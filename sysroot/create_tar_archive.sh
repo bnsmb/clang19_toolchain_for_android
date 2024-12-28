@@ -1,20 +1,26 @@
 #
-# simple script to create a tar archive with the contents of /data/local/tmp/sysroot
+# simple script to create a tar archive with the contents of  the directory sysroot
 #
 # If called with the parameter "release" the script removes all tempoary files and config files before creating the tar archive
 #
 # For more details, see the source code below
 #
-
-CLANG_VERSION=19
-
-# BASE_DIR="/data/local/tmp/"
-# SYSROOT_DIR="${BASE_DIR}/sysroot"
+#
+#
 
 SYSROOT_DIR="${0%/*}"
 BASE_DIR="$( cd "${SYSROOT_DIR}/.." ; pwd )"
 
-if [ $# -eq 1 -a -d $1 ] ; then
+if [ "$1"x = "-h"x -o "$1"x = "--help"x ] ; then
+  echo "Usage: $0 [target_dir_for_the_tar_file] [tar_file_descriptions]"
+  echo "The default target directory is ${BASE_DIR}"
+  exit 5
+fi
+
+
+CLANG_VERSION=19
+
+if [ $# -ge 1 -a -d $1 ] ; then
 
   TARGET_DIR="$1"
   shift
