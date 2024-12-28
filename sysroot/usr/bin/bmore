@@ -1,0 +1,39 @@
+#!/system/bin/sh
+
+if [ ${0##*/} = debug_tools_wrapper ] ; then
+  echo "ERROR: Do not call this script - this is only a wrapper used to call the executables with a well defined enviroment"
+  exit 254
+fi
+
+
+# settings for all binaries
+# 
+export TERMINFO="/system/etc/terminfo"
+
+export LD_LIBRARY_PATH=/system/usr/lib
+
+case ${0##*/} in
+
+  losetup.linux_utils )
+    TARGET_BINARY="losetup"
+    ;;
+ 
+  mount.linux_utils )
+    TARGET_BINARY="mount"
+    ;;
+
+  * )
+   TARGET_BINARY="${0##*/}"
+   ;;
+
+
+esac
+
+export LD_LIBRARY_PATH=/system/usr/lib
+
+if [ ! -z ${VERBOSE} ] ; then
+  echo "Eexcuting: /system/usr/bin/${TARGET_BINARY} ${CMD_PARAMETER} ${1+\"$@\"}' "
+fi
+
+eval 'exec  /system/usr/bin/${TARGET_BINARY} ${CMD_PARAMETER} ${1+"$@"}'
+

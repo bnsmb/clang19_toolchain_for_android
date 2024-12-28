@@ -1,0 +1,7 @@
+while [ $# -ne 0 ] ;  do
+  CUR_FILE="$1"
+  shift
+  [[ ${CUR_FILE} != /* ]] && CUR_FILE=${PWD}/${CUR_FILE}
+  LD_LIBRARY_PATH=/data/local/tmp/develop/sysroot/usr/lib ldd ${CUR_FILE}
+done
+

@@ -1,0 +1,53 @@
+#!/system/bin/sh
+[ ! -z ${DEBUG} ] && set -x
+
+CUR_NAME="${0##*/}"
+
+# variable predefined for future use
+# 
+CMD_PARAMETER=""
+
+if [[ ${CUR_NAME} == *wrapper ]] ; then
+  echo "ERROR: Do not call this script - this is only a wrapper used to call the executables with a well defined enviroment"
+  exit 254
+fi
+
+ROOT_DIR="/data/local/tmp/sysroot"
+
+# set this variable to any non empty string to suppress creating cache files with the compiled code
+#
+# PYTHONDONTWRITEBYTECODE=yes
+
+# define the directory for compiled python files 
+#
+export PYTHONPYCACHEPREFIX="${ROOT_DIR}/var/cache/python"
+
+# directory tree with the python files
+#
+PYTHON_BIN_DIR="${ROOT_DIR}/usr/bin"
+PYTHON_LIB_DIR="${ROOT_DIR}/usr/lib"
+
+# settings for all binaries
+# 
+# export TERMINFO="/data/local/tmp/sysroot/usr/share/terminfo/"
+
+export LD_LIBRARY_PATH="${PYTHON_LIB_DIR}:${LD_LIBRARY_PATH}"
+
+export HOME="${ROOT_DIR}/home"
+
+CUR_BINARY="${PYTHON_BIN_DIR}/${CUR_NAME}3.14"
+
+if [ ! -x "${CUR_BINARY}" ] ; then
+  echo "Executable \"${CUR_BINARY}\" not found"
+  exit 127
+fi
+
+if [ -r /data/local/tmp/home/python_init.sh ] ; then
+  . /data/local/tmp/home/python_init.sh
+fi
+
+eval 'exec  ${CUR_BINARY} ${CMD_PARAMETER} ${1+"$@"}'
+
+# eval 'exec  ${0%/*}/${0##*/}.bin ${CMD_PARAMETER} ${1+"$@"}'
+
+

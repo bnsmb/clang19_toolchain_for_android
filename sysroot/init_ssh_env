@@ -1,0 +1,9 @@
+
+echo "Initializing the environment for SSH ..."
+
+export HOME="/data/local/tmp/sysroot/home"
+
+export PATH="/data/local/tmp/sysroot/usr/bin:$PATH"
+
+[ $# -ne 0 ] && $*
+

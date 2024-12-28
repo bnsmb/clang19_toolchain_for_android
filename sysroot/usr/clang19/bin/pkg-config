@@ -1,0 +1,1 @@
+LD_LIBRARY_PATH=/data/local/tmp/sysroot/usr/clang19/lib ${0%/*}/${0##*/}.bin $*

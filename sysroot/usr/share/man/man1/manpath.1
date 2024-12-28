@@ -1,0 +1,127 @@
+.\" Man page for manpath
+.\"
+.\" Copyright (C) 1995, Graeme W. Wilford. (Wilf.)
+.\" Copyright (C) 2001-2019 Colin Watson.
+.\"
+.\" You may distribute under the terms of the GNU General Public
+.\" License as specified in the docs/COPYING.GPLv2 file that comes with the
+.\" man-db distribution.
+.\"
+.\" Sun Jan 22 22:15:17 GMT 1995 Wilf. (G.Wilford@ee.surrey.ac.uk)
+.\"
+.pc
+.TH MANPATH 1 "2024-08-29" "2.13.0" "Manual pager utils"
+.SH NAME
+manpath \- determine search path for manual pages
+.SH SYNOPSIS
+.B manpath
+.RB [\| \-qgdc?V \|]
+.RB [\| \-m
+.IR system \|[\|,.\|.\|.\|]\|]
+.RB [\| \-C
+.IR file \|]
+.SH DESCRIPTION
+If
+.RB $ MANPATH
+is set,
+.B manpath
+will simply display its contents and issue a warning.
+If not,
+.B manpath
+will determine a suitable manual page hierarchy search path and display the
+results.
+
+The colon-delimited path is determined using information gained from the
+man-db configuration file \(en
+.RI ( "/data/local/tmp/sysroot/usr/etc/man_db.conf" )
+and the user's environment.
+.SH OPTIONS
+.TP
+.BR \-q ", " \-\-quiet
+Do not issue warnings.
+.TP
+.BR \-d ", " \-\-debug
+Print debugging information.
+.TP
+.BR \-c ", " \-\-catpath
+Produce a catpath as opposed to a manpath.
+Once the manpath is determined,
+each path element is converted to its relative catpath.
+.TP
+.BR \-g ", " \-\-global
+Produce a manpath consisting of all paths named as "global" within the
+man-db configuration file.
+.TP
+\fB\-m\fR \fIsystem\fR\|[\|,.\|.\|.\|]\|, \
+\fB\-\-systems=\fIsystem\fR\|[\|,.\|.\|.\|]
+If this system has access to other operating systems' manual hierarchies,
+this option can be used to include them in the output of
+.BR manpath .
+To include NewOS's manual page hierarchies use the option
+.B \-m
+.BR NewOS .
+
+The
+.I system
+specified can be a combination of comma delimited operating system names.
+To include the native operating system's manual page hierarchies,
+the system name
+.B man
+must be included in the argument string.
+This option will override the
+.RB $ SYSTEM
+environment variable.
+.TP
+.BI \-C\  file \fR,\ \fB\-\-config\-file= file
+Use this user configuration file rather than the default of
+.IR \(ti/.manpath .
+.TP
+.BR \-? ", " \-\-help
+Print a help message and exit.
+.TP
+.B \-\-usage
+Print a short usage message and exit.
+.TP
+.BR \-V ", " \-\-version
+Display version information.
+.SH ENVIRONMENT
+.TP
+.B MANPATH
+If
+.RB $ MANPATH
+is set,
+.B manpath
+displays its value rather than determining it on the fly.
+
+See the
+.B SEARCH PATH
+section of
+.BR manpath (5)
+for the default behaviour and details of how this environment variable is
+handled.
+.TP
+.B SYSTEM
+If
+.RB $ SYSTEM
+is set, it will have the same effect as if it had been specified as the
+argument to the
+.B \-m
+option.
+.SH FILES
+.TP \w'/data/local/tmp/sysroot/usr/etc/man_db.conf'u+2n
+.I /data/local/tmp/sysroot/usr/etc/man_db.conf
+man-db configuration file.
+.SH "SEE ALSO"
+.BR apropos (1),
+.BR man (1),
+.BR whatis (1)
+.SH AUTHOR
+.nf
+Wilf.\& (G.Wilford@ee.surrey.ac.uk).
+Fabrizio Polacco (fpolacco@debian.org).
+Colin Watson (cjwatson@debian.org).
+.fi
+.SH BUGS
+https://gitlab.com/man-db/man-db/\-/issues
+.br
+https://savannah.nongnu.org/bugs/?group=man\-db

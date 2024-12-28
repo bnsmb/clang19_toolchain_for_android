@@ -1,0 +1,1 @@
+GIT_SSL_NO_VERIFY=yes exec ${0%/*}/git ${1+"$@"}

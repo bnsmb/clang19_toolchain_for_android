@@ -1,0 +1,34 @@
+#!/system/bin/sh
+[ ! -z ${DEBUG} ] && set -x
+
+CUR_NAME="${0}"
+
+# variable predefined for future use
+# 
+CMD_PARAMETER=""
+
+# set this variable to any non empty string to suppress creating cache files with the compiled code
+#
+# PYTHONDONTWRITEBYTECODE=yes
+
+# define the directory for compiled python files 
+#
+export PYTHONPYCACHEPREFIX="/data/local/tmp/sysroot/var/cache/python"
+
+
+CUR_BINARY="${CUR_NAME}3"
+
+if [ ! -x "${CUR_BINARY}" ] ; then
+  echo "Executable \"${CUR_BINARY}\" not found"
+  exit 127
+fi
+
+if [ -r /data/local/tmp/sysroot/home/shell/python_init.sh ] ; then
+  . /data/local/tmp/sysroot/home/shell/python_init.sh
+fi
+
+eval 'exec  ${CUR_BINARY} ${CMD_PARAMETER} ${1+"$@"}'
+
+# eval 'exec  ${0%/*}/${0##*/}.bin ${CMD_PARAMETER} ${1+"$@"}'
+
+

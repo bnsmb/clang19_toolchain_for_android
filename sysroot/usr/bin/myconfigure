@@ -1,0 +1,18 @@
+#DEBUG_CFLAGS="-g -O0"
+DEBUG_CFLAGS=""
+
+CFLAGS="${CFLAGS} -Wno-implicit-function-declaration -Wno-int-conversion ${DEBUG_CFLAGS}"
+
+CFLAGS="${CFLAGS} "
+LDFLAGS="${LDFLAGS} "
+
+CXXFLAGS="${CFLAGS}"
+CXXFLAGS="${CXXFLAGS} ${DEBUG_CFLAGS}"
+
+CONFIGURE_OPTIONS="
+"
+
+TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
+
+${PREFIX}  ./configure  --prefix=${TARGET_ROOT}/usr/ CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" ${CONFIGURE_OPTIONS} $* 
+

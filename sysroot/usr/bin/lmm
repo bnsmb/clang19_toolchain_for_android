@@ -1,0 +1,29 @@
+#!/system/bin/sh
+#
+#h#  imm -- list Magisk Modules
+#h#
+#h#  This script lists all installed Magisk Modules including the version, the status (enabled/disabled) and the name
+#h#
+#h#  Usage: lmm
+#h#
+#  History:
+#    09.11.2024 /bs
+#      initial version
+#
+if [ "$1"x = "-h"x -o "$1"x = "--help"x ] ; then
+  grep "^#h#" $0 | cut -c4-
+  exit 1
+fi
+
+if [ "$( id -un )"x != "root"x ] ; then
+   exec su - -c $0
+   exit
+fi
+
+for i in /data/adb/modules/*; do printf "%-30s %-15s %-10s %s\n" \
+"${i##*/}" \
+"$(  grep version= $i/module.prop 2>/dev/null | cut -f2 -d "=" | tr -s " " )" \
+"$( [ ! -r $i/disable ] && echo "enabled" || echo "disabled" )"  \
+"$(  grep name= $i/module.prop 2>/dev/null | cut -f2 -d "=" | tr -s " " )" \
+; done   
+

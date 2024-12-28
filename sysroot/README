@@ -1,0 +1,99 @@
+
+This tar files contains clang and other tools to compile libraries and
+binaries in Android
+
+Also included is the Android NDK r27b
+
+
+Usage:
+
+unpack the tar file in 
+
+/data/local/tmp
+
+this creates the directories with the tools in the directory 
+
+/data/local/tmp/sysroot
+
+
+execute the script to configure the clang environment
+
+/data/local/tmp/sysroot/create_clang_env.sh
+
+
+To init the clang environment source the file
+
+/data/local/tmp/sysroot/bin/init_clang19_env
+
+Note: This must be done once in each adb session using this clang chaintool
+
+
+Installed programs
+
+bash 5.2.0
+
+clang 19.0.0
+cmake 3.30.4
+ninja 1.13.0.git
+make 4.4.1
+
+
+autoconf 2.72
+automake 1.17
+m4 1.4.19
+libtool 2.5.3
+(gnu) patch 2.7
+GNU help2man 1.49.3
+
+bison 3.8
+flex 2.6.4
+
+gdb 15.2
+
+rsync 3.3.0
+
+wget 2.1.0
+curl 8.11.1
+
+perl 5.40
+python 3.14
+tcl 9.0
+
+sshd/ssh 9.9p1
+
+git 2.47.0.288
+
+dig 9.11.37
+
+nano 8.2 and nano 6.4 
+
+vim 9.1-672
+
+man 2.13
+
+tmux 3.5a
+
+
+various compression tools:
+
+7zz
+bzip2
+zip
+unzip
+lz4
+lzop
+compress
+uncompress
+zstd
+pigz
+xz
+gunzip
+gzip 
+unrar
+
+
+History
+
+  27.12.2024 v1.0.0 /bs
+    initial release
+

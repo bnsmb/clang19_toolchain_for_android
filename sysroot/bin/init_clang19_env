@@ -1,0 +1,517 @@
+#!/system/bin/sh
+#
+# Script to init the environment vor clang in /data/local/tmp/sysroot
+#
+# Usage: see below or execute the script with the parameter "--help" 
+#
+#
+# History
+#  25.12.2024 v1.0.0 /bs
+#    initial release
+#   
+#
+
+__TRUE=0
+__FALSE=1
+
+STANDALONE_SCRIPT=${__FALSE}
+
+CONTINUE=${__TRUE}
+
+PRINT_EXAMPLES=${__FALSE}
+
+alias LogDebugMsg='[ "${DEBUG}"x != ""x ] && echo "DEBUG: $*" >&2 '
+
+THIS_SCRIPT="$0"
+[ ! -r "${THIS_SCRIPT}" ] && THIS_SCRIPT="/data/local/tmp/sysroot/bin/init_clang19_env"
+
+
+# ---------------------------------------------------------------------
+# the variable TMPDIR is used by the /sytem/bin/sh to get the default directory for temporary files
+#
+export TMPDIR="${TMPDIR:=/data/local/tmp}"
+
+# ---------------------------------------------------------------------
+
+function add_path {
+  
+  while [ $# -ne 0 ] ; do
+    CUR_DIR="$1"
+    shift
+    [[ *:${PATH}:* != *:${CUR_DIR}:* ]]  && PATH="${PATH}:${CUR_DIR}"
+  done
+}
+
+function add_library_path {
+  
+  while [ $# -ne 0 ] ; do
+    CUR_DIR="$1"
+    shift
+    [[ *:${LD_LIBRARY_PATH}:* != *:${CUR_DIR}:* ]]  && LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${CUR_DIR}"
+  done
+}
+
+# ---------------------------------------------------------------------
+ 
+# sysroot for the programs compiled with clang
+# 
+TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
+
+# clang version 
+#
+CLANG_VERSION="${CLANG_VERSION:=19}"
+
+#  sysroot for the clang binaries and the other tools (make, etc)
+#
+CLANG_SYSROOT="/data/local/tmp/sysroot"
+
+# directory with the files for clang
+# 
+CLANG_DIR="${CLANG_DIR:=${CLANG_SYSROOT}/usr/clang${CLANG_VERSION}}"
+
+# directory with the files from the NDK
+#
+NDK_DIR="${NDK_DIR:=${CLANG_SYSROOT}/usr/ndk/r27b}"
+
+# sysrot directory from the NDK
+#
+SYSROOT="${SYSROOT:=${NDK_DIR}/sysroot}"
+
+API=${API:=31}
+   
+# magiskpolicy is optional used to change SELinux permissions 
+#
+MAGISKPOLICY="$( which magiskpolicy 2>/dev/null )"
+
+
+
+MANPATH=${CLANG_SYSROOT}/usr/share/man
+
+HOME="${CLANG_SYSROOT}/home/shell"
+
+TERMINFO="${CLANG_SYSROOT}/usr/share/terminfo"
+
+add_path "${CLANG_SYSROOT}/usr/bin" "${CLANG_SYSROOT}/bin"
+
+add_library_path "${CLANG_SYSROOT}/usr/lib"
+
+export HOME TERMINFO PATH LD_LIBRARY_PATH MAN_PATH
+
+# ---------------------------------------------------------------------
+
+
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+  ROOT_ACCESS_AVAILABLE=${__FALSE}
+  ROOT_PREFIX=""
+  
+  CUR_USER="$( id -un )"
+
+  if [ "${CUR_USER}"x = "root"x ] ; then
+    ROOT_ACCESS_AVAILABLE=${__TRUE}
+  else 
+    su - -c id 2>/dev/null 1>/dev/null 
+    if [ $? -eq 0 ] ; then
+      ROOT_ACCESS_AVAILABLE=${__TRUE}
+      ROOT_PREFIX="su - -c "
+    fi
+  fi  
+fi
+
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+
+  while [ $# -ne 0 ] ; do
+    CUR_PARAMETER="$1"
+    shift
+    
+    case ${CUR_PARAMETER} in
+ 
+      -h | --help | help )
+
+        if [ -r "${THIS_SCRIPT}" ] ; then
+          SUPPORTED_ENV_VARIABLES="Supported environment variables are:
+
+$( grep ":=" ${THIS_SCRIPT} | grep -v SUPPORTED_ENV_VARIABLES )
+"
+        else
+           SUPPORTED_ENV_VARIABLES=""
+        fi
+        cat <<EOT
+        
+Usage: . ${THIS_SCRIPT} [-h|--help] [init] [var=value] [examples]
+ 
+init        - clear the used enviroment variables at script start
+var=value   - set the environment variable "var" to "value" at start of the script
+examples    - print compile examples 
+
+${SUPPORTED_ENV_VARIABLES}
+
+EOT
+
+        CONTINUE=${__FALSE}
+      ;;
+
+      examples | example | ex )
+        PRINT_EXAMPLES=${__TRUE}
+        ;;
+
+      init | clear )
+        echo "Clearing all used variables ..."
+        unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS  API SYSROOT TARGET_ROOT CPU_TYPE CLANG_DIR CLANG_VERSION NDK_DIR
+        ;;
+    
+      *=* )
+        eval ${CUR_PARAMETER}
+        if [ $? -ne 0 ] ; then
+          echo "ERROR: Error executing \"${CUR_PARAMETER}\" "
+          CONTINUE=${__FALSE}
+        fi
+        ;;
+
+      * )
+        echo "ERROR: Unknown parameter found: \"${CUR_PARAMETER}\" "
+        CONTINUE=${__FALSE}
+        ;;
+    esac
+  done
+
+fi
+
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+
+  echo "Running as user \"${CUR_USER}\" "
+  
+  if [[ $0 == *init_clang*_env* ]] ; then
+    echo
+    echo "*******************************************************************"
+    echo " WARNING: The script $0 must be sourced in "
+    echo "*******************************************************************"
+    echo
+    STANDALONE_SCRIPT=${__TRUE}                 
+  fi
+
+  CPU_TYPE="${CPU_TYPE:=$( uname -m )}"
+
+
+# ---------------------------------------------------------------------
+
+  LIB_DIRS=""
+
+  OBJ_DIRS=""
+  
+  INCLUDE_DIRS="${CLANG_DIR}/include"
+
+  BIN_DIRS="${CLANG_DIR}/bin"
+
+  SYSROOT_CONFIGURE_OPTION=""
+ 
+  if [ "${NDK_DIR}"x != ""x ] ; then
+    if [ -d  "${NDK_DIR}" ] ; then
+
+      INCLUDE_DIRS="${INCLUDE_DIRS} ${NDK_DIR}/include"
+
+    fi
+  fi
+
+  if [ "${SYSROOT}"x != ""x ] ; then
+    if [ -d  "${SYSROOT}" ] ; then
+
+      SYSROOT_LIB_DIR="${SYSROOT}/usr/lib/${CPU_TYPE}-linux-android"
+
+      INCLUDE_DIRS="${INCLUDE_DIRS} ${SYSROOT}/usr/include"
+
+      if [ -d ${SYSROOT_LIB_DIR}/${API} ] ; then
+        LIB_DIRS="${LIB_DIRS} ${SYSROOT_LIB_DIR}/${API}"
+        OBJ_DIRS="${OBJ_DIRS} ${SYSROOT_LIB_DIR}/${API}"
+      fi
+
+      if [ -d ${SYSROOT_LIB_DIR}/ ] ; then
+        LIB_DIRS="${LIB_DIRS} ${SYSROOT_LIB_DIR}"
+      fi
+      
+      
+      [ -d ${SYSROOT}/usr/bin ] && BIN_DIRS="${BIN_DIRS} ${SYSROOT}/usr/bin"
+
+      SYSROOT_CONFIGURE_OPTION="--sysroot ${SYSROOT}"
+
+    else
+      echo "WARNING: The sysroot directory ${SYSROOT} does not exist"	  
+    fi
+  fi
+
+  CLANG="${CLANG_DIR}/bin/clang"
+
+  add_path "${CLANG_DIR}/bin"
+
+# ---------------------------------------------------------------------
+
+  if [ ! -x "${CLANG}" ] ; then
+    echo "ERROR: The binary ${CLANG} does not exist or is not executable"
+    CONTINUE=${__FALSE}
+  fi
+fi
+
+# ---------------------------------------------------------------------
+
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+ 
+  echo
+  echo "Preparing the clang environment for creating binaries for the CPU type ${CPU_TYPE}"
+
+  if [ "${TARGET_ROOT}"x != ""x ] ; then
+    if [ -d  "${TARGET_ROOT}" ] ; then
+      INCLUDE_DIRS="${INCLUDE_DIRS} ${TARGET_ROOT}/usr/include"
+      BIN_DIRS="${BIN_DIRS} ${TARGET_ROOT}/usr/bin"
+      LIB_DIRS="${LIB_DIRS} ${TARGET_ROOT}/usr/lib"
+    else
+     echo "INFO: The target root directory ${TARGET_ROOT} does not exist"  
+    fi
+  fi
+  
+  echo ""
+  
+  printf "%-90s %s\n" "Using clang ${CLANG_VERSION}" 
+  printf "\n"
+
+  if [ "${NDK_DIR}"x != ""x ] ; then
+    printf "%-90s %s\n" "Using the NDK ${NDK_DIR}" "(environment variable NDK_DIR)"
+  fi
+
+  if [ "${SYSROOT}"x != ""x ] ; then
+    printf "%-90s %s\n" "Using the sysroot directory ${SYSROOT}" "(environment variable SYSROOT)"
+  fi
+
+  if [ "${TARGET_ROOT}"x != ""x ] ; then
+    printf "%-90s %s\n" "Using the target root directory ${TARGET_ROOT}" "(environment variable TARGET_ROOT)"
+  fi
+
+  printf "\n"
+  
+  echo ""
+  
+  for CUR_DIR in ${BIN_DIRS} ; do
+    echo ":${PATH}:" | grep ":${CUR_DIR}:" >/dev/null
+    if [ $? -ne 0 ] ; then
+      if [ ! -d "${CUR_DIR}" ] ; then
+        echo "WARNING: The directory \"${CUR_DIR}\" does not exist"
+      fi
+      [[ :${PATH}: != *:${CUR_DIR}: ]] && PATH="${CUR_DIR}:${PATH}"
+    fi
+  done
+ 
+ 
+  for CUR_DIR in ${INCLUDE_DIRS} ; do
+    if [ ! -d "${CUR_DIR}" ] ; then
+      echo "WARNING: The directory \"${CUR_DIR}\" does not exist"
+    fi
+  
+    echo "${CFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
+    if [ $? -ne 0 ] ; then
+    echo "${CFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
+      CFLAGS="${CFLAGS} -I${CUR_DIR}"
+    fi
+  
+    echo "${CPPFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
+    if [ $? -ne 0 ] ; then
+       CPPFLAGS="${CPPFLAGS} -I${CUR_DIR}"
+    fi
+  
+    echo "${CXXFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
+    if [ $? -ne 0 ] ; then
+       CXXFLAGS="${CXXFLAGS} -I${CUR_DIR}"
+    fi
+  
+  done
+
+ 
+  for CUR_DIR in ${LIB_DIRS} ; do
+    if [ ! -d "${CUR_DIR}" ] ; then
+      echo "WARNING: The directory \"${CUR_DIR}\" does not exist"
+    fi
+  
+    echo "${LDFLAGS} " | grep -- "-L${CUR_DIR} " >/dev/null
+    if [ $? -ne 0 ] ; then
+      LDFLAGS="${LDFLAGS} -L${CUR_DIR}"
+    fi
+  done
+
+
+  for CUR_DIR in ${OBJ_DIRS} ; do
+    if [ ! -d "${CUR_DIR}" ] ; then
+      echo "WARNING: The directory \"${CUR_DIR}\" does not exist"
+    fi
+  
+    echo "${LDFLAGS} " | grep -- "-B${CUR_DIR}/ " >/dev/null
+    if [ $? -ne 0 ] ; then
+      LDFLAGS="${LDFLAGS} -B${CUR_DIR}/"
+    fi
+  done
+  
+
+  if [ "${SYSROOT_CONFIGURE_OPTION}"x != ""x ] ; then 
+    echo "$CFLAGS" | grep -- "--sysroot" >/dev/null ||
+      CFLAGS="$CFLAGS --sysroot=${SYSROOT}"
+  
+    echo "$CPPFLAGS" | grep -- "--sysroot" >/dev/null ||
+      CPPFLAGS="$CPPFLAGS --sysroot=${SYSROOT}"
+  
+    echo "$CXXLAGS" | grep -- "--sysroot" >/dev/null ||
+      CXXFLAGS="$CXXFLAGS --sysroot=${SYSROOT}"
+  
+  
+    echo "$LDFLAGS" | grep -- "--sysroot" >/dev/null ||
+      LDFLAGS="$LDFLAGS --sysroot=${SYSROOT}"
+    
+  fi
+
+  LDFLAGS="${LDFLAGS} -lc  "
+
+  add_library_path "${SYSROOT}/usr/lib/aarch64-linux-android" "${CLANG_DIR}/lib"
+  
+  
+  export CFLAGS CXXFLAGS CPPFLAGS LDFLAGS SYSROOT TARGET_ROOT API NDK SYSROOT
+
+  export CC="${CLANG_DIR}/bin/clang"
+  export CXX="${CLANG_DIR}/bin/clang++"
+  export AR="${CLANG_DIR}/bin/llvm-ar"
+  export AS="${CLANG_DIR}/bin/llvm-as"
+  export LD="${CLANG_DIR}/bin/lld"
+  export RANLIB="${CLANG_DIR}/bin/llvm-ranlib"
+  export STRIP="${CLANG_DIR}/bin/llvm-strip"
+  export CPP="${CLANG_DIR}/bin/clang-cpp"
+  export CXXCPP="${CLANG_DIR}/bin/clang-cpp"
+  export PKG_CONFIG="${CLANG_DIR}/bin/pkg-config"
+
+  echo "Environment variables used:"
+  
+  printf "\n"
+  printf "%-20s %s\n" "PATH is now:"             "${PATH}"
+  printf "\n"
+  
+  printf "%-20s %s\n" "LD_LIBRARY_PATH:"         "${LD_LIBRARY_PATH}"
+  printf "\n"
+  printf "%-20s %s\n" "API is now:"              "${API}"
+  printf "%-20s %s\n" "NDK_DIR is now:"          "${NDK_DIR}"
+  printf "\n"
+  printf "%-20s %s\n" "SYSROOT is now:"          "${SYSROOT}"
+  printf "\n"
+
+  printf "%-20s %s\n" "CFLAGS are now:"          "${CFLAGS}"
+  printf "\n"
+  printf "%-20s %s\n" "CPPFLAGS are now:"        "${CPPFLAGS}"
+  printf "\n"
+  printf "%-20s %s\n" "CXXFLAGS are now:"        "${CXXFLAGS}"
+  printf "\n"
+  printf "%-20s %s\n" "LDFLAGS are now:"         "${LDFLAGS}"
+  printf "\n"
+  
+  for CUR_VAR in CC CXX CPP CXXCPP AR AS LD RANLIB STRIP PKG_CONFIG ; do
+    eval CUR_VALUE="\$$CUR_VAR"
+    printf "%-20s %s\n" "${CUR_VAR} is now:" "${CUR_VALUE}"
+  done
+ 
+  echo
+
+  if [ ! -d /tmp ] ; then
+    if [ "${TMP}"x = ""x ] ; then
+      if [ -d /data/local/tmp ] ; then
+        export TMP="/data/local/tmp"
+        printf "%-20s %s\n" "TMP is now:"         "${TMP}"
+      else
+        echo "WARNING: The directories /tmp and /data/local/tmp do not exist - please set the variable TMP before using clang"
+      fi
+    fi
+  fi 
+
+  echo "Checking the clang binary ..."
+  echo
+  ${CLANG} --version
+  THISRC=$?
+  echo
+  if [ ${THISRC} != 0 ] ; then
+    echo "WARNING: Executing \"${CLANG} --version\" ended with RC=${THISRC}"
+  fi
+
+  if [ $API -lt 30 ] ; then
+    echo
+    echo "WARNING: Compling C++ program using API version less then 30 will probably not work"
+    echo 
+  fi
+
+  export CC=${CLANG}
+  export LD=${LLD}
+  
+  
+  # define aliase
+  #
+  echo "Define some aliase ..."
+  
+  set -x
+  
+  alias sysroot="cd ${CLANG_SYSROOT}; pwd"
+  
+  alias setlibpath="export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}"
+ 
+  alias addlib='LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/local/tmp/develop/sysroot/usr/lib '
+
+  alias vi="${CLANG_SYSROOT}/usr/bin/vi"
+
+  alias find="${CLANG_SYSROOT}/usr/bin/find"
+ 
+  alias bash="/data/local/tmp/sysroot/bin/bash"
+
+  set +x 
+  
+  echo ""
+  
+  
+  if [ ${ROOT_ACCESS_AVAILABLE} = ${__TRUE} ] ; then
+    
+    echo "Root access is enabled on this machine"
+    echo ""
+    
+    if [ "${MAGISKPOLICY}"x != ""x ] ; then
+    
+      if which tmux 2>/dev/null 1>dev/null ; then
+	      echo "Enabling socket access for the user \"shell\"  (this is necessary to use tmux)..."
+    
+        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file sock_file { create getattr setattr write unlink }"  '
+        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell devpts chr_file { read write open }"'
+      fi
+
+      echo "Enabling hard links for the user \"shell\" ..."
+      ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file file link" '
+
+      echo "Enabling creating and using fifos for the user \"shell\" ..."
+      ${ROOT_PREFIX} 'magiskpolicy --live "allow shell shell_data_file fifo_file { create read open write }" '      
+
+    else
+      LogDebugMsg "Magisk is not installed on this machine - can not enable tmux for non-root user"
+    fi
+    
+    echo ""
+  else
+    LogDebugMsg  "root access is NOT enabled on this machine"
+  fi
+fi
+
+
+CLANG_ENV_INIT_DONE=${__TRUE}
+
+if [ ${PRINT_EXAMPLES} = ${__TRUE} ] ; then
+
+  cat <<EOT
+
+To test the clang environment use
+
+cd ${CLANG_SYSROOT}
+clang \${CFLAGS} \${LDFLAGS} -o helloworld_in_c helloworld_in_c.c  && ./helloworld_in_c
+
+To test the C++ compiler use
+
+cd ${CLANG_SYSROOT}
+clang++ \${CPPFLAGS} \${LDFLAGS}  -o helloworld_in_c++ ./helloworld_in_c++.cpp && ./helloworld_in_c++
+
+EOT
+
+fi
+

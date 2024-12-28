@@ -1,0 +1,1 @@
+VIMRUNTIME=/data/local/tmp/sysroot/share/vim/vim91 ${0%/*}/xxd.bin $*
