@@ -8,7 +8,8 @@
 # History
 #  25.12.2024 v1.0.0 /bs
 #    initial release
-#   
+#  29.12.2024 v1.0.1 /bs
+#    added the alias alias testcc='$CC $LDFLAGS $CFLAGS  -Wno-implicit-function-declaration -Wno-int-conversion  $LDFLAGS '  
 #
 
 __TRUE=0
@@ -458,6 +459,8 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   alias find="${CLANG_SYSROOT}/usr/bin/find"
  
   alias bash="/data/local/tmp/sysroot/bin/bash"
+
+  alias testcc='$CC $LDFLAGS $CFLAGS  -Wno-implicit-function-declaration -Wno-int-conversion  $LDFLAGS '
 
   set +x 
   

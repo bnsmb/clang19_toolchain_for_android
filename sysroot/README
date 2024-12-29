@@ -101,3 +101,8 @@ History
     1st release also published on github.com
     minor changes to get around the size limitations from github
 
+  29.12.2024 v1.0.2 /bs
+    added the alias alias testcc='$CC $LDFLAGS $CFLAGS  -Wno-implicit-function-declaration -Wno-int-conversion  $LDFLAGS ' 
+    added the include file with definitions missing in the Android NKD files:
+      ./sysroot/usr/clang19/include/add_missing_definitions.h
+
