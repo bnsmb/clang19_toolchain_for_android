@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/data/local/tmp/sysroot/usr/bin/perl
 
 use lib (split(/:/, $ENV{GITPERLLIB} || '/data/local/tmp/sysroot/usr/share/perl5'));
 # Copyright (C) 2006, Eric Wong <normalperson@yhbt.net>
