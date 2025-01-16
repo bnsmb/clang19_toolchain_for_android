@@ -1,4 +1,4 @@
-#!/data/local/tmp/sysroot/usr/bin/python
+#!/usr/bin/python
 #
 # git-p4.py -- A tool for bidirectional operation between a Perforce depot and git.
 #

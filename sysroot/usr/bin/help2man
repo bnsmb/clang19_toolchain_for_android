@@ -1,4 +1,4 @@
-#!/data/local/tmp/sysroot/usr/bin/perl -w
+#!/usr/bin/perl -w
 
 # Generate a short man page from --help and --version output.
 # Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2009,
