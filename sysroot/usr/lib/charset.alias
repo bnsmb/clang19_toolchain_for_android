@@ -1,4 +1,5 @@
 # This file contains a table of character encoding aliases,
-# suitable for operating system ''.
+# suitable for operating system 'linux-android'.
 # It was automatically generated from config.charset.
-# Packages using this file: groff 
+# Packages using this file: gnupg 
+ISO_646.IRV:1983 ASCII
