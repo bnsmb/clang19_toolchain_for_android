@@ -8,8 +8,7 @@
 # History
 #  25.12.2024 v1.0.0 /bs
 #    initial release
-#  29.12.2024 v1.0.1 /bs
-#    added the alias alias testcc='$CC $LDFLAGS $CFLAGS  -Wno-implicit-function-declaration -Wno-int-conversion  $LDFLAGS '  
+#   
 #
 
 __TRUE=0
@@ -380,7 +379,10 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   export STRIP="${CLANG_DIR}/bin/llvm-strip"
   export CPP="${CLANG_DIR}/bin/clang-cpp"
   export CXXCPP="${CLANG_DIR}/bin/clang-cpp"
-  export PKG_CONFIG="${CLANG_DIR}/bin/pkg-config"
+
+  if [ "${PKG_CONFIG}"x = ""x ] ; then
+    export PKG_CONFIG="${CLANG_DIR}/bin/pkg-config"
+  fi
 
   echo "Environment variables used:"
   
@@ -459,8 +461,6 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   alias find="${CLANG_SYSROOT}/usr/bin/find"
  
   alias bash="/data/local/tmp/sysroot/bin/bash"
-
-  alias testcc='$CC $LDFLAGS $CFLAGS  -Wno-implicit-function-declaration -Wno-int-conversion  $LDFLAGS '
 
   set +x 
   
