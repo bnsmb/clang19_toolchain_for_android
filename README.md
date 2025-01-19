@@ -1,5 +1,5 @@
 # clang19_toolchain_for_android
-This repository contains a toolchain for **clang19** on **Android** on a **arm64** CPU
+This repository contains a toolchain for **clang19** on **Android** on an **arm64** CPU
 
 The clang19 toolchain contains these programs:
 
@@ -9,6 +9,7 @@ The toolchain contains :
 - make
 - cmake
 - ninja
+- pkg-config, pkgconf
 - the autoconf tools, libtool, and m4
 - gnupatch
 - bison
@@ -25,7 +26,7 @@ The toolchain contains :
 - man
 - bash
 - nano
--  vi
+- vi
 
 and some other tools -- all configured for the target directory **/data/local/tmp/sysroot**.
 
