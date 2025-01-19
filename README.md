@@ -89,4 +89,19 @@ or
 
 [https://xdaforums.com/t/guide-how-to-install-a-toolchain-for-clang-on-phones-without-root-access.4710235/](https://xdaforums.com/t/guide-how-to-install-a-toolchain-for-clang-on-phones-without-root-access.4710235/)
 
+**Notes**
+
+Please note that due to the size limitations on Github, some files in the repository are compressed and are decompressed by the script **create_clang_env.sh**. The compressed files are:
+
+```
+[ OmniRom 15 - xtrnaw7@t15g /data/develop/git_repos/clang19_toolchain_for_android/sysroot ] $ ls -hl usr/bin/*.gz usr/ndk/r27b.tar.gz 
+-rwxrwxr-x. 1 xtrnaw7 xtrnaw7 43M Dec 13 15:22 usr/bin/cmake.gz
+-rwxrwxr-x. 1 xtrnaw7 xtrnaw7 44M Dec 13 15:22 usr/bin/cpack.gz
+-rwxrwxr-x. 1 xtrnaw7 xtrnaw7 48M Dec 13 15:22 usr/bin/ctest.gz
+-rwxrwxr-x. 1 xtrnaw7 xtrnaw7 48M Dec 13 15:22 usr/bin/ctresalloc.gz
+-rw-rw-r--. 1 xtrnaw7 xtrnaw7 59M Dec 28 06:41 usr/ndk/r27b.tar.gz
+[ OmniRom 15 - xtrnaw7@t15g /data/develop/git_repos/clang19_toolchain_for_android/sysroot ] $ 
+
+
+```
 
