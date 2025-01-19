@@ -110,4 +110,7 @@ History
     updated git to version 2.48
     added gpp 1.4.23
     added pkgconf 2.30
+    added a wrapper for clang : /data/local/tmp/sysroot/usr/bin/cc
+    the script init_clang19_env now adds the directory /data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/include/aarch64-linux-android to the include dirs in CFLAGS 
+
 

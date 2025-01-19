@@ -8,6 +8,8 @@
 # History
 #  25.12.2024 v1.0.0 /bs
 #    initial release
+#  18.01.2025 v1.1.0 /bs
+#    added the directory /data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/include/aarch64-linux-android to the include dirs in CFLAGS
 #   
 #
 
@@ -72,6 +74,7 @@ CLANG_DIR="${CLANG_DIR:=${CLANG_SYSROOT}/usr/clang${CLANG_VERSION}}"
 # directory with the files from the NDK
 #
 NDK_DIR="${NDK_DIR:=${CLANG_SYSROOT}/usr/ndk/r27b}"
+
 
 # sysrot directory from the NDK
 #
@@ -207,7 +210,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   if [ "${NDK_DIR}"x != ""x ] ; then
     if [ -d  "${NDK_DIR}" ] ; then
 
-      INCLUDE_DIRS="${INCLUDE_DIRS} ${NDK_DIR}/include"
+      INCLUDE_DIRS="${INCLUDE_DIRS} ${NDK_DIR}/include ${NDK_DIR}/sysroot/usr/include/aarch64-linux-android"
 
     fi
   fi
