@@ -1,0 +1,1 @@
+/data/local/tmp/sysroot/usr/clang19/bin/clang $CFLAGS $LDFLAGS $*
