@@ -91,6 +91,14 @@ or
 
 **Notes**
 
+The unzip binary in some Android distributions does not create correct symbolic links . Therefore, I recommend to use the unzip executable for Android from my homepage to unpack the ZIP file. 
+That unzip binary should run on any Android and is available here:
+
+[http://bnsmb.de/files/public/Android/binaries_for_arm64/unzip](http://bnsmb.de/files/public/Android/binaries_for_arm64/unzip)
+
+To check, if unzip has created symbolic link, check if ./sysroot/usr/lib/libcrypto.so is a symbolic link after after you have uncomporessed the ZIP file.
+
+
 Please note that due to the size limitations on Github, some files in the repository are compressed and are decompressed by the script **create_clang_env.sh**. The compressed files are:
 
 ```
