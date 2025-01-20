@@ -113,5 +113,5 @@ History
     added a wrapper for clang : /data/local/tmp/sysroot/usr/bin/cc
     added a wrapper for cpp : /data/local/tmp/sysroot/usr/bin/cpp
     the script init_clang19_env now adds the directory /data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/include/aarch64-linux-android to the include dirs in CFLAGS 
-
+    replaced the perl executables in the archive with perl executables compiled on the phone using clang19 and API version 31 
 
