@@ -6,14 +6,13 @@
 # For more details, see the source code below
 #
 #
-#
 
 SYSROOT_DIR="${0%/*}"
 BASE_DIR="$( cd "${SYSROOT_DIR}/.." ; pwd )"
 
 if [ "$1"x = "-h"x -o "$1"x = "--help"x ] ; then
-  echo "Usage: $0 [target_dir_for_the_tar_file] [tar_file_descriptions]"
-  echo "The default target directory is ${BASE_DIR}"
+  echo "Usage: $0 [target_dir_for_the_tar_file] [tar_file_description]"
+  echo "The default target directory is the directory with this script:  ${BASE_DIR}"
   exit 5
 fi
 
