@@ -105,12 +105,13 @@ History
   27.12.2024 v1.0.0 /bs
     initial release
 
-  16.01.2025 v1.1.0 /bs
+  20.01.2025 v1.1.0 /bs
     updated rsync to version 3.4.1
     updated git to version 2.48
     added gpp 1.4.23
     added pkgconf 2.30
     added a wrapper for clang : /data/local/tmp/sysroot/usr/bin/cc
+    added a wrapper for cpp : /data/local/tmp/sysroot/usr/bin/cpp
     the script init_clang19_env now adds the directory /data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/include/aarch64-linux-android to the include dirs in CFLAGS 
 
 
