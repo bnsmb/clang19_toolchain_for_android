@@ -109,7 +109,9 @@ History
 
   20.01.2025 v1.1.0 /bs
     updated rsync to version 3.4.1
+    added man pages for rsync
     updated git to version 2.48
+    added man pages for git
     added gpp 1.4.23
     added pkgconf 2.30
     added a wrapper for clang : /data/local/tmp/sysroot/usr/bin/cc
