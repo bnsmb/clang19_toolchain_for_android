@@ -462,7 +462,9 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   alias vi="${CLANG_SYSROOT}/usr/bin/vi"
 
   alias find="${CLANG_SYSROOT}/usr/bin/find"
- 
+
+  alias tar=/data/local/tmp/sysroot/usr/bin/tar
+
   alias bash="/data/local/tmp/sysroot/bin/bash"
 
   set +x 
