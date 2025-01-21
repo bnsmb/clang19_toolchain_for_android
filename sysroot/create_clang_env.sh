@@ -261,7 +261,8 @@ if [ ${ROOT_ACCESS_AVAILABLE} = ${__TRUE} ] ; then
 
   which tmux 2>/dev/null 1>/dev/null
   if [ $? -eq 0 ]  ; then
-    if [ -d "${TMPDIR}" ] ; then
+    mkdir -p "${TMP}"
+    if [ -d "${TMP}" ] ; then
       CUR_SELINUX_CONTEXT="$( stat -c "%C" "${TMP}" )"
       if [[ ${CUR_SELINUX_CONTEXT} != *:shell_test_data_file:*  ]] ; then
         LogMsg ""
