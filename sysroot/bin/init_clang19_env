@@ -505,6 +505,8 @@ fi
 
 CLANG_ENV_INIT_DONE=${__TRUE}
 
+echo "$PS1" | grep "\[clang19" 2>/dev/null >/dev/null || export PS1="[clang19 toolchain] $PS1" 
+
 if [ ${PRINT_EXAMPLES} = ${__TRUE} ] ; then
 
   cat <<EOT
