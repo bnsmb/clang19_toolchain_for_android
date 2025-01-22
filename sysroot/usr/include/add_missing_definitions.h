@@ -25,6 +25,9 @@
 //   nl_langinfo
 //
 
+#ifndef ADD_MISSING_DEFINITIONS_H
+#define ADD_MISSING_DEFINITIONS_H
+
 // --------------------------------------------------------------------
 //
 #ifndef __GNUC_PREREQ
@@ -197,6 +200,10 @@ const char* nl_langinfo(int item) {
 }
 
 #endif
+
+// --------------------------------------------------------------------
+
+#endif  /* ADD_MISSING_DEFINITIONS_H */
 
 // --------------------------------------------------------------------
 //
