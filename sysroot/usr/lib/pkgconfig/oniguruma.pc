@@ -1,0 +1,13 @@
+prefix=/data/local/tmp/sysroot/usr
+exec_prefix=/data/local/tmp/sysroot/usr
+libdir=/data/local/tmp/sysroot/usr/lib
+includedir=/data/local/tmp/sysroot/usr/include
+datarootdir=/data/local/tmp/sysroot/usr/share
+datadir=/data/local/tmp/sysroot/usr/share
+
+Name: oniguruma
+Description: Regular expression library
+Version: 6.9.8
+Requires:
+Libs: -L${libdir} -lonig
+Cflags: -I${includedir}
