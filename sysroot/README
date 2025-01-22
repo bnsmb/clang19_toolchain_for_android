@@ -83,6 +83,7 @@ tmux 3.5a
 
 tar 1.34
 
+jq 1.7.1
 
 various compression tools:
 
@@ -120,4 +121,6 @@ History
     replaced the perl executables in the archive with perl executables compiled on the phone using clang19 and API version 31 
     installed and configured CPAN
     added tar 1.34
+    added jq 1.7.1
+
 
