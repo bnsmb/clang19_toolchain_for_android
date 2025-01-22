@@ -32,6 +32,10 @@ The default pkg-config tool configured is pkg-config 0.19; to use pkgconf instea
 PKG_CONFIG=/data/local/tmp/sysroot/usr/clang19/bin/pkgconf
 
 
+The dummy library sysroot/usr/lib/libmylib.so can be used to create libraries that are needed in the Makefile of a tool but are not necessary in Android (like libthreads.so).
+Simply create a symbolic link for the missing library to libmylib.so
+
+
 Installed programs
 
 bash 5.2.0
@@ -122,5 +126,6 @@ History
     installed and configured CPAN
     added tar 1.34
     added jq 1.7.1
+    added the dummy library sysroot/usr/lib/libmylib.so
 
 
