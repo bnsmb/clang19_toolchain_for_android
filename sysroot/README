@@ -130,5 +130,7 @@ History
     added the dummy library sysroot/usr/lib/libmylib.so
     added an include file with dummys for functions missing in Android: sysroot/usr/include/add_missing_definitions.h
     updated nano to version 8.3
+    the executable xz now works without the library liblzma.so.5
+
 
 
