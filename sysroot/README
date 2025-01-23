@@ -78,7 +78,7 @@ gpg 1.4.3
 
 dig 9.11.37
 
-nano 8.2 and nano 6.4 
+nano 8.3 and nano 6.4 
 
 vim 9.1-672
 
@@ -113,7 +113,7 @@ History
   27.12.2024 v1.0.0 /bs
     initial release
 
-  20.01.2025 v1.1.0 /bs
+  25.01.2025 v1.1.0 /bs
     updated rsync to version 3.4.1
     added man pages for rsync
     updated git to version 2.48
@@ -129,5 +129,6 @@ History
     added jq 1.7.1
     added the dummy library sysroot/usr/lib/libmylib.so
     added an include file with dummys for functions missing in Android: sysroot/usr/include/add_missing_definitions.h
+    updated nano to version 8.3
 
 
