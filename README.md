@@ -1,5 +1,5 @@
 # clang19_toolchain_for_android
-This repository contains a toolchain for **clang19** on **Android** running on a phone or table with an **arm64** CPU
+This repository contains a toolchain for **clang19** on **Android** running on a phone or tablet with an **arm64** CPU
 
 The clang19 toolchain contains these programs:
 
@@ -23,6 +23,7 @@ The toolchain contains :
 - curl
 - sshd/ssh
 - git
+- gpg
 - man
 - bash
 - nano
