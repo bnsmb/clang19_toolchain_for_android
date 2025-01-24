@@ -1,5 +1,15 @@
 #!/system/bin/sh
 
+# wrapper script for the ldd from Android
+#
+# History
+#  18.12.2024 1.0.0 /bs
+#   initial version
+#
+#  24.01.2025 2.0.0 /bs
+#    script rewritten
+#
+#
 if [ $# -eq 0 -o  "$1"x = "-h"x  -o "$1"x = "--help"x ] ; then
   echo "Usage $0 [binary] [...]"
   exit 1
