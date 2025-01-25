@@ -25,7 +25,7 @@ To init the clang environment source the file
 
 /data/local/tmp/sysroot/bin/init_clang19_env
 
-Note: This must be done once in each adb session using this clang chaintool
+Note: This must be done once in each adb session using this clang toolchain
 
 The default pkg-config tool configured is pkg-config 0.19; to use pkgconf instead of pkg-config set the environment variable PKG_CONFIG 
 
@@ -118,7 +118,7 @@ History
     added man pages for rsync
     updated git to version 2.48
     added man pages for git
-    added gpp 1.4.23
+    added gpg 1.4.23
     added pkgconf 2.30
     added a wrapper for clang : /data/local/tmp/sysroot/usr/bin/cc
     added a wrapper for cpp : /data/local/tmp/sysroot/usr/bin/cpp
