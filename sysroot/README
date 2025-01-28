@@ -134,4 +134,6 @@ History
     added the SELinux tools (libsepol-3.7)
 
 
+  28.01.2025 v1.2.0 /bs
+    added nmon 16q
 
