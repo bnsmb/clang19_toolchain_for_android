@@ -452,23 +452,28 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   #
   echo "Define some aliase ..."
   
-  set -x
-  
+  NEW_ALIAS=""
+
   alias sysroot="cd ${CLANG_SYSROOT}; pwd"
   
   alias setlibpath="export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}"
  
   alias addlib='LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/local/tmp/develop/sysroot/usr/lib '
 
-  alias vi="${CLANG_SYSROOT}/usr/bin/vi"
+  NEW_ALIAS="sysroot setlibpath addlib"
 
-  alias find="${CLANG_SYSROOT}/usr/bin/find"
+  for i in vi find tar bash sed awk dd ; do
+    if [ -x "${CLANG_SYSROOT}/usr/bin/$i" ] ; then
+       alias $i="${CLANG_SYSROOT}/usr/bin/$i"
+      NEW_ALIAS="${NEW_ALIAS} $i"
+    fi
+  done
 
-  alias tar="/data/local/tmp/sysroot/usr/bin/tar"
 
-  alias bash="/data/local/tmp/sysroot/bin/bash"
+  for i in ${NEW_ALIAS} ; do
+    alias $i
+  done
 
-  set +x 
   
   echo ""
   
