@@ -1,0 +1,23 @@
+#!/bin/sh
+# wrapper script for the script myconfigure in the current directory
+#
+THIS_MYCONFIGURE="$( readlink -f $0 )"
+
+REAL_MYCONFIGURE="${PWD}/myconfigure"
+
+if [ ! -r "${REAL_MYCONFIGURE}" ] ; then
+  echo "${REAL_MYCONFIGURE} not found"
+
+elif [ ! -x "${REAL_MYCONFIGURE}" ] ; then
+
+  echo "${REAL_MYCONFIGURE} not executable"
+else
+  if [ ${THIS_MYCONFIGURE} = ${REAL_MYCONFIGURE} ] ; then
+    echo "No endless loops allowed"
+  else
+    ${PREFIX} ${REAL_MYCONFIGURE} $*
+    exit $?
+  fi
+fi
+
+  

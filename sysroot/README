@@ -138,4 +138,5 @@ History
     added nmon 16q
     added scoat 1.8.0.2
     the script now uses the command "patch -p1 <patch>" to apply the patches
+    added the wrapper script /data/local/tmp/sysroot/bin/myconfigure (this script executes the script myconfigure in the current directory)
 
