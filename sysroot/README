@@ -92,6 +92,7 @@ jq 1.7.1
 
 gawk 5.1
 gsed 4.8
+diff 3.8
 
 
 various compression tools:
@@ -143,6 +144,7 @@ History
     added scoat 1.8.0.2
     added gawk 5.1.0
     added gsed 4.8
+    added diff 3.8
     the script now uses the command "patch -p1 <patch>" to apply the patches
     added the wrapper script /data/local/tmp/sysroot/bin/myconfigure (this script executes the script myconfigure in the current directory)
 
