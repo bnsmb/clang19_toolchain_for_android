@@ -7,84 +7,92 @@
 # History
 #   24.12.2024 v1.0.0 /bs
 #     initial version
+#   01.02.2025 v1.1.0 /bs
+#     the script now uses "patch -p1 <patchfile" to apply the patches
+#     in the previous version the patch script created by this script only applied the 1st patch from patch files with more then one patch
 #
 
+__TRUE=0
+__FALSE=1
+
+
+# the target patch script
+#
 PATCH_SCRIPT="${PWD}/apply_patches.sh"
 
+# the directory with the patches
+#
+PATCH_DIR="$( pwd )"
+
+# the header of the patch script
+#
 PATCH_SCRIPT_CONTENTS='#!/bin/sh
 
 function mycp {
 
-  if [ ! -r $2 ] ; then
-    cp $1 $2
+  if [ -r $1 ] ; then
+    if [ ! -r $2 ] ; then
+      cp $1 $2
+    else
+      echo "The target file $2 already exists"
+    fi
   else
-    echo "$2 already exist"
+    echo "The source file $1 does not exist"
   fi
 }
+
+PATCH="$( which gnupatch || which patch )"
+
+echo "Using the patch binary $PATCH"
+
 '
 
+PATCHES_FOUND=${__FALSE}
 for CUR_PATCH in *.patch ;do
+  [[ ${CUR_PATCH} == '*.patch' ]] && break
+
+  PATCHES_FOUND=${__TRUE}
   echo
   echo "Processing the patch \"${CUR_PATCH}\" ..."
 
-
-  TARGET_FILE="$( grep "^+++" "${CUR_PATCH}" | head -1 | awk '{ print $2 }' )"
-  if [ "${TARGET_FILE}"x = ""x ] ; then
-    echo "ERROR: No file to patch found in the file \"${CUR_PATCH}\" "
-    continue
-  fi
-
-  SOURCE_FILE="${TARGET_FILE}"
-
-  while [ "${SOURCE_FILE}"x != ""x ] ; do
-    [ -r "../${SOURCE_FILE}" ] && break
-    if [[ ${SOURCE_FILE} != */* ]] ; then
-      SOURCE_FILE=""
-      break
-    fi 
-    SOURCE_FILE="${SOURCE_FILE#*/}"
-  done
-
-  if [ "${SOURCE_FILE}"x = ""x ] ; then
-
-    SOURCE_FILE="$( grep "^---" "${CUR_PATCH}" | head -1 | awk '{ print $2 }' )"
-    while [ "${SOURCE_FILE}"x != ""x ] ; do
-      [ -r "../${SOURCE_FILE}" ] && break
-      if [[ ${SOURCE_FILE} != */* ]] ; then
-        SOURCE_FILE=""
-        break
-      fi
-      SOURCE_FILE="${SOURCE_FILE#*/}"
-    done
-  fi
-
-  if [ "${SOURCE_FILE}"x = ""x ] ; then
-    echo "WARNING: The file \"${TARGET_FILE}\" does not exist"
-    LINE_START="#"
-  else
-    echo "The patch is for the file \"${SOURCE_FILE}\" "
-    LINE_START=""
-  fi    
+  TARGET_FILES="$( egrep -- "^--- " "${CUR_PATCH}"  | awk '{ print $2 }' | cut -f2- -d/  )"
 
   PATCH_SCRIPT_CONTENTS="${PATCH_SCRIPT_CONTENTS}
-echo 
 echo \"*** Patch: ${CUR_PATCH}\"
-${LINE_START} \${PREFIX} mycp \"../${SOURCE_FILE}\" \"../${SOURCE_FILE}.org\"
-${LINE_START} \${PREFIX} patch \"../${SOURCE_FILE}\" \"${CUR_PATCH}\"
 "
 
+  for i in ${TARGET_FILES} ; do
+    PATCH_SCRIPT_CONTENTS="${PATCH_SCRIPT_CONTENTS}
+mycp ${i} ${i}.org
+"
+  done
+
+  PATCH_SCRIPT_CONTENTS="${PATCH_SCRIPT_CONTENTS}
+\${PREFIX} \${PATCH} -p1 <${PATCH_DIR}/${CUR_PATCH}
+"
 done
 echo 
 
-if [ -r "${PATCH_SCRIPT}" ] ; then
-  PATCH_SCRIPT_BACKUP="${PATCH_SCRIPT}.$$.bkp"
-  echo "Creating a backup of the patch script in \"${PATCH_SCRIPT_BACKUP}\" ..."
-  mv "${PATCH_SCRIPT}" "${PATCH_SCRIPT_BACKUP}"
+if [ ${PATCHES_FOUND} = ${__TRUE} ] ; then
+  if [ -r "${PATCH_SCRIPT}" ] ; then
+    PATCH_SCRIPT_BACKUP="${PATCH_SCRIPT}.$$.bkp"
+    echo "Creating a backup of the patch script in \"${PATCH_SCRIPT_BACKUP}\" ..."
+    mv "${PATCH_SCRIPT}" "${PATCH_SCRIPT_BACKUP}"
+  fi
+
+  echo "Creating the patch script in \"${PATCH_SCRIPT}\" ..."
+
+  echo "${PATCH_SCRIPT_CONTENTS}" >"${PATCH_SCRIPT}" && chmod 755 "${PATCH_SCRIPT}"
+  echo
+  ls -l "${PATCH_SCRIPT}"
+  echo  
+  echo "Doing a syntax check for the script \"${PATCH_SCRIPT}\" ..."
+  sh -x -n "${PATCH_SCRIPT}"
+  if [ $? -eq 0 ] ; then
+    echo "OK, no syntax errors found"
+  else
+    echo "ERROR: Something went wrong creating the patch script"
+  fi
+else
+  echo "ERROR: No patches found in the current directory"
 fi
-
-echo "Creating the patch script in \"${PATCH_SCRIPT}\" ..."
-
-echo "${PATCH_SCRIPT_CONTENTS}" >"${PATCH_SCRIPT}" && chmod 755 "${PATCH_SCRIPT}"
-echo
-ls -l "${PATCH_SCRIPT}"
-echo  
