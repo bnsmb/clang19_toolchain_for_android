@@ -12,7 +12,10 @@
 #    added the directory /data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/include/aarch64-linux-android to the include dirs in CFLAGS
 #  26.01.2025 v1.1.1 /bs
 #    the script does not change the SELinux policies anymore if running as user root
+#  02.02.2025 v1.2.0 /bs
+#    added the directory /data/local/tmp/sysroot/usr/lib to list of directories with libraries in the environment variable LDFLAGS
 #
+
 
 __TRUE=0
 __FALSE=1
@@ -198,7 +201,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
 # ---------------------------------------------------------------------
 
-  LIB_DIRS=""
+  LIB_DIRS="${CLANG_SYSROOT}/usr/lib"
 
   OBJ_DIRS=""
   
