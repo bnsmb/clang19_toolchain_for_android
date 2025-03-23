@@ -74,7 +74,7 @@ tcl 9.0
 
 sshd/ssh 9.9p2
 
-git 2.48
+git 2.49
 
 gpg 1.4.3
 
@@ -142,7 +142,7 @@ History
     added the SELinux tools (libsepol-3.7)
 
 
-  22.02.2025 v1.2.0 /bs
+  23.03.2025 v1.2.0 /bs
     added nmon 16q
     added scoat 1.8.0.2
     added gawk 5.1.0
@@ -153,6 +153,8 @@ History
     added the wrapper script /data/local/tmp/sysroot/bin/myconfigure (this script executes the script myconfigure in the current directory)
     added autopoint from gettext 0.23
     added patchelf 0.18
-    upddate the OpenSSH binaries to 9.9p2
+    updated the OpenSSH binaries to version 9.9p2
+    updated git to version 2.49
+
 
 

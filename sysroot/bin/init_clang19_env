@@ -1,6 +1,6 @@
 #!/system/bin/sh
 #
-# Script to init the environment vor clang in /data/local/tmp/sysroot
+# Script to init the environment for clang in /data/local/tmp/sysroot
 #
 # Usage: see below or execute the script with the parameter "--help" 
 #
