@@ -10,6 +10,8 @@
 #   28.12.2024 1.1.0 /bs
 #     added code to unpack compressed files in the tar archive
 #     some files are now compressed to get around the size limitation for files in github.com
+#   30.03.2025 1.2.0 /bs
+#     added support for multiple NDKs
 #
 
 CUR_ID="$( id -un )"
@@ -34,7 +36,7 @@ export TMPDIR="${TMPDIR:=/data/local/tmp}"
 THISRC=${__TRUE}
 CONT=${__TRUE}
 
-NDK="r27b"
+NDK="${NDK:=r27b}"
 
 SYSROOT_DIR="/data/local/tmp/sysroot"
 
@@ -169,6 +171,8 @@ LogMsg ""
 
 # ----------------------------------------------------------------------
 
+LogMsg "Processing the certificate files ..."
+
 CERTIFICATE_BUNDLE_FILE="${SYSROOT_DIR}/etc/security/ca-certificates.crt"
 
 ls -l  ${SYSROOT_DIR}/etc/security/cacerts/* 2>/dev/null 1>/dev/null ; 
@@ -193,12 +197,16 @@ if [ ! -r ${CERTIFICATE_BUNDLE_FILE} ] ; then
     done
     printf "\n"
     LogMsg "... done:"
+    LogMsg ""
     ls -l "${CERTIFICATE_BUNDLE_FILE}"
+    LogMsg ""
 
   fi
 else
   LogMsg "The certificate bundle file \"${CERTIFICATE_BUNDLE_FILE}\" already exists:"
+  LogMsg ""
   ls -l "${CERTIFICATE_BUNDLE_FILE}"
+  LogMsg ""
 fi
 
 
@@ -227,21 +235,53 @@ fi
 # ----------------------------------------------------------------------
 # unpack the tar file with the files from the NDK
 #
+LogMsg
+LogMsg "Processing the tar files with the NDKs in the directroy \"${SYSROOT_DIR}/usr/ndk/\" ..."
 
-if [ !  -d "${SYSROOT_DIR}/usr/ndk/${NDK}" ] ; then
-  NDK_TAR_FILE="${SYSROOT_DIR}/usr/ndk/${NDK}.tar.gz"
-
-  if [ -r "${NDK_TAR_FILE}" ] ; then
-    LogMsg "Unpacking the tar file \"${NDK_TAR_FILE}\" ..."
-    cd "${SYSROOT_DIR}/usr/ndk" &&  ( ${SYSROOT_DIR}/usr/bin/gzip -cd "${NDK_TAR_FILE}" |  tar -xf- )
+if [ -d "${SYSROOT_DIR}/usr/ndk/" ] ; then
+  cd "${SYSROOT_DIR}/usr/ndk" 
+  if [ $? -ne 0 ] ; then
+    LogError "Can not change the working directory to \"${SYSROOT_DIR}/usr/ndk\" "
+  else
+    LogMsg "The tar files with NDKs found are:"
+    LogMsg ""
+    LogMsg "$( ls -l *tar.gz )"
+    for NDK_TAR_FILE in *.tar.gz ; do
+      LogMsg ""
+      LogMsg "Processing the tar file \"${NDK_TAR_FILE}\" ..."
+      
+      CUR_NDK="$( ${SYSROOT_DIR}/usr/bin/gzip -cd "${NDK_TAR_FILE}" | tar -tf - 2>/dev/null | head -1 | cut -f1 -d "/"  )"
+      LogMsg "The tar file contains the NDK \"${CUR_NDK}\" "
+      if [ -d "${CUR_NDK}" ] ; then
+        LogMsg "The directory with the NDK \"${CUR_NDK}\" already exists"
+      else
+        LogMsg "Unpacking the tar file \"${NDK_TAR_FILE}\" ..."
+        ${SYSROOT_DIR}/usr/bin/gzip -cd "${NDK_TAR_FILE}" |  tar -xf - 
+        if [ $? -ne 0 ] ; then
+          LogMsg "WARNING: Error unpacking the file \"${NDK_TAR_FILE}\" "
+        else
+          LogMsg " ...tar file \"${NDK_TAR_FILE}\" succesfully unpacked"
+        fi
+      fi
+    done
   fi
 else
-  LogMsg "The directory with the NDK \"${SYSROOT_DIR}/usr/ndk/${NDK}\" already exists"
+  LogMsg "The directory with the NDKs \"${SYSROOT_DIR}/usr/ndk\" does not exist"
 fi
+LogMsg ""
+if [ ! -d "${SYSROOT_DIR}/usr/ndk/${NDK}" ] ; then
+  LogWarning "The directory with the default NDK \"${SYSROOT_DIR}/usr/ndk/${NDK}\" does not exist"
+else
+  LogMsg "OK, the directory with the default NDK \"${SYSROOT_DIR}/usr/ndk/${NDK}\" exists"
+fi
+
 
 # ----------------------------------------------------------------------
 # uncompress compressed executables
 #
+LogMsg ""
+LogMsg "Uncompressing the compressed files in \"${SYSROOT_DIR}/usr/bin\" ..."
+
 ls  ${SYSROOT_DIR}/usr/bin/*.gz 2>/dev/null 1>/dev/null
 if [ $? -eq 0  ] ; then
   LogMsg "Uncompressing compressed executables in \"${SYSROOT_DIR}\" ..."
@@ -251,7 +291,7 @@ if [ $? -eq 0  ] ; then
     ${SYSROOT_DIR}/usr/bin/gzip -d "${CUR_FILE}" 
   done
 else
-  LogMsg "No compressed executables found  in \"${SYSROOT_DIR}\" "
+  LogMsg "No compressed executables found  in \"${SYSROOT_DIR}/usr/bin\" "
 fi
 
 # ----------------------------------------------------------------------

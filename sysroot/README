@@ -2,7 +2,15 @@
 This tar files contains clang and other tools to compile libraries and
 binaries in Android
 
-Also included is the Android NDK r27b
+Also included is the Android NDK version r27b and version r27c.
+
+The default NDK is still r27b; to use the NDK r27c either change the variable NDK in the file 
+
+/data/local/tmp/sysroot/bin/init_clang19_env 
+
+or set the variable NDK to r27c before sourcing the file /data/local/tmp/sysroot/bin/init_clang19_env :
+
+NDK=r27c source /data/local/tmp/sysroot/bin/init_clang19_env 
 
 
 Usage:
@@ -156,5 +164,10 @@ History
     updated the OpenSSH binaries to version 9.9p2
     updated git to version 2.49
 
+  30.03.2025 v1.3.0 beta /bs
+    the script /data/local/tmp/create_clang_env.sh now supports multiple NDKs
+    removed the file LLVMPolly.so from the archive with NDK r27b files -- this is a library for x86
+    added the files from the NDK r27c
+    the flex binary in the toolchain failed sometimes with a segmentation fault -- fixed
 
 

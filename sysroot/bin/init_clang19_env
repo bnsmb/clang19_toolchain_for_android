@@ -75,9 +75,14 @@ CLANG_SYSROOT="/data/local/tmp/sysroot"
 # 
 CLANG_DIR="${CLANG_DIR:=${CLANG_SYSROOT}/usr/clang${CLANG_VERSION}}"
 
+# NDK to use
+
+NDK="${NDK:=r27b}"
+
 # directory with the files from the NDK
 #
-NDK_DIR="${NDK_DIR:=${CLANG_SYSROOT}/usr/ndk/r27b}"
+NDK_DIR="${NDK_DIR:=${CLANG_SYSROOT}/usr/ndk/${NDK}}"
+
 
 
 # sysrot directory from the NDK
