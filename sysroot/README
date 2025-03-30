@@ -169,5 +169,6 @@ History
     removed the file LLVMPolly.so from the archive with NDK r27b files -- this is a library for x86
     added the files from the NDK r27c
     the flex binary in the toolchain failed sometimes with a segmentation fault -- fixed
+    added the header files for the curses libraries
 
 
