@@ -93,6 +93,7 @@ nano 8.3 and nano 6.4
 
 vim 9.1-672
 ed 1.21
+diff 3.11
 
 man 2.13
 
@@ -175,5 +176,6 @@ History
     minor changes to the scripts create_clang_env.sh and bin/init_clang19_env (see the history section in these files)
     added textinfo 7.2
     added ed 1.21
+    added diff 3.11
 
 
