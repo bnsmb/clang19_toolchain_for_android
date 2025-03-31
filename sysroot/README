@@ -65,6 +65,7 @@ GNU help2man 1.49.3
 pkg-config 0.29
 pkgconf 2.30
 autopoint 0.23
+texinfo 7.2
 
 bison 3.8
 flex 2.6.4
@@ -170,5 +171,7 @@ History
     added the files from the NDK r27c
     the flex binary in the toolchain failed sometimes with a segmentation fault -- fixed
     added the header files for the curses libraries
+    minor changes to the scripts create_clang_env.sh and bin/init_clang19_env (see the history section in these files)
+    added textinfo 7.2
 
 

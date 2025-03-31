@@ -1,0 +1,347 @@
+=head1 NAME
+
+Texinfo::Commands - Classification of commands
+
+=head1 SYNOPSIS
+
+  use Texinfo::Commands;
+  if ($Texinfo::Commands::accent_commands{$a_command}) {
+    print STDERR "$a_command is an accent command\n";
+  }
+
+=head1 NOTES
+
+The Texinfo Perl module main purpose is to be used in C<texi2any> to convert
+Texinfo to other formats.  There is no promise of API stability.
+
+=head1 DESCRIPTION
+
+Texinfo::Commands holds a few hashes with information on @-commands
+and hashes classifying Texinfo @-commands.
+
+=head1 @-COMMAND INFORMATION
+
+Hashes are defined as C<our> variables, and are therefore available
+outside of the module.
+
+=over
+
+=item %index_names
+X<C<%index_names>>
+
+Hash describing the default Texinfo indices.  The format of this hash is
+described in L<< C<Texinfo::Document::indices_information>|Texinfo::Document/$indices_information = $document->indices_information() >>.
+
+=back
+
+=head1 @-COMMAND CLASSES
+
+Hashes are defined as C<our> variables, and are therefore available
+outside of the module.
+
+The key of the hashes are @-command names without the @.  The
+following hashes are available:
+
+=over
+
+=item %accent_commands
+X<C<%accent_commands>>
+
+Accent @-commands taking an argument, like C<@'> or C<@ringaccent>,
+including C<@dotless> and C<@tieaccent>.
+
+=item %block_commands
+X<C<%block_commands>>
+
+Commands delimiting a block with a closing C<@end>.  The values are:
+
+=over
+
+=item I<conditional>
+
+C<@if*> commands;
+
+=item I<def>
+
+Definition commands like C<@deffn>;
+
+=item I<float>
+
+C<@float>;
+
+=item I<format_raw>
+
+raw output format commands such as C<@html> or C<@info>;
+
+=item I<item_container>
+
+commands  with C<@item> containing
+any content, C<@itemize> and C<@enumerate>;
+
+=item I<item_line>
+
+commands like C<@table> in which the C<@item> argument is on its line;
+
+=item I<menu>
+
+menu @-commands, C<@menu>, C<@detailmenu>
+and C<@direntry>;
+
+=item I<math>
+
+Math block commands, like C<@displaymath>.
+
+=item I<multitable>
+
+C<@multitable>;
+
+=item I<other>
+
+The remaining block commands.
+
+=item I<preformatted>
+
+Commands whose content should not be filled, like C<@example> or C<@display>.
+
+=item I<quotation>
+
+Commands like C<@quotation>.
+
+=item I<raw>
+
+@-commands that have no expansion
+of @-commands in their bodies (C<@macro>, C<@verbatim> and C<@ignore>);
+
+=item I<region>
+
+Commands delimiting a region of the document out of the main processing:
+C<@titlepage>, C<@copying>, C<@documentdescription>.
+
+=back
+
+=item %blockitem_commands
+X<C<%blockitem_commands>>
+
+Block commands containing C<@item> with possible content before an C<@item>,
+like C<@itemize>, C<@table> or C<@multitable>.
+
+=item %brace_code_commands
+X<C<%brace_code_commands>>
+
+Brace commands that have their argument in code style, like
+C<@code>.
+
+=item %brace_commands
+X<C<%brace_commands>>
+
+The commands that take braces. Value is I<noarg> for brace commands without
+argument such as C<@AA>, C<@TeX>, or C<@equiv>.  Other values include
+I<accent>, I<arguments>, I<context> and other values.
+
+=item %close_paragraph_commands
+X<C<%close_paragraph_commands>>
+
+Commands that stop a paragraph.  Root commands are not specified here,
+but they also close paragraphs.
+
+=item %commands_args_number
+X<C<%commands_args_number>>
+
+Set to the number of arguments separated by commas that may appear in braces or
+on the @-command line.  That means 0 or unset for most block commands,
+including C<@example> which has an unlimited (variadic) number of arguments, 1
+for C<@quotation>, 2 for C<@float>, 1 for most brace commands, 2 for C<@email>
+and C<@abbr>, 5 for C<@image> and C<@ref>.
+
+Values are not necessarily set for all the commands, as commands are
+also classified by type of command, some type of commands implying a
+number of arguments, and the number of arguments may not be set if it
+corresponds to the default (0 for block commands, 1 for other commands
+that take arguments).
+
+=item %contain_basic_inline_commands
+X<C<%contain_basic_inline_commands>>
+
+Commands containing simple text only, much like paragraph text, but
+without C<@ref>, C<@footnote>, C<@titlefont>, C<@anchor> nor C<@verb>.
+
+=item %contain_plain_text_commands
+X<C<%contain_plain_text>>
+
+Commands accepting only plain text with accent, symbol and glyph
+commands.
+
+=item %def_commands
+X<C<%def_commands>>
+
+Definition commands.
+
+=item %default_index_commands
+X<C<%default_index_commands>>
+
+Index entry commands corresponding to default indices. For example
+C<@cindex>.
+
+=item %explained_commands
+X<C<%explained_commands>>
+
+@-commands whose second argument explain first argument and further
+@-command call without first argument, as C<@abbr> and C<@acronym>.
+
+=item %formattable_line_commands
+X<C<%formattable_line_commands>>
+
+Line commands which may be formatted as text, but that require constructing
+some replacement text, for example C<@printindex>, C<@need> or
+C<@verbatiminclude>.  C<@contents> and C<@shortcontents> are not in this hash,
+since they are in a corresponding situation only when the tables of contents
+are formatted where the commands are.
+
+=item %formatted_nobrace_commands
+X<C<%formatted_nobrace_commands>>
+
+Commands not taking brace formatted as text or with text in the main
+document body, corresponding to symbol commands such as C<@@> or C<@:> and
+commands such as C<@item>.  @-commands appearing only in headers are not
+in this hash, but in in C<%in_heading_spec_commands>.
+
+=item %formatted_line_commands
+X<C<%formatted_line_commands>>
+
+Line commands which arguments may be formatted as text, such as
+C<@center>, C<@author>, C<@item>, C<@node>, C<@chapter> and other.
+Index commands may be formatted as text too, but they may be added
+with C<@def*index>, therefore they are not in that hash.  Also,
+in general, they are not formatted as text where they appear, only
+when an index is printed.
+
+=item %heading_spec_commands
+X<C<%heading_spec_commands>>
+
+@-commands used to specify custom headings, like C<@everyheading>.
+
+=item %in_heading_spec_commands
+X<C<%in_heading_spec_commands>>
+
+Special @-commands appearing in custom headings, such as C<@thischapter>,
+C<@thistitle> or C<@|>.
+
+=item %in_index_commands
+
+@-commands only valid in index entries, such as C<@sortas> or C<@subentry>.
+
+=item %inline_conditional_commands
+
+=item %inline_format_commands
+X<C<%inline_conditional_commands>>
+X<C<%inline_format_commands>>
+
+Inline conditional commands, like C<@inlineifclear>, and inline format
+commands like C<@inlineraw> and C<@inlinefmt>.
+
+=item %letter_no_arg_commands
+X<C<%letter_no_arg_commands>>
+
+@-commands with braces but no argument corresponding to letters,
+like C<@AA{}> or C<@ss{}> or C<@o{}>.
+
+=item %math_commands
+X<C<%math_commands>>
+
+@-commands which contains math, like C<@math> or C<@displaymath>.
+
+=item %line_commands
+X<C<%line_commands>>
+
+Commands that do not take braces, take arguments on the command line and are
+not block commands either, like C<@node>, C<@chapter>, C<@cindex>, C<@deffnx>,
+C<@end>, C<@footnotestyle>, C<@set>, C<@settitle>, C<@itemx>,
+C<@definfoenclose>, C<@comment> and many others.
+
+Note that C<@item> is in C<%line_commands> for its role in C<@table> and
+similar @-commands.
+
+=item %no_paragraph_commands
+X<C<%no_paragraph_commands>>
+
+Commands that do not start a paragraph.
+
+=item %nobrace_commands
+X<C<%nobrace_commands>>
+
+Command that do not take braces, do not have argument on their line and
+are not block commands either.  The value is I<symbol> for single character
+non-alphabetical @-commands such as C<@@>, C<@ > or C<@:>.  Other commands in that hash
+include C<@indent>, C<@tab> or C<@thissection>.
+
+Note that C<@item> is in C<%nobrace_commands> for its role in C<@multitable>,
+C<@itemize> and C<@enumerate>.
+
+=item %non_formatted_block_commands
+X<C<%non_formatted_block_commands>>
+
+Block commands not formatted as text, such as C<@ignore> or C<@macro>.
+
+=item %non_formatted_brace_commands
+
+Brace commands that are not immediately replaced with text, such as
+C<anchor>, C<caption>, C<errormsg> and others.
+
+=item %preamble_commands
+X<C<%preamble_commands>>
+
+@-commands that do not stop the preamble.
+
+=item %preformatted_commands
+
+=item %preformatted_code_commands
+X<C<%preformatted_commands>>
+X<C<%preformatted_code_commands>>
+
+I<%preformatted_commands> is for commands whose content should not
+be filled, like C<@example> or C<@display>.  If the command is meant
+for code, it is also in I<%preformatted_code_commands>, like C<@example>.
+
+=item %ref_commands
+X<C<%ref_commands>>
+
+Cross reference @-command referencing nodes, like C<@xref> or C<@link>.
+
+=item %root_commands
+X<C<%root_commands>>
+
+Commands that are at the root of a Texinfo document, namely
+C<@node> and sectioning commands, except heading commands
+like C<@heading>.
+
+=item %sectioning_heading_commands
+X<C<%sectioning_heading_commands>>
+
+All the sectioning and heading commands.
+
+=item %variadic_commands
+X<C<%variadic_commands>>
+
+Commands with unlimited arguments, like C<@example>.
+
+=back
+
+=head1 SEE ALSO
+
+L<Texinfo::Parser>.
+
+=head1 AUTHOR
+
+Patrice Dumas, E<lt>pertusus@free.frE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2010- Free Software Foundation, Inc.  See the source file for
+all copyright years.
+
+This library is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or (at
+your option) any later version.
+
+=cut
