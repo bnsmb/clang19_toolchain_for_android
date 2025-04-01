@@ -18,6 +18,9 @@
 #    added the directory /data/local/tmp/sysroot/usr/include to the list of directories with include files in the environment variable CFLAGS
 #    added the alias nano for /data/local/tmp/sysroot/usr/bin/nano
 #
+#  01.04.2025 v1.2.2 /bs
+#    added the alias curl for /data/local/tmp/sysroot/usr/bin/nano
+#
 
 
 __TRUE=0
@@ -472,7 +475,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   NEW_ALIAS="sysroot setlibpath addlib"
 
-  for i in vi find tar bash sed awk dd nano ; do
+  for i in vi find tar bash sed awk dd nano curl ; do
     if [ -x "${CLANG_SYSROOT}/usr/bin/$i" ] ; then
        alias $i="${CLANG_SYSROOT}/usr/bin/$i"
       NEW_ALIAS="${NEW_ALIAS} $i"
