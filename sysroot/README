@@ -180,5 +180,8 @@ History
     added diff 3.11
     added pip 25.0.1
     added meson 1.7
+    recompiled python with clang19; all default python modules except posixshmem, _tkinter, and _dbm are part of the python installation
+
+
 
 

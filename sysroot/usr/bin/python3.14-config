@@ -36,12 +36,12 @@ prefix_real=$(installed_prefix "$0")
 # locations. Keep prefix & exec_prefix using their original values in case
 # they are referenced in other configure variables, to prevent double
 # substitution, issue #22140.
-prefix="/data/local/tmp/sysroot//usr"
+prefix="/data/local/tmp/sysroot/usr"
 exec_prefix="${prefix}"
 exec_prefix_real=${prefix_real}
 includedir=$(echo "${prefix}/include" | sed "s#$prefix#$prefix_real#")
 libdir=$(echo "${exec_prefix}/lib" | sed "s#$prefix#$prefix_real#")
-CFLAGS=$(echo " -I/data/local/tmp/sysroot/usr/clang19/include -I/data/local/tmp/sysroot/usr/ndk/r27b/include -I/data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/include -I/data/local/tmp/develop/sysroot/usr/include --sysroot=/data/local/tmp/sysroot/usr/ndk/r27b/sysroot -D__ANDROID_API__=21 -O3  -Wno-implicit-function-declaration -Wno-int-conversion " | sed "s#$prefix#$prefix_real#")
+CFLAGS=$(echo " -I/data/local/tmp/sysroot/usr/include -I/data/local/tmp/sysroot/usr/clang19/include -I/data/local/tmp/sysroot/usr/ndk/r27b/include -I/data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/include/aarch64-linux-android -I/data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/include -I/data/local/tmp/develop/sysroot/usr/include --sysroot=/data/local/tmp/sysroot/usr/ndk/r27b/sysroot -D__ANDROID_API__=21 -O3  -Wno-implicit-function-declaration -Wno-int-conversion " | sed "s#$prefix#$prefix_real#")
 VERSION="3.14"
 LIBM="-lm"
 LIBC=""

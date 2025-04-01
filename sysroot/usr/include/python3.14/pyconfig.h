@@ -198,7 +198,7 @@
 #define HAVE_CURSES_FILTER 1
 
 /* Define to 1 if you have the <curses.h> header file. */
-#define HAVE_CURSES_H 1
+/* #undef HAVE_CURSES_H */
 
 /* Define if you have the 'has_key' function. */
 #define HAVE_CURSES_HAS_KEY 1
@@ -464,7 +464,7 @@
 #define HAVE_GDBM_H 1
 
 /* Define to 1 if you have the <gdbm/ndbm.h> header file. */
-/* #undef HAVE_GDBM_NDBM_H */
+#define HAVE_GDBM_NDBM_H 1
 
 /* Define if you have the getaddrinfo function. */
 #define HAVE_GETADDRINFO 1
@@ -527,7 +527,7 @@
 #define HAVE_GETITIMER 1
 
 /* Define to 1 if you have the `getloadavg' function. */
-/* #undef HAVE_GETLOADAVG */
+#define HAVE_GETLOADAVG 1
 
 /* Define to 1 if you have the `getlogin' function. */
 #define HAVE_GETLOGIN 1
@@ -852,7 +852,7 @@
 #define HAVE_NCURSES_CURSES_H 1
 
 /* Define to 1 if you have the <ncurses.h> header file. */
-/* #undef HAVE_NCURSES_H */
+#define HAVE_NCURSES_H 1
 
 /* Define to 1 if you have the <ncurses/ncurses.h> header file. */
 #define HAVE_NCURSES_NCURSES_H 1
@@ -910,7 +910,7 @@
 /* #undef HAVE_PANELW */
 
 /* Define to 1 if you have the <panel.h> header file. */
-#define HAVE_PANEL_H 1
+/* #undef HAVE_PANEL_H */
 
 /* Define to 1 if you have the `pathconf' function. */
 #define HAVE_PATHCONF 1
@@ -1089,7 +1089,7 @@
 #define HAVE_SCHED_SETSCHEDULER 1
 
 /* Define to 1 if you have the `sem_clockwait' function. */
-/* #undef HAVE_SEM_CLOCKWAIT */
+#define HAVE_SEM_CLOCKWAIT 1
 
 /* Define to 1 if you have the `sem_getvalue' function. */
 #define HAVE_SEM_GETVALUE 1
