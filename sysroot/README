@@ -53,7 +53,7 @@ clang 19.0.0
 cmake 3.30.4
 ninja 1.13.0.git
 make 4.4.1
-
+meson 1.7
 
 autoconf 2.72
 automake 1.17
@@ -179,4 +179,6 @@ History
     added ed 1.21
     added diff 3.11
     added pip 25.0.1
+    added meson 1.7
+
 
