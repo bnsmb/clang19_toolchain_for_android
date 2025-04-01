@@ -14,27 +14,12 @@ File: dir,	Node: Top	This is the top of the INFO tree
 
 * Menu:
 
-Texinfo documentation system
-* Texinfo: (texinfo).           The GNU documentation format.
-* info stand-alone: (info-stnd).
-                                Read Info documents without Emacs.
-* install-info: (texinfo)Invoking install-info.
-                                Update info/dir entries.
-* makeinfo: (texinfo)Invoking texi2any.
-                                Translate Texinfo source.
-* pdftexi2dvi: (texinfo)PDF Output.
-                                PDF output for Texinfo.
-* pod2texi: (pod2texi)Invoking pod2texi.
-                                Translate Perl Pod to Texinfo.
-* texi2any: (texinfo)Invoking texi2any.
-                                Translate Texinfo source.
-* texi2any customization: (texi2any_api).
-                                Customizing texi2any output
-* texi2dvi: (texinfo)Format with texi2dvi.
-                                Print Texinfo documents.
-* texi2pdf: (texinfo)PDF Output.
-                                PDF output for Texinfo.
-* texi2any modules: (texi2any_internals).
-                                Texinfo Perl modules used in texi2any
-* texindex: (texinfo)Format with tex/texindex.
-                                Sort Texinfo index files.
+Individual utilities
+* cmp: (diffutils)Invoking cmp.                 Compare 2 files byte by byte.
+* diff3: (diffutils)Invoking diff3.             Compare 3 files line by line.
+* diff: (diffutils)Invoking diff.               Compare 2 files line by line.
+* patch: (diffutils)Invoking patch.             Apply a patch to a file.
+* sdiff: (diffutils)Invoking sdiff.             Merge 2 files side-by-side.
+
+Text creation and manipulation
+* Diffutils: (diffutils).       Comparing and merging files.

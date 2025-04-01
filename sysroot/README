@@ -79,6 +79,7 @@ curl 8.11.1
 
 perl 5.40
 python 3.14
+pip 25.0.1
 tcl 9.0
 
 sshd/ssh 9.9p2
@@ -177,5 +178,5 @@ History
     added textinfo 7.2
     added ed 1.21
     added diff 3.11
-
+    added pip 25.0.1
 
