@@ -64,7 +64,12 @@ function add_library_path {
 }
 
 # ---------------------------------------------------------------------
- 
+
+
+# certificate file
+#
+DEFAULT_SSL_CERT_FILE="/data/local/tmp/sysroot/etc/security/ca-certificates.crt"
+
 # sysroot for the programs compiled with clang
 # 
 TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
@@ -523,6 +528,13 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   else
     LogDebugMsg  "root access is NOT enabled on this machine"
   fi
+fi
+
+if [ -r  ${DEFAULT_SSL_CERT_FILE} ] ; then
+  LogMsg "Setting the variable i\"SSL_CERT_FILE\" to \"${DEFAULT_SSL_CERT_FILE}\" ..."
+  export SSL_CERT_FILE=${DEFAULT_SSL_CERT_FILE}
+else
+  LogWarning "Certificate file \"${DEFAULT_SSL_CERT_FILE}\" not found "
 fi
 
 
