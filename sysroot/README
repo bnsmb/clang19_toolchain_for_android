@@ -47,7 +47,7 @@ Simply create a symbolic link for the missing library to libmylib.so
 
 Installed programs
 
-bash 5.2.0
+bash 5.2.37
 
 clang 19.0.0
 cmake 3.30.4
@@ -185,6 +185,6 @@ History
     the script bin/init_clang19_env now exports the environment variable DEFAULT_SSL_CERT_FILE if the file /data/local/tmp/sysroot/etc/security/ca-certificates.crt exists
     the script bin/init_clang19_env now exports the environment variable PKG_CONFIG_PATH
     the script create_clang_env.sh used a wrong value for HOME and therefore some configuration files were created in the wrong directories -- fixed
-
+    updated bash to version 5.2.37
 
 
