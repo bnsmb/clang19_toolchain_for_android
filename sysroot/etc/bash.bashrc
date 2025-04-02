@@ -98,7 +98,9 @@ blank="\e[m\]"
 
 # Sexy af PS1
 rootcheck
-export PS1="${green}┌|\@${cyan} ${USER}${purple} at ${HOSTNAME} in \w \n${green}└─${blank} \$ "
+# export PS1="${green}┌|\@${cyan} ${USER}${purple} at ${HOSTNAME} in \w \n${green}└─${blank} \$ "
+
+PS1="[\u@\h \w]\\$ "
 
 # Load user defined bashrc if it exists
 [ -f /data/local/tmp/home/bashrc ] && . /data/local/tmp/home/bashrc
