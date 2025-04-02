@@ -41,6 +41,8 @@ NDK="${NDK:=r27b}"
 
 SYSROOT_DIR="/data/local/tmp/sysroot"
 
+CLANG_INIT_SCRIPT="${SYSROOT_DIR}/bin/init_clang19_env"
+
 CUR_USER="$( id -un )"
 
 BASE_HOME_DIR="${SYSROOT_DIR}/home"
@@ -336,6 +338,19 @@ if [ -x ${SYSROOT_DIR}/create_ssh_env.sh ] ; then
   LogMsg "Executing now \"${SYSROOT_DIR}/create_ssh_env.sh\" ..."
   LogMsg ""
   ${SYSROOT_DIR}/create_ssh_env.sh
+fi
+
+if [ -r "${CLANG_INIT_SCRIPT}" ] ; then
+  LogMsg ""
+  LogMsg "Use the command
+
+source ${CLANG_INIT_SCRIPT}
+
+to init the clang19 session in an adb shell
+
+"
+else
+  LogWarning "The init script \"${CLANG_INIT_SCRIPT}\" does not exist"
 fi
 
 

@@ -546,6 +546,7 @@ else
   echo "WARNING: Certificate file \"${DEFAULT_SSL_CERT_FILE}\" not found "
 fi
 
+echo ""
 
 CLANG_ENV_INIT_DONE=${__TRUE}
 
