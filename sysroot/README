@@ -173,14 +173,15 @@ History
     removed the file LLVMPolly.so from the archive with NDK r27b files -- this is a library for x86
     added the files from the NDK r27c
     the flex binary in the toolchain failed sometimes with a segmentation fault -- fixed
-    added the header files for the curses libraries
+    added the header files for the ncurses libraries
     minor changes to the scripts create_clang_env.sh and bin/init_clang19_env (see the history section in these files)
     added textinfo 7.2
     added ed 1.21
-    added diff 3.11
+    updated diff to version 3.11
     added pip 25.0.1
     added meson 1.7
-    recompiled python with clang19; all default python modules except posixshmem, _tkinter, and _dbm are part of the python installation
+    recompiled python3 with clang19; all default python modules except _posixshmem, _tkinter, and _dbm are part of the python installation
+    pkg-config 0.29 now only requires the standard Android OS libraries
 
 
 
