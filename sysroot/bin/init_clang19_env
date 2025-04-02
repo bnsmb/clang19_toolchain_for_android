@@ -20,8 +20,9 @@
 #
 #  01.04.2025 v1.2.2 /bs
 #    added the alias curl for /data/local/tmp/sysroot/usr/bin/nano
+#    the script now defines the environment variable SSL_CERT_FILE
+#    the script now sets the environment variable PKG_CONFIG_PATH 
 #
-
 
 __TRUE=0
 __FALSE=1
@@ -275,7 +276,7 @@ fi
 # ---------------------------------------------------------------------
 
 if [ ${CONTINUE} = ${__TRUE} ] ; then
- 
+  
   echo
   echo "Preparing the clang environment for creating binaries for the CPU type ${CPU_TYPE}"
 
@@ -388,9 +389,15 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   LDFLAGS="${LDFLAGS} -lc  "
 
   add_library_path "${SYSROOT}/usr/lib/aarch64-linux-android" "${CLANG_DIR}/lib"
+
+  for CUR_PKG_CONFIG_PATH  in /data/local/tmp/sysroot/usr/lib/pkgconfig/ /data/local/tmp/develop/sysroot/usr/lib/pkgconfig/ ; do
+    if [[ " :${PKG_CONFIG_PATH}: " != *:${CUR_PKG_CONFIG_PATH}:* ]] ; then
+      export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${CUR_PKG_CONFIG_PATH}"
+    fi 
+  done
   
   
-  export CFLAGS CXXFLAGS CPPFLAGS LDFLAGS SYSROOT TARGET_ROOT API NDK SYSROOT
+  export CFLAGS CXXFLAGS CPPFLAGS LDFLAGS SYSROOT TARGET_ROOT API NDK SYSROOT PKG_CONFIG_PATH
 
   export CC="${CLANG_DIR}/bin/clang"
   export CXX="${CLANG_DIR}/bin/clang++"
@@ -408,30 +415,32 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   echo "Environment variables used:"
   
+  CUR_VAR_NAME_FIELD_LENGTH=25
+  
   printf "\n"
-  printf "%-20s %s\n" "PATH is now:"             "${PATH}"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "PATH is now:"             "${PATH}"
   printf "\n"
   
-  printf "%-20s %s\n" "LD_LIBRARY_PATH:"         "${LD_LIBRARY_PATH}"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "LD_LIBRARY_PATH:"         "${LD_LIBRARY_PATH}"
   printf "\n"
-  printf "%-20s %s\n" "API is now:"              "${API}"
-  printf "%-20s %s\n" "NDK_DIR is now:"          "${NDK_DIR}"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "API is now:"              "${API}"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "NDK_DIR is now:"          "${NDK_DIR}"
   printf "\n"
-  printf "%-20s %s\n" "SYSROOT is now:"          "${SYSROOT}"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "SYSROOT is now:"          "${SYSROOT}"
   printf "\n"
 
-  printf "%-20s %s\n" "CFLAGS are now:"          "${CFLAGS}"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "CFLAGS are now:"          "${CFLAGS}"
   printf "\n"
-  printf "%-20s %s\n" "CPPFLAGS are now:"        "${CPPFLAGS}"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "CPPFLAGS are now:"        "${CPPFLAGS}"
   printf "\n"
-  printf "%-20s %s\n" "CXXFLAGS are now:"        "${CXXFLAGS}"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "CXXFLAGS are now:"        "${CXXFLAGS}"
   printf "\n"
-  printf "%-20s %s\n" "LDFLAGS are now:"         "${LDFLAGS}"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "LDFLAGS are now:"         "${LDFLAGS}"
   printf "\n"
   
-  for CUR_VAR in CC CXX CPP CXXCPP AR AS LD RANLIB STRIP PKG_CONFIG ; do
+  for CUR_VAR in CC CXX CPP CXXCPP AR AS LD RANLIB STRIP PKG_CONFIG PKG_CONFIG_PATH ; do
     eval CUR_VALUE="\$$CUR_VAR"
-    printf "%-20s %s\n" "${CUR_VAR} is now:" "${CUR_VALUE}"
+    printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "${CUR_VAR} is now:" "${CUR_VALUE}"
   done
  
   echo
@@ -440,7 +449,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     if [ "${TMP}"x = ""x ] ; then
       if [ -d /data/local/tmp ] ; then
         export TMP="/data/local/tmp"
-        printf "%-20s %s\n" "TMP is now:"         "${TMP}"
+        printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "TMP is now:"         "${TMP}"
       else
         echo "WARNING: The directories /tmp and /data/local/tmp do not exist - please set the variable TMP before using clang"
       fi
