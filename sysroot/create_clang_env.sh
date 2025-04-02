@@ -12,9 +12,10 @@
 #     some files are now compressed to get around the size limitation for files in github.com
 #   30.03.2025 1.2.0 /bs
 #     added support for multiple NDKs
+#   01.04.2025 1.3.0 /bs
+#     in the previous versions of this script the environment variable HOME was not set correctly and therefore some configuration files were created in the wrong directories -- fixed
 #
 
-CUR_ID="$( id -un )"
 
 #
 # define some constants
@@ -40,10 +41,11 @@ NDK="${NDK:=r27b}"
 
 SYSROOT_DIR="/data/local/tmp/sysroot"
 
+CUR_USER="$( id -un )"
 
 BASE_HOME_DIR="${SYSROOT_DIR}/home"
 
-HOME="${BASE_HOME_DIR}/${SSH_USER}"
+HOME="${BASE_HOME_DIR}/${CUR_USER}"
 
 TMP="${SYSROOT_DIR}/var/tmp"
 
@@ -171,6 +173,18 @@ LogMsg ""
 
 # ----------------------------------------------------------------------
 
+LogMsg "The user executing this script is \"${CUR_USER}\"; the current home directory is \"${HOME}\" ..."
+
+if [ ! -d "${HOME}" ] ; then
+  LogMsg "Creating the directory \"${HOME}\" ..."
+  mkdir -p "${HOME}"
+else
+  LogMsg "The directory \"${HOME}\" already exists"
+fi
+LogMsg ""
+
+# ----------------------------------------------------------------------
+
 LogMsg "Processing the certificate files ..."
 
 CERTIFICATE_BUNDLE_FILE="${SYSROOT_DIR}/etc/security/ca-certificates.crt"
@@ -227,6 +241,7 @@ if [ $? -eq 0 ] ; then
   GIT_CRT_FILE="$( git config --global http.sslCAInfo )"
   if ! test -z "${GIT_CRT_FILE}" ;then 
     LogMsg "The certificate bundle file for git is \"${GIT_CRT_FILE}\" "
+    LogMsg "(Use \"git config --global http.sslCAInfo <cert_bundle_file>\" to change that)"
   else
     LogMsg "There is no certificate bundle file configured for git"
   fi
