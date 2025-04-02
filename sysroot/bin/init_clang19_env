@@ -531,10 +531,10 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 fi
 
 if [ -r  ${DEFAULT_SSL_CERT_FILE} ] ; then
-  LogMsg "Setting the variable i\"SSL_CERT_FILE\" to \"${DEFAULT_SSL_CERT_FILE}\" ..."
+  echo "Setting the variable \"SSL_CERT_FILE\" to \"${DEFAULT_SSL_CERT_FILE}\" ..."
   export SSL_CERT_FILE=${DEFAULT_SSL_CERT_FILE}
 else
-  LogWarning "Certificate file \"${DEFAULT_SSL_CERT_FILE}\" not found "
+  echo "WARNING: Certificate file \"${DEFAULT_SSL_CERT_FILE}\" not found "
 fi
 
 
