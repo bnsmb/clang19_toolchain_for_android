@@ -14,7 +14,8 @@
 #     added support for multiple NDKs
 #   01.04.2025 1.3.0 /bs
 #     in the previous versions of this script the environment variable HOME was not set correctly and therefore some configuration files were created in the wrong directories -- fixed
-#
+#     added to code to check the user executing the script
+#    
 
 
 #
@@ -58,6 +59,12 @@ export PATH HOME TMP
 # LD_LIBRARY_PATH is not necessary
 # export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${SYSROOT_DIR}/usr/lib"
 
+
+if [[ " $* " == *\ noask\ * ]]; then
+   YES=${__TRUE}
+else
+   YES=${__FALSE}
+fi
 
 # ----------------------------------------------------------------------
 #
@@ -134,6 +141,46 @@ function die  {
 }
 
 # ----------------------------------------------------------------------
+# ask_user
+# 
+# function: ask user for confirmation
+# 
+# usage; ask_user [message]
+#
+# returns: ${__TRUE} - use entered yes
+#          ${__FALSE} - user entered no
+#
+# If the variable YES is ${__TRUE} the function does not ask the user and always returns ${__TRUE}
+#
+function ask_user {
+  typeset THISMSG="$*"
+
+  typeset THISRC=${__FALSE}
+  typeset USER_INPUT=""
+
+  THISMSG="${THISMSG:=Press return to continue or CTRL-C to abort}"
+
+  if [ "${YES}"x = "${__TRUE}"x ] ; then
+    THISRC=${__TRUE}
+  else
+    LogMsg "${THISMSG}"
+    read USER_INPUT
+
+    case ${USER_INPUT} in
+      "" | "yes" | "Y" | "y" )
+        THISRC=${__TRUE}
+	;;
+
+      * )
+        THISRC=${__FALSE}
+	;;
+    esac
+  fi
+
+  return ${THISRC}
+}
+
+# ----------------------------------------------------------------------
 # main function
 #
 
@@ -160,7 +207,9 @@ LogMsg ""
 
   ROOT_ACCESS_AVAILABLE=${__FALSE}
   ROOT_PREFIX=""
-  
+ 
+  DEFAULT_USER="shell"
+
   CUR_USER="$( id -un )"
 
   if [ "${CUR_USER}"x = "root"x ] ; then
@@ -177,6 +226,28 @@ LogMsg ""
 
 LogMsg "The user executing this script is \"${CUR_USER}\"; the current home directory is \"${HOME}\" ..."
 
+if [ "${CUR_USER}"x != "${DEFAULT_USER}"x ] ; then
+  if [ "${CUR_USER}"x = "root"x ] ; then
+    LogMsg ""
+    LogWarning "Executing the setup script using the user \"root\" is not recommended"
+    LogMsg ""
+    ask_user "Press return to continue anyway or CTRL-C to abort the script (use the parameter \"noask\" to suppress this question)" || die 100 "Script aborted by the user"
+  else
+    LogMsg ""
+    LogWarning "The user executing the script \"${CUR_USER}\" is NOT the default shell user \"${DEFAULT_USER}\" "
+    LogMsg ""
+    ask_user "Press return to continue anyway or CTRL-C to abort the script (use the parameter \"noask\" to suppress this question)" || die 100 "Script aborted by the user"
+    
+    OWNER_OF_SYSROOT="$( stat -c %U "${SYSROOT_DIR}" )"
+    if [ "${OWNER_OF_SYSROOT}"x != "${CUR_USER}" ] ; then
+      LogMsg ""
+      LogWarning "The owner of the directory \"${SYSROOT_DIR}\" is \"${OWNER_OF_SYSROOT}\" but the user running this script is \"${CUR_USER}\" -- this will most probably not work"
+      LogMsg ""
+      ask_user "Press return to continue anyway or CTRL-C to abort the script (use the parameter \"noask\" to suppress this question)" || die 100 "Script aborted by the user"
+    fi
+  fi
+fi
+
 if [ ! -d "${HOME}" ] ; then
   LogMsg "Creating the directory \"${HOME}\" ..."
   mkdir -p "${HOME}"
@@ -184,6 +255,7 @@ else
   LogMsg "The directory \"${HOME}\" already exists"
 fi
 LogMsg ""
+
 
 # ----------------------------------------------------------------------
 
