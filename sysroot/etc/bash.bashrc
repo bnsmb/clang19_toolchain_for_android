@@ -23,7 +23,8 @@ shopt -s histappend
 HISTFILESIZE=10000
 HISTSIZE=100
 # ... and ignore same sucessive entries.
-HISTCONTROL=ignoreboth
+# HISTCONTROL=ignoreboth
+HISTCONTROL=ignoredups
 
 rootcheck(){
   ROOT= && [ $USER = root ] || ROOT="su -c"
