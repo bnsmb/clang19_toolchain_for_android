@@ -108,7 +108,7 @@ jq 1.7.1
 gawk 5.1
 gsed 4.8
 diff 3.8
-
+bc 1.0.8
 
 various compression tools:
 
@@ -199,4 +199,5 @@ History
     the script create_clang_env.sh used a wrong value for HOME and therefore some configuration files were created in the wrong directories -- fixed
     updated bash to version 5.2.37
     replaced m4 with a new compiled binary to avoid core dumps
+    added bc 1.08.1
 
