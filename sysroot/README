@@ -128,6 +128,18 @@ gzip 1.13
 unrar 5.91
 
 
+Notes
+
+The test for the execution permissions like this
+
+ [ -x /bin/sh ] && echo ok
+
+does not work with these bash binaries for non-root user. To get around that limitiation use the test binary from Android, e.g.
+
+/system/bin/test -x /bin/sh && echo ok
+
+
+
 History
 
   27.12.2024 v1.0.0 /bs
@@ -186,5 +198,5 @@ History
     the script bin/init_clang19_env now exports the environment variable PKG_CONFIG_PATH
     the script create_clang_env.sh used a wrong value for HOME and therefore some configuration files were created in the wrong directories -- fixed
     updated bash to version 5.2.37
-
+    replaced m4 with a new compiled binary to avoid core dumps
 
