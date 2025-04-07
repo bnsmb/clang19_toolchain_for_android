@@ -123,7 +123,7 @@ compress 5.0
 uncompress 5.0
 zstd 1.5.6
 pigz 2.8
-xz 5.6.2
+xz 5.8.1
 gunzip 1.13
 gzip 1.13
 unrar 5.91
@@ -202,4 +202,5 @@ History
     replaced m4 with a new compiled binary to avoid core dumps
     added bc 1.08.1
     updated less to version 661 (and added lessecho and lesskey)
+    updated xz to version 5.8.1
 
