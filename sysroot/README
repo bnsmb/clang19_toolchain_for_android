@@ -109,6 +109,7 @@ gawk 5.1
 gsed 4.8
 diff 3.8
 bc 1.0.8
+less 661
 
 various compression tools:
 
@@ -200,4 +201,5 @@ History
     updated bash to version 5.2.37
     replaced m4 with a new compiled binary to avoid core dumps
     added bc 1.08.1
+    updated less to version 661 (and added lessecho and lesskey)
 
