@@ -1,11 +1,20 @@
 //
 // include file with standard definitions missing in the libc from Android
 //
+// Please note that you must remove the definitions for functions that already exist in the source code from this include file.
+// If not there will be error messages like this:
+//
+//    command.c:(.text+0x348): multiple definition of `catclose'
+//    array.o:array.c:(.text+0x348): first defined here
+//
 // History
 //  29.12.2024
 //    initial release
 //  22.01.2025 
 //    added the function nl_langinfo
+//  11.04.2025
+//    added the functions getpwent and endpwent
+//    the definitions for nl_langinfo and nl_catd now also can be used in C programs
 //
 // This file defines
 //   __GNUC_PREREQ
@@ -23,9 +32,12 @@
 //   catgets
 //   catclose
 //   nl_langinfo
+//   getpwent
+//   endpwent
 //
 
 #ifndef ADD_MISSING_DEFINITIONS_H
+
 #define ADD_MISSING_DEFINITIONS_H
 
 // --------------------------------------------------------------------
@@ -170,6 +182,12 @@ char *rindex(const char *s, int c) {
 #ifdef __ANDROID__
 typedef void* nl_catd;
 
+
+#ifndef __cplusplus
+#define nullptr ((void*)0)
+#endif
+
+
 nl_catd catopen(const char *name, int flag) {
     return nullptr;
 }
@@ -187,6 +205,10 @@ int catclose(nl_catd catalog) {
 
 #ifndef nl_langinfo
 
+#ifndef CODESET
+#define CODESET 0
+#endif
+
 const char* nl_langinfo(int item) {
     switch (item) {
         case CODESET:
@@ -200,6 +222,36 @@ const char* nl_langinfo(int item) {
 }
 
 #endif
+
+
+// --------------------------------------------------------------------
+
+#ifndef getpwent
+
+#include <pwd.h>
+#include <stddef.h>
+
+// Dummy getpwent – always return NULL (no user)
+struct passwd *getpwent(void) {
+    return NULL;
+}
+
+#endif
+
+// --------------------------------------------------------------------
+
+#ifndef endpwent
+
+#include <pwd.h>
+#include <stddef.h>
+
+// Dummy endpwent – do nothing
+void endpwent(void) {
+    // no-op
+}
+
+#endif
+
 
 // --------------------------------------------------------------------
 
