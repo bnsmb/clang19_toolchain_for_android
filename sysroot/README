@@ -105,7 +105,7 @@ dd 9.5.58
 
 jq 1.7.1
 
-gawk 5.1
+gawk 5.3.2
 gsed 4.8
 diff 3.8
 bc 1.0.8
@@ -203,4 +203,5 @@ History
     added bc 1.08.1
     updated less to version 661 (and added lessecho and lesskey)
     updated xz to version 5.8.1
+    updated gawk to version 5.3.2; gawk is now a dynamically bind executable
 
