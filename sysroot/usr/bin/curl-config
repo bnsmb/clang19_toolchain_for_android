@@ -25,13 +25,12 @@
 
 # shellcheck disable=SC2006
 
-prefix='/system'
+prefix='/data/local/tmp/sysroot/usr'
 # Used in 'libdir'
 # shellcheck disable=SC2034
 exec_prefix="${prefix}"
 # shellcheck disable=SC2034
 includedir="${prefix}/include"
-cppflag_curl_staticlib=''
 
 usage()
 {
@@ -71,7 +70,7 @@ while test "$#" -gt 0; do
     ;;
 
   --ca)
-    echo ''
+    echo '/data/local/tmp/sysroot/etc/security/ca-certificates.crt'
     ;;
 
   --cc)
@@ -83,7 +82,7 @@ while test "$#" -gt 0; do
     ;;
 
   --feature|--features)
-    for feature in alt-svc AsynchDNS brotli HSTS HTTPS-proxy IDN IPv6 Largefile libz NTLM PSL SSL threadsafe TLS-SRP UnixSockets zstd ''; do
+    for feature in alt-svc AsynchDNS brotli CAcert HSTS HTTP2 HTTP3 HTTPS-proxy IDN IPv6 Largefile libz NTLM PSL SSL threadsafe TLS-SRP UnixSockets zstd ''; do
       test -n "$feature" && echo "$feature"
     done
     ;;
@@ -96,7 +95,7 @@ while test "$#" -gt 0; do
     ;;
 
   --version)
-    echo 'libcurl 8.11.1-DEV'
+    echo 'libcurl 8.13.0-DEV'
     exit 0
     ;;
 
@@ -108,11 +107,11 @@ while test "$#" -gt 0; do
     # dash as that's used for things like version 1.2.3-pre1
     cpatch=`echo "$checkfor" | cut -d. -f3 | cut -d- -f1`
 
-    vmajor=`echo '8.11.1-DEV' | cut -d. -f1`
-    vminor=`echo '8.11.1-DEV' | cut -d. -f2`
+    vmajor=`echo '8.13.0-DEV' | cut -d. -f1`
+    vminor=`echo '8.13.0-DEV' | cut -d. -f2`
     # when extracting the patch part we strip off everything after a
     # dash as that's used for things like version 1.2.3-pre1
-    vpatch=`echo '8.11.1-DEV' | cut -d. -f3 | cut -d- -f1`
+    vpatch=`echo '8.13.0-DEV' | cut -d. -f3 | cut -d- -f1`
 
     if test "$vmajor" -gt "$cmajor"; then
       exit 0
@@ -128,12 +127,12 @@ while test "$#" -gt 0; do
       fi
     fi
 
-    echo "requested version $checkfor is newer than existing 8.11.1-DEV"
+    echo "requested version $checkfor is newer than existing 8.13.0-DEV"
     exit 1
     ;;
 
   --vernum)
-    echo '080b01'
+    echo '080d00'
     exit 0
     ;;
 
@@ -142,28 +141,23 @@ while test "$#" -gt 0; do
     ;;
 
   --cflags)
-    if test "X$cppflag_curl_staticlib" = 'X-DCURL_STATICLIB'; then
-      CPPFLAG_CURL_STATICLIB='-DCURL_STATICLIB '
-    else
-      CPPFLAG_CURL_STATICLIB=''
-    fi
     if test "X${prefix}/include" = 'X/usr/include'; then
-      echo "${CPPFLAG_CURL_STATICLIB}"
+      echo ''
     else
-      echo "${CPPFLAG_CURL_STATICLIB}-I${prefix}/include"
+      echo " -I${prefix}/include"
     fi
     ;;
 
   --libs)
     if test "X${exec_prefix}/lib" != 'X/usr/lib' -a "X${exec_prefix}/lib" != 'X/usr/lib64'; then
-      CURLLIBDIR="-L${exec_prefix}/lib "
+      curllibdir="-L${exec_prefix}/lib "
     else
-      CURLLIBDIR=''
+      curllibdir=''
     fi
     if test 'Xyes' = 'Xno'; then
-      echo "${CURLLIBDIR}-lcurl -lidn2 -lssh2 -lssh2 -lpsl -lssl -lcrypto -lssl -lcrypto -lzstd -lzstd -lbrotlidec -lbrotlidec -lz -lidn2 -lunistring -ldl -lm"
+      echo "${curllibdir}-lcurl -lnghttp3 -lnghttp2 -lidn2 -lssh2 -lssh2 -lpsl -lssl -lcrypto -lssl -lcrypto -lzstd -lzstd -lbrotlidec -lbrotlidec -lz -lidn2 -lunistring -ldl -lm"
     else
-      echo "${CURLLIBDIR}-lcurl"
+      echo "${curllibdir}-lcurl"
     fi
     ;;
 
@@ -173,7 +167,7 @@ while test "$#" -gt 0; do
 
   --static-libs)
     if test 'Xyes' != 'Xno'; then
-      echo "${exec_prefix}/lib/libcurl.a -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/system/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -lidn2 -lssh2 -lssh2 -lpsl -lssl -lcrypto -lssl -lcrypto -lzstd -lzstd -lbrotlidec -lbrotlidec -lz -lidn2 -lunistring -ldl -lm"
+      echo "${exec_prefix}/lib/libcurl.a -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -lnghttp3 -lnghttp2 -lidn2 -lssh2 -lssh2 -lpsl -lssl -lcrypto -lssl -lcrypto -lzstd -lzstd -lbrotlidec -lbrotlidec -lz -lidn2 -lunistring -ldl -lm"
     else
       echo 'curl was built with static libraries disabled' >&2
       exit 1
@@ -181,7 +175,7 @@ while test "$#" -gt 0; do
     ;;
 
   --configure)
-    echo " 'CFLAGS=--sysroot /data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/sysroot --sysroot /data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -O2 -fPIE -fPIC -I/data/develop/android/sysroot/usr/include   -Wno-implicit-function-declaration -Wno-int-conversion -O2 -fPIE -fPIC -I/data/develop/android/sysroot/usr/include   -Wno-implicit-function-declaration -Wno-int-conversion' 'CPPFLAGS=--sysroot /data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/sysroot --sysroot /data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -O2 -fPIE -fPIC -I/data/develop/android/sysroot/usr/include   -Wno-implicit-function-declaration -Wno-int-conversion -O2 -fPIE -fPIC -I/data/develop/android/sysroot/usr/include   -Wno-implicit-function-declaration -Wno-int-conversion -DANDROID' 'LDFLAGS=--sysroot /data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/sysroot --sysroot /data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -s -pie -L/data/develop/android/sysroot/usr/lib  -s -pie -L/data/develop/android/sysroot/usr/lib ' 'LIBS=-lidn2 -lunistring -ldl -lm' '--host=aarch64-linux-android' '--target=aarch64-linux-android' '--prefix=/system' '--enable-optimize' '--enable-symbol-hiding' '--disable-manual' '--enable-threaded-resolver' '--enable-alt-svc' '--enable-hsts' '--with-openssl=/data/develop/android/sysroot/usr' '--with-brotli=/data/develop/android/sysroot/usr' '--with-zstd=/data/develop/android/sysroot/usr' '--with-ca-path=/system/etc/security' '--with-nghttp2=/data/develop/android/sysroot/usr' '--with-libidn2=/data/develop/android/sysroot/usr' '--with-libssh2=/data/develop/android/sysroot/usr' '--without-quiche' '--enable-shared' 'host_alias=aarch64-linux-android' 'target_alias=aarch64-linux-android' 'CC=/data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android28-clang'"
+    echo " 'CFLAGS=--sysroot /data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -O2 -fPIE -fPIC -I/data/develop/android/sysroot/usr/include   -Wno-implicit-function-declaration -Wno-int-conversion' 'CPPFLAGS=--sysroot /data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -O2 -fPIE -fPIC -I/data/develop/android/sysroot/usr/include   -Wno-implicit-function-declaration -Wno-int-conversion -DANDROID' 'LDFLAGS=--sysroot /data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -s -pie -L/data/develop/android/sysroot/usr/lib ' 'LIBS=-lidn2 -lunistring -ldl -lm ' '--host=aarch64-linux-android' '--target=aarch64-linux-android' '--prefix=/data/local/tmp/sysroot/usr' '--enable-optimize' '--enable-symbol-hiding' '--disable-manual' '--enable-threaded-resolver' '--enable-alt-svc' '--enable-hsts' '--with-openssl=/data/develop/android/sysroot/usr' '--with-brotli=/data/develop/android/sysroot/usr' '--with-zstd=/data/develop/android/sysroot/usr' '--with-ca-path=/system/etc/security' '--with-nghttp2={TARGET_SYSROOT}/usr' '--with-libidn2=/data/develop/android/sysroot/usr' '--with-libssh2=/data/develop/android/sysroot/usr' '--without-quiche' '--enable-shared' '--with-ca-path=/data/local/tmp/sysroot/etc/security/cacerts' '--with-ca-bundle=/data/local/tmp/sysroot/etc/security/ca-certificates.crt' '-with-ca-fallback' '-with-ca-embed=/data/develop/android/source/curl-curl-8_13_0/ca-certificates.crt' '--with-openssl-quic' '--with-nghttp3' 'host_alias=aarch64-linux-android' 'target_alias=aarch64-linux-android' 'CC=/data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android28-clang'"
     ;;
 
   *)

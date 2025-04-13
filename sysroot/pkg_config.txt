@@ -1,0 +1,67 @@
+pkg-config environment variables not yet used:
+
+
+pkg-config uses several environment variables to control its behavior. The most important are:
+
+1. PKG_CONFIG_PATH
+
+
+Defines additional search paths for .pc files.
+
+
+export PKG_CONFIG_PATH=/custom/path/lib/pkgconfig:/another/path/share/pkgconfig
+
+
+2. PKG_CONFIG_LIBDIR
+
+
+Overwrites the default paths (/usr/lib/pkgconfig, /usr/share/pkgconfig).
+
+
+export PKG_CONFIG_LIBDIR=/my/custom/lib/pkgconfig
+
+
+Useful for cross-compiling if /usr/lib/pkgconfig is to be ignored.
+
+3. PKG_CONFIG_SYSROOT_DIR
+
+
+Sets a sysroot directory to customize paths for cross-compiling.
+
+
+export PKG_CONFIG_SYSROOT_DIR=/path/to/sysroot
+
+
+This adjusts absolute paths in .pc files.
+
+4. PKG_CONFIG_ALLOW_SYSTEM_CFLAGS & PKG_CONFIG_ALLOW_SYSTEM_LIBS
+
+
+Normally pkg-config ignores system paths in CFLAGS and LIBS.
+
+These variables disable this restriction:
+
+
+export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
+
+export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
+
+
+5. PKG_CONFIG_DEBUG_SPEW
+
+
+Displays debug information for pkg-config.
+
+
+export PKG_CONFIG_DEBUG_SPEW=1
+
+
+If you have problems with pkg-config, you can use
+
+
+pkg-config --debug somepackage
+
+
+to activate the debug mode for a specific package.
+
+

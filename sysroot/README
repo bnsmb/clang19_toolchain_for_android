@@ -75,7 +75,7 @@ gdb 15.2
 rsync 3.4.1 
 
 wget 2.1.0
-curl 8.11.1
+curl 8.13.0
 
 perl 5.40
 python 3.14
@@ -201,9 +201,8 @@ History
     updated bash to version 5.2.37
     replaced m4 with a new compiled binary to avoid core dumps
     added bc 1.08.1
-    updated less to version 661 (and added lessecho and lesskey)
     updated xz to version 5.8.1
     updated gawk to version 5.3.2; gawk is now a dynamically bind executable
     updated nano to version 8.4
     updated less to version 668
-
+    updated curl to version 8.13.0

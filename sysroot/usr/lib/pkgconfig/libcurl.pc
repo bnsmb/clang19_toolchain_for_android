@@ -22,20 +22,20 @@
 #
 ###########################################################################
 
-prefix=/system
+prefix=/data/local/tmp/sysroot/usr
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 supported_protocols="DICT FILE FTP FTPS GOPHER GOPHERS HTTP HTTPS IMAP IMAPS IPFS IPNS MQTT POP3 POP3S RTSP SCP SFTP SMB SMBS SMTP SMTPS TELNET TFTP WS WSS"
-supported_features="alt-svc AsynchDNS brotli HSTS HTTPS-proxy IDN IPv6 Largefile libz NTLM PSL SSL threadsafe TLS-SRP UnixSockets zstd"
+supported_features="alt-svc AsynchDNS brotli CAcert HSTS HTTP2 HTTP3 HTTPS-proxy IDN IPv6 Largefile libz NTLM PSL SSL threadsafe TLS-SRP UnixSockets zstd"
 
 Name: libcurl
 URL: https://curl.se/
 Description: Library to transfer files with HTTP, FTP, etc.
-Version: 8.11.1-DEV
+Version: 8.13.0-DEV
 Requires: 
-Requires.private: libidn2,zlib,libbrotlidec,libzstd,openssl,libpsl,libssh2
+Requires.private: libidn2,zlib,libbrotlidec,libbrotlicommon,libzstd,openssl,libpsl,libssh2,libnghttp2,libnghttp3
 Libs: -L${libdir} -lcurl 
-Libs.private: -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/system/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -lidn2 -lssh2 -lssh2 -lpsl -lssl -lcrypto -lssl -lcrypto -lzstd -lzstd -lbrotlidec -lbrotlidec -lz -lidn2 -lunistring -ldl -lm
+Libs.private: -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -lnghttp3 -lnghttp2 -lidn2 -lssh2 -lssh2 -lpsl -lssl -lcrypto -lssl -lcrypto -lzstd -lzstd -lbrotlidec -lbrotlidec -lz -lidn2 -lunistring -ldl -lm
 Cflags: -I${includedir} 
 Cflags.private: -DCURL_STATICLIB
