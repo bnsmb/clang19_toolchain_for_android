@@ -206,3 +206,5 @@ History
     updated nano to version 8.4
     updated less to version 668
     updated curl to version 8.13.0
+    moved the autoconf directories and files to sysroot/usr/<subdir>
+

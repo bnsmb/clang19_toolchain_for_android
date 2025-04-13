@@ -51,14 +51,14 @@ use Autom4te::General;
 use Autom4te::XFile;
 
 # Lib files.
-my $autom4te = $ENV{'AUTOM4TE'} || '/data/local/tmp/sysroot/bin/autom4te';
+my $autom4te = $ENV{'AUTOM4TE'} || '/data/local/tmp/sysroot/usr/bin/autom4te';
 my $autoconf = "$autom4te --language=autoconf";
 # We need to find m4sugar.
 my @prepend_include;
 my @include = ('/data/local/tmp/sysroot/usr/autoconf');
 my $force = 0;
 # m4.
-my $m4 = $ENV{"M4"} || '/data/local/tmp/sysroot/bin/m4';
+my $m4 = $ENV{"M4"} || '/data/local/tmp/sysroot/usr/bin/m4';
 
 
 # $HELP

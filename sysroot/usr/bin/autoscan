@@ -95,7 +95,7 @@ my %needed_macros =
 my $log;
 
 # Autoconf and lib files.
-my $autom4te = $ENV{'AUTOM4TE'} || '/data/local/tmp/sysroot/bin/autom4te';
+my $autom4te = $ENV{'AUTOM4TE'} || '/data/local/tmp/sysroot/usr/bin/autom4te';
 my $autoconf = "$autom4te --language=autoconf";
 my @prepend_include;
 my @include = ('/data/local/tmp/sysroot/usr/autoconf');

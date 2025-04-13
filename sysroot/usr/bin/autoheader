@@ -54,7 +54,7 @@ use Autom4te::XFile;
 our ($config_h, %symbol, %verbatim);
 
 # Lib files.
-my $autom4te = $ENV{'AUTOM4TE'} || '/data/local/tmp/sysroot/bin/autom4te';
+my $autom4te = $ENV{'AUTOM4TE'} || '/data/local/tmp/sysroot/usr/bin/autom4te';
 my $config_h_in;
 my @prepend_include;
 my @include;
