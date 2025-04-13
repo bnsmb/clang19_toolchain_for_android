@@ -2,10 +2,13 @@
 // include file with standard definitions missing in the libc from Android
 //
 // Please note that you must remove the definitions for functions that already exist in the source code from this include file.
-// If not there will be error messages like this:
+// If not, error messages like this are displayed when compiling your source code:
 //
 //    command.c:(.text+0x348): multiple definition of `catclose'
 //    array.o:array.c:(.text+0x348): first defined here
+//
+// Therefore, either edit this file before using it or copy only the necessary parts to your source files
+//
 //
 // History
 //  29.12.2024
@@ -15,6 +18,8 @@
 //  11.04.2025
 //    added the functions getpwent and endpwent
 //    the definitions for nl_langinfo and nl_catd now also can be used in C programs
+//  13.04.2025
+//    added the defintion for CloseSocket
 //
 // This file defines
 //   __GNUC_PREREQ
@@ -34,6 +39,7 @@
 //   nl_langinfo
 //   getpwent
 //   endpwent
+//   CloseSocket
 //
 
 #ifndef ADD_MISSING_DEFINITIONS_H
@@ -250,6 +256,12 @@ void endpwent(void) {
     // no-op
 }
 
+#endif
+
+// --------------------------------------------------------------------
+
+#ifndef CloseSocket
+#define CloseSocket(x) close(x)
 #endif
 
 
