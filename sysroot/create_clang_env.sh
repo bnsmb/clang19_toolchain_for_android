@@ -384,6 +384,19 @@ else
 fi
 
 # ----------------------------------------------------------------------
+#  create the config file for vim
+#
+if [ ! -r "${HOME}/.vimrc" ] ; then
+  echO "Creating the config file for vim ${HOME}/.vimrc ..."
+  cat >"${HOME}/.vimrc" <<EOT
+" Disable Visual Mode (v, V, and Ctrl-V)
+nnoremap v <Nop>
+nnoremap V <Nop>
+nnoremap <C-v> <Nop>
+EOT
+fi
+
+# ----------------------------------------------------------------------
 # additional optional configuration changes that require root access
 #
 if [ ${ROOT_ACCESS_AVAILABLE} = ${__TRUE} ] ; then
