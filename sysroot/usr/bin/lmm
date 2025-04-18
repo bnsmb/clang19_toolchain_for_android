@@ -2,28 +2,369 @@
 #
 #h#  imm -- list Magisk Modules
 #h#
-#h#  This script lists all installed Magisk Modules including the version, the status (enabled/disabled) and the name
+#h#  This script lists all installed Magisk Modules including the version, the status (enabled/disabled) and the name.
+#h#  The status of the Magisk Modules that will be deleted after the next reboot is marked with an appended "(*)"
+#h#  The script can also be used to enable, disable, or remove one or more Magisk Modules.
 #h#
-#h#  Usage: lmm
+#h#  Usage: lmm [--verbose] [--dry-run] [--enable] [--disable| [--remove] [--keep] [module]
 #h#
+#h#  "module" is one or more regular expressions for modules or "all"; default for module is "all".
+#h#
+#h# The script prints the message "Reboot the phone to activate the changes." if a reboot is required. 
+#h# The script returns 0 if everything is okay and 1 if a reboot is required. All other return codes signal an error.
+#h#
+#h#  Supported environment variables:
+#h#    PREFIX    prefix for the commands, e.g. use "PREFIX=echo lmm" to run the script in dry-run mode
+#h#    VERBOSE   write verbose messages if VERBOSE is not empty
+#h#
+
 #  History:
-#    09.11.2024 /bs
+#    09.11.2024 v1.0.0 /bs
 #      initial version
 #
+#    27.02.2025 v1.1.0 /bs 
+#      added the parameter --enable, --disable, --remove, --keep, --verbose, --dry-run, module and all
+#      the script now prints a "-" after the status of the Magisk Modules that will be deleted after the next reboot
+#
+#    18.04.2025 v1.2.0 /bs 
+#      increased the field length for the module version to 25
+#      the script is now aborted if an unknown parameter is used
+#
+
+__TRUE=0
+__FALSE=1
+
+
+# ----------------------------------------------------------------------
+# LogMsg
+#
+# function: write a message to STDOUT
+#
+# usage: LogMsg [message]
+#
+function LogMsg {
+  typeset THISMSG="$*"
+
+  echo "${THISMSG}"
+}
+
+# ----------------------------------------------------------------------
+# LogWarning
+#
+# function: write a message prefixed with "WARNING:" to STDOUT
+#
+# usage: LogWarning [message]
+#
+function LogWarning {
+  typeset THISMSG="$*"
+
+  LogMsg "WARNING: ${THISMSG}" 
+}
+
+# ----------------------------------------------------------------------
+# LogError
+#
+# function: write a message prefixed with "ERROR:" to STDERR
+#
+# usage: LogError [message]
+#
+function LogError {
+  typeset THISMSG="$*"
+
+  LogMsg "ERROR: ${THISMSG}" >&2
+}
+
+
+# ----------------------------------------------------------------------
+# LogInfo
+#
+# function: write a message prefixed with "INFO:" to STDOUT if the variable VERBOSE is set
+#
+# usage: LogInfo [message]
+#
+function LogInfo {
+  typeset THISMSG="$*"
+  typeset THISRC=1
+  
+  if [ "${VERBOSE}"x != ""x ] ; then
+    if [ "${THISMSG}"x != ""x ] ; then 
+      LogMsg "INFO: ${THISMSG}" 
+    else
+      LogMsg ""
+    fi
+    THISRC=0
+  fi
+  return ${THISRC}
+}
+
+# ----------------------------------------------------------------------
+# die
+#
+# function: print a message and end the script
+#
+# usage: die [script_exit_code] [message]
+#
+# the parameter "message" is optional; the script will add a leading "ERROR: "
+# to the message if the script_exit_code is not zero
+#
+# returns: n/a
+#
+function die  {
+  typeset THISRC=$1
+  [ $# -ne 0 ] && shift
+  typeset THISMSG="$*"
+
+  if [ "${THISMSG}"x != ""x ] ; then
+    if [ ${THISRC} != 0 ] ; then
+      echo "ERROR: ${THISMSG} (RC=${THISRC})" >&2
+    else
+      echo "${THISMSG}"
+    fi
+  fi
+
+  exit ${THISRC}
+}
+
+# ----------------------------------------------------------------------
+
 if [ "$1"x = "-h"x -o "$1"x = "--help"x ] ; then
   grep "^#h#" $0 | cut -c4-
-  exit 1
+  exit 0
 fi
+
+# ----------------------------------------------------------------------
+
+which getprop 2>/dev/null 1>/dev/null
+if [ $? -ne 0 ] ; then
+  die 100 "This script must run in a session on a phone running the Android OS"
+fi
+
+# ----------------------------------------------------------------------
 
 if [ "$( id -un )"x != "root"x ] ; then
-   exec su - -c $0
-   exit
+   exec su - -c $0 $*
+   exit $?
 fi
 
-for i in /data/adb/modules/*; do printf "%-30s %-15s %-10s %s\n" \
-"${i##*/}" \
+# ----------------------------------------------------------------------
+
+LIST_MODULES=${__TRUE}
+
+ACTION="--enable"
+
+MODULES_TO_ENABLE=""
+MODULES_TO_DISABLE=""
+MODULES_TO_REMOVE=""
+
+DIRECTORY_WITH_MAGISK_MODULES="/data/adb/modules"
+
+MODULE_STATUS_CHANGED=${__FALSE}
+
+# ----------------------------------------------------------------------
+
+if [ ! -d "${DIRECTORY_WITH_MAGISK_MODULES}" ] ; then
+  die 25 "The directory with the Magisk Modules \"${DIRECTORY_WITH_MAGISK_MODULES}\" does not exist"
+fi
+
+# ----------------------------------------------------------------------
+#
+# pre process the paramter
+#
+if [ $# -ne 0 ] ; then
+
+  LogInfo "The parameter for the script are "  && \
+    LogMsg "$*"
+
+  ALL_MODULES=" $( cd "${DIRECTORY_WITH_MAGISK_MODULES}" && ls | tr "\n" " " ) "
+
+  LogInfo "The installed Magisk Modules are: " &&
+    LogMsg "${ALL_MODULES}"
+
+  OLD_MODULE_STATUS="$( set +f ; ls -1 ${DIRECTORY_WITH_MAGISK_MODULES}/*/{disable,remove} 2>/dev/null | sort )"
+  
+  NEW_PARAMETER=""
+  
+  LAST_ACTION=""
+  
+  set -f
+
+  while [ $# -ne 0 ] ; do
+    CUR_PARAMETER="$1"
+    shift
+    
+    case ${CUR_PARAMETER}  in
+
+      --verbose )
+        VERBOSE=${__TRUE}
+        ;; 
+
+      ++verbose )
+        VERBOSE=""
+        ;; 
+
+      --dry-run )
+        PREFIX="echo"
+        ;;
+
+      ++dry-run )
+        PREFIX=""
+        ;;
+
+      --enable | --disable | --remove | --keep )
+
+        if [ "${LAST_ACTION}"x != ""x ]  ; then
+          NEW_PARAMETER="${NEW_PARAMETER} ${ALL_MODULES} "
+        fi
+
+        NEW_PARAMETER="${NEW_PARAMETER} ${CUR_PARAMETER}"
+
+        LAST_ACTION="${CUR_PARAMETER}"
+        ;;  
+   
+      all )
+        NEW_PARAMETER="${NEW_PARAMETER} ${ALL_MODULES}"
+        LAST_ACTION=""
+        ;;
+
+      --* | -* )
+        die 99 "Unknown parameter found: ${CUR_PARAMETER}"
+        ;;
+        
+      * )
+        NEW_PARAMETER="${NEW_PARAMETER} ${CUR_PARAMETER}"
+        LAST_ACTION=""
+        ;;  
+    esac
+  done
+  
+  if [ "${LAST_ACTION}"x != ""x ] ; then
+    NEW_PARAMETER="${NEW_PARAMETER} ${ALL_MODULES}"
+  fi
+  
+  LogInfo "The parameter are now after pre-proccessing "  && \
+    LogMsg "${NEW_PARAMETER}"
+    
+  set -- ${NEW_PARAMETER}   
+fi
+
+
+# ----------------------------------------------------------------------
+
+if [ $# -ne 0 ] ; then
+  LIST_MODULES=${__FALSE}
+
+  while [ $# -ne 0 ] ; do
+    CUR_PARAMETER="$1"
+    shift
+    
+    case ${CUR_PARAMETER} in 
+    
+      --enable )
+        ACTION="${CUR_PARAMETER}"
+        ;;
+
+      --disable )
+        ACTION="${CUR_PARAMETER}"
+        ;;
+
+      --remove )
+        ACTION="${CUR_PARAMETER}"
+        ;;
+
+      --keep )
+        ACTION="${CUR_PARAMETER}"
+        ;;
+
+      * )
+        MODULE_REGEX="${CUR_PARAMETER}"
+
+        MODULE_EXIST=${__FALSE}
+          
+          
+        for CUR_MODULE in ${ALL_MODULES} ; do
+        
+          if [[ ${CUR_MODULE} == ${MODULE_REGEX} ]] ; then
+                        
+            case ${ACTION} in
+
+              --enable )
+                LogMsg "Enabling the Magisk module \"${CUR_MODULE}\"  ..."
+                ${PREFIX} rm -f "${DIRECTORY_WITH_MAGISK_MODULES}/${CUR_MODULE}/remove"
+                ${PREFIX} rm -f "${DIRECTORY_WITH_MAGISK_MODULES}/${CUR_MODULE}/disable"
+                MODULE_STATUS_CHANGED=${__TRUE}
+                MODULE_EXIST=${__TRUE}
+                ;;
+
+              --disable )
+                LogMsg "Disabling the Magisk module \"${CUR_MODULE}\"  ..."
+                ${PREFIX} rm -f "${DIRECTORY_WITH_MAGISK_MODULES}/${CUR_MODULE}/remove"
+                ${PREFIX} touch "${DIRECTORY_WITH_MAGISK_MODULES}/${CUR_MODULE}/disable"
+                MODULE_EXIST=${__TRUE}
+                MODULE_STATUS_CHANGED=${__TRUE}
+                ;;
+
+              --remove )
+                LogMsg "Removing the Magisk module \"${CUR_MODULE}\"  ..."
+                ${PREFIX} rm -f "${DIRECTORY_WITH_MAGISK_MODULES}/${CUR_MODULE}/disable"
+                ${PREFIX} touch "${DIRECTORY_WITH_MAGISK_MODULES}/${CUR_MODULE}/remove"
+                MODULE_EXIST=${__TRUE}
+                MODULE_STATUS_CHANGED=${__TRUE}
+                ;;
+
+              --keep )
+                LogMsg "Keep the Magisk module \"${CUR_MODULE}\"  ..."
+                ${PREFIX} rm -f "${DIRECTORY_WITH_MAGISK_MODULES}/${CUR_MODULE}/remove"
+                MODULE_EXIST=${__TRUE}
+                MODULE_STATUS_CHANGED=${__TRUE}
+                ;;
+            esac
+          fi   
+        done
+        
+        if [ ${MODULE_EXIST} = ${__FALSE} ] ;then
+          LogMsg ""
+          if [[ ${MODULE_REGEX} == *\** || ${MODULE_REGEX} == *\?* ]] ;then
+            LogError "No Magisk Module matches the regular expression \"${MODULE_REGEX}\" "
+          else
+            LogError "The Magisk Module \"${MODULE_REGEX}\" does not exist"
+          fi
+        fi
+        ;;
+        
+    esac
+  done
+
+  NEW_MODULE_STATUS="$( set +f ; ls -1 ${DIRECTORY_WITH_MAGISK_MODULES}/*/{disable,remove} 2>/dev/null | sort )"
+
+  LogMsg ""
+  if [ "${OLD_MODULE_STATUS}"x != "${NEW_MODULE_STATUS}"x ] ; then
+    LogMsg ""
+    LogMsg "Reboot the phone to activate the changes."
+    LogMsg ""
+    THISRC=1
+  else
+    LogMsg "The status of all Magisk Modules is already okay -- nothing changed"  
+    THISRC=0
+  fi
+
+else
+    
+  for i in /data/adb/modules/*; do 
+    CUR_MODULE_ID="${i##*/}"
+  
+    printf "%-30s %-25s %-15s %s\n" \
+"${CUR_MODULE_ID}" \
 "$(  grep version= $i/module.prop 2>/dev/null | cut -f2 -d "=" | tr -s " " )" \
-"$( [ ! -r $i/disable ] && echo "enabled" || echo "disabled" )"  \
+"$( [ ! -r $i/disable ] && echo "enabled" || echo "disabled" ) $( [ -r $i/remove ] && echo "(-)" || echo "  " )" \
 "$(  grep name= $i/module.prop 2>/dev/null | cut -f2 -d "=" | tr -s " " )" \
-; done   
+     
+  done   
+  THISRC=0
+
+fi
+
+LogInfo "The returncode of the script is ${THISRC}"
+  
+exit ${THISRC}
+
 
