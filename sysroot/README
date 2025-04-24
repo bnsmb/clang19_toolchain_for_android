@@ -210,3 +210,5 @@ History
     use symbolic links for clang clang++ clang-cl clang-cpp
     use symbolic links for ld64.lld ld.lld  lld-link
     use symbolic links for llvm-addr2line llvm-bitcode-strip llvm-dlltool llvm-install-name-tool llvm-lib llvm-otool llvm-ranlib llvm-readelf llvm-strip llvm-windres wasm-ld
+    replaced the binaries cmake cpack ctest ctresalloc with the stripped version
+
