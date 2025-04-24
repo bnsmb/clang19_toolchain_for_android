@@ -23,6 +23,9 @@
 #    the script now defines the environment variable SSL_CERT_FILE
 #    the script now sets the environment variable PKG_CONFIG_PATH 
 #
+#  24.04.2025 v1.2.3 /bs
+#    the script now sets the environment variable HOSTNAME to "$( getprop ro.product.device ) $( getprop ro.serialno )" if it's empty
+#
 
 __TRUE=0
 __FALSE=1
@@ -549,6 +552,15 @@ fi
 echo ""
 
 CLANG_ENV_INIT_DONE=${__TRUE}
+
+if [ "${HOSTNAME}"x = ""x ] ; then
+  if [ $( hostname )x != "localhost"x ] ; then
+    export HOSTNAME="$( hostname )"
+  else
+    export HOSTNAME="$( getprop ro.product.device ) $( getprop ro.serialno )"
+  fi
+fi
+
 
 echo "$PS1" | grep "\[clang19" 2>/dev/null >/dev/null || export PS1="[clang19 toolchain] $PS1" 
 
