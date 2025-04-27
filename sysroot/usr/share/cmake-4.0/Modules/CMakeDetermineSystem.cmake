@@ -30,7 +30,13 @@ if(CMAKE_HOST_UNIX)
         ERROR_QUIET)
 
       if(NOT DEFINED CMAKE_SYSTEM_VERSION)
-        set(_ANDROID_API_LEVEL_H $ENV{PREFIX}/include/android/api-level.h)
+
+        if(DEFINED ENV{PREFIX})
+          set(_ANDROID_API_LEVEL_H $ENV{PREFIX}/include/android/api-level.h)
+        else()
+          set(_ANDROID_API_LEVEL_H /data/local/tmp/sysroot/usr/include/android/api-level.h)
+        endif()
+	
         set(_ANDROID_API_REGEX "#define __ANDROID_API__ ([0-9]+)")
         file(READ ${_ANDROID_API_LEVEL_H} _ANDROID_API_LEVEL_H_CONTENT)
         string(REGEX MATCH ${_ANDROID_API_REGEX} _ANDROID_API_LINE "${_ANDROID_API_LEVEL_H_CONTENT}")
