@@ -51,7 +51,7 @@ bash 5.2.37
 
 clang 19.0.0
 cmake 3.30.4
-ninja 1.13.0.git
+ninja 1.13.0.git and 1.12.1
 make 4.4.1
 meson 1.7
 
@@ -211,3 +211,5 @@ History
     use symbolic links for ld64.lld ld.lld  lld-link
     use symbolic links for llvm-addr2line llvm-bitcode-strip llvm-dlltool llvm-install-name-tool llvm-lib llvm-otool llvm-ranlib llvm-readelf llvm-strip llvm-windres wasm-ld
     updated cmake to version 4.0.1
+    added ninja 1.12.1
+
