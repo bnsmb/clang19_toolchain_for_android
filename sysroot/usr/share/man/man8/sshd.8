@@ -155,7 +155,7 @@ Write debug logs to standard error instead of the system log.
 .It Fl f Ar config_file
 Specifies the name of the configuration file.
 The default is
-.Pa /data/local/tmp/sysroot/etc/ssh/sshd_config .
+.Pa /system/etc/ssh/sshd_config .
 .Nm
 refuses to start if there is no configuration file.
 .It Fl G
@@ -180,10 +180,10 @@ This option must be given if
 is not run as root (as the normal
 host key files are normally not readable by anyone but root).
 The default is
-.Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_ecdsa_key ,
-.Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_ed25519_key
+.Pa /system/etc/ssh/ssh_host_ecdsa_key ,
+.Pa /system/etc/ssh/ssh_host_ed25519_key
 and
-.Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_rsa_key .
+.Pa /system/etc/ssh/ssh_host_rsa_key .
 It is possible to have multiple host key files for
 the different host key algorithms.
 .It Fl i
@@ -379,7 +379,7 @@ exists and the
 .Xr sshd_config 5
 .Cm PermitUserRC
 option is set, runs it; else if
-.Pa /data/local/tmp/sysroot/etc/ssh/sshrc
+.Pa /system/etc/ssh/sshrc
 exists, runs
 it; otherwise runs
 .Xr xauth 1 .
@@ -434,7 +434,7 @@ fi
 .Ed
 .Pp
 If this file does not exist,
-.Pa /data/local/tmp/sysroot/etc/ssh/sshrc
+.Pa /system/etc/ssh/sshrc
 is run, and if that
 does not exist either, xauth is used to add the cookie.
 .Sh AUTHORIZED_KEYS FILE FORMAT
@@ -712,7 +712,7 @@ cert-authority,no-touch-required,principals="user_a" ssh-rsa ...
 .Ed
 .Sh SSH_KNOWN_HOSTS FILE FORMAT
 The
-.Pa /data/local/tmp/sysroot/etc/ssh/ssh_known_hosts
+.Pa /system/etc/ssh/ssh_known_hosts
 and
 .Pa ~/.ssh/known_hosts
 files contain host public keys for all known hosts.
@@ -779,7 +779,7 @@ negation or wildcard operators may be applied.
 .Pp
 The keytype and base64-encoded key are taken directly from the host key; they
 can be obtained, for example, from
-.Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_rsa_key.pub .
+.Pa /system/etc/ssh/ssh_host_rsa_key.pub .
 The optional comment field continues to the end of the line, and is not used.
 .Pp
 Lines starting with
@@ -819,7 +819,7 @@ long, and you definitely don't want to type in the host keys by hand.
 Rather, generate them by a script,
 .Xr ssh-keyscan 1
 or by taking, for example,
-.Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_rsa_key.pub
+.Pa /system/etc/ssh/ssh_host_rsa_key.pub
 and adding the host names at the front.
 .Xr ssh-keygen 1
 also offers some basic automated editing for
@@ -930,7 +930,7 @@ This file is for host-based authentication (see
 .Xr ssh 1 ) .
 It should only be writable by root.
 .Pp
-.It Pa /data/local/tmp/sysroot/data/local/tmp/sysroot/etc/ssh/moduli
+.It Pa /system/system/etc/ssh/moduli
 Contains Diffie-Hellman groups used for the "Diffie-Hellman Group Exchange"
 key exchange method.
 The file format is described in
@@ -951,15 +951,15 @@ are displayed to anyone trying to log in, and non-root connections are
 refused.
 The file should be world-readable.
 .Pp
-.It Pa /data/local/tmp/sysroot/etc/ssh/shosts.equiv
+.It Pa /system/etc/ssh/shosts.equiv
 This file is used in exactly the same way as
 .Pa hosts.equiv ,
 but allows host-based authentication without permitting login with
 rlogin/rsh.
 .Pp
-.It Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_ecdsa_key
-.It Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_ed25519_key
-.It Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_rsa_key
+.It Pa /system/etc/ssh/ssh_host_ecdsa_key
+.It Pa /system/etc/ssh/ssh_host_ed25519_key
+.It Pa /system/etc/ssh/ssh_host_rsa_key
 These files contain the private parts of the host keys.
 These files should only be owned by root, readable only by root, and not
 accessible to others.
@@ -967,9 +967,9 @@ Note that
 .Nm
 does not start if these files are group/world-accessible.
 .Pp
-.It Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_ecdsa_key.pub
-.It Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_ed25519_key.pub
-.It Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_rsa_key.pub
+.It Pa /system/etc/ssh/ssh_host_ecdsa_key.pub
+.It Pa /system/etc/ssh/ssh_host_ed25519_key.pub
+.It Pa /system/etc/ssh/ssh_host_rsa_key.pub
 These files contain the public parts of the host keys.
 These files should be world-readable but writable only by
 root.
@@ -980,7 +980,7 @@ the user so their contents can be copied to known hosts files.
 These files are created using
 .Xr ssh-keygen 1 .
 .Pp
-.It Pa /data/local/tmp/sysroot/etc/ssh/ssh_known_hosts
+.It Pa /system/etc/ssh/ssh_known_hosts
 Systemwide list of known host keys.
 This file should be prepared by the
 system administrator to contain the public host keys of all machines in the
@@ -989,20 +989,20 @@ The format of this file is described above.
 This file should be writable only by root/the owner and
 should be world-readable.
 .Pp
-.It Pa /data/local/tmp/sysroot/etc/ssh/sshd_config
+.It Pa /system/etc/ssh/sshd_config
 Contains configuration data for
 .Nm sshd .
 The file format and configuration options are described in
 .Xr sshd_config 5 .
 .Pp
-.It Pa /data/local/tmp/sysroot/etc/ssh/sshrc
+.It Pa /system/etc/ssh/sshrc
 Similar to
 .Pa ~/.ssh/rc ,
 it can be used to specify
 machine-specific login-time initializations globally.
 This file should be writable only by root, and should be world-readable.
 .Pp
-.It Pa /data/local/tmp/sysroot/var/empty
+.It Pa /data/local/tmp/var/empty
 .Xr chroot 2
 directory used by
 .Nm
@@ -1010,7 +1010,7 @@ during privilege separation in the pre-authentication phase.
 The directory should not contain any files and must be owned by root
 and not group or world-writable.
 .Pp
-.It Pa /data/local/tmp/sysroot/var/run/sshd.pid
+.It Pa /data/local/tmp/var/run/sshd.pid
 Contains the process ID of the
 .Nm
 listening for connections (if there are several daemons running

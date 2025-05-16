@@ -33,8 +33,8 @@
 .\" (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 .\" THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 .\"
-.\" $OpenBSD: ssh.1,v 1.443 2024/07/18 01:47:27 djm Exp $
-.Dd $Mdocdate: July 18 2024 $
+.\" $OpenBSD: ssh.1,v 1.444 2024/12/04 14:37:55 djm Exp $
+.Dd $Mdocdate: December 4 2024 $
 .Dt SSH 1
 .Os
 .Sh NAME
@@ -237,7 +237,7 @@ disables any escapes and makes the session fully transparent.
 Specifies an alternative per-user configuration file.
 If a configuration file is given on the command line,
 the system-wide configuration file
-.Pq Pa /data/local/tmp/sysroot/etc/ssh/ssh_config
+.Pq Pa /system/etc/ssh/ssh_config
 will be ignored.
 The default for the per-user configuration file is
 .Pa ~/.ssh/config .
@@ -509,24 +509,27 @@ For full details of the options listed below, and their possible values, see
 .It AddressFamily
 .It BatchMode
 .It BindAddress
+.It BindInterface
+.It CASignatureAlgorithms
 .It CanonicalDomains
 .It CanonicalizeFallbackLocal
 .It CanonicalizeHostname
 .It CanonicalizeMaxDots
 .It CanonicalizePermittedCNAMEs
-.It CASignatureAlgorithms
 .It CertificateFile
+.It ChannelTimeout
 .It CheckHostIP
 .It Ciphers
 .It ClearAllForwardings
 .It Compression
-.It ConnectionAttempts
 .It ConnectTimeout
+.It ConnectionAttempts
 .It ControlMaster
 .It ControlPath
 .It ControlPersist
 .It DynamicForward
 .It EnableEscapeCommandline
+.It EnableSSHKeysign
 .It EscapeChar
 .It ExitOnForwardFailure
 .It FingerprintHash
@@ -535,21 +538,23 @@ For full details of the options listed below, and their possible values, see
 .It ForwardX11
 .It ForwardX11Timeout
 .It ForwardX11Trusted
-.It GatewayPorts
-.It GlobalKnownHostsFile
 .It GSSAPIAuthentication
 .It GSSAPIDelegateCredentials
+.It GatewayPorts
+.It GlobalKnownHostsFile
 .It HashKnownHosts
 .It Host
-.It HostbasedAcceptedAlgorithms
-.It HostbasedAuthentication
 .It HostKeyAlgorithms
 .It HostKeyAlias
+.It HostbasedAcceptedAlgorithms
+.It HostbasedAuthentication
 .It Hostname
+.It IPQoS
 .It IdentitiesOnly
 .It IdentityAgent
 .It IdentityFile
-.It IPQoS
+.It IgnoreUnknown
+.It Include
 .It KbdInteractiveAuthentication
 .It KbdInteractiveDevices
 .It KexAlgorithms
@@ -557,14 +562,15 @@ For full details of the options listed below, and their possible values, see
 .It LocalCommand
 .It LocalForward
 .It LogLevel
+.It LogVerbose
 .It MACs
-.It Match
 .It NoHostAuthenticationForLocalhost
 .It NumberOfPasswordPrompts
+.It ObscureKeystrokeTiming
+.It PKCS11Provider
 .It PasswordAuthentication
 .It PermitLocalCommand
 .It PermitRemoteOpen
-.It PKCS11Provider
 .It Port
 .It PreferredAuthentications
 .It ProxyCommand
@@ -577,16 +583,20 @@ For full details of the options listed below, and their possible values, see
 .It RemoteForward
 .It RequestTTY
 .It RequiredRSASize
+.It RevokedHostKeys
+.It SecurityKeyProvider
 .It SendEnv
-.It ServerAliveInterval
 .It ServerAliveCountMax
+.It ServerAliveInterval
 .It SessionType
 .It SetEnv
 .It StdinNull
 .It StreamLocalBindMask
 .It StreamLocalBindUnlink
 .It StrictHostKeyChecking
+.It SyslogFacility
 .It TCPKeepAlive
+.It Tag
 .It Tunnel
 .It TunnelDevice
 .It UpdateHostKeys
@@ -893,7 +903,7 @@ Host-based authentication works as follows:
 If the machine the user logs in from is listed in
 .Pa /etc/hosts.equiv
 or
-.Pa /data/local/tmp/sysroot/etc/ssh/shosts.equiv
+.Pa /system/etc/ssh/shosts.equiv
 on the remote machine, the user is non-root and the user names are
 the same on both sides, or if the files
 .Pa ~/.rhosts
@@ -907,7 +917,7 @@ Additionally, the server
 .Em must
 be able to verify the client's
 host key (see the description of
-.Pa /data/local/tmp/sysroot/etc/ssh/ssh_known_hosts
+.Pa /system/etc/ssh/ssh_known_hosts
 and
 .Pa ~/.ssh/known_hosts ,
 below)
@@ -1039,7 +1049,7 @@ Host keys are stored in
 .Pa ~/.ssh/known_hosts
 in the user's home directory.
 Additionally, the file
-.Pa /data/local/tmp/sysroot/etc/ssh/ssh_known_hosts
+.Pa /system/etc/ssh/ssh_known_hosts
 is automatically checked for known hosts.
 Any new hosts are automatically added to the user's file.
 If a host's identification ever changes,
@@ -1265,7 +1275,7 @@ has been disabled).
 Fingerprints can be determined using
 .Xr ssh-keygen 1 :
 .Pp
-.Dl $ ssh-keygen -l -f /data/local/tmp/sysroot/etc/ssh/ssh_host_rsa_key
+.Dl $ ssh-keygen -l -f /system/etc/ssh/ssh_host_rsa_key
 .Pp
 If the fingerprint is already known, it can be matched
 and the key can be accepted or rejected.
@@ -1614,24 +1624,24 @@ manual page for more information.
 This file is for host-based authentication (see above).
 It should only be writable by root.
 .Pp
-.It Pa /data/local/tmp/sysroot/etc/ssh/shosts.equiv
+.It Pa /system/etc/ssh/shosts.equiv
 This file is used in exactly the same way as
 .Pa hosts.equiv ,
 but allows host-based authentication without permitting login with
 rlogin/rsh.
 .Pp
-.It Pa /data/local/tmp/sysroot/etc/ssh/ssh_config
+.It Pa /system/etc/ssh/ssh_config
 Systemwide configuration file.
 The file format and configuration options are described in
 .Xr ssh_config 5 .
 .Pp
-.It Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_ecdsa_key
-.It Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_ed25519_key
-.It Pa /data/local/tmp/sysroot/etc/ssh/ssh_host_rsa_key
+.It Pa /system/etc/ssh/ssh_host_ecdsa_key
+.It Pa /system/etc/ssh/ssh_host_ed25519_key
+.It Pa /system/etc/ssh/ssh_host_rsa_key
 These files contain the private parts of the host keys
 and are used for host-based authentication.
 .Pp
-.It Pa /data/local/tmp/sysroot/etc/ssh/ssh_known_hosts
+.It Pa /system/etc/ssh/ssh_known_hosts
 Systemwide list of known host keys.
 This file should be prepared by the
 system administrator to contain the public host keys of all machines in the
@@ -1641,7 +1651,7 @@ See
 .Xr sshd 8
 for further details of the format of this file.
 .Pp
-.It Pa /data/local/tmp/sysroot/etc/ssh/sshrc
+.It Pa /system/etc/ssh/sshrc
 Commands in this file are executed by
 .Nm
 when the user logs in, just before the user's shell (or command) is started.
