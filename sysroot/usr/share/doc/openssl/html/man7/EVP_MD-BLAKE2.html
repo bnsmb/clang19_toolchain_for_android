@@ -60,7 +60,7 @@
 
 <dl>
 
-<dt id="xoflen-OSSL_DIGEST_PARAM_XOFLEN-unsigned-integer">&quot;xoflen&quot; (<b>OSSL_DIGEST_PARAM_XOFLEN</b>) &lt;unsigned integer&gt;</dt>
+<dt id="size-OSSL_DIGEST_PARAM_SIZE-unsigned-integer">&quot;size&quot; (<b>OSSL_DIGEST_PARAM_SIZE</b>) &lt;unsigned integer&gt;</dt>
 <dd>
 
 </dd>
@@ -76,7 +76,7 @@
 
 <dl>
 
-<dt id="size-OSSL_DIGEST_PARAM_SIZE-unsigned-integer">&quot;size&quot; (<b>OSSL_DIGEST_PARAM_SIZE</b>) &lt;unsigned integer&gt;</dt>
+<dt id="size-OSSL_DIGEST_PARAM_SIZE-unsigned-integer1">&quot;size&quot; (<b>OSSL_DIGEST_PARAM_SIZE</b>) &lt;unsigned integer&gt;</dt>
 <dd>
 
 <p>Sets a different digest length for the <a href="../man3/EVP_DigestFinal.html">EVP_DigestFinal(3)</a> output. The value of the &quot;size&quot; parameter must not exceed the default digest length of the respective BLAKE2 algorithm variants, 64 for BLAKE2B-512 and 32 for BLAKE2S-256. The parameter must be set with the <a href="../man3/EVP_DigestInit_ex2.html">EVP_DigestInit_ex2(3)</a> call to have an immediate effect. When set with <a href="../man3/EVP_MD_CTX_set_params.html">EVP_MD_CTX_set_params(3)</a> it will have an effect only if the <b>EVP_MD_CTX</b> context is reinitialized.</p>
@@ -96,7 +96,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2020-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2020-2024 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

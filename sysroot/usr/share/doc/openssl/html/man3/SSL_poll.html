@@ -72,7 +72,7 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>SSL_poll() allows the readiness conditions of the resources represented by one or more BIO_POLL_DESCRIPTOR structures to be determined. In particular, it can be used to query for readiness conditions on QUIC connection SSL objects and QUIC stream SSL objects in a single call.</p>
+<p>SSL_poll() allows the readiness conditions of the resources represented by one or more BIO_POLL_DESCRIPTOR structures to be determined. In particular, it can be used to query for readiness conditions on QUIC connection SSL objects and QUIC stream SSL objects in a single call. It can also be used to block until at least one of the given resources is ready.</p>
 
 <p>A call to SSL_poll() specifies an array of <b>SSL_POLL_ITEM</b> structures, each of which designates a resource which is being polled for readiness, and a set of event flags which indicate the specific readiness events which the caller is interested in in relation to the specified resource.</p>
 
@@ -83,7 +83,7 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 <dt id="desc"><i>desc</i></dt>
 <dd>
 
-<p>The resource being polled for readiness, as represented by a <b>BIO_POLL_DESCRIPTOR</b>. Currently, this must be a poll descriptor of type <b>BIO_POLL_DESCRIPTOR_TYPE_SSL</b>, representing a SSL object pointer, and the SSL object must be a QUIC connection SSL object or QUIC stream SSL object.</p>
+<p>The resource being polled for readiness, as represented by a <b>BIO_POLL_DESCRIPTOR</b>. Currently, this must be a poll descriptor of type <b>BIO_POLL_DESCRIPTOR_TYPE_SSL</b>, representing an SSL object pointer, and the SSL object must be a QUIC connection SSL object or QUIC stream SSL object.</p>
 
 <p>If a <b>SSL_POLL_ITEM</b> has a poll descriptor type of <b>BIO_POLL_DESCRIPTOR_TYPE_NONE</b>, or the SSL object pointer is NULL, the <b>SSL_POLL_ITEM</b> array entry is ignored and <i>revents</i> will be set to 0 on return.</p>
 
@@ -106,7 +106,22 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 
 <p>To use SSL_poll(), call it with an array of <b>SSL_POLL_ITEM</b> structures. The array need remain allocated only for the duration of the call. <i>num_items</i> must be set to the number of entries in the array, and <i>stride</i> must be set to <code>sizeof(SSL_POLL_ITEM)</code>.</p>
 
-<p>The present implementation of SSL_poll() is a subset of the functionality which will eventually be available. Only a nonblocking mode of operation is available at this time, where SSL_poll() always returns immediately. As such, <i>timeout</i> must point to a valid <b>struct timeval</b> and that structure must be set to zero. In future, other inputs to the <i>timeout</i> argument will result in a blocking mode of operation, which is not currently supported. For more information, see <a href="#LIMITATIONS">&quot;LIMITATIONS&quot;</a>.</p>
+<p>The <i>timeout</i> argument specifies the timeout to use, and, implicitly, whether to use SSL_poll() in blocking or nonblocking mode:</p>
+
+<ul>
+
+<li><p>If <i>timeout</i> is NULL, the function blocks indefinitely until at least one resource is ready.</p>
+
+</li>
+<li><p>If <i>timeout</i> is non-NULL, and it points to a <b>struct timeval</b> which is set to zero, the function operates in nonblocking mode and returns immediately with readiness information.</p>
+
+</li>
+<li><p>If <i>timeout</i> is non-NULL, and it points to a <b>struct timeval</b> which is set to a value other than zero, the function blocks for the specified interval or until at least one of the specified resources is ready, whichever comes first.</p>
+
+</li>
+</ul>
+
+<p>The present implementation of SSL_poll() is a subset of the functionality which will eventually be available. For more information, see <a href="#LIMITATIONS">&quot;LIMITATIONS&quot;</a>.</p>
 
 <p>The following flags are currently defined for the <i>flags</i> argument:</p>
 
@@ -116,6 +131,10 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 <dd>
 
 <p>This flag indicates that internal state machine processing should not be performed in an attempt to generate new readiness events. Only existing readiness events will be reported.</p>
+
+<p>If this flag is used in nonblocking mode (with a timeout of zero), no internal state machine processing is performed.</p>
+
+<p>If this flag is used in blocking mode (for example, with <i>timeout</i> set to NULL), event processing does not occur unless the function blocks.</p>
 
 </dd>
 </dl>
@@ -150,6 +169,14 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 <p>This event type may be raised even if it was not requested in <i>events</i>; specifying this event type in <i>events</i> does nothing.</p>
 
 </dd>
+<dt id="SSL_POLL_EVENT_EL"><b>SSL_POLL_EVENT_EL</b></dt>
+<dd>
+
+<p>Error at listener level. This event is raised when a listener has failed, for example if a network BIO has encountered a permanent error.</p>
+
+<p>This event is never raised on objects which are not listeners, but its occurrence will cause <b>SSL_POLL_EVENT_EC</b> to be raised on all dependent connections.</p>
+
+</dd>
 <dt id="SSL_POLL_EVENT_EC"><b>SSL_POLL_EVENT_EC</b></dt>
 <dd>
 
@@ -158,7 +185,7 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 <p>This event is never raised on objects which are not connections.</p>
 
 </dd>
-<dt id="SSL_POLL_EVENT_DCD"><b>SSL_POLL_EVENT_DCD</b></dt>
+<dt id="SSL_POLL_EVENT_ECD"><b>SSL_POLL_EVENT_ECD</b></dt>
 <dd>
 
 <p>Error at connection level (drained). This event is raised when a connection has finished terminating, and has reached the terminated state. This event will generally occur after an interval of time passes after the <b>SSL_POLL_EVENT_EC</b> event is raised on a connection.</p>
@@ -198,6 +225,12 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 <p>This event does not guarantee that a subsequent call to <a href="../man3/SSL_write_ex.html">SSL_write_ex(3)</a> will succeed.</p>
 
 </dd>
+<dt id="SSL_POLL_EVENT_IC"><b>SSL_POLL_EVENT_IC</b></dt>
+<dd>
+
+<p>This event, which is only raised by a QUIC listener SSL object, is raised when one or more incoming QUIC connections are available to be accepted using <a href="../man3/SSL_accept_connection.html">SSL_accept_connection(3)</a>.</p>
+
+</dd>
 <dt id="SSL_POLL_EVENT_ISB"><b>SSL_POLL_EVENT_ISB</b></dt>
 <dd>
 
@@ -226,21 +259,16 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 
 <h1 id="LIMITATIONS">LIMITATIONS</h1>
 
-<p>SSL_poll() as presently implemented has the following limitations:</p>
+<p>SSL_poll() as presently implemented has the following limitation:</p>
 
 <ul>
 
-<li><p>The implementation of SSL_poll() only supports nonblocking operation and therefore requires the <i>timeout</i> argument be used to specify a zero timeout. Calls to SSL_poll() which specify another value, or which pass <i>timeout</i> as NULL, will fail. This does not allow waiting, but does allow multiple QUIC SSL objects to be queried for their readiness state in a single call.</p>
-
-<p>Future releases will remove this limitation and support blocking SSL_poll().</p>
-
-</li>
-<li><p>Only <b>BIO_POLL_DESCRIPTOR</b> structures with type <b>BIO_POLL_DESCRIPTOR_TYPE_SSL</b>, referencing QUIC connection SSL objects or QUIC stream SSL objects, are supported.</p>
+<li><p>Only <b>BIO_POLL_DESCRIPTOR</b> structures with type <b>BIO_POLL_DESCRIPTOR_TYPE_SSL</b>, referencing QUIC listener, connection or stream SSL objects, are supported.</p>
 
 </li>
 </ul>
 
-<p>These limitations will be revised in a future release of OpenSSL.</p>
+<p>This limitation may be revised in a future release of OpenSSL.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -284,9 +312,13 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 
 <p>SSL_poll() was added in OpenSSL 3.3.</p>
 
+<p>Before 3.5, SSL_poll() did not support blocking operation and would fail if called with a NULL <i>timeout</i> parameter or a <i>timeout</i> parameter pointing to a <b>struct timeval</b> which was not zero.</p>
+
+<p>Before 3.5, the <b>SSL_POLL_EVENT_EL</b> and <b>SSL_POLL_EVENT_IC</b> event types were not present.</p>
+
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2024 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2024-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

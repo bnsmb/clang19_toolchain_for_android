@@ -128,7 +128,7 @@ DECLARE_LHASH_COMP_FN(stuff, TYPE)</code></pre>
 
 htable = B&lt;lh_I&lt;TYPE&gt;_new&gt;(LHASH_HASH_FN(stuff), LHASH_COMP_FN(stuff));</code></pre>
 
-<p><b>lh_<i>TYPE</i>_free</b>() frees the <b>LHASH_OF</b>(<b><i>TYPE</i></b>) structure <i>table</i>. Allocated hash table entries will not be freed; consider using <b>lh_<i>TYPE</i>_doall</b>() to deallocate any remaining entries in the hash table (see below).</p>
+<p><b>lh_<i>TYPE</i>_free</b>() frees the <b>LHASH_OF</b>(<b><i>TYPE</i></b>) structure <i>table</i>. Allocated hash table entries will not be freed; consider using <b>lh_<i>TYPE</i>_doall</b>() to deallocate any remaining entries in the hash table (see below). If the argument is NULL, nothing is done.</p>
 
 <p><b>lh_<i>TYPE</i>_flush</b>() empties the <b>LHASH_OF</b>(<b><i>TYPE</i></b>) structure <i>table</i>. New entries can be added to the flushed table. Allocated hash table entries will not be freed; consider using <b>lh_<i>TYPE</i>_doall</b>() to deallocate any remaining entries in the hash table (see below).</p>
 
@@ -217,6 +217,8 @@ lh_TYPE_doall_arg(hashtable, LHASH_DOALL_ARG_FN(TYPE_print), BIO,
 <p>In OpenSSL 1.0.0, the lhash interface was revamped for better type checking.</p>
 
 <p>In OpenSSL 3.1, <b>DEFINE_LHASH_OF_EX</b>() was introduced and <b>DEFINE_LHASH_OF</b>() was deprecated.</p>
+
+<p>OPENSSL_LH_doall_arg_thunk(), OPENSSL_LH_set_thunks() were added in OpenSSL 3.3.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

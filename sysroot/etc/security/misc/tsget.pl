@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/data/local/tmp/sysroot/usr/bin/perl
 # Copyright 2002-2018 The OpenSSL Project Authors. All Rights Reserved.
 # Copyright (c) 2002 The OpenTSA Project. All rights reserved.
 #
@@ -47,7 +47,7 @@ sub create_curl {
     $curl->setopt(CURLOPT_VERBOSE, 1) if $options{d};
     $curl->setopt(CURLOPT_FAILONERROR, 1);
     $curl->setopt(CURLOPT_USERAGENT,
-        "OpenTSA tsget.pl/openssl-3.3.1");
+        "OpenTSA tsget.pl/openssl-3.5.0");
 
     # Options for POST method.
     $curl->setopt(CURLOPT_UPLOAD, 1);
