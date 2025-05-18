@@ -22,12 +22,15 @@ The toolchain contains :
 - wget
 - curl
 - sshd/ssh
+- openssl
 - git
 - gpg
 - man
 - bash
 - nano
-- vi
+- vi / vim
+- tmux
+
 
 and some other tools -- all configured for the target directory **/data/local/tmp/sysroot**.
 (see the file [README in the directory sysroot](https://github.com/bnsmb/clang19_toolchain_for_android/tree/main/sysroot/))
@@ -64,7 +67,12 @@ Unpack the tar file in the directory
 
 **/data/local/tmp**
 
-This command creates the directories with the **clang19 toolchain** in the directory 
+```
+cd /data/local/tmp
+tar -xf clang19_toolchain*release*.tar.gz
+```
+
+This creates the directories with the **clang19 toolchain** in the directory 
 
 **/data/local/tmp/sysroot**
 
@@ -85,7 +93,7 @@ e.g.
  source /data/local/tmp/sysroot/bin/init_clang19_env
 ```
 
-This must be performed once in each adb session using the **clang19 toolchain**
+This must be performed once in each session using the **clang19 toolchain**
 
 For more details see 
 
