@@ -26,9 +26,6 @@
 #  24.04.2025 v1.2.3 /bs
 #    the script now sets the environment variable HOSTNAME to "$( getprop ro.product.device ) $( getprop ro.serialno )" if it's empty
 #
-#  18.05.2025 v1.3.0 /bs
-#    the script now uses /system/bin/test to check, if a file or directdory exists (-> the script now also works in bash)
-#
 
 __TRUE=0
 __FALSE=1
@@ -41,11 +38,8 @@ PRINT_EXAMPLES=${__FALSE}
 
 alias LogDebugMsg='[ "${DEBUG}"x != ""x ] && echo "DEBUG: $*" >&2 '
 
-TEST="$( which test )"
-TEST=${TEST:=test}
-
 THIS_SCRIPT="$0"
-${TEST} ! -r "${THIS_SCRIPT}"  && THIS_SCRIPT="/data/local/tmp/sysroot/bin/init_clang19_env"
+[ ! -r "${THIS_SCRIPT}" ] && THIS_SCRIPT="/data/local/tmp/sysroot/bin/init_clang19_env"
 
 
 # ---------------------------------------------------------------------
@@ -159,7 +153,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
  
       -h | --help | help )
 
-        if ${TEST} -r "${THIS_SCRIPT}"  ; then
+        if [ -r "${THIS_SCRIPT}" ] ; then
           SUPPORTED_ENV_VARIABLES="Supported environment variables are:
 
 $( grep ":=" ${THIS_SCRIPT} | grep -v SUPPORTED_ENV_VARIABLES )
@@ -237,31 +231,31 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   SYSROOT_CONFIGURE_OPTION=""
  
   if [ "${NDK_DIR}"x != ""x ] ; then
-    if ${TEST} -d "${NDK_DIR}" ; then
+    if [ -d  "${NDK_DIR}" ] ; then
 
       INCLUDE_DIRS="${INCLUDE_DIRS} ${NDK_DIR}/include ${NDK_DIR}/sysroot/usr/include/aarch64-linux-android"
 
     fi
   fi
 
-  if  "${SYSROOT}"x != ""x ] ; then
-    if ${TEST} -d  "${SYSROOT}" ; then
+  if [ "${SYSROOT}"x != ""x ] ; then
+    if [ -d  "${SYSROOT}" ] ; then
 
       SYSROOT_LIB_DIR="${SYSROOT}/usr/lib/${CPU_TYPE}-linux-android"
 
       INCLUDE_DIRS="${INCLUDE_DIRS} ${SYSROOT}/usr/include"
 
-      if ${TEST} -d ${SYSROOT_LIB_DIR}/${API}  ; then
+      if [ -d ${SYSROOT_LIB_DIR}/${API} ] ; then
         LIB_DIRS="${LIB_DIRS} ${SYSROOT_LIB_DIR}/${API}"
         OBJ_DIRS="${OBJ_DIRS} ${SYSROOT_LIB_DIR}/${API}"
       fi
 
-      if ${TEST} -d ${SYSROOT_LIB_DIR}/  ; then
+      if [ -d ${SYSROOT_LIB_DIR}/ ] ; then
         LIB_DIRS="${LIB_DIRS} ${SYSROOT_LIB_DIR}"
       fi
       
       
-      ${TEST} -d ${SYSROOT}/usr/bin && BIN_DIRS="${BIN_DIRS} ${SYSROOT}/usr/bin"
+      [ -d ${SYSROOT}/usr/bin ] && BIN_DIRS="${BIN_DIRS} ${SYSROOT}/usr/bin"
 
       SYSROOT_CONFIGURE_OPTION="--sysroot ${SYSROOT}"
 
@@ -276,7 +270,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
 # ---------------------------------------------------------------------
 
-  if ${TEST} ! -x "${CLANG}"  ; then
+  if [ ! -x "${CLANG}" ] ; then
     echo "ERROR: The binary ${CLANG} does not exist or is not executable"
     CONTINUE=${__FALSE}
   fi
@@ -290,7 +284,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   echo "Preparing the clang environment for creating binaries for the CPU type ${CPU_TYPE}"
 
   if [ "${TARGET_ROOT}"x != ""x ] ; then
-    if ${TEST} -d  "${TARGET_ROOT}"  ; then
+    if [ -d  "${TARGET_ROOT}" ] ; then
       INCLUDE_DIRS="${INCLUDE_DIRS} ${TARGET_ROOT}/usr/include"
       BIN_DIRS="${BIN_DIRS} ${TARGET_ROOT}/usr/bin"
       LIB_DIRS="${LIB_DIRS} ${TARGET_ROOT}/usr/lib"
@@ -323,7 +317,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   for CUR_DIR in ${BIN_DIRS} ; do
     echo ":${PATH}:" | grep ":${CUR_DIR}:" >/dev/null
     if [ $? -ne 0 ] ; then
-      if ! ${TEST} -d "${CUR_DIR}" ; then
+      if [ ! -d "${CUR_DIR}" ] ; then
         echo "WARNING: The directory \"${CUR_DIR}\" does not exist"
       fi
       [[ :${PATH}: != *:${CUR_DIR}: ]] && PATH="${CUR_DIR}:${PATH}"
@@ -332,7 +326,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
  
  
   for CUR_DIR in ${INCLUDE_DIRS} ; do
-    if ! ${TEST} -d "${CUR_DIR}" ; then
+    if [ ! -d "${CUR_DIR}" ] ; then
       echo "WARNING: The directory \"${CUR_DIR}\" does not exist"
     fi
   
@@ -356,7 +350,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
  
   for CUR_DIR in ${LIB_DIRS} ; do
-    if ! ${TEST} -d "${CUR_DIR}" ; then
+    if [ ! -d "${CUR_DIR}" ] ; then
       echo "WARNING: The directory \"${CUR_DIR}\" does not exist"
     fi
   
@@ -368,7 +362,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
 
   for CUR_DIR in ${OBJ_DIRS} ; do
-    if ! ${TEST} -d "${CUR_DIR}" ; then
+    if [ ! -d "${CUR_DIR}" ] ; then
       echo "WARNING: The directory \"${CUR_DIR}\" does not exist"
     fi
   
@@ -454,9 +448,9 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
  
   echo
 
-  if  ! ${TEST} -d /tmp  ; then
+  if [ ! -d /tmp ] ; then
     if [ "${TMP}"x = ""x ] ; then
-      if ${TEST} -d /data/local/tmp  ; then
+      if [ -d /data/local/tmp ] ; then
         export TMP="/data/local/tmp"
         printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "TMP is now:"         "${TMP}"
       else
@@ -499,7 +493,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   NEW_ALIAS="sysroot setlibpath addlib"
 
   for i in vi find tar bash sed awk dd nano curl ; do
-    if ${TEST} -x "${CLANG_SYSROOT}/usr/bin/$i"  ; then
+    if [ -x "${CLANG_SYSROOT}/usr/bin/$i" ] ; then
        alias $i="${CLANG_SYSROOT}/usr/bin/$i"
       NEW_ALIAS="${NEW_ALIAS} $i"
     fi
@@ -548,7 +542,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   fi
 fi
 
-if ${TEST} -r  ${DEFAULT_SSL_CERT_FILE}  ; then
+if [ -r  ${DEFAULT_SSL_CERT_FILE} ] ; then
   echo "Setting the variable \"SSL_CERT_FILE\" to \"${DEFAULT_SSL_CERT_FILE}\" ..."
   export SSL_CERT_FILE=${DEFAULT_SSL_CERT_FILE}
 else
