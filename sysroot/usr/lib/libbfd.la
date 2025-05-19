@@ -17,7 +17,7 @@ old_library='libbfd.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/source/gdb-15.2/zlib -lz -lzstd'
+dependency_libs=' -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/source/binutils-2.44/zlib -lz -lzstd '/data/local/tmp/sysroot/usr/lib'/libsframe.la'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''

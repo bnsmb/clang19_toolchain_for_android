@@ -15,11 +15,42 @@ File: dir,	Node: Top	This is the top of the INFO tree
 * Menu:
 
 Individual utilities
-* cmp: (diffutils)Invoking cmp.                 Compare 2 files byte by byte.
-* diff3: (diffutils)Invoking diff3.             Compare 3 files line by line.
-* diff: (diffutils)Invoking diff.               Compare 2 files line by line.
-* patch: (diffutils)Invoking patch.             Apply a patch to a file.
-* sdiff: (diffutils)Invoking sdiff.             Merge 2 files side-by-side.
+* addr2line: (binutils)addr2line.               Convert addresses to file and 
+                                                  line.
+* ar: (binutils)ar.                             Create, modify, and extract 
+                                                  from archives.
+* c++filt: (binutils)c++filt.                   Filter to demangle encoded C++ 
+                                                  symbols.
+* cxxfilt: (binutils)c++filt.                   MS-DOS name for c++filt.
+* dlltool: (binutils)dlltool.                   Create files needed to build 
+                                                  and use DLLs.
+* elfedit: (binutils)elfedit.                   Update ELF header and property 
+                                                  of ELF files.
+* nm: (binutils)nm.                             List symbols from object files.
+* objcopy: (binutils)objcopy.                   Copy and translate object 
+                                                  files.
+* objdump: (binutils)objdump.                   Display information from 
+                                                  object files.
+* ranlib: (binutils)ranlib.                     Generate index to archive 
+                                                  contents.
+* readelf: (binutils)readelf.                   Display the contents of ELF 
+                                                  format files.
+* size: (binutils)size.                         List section sizes and total 
+                                                  size.
+* strings: (binutils)strings.                   List printable strings from 
+                                                  files.
+* strip: (binutils)strip.                       Discard symbols.
+* windmc: (binutils)windmc.                     Generator for Windows message 
+                                                  resources.
+* windres: (binutils)windres.                   Manipulate Windows resources.
 
-Text creation and manipulation
-* Diffutils: (diffutils).       Comparing and merging files.
+Software development
+* As: (as).                     The GNU assembler.
+* Bfd: (bfd).                   The Binary File Descriptor library.
+* Binutils: (binutils).         The GNU binary utilities.
+* CTF: (ctf-spec).              The CTF file format.
+* Gas: (as).                    The GNU assembler.
+* Ld: (ld).                     The GNU linker.
+* Ld-Internals: (ldint).        The GNU linker internals.
+* SFrame: (sframe-spec).        The Simple Frame format.
+* gprof: (gprof).               Profiling your program's execution

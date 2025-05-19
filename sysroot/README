@@ -54,6 +54,7 @@ cmake 3.30.4
 ninja 1.13.0.git and 1.12.1
 make 4.4.1
 meson 1.7
+binutils 2.44 (ddr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
 
 autoconf 2.72
 automake 1.17
@@ -181,7 +182,7 @@ History
     updated the OpenSSH binaries to version 9.9p2
     updated git to version 2.49
 
-  16.04.2025 v1.3.0 beta /bs
+  23.05.2025 v1.3.0 beta /bs
     the script /data/local/tmp/create_clang_env.sh now supports multiple NDKs
     removed the file LLVMPolly.so from the archive with NDK r27b files -- this is a library for x86
     added the files from the NDK r27c
@@ -210,8 +211,9 @@ History
     use symbolic links for clang clang++ clang-cl clang-cpp
     use symbolic links for ld64.lld ld.lld  lld-link
     use symbolic links for llvm-addr2line llvm-bitcode-strip llvm-dlltool llvm-install-name-tool llvm-lib llvm-otool llvm-ranlib llvm-readelf llvm-strip llvm-windres wasm-ld
-    updated cmake to version 4.0.1
+    updated cmake to version 4.0.1 (the binaries for cmake are now stripped and not compressed anymore)
     added ninja 1.12.1
     updated OpoenSSH to version 10.0p2 using the libraries from OpenSSL 3.5
     updated OpenSSL to version 3.5
+    updated the binutils to version 2.44 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
 
