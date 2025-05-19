@@ -26,8 +26,10 @@
 #  24.04.2025 v1.2.3 /bs
 #    the script now sets the environment variable HOSTNAME to "$( getprop ro.product.device ) $( getprop ro.serialno )" if it's empty
 #
-#  18.05.2025 v1.3.0 /bs
+#  19.05.2025 v1.3.0 /bs
 #    the script now uses /system/bin/test to check, if a file or directdory exists (-> the script now also works in bash)
+#    added a "Hello Rorld" program written in Assembler for the arm64 CPU
+#    added support for this syntax:  CLANG_SYSROOT=/data/local/tmp/sysroot.test  source ${CLANG_SYSROOT}/bin/init_clang19_env
 #
 
 __TRUE=0
@@ -45,8 +47,14 @@ TEST="$( which test )"
 TEST=${TEST:=test}
 
 THIS_SCRIPT="$0"
-${TEST} ! -r "${THIS_SCRIPT}"  && THIS_SCRIPT="/data/local/tmp/sysroot/bin/init_clang19_env"
 
+# check if this script was sourced in
+#
+if [[ "${THIS_SCRIPT}" != */init_clang*_env ]] ; then
+  THIS_SCRIPT="/data/local/tmp/sysroot/bin/init_clang19_env"
+else
+  CLANG_SYSROOT="$( cd "${THIS_SCRIPT%/bin/*}" && pwd )"
+fi
 
 # ---------------------------------------------------------------------
 # the variable TMPDIR is used by the /sytem/bin/sh to get the default directory for temporary files
@@ -74,11 +82,17 @@ function add_library_path {
 }
 
 # ---------------------------------------------------------------------
+#  sysroot for the clang binaries and the other tools (make, etc)
+#
+CLANG_SYSROOT="${CLANG_SYSROOT:=/data/local/tmp/sysroot}"
 
+echo "The toolchain directory used is \"${CLANG_SYSROOT}\" "
+
+# ---------------------------------------------------------------------
 
 # certificate file
 #
-DEFAULT_SSL_CERT_FILE="/data/local/tmp/sysroot/etc/security/ca-certificates.crt"
+DEFAULT_SSL_CERT_FILE="${CLANG_SYSROOT}/etc/security/ca-certificates.crt"
 
 # sysroot for the programs compiled with clang
 # 
@@ -87,10 +101,6 @@ TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
 # clang version 
 #
 CLANG_VERSION="${CLANG_VERSION:=19}"
-
-#  sysroot for the clang binaries and the other tools (make, etc)
-#
-CLANG_SYSROOT="/data/local/tmp/sysroot"
 
 # directory with the files for clang
 # 
@@ -129,6 +139,8 @@ add_library_path "${CLANG_SYSROOT}/usr/lib"
 
 export HOME TERMINFO PATH LD_LIBRARY_PATH MAN_PATH
 
+CPU_TYPE="${CPU_TYPE:=$( uname -m )}"
+
 # ---------------------------------------------------------------------
 
 
@@ -162,7 +174,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
         if ${TEST} -r "${THIS_SCRIPT}"  ; then
           SUPPORTED_ENV_VARIABLES="Supported environment variables are:
 
-$( grep ":=" ${THIS_SCRIPT} | grep -v SUPPORTED_ENV_VARIABLES )
+$( grep ":=" ${THIS_SCRIPT} | grep -v SUPPORTED_ENV_VARIABLES | sed "s/export //g" )
 "
         else
            SUPPORTED_ENV_VARIABLES=""
@@ -176,6 +188,10 @@ var=value   - set the environment variable "var" to "value" at start of the scri
 examples    - print compile examples 
 
 ${SUPPORTED_ENV_VARIABLES}
+
+To use another toolchain base directory use this syntax:
+
+  CLANG_SYSROOT=/data/local/tmp/sysroot.test  source \${CLANG_SYSROOT}/bin/init_clang19_env
 
 EOT
 
@@ -214,15 +230,12 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   
   if [[ $0 == *init_clang*_env* ]] ; then
     echo
-    echo "*******************************************************************"
+    echo "*******************************************************************************************"
     echo " WARNING: The script $0 must be sourced in "
-    echo "*******************************************************************"
+    echo "*******************************************************************************************"
     echo
     STANDALONE_SCRIPT=${__TRUE}                 
   fi
-
-  CPU_TYPE="${CPU_TYPE:=$( uname -m )}"
-
 
 # ---------------------------------------------------------------------
 
@@ -244,7 +257,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     fi
   fi
 
-  if  "${SYSROOT}"x != ""x ] ; then
+  if [ "${SYSROOT}"x != ""x ] ; then
     if ${TEST} -d  "${SYSROOT}" ; then
 
       SYSROOT_LIB_DIR="${SYSROOT}/usr/lib/${CPU_TYPE}-linux-android"
@@ -584,7 +597,13 @@ To test the C++ compiler use
 cd ${CLANG_SYSROOT}
 clang++ \${CPPFLAGS} \${LDFLAGS}  -o helloworld_in_c++ ./helloworld_in_c++.cpp && ./helloworld_in_c++
 
+To test the assembler use
+
+cd ${CLANG_SYSROOT}
+clang -nostdlib -static -Wl,--entry=_start -o helloworld_in_assembler helloworld_in_assembler.s && ./helloworld_in_assembler
+
 EOT
+
 
 fi
 
