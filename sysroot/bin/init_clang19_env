@@ -191,7 +191,7 @@ ${SUPPORTED_ENV_VARIABLES}
 
 To use another toolchain base directory use this syntax:
 
-  CLANG_SYSROOT=/data/local/tmp/sysroot.test  source \${CLANG_SYSROOT}/bin/init_clang19_env
+  CLANG_SYSROOT=${CLANG_SYSROOT}  source \${CLANG_SYSROOT}/bin/init_clang19_env
 
 EOT
 
@@ -597,10 +597,15 @@ To test the C++ compiler use
 cd ${CLANG_SYSROOT}
 clang++ \${CPPFLAGS} \${LDFLAGS}  -o helloworld_in_c++ ./helloworld_in_c++.cpp && ./helloworld_in_c++
 
-To test the assembler use
+To test the assembler from CLANG use
 
 cd ${CLANG_SYSROOT}
 clang -nostdlib -static -Wl,--entry=_start -o helloworld_in_assembler helloworld_in_assembler.s && ./helloworld_in_assembler
+
+To test the assembler from the binutils use
+
+cd ${CLANG_SYSROOT}
+as -o helloworld_in_assembler_for_as.o helloworld_in_assembler_for_as.s && ld -o helloworld_in_assembler_for_as helloworld_in_assembler_for_as.o && ./helloworld_in_assembler_for_as
 
 EOT
 

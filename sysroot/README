@@ -54,7 +54,7 @@ cmake 3.30.4
 ninja 1.13.0.git and 1.12.1
 make 4.4.1
 meson 1.7
-binutils 2.44 (ddr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
+binutils 2.44 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
 
 autoconf 2.72
 automake 1.17
