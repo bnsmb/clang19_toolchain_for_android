@@ -107,6 +107,7 @@ dd 9.5.58
 jq 1.7.1
 
 gawk 5.3.2
+grep 3.12
 gsed 4.8
 diff 3.8
 bc 1.0.8
@@ -216,4 +217,5 @@ History
     updated OpoenSSH to version 10.0p2 using the libraries from OpenSSL 3.5
     updated OpenSSL to version 3.5
     updated the binutils to version 2.44 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
+    added grep 3.12 (the name used for the binary is ggrep)
 
