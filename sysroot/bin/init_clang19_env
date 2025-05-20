@@ -605,7 +605,9 @@ clang -nostdlib -static -Wl,--entry=_start -o helloworld_in_assembler helloworld
 To test the assembler from the binutils use
 
 cd ${CLANG_SYSROOT}
-as -o helloworld_in_assembler_for_as.o helloworld_in_assembler_for_as.s && ld -o helloworld_in_assembler_for_as helloworld_in_assembler_for_as.o && ./helloworld_in_assembler_for_as
+${CLANG_SYSROOT}/usr/bin/as -o helloworld_in_assembler_for_as.o helloworld_in_assembler_for_as.s && \
+  ${CLANG_SYSROOT}//usr/bin/ld -o helloworld_in_assembler_for_as helloworld_in_assembler_for_as.o && \
+  ./helloworld_in_assembler_for_as
 
 EOT
 

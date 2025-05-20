@@ -219,5 +219,6 @@ History
     updated the binutils to version 2.44 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
     added grep 3.12 (the name used for the binary is ggrep)
     added example programs for the CLANG assembler and the assembler from the binutils
+    nmon now only needs the standard Android OS libraries
 
 
