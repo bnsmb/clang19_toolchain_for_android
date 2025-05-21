@@ -44,7 +44,11 @@ PRINT_EXAMPLES=${__FALSE}
 alias LogDebugMsg='[ "${DEBUG}"x != ""x ] && echo "DEBUG: $*" >&2 '
 
 TEST="$( which test )"
-TEST=${TEST:=test}
+
+# this is NOT a supported enviornment variable -> use this code to avoid adding the variable to the list of supported environment variables in the usage output
+#
+[ "${TEST}"x = ""x ] && TEST="test"
+
 
 THIS_SCRIPT="$0"
 
@@ -59,7 +63,8 @@ fi
 # ---------------------------------------------------------------------
 # the variable TMPDIR is used by the /sytem/bin/sh to get the default directory for temporary files
 #
-export TMPDIR="${TMPDIR:=/data/local/tmp}"
+TMPDIR="${TMPDIR:=/data/local/tmp}"
+export TMPDIR
 
 # ---------------------------------------------------------------------
 
@@ -174,7 +179,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
         if ${TEST} -r "${THIS_SCRIPT}"  ; then
           SUPPORTED_ENV_VARIABLES="Supported environment variables are:
 
-$( grep ":=" ${THIS_SCRIPT} | grep -v SUPPORTED_ENV_VARIABLES | sed "s/export //g" )
+$( grep ":=" ${THIS_SCRIPT} | grep -v SUPPORTED_ENV_VARIABLES )
 "
         else
            SUPPORTED_ENV_VARIABLES=""
@@ -559,29 +564,28 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   else
     LogDebugMsg  "root access is NOT enabled on this machine"
   fi
-fi
 
-if ${TEST} -r  ${DEFAULT_SSL_CERT_FILE}  ; then
-  echo "Setting the variable \"SSL_CERT_FILE\" to \"${DEFAULT_SSL_CERT_FILE}\" ..."
-  export SSL_CERT_FILE=${DEFAULT_SSL_CERT_FILE}
-else
-  echo "WARNING: Certificate file \"${DEFAULT_SSL_CERT_FILE}\" not found "
-fi
-
-echo ""
-
-CLANG_ENV_INIT_DONE=${__TRUE}
-
-if [ "${HOSTNAME}"x = ""x ] ; then
-  if [ $( hostname )x != "localhost"x ] ; then
-    export HOSTNAME="$( hostname )"
+  if ${TEST} -r  ${DEFAULT_SSL_CERT_FILE}  ; then
+    echo "Setting the variable \"SSL_CERT_FILE\" to \"${DEFAULT_SSL_CERT_FILE}\" ..."
+    export SSL_CERT_FILE=${DEFAULT_SSL_CERT_FILE}
   else
-    export HOSTNAME="$( getprop ro.product.device ) $( getprop ro.serialno )"
+    echo "WARNING: Certificate file \"${DEFAULT_SSL_CERT_FILE}\" not found "
+  fi
+
+  echo "$PS1" | grep "\[clang19" 2>/dev/null >/dev/null || export PS1="[clang19 toolchain] $PS1" 
+
+  CLANG_ENV_INIT_DONE=${__TRUE}  
+
+  echo ""
+
+  if [ "${HOSTNAME}"x = ""x ] ; then
+    if [ $( hostname )x != "localhost"x ] ; then
+      export HOSTNAME="$( hostname )"
+    else
+      export HOSTNAME="$( getprop ro.product.device ) $( getprop ro.serialno )"
+    fi
   fi
 fi
-
-
-echo "$PS1" | grep "\[clang19" 2>/dev/null >/dev/null || export PS1="[clang19 toolchain] $PS1" 
 
 if [ ${PRINT_EXAMPLES} = ${__TRUE} ] ; then
 

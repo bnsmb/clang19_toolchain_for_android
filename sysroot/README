@@ -4,14 +4,6 @@ binaries in Android
 
 Also included is the Android NDK version r27b and version r27c.
 
-The default NDK is still r27b; to use the NDK r27c either change the variable NDK in the file 
-
-/data/local/tmp/sysroot/bin/init_clang19_env 
-
-or set the variable NDK to r27c before sourcing the file /data/local/tmp/sysroot/bin/init_clang19_env :
-
-NDK=r27c source /data/local/tmp/sysroot/bin/init_clang19_env 
-
 
 Usage:
 
@@ -35,100 +27,118 @@ To init the clang environment source the file
 
 Note: This must be done once in each adb session using this clang toolchain
 
-The default pkg-config tool configured is pkg-config 0.19; to use pkgconf instead of pkg-config set the environment variable PKG_CONFIG 
+
+The default NDK is r27b; to use the NDK r27c either change the variable NDK in the file 
+
+/data/local/tmp/sysroot/bin/init_clang19_env 
+
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/develop/binutils-2.44 $ ASUS_I006D:/ $  grep NDK= /data/local/tmp/sysroot/bin/init_clang19_env 
+NDK="${NDK:=r27b}"
+ASUS_I006D:/ $ 
+
+or set the variable NDK to r27c before sourcing the file /data/local/tmp/sysroot/bin/init_clang19_env :
+
+NDK=r27c source /data/local/tmp/sysroot/bin/init_clang19_env 
+
+
+The default pkg-config tool configured is pkg-config; to use pkgconf instead of pkg-config set the environment variable PKG_CONFIG 
 
 PKG_CONFIG=/data/local/tmp/sysroot/usr/clang19/bin/pkgconf
+
 
 The include file sysroot/usr/include/add_missing_definitions.h contains dummies for functions missing in Android
 
 The dummy library sysroot/usr/lib/libmylib.so can be used to create libraries that are needed in the Makefile of a tool but are not necessary in Android (like libpthreads.so).
-Simply create a symbolic link for the missing library to libmylib.so
+Simply create a symbolic link for the missing library to libmylib.so, e.g.:
+
+cd /data/local/tmp/sysroot/usr/lib
+ln -s ./libmylib.so ./libpthreads.so
 
 
-Installed programs
-
-bash 5.2.37
-
-clang 19.0.0
-cmake 3.30.4
-ninja 1.13.0.git and 1.12.1
-make 4.4.1
-meson 1.7
-binutils 2.44 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
-
-autoconf 2.72
-automake 1.17
-m4 1.4.19
-libtool 2.5.3
-(gnu) patch 2.7
-patchelf 0.18
-GNU help2man 1.49.3
-pkg-config 0.29
-pkgconf 2.30
-autopoint 0.23
-texinfo 7.2
-
-bison 3.8
-flex 2.6.4
-
-gdb 15.2
-
-rsync 3.4.1 
-
-wget 2.1.0
-curl 8.13.0
-
-perl 5.40
-python 3.14
-pip 25.0.1
-tcl 9.0
-
-sshd/ssh 9.9p2
-
-git 2.49
-
-gpg 1.4.3
-
-dig 9.11.37
-
-nano 8.4 and nano 6.4 
-
-vim 9.1-672
-ed 1.21
-diff 3.11
-
-man 2.13
-
-tmux 3.5a
-
-tar 1.34
-dd 9.5.58
-
-jq 1.7.1
-
-gawk 5.3.2
-grep 3.12
-gsed 4.8
-diff 3.8
-bc 1.0.8
-less 661
-
-various compression tools:
-
-7zz 24.05
-bzip2 1.0.8
-zip 3.0
-unzip 5.52
-lz4 v1.10.0
-lzop 1.04
-compress 5.0
-uncompress 5.0
-zstd 1.5.6
-pigz 2.8
-xz 5.8.1
-gunzip 1.13
-gzip 1.13
-unrar 5.91
+# The tools included in the tar file with the clang19 toolchain are:
+# 
+# clang 19.0.0
+# cmake 4.0.1
+# ninja 1.13.0.git and 1.12.1
+# make 4.4.1
+# meson 1.7
+# binutils 2.44 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
+# 
+# autoconf 2.72
+# automake 1.17
+# m4 1.4.19
+# libtool 2.5.3
+# (gnu) patch 2.7
+# patchelf 0.18
+# GNU help2man 1.49.3
+# pkg-config 0.29
+# pkgconf 2.30
+# autopoint 0.23
+# texinfo 7.2
+# 
+# bash 5.2.37
+# 
+# bison 3.8
+# flex 2.6.4
+# 
+# gdb 15.2
+# 
+# rsync 3.4.1 
+# 
+# wget 2.1.0
+# curl 8.13.0
+# 
+# perl 5.40
+# python 3.14
+# pip 25.0.1
+# tcl 9.0
+# 
+# sshd/ssh 9.9p2
+# 
+# git 2.49
+# 
+# gpg 1.4.3
+# 
+# dig 9.11.37
+# 
+# nano 8.4 and nano 6.4 
+# 
+# vim 9.1-672
+# ed 1.21
+# diff 3.11
+# 
+# man 2.13
+# 
+# tmux 3.5a
+# 
+# tar 1.34
+# dd 9.5.58
+# 
+# jq 1.7.1
+# 
+# gawk 5.3.2
+# grep 3.12
+# gsed 4.8
+# diff 3.8
+# bc 1.0.8
+# less 661
+# 
+# various compression tools:
+# 
+# 7zz 24.05
+# bzip2 1.0.8
+# zip 3.0
+# unzip 5.52
+# lz4 v1.10.0
+# lzop 1.04
+# compress 5.0
+# uncompress 5.0
+# zstd 1.5.6
+# pigz 2.8
+# xz 5.8.1
+# gunzip 1.13
+# gzip 1.13
+# unrar 5.91
 
 
 Notes
@@ -141,6 +151,9 @@ does not work with these bash binaries for non-root user. To get around that lim
 
 /system/bin/test -x /bin/sh && echo ok
 
+
+Some standard Android programs do not work very well with the new binaries in /data/local/tmp/sysroot/usr/bin -- therefore it is recommended that
+/system/bin/ and /system_ext/bin are placed in the PATH variable before /data/local/tmp/sysroot/usr/bin
 
 
 History
@@ -183,7 +196,7 @@ History
     updated the OpenSSH binaries to version 9.9p2
     updated git to version 2.49
 
-  23.05.2025 v1.3.0 beta /bs
+  23.05.2025 v1.3.0 /bs
     the script /data/local/tmp/create_clang_env.sh now supports multiple NDKs
     removed the file LLVMPolly.so from the archive with NDK r27b files -- this is a library for x86
     added the files from the NDK r27c
