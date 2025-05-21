@@ -325,7 +325,7 @@ fi
 # unpack the tar file with the files from the NDK
 #
 LogMsg
-LogMsg "Processing the tar files with the NDKs in the directroy \"${SYSROOT_DIR}/usr/ndk/\" ..."
+LogMsg "Processing the tar files with the NDKs in the directory \"${SYSROOT_DIR}/usr/ndk/\" ..."
 
 if [ -d "${SYSROOT_DIR}/usr/ndk/" ] ; then
   cd "${SYSROOT_DIR}/usr/ndk" 
@@ -349,7 +349,7 @@ if [ -d "${SYSROOT_DIR}/usr/ndk/" ] ; then
         if [ $? -ne 0 ] ; then
           LogMsg "WARNING: Error unpacking the file \"${NDK_TAR_FILE}\" "
         else
-          LogMsg " ...tar file \"${NDK_TAR_FILE}\" succesfully unpacked"
+          LogMsg " ... tar file \"${NDK_TAR_FILE}\" succesfully unpacked"
         fi
       fi
     done
@@ -387,7 +387,7 @@ fi
 #  create the config file for vim
 #
 if [ ! -r "${HOME}/.vimrc" ] ; then
-  echO "Creating the config file for vim ${HOME}/.vimrc ..."
+  echo "Creating the config file for vim ${HOME}/.vimrc ..."
   cat >"${HOME}/.vimrc" <<EOT
 " Disable Visual Mode (v, V, and Ctrl-V)
 nnoremap v <Nop>
