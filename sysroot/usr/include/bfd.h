@@ -7,7 +7,7 @@
 
 /* Main header file for the bfd library -- portable access to object files.
 
-   Copyright (C) 1990-2025 Free Software Foundation, Inc.
+   Copyright (C) 1990-2024 Free Software Foundation, Inc.
 
    Contributed by Cygnus Support.
 
@@ -924,9 +924,6 @@ extern asection _bfd_std_section[4];
 #define BFD_UND_SECTION_NAME "*UND*"
 #define BFD_COM_SECTION_NAME "*COM*"
 #define BFD_IND_SECTION_NAME "*IND*"
-
-/* GNU object-only section name.  */
-#define GNU_OBJECT_ONLY_SECTION_NAME ".gnu_object_only"
 
 /* Pointer to the common section.  */
 #define bfd_com_section_ptr (&_bfd_std_section[0])
@@ -1965,8 +1962,7 @@ enum bfd_lto_object_type
     lto_non_object,            /* Not an LTO object.  */
     lto_non_ir_object,         /* An object without LTO IR.  */
     lto_slim_ir_object,        /* A slim LTO IR object.  */
-    lto_fat_ir_object,         /* A fat LTO IR object.  */
-    lto_mixed_object           /* A mixed LTO IR object.  */
+    lto_fat_ir_object          /* A fat LTO IR object.  */
   };
 
 struct bfd_mmapped_entry
@@ -2189,7 +2185,7 @@ struct bfd
   unsigned int read_only : 1;
 
   /* LTO object type.  */
-  ENUM_BITFIELD (bfd_lto_object_type) lto_type : 3;
+  ENUM_BITFIELD (bfd_lto_object_type) lto_type : 2;
 
   /* Set if this BFD is currently being processed by
      bfd_check_format_matches.  This is checked by the cache to
@@ -2220,9 +2216,6 @@ struct bfd
 
   /* The last section on the section list.  */
   struct bfd_section *section_last;
-
-  /* The object-only section on the section list.  */
-  struct bfd_section *object_only_section;
 
   /* The number of sections.  */
   unsigned int section_count;
@@ -2797,8 +2790,6 @@ bfd_vma bfd_emul_get_commonpagesize (const char *);
 
 char *bfd_demangle (bfd *, const char *, int);
 
-asymbol *bfd_group_signature (asection *group, asymbol **isympp);
-
 /* Extracted from bfdio.c.  */
 bfd_size_type bfd_read (void *, bfd_size_type, bfd *)
 ATTRIBUTE_WARN_UNUSED_RESULT;
@@ -3081,9 +3072,6 @@ bool bfd_fill_in_gnu_debuglink_section
 char *bfd_follow_build_id_debuglink (bfd *abfd, const char *dir);
 
 const char *bfd_set_filename (bfd *abfd, const char *filename);
-
-const char *bfd_extract_object_only_section
-   (bfd *abfd);
 
 /* Extracted from reloc.c.  */
 typedef enum bfd_reloc_status
@@ -8030,13 +8018,6 @@ static inline bool
 bfd_keep_unused_section_symbols (const bfd *abfd)
 {
   return abfd->xvec->keep_unused_section_symbols;
-}
-
-static inline bool
-bfd_target_supports_archives (const bfd *abfd)
-{
-  return (abfd->xvec->_bfd_check_format[bfd_archive]
-	  != abfd->xvec->_bfd_check_format[bfd_unknown]);
 }
 
 bool bfd_set_default_target (const char *name);

@@ -17,7 +17,7 @@ old_library='libctf-nobfd.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/source/binutils-2.44/libctf/../libiberty -liberty -L/data/develop/android/source/binutils-2.44/zlib -lz'
+dependency_libs=' -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/source/gdb-16.3/libctf/../libiberty -liberty -L/data/develop/android/source/gdb-16.3/zlib -lz'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
