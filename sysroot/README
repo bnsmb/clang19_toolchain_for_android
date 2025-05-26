@@ -236,4 +236,5 @@ History
 
   21.07.2025 v1.4.0 /bs
     updated gdb to version 16.3 
+    removed the directories arm-linux-androideabi  i686-linux-android  riscv64-linux-android  x86_64-linux-android from the directory sysroot/usr/lib in the NDK r27c
 
