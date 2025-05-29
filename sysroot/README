@@ -238,4 +238,5 @@ History
     updated gdb to version 16.3 
     removed the directories arm-linux-androideabi  i686-linux-android  riscv64-linux-android  x86_64-linux-android from the directory sysroot/usr/lib in the NDK r27c
     added the alias cp_crt_libs to copy the crt*.o files to the current directory
+    added the Android NDK r28b
 
