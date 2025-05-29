@@ -514,6 +514,8 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
  
   alias addlib='LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/local/tmp/develop/sysroot/usr/lib '
 
+  alias cp_crt_libs='cp ${NDK_DIR}/sysroot/usr/lib/aarch64-linux-android/${API}/crt*.o .'
+  
   NEW_ALIAS="sysroot setlibpath addlib"
 
   for i in vi find tar bash sed awk dd nano curl ; do
