@@ -8,6 +8,9 @@
 #   24.12.2024 1.0.0 /bs
 #     initial release
 #
+#   04.06.2025 1.0.1 /bs
+#    corrected a minor error in the messages (the script did not print the IP address of the phone)
+#
 
 CUR_ID="$( id -un )"
 
@@ -275,7 +278,7 @@ if [ ${THISRC} = ${__TRUE} -a ${CONT} = ${__TRUE} ] ; then
   CURVAR=$( grep "^Port" etc/ssh/sshd_config | tr "\t" " " | tr -s " " )
   SSHD_PORT="${CURVAR#* }"
 
-  CUR_IP_ADDRES="$( ip addr list wlan0 | grep "inet " | tr -s " " | sed -e "s/^.*inet //g" -e "s#/.*##g"  )"
+  CUR_IP_ADDRESS="$( ip addr list wlan0 | grep "inet " | tr -s " " | sed -e "s/^.*inet //g" -e "s#/.*##g"  )"
   
 # awk does not exist in some Android OS
 #
