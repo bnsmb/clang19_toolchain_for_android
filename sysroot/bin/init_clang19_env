@@ -31,6 +31,10 @@
 #    added a "Hello Rorld" program written in Assembler for the arm64 CPU
 #    added support for this syntax:  CLANG_SYSROOT=/data/local/tmp/sysroot.test  source ${CLANG_SYSROOT}/bin/init_clang19_env
 #
+#  04.06.2025 v1.3.1 /bs
+#    if 'uname -m" returns "armv8*" the script sets CPU_TYPE now to aarch64
+#    the script now prints warning messages if a directory from the NDK is missing
+#
 
 __TRUE=0
 __FALSE=1
@@ -45,7 +49,7 @@ alias LogDebugMsg='[ "${DEBUG}"x != ""x ] && echo "DEBUG: $*" >&2 '
 
 TEST="$( which test )"
 
-# this is NOT a supported enviornment variable -> use this code to avoid adding the variable to the list of supported environment variables in the usage output
+# this is NOT a supported environment variable -> use this code to avoid adding the variable to the list of supported environment variables in the usage output
 #
 [ "${TEST}"x = ""x ] && TEST="test"
 
@@ -144,12 +148,20 @@ add_library_path "${CLANG_SYSROOT}/usr/lib"
 
 export HOME TERMINFO PATH LD_LIBRARY_PATH MAN_PATH
 
-CPU_TYPE="${CPU_TYPE:=$( uname -m )}"
-
 # ---------------------------------------------------------------------
 
+CPU_TYPE="${CPU_TYPE:=$( uname -m )}"
+
+CPU_TYPE="${CPU_TYPE:=$( uname -m )}"
+if [[ ${CPU_TYPE} == armv8* ]] ; then
+  echo "The CPU type is \"${CPU_TYPE}\" - using the directories for the CPU type \"aarch64\" "
+  CPU_TYPE="aarch64"
+fi
+  
+# ---------------------------------------------------------------------
 
 if [ ${CONTINUE} = ${__TRUE} ] ; then
+
   ROOT_ACCESS_AVAILABLE=${__FALSE}
   ROOT_PREFIX=""
   
@@ -256,9 +268,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
  
   if [ "${NDK_DIR}"x != ""x ] ; then
     if ${TEST} -d "${NDK_DIR}" ; then
-
-      INCLUDE_DIRS="${INCLUDE_DIRS} ${NDK_DIR}/include ${NDK_DIR}/sysroot/usr/include/aarch64-linux-android"
-
+       INCLUDE_DIRS="${INCLUDE_DIRS} ${NDK_DIR}/include ${NDK_DIR}/sysroot/usr/include/${CPU_TYPE}-linux-android"
     fi
   fi
 
@@ -269,16 +279,11 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
       INCLUDE_DIRS="${INCLUDE_DIRS} ${SYSROOT}/usr/include"
 
-      if ${TEST} -d ${SYSROOT_LIB_DIR}/${API}  ; then
-        LIB_DIRS="${LIB_DIRS} ${SYSROOT_LIB_DIR}/${API}"
-        OBJ_DIRS="${OBJ_DIRS} ${SYSROOT_LIB_DIR}/${API}"
-      fi
+      LIB_DIRS="${LIB_DIRS} ${SYSROOT_LIB_DIR}/${API}"
+      OBJ_DIRS="${OBJ_DIRS} ${SYSROOT_LIB_DIR}/${API}"
 
-      if ${TEST} -d ${SYSROOT_LIB_DIR}/  ; then
-        LIB_DIRS="${LIB_DIRS} ${SYSROOT_LIB_DIR}"
-      fi
-      
-      
+      LIB_DIRS="${LIB_DIRS} ${SYSROOT_LIB_DIR}"
+            
       ${TEST} -d ${SYSROOT}/usr/bin && BIN_DIRS="${BIN_DIRS} ${SYSROOT}/usr/bin"
 
       SYSROOT_CONFIGURE_OPTION="--sysroot ${SYSROOT}"
@@ -342,7 +347,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     echo ":${PATH}:" | grep ":${CUR_DIR}:" >/dev/null
     if [ $? -ne 0 ] ; then
       if ! ${TEST} -d "${CUR_DIR}" ; then
-        echo "WARNING: The directory \"${CUR_DIR}\" does not exist"
+        echo "WARNING: The directory with binaries \"${CUR_DIR}\" does not exist"
       fi
       [[ :${PATH}: != *:${CUR_DIR}: ]] && PATH="${CUR_DIR}:${PATH}"
     fi
@@ -351,7 +356,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
  
   for CUR_DIR in ${INCLUDE_DIRS} ; do
     if ! ${TEST} -d "${CUR_DIR}" ; then
-      echo "WARNING: The directory \"${CUR_DIR}\" does not exist"
+      echo "WARNING: The directory with include files \"${CUR_DIR}\" does not exist"
     fi
   
     echo "${CFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
@@ -362,12 +367,12 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   
     echo "${CPPFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
     if [ $? -ne 0 ] ; then
-       CPPFLAGS="${CPPFLAGS} -I${CUR_DIR}"
+      CPPFLAGS="${CPPFLAGS} -I${CUR_DIR}"
     fi
   
     echo "${CXXFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
     if [ $? -ne 0 ] ; then
-       CXXFLAGS="${CXXFLAGS} -I${CUR_DIR}"
+      CXXFLAGS="${CXXFLAGS} -I${CUR_DIR}"
     fi
   
   done
@@ -375,7 +380,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
  
   for CUR_DIR in ${LIB_DIRS} ; do
     if ! ${TEST} -d "${CUR_DIR}" ; then
-      echo "WARNING: The directory \"${CUR_DIR}\" does not exist"
+      echo "WARNING: The directory with libraries \"${CUR_DIR}\" does not exist"
     fi
   
     echo "${LDFLAGS} " | grep -- "-L${CUR_DIR} " >/dev/null
@@ -387,7 +392,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   for CUR_DIR in ${OBJ_DIRS} ; do
     if ! ${TEST} -d "${CUR_DIR}" ; then
-      echo "WARNING: The directory \"${CUR_DIR}\" does not exist"
+      echo "WARNING: The directory with object files \"${CUR_DIR}\" does not exist"
     fi
   
     echo "${LDFLAGS} " | grep -- "-B${CUR_DIR}/ " >/dev/null
@@ -398,24 +403,26 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   
 
   if [ "${SYSROOT_CONFIGURE_OPTION}"x != ""x ] ; then 
-    echo "$CFLAGS" | grep -- "--sysroot" >/dev/null ||
+    echo "$CFLAGS" | grep -- " --sysroot" >/dev/null ||
       CFLAGS="$CFLAGS --sysroot=${SYSROOT}"
   
-    echo "$CPPFLAGS" | grep -- "--sysroot" >/dev/null ||
+    echo "$CPPFLAGS" | grep -- " --sysroot" >/dev/null ||
       CPPFLAGS="$CPPFLAGS --sysroot=${SYSROOT}"
   
-    echo "$CXXLAGS" | grep -- "--sysroot" >/dev/null ||
+    echo "$CXXLAGS" | grep -- " --sysroot " >/dev/null ||
       CXXFLAGS="$CXXFLAGS --sysroot=${SYSROOT}"
   
   
-    echo "$LDFLAGS" | grep -- "--sysroot" >/dev/null ||
+    echo "$LDFLAGS" | grep -- " --sysroot " >/dev/null ||
       LDFLAGS="$LDFLAGS --sysroot=${SYSROOT}"
     
   fi
 
-  LDFLAGS="${LDFLAGS} -lc  "
+  echo " $LDFLAGS " | grep -- " -lc " >/dev/null ||
+    LDFLAGS="$LDFLAGS -lc "
 
-  add_library_path "${SYSROOT}/usr/lib/aarch64-linux-android" "${CLANG_DIR}/lib"
+
+  add_library_path "${SYSROOT}/usr/lib/${CPU_TYPE}-linux-android" "${CLANG_DIR}/lib"
 
   for CUR_PKG_CONFIG_PATH  in /data/local/tmp/sysroot/usr/lib/pkgconfig/ /data/local/tmp/develop/sysroot/usr/lib/pkgconfig/ ; do
     if [[ " :${PKG_CONFIG_PATH}: " != *:${CUR_PKG_CONFIG_PATH}:* ]] ; then
@@ -514,7 +521,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
  
   alias addlib='LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/local/tmp/develop/sysroot/usr/lib '
 
-  alias cp_crt_libs='cp ${NDK_DIR}/sysroot/usr/lib/aarch64-linux-android/${API}/crt*.o .'
+  alias cp_crt_libs='cp ${NDK_DIR}/sysroot/usr/lib/${CPU_TYPE}-linux-android/${API}/crt*.o .'
   
   NEW_ALIAS="sysroot setlibpath addlib"
 
