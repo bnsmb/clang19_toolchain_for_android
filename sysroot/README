@@ -241,4 +241,5 @@ History
     added the alias cp_crt_libs to copy the crt*.o files to the current directory
     added the Android NDK r28b
     updated sqlite3 to version 3.50.1
-
+    init_clang19_env now uses the executable sysroot/bin/testcpu to check if the current CPU can execute binaries compiled for arm64 CPUs
+    
