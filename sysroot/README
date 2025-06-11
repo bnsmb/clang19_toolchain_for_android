@@ -124,6 +124,8 @@ ln -s ./libmylib.so ./libpthreads.so
 # bc 1.0.8
 # less 661
 # 
+# Android SDK build tools 35.0.2 
+#
 # various compression tools:
 # 
 # 7zz 24.05
@@ -144,17 +146,18 @@ ln -s ./libmylib.so ./libpthreads.so
 
 Notes
 
+Some standard Android programs do not work very well with the new binaries in /data/local/tmp/sysroot/usr/bin -- therefore it is recommended that
+/system/bin/ and /system_ext/bin are placed in the PATH variable before /data/local/tmp/sysroot/usr/bin
+
+
+Update 07.06.2025 /bs
+
 The test for the execution permissions like this
 
  [ -x /bin/sh ] && echo ok
 
-does not work with these bash binaries for non-root user. To get around that limitiation use the test binary from Android, e.g.
+does now work in the bash from this tar archive.
 
-/system/bin/test -x /bin/sh && echo ok
-
-
-Some standard Android programs do not work very well with the new binaries in /data/local/tmp/sysroot/usr/bin -- therefore it is recommended that
-/system/bin/ and /system_ext/bin are placed in the PATH variable before /data/local/tmp/sysroot/usr/bin
 
 
 History
@@ -242,4 +245,6 @@ History
     added the Android NDK r28b
     updated sqlite3 to version 3.50.1
     init_clang19_env now uses the executable sysroot/bin/testcpu to check if the current CPU can execute binaries compiled for arm64 CPUs
-    
+    tests like "[ -x /system/bin/sh ]" now work in the bash from this archive 
+    added the Android SDK build tools 35.0.2
+
