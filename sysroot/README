@@ -249,4 +249,5 @@ History
     tests like "[ -x /system/bin/sh ]" now work in the bash from this archive 
     added the Android SDK build tools 35.0.2
     added the binaries pstree, killall, and fuser from https://github.com/acg/psmisc
+    updated lmm to verson 2.1.2
 
