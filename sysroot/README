@@ -250,4 +250,5 @@ History
     added the Android SDK build tools 35.0.2
     added the binaries pstree, killall, and fuser from https://github.com/acg/psmisc
     updated lmm to verson 2.1.2
+    updated ack to version 3.9.0
 
