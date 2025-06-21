@@ -124,7 +124,8 @@ ln -s ./libmylib.so ./libpthreads.so
 # bc 1.0.8
 # less 661
 # 
-# Android SDK build tools 35.0.2 
+# Android SDK build tools 35.0.2 (aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs hprof-conv etc1tool mke2fs make_f2fs adb make_f2fs_casefold veridex)
+# ( the binaries are from this ZIP file: https://github.com/lzhiyong/android-sdk-tools/releases/download/35.0.2/android-sdk-tools-static-aarch64.zip )
 #
 # various compression tools:
 # 
@@ -247,4 +248,5 @@ History
     init_clang19_env now uses the executable sysroot/bin/testcpu to check if the current CPU can execute binaries compiled for arm64 CPUs
     tests like "[ -x /system/bin/sh ]" now work in the bash from this archive 
     added the Android SDK build tools 35.0.2
+    added the binaries pstree, killall, and fuser from https://github.com/acg/psmisc
 
