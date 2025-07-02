@@ -1,16 +1,5 @@
 #!/system/bin/sh
-#
-# Script to create the neccessary directories and files for ssh and sshd
-#
-# Usage: create_ssh_env.sh
-#
-# History
-#   24.12.2024 1.0.0 /bs
-#     initial release
-#
-#   04.06.2025 1.0.1 /bs
-#    corrected a minor error in the messages (the script did not print the IP address of the phone)
-#
+
 
 CUR_ID="$( id -un )"
 
@@ -21,12 +10,6 @@ __TRUE=0
 __FALSE=1
 
 
-# ---------------------------------------------------------------------
-# the variable TMPDIR is used by the /sytem/bin/sh to get the default directory for temporary files
-#
-export TMPDIR="${TMPDIR:=/data/local/tmp}"
-
-# --------------------------------------------------------------------
 #
 # variables for the script control flow and the script return code
 #
@@ -67,7 +50,7 @@ INIT_ENV_FILE="/data/local/tmp/sysroot/init_ssh_env"
 #
 
 # ----------------------------------------------------------------------
-# LogMsg
+# LogMsgchmod
 #
 # function: write a message to STDOUT
 #
@@ -142,12 +125,10 @@ LogMsg ""
 LogMsg "Initializing the ssh environment in ${SYSROOT_DIR} ..."
 LogMsg ""
 
-cd "${SYSROOT_DIR}" || die 10 "Can not change the working directory to \"${SYSROOT_DIR}\" "
-
 if [ "${CUR_ID}"x = "${SSH_USER}"x ] ; then
   LogMsg "OK; the user executing this script is \"${SSH_USER}\" "
 elif [ "${CUR_ID}"x = "root"x ] ; then
-  LogMsg "The user executing this script is \"root\" -- will no restart the script as user \"${SSH_USER}\" ... "
+  LogMsg "The user executing this script is \"root\" -- will now restart the script as user \"${SSH_USER}\" ... "
   id "${SSH_USER}" 2>/dev/null 1>/dev/null \
     die 90 "The user \"${SSH_USER}\" does not exist"
   exec su - "${SSH_USER}" -c $0 $*
@@ -233,6 +214,7 @@ if [ ${THISRC} = ${__TRUE} -a ${CONT} = ${__TRUE} ] ; then
     cp "${SSHD_CONFIG_FILE}.new" "${SSHD_CONFIG_FILE}"
   else
     LogMsg "The file \"${SSHD_CONFIG_FILE}\" already exists"
+    LogMsg "(The template for the file \"${SSHD_CONFIG_FILE}\" in this tar archive is \"${SSHD_CONFIG_FILE}.new\" )"
   fi
 
   if [ ! -r "${SSH_CONFIG_FILE}" ] ; then
@@ -240,6 +222,7 @@ if [ ${THISRC} = ${__TRUE} -a ${CONT} = ${__TRUE} ] ; then
     cp "${SSH_CONFIG_FILE}.new" "${SSH_CONFIG_FILE}"
   else
     LogMsg "The file \"${SSH_CONFIG_FILE}\" already exists"
+    LogMsg "(The template for the file \"${SSH_CONFIG_FILE}\" in this tar archive is \"${SSH_CONFIG_FILE}.new\" )"
   fi
   
   if [ ! -r "${INIT_ENV_FILE}" ] ; then
@@ -260,13 +243,8 @@ EOT
 fi
 
 if [ ${THISRC} = ${__TRUE} -a ${CONT} = ${__TRUE} ] ; then
- 
-  CURVAR=$( grep "^AuthorizedKeysFile" etc/ssh/sshd_config | tr "\t" " " | tr -s " " )
-  AUTHORIZED_KEYS_FILE="${CURVAR#* }"
-  
-# awk does not exist in some Android OS
-#
-#  AUTHORIZED_KEYS_FILE="$( grep "^AuthorizedKeysFile" "${SYSROOT_DIR}/etc/ssh/sshd_config" | awk '{ print $NF}' )"
+
+  AUTHORIZED_KEYS_FILE="$( grep "^AuthorizedKeysFile" "${SYSROOT_DIR}/etc/ssh/sshd_config" | awk '{ print $NF}' )"
 
   if [ ! -r "${AUTHORIZED_KEYS_FILE}" ] ; then
     LogMsg "Creating the empty file \"${AUTHORIZED_KEYS_FILE}\" ..."
@@ -275,16 +253,9 @@ if [ ${THISRC} = ${__TRUE} -a ${CONT} = ${__TRUE} ] ; then
     LogMsg "The file \"${AUTHORIZED_KEYS_FILE}\" already exists"
   fi
 
-  CURVAR=$( grep "^Port" etc/ssh/sshd_config | tr "\t" " " | tr -s " " )
-  SSHD_PORT="${CURVAR#* }"
+  SSHD_PORT="$( grep "^Port" "${SYSROOT_DIR}/etc/ssh/sshd_config" | awk '{ print $NF}' )"
 
-  CUR_IP_ADDRESS="$( ip addr list wlan0 | grep "inet " | tr -s " " | sed -e "s/^.*inet //g" -e "s#/.*##g"  )"
-  
-# awk does not exist in some Android OS
-#
-#  SSHD_PORT="$( grep "^Port" "${SYSROOT_DIR}/etc/ssh/sshd_config" | awk '{ print $NF}' )"
-#
-#  CUR_IP_ADDRESS="$( ip addr list wlan0 | grep "inet " | awk '{ print $2 }' | cut -f1 -d "/" )"
+  CUR_IP_ADDRESS="$( ip addr list wlan0 | grep "inet " | awk '{ print $2 }' | cut -f1 -d "/" )"
   
   LogMsg "
 
@@ -309,6 +280,10 @@ scp -P ${SSHD_PORT} [source_file]  ${CUR_IP_ADDRESS}:[targetfile|targetdir]
 To connect to other machines using ssh from this phone use
 
 ${SYSROOT_DIR}/usr/bin/ssh [hostname]
+
+To make the ssh binaries available via PATH variable execute
+
+source ${INIT_ENV_FILE}
 
 "
 

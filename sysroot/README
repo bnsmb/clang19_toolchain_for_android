@@ -251,4 +251,5 @@ History
     added the binaries pstree, killall, and fuser from https://github.com/acg/psmisc
     updated lmm to verson 2.1.2
     updated ack to version 3.9.0
+    the privilege separation user in OpenSSH is now "nobody" and the sshd can be started by the root user
 

@@ -1,0 +1,104 @@
+This archive contains the 
+
+    OpenSSH 10.0p2 binaries using OpenSSL 3.5.0 libraries
+
+    rsync 3.4.1
+
+and the 
+
+    dig binary from the bind utils
+
+The OpenSSH binaries are build for Android API version 33 (-> they should run on Android 13 and newer Android versions)
+dig and rsync are build for Android API version 28 (-> they should run on Android 9 and newer Android versions)
+
+All binaries are dynamically linked but only for the standard Android libraries, e.g.:
+
+ASUS_I006D:/ $ ldd /data/local/tmp/sysroot/usr/bin/ssh                                                                                                                                                                                       
+	linux-vdso.so.1 => [vdso] (0x76f77f7000)
+	libdl.so => /apex/com.android.runtime/lib64/bionic/libdl.so (0x76f542a000)
+	libc.so => /apex/com.android.runtime/lib64/bionic/libc.so (0x76f5441000)
+ASUS_I006D:/ $ 
+
+There are therefor no libraries (*.so) in this tar archive.
+
+
+The binaries are compiled for the target directory /data/local/tmp/sysroot.
+
+The tar archive must be unpacked into the directory /data/local/tmp. After unpacking the tar archive, the files are located in the directory
+
+/data/local/tmp/sysroot
+
+
+To init the ssh environment execute once after unpacking the tar file
+
+/data/local/tmp/sysroot/create_ssh_env.sh
+
+
+The script /data/local/tmp/sysroot/create_ssh_env.sh
+
+- creates all necessary directories in /data/local/tmp/sysroot if they do not yet exist
+
+- creates the ssh host keys in the directory /data/local/tmp/sysroot/etc if they do not yet exist.
+
+- creates the configuration files for ssh, /data/local/tmp/sysroot/etc/ssh_config and /data/local/tmp/sysroot/sshd_config, if they do not yet exist.
+
+- creates the script to init the ssh environment in an adb session:  /data/local/tmp/sysroot/init_ssh_env
+
+
+The script /data/local/tmp/sysroot/init_ssh_env should be sourced in in every session before using one of the ssh binaries: 
+
+source /data/local/tmp/sysroot/init_ssh_env
+
+
+Details
+
+The configure command used to compile OpenSSH is:
+
+./configure --host aarch64-linux-android --target=aarch64-linux-android --prefix=/system/usr/ --disable-etc-default-login --disable-lastlog --disable-libutil --disable-pututline --disable-pututxline --disable-strip --disable-utmp --disable-utmpx --disable-wtmp --disable-wtmpx --sysconfdir=/system/etc/ssh --with-cflags=-Dfd_mask=int --with-libedit --without-stackprotect --with-pid-dir=/data/local/tmp/var/run --with-privsep-path=/data/local/tmp/var/empty --with-xauth=/system/bin/xauth --with-default-path=/system/bin --with-ldns=/system/usr --with-maildir=/data/local/tmp/var/mail ac_cv_func_endgrent=yes ac_cv_func_fmt_scaled=no ac_cv_func_getlastlogxbyname=no ac_cv_func_readpassphrase=no ac_cv_func_strnvis=no ac_cv_header_sys_un_h=yes ac_cv_lib_crypt_crypt=no ac_cv_search_getrrsetbyname=no ac_cv_func_bzero=yes -with-ssl-dir=/data/develop/android/sysroot/usr --datarootdir=/system/usr --with-selinux --with-libedit=/data/local/tmp/develop/sysroot/usr
+
+
+OpenSSH has been configured with the following options:
+                     User binaries: /system/usr/bin
+                   System binaries: /system/usr/sbin
+               Configuration files: /system/etc/ssh
+                   Askpass program: /system/usr/libexec/ssh-askpass
+                      Manual pages: /system/usr/man/manX
+                          PID file: /data/local/tmp/var/run
+  Privilege separation chroot path: /data/local/tmp/var/empty
+            sshd default user PATH: /system/bin
+                    Manpage format: doc
+                       PAM support: no
+                   OSF SIA support: no
+                 KerberosV support: no
+                   SELinux support: yes
+                   libedit support: yes
+                   libldns support: yes
+  Solaris process contract support: no
+           Solaris project support: no
+         Solaris privilege support: no
+       IP address in $DISPLAY hack: no
+           Translate v4 in v6 hack: no
+                  BSD Auth support: no
+              Random number source: OpenSSL internal ONLY
+             Privsep sandbox style: none
+                   PKCS#11 support: yes
+                  U2F/FIDO support: yes
+
+              Host: aarch64-unknown-linux-android
+          Compiler: /data/develop/android/android-ndk-r27b/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang
+    Compiler flags: --sysroot /data/develop/android/android-ndk-r27b/toolchains/llvm/prebuilt/linux-x86_64/sysroot/ -O2 -w -I/data/develop/android/sysroot/usr/include -I/data/develop/android/android-ndk-r27b/toolchains/llvm/prebuilt/linux-x86_64/sysroot//usr/include -Wno-implicit-function-declaration -Wno-int-conversion -fPIE -I/data/develop/android/sysroot/selinux/usr/include -DHAVE_SETRESGID=1 -pipe -Wunknown-warning-option -Wno-error=format-truncation -Qunused-arguments -Wall -Wextra -Wpointer-arith -Wuninitialized -Wsign-compare -Wformat-security -Wsizeof-pointer-memaccess -Wno-pointer-sign -Wno-unused-parameter -Wno-unused-result -Wimplicit-fallthrough -Wmisleading-indentation -Wbitwise-instead-of-logical -fno-strict-aliasing -D_FORTIFY_SOURCE=2 -ftrapv -fzero-call-used-regs=used -ftrivial-auto-var-init=zero -mretpoline -fno-builtin-memset -Dfd_mask=int  
+Preprocessor flags: -I/data/develop/android/sysroot/usr/include  -DHAVE_ATTRIBUTE__SENTINEL__=1 -DBROKEN_SETRESGID  -I/system/usr/include -I/data/local/tmp/develop/sysroot/usr/include
+      Linker flags: -L/data/develop/android/sysroot/usr/lib -L/data/local/tmp/develop/sysroot/usr/lib --sysroot /data/develop/android/android-ndk-r27b/toolchains/llvm/prebuilt/linux-x86_64/sysroot/  -s -ffunction-sections -fdata-sections -Wl,--gc-sections -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/android-ndk-r27b/toolchains/llvm/prebuilt/linux-x86_64/sysroot//lib -L/data/develop/android/sysroot/selinux/usr/lib -ldl -lcrypto -lssl -lpcre2  -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack -Wl,-z,retpolineplt -L/system/usr/lib 
+         Libraries: -lldns  -lselinux
+     +for channels: -lcrypto  -lz
+
+
+
+History
+  12.05.2025 1.0.0 /bs
+    initial release
+
+  20.06.2025 v1.1.0 /bs
+    the privilege separation user is now "nobody" -> the sshd can be started by the root user
+
+

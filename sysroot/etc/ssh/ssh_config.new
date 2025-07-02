@@ -19,16 +19,10 @@
 
 Include /data/local/tmp/sysroot/etc/ssh/ssh_config.d/*.conf
 
-#Host 192.168.1.164
-#	user xtrnaw7
-
 Host *
-    UserKnownHostsFile /data/local/tmp/sysroot/etc/ssh/known_hosts
-
-# Host *
-#   ForwardAgent no
+   ForwardAgent yes 
 #   ForwardX11 no
-#   PasswordAuthentication yes
+#   PasswordAuthentication no 
 #   HostbasedAuthentication no
 #   GSSAPIAuthentication no
 #   GSSAPIDelegateCredentials no
@@ -52,5 +46,7 @@ Host *
 #   ProxyCommand ssh -q -W %h:%p gateway.example.com
 #   RekeyLimit 1G 1h
 #   UserKnownHostsFile ~/.ssh/known_hosts.d/%k
+
+UserKnownHostsFile /data/local/tmp/home/.ssh/known_hosts 
 
 SendEnv LANG
