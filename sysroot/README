@@ -2,7 +2,7 @@
 This tar files contains clang and other tools to compile libraries and
 binaries in Android
 
-Also included is the Android NDK version r27b and version r27c.
+Also included is the Android NDK version r27b, r27c and r28b
 
 
 Usage:
@@ -28,7 +28,7 @@ To init the clang environment source the file
 Note: This must be done once in each adb session using this clang toolchain
 
 
-The default NDK is r27b; to use the NDK r27c either change the variable NDK in the file 
+The default NDK is r27b; to use another NDK version included in the tar file either change the variable NDK in the file 
 
 /data/local/tmp/sysroot/bin/init_clang19_env 
 
@@ -252,4 +252,4 @@ History
     updated lmm to verson 2.1.2
     updated ack to version 3.9.0
     the privilege separation user in OpenSSH is now "nobody" and the sshd can be started by the root user
-
+    recompiled the bison binary with the correct prefix /data/local/tmp/sysroot/usr
