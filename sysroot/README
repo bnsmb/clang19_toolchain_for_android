@@ -256,4 +256,5 @@ History
     the flex binary now use the m4 in /data/local/tmp/sysroot/usr/bin/
     the default config file for rsyncd is now /data/local/tmp/sysroot/etc/rsyncd.conf
     ncat recompiled with prefix=/data/local/tmp/sysroot/
+    ncat.static recompiled with prefix=/data/local/tmp/sysroot/
 
