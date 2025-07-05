@@ -123,6 +123,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # diff 3.8
 # bc 1.0.8
 # less 661
+# htop 3.4.1
 # 
 # Android SDK build tools 35.0.2 (aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs hprof-conv etc1tool mke2fs make_f2fs adb make_f2fs_casefold veridex)
 # ( the binaries are from this ZIP file: https://github.com/lzhiyong/android-sdk-tools/releases/download/35.0.2/android-sdk-tools-static-aarch64.zip )
@@ -257,4 +258,6 @@ History
     the default config file for rsyncd is now /data/local/tmp/sysroot/etc/rsyncd.conf
     ncat recompiled with prefix=/data/local/tmp/sysroot/
     ncat.static recompiled with prefix=/data/local/tmp/sysroot/
+    added the alias make_fast (= make -j$( nproc ) )
+    updated htop to version 3.4.1
 
