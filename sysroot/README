@@ -128,6 +128,8 @@ ln -s ./libmylib.so ./libpthreads.so
 # Android SDK build tools 35.0.2 (aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs hprof-conv etc1tool mke2fs make_f2fs adb make_f2fs_casefold veridex)
 # ( the binaries are from this ZIP file: https://github.com/lzhiyong/android-sdk-tools/releases/download/35.0.2/android-sdk-tools-static-aarch64.zip )
 #
+# OpenVPN 2.7 (openvpn requires root access)
+#
 # various compression tools:
 # 
 # 7zz 24.05
@@ -260,4 +262,5 @@ History
     ncat.static recompiled with prefix=/data/local/tmp/sysroot/
     added the alias make_fast (= make -j$( nproc ) )
     updated htop to version 3.4.1
+    added OpenVPN 2.7
 
