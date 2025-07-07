@@ -263,4 +263,5 @@ History
     added the alias make_fast (= make -j$( nproc ) )
     updated htop to version 3.4.1
     added OpenVPN 2.7
+    updated 7zz to version 25.00
 
