@@ -31,6 +31,11 @@
 #  15.06.2025 v1.2.0 /bs
 #   the script now resolves symbolic links
 #
+#  14.07.2025 v1.3.0 /bs
+#   the code to detect symbolic links only worked for absoulte filenames -- fixed
+#   the script now ignores bind mount with source = target 
+#   the name of the temporary file used is now list_bind_mounts.sh.tmp
+#
 
 __TRUE=0
 __FALSE=1
@@ -38,7 +43,7 @@ __FALSE=1
 THISRC=${__TRUE}
 
 
-TMPFILE_NAME="${0##*/}"
+TMPFILE_NAME="${0##*/}.tmp"
 
 if [ -d /tmp ] ; then
   TMPFILE="/tmp/${TMPFILE_NAME}"
