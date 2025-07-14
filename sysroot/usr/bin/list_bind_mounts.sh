@@ -22,11 +22,14 @@
 #
 # History
 #
-#  29.07.2024 /bs
+#  29.07.2024 v1.0.0 /bs
 #   initial release
 #
-#  01.08.2024 /bs
+#  01.08.2024 v1.1.0 /bs
 #   use /sdcard/Download for temporary files if /tmp is not available
+#
+#  15.06.2025 v1.2.0 /bs
+#   the script now resolves symbolic links
 #
 
 __TRUE=0
@@ -62,6 +65,12 @@ function LogMsg {
 function LogInfo {
   [[ ${VERBOSE} = ${__TRUE} ]] && echo "$@" >&2
 }
+
+# ---------------------------------------------------------------------
+# aliase
+#
+alias LogInfoVar='f() { [[ ${__FUNCTION} = "" ]] && __FUNCTION=main ; [[ ${VERBOSE} != 0 ]] && return; varname="$1"; eval "echo \"INFO: in $__FUNCTION:  $varname ist \${$varname}\" >&2"; unset -f f; } ;  f'
+
 
 # get the list of current bind mounts 
 #
@@ -103,13 +112,21 @@ for CUR_FILE in ${FILES_TO_CHECK} ; do
   
   LogInfo
   LogInfo "Processing \"${CUR_FILE}\" ..."
-  
+
+  CUR_OUTPUT="$( readlink -f "${CUR_FILE}" )"
+  if [ -L "${CUR_FILE}" ] ; then
+    LogMsg "\"${CUR_FILE}\" is a symbolic link to ${CUR_OUTPUT} -- Now using the target for the symbolic link \"${CUR_OUTPUT}\" "
+    CUR_FILE="${CUR_OUTPUT}"
+  fi
+    
   CUR_OUTPUT="$( echo "${MOUNTINFO}" | grep  -F " ${CUR_FILE} ####" )"
   if [ $? -eq 2 ] ; then
     LogInfo "# Error using \"${CUR_FILE}\" as parameter for grep:" 
     LogInfo "${CUR_OUTPUT}" 
     THISRC=2
     continue
+  else
+    LogInfo "Found this entry: \"${CUR_OUTPUT}\" "
   fi
    
   if [ "${CUR_OUTPUT}"x = ""x ] ; then
@@ -131,11 +148,17 @@ for CUR_FILE in ${FILES_TO_CHECK} ; do
       MOUNT_SOURCE="$( echo "${CUR_LINE}" | cut -f2 -d " " )"
       MOUNT_TARGET="$( echo "${CUR_LINE}" | cut -f3 -d " " )"
 
+      LogInfoVar MAJOR_MINOR
+      LogInfoVar MOUNT_SOURCE
+      LogInfoVar MOUNT_TARGET
+      
       [[ ${VERBOSE} = ${__TRUE} ]] && set +x
     
       [ "${MOUNT_TARGET}"x = "/"x ] && MOUNT_TARGET=""
  
       eval MOUNT_SRC_ROOT_DEV="\$DEV_${MAJOR_MINOR%:*}_${MAJOR_MINOR#*:}"
+      
+      LogInfoVar MOUNT_SRC_ROOT_DEV
   
       if [ "${MOUNT_SRC_ROOT_DEV}"x = ""x ] ; then
         MOUNT_SRC_ROOT_DEV="$( mount | grep   "/dev/block/$( ls -ld /sys/dev/block/${MAJOR_MINOR} | awk -F/ '{ print $NF}'|  tail -1 | awk '{ print $NF}' )" | head -1 | awk '{ print $3}' )"
@@ -143,11 +166,16 @@ for CUR_FILE in ${FILES_TO_CHECK} ; do
         eval DEV_${MAJOR_MINOR%:*}_${MAJOR_MINOR#*:}="\${MOUNT_SRC_ROOT_DEV}"
       fi
 
-      LogInfo "MOUNT_SRC_ROOT_DEV is ${MOUNT_SRC_ROOT_DEV}" 
+      LogInfoVar MOUNT_SRC_ROOT_DEV
 
-      let NO_OF_BIND_MOUNTS_FOUND=NO_OF_BIND_MOUNTS_FOUND+1
+      if [ "${MOUNT_TARGET}"x !=  "${MOUNT_SRC_ROOT_DEV}${MOUNT_SOURCE}"x  ] ; then
+      
+        LogInfo "MOUNT_SRC_ROOT_DEV is ${MOUNT_SRC_ROOT_DEV}" 
+
+        let NO_OF_BIND_MOUNTS_FOUND=NO_OF_BIND_MOUNTS_FOUND+1
   
-      LogMsg "$( printf "%-20s -> %-20s\n"  "${MOUNT_TARGET}" "${MOUNT_SRC_ROOT_DEV}${MOUNT_SOURCE}" )"
+        LogMsg "$( printf "%-20s -> %-20s\n"  "${MOUNT_TARGET}" "${MOUNT_SRC_ROOT_DEV}${MOUNT_SOURCE}" )"        
+      fi
       
     done <"${TMPFILE}"
   fi
