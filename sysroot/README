@@ -146,6 +146,8 @@ ln -s ./libmylib.so ./libpthreads.so
 # gunzip 1.13
 # gzip 1.13
 # unrar 5.91
+# lzip 1.25
+#
 
 
 Notes
@@ -266,4 +268,6 @@ History
     updated 7zz to version 25.00
     added pigz 2.8
     updated nano to version 8.5
+    added lzip 1.25
+
 
