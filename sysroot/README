@@ -103,10 +103,8 @@ ln -s ./libmylib.so ./libpthreads.so
 # dig 9.11.37
 # 
 # nano 8.5 and nano 6.4 
-# 
 # vim 9.1-672
 # ed 1.21
-# diff 3.11
 # 
 # man 2.13
 # 
@@ -120,7 +118,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # gawk 5.3.2
 # grep 3.12
 # gsed 4.8
-# diff 3.8
+# diff 3.11
 # bc 1.0.8
 # less 661
 # htop 3.4.1
