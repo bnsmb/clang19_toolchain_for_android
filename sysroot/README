@@ -94,7 +94,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # tcl 9.0
 # sqlite3 3.50.1
 # 
-# sshd/ssh 9.9p2
+# sshd/ssh 10.0p2 
 # 
 # git 2.49
 # 
@@ -132,7 +132,7 @@ ln -s ./libmylib.so ./libpthreads.so
 #
 # various compression tools:
 # 
-# 7zz 24.05
+# 7zz 25.00 
 # bzip2 1.0.8
 # zip 3.0
 # unzip 5.52
