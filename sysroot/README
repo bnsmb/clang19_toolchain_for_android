@@ -59,7 +59,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # 
 # clang 19.0.0
 # cmake 4.0.1
-# ninja 1.13.0.git, 1.12.1, and 1.13.1
+# ninja 1.12.1, and 1.13.1
 # make 4.4.1
 # meson 1.7
 # binutils 2.44 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
@@ -268,5 +268,6 @@ History
     updated nano to version 8.5
     added lzip 1.25
     updated list_bind_mounts.sh to version 1.3.0
-    added ninja 1.13.1
+    updated ninja to version 1.13.1
+
 
