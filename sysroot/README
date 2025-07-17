@@ -120,7 +120,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # gsed 4.8
 # diff 3.11
 # bc 1.0.8
-# less 661
+# less 679 
 # htop 3.4.1
 # 
 # Android SDK build tools 35.0.2 (aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs hprof-conv etc1tool mke2fs make_f2fs adb make_f2fs_casefold veridex)
@@ -269,5 +269,5 @@ History
     added lzip 1.25
     updated list_bind_mounts.sh to version 1.3.0
     updated ninja to version 1.13.1
-
+    updated less to version 679
 
