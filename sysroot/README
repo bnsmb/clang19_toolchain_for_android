@@ -119,7 +119,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # grep 3.12
 # gsed 4.8
 # diff 3.11
-# bc 1.0.8
+# bc 1.08.2
 # less 679 
 # htop 3.4.1
 # 
@@ -270,4 +270,5 @@ History
     updated list_bind_mounts.sh to version 1.3.0
     updated ninja to version 1.13.1
     updated less to version 679
+    updated bc to version 1.08.2 ; added dc
 
