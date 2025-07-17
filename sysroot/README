@@ -117,7 +117,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # 
 # gawk 5.3.2
 # grep 3.12
-# gsed 4.8
+# gsed 4.9
 # diff 3.11
 # bc 1.08.2
 # less 679 
@@ -271,4 +271,4 @@ History
     updated ninja to version 1.13.1
     updated less to version 679
     updated bc to version 1.08.2 ; added dc
-
+    updated sed (gsed) to version 4.9
