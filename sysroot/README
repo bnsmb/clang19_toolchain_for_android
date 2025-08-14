@@ -2,7 +2,12 @@
 This tar files contains clang and other tools to compile libraries and
 binaries in Android
 
-Also included is the Android NDK version r27b, r27c and r28b
+Also included is the Android NDK version r27d and r28b
+
+Note that tar files with the files from the older NDK versions can be found here:
+
+http://bnsmb.de/files/public/Android/archive/ndk_for_clang19_toolchain/
+
 
 
 Usage:
@@ -28,17 +33,19 @@ To init the clang environment source the file
 Note: This must be done once in each adb session using this clang toolchain
 
 
-The default NDK is r27b; to use another NDK version included in the tar file either change the variable NDK in the file 
+The default NDK version is stored in the variable NDK defined in the file init_clang91_env:
 
-/data/local/tmp/sysroot/bin/init_clang19_env 
+[clang19 toolchain] 127|ASUS_I006D:/data/local/tmp $ grep NDK= /data/local/tmp/sysroot/bin/init_clang19_env                                    
+  NDK="${NDK:=r27d}"
+[clang19 toolchain] ASUS_I006D:/data/local/tmp $ 
 
-[clang19 toolchain] ASUS_I006D:/data/local/tmp/develop/binutils-2.44 $ ASUS_I006D:/ $  grep NDK= /data/local/tmp/sysroot/bin/init_clang19_env 
-NDK="${NDK:=r27b}"
-ASUS_I006D:/ $ 
+To use another NDK version included in the tar file either change the variable NDK in the file
 
-or set the variable NDK to r27c before sourcing the file /data/local/tmp/sysroot/bin/init_clang19_env :
+/data/local/tmp/sysroot/bin/init_clang19_env
 
-NDK=r27c source /data/local/tmp/sysroot/bin/init_clang19_env 
+or set the variable NDK before sourcing the file /data/local/tmp/sysroot/bin/init_clang19_env :
+
+NDK=<ndk_version> source /data/local/tmp/sysroot/bin/init_clang19_env 
 
 
 The default pkg-config tool configured is pkg-config; to use pkgconf instead of pkg-config set the environment variable PKG_CONFIG 
@@ -275,3 +282,9 @@ History
     updated gnupatch to version 2.8
     updated tar to version 1.35
 
+  21.09.2025 v1.5.0 beta /bs
+    added the files from the Android NDK r27d
+    removed the files from the Android NDK r27b and r27c
+    the default Android NDK version used is now r27d
+    updated vim to version 9.1 with patches 1-1629
+:
