@@ -129,6 +129,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # bc 1.08.2
 # less 679 
 # htop 3.4.1
+# btop 1.4.4 (btop needs root access)
 # 
 # Android SDK build tools 35.0.2 (aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs hprof-conv etc1tool mke2fs make_f2fs adb make_f2fs_casefold veridex)
 # ( the binaries are from this ZIP file: https://github.com/lzhiyong/android-sdk-tools/releases/download/35.0.2/android-sdk-tools-static-aarch64.zip )
@@ -288,3 +289,5 @@ History
     the default Android NDK version used is now r27d
     updated vim to version 9.1 with patches 1-1629
     updated curl to version 8.15.0
+    added btop 1.4.4 (btop needs root access)
+
