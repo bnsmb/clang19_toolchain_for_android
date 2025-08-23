@@ -109,7 +109,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # 
 # dig 9.11.37
 # 
-# nano 8.5 and nano 6.4 
+# nano 8.6 and nano 6.4 
 # vim 9.1-672
 # ed 1.21
 # 
@@ -290,4 +290,5 @@ History
     updated vim to version 9.1 with patches 1-1629
     updated curl to version 8.15.0
     added btop 1.4.4 (btop needs root access)
+    updated nano to version 8.6
 
