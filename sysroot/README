@@ -292,4 +292,6 @@ History
     added btop 1.4.4 (btop needs root access)
     updated nano to version 8.6
     updated m4 to version 1.4.20
+    bison binary recompiled with these configure options "--prefix=/data/local/tmp/sysroot/usr  --datarootdir=/data/local/tmp/sysroot/usr/share --datadir=/data/local/tmp/sysroot/usr/share "
+
 
