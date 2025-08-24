@@ -73,7 +73,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # 
 # autoconf 2.72
 # automake 1.17
-# m4 1.4.19
+# m4 1.4.20
 # libtool 2.5.3
 # patch 2.8 (gnupatch)
 # patchelf 0.18
@@ -291,4 +291,5 @@ History
     updated curl to version 8.15.0
     added btop 1.4.4 (btop needs root access)
     updated nano to version 8.6
+    updated m4 to version 1.4.20
 
