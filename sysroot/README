@@ -136,7 +136,7 @@ ln -s ./libmylib.so ./libpthreads.so
 #
 # OpenVPN 2.7 (openvpn requires root access)
 #
-# unfsd 0.11.0 (a userland NFS daemon usable by non-root user)
+# unfsd 0.11.0 (a userland NFS daemon usable by non-root user; the default exports file for this binary is /data/local/tmp/sysroot/etc/exports)
 #
 # various compression tools:
 # 
@@ -296,4 +296,5 @@ History
     updated m4 to version 1.4.20
     bison binary recompiled with these configure options "--prefix=/data/local/tmp/sysroot/usr  --datarootdir=/data/local/tmp/sysroot/usr/share --datadir=/data/local/tmp/sysroot/usr/share "
     added unfsd 0.11.0 
+    added a a statically linked sqlite3 binary (sqlite3.static)
 
