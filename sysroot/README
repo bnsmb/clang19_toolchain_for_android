@@ -138,6 +138,8 @@ ln -s ./libmylib.so ./libpthreads.so
 #
 # unfsd 0.11.0 (a userland NFS daemon usable by non-root user; the default exports file for this binary is /data/local/tmp/sysroot/etc/exports)
 #
+# protoc v32.1.0 (currently the binary only)
+#
 # various compression tools:
 # 
 # 7zz 25.00 
@@ -297,4 +299,4 @@ History
     bison binary recompiled with these configure options "--prefix=/data/local/tmp/sysroot/usr  --datarootdir=/data/local/tmp/sysroot/usr/share --datadir=/data/local/tmp/sysroot/usr/share "
     added unfsd 0.11.0 
     added a a statically linked sqlite3 binary (sqlite3.static)
-
+    added the binary protoc v32.1.0
