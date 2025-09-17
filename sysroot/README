@@ -112,6 +112,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # nano 8.6 and nano 6.4 
 # vim 9.1-672
 # ed 1.21
+# bvi /bmore 1.5.0
 # 
 # man 2.13
 # 
@@ -301,4 +302,5 @@ History
     added a a statically linked sqlite3 binary (sqlite3.static)
     added the binary protoc v32.1.0
     recreated the tar file with the files from the NDK r27d to remove the leading "./" from the path names in the tar file
+    updated bvi and bmore to version 1.5.0
 
