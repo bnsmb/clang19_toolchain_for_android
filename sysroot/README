@@ -300,3 +300,5 @@ History
     added unfsd 0.11.0 
     added a a statically linked sqlite3 binary (sqlite3.static)
     added the binary protoc v32.1.0
+    recreated the tar file with the files from the NDK r27d to remove the leading "./" from the path names in the tar file
+
