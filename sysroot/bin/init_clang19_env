@@ -211,7 +211,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
 # NDK to use
 #
-  NDK="${NDK:=r27b}"
+  NDK="${NDK:=r27d}"
 
 # directory with the files from the NDK
 #

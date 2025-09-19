@@ -40,7 +40,7 @@ export TMPDIR="${TMPDIR:=/data/local/tmp}"
 THISRC=${__TRUE}
 CONT=${__TRUE}
 
-NDK="${NDK:=r27b}"
+NDK="${NDK:=r27d}"
 
 SYSROOT_DIR="/data/local/tmp/sysroot"
 
@@ -341,9 +341,9 @@ if [ -d "${SYSROOT_DIR}/usr/ndk/" ] ; then
       LogMsg ""
       LogMsg "Processing the tar file \"${NDK_TAR_FILE}\" ..."
       
-      DIR_IN_TAR="$( ${SYSROOT_DIR}/usr/bin/gzip -cd "${NDK_TAR_FILE}" | tar -tf - 2>/dev/null | head -1 )"
+      DIR_IN_TAR_FILE="$( ${SYSROOT_DIR}/usr/bin/gzip -cd "${NDK_TAR_FILE}" | tar -tf - 2>/dev/null | head -1 )"
 
-      CUR_NDK=${DIR_IN_TAR_FILE%%/*}
+      CUR_NDK="${DIR_IN_TAR_FILE%%/*}"
       if [ "${CUR_NDK}"x = "."x ] ; then 
         DIR_IN_TAR_FILE="${DIR_IN_TAR_FILE#*/}"
         CUR_NDK="${DIR_IN_TAR_FILE%%/*}"

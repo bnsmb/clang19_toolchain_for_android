@@ -1,18 +1,40 @@
+# template file with ./configure command for using with the clang19 tool chain
+#
+#
+
+# use these addtional CFLAGs for binaries should be executed using a debugger like gdb
+# 
 #DEBUG_CFLAGS="-g -O0"
+
 DEBUG_CFLAGS=""
 
+# these configure options are required to compile the source code of a lot of  "old" unix programs with clang
+# 
 CFLAGS="${CFLAGS} -Wno-implicit-function-declaration -Wno-int-conversion ${DEBUG_CFLAGS}"
 
+
+# add additional CFLAGS for the compiler here
+#
 CFLAGS="${CFLAGS} "
+
+# add additional LDFLAGS for the linker here
+#
 LDFLAGS="${LDFLAGS} "
 
 CXXFLAGS="${CFLAGS}"
 CXXFLAGS="${CXXFLAGS} ${DEBUG_CFLAGS}"
 
+# add additional configure options here
+#
 CONFIGURE_OPTIONS="
 "
 
+# target directory used by "make install"
+#
 TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
 
+#
+# set PREFIX to "echo" or something similar before calling this script to run it in dry-run mode
+#
 ${PREFIX}  ./configure  --prefix=${TARGET_ROOT}/usr/ CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" ${CONFIGURE_OPTIONS} $* 
 

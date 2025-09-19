@@ -2,7 +2,7 @@
 This tar files contains clang and other tools to compile libraries and
 binaries in Android
 
-Also included is the Android NDK version r27d and r28b
+Also included is the Android NDK version r27b, r27c, r27d and r28b
 
 Note that tar files with the files from the older NDK versions can be found here:
 
@@ -288,9 +288,8 @@ History
     updated gnupatch to version 2.8
     updated tar to version 1.35
 
-  21.09.2025 v1.5.0 beta /bs
+  21.09.2025 v1.5.0 /bs
     added the files from the Android NDK r27d
-    removed the files from the Android NDK r27b and r27c
     the default Android NDK version used is now r27d
     updated vim to version 9.1 with patches 1-1629
     updated curl to version 8.15.0
@@ -304,6 +303,7 @@ History
     recreated the tar file with the files from the NDK r27d to remove the leading "./" from the path names in the tar file
     updated bvi and bmore to version 1.5.0
     added statically linked gdb binaries
-    removed the dependencies on libc++_shared.so from some binaries; corrected the symlink ninja
-    nmap, nping, ncat now use /data/local/tmp/sysroot/etc/resolv.conf and /data/local/tmp/sysroot/etc/hosts
+    removed the dependency on libc++_shared.so from some binaries
+    corrected the broken symlink for ninja
+    nmap, nping, ncat now use config files in  /data/local/tmp/sysroot/etc/ (except /etc/ethers)
 
