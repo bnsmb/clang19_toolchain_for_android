@@ -304,4 +304,6 @@ History
     recreated the tar file with the files from the NDK r27d to remove the leading "./" from the path names in the tar file
     updated bvi and bmore to version 1.5.0
     added statically linked gdb binaries
+    removed the dependencies on libc++_shared.so from some binaries; corrected the symlink ninja
+    nmap, nping, ncat now use /data/local/tmp/sysroot/etc/resolv.conf and /data/local/tmp/sysroot/etc/hosts
 

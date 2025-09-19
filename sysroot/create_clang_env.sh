@@ -15,7 +15,9 @@
 #   01.04.2025 1.3.0 /bs
 #     in the previous versions of this script the environment variable HOME was not set correctly and therefore some configuration files were created in the wrong directories -- fixed
 #     added to code to check the user executing the script
-#    
+#   19.09.2025 1.3.1 /bs
+#       The script now also processes NDK tar files if the file names in the tar file begin with “./”
+#
 
 
 #
@@ -339,7 +341,14 @@ if [ -d "${SYSROOT_DIR}/usr/ndk/" ] ; then
       LogMsg ""
       LogMsg "Processing the tar file \"${NDK_TAR_FILE}\" ..."
       
-      CUR_NDK="$( ${SYSROOT_DIR}/usr/bin/gzip -cd "${NDK_TAR_FILE}" | tar -tf - 2>/dev/null | head -1 | cut -f1 -d "/"  )"
+      DIR_IN_TAR="$( ${SYSROOT_DIR}/usr/bin/gzip -cd "${NDK_TAR_FILE}" | tar -tf - 2>/dev/null | head -1 )"
+
+      CUR_NDK=${DIR_IN_TAR_FILE%%/*}
+      if [ "${CUR_NDK}"x = "."x ] ; then 
+        DIR_IN_TAR_FILE="${DIR_IN_TAR_FILE#*/}"
+        CUR_NDK="${DIR_IN_TAR_FILE%%/*}"
+      fi
+      
       LogMsg "The tar file contains the NDK \"${CUR_NDK}\" "
       if [ -d "${CUR_NDK}" ] ; then
         LogMsg "The directory with the NDK \"${CUR_NDK}\" already exists"
