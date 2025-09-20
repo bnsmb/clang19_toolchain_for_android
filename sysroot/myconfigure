@@ -17,12 +17,15 @@ CFLAGS="${CFLAGS} -Wno-implicit-function-declaration -Wno-int-conversion ${DEBUG
 #
 CFLAGS="${CFLAGS} "
 
+# C++ compiler options
+# 
+CXXFLAGS="${CFLAGS}"
+
 # add additional LDFLAGS for the linker here
 #
 LDFLAGS="${LDFLAGS} "
 
 CXXFLAGS="${CFLAGS}"
-CXXFLAGS="${CXXFLAGS} ${DEBUG_CFLAGS}"
 
 # add additional configure options here
 #

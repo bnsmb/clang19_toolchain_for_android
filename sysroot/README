@@ -66,7 +66,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # 
 # clang 19.0.0
 # cmake 4.0.1
-# ninja 1.12.1, and 1.13.1
+# ninja 1.12.1 and 1.13.1
 # make 4.4.1
 # meson 1.7
 # binutils 2.44 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
@@ -306,4 +306,5 @@ History
     removed the dependency on libc++_shared.so from some binaries
     corrected the broken symlink for ninja
     nmap, nping, ncat now use config files in  /data/local/tmp/sysroot/etc/ (except /etc/ethers)
+    deleted not working binary bin/soelim (there is still a soelim in usr/bin)
 
