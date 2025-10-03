@@ -1,0 +1,4 @@
+bin/init_clang19_env
+create_empty_library.sh
+usr/lib/libpthread.a
+usr/lib/libpthread.so

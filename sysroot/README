@@ -308,3 +308,7 @@ History
     nmap, nping, ncat now use config files in  /data/local/tmp/sysroot/etc/ (except /etc/ethers)
     deleted not working binary bin/soelim (there is still a soelim in usr/bin)
 
+  21.11.2025 v1.6.0 beta /bs
+    added the script ./create_empty_library.sh to create an empty library
+    added the empty library libpthread.so (and libpthread.a)
+

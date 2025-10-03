@@ -40,7 +40,9 @@
 #    added the parameter nocpucheck
 #    the value for CPU_TYPE is now hardcoded in the script
 #    the parameter are now processed BEFORE setting the variables
-#
+#  22.09.2025 v1.4.1 /bs
+#    the script now ignores all parameter following the parameter "--"
+#    
 
 __TRUE=0
 __FALSE=1
