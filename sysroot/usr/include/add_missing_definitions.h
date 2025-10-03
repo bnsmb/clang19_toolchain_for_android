@@ -20,9 +20,16 @@
 //    the definitions for nl_langinfo and nl_catd now also can be used in C programs
 //  13.04.2025
 //    added the defintion for CloseSocket
+//  16.04.2025
+//    added the defintion for a replacement for the function mktime_z
+//  16.06.2025 
+//    added the definition for a replacement for the function bzero
+//  07.07.2025
+//    added the definition for isblank, min and max
+//  03.10.2025
+//    added the functions tzalloc, tzfree, localtime_rz, mktime_z for API < 35
 //
 // This file defines
-//   __GNUC_PREREQ
 //   quad_t
 //   u_quad_t
 //   short
@@ -40,6 +47,19 @@
 //   getpwent
 //   endpwent
 //   CloseSocket
+//   mktime_z
+//   bzero
+//   tzalloc
+//   tzfree 
+//   localtime_rz 
+//   mktime_z
+//
+// This file defines the macros
+//
+//   __GNUC_PREREQ
+//   isblank
+//   min
+//   max
 //
 
 #ifndef ADD_MISSING_DEFINITIONS_H
@@ -264,6 +284,89 @@ void endpwent(void) {
 #define CloseSocket(x) close(x)
 #endif
 
+// --------------------------------------------------------------------
+
+#ifndef mktime_z
+
+time_t mktime_z(timezone_t tz, struct tm *tm) {
+    return mktime(tm);  // Fallback without timezone
+}
+
+// If not using this function, replace mktime_z with mktime in the source code:
+
+// Replace
+//    time_t t = mktime_z(tz, &tm);
+
+// With
+//   time_t t = mktime(&tm);
+
+#endif
+
+
+// --------------------------------------------------------------------
+
+#ifndef bzero
+
+void bzero(void *s, size_t n) {
+    memset(s, 0, n);
+}
+
+#endif
+
+
+// --------------------------------------------------------------------
+
+#ifndef isblank
+
+#define isblank(c) ((c) == ' ' || (c) == '\t')
+
+#endif
+
+// --------------------------------------------------------------------
+
+#ifndef min
+
+#define min(a,b) ((a) < (b) ? (a) : (b))
+
+#endif
+
+#ifndef max
+
+#define max(a,b) ((a) > (b) ? (a) : (b))
+
+#endif
+
+// --------------------------------------------------------------------
+
+// these functions are defined in API 35 and newer only
+
+#if !defined(__ANDROID__) || __ANDROID_API__ < 35
+
+#include <time.h>
+#include <stdlib.h>
+
+void *tzalloc(const char *tz) {
+    if (tz) setenv("TZ", tz, 1);
+    tzset();
+    return (void*)1; // Dummy TZ handle
+}
+
+void tzfree(void *tzobj) {
+    (void)tzobj; // nichts tun
+}
+
+struct tm *localtime_rz(void *tz, const time_t *timep, struct tm *result) {
+    (void)tz; // ignorieren, global TZ
+    return localtime_r(timep, result);
+}
+
+time_t mktime_z(void *tz, struct tm *tm) {
+    (void)tz; // ignorieren, global TZ
+    return mktime(tm);
+}
+
+#endif
+
 
 // --------------------------------------------------------------------
 
@@ -271,3 +374,11 @@ void endpwent(void) {
 
 // --------------------------------------------------------------------
 //
+
+
+// --------------------------------------------------------------------
+
+
+
+
+
