@@ -16,8 +16,11 @@
 #     in the previous versions of this script the environment variable HOME was not set correctly and therefore some configuration files were created in the wrong directories -- fixed
 #     added to code to check the user executing the script
 #   19.09.2025 1.3.1 /bs
-#       The script now also processes NDK tar files if the file names in the tar file begin with “./”
-#
+#     The script now also processes NDK tar files if the file names in the tar file begin with “./”
+#   03.10.2025 1.3.2 /bs
+#     The script now changes the owner for the directory /data/local/tmp/sysroot/var/empty to "root" if root access is enabled
+#       (That directory is only used by the sshd if started as user root)
+#     
 
 
 #
@@ -425,6 +428,9 @@ if [ ${ROOT_ACCESS_AVAILABLE} = ${__TRUE} ] ; then
     fi
   fi
 
+  if [ -d /data/local/tmp/sysroot/var/empty ] ; then
+    LogMsg "Changing the owner of the directory \"/data/local/tmp/sysroot/var/empty\" to \"root\" ..."
+  fi
 fi
 
 if [ -x ${SYSROOT_DIR}/create_ssh_env.sh ] ; then
