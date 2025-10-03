@@ -58,7 +58,7 @@
 .\" ========================================================================
 .\"
 .IX Title "SSL_CONF_CMD 3ossl"
-.TH SSL_CONF_CMD 3ossl 2025-04-08 3.5.0 OpenSSL
+.TH SSL_CONF_CMD 3ossl 2025-09-30 3.5.4 OpenSSL
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -125,7 +125,7 @@ Permits the use of unsafe legacy renegotiation. Equivalent to setting
 \&\fBSSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION\fR.
 .IP \fB\-no_renegotiation\fR 4
 .IX Item "-no_renegotiation"
-Disables all attempts at renegotiation in TLSv1.2 and earlier, same as setting
+Disables all attempts at renegotiation in (D)TLSv1.2 and earlier, same as setting
 \&\fBSSL_OP_NO_RENEGOTIATION\fR.
 .IP \fB\-no_resumption_on_reneg\fR 4
 .IX Item "-no_resumption_on_reneg"

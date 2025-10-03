@@ -58,7 +58,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL-GUIDE-TLS-INTRODUCTION 7ossl"
-.TH OSSL-GUIDE-TLS-INTRODUCTION 7ossl 2025-04-08 3.5.0 OpenSSL
+.TH OSSL-GUIDE-TLS-INTRODUCTION 7ossl 2025-09-30 3.5.4 OpenSSL
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -132,7 +132,7 @@ TLSv1.2 is chosen.
 .SH CERTIFICATES
 .IX Header "CERTIFICATES"
 In order for a client to establish a connection to a server it must authenticate
-the identify of that server, i.e. it needs to confirm that the server is really
+the identity of that server, i.e. it needs to confirm that the server is really
 the server that it claims to be and not some imposter. In order to do this the
 server will send to the client a digital certificate (also commonly referred to
 as an X.509 certificate). The certificate contains various information about the
@@ -371,7 +371,7 @@ See \fBossl\-guide\-quic\-introduction\fR\|(7) for an introduction to QUIC in Op
 \&\fBossl\-guide\-tls\-server\-block\fR\|(7), \fBossl\-guide\-quic\-introduction\fR\|(7)
 .SH COPYRIGHT
 .IX Header "COPYRIGHT"
-Copyright 2023\-2024 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2023\-2025 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy

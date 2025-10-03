@@ -58,7 +58,7 @@
 .\" ========================================================================
 .\"
 .IX Title "CMS_SIGN 3ossl"
-.TH CMS_SIGN 3ossl 2025-04-08 3.5.0 OpenSSL
+.TH CMS_SIGN 3ossl 2025-09-30 3.5.4 OpenSSL
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -158,7 +158,7 @@ can be performed by obtaining the streaming ASN1 \fBBIO\fR directly using
 \&\fBBIO_new_CMS()\fR.
 .PP
 If a signer is specified it will use the default digest for the signing
-algorithm. This is \fBSHA1\fR for both RSA and DSA keys.
+algorithm. This is \fBSHA256\fR for both RSA and DSA keys.
 .PP
 If \fBsigncert\fR and \fBpkey\fR are NULL then a certificates only CMS structure is
 output.
@@ -192,7 +192,7 @@ Since OpenSSL 3.2, \fBCMS_sign_ex()\fR and \fBCMS_sign()\fR ignore any duplicate
 certificates in their \fIcerts\fR argument and no longer throw an error for them.
 .SH COPYRIGHT
 .IX Header "COPYRIGHT"
-Copyright 2008\-2023 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2008\-2025 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy

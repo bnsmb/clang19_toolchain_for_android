@@ -58,7 +58,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EVP_PKEY_SIGN 3ossl"
-.TH EVP_PKEY_SIGN 3ossl 2025-04-08 3.5.0 OpenSSL
+.TH EVP_PKEY_SIGN 3ossl 2025-09-30 3.5.4 OpenSSL
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -102,7 +102,7 @@ signing a pre\-computed message digest using the algorithm given by \fIalgo\fR a
 the key given through \fBEVP_PKEY_CTX_new\fR\|(3) or \fBEVP_PKEY_CTX_new_from_pkey\fR\|(3).
 A context \fIctx\fR without a pre\-loaded key cannot be used with this function.
 This function provides almost the same functionality as \fBEVP_PKEY_sign_init_ex()\fR,
-but is uniquely intended to be used with a pre\-computed messsage digest, and
+but is uniquely intended to be used with a pre\-computed message digest, and
 allows pre\-determining the exact conditions for that message digest, if a
 composite signature algorithm (such as RSA\-SHA256) was fetched.
 Following a call to this function, setting parameters that modifies the digest
@@ -401,7 +401,7 @@ The \fBEVP_PKEY_sign_init_ex2()\fR, \fBEVP_PKEY_sign_message_init()\fR,
 where added in OpenSSL 3.4.
 .SH COPYRIGHT
 .IX Header "COPYRIGHT"
-Copyright 2006\-2024 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2006\-2025 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the "License").  You may not use
 this file except in compliance with the License.  You can obtain a copy

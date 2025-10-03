@@ -429,13 +429,13 @@ DANE TLSA 2 1 1 ...ee12d2cc90180517616e8a18 matched TA certificate at depth 1
 <dt id="ign_eof"><b>-ign_eof</b></dt>
 <dd>
 
-<p>Inhibit shutting down the connection when end of file is reached in the input.</p>
+<p>Inhibit shutting down the connection when end of file is reached in the input. This implicitly turns on <b>-nocommands</b> as well.</p>
 
 </dd>
 <dt id="quiet"><b>-quiet</b></dt>
 <dd>
 
-<p>Inhibit printing of session and certificate information. This implicitly turns on <b>-ign_eof</b> as well.</p>
+<p>Inhibit printing of session and certificate information. This implicitly turns on <b>-ign_eof</b> and <b>-nocommands</b> as well.</p>
 
 </dd>
 <dt id="no_ign_eof"><b>-no_ign_eof</b></dt>

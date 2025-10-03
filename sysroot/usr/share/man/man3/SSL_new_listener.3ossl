@@ -58,7 +58,7 @@
 .\" ========================================================================
 .\"
 .IX Title "SSL_NEW_LISTENER 3ossl"
-.TH SSL_NEW_LISTENER 3ossl 2025-04-08 3.5.0 OpenSSL
+.TH SSL_NEW_LISTENER 3ossl 2025-09-30 3.5.4 OpenSSL
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -165,6 +165,14 @@ accepts a new incoming connection. A new SSL object representing the accepted
 connection is created and returned on success. If no incoming connection is
 available and the listener SSL object is configured in nonblocking mode, NULL is
 returned.
+.PP
+The new SSL object returned from \fBSSL_accept_connection()\fR may or may not have
+completed its handshake at the point it is returned. Optionally, you may use the
+function \fBSSL_is_init_finished\fR\|(3) to determine this. You may call the
+functions \fBSSL_accept\fR\|(3), \fBSSL_do_handshake\fR\|(3) or \fBSSL_handle_events\fR\|(3) to
+progress the state of the SSL object towards handshake completion. Other "I/O"
+functions may also implicitly progress the state of the handshake such as
+\&\fBSSL_poll\fR\|(3), \fBSSL_read\fR\|(3) and \fBSSL_write\fR\|(3).
 .PP
 The \fBSSL_ACCEPT_CONNECTION_NO_BLOCK\fR flag may be specified to
 \&\fBSSL_accept_connection()\fR. If specified, the call does not block even if the

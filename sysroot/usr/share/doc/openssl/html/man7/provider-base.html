@@ -183,6 +183,10 @@ core_get_libctx                OSSL_FUNC_CORE_GET_LIBCTX
 core_new_error                 OSSL_FUNC_CORE_NEW_ERROR
 core_set_error_debug           OSSL_FUNC_CORE_SET_ERROR_DEBUG
 core_vset_error                OSSL_FUNC_CORE_VSET_ERROR
+core_set_error_mark            OSSL_FUNC_CORE_SET_ERROR_MARK
+core_clear_last_error_mark     OSSL_FUNC_CORE_CLEAR_LAST_ERROR_MARK
+core_pop_error_to_mark         OSSL_FUNC_CORE_POP_ERROR_TO_MARK
+core_count_to_mark             OSSL_FUNC_CORE_COUNT_TO_MARK
 core_obj_add_sigid             OSSL_FUNC_CORE_OBJ_ADD_SIGID
 core_obj_create                OSSL_FUNC_CORE_OBJ_CREATE
 CRYPTO_malloc                  OSSL_FUNC_CRYPTO_MALLOC
@@ -272,6 +276,38 @@ provider_self_test             OSSL_FUNC_PROVIDER_SELF_TEST</code></pre>
 <p>sets the <i>reason</i> for the error, along with any addition data. The <i>reason</i> is a number defined by the provider and used to index the reason strings table that&#39;s returned by provider_get_reason_strings(). The additional data is given as a format string <i>fmt</i> and a set of arguments <i>args</i>, which are treated in the same manner as with BIO_vsnprintf(). <i>file</i> and <i>line</i> may also be passed to indicate exactly where the error occurred or was reported.</p>
 
 <p>This corresponds to the OpenSSL function <a href="../man3/ERR_vset_error.html">ERR_vset_error(3)</a>.</p>
+
+</dd>
+<dt id="core_set_error_mark">core_set_error_mark()</dt>
+<dd>
+
+<p>sets a mark on the current topmost error record if there is one.</p>
+
+<p>This corresponds to the OpenSSL function <a href="../man3/ERR_set_mark.html">ERR_set_mark(3)</a>.</p>
+
+</dd>
+<dt id="core_clear_last_error_mark">core_clear_last_error_mark()</dt>
+<dd>
+
+<p>removes the last mark added if there is one.</p>
+
+<p>This corresponds to the OpenSSL function <a href="../man3/ERR_clear_last_mark.html">ERR_clear_last_mark(3)</a>.</p>
+
+</dd>
+<dt id="core_pop_error_to_mark">core_pop_error_to_mark()</dt>
+<dd>
+
+<p>pops the top of the error stack until a mark is found. The mark is then removed. If there is no mark, the whole stack is removed.</p>
+
+<p>This corresponds to the OpenSSL function <a href="../man3/ERR_pop_to_mark.html">ERR_pop_to_mark(3)</a>.</p>
+
+</dd>
+<dt id="core_count_to_mark">core_count_to_mark()</dt>
+<dd>
+
+<p>returns the number of entries on the error stack above the most recently marked entry, not including that entry. If there is no mark in the error stack, the number of entries in the error stack is returned.</p>
+
+<p>This corresponds to the OpenSSL function <a href="../man3/ERR_count_to_mark.html">ERR_count_to_mark(3)</a>.</p>
 
 </dd>
 </dl>

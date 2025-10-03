@@ -58,7 +58,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL_CMP_CTX_NEW 3ossl"
-.TH OSSL_CMP_CTX_NEW 3ossl 2025-04-08 3.5.0 OpenSSL
+.TH OSSL_CMP_CTX_NEW 3ossl 2025-09-30 3.5.4 OpenSSL
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -168,7 +168,7 @@ OSSL_CMP_CTX_set1_senderNonce
 \& /* server authentication: */
 \& int OSSL_CMP_CTX_set1_srvCert(OSSL_CMP_CTX *ctx, X509 *cert);
 \& int OSSL_CMP_CTX_set1_expected_sender(OSSL_CMP_CTX *ctx,
-\&                                      const X509_NAME *name);
+\&                                       const X509_NAME *name);
 \& #define OSSL_CMP_CTX_set0_trusted OSSL_CMP_CTX_set0_trustedStore
 \& int OSSL_CMP_CTX_set0_trustedStore(OSSL_CMP_CTX *ctx, X509_STORE *store);
 \& #define OSSL_CMP_CTX_get0_trusted OSSL_CMP_CTX_get0_trustedStore
@@ -273,94 +273,74 @@ when constructing \fIctx\fR with \fBOSSL_CMP_CTX_new()\fR, which may be NULL.
 The following options can be set:
 .IP \fBOSSL_CMP_OPT_LOG_VERBOSITY\fR 4
 .IX Item "OSSL_CMP_OPT_LOG_VERBOSITY"
-.Vb 3
-\&        The level of severity needed for actually outputting log messages
-\&        due to errors, warnings, general info, debugging, etc.
-\&        Default is OSSL_CMP_LOG_INFO. See also L<OSSL_CMP_log_open(3)>.
-.Ve
+The level of severity needed for actually outputting log messages
+due to errors, warnings, general info, debugging, etc.
+Default is OSSL_CMP_LOG_INFO. See also \fBOSSL_CMP_log_open\fR\|(3).
 .IP \fBOSSL_CMP_OPT_KEEP_ALIVE\fR 4
 .IX Item "OSSL_CMP_OPT_KEEP_ALIVE"
-.Vb 6
-\&        If the given value is 0 then HTTP connections are not kept open
-\&        after receiving a response, which is the default behavior for HTTP 1.0.
-\&        If the value is 1 or 2 then persistent connections are requested.
-\&        If the value is 2 then persistent connections are required,
-\&        i.e., in case the server does not grant them an error occurs.
-\&        The default value is 1: prefer to keep the connection open.
-.Ve
+If the given value is 0 then HTTP connections are not kept open
+after receiving a response, which is the default behavior for HTTP 1.0.
+If the value is 1 or 2 then persistent connections are requested.
+If the value is 2 then persistent connections are required,
+i.e., in case the server does not grant them an error occurs.
+The default value is 1: prefer to keep the connection open.
 .IP \fBOSSL_CMP_OPT_MSG_TIMEOUT\fR 4
 .IX Item "OSSL_CMP_OPT_MSG_TIMEOUT"
-.Vb 4
-\&        Number of seconds a CMP request\-response message round trip
-\&        is allowed to take before a timeout error is returned.
-\&        A value <= 0 means no limitation (waiting indefinitely).
-\&        Default is to use the B<OSSL_CMP_OPT_TOTAL_TIMEOUT> setting.
-.Ve
+Number of seconds a CMP request\-response message round trip
+is allowed to take before a timeout error is returned.
+A value <= 0 means no limitation (waiting indefinitely).
+Default is to use the \fBOSSL_CMP_OPT_TOTAL_TIMEOUT\fR setting.
 .IP \fBOSSL_CMP_OPT_TOTAL_TIMEOUT\fR 4
 .IX Item "OSSL_CMP_OPT_TOTAL_TIMEOUT"
-.Vb 4
-\&        Maximum total number of seconds a transaction may take,
-\&        including polling etc.
-\&        A value <= 0 means no limitation (waiting indefinitely).
-\&        Default is 0.
-.Ve
+Maximum total number of seconds a transaction may take,
+including polling etc.
+A value <= 0 means no limitation (waiting indefinitely).
+Default is 0.
 .IP \fBOSSL_CMP_OPT_USE_TLS\fR 4
 .IX Item "OSSL_CMP_OPT_USE_TLS"
-.Vb 8
-\&        Use this option to indicate to the HTTP implementation
-\&        whether TLS is going to be used for the connection (resulting in HTTPS).
-\&        The value 1 indicates that TLS is used for client\-side HTTP connections,
-\&        which needs to be implemented via a callback function set by
-\&        OSSL_CMP_CTX_set_http_cb().
-\&        The value 0 indicates that TLS is not used.
-\&        Default is \-1 for backward compatibility: TLS is used by the client side
-\&        if and only if OSSL_CMP_CTX_set_http_cb_arg() sets a non\-NULL I<arg>.
-.Ve
+Use this option to indicate to the HTTP implementation
+whether TLS is going to be used for the connection (resulting in HTTPS).
+The value 1 indicates that TLS is used for client\-side HTTP connections,
+which needs to be implemented via a callback function set by
+\&\fBOSSL_CMP_CTX_set_http_cb()\fR.
+The value 0 indicates that TLS is not used.
+Default is \-1 for backward compatibility: TLS is used by the client side
+if and only if \fBOSSL_CMP_CTX_set_http_cb_arg()\fR sets a non\-NULL \fIarg\fR.
 .IP \fBOSSL_CMP_OPT_VALIDITY_DAYS\fR 4
 .IX Item "OSSL_CMP_OPT_VALIDITY_DAYS"
-.Vb 1
-\&        Number of days new certificates are asked to be valid for.
-.Ve
+Number of days new certificates are asked to be valid for.
 .IP \fBOSSL_CMP_OPT_SUBJECTALTNAME_NODEFAULT\fR 4
 .IX Item "OSSL_CMP_OPT_SUBJECTALTNAME_NODEFAULT"
-.Vb 2
-\&        Do not take default Subject Alternative Names
-\&        from the reference certificate.
-.Ve
+Do not take default Subject Alternative Names
+from the reference certificate.
 .IP \fBOSSL_CMP_OPT_SUBJECTALTNAME_CRITICAL\fR 4
 .IX Item "OSSL_CMP_OPT_SUBJECTALTNAME_CRITICAL"
-.Vb 1
-\&        Demand that the given Subject Alternative Names are flagged as critical.
-.Ve
+Demand that the given Subject Alternative Names are flagged as critical.
 .IP \fBOSSL_CMP_OPT_POLICIES_CRITICAL\fR 4
 .IX Item "OSSL_CMP_OPT_POLICIES_CRITICAL"
-.Vb 1
-\&        Demand that the given policies are flagged as critical.
-.Ve
+Demand that the given policies are flagged as critical.
 .IP \fBOSSL_CMP_OPT_POPO_METHOD\fR 4
 .IX Item "OSSL_CMP_OPT_POPO_METHOD"
-.Vb 1
-\&        Select the proof of possession method to use. Possible values are:
-\&
-\&            OSSL_CRMF_POPO_NONE       \- ProofOfPossession field omitted,
-\&                                        which implies central key generation
-\&            OSSL_CRMF_POPO_RAVERIFIED \- assert that the RA has already
-\&                                        verified the PoPo
-\&            OSSL_CRMF_POPO_SIGNATURE  \- sign a value with private key,
-\&                                        which is the default.
-\&            OSSL_CRMF_POPO_KEYENC     \- decrypt the encrypted certificate
-\&                                        ("indirect method")
-\&
-\&        Note that a signature\-based POPO can only be produced if a private key
-\&        is provided as the newPkey or client\*(Aqs pkey component of the CMP context.
+Select the proof of possession method to use. Possible values are:
+.Sp
+.Vb 8
+\&    OSSL_CRMF_POPO_NONE       \- ProofOfPossession field omitted,
+\&                                which implies central key generation
+\&    OSSL_CRMF_POPO_RAVERIFIED \- assert that the RA has already
+\&                                verified the PoPo
+\&    OSSL_CRMF_POPO_SIGNATURE  \- sign a value with private key,
+\&                                which is the default.
+\&    OSSL_CRMF_POPO_KEYENC     \- decrypt the encrypted certificate
+\&                                ("indirect method")
 .Ve
+.Sp
+Note that a signature\-based POPO can only be produced if a private key
+is provided as the newPkey or client\*(Aqs pkey component of the CMP context.
 .IP \fBOSSL_CMP_OPT_DIGEST_ALGNID\fR 4
 .IX Item "OSSL_CMP_OPT_DIGEST_ALGNID"
-.Vb 3
-\&        The NID of the digest algorithm to be used in RFC 4210\*(Aqs MSG_SIG_ALG
-\&        for signature\-based message protection and Proof\-of\-Possession (POPO).
-\&        Default is SHA256.
-.Ve
+The NID of the digest algorithm to be used in RFC 4210\*(Aqs MSG_SIG_ALG
+for signature\-based message protection and Proof\-of\-Possession (POPO).
+Default is SHA256.
 .IP "\fBOSSL_CMP_OPT_OWF_ALGNID\fR The NID of the digest algorithm to be used as one\-way function (OWF) for MAC\-based message protection with password\-based MAC (PBM). See RFC 4210 section 5.1.3.1 for details. Default is SHA256." 4
 .IX Item "OSSL_CMP_OPT_OWF_ALGNID The NID of the digest algorithm to be used as one-way function (OWF) for MAC-based message protection with password-based MAC (PBM). See RFC 4210 section 5.1.3.1 for details. Default is SHA256."
 .PD 0
@@ -369,67 +349,51 @@ The following options can be set:
 .IP \fBOSSL_CMP_OPT_REVOCATION_REASON\fR 4
 .IX Item "OSSL_CMP_OPT_REVOCATION_REASON"
 .PD
-.Vb 2
-\&        The reason code to be included in a Revocation Request (RR);
-\&        values: 0..10 (RFC 5210, 5.3.1) or \-1 for none, which is the default.
-.Ve
+The reason code to be included in a Revocation Request (RR);
+values: 0..10 (RFC 5210, 5.3.1) or \-1 for none, which is the default.
 .IP \fBOSSL_CMP_OPT_IMPLICIT_CONFIRM\fR 4
 .IX Item "OSSL_CMP_OPT_IMPLICIT_CONFIRM"
-.Vb 4
-\&        Request server to enable implicit confirm mode, where the client
-\&        does not need to send confirmation upon receiving the
-\&        certificate. If the server does not enable implicit confirmation
-\&        in the return message, then confirmation is sent anyway.
-.Ve
+Request server to enable implicit confirm mode, where the client
+does not need to send confirmation upon receiving the
+certificate. If the server does not enable implicit confirmation
+in the return message, then confirmation is sent anyway.
 .IP \fBOSSL_CMP_OPT_DISABLE_CONFIRM\fR 4
 .IX Item "OSSL_CMP_OPT_DISABLE_CONFIRM"
-.Vb 5
-\&        Do not confirm enrolled certificates, to cope with broken servers
-\&        not supporting implicit confirmation correctly.
-\&B<WARNING:> This setting leads to unspecified behavior and it is meant
-\&exclusively to allow interoperability with server implementations violating
-\&RFC 4210.
-.Ve
+Do not confirm enrolled certificates, to cope with broken servers
+not supporting implicit confirmation correctly.
+\&\fBWARNING:\fR This setting leads to unspecified behavior and it is meant
+exclusively to allow interoperability with server implementations violating
+RFC 4210.
 .IP \fBOSSL_CMP_OPT_UNPROTECTED_SEND\fR 4
 .IX Item "OSSL_CMP_OPT_UNPROTECTED_SEND"
-.Vb 1
-\&        Send request or response messages without CMP\-level protection.
-.Ve
+Send request or response messages without CMP\-level protection.
 .IP \fBOSSL_CMP_OPT_UNPROTECTED_ERRORS\fR 4
 .IX Item "OSSL_CMP_OPT_UNPROTECTED_ERRORS"
-.Vb 7
-\&        Accept unprotected error responses which are either explicitly
-\&        unprotected or where protection verification failed. Applies to regular
-\&        error messages as well as certificate responses (IP/CP/KUP) and
-\&        revocation responses (RP) with rejection.
-\&B<WARNING:> This setting leads to unspecified behavior and it is meant
-\&exclusively to allow interoperability with server implementations violating
-\&RFC 4210.
-.Ve
+Accept unprotected error responses which are either explicitly
+unprotected or where protection verification failed. Applies to regular
+error messages as well as certificate responses (IP/CP/KUP) and
+revocation responses (RP) with rejection.
+\&\fBWARNING:\fR This setting leads to unspecified behavior and it is meant
+exclusively to allow interoperability with server implementations violating
+RFC 4210.
 .IP \fBOSSL_CMP_OPT_IGNORE_KEYUSAGE\fR 4
 .IX Item "OSSL_CMP_OPT_IGNORE_KEYUSAGE"
-.Vb 3
-\&        Ignore key usage restrictions in the signer\*(Aqs certificate when
-\&        validating signature\-based protection in received CMP messages.
-\&        Else, \*(AqdigitalSignature\*(Aq must be allowed by CMP signer certificates.
-.Ve
+Ignore key usage restrictions in the signer\*(Aqs certificate when
+validating signature\-based protection in received CMP messages.
+Else, \*(AqdigitalSignature\*(Aq must be allowed by CMP signer certificates.
 .IP \fBOSSL_CMP_OPT_PERMIT_TA_IN_EXTRACERTS_FOR_IR\fR 4
 .IX Item "OSSL_CMP_OPT_PERMIT_TA_IN_EXTRACERTS_FOR_IR"
-.Vb 3
-\&        Allow retrieving a trust anchor from extraCerts and using that
-\&        to validate the certificate chain of an IP message.
-\&        This is a quirk option added to support 3GPP TS 33.310.
-\&
-\&        Note that using this option is dangerous as the certificate obtained
-\&        this way has not been authenticated (at least not at CMP level).
-\&        Taking it over as a trust anchor implements trust\-on\-first\-use (TOFU).
-.Ve
+Allow retrieving a trust anchor from extraCerts and using that
+to validate the certificate chain of an IP message.
+This is a quirk option added to support 3GPP TS 33.310.
+.Sp
+Note that using this option is dangerous as the certificate obtained
+this way has not been authenticated (at least not at CMP level).
+Taking it over as a trust anchor implements trust\-on\-first\-use (TOFU).
 .IP \fBOSSL_CMP_OPT_NO_CACHE_EXTRACERTS\fR 4
 .IX Item "OSSL_CMP_OPT_NO_CACHE_EXTRACERTS"
-.Vb 2
-\&        Do not cache certificates received in the extraCerts CMP message field.
-\&        Otherwise they are stored to potentially help validate further messages.
-.Ve
+Do not cache certificates received in the extraCerts CMP message field.
+Otherwise they are stored to potentially help validate further messages.
 .PP
 \&\fBOSSL_CMP_CTX_get_option()\fR reads the current value of the given option
 (e.g., OSSL_CMP_OPT_IMPLICIT_CONFIRM) from the given OSSL_CMP_CTX structure.

@@ -58,7 +58,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PROVIDER-SIGNATURE 7ossl"
-.TH PROVIDER-SIGNATURE 7ossl 2025-04-08 3.5.0 OpenSSL
+.TH PROVIDER-SIGNATURE 7ossl 2025-09-30 3.5.4 OpenSSL
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -167,8 +167,7 @@ for further information.
 The signature (OSSL_OP_SIGNATURE) operation enables providers to implement
 signature algorithms and make them available to applications via the API
 functions \fBEVP_PKEY_sign\fR\|(3), \fBEVP_PKEY_verify\fR\|(3),
-and \fBEVP_PKEY_verify_recover\fR\|(3) (as well
-as other related functions).
+and \fBEVP_PKEY_verify_recover\fR\|(3) (as well as other related functions).
 .PP
 All "functions" mentioned here are passed as function pointers between
 \&\fIlibcrypto\fR and the provider in \fBOSSL_DISPATCH\fR\|(3) arrays via
@@ -263,10 +262,22 @@ set of "signature" functions, i.e. at least one of:
 .IX Item "OSSL_FUNC_signature_digest_verify_init and OSSL_FUNC_signature_digest_verify"
 .PD
 .PP
-OSSL_FUNC_signature_set_ctx_params and OSSL_FUNC_signature_settable_ctx_params are optional,
-but if one of them is present then the other one must also be present. The same
-applies to OSSL_FUNC_signature_get_ctx_params and OSSL_FUNC_signature_gettable_ctx_params, as
-well as the "md_params" functions. The OSSL_FUNC_signature_dupctx function is optional.
+The \fBOSSL_FUNC_signature_set_ctx_params()\fR and
+\&\fBOSSL_FUNC_signature_settable_ctx_params()\fR functions are optional,
+but if one of them is provided then the other one must also be provided.
+The same applies to the \fBOSSL_FUNC_signature_get_ctx_params()\fR and
+\&\fBOSSL_FUNC_signature_gettable_ctx_params()\fR functions,
+as well as the "md_params" functions.
+.PP
+The \fBOSSL_FUNC_signature_dupctx()\fR function is optional.
+It is not yet used by OpenSSL.
+.PP
+The \fBOSSL_FUNC_signature_query_key_types()\fR function is optional.
+When present, it should return a NULL\-terminated array of strings
+indicating the key types supported by the provider for signature operations.
+Otherwise the signature algorithm name must match the given key
+or match the default signature algorithm name of the key,
+both checked using \fBEVP_SIGNATURE_is_a\fR\|(3).
 .PP
 A signature algorithm must also implement some mechanism for generating,
 loading or importing keys via the key management (OSSL_OP_KEYMGMT) operation.
@@ -433,7 +444,7 @@ should be written to \fI*siglen\fR. If \fIsig\fR is NULL then the maximum length
 the signature should be written to \fI*siglen\fR.
 .PP
 \&\fBOSSL_FUNC_signature_digest_sign()\fR implements a "one shot" digest sign operation
-previously started through \fBOSSL_FUNC_signature_digeset_sign_init()\fR. A previously
+previously started through \fBOSSL_FUNC_signature_digest_sign_init()\fR. A previously
 initialised signature context is passed in the \fIctx\fR parameter. The data to be
 signed is in \fItbs\fR which should be \fItbslen\fR bytes long. Unless \fIsig\fR is NULL,
 the signature should be written to the location pointed to by the \fIsig\fR
@@ -442,7 +453,7 @@ signature should be written to \fI*siglen\fR. If \fIsig\fR is NULL then the maxi
 length of the signature should be written to \fI*siglen\fR.
 .SS "Digest Verify Functions"
 .IX Subsection "Digest Verify Functions"
-\&\fBOSSL_FUNC_signature_digeset_verify_init()\fR initialises a context for verifying given a
+\&\fBOSSL_FUNC_signature_digest_verify_init()\fR initialises a context for verifying given a
 provider side verification context in the \fIctx\fR parameter, and a pointer to a
 provider key object in the \fIprovkey\fR parameter.
 The \fIparams\fR, if not NULL, should be set on the context in a manner similar to
@@ -466,7 +477,7 @@ verification context is passed in the \fIctx\fR parameter. The signature to be
 verified is in \fIsig\fR which is \fIsiglen\fR bytes long.
 .PP
 \&\fBOSSL_FUNC_signature_digest_verify()\fR implements a "one shot" digest verify operation
-previously started through \fBOSSL_FUNC_signature_digeset_verify_init()\fR. A previously
+previously started through \fBOSSL_FUNC_signature_digest_verify_init()\fR. A previously
 initialised verification context is passed in the \fIctx\fR parameter. The data to be
 verified is in \fItbs\fR which should be \fItbslen\fR bytes long. The signature to be
 verified is in \fIsig\fR which is \fIsiglen\fR bytes long.
@@ -512,8 +523,13 @@ signature functions.
 The length of the "digest\-size" parameter should not exceed that of a \fBsize_t\fR.
 .IP """algorithm\-id"" (\fBOSSL_SIGNATURE_PARAM_ALGORITHM_ID\fR) <octet string>" 4
 .IX Item """algorithm-id"" (OSSL_SIGNATURE_PARAM_ALGORITHM_ID) <octet string>"
-Gets the DER encoded AlgorithmIdentifier that corresponds to the combination of
-signature algorithm and digest algorithm for the signature operation.
+Gets the DER\-encoded AlgorithmIdentifier for the signature operation.
+This typically corresponds to the combination of a digest algorithm
+with a purely asymmetric signature algorithm, such as SHA256WithECDSA.
+.Sp
+The \fBASN1_item_sign_ctx\fR\|(3) function relies on this operation and is used by
+many other functions that sign ASN.1 structures such as X.509 certificates,
+certificate requests, and CRLs, as well as OCSP, CMP, and CMS messages.
 .IP """nonce\-type"" (\fBOSSL_SIGNATURE_PARAM_NONCE_TYPE\fR) <unsigned integer>" 4
 .IX Item """nonce-type"" (OSSL_SIGNATURE_PARAM_NONCE_TYPE) <unsigned integer>"
 Set this to 1 to use deterministic digital signature generation with
@@ -625,10 +641,19 @@ provider side signature context, or NULL on failure.
 \&\fBOSSL_FUNC_signature_gettable_md_ctx_params()\fR and \fBOSSL_FUNC_signature_settable_md_ctx_params()\fR,
 return the gettable or settable parameters in a constant \fBOSSL_PARAM\fR\|(3) array.
 .PP
-All other functions should return 1 for success or 0 on error.
+\&\fBOSSL_FUNC_signature_query_key_types()\fR should return a NULL\-terminated array of strings.
+.PP
+All verification functions should return 1 for success,
+0 for a non\-matching signature, and a negative value for operation failure.
+.PP
+All other functions should return 1 for success
+and 0 or a negative value for failure.
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
-\&\fBprovider\fR\|(7)
+\&\fBprovider\fR\|(7), "Provider Functions" in \fBprovider\-base\fR\|(7),
+\&\fBOSSL_PARAM\fR\|(3), \fBOSSL_DISPATCH\fR\|(3), \fBOSSL_ALGORITHM\fR\|(3),
+\&\fBEVP_PKEY_sign\fR\|(3), \fBEVP_PKEY_verify\fR\|(3), \fBEVP_PKEY_verify_recover\fR\|(3),
+\&\fBEVP_SIGNATURE_is_a\fR\|(3), \fBASN1_item_sign_ctx\fR\|(3)
 .SH HISTORY
 .IX Header "HISTORY"
 The provider SIGNATURE interface was introduced in OpenSSL 3.0.

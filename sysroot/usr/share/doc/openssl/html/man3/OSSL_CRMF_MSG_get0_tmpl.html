@@ -92,7 +92,7 @@ int OSSL_CRMF_MSG_centralkeygen_requested(const OSSL_CRMF_MSG *crm,
 
 <p>OSSL_CRMF_ENCRYPTEDKEY_get1_pkey() decrypts the private key in <i>encryptedKey</i>. If <i>encryptedKey</i> is not of type <b>OSSL_CRMF_ENCRYPTEDKEY_ENVELOPEDDATA</b>, decryption uses the private key <i>pkey</i>. The library context <i>libctx</i> and property query <i>propq</i> are taken into account as usual. The rest of this paragraph is relevant only if CMS support not disabled for the OpenSSL build and <i>encryptedKey</i> is of type case <b>OSSL_CRMF_ENCRYPTEDKEY_ENVELOPEDDATA</b>. Decryption uses the <i>secret</i> parameter if not NULL; otherwise uses the private key &lt;pkey&gt; and the certificate <i>cert</i> related to <i>pkey</i>, where <i>cert</i> is recommended to be given if available. On success, the function verifies the decrypted data as signed data, using the trust store <i>ts</i> and any untrusted certificates in <i>extra</i>. Doing so, it checks for the purpose &quot;CMP Key Generation Authority&quot; (cmKGA).</p>
 
-<p>OSSL_CRMF_ENCRYPTEDKEY_init_envdata() returns <i>OSSL_CRMF_ENCRYPTEDKEY</i>, intialized with the enveloped data <i>envdata</i>.</p>
+<p>OSSL_CRMF_ENCRYPTEDKEY_init_envdata() returns <i>OSSL_CRMF_ENCRYPTEDKEY</i>, initialized with the enveloped data <i>envdata</i>.</p>
 
 <p>OSSL_CRMF_ENCRYPTEDVALUE_decrypt() decrypts the encrypted value in the given encryptedValue <i>enc</i>, using the private key <i>pkey</i>, library context <i>libctx</i> and property query string <i>propq</i> (see <a href="../man3/OSSL_LIB_CTX.html">OSSL_LIB_CTX(3)</a>).</p>
 

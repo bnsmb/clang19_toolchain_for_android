@@ -99,6 +99,8 @@ SSL *SSL_new_from_listener(SSL *ssl, uint64_t flags);</code></pre>
 
 <p>The SSL_accept_connection() call is supported only on a listener SSL object and accepts a new incoming connection. A new SSL object representing the accepted connection is created and returned on success. If no incoming connection is available and the listener SSL object is configured in nonblocking mode, NULL is returned.</p>
 
+<p>The new SSL object returned from SSL_accept_connection() may or may not have completed its handshake at the point it is returned. Optionally, you may use the function <a href="../man3/SSL_is_init_finished.html">SSL_is_init_finished(3)</a> to determine this. You may call the functions <a href="../man3/SSL_accept.html">SSL_accept(3)</a>, <a href="../man3/SSL_do_handshake.html">SSL_do_handshake(3)</a> or <a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a> to progress the state of the SSL object towards handshake completion. Other &quot;I/O&quot; functions may also implicitly progress the state of the handshake such as <a href="../man3/SSL_poll.html">SSL_poll(3)</a>, <a href="../man3/SSL_read.html">SSL_read(3)</a> and <a href="../man3/SSL_write.html">SSL_write(3)</a>.</p>
+
 <p>The <b>SSL_ACCEPT_CONNECTION_NO_BLOCK</b> flag may be specified to SSL_accept_connection(). If specified, the call does not block even if the listener SSL object is configured in blocking mode.</p>
 
 <p>The SSL_get_accept_connection_queue_len() call returns the number of pending connections on the <i>ssl</i> listener&#39;s queue. SSL_accept_connection() returns the next pending connection, removing it from the queue. The returned connection count is a point-in-time value, the actual number of connections that will ultimately be returned may be different.</p>

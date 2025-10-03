@@ -311,4 +311,7 @@ History
   21.11.2025 v1.6.0 beta /bs
     added the script ./create_empty_library.sh to create an empty library
     added the empty library libpthread.so (and libpthread.a)
+    updated OpenSSL to version 3.5.4
+    relinked the OpenSSH binaries with the OpenSSL 3.5.4 libraries
+    relinked the OpenVPN binary with the OpenSSL 3.5.4 libraries
 

@@ -74,7 +74,7 @@ int X509_PURPOSE_set(int *p, int purpose);</code></pre>
 
 <p>X509_PURPOSE_get_by_id() returns the index of the purpose with the given id or -1 if not found.</p>
 
-<p>X509_PURPOSE_add() adds or modifies a purpose entry identified by <i>sname</i>. Unless the id stays the same for an existing entry, <i>id</i> must be fresh, which can be achieved by using the result of X509_PURPOSE_get_unused_id(). The function also sets in the entry the trust id <i>trust</i>, the given <i>flags</i>, the purpose (long) name <i>name</i>, the short name <i>sname</i>, the purpose checking funktion <i>ck</i> of type <b>int (*) (const X509_PURPOSE *, const X509 *, int)</b>, and its user data <i>arg</i> which may be retrieved via the <b>X509_PURPOSE</b> pointer.</p>
+<p>X509_PURPOSE_add() adds or modifies a purpose entry identified by <i>sname</i>. Unless the id stays the same for an existing entry, <i>id</i> must be fresh, which can be achieved by using the result of X509_PURPOSE_get_unused_id(). The function also sets in the entry the trust id <i>trust</i>, the given <i>flags</i>, the purpose (long) name <i>name</i>, the short name <i>sname</i>, the purpose checking function <i>ck</i> of type <b>int (*) (const X509_PURPOSE *, const X509 *, int)</b>, and its user data <i>arg</i> which may be retrieved via the <b>X509_PURPOSE</b> pointer.</p>
 
 <p>X509_PURPOSE_cleanup() removes all purposes that are not pre-defined.</p>
 

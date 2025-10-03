@@ -195,10 +195,10 @@
 <p>Print out the key and IV used then immediately exit: don&#39;t do any encryption or decryption.</p>
 
 </dd>
-<dt id="bufsize-number"><b>-bufsize</b> <i>number</i></dt>
+<dt id="bufsize-number-k"><b>-bufsize</b> <i>number</i>[<b>k</b>]</dt>
 <dd>
 
-<p>Set the buffer size for I/O.</p>
+<p>Set the buffer size for I/O. The maximum size that can be specified is <b>2^31-1</b> (2147483647) bytes. The <b>k</b> suffix can be specified to indicate that <i>number</i> is provided in kibibytes (multiples of 1024 bytes).</p>
 
 </dd>
 <dt id="nopad"><b>-nopad</b></dt>
@@ -295,7 +295,7 @@
 
 <p>Some of the ciphers do not have large keys and others have security implications if not used correctly. A beginner is advised to just use a strong block cipher, such as AES, in CBC mode.</p>
 
-<p>All the block ciphers normally use PKCS#5 padding, also known as standard block padding. This allows a rudimentary integrity or password check to be performed. However, since the chance of random data passing the test is better than 1 in 256 it isn&#39;t a very good test.</p>
+<p>All the block ciphers normally use PKCS#7 padding, also known as standard block padding. This allows a rudimentary integrity or password check to be performed. However, since the chance of random data passing the test is better than 1 in 256 it isn&#39;t a very good test.</p>
 
 <p>If padding is disabled then the input data must be a multiple of the cipher block length.</p>
 
