@@ -1,4 +1,4 @@
-#!/system/bin/python3.14
+#!/data/local/tmp/sysroot/usr/bin/python3
 
 import pydoc
 if __name__ == '__main__':

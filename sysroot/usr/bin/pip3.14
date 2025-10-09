@@ -1,4 +1,4 @@
-#!/system/bin/python3
+#!/data/local/tmp/sysroot/usr/bin/python3
 import sys
 from pip._internal.cli.main import main
 if __name__ == '__main__':

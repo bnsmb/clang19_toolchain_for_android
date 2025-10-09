@@ -68,7 +68,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # cmake 4.0.1
 # ninja 1.12.1 and 1.13.1
 # make 4.4.1
-# meson 1.7
+# meson 1.9.1
 # binutils 2.44 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
 # 
 # autoconf 2.72
@@ -317,4 +317,5 @@ History
     relinked the OpenSSH binaries with the OpenSSL 3.5.4 libraries
     relinked the OpenVPN binary with the OpenSSL 3.5.4 libraries
     compiled all python binaries using the source code for the offical reelase for Python 3.14 
+    updated meson to version 1.9.1
 
