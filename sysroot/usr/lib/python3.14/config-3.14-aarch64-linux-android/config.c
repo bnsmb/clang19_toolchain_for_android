@@ -1,14 +1,4 @@
 /* Generated automatically from ./Modules/config.c.in by makesetup. */
-/* -*- C -*- ***********************************************
-Copyright (c) 2000, BeOpen.com.
-Copyright (c) 1995-2000, Corporation for National Research Initiatives.
-Copyright (c) 1990-1995, Stichting Mathematisch Centrum.
-All rights reserved.
-
-See the file "Misc/COPYRIGHT" for information on usage and
-redistribution of this file, and for a DISCLAIMER OF ALL WARRANTIES.
-******************************************************************/
-
 /* Module configuration */
 
 /* !!! !!! !!! This file is edited by the makesetup script !!! !!! !!! */
@@ -29,6 +19,7 @@ extern PyObject* PyInit_posix(void);
 extern PyObject* PyInit__signal(void);
 extern PyObject* PyInit__tracemalloc(void);
 extern PyObject* PyInit__suggestions(void);
+extern PyObject* PyInit__datetime(void);
 extern PyObject* PyInit__codecs(void);
 extern PyObject* PyInit__collections(void);
 extern PyObject* PyInit_errno(void);
@@ -38,6 +29,7 @@ extern PyObject* PyInit__sre(void);
 extern PyObject* PyInit__sysconfig(void);
 extern PyObject* PyInit__thread(void);
 extern PyObject* PyInit_time(void);
+extern PyObject* PyInit__types(void);
 extern PyObject* PyInit__typing(void);
 extern PyObject* PyInit__weakref(void);
 extern PyObject* PyInit__abc(void);
@@ -56,6 +48,7 @@ extern PyObject* PyInit__imp(void);
 extern PyObject* PyInit_gc(void);
 extern PyObject* PyInit__ast(void);
 extern PyObject* PyInit__tokenize(void);
+extern PyObject* PyInit__contextvars(void);
 extern PyObject* _PyWarnings_Init(void);
 extern PyObject* PyInit__string(void);
 
@@ -67,6 +60,7 @@ struct _inittab _PyImport_Inittab[] = {
     {"_signal", PyInit__signal},
     {"_tracemalloc", PyInit__tracemalloc},
     {"_suggestions", PyInit__suggestions},
+    {"_datetime", PyInit__datetime},
     {"_codecs", PyInit__codecs},
     {"_collections", PyInit__collections},
     {"errno", PyInit_errno},
@@ -76,6 +70,7 @@ struct _inittab _PyImport_Inittab[] = {
     {"_sysconfig", PyInit__sysconfig},
     {"_thread", PyInit__thread},
     {"time", PyInit_time},
+    {"_types", PyInit__types},
     {"_typing", PyInit__typing},
     {"_weakref", PyInit__weakref},
     {"_abc", PyInit__abc},
@@ -107,6 +102,9 @@ struct _inittab _PyImport_Inittab[] = {
 
     /* This lives in gcmodule.c */
     {"gc", PyInit_gc},
+
+    /* This lives in Python/_contextvars.c */
+    {"_contextvars", PyInit__contextvars},
 
     /* This lives in _warnings.c */
     {"_warnings", _PyWarnings_Init},

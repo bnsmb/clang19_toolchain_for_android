@@ -1,5 +1,5 @@
 # See: man pkg-config
-prefix=/data/local/tmp/sysroot/usr
+refix=/data/local/tmp/sysroot/usr
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

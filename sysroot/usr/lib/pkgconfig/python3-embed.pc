@@ -1,1 +1,13 @@
-python-3.14-embed.pc
+# See: man pkg-config
+refix=/data/local/tmp/sysroot/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Python
+Description: Embed Python into an application
+Requires:
+Version: 3.14
+Libs.private: -ldl  -llog
+Libs: -L${libdir} -lpython3.14
+Cflags: -I${includedir}/python3.14
