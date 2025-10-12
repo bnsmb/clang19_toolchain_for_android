@@ -145,7 +145,7 @@ ln -s ./libmylib.so ./libpthreads.so
 #
 # various compression tools:
 # 
-# 7zz 25.00 
+# 7zz 25.01
 # bzip2 1.0.8
 # zip 3.0
 # unzip 5.52
@@ -318,4 +318,5 @@ History
     relinked the OpenVPN binary with the OpenSSL 3.5.4 libraries
     compiled all python binaries using the source code for the offical reelase for Python 3.14 
     updated meson to version 1.9.1
+    updated 7zz to version 25.01 
 
