@@ -319,4 +319,5 @@ History
     compiled all python binaries using the source code for the offical reelase for Python 3.14 
     updated meson to version 1.9.1
     updated 7zz to version 25.01 
+    added the library libexecinfo.a (https://github.com/mikroskeem/libexecinfo.git); this library implements the function backtrace)
 
