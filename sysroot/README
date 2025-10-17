@@ -320,4 +320,5 @@ History
     updated meson to version 1.9.1
     updated 7zz to version 25.01 
     added the library libexecinfo.a (https://github.com/mikroskeem/libexecinfo.git); this library implements the function backtrace)
+    added the script create_dummy_lib.sh to create an empty dummy lib
 
