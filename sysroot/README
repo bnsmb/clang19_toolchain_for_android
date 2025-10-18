@@ -321,4 +321,5 @@ History
     updated 7zz to version 25.01 
     added the library libexecinfo.a (https://github.com/mikroskeem/libexecinfo.git); this library implements the function backtrace)
     added the script create_dummy_lib.sh to create an empty dummy lib
+    added the files from the Android NDK r29
 
