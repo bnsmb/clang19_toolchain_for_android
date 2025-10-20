@@ -622,7 +622,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
         ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file file link" '
 
         echo "Enabling creating and using fifos for the user \"shell\" ..."
-        ${ROOT_PREFIX} 'magiskpolicy --live "allow shell shell_data_file fifo_file { create read open write }" '
+        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file fifo_file { create read open write }" '
 
       else
         LogDebugMsg "Magisk is not installed on this machine - can not enable tmux for non-root user"
