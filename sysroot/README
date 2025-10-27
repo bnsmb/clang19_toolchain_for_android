@@ -92,7 +92,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # 
 # rsync 3.4.1 
 # 
-# wget 2.1.0
+# wget 2.2.0
 # curl 8.13.0
 # 
 # perl 5.40
@@ -322,4 +322,6 @@ History
     added the library libexecinfo.a (https://github.com/mikroskeem/libexecinfo.git); this library implements the function backtrace)
     added the script create_dummy_lib.sh to create an empty dummy lib
     added the files from the Android NDK r29
+    added the script create_overlay_mount.sh  (this script needs root access)
+    updated wget2 to version 2.2.0
 
