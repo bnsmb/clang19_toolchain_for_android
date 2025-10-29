@@ -20,7 +20,9 @@
 #   03.10.2025 1.3.2 /bs
 #     The script now changes the owner for the directory /data/local/tmp/sysroot/var/empty to "root" if root access is enabled
 #       (That directory is only used by the sshd if started as user root)
-#     
+#   29.10.2025 1.3.3 /bs
+#     create the directory /data/local/tmp/sysroot/tmp if it's missing
+#
 
 
 #
@@ -262,6 +264,24 @@ fi
 LogMsg ""
 
 
+TMP_DIR="${SYSROOT_DIR}/tmp"
+if [ ! -d "${TMP_DIR}" ] ; then
+  LogMsg "Creating the directory \"$TMP_DIR}\" ..."
+  mkdir -p "${TMPD_DIR}"
+else
+  LogMsg "The directory \"${TMP_DIR}\" already exists"
+fi
+
+TMP_DIR_PERM="$( stat -c %a "${TMP_DIR}" )"
+if [ "${TMP_DIR_PERM}"x != "1777"x ] ; then
+  LogMsg "Correcting the permissions for \"${TMP}\" ..."
+  chmod 1777 "${TMP_DIR}"
+else
+  LogMsg "The permissions for \"${TMP_DIR}\" are already okay"	
+fi
+
+LogMsg ""
+	
 # ----------------------------------------------------------------------
 
 LogMsg "Processing the certificate files ..."
