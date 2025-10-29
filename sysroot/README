@@ -84,6 +84,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # texinfo 7.2
 # 
 # bash 5.2.37
+# mksh @(#)MIRBSD KSH R59 2025/06/02
 # 
 # bison 3.8
 # flex 2.6.4
@@ -325,5 +326,5 @@ History
     added the script create_overlay_mount.sh  (this script needs root access)
     updated wget2 to version 2.2.0
     added the permissions "getattr unlink ioctl" to the SELinux permissions for fifos for the user shell
-    added mksh
+    added mksh "@(#)MIRBSD KSH R59 2025/06/02" (= Environment variable KSH_VERSION)
 
