@@ -325,4 +325,5 @@ History
     added the script create_overlay_mount.sh  (this script needs root access)
     updated wget2 to version 2.2.0
     added the permissions "getattr unlink ioctl" to the SELinux permissions for fifos for the user shell
+    added mksh
 
