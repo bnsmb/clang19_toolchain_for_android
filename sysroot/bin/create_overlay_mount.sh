@@ -123,6 +123,10 @@
 #     correct some typos in the comments and messages
 #     the parameter "var=value" now supports values with whitespaces
 #
+#   31.10.2025 /bs v1.3.1
+#     added magiskpolicy to the list of Magisk binaries
+#
+
 # ----------------------------------------------------------------------
 
 __TRUE=0
@@ -217,7 +221,7 @@ DEFAULT_DD=$( which dd )
 
 # list of Magisk binaries for which a bind mount should be created automatically before creating the overlay mount for /system
 #
-MAGISK_BINARIES=" magisk su resetprop"
+MAGISK_BINARIES=" magisk su resetprop magiskpolicy"
 
 # list of additional files for which a bind mount should be created before creating the overlay mount for /system
 #
