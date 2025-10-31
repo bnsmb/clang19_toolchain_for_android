@@ -328,4 +328,5 @@ History
     added the permissions "getattr unlink ioctl" to the SELinux permissions for fifos for the user shell
     added mksh "@(#)MIRBSD KSH R59 2025/06/02" (= Environment variable KSH_VERSION)
     added SELinux tools (chkcon  seinfo  sepol_check_access  sepol_compute_av  sepol_compute_member  sepol_compute_relabel  sepolicy-inject  sepol_validate_transition  sesearc)
+    the script init_clang19_env now uses sepolicy-inject to add missing SELinux rules if Magisk is not installed
 

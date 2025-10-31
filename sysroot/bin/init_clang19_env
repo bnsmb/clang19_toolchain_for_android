@@ -43,7 +43,10 @@
 #  22.09.2025 v1.4.1 /bs
 #    the script now ignores all parameter following the parameter "--"
 #    
-
+#  31.10.2025 v1.5.0 /bs
+#    use sepolicy-inject (via helper script add_missing_selinux_rules.sh) to add missing SELinux policies if Magisk is not installed
+#
+#
 __TRUE=0
 __FALSE=1
 
@@ -231,6 +234,10 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 # magiskpolicy is optional used to change SELinux permissions 
 #
   MAGISKPOLICY="$( which magiskpolicy 2>/dev/null )"
+
+  # SELinux helpler script for machines without Magisk
+  #
+  SELINUX_HELP_SCRIPT="$( which add_missing_selinux_rules.sh )"
 
 
   MANPATH=${CLANG_SYSROOT}/usr/share/man
@@ -611,8 +618,9 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
       if [ "${MAGISKPOLICY}"x != ""x ] ; then
 
+	echo "Adding missing SELinux policies  using \"${MAGISKPOLICY}\" ..."
         if which tmux 2>/dev/null 1>dev/null ; then
-          echo "Enabling socket access for the user \"shell\"  (this is necessary to use tmux)..."
+          echo "Enabling socket access for the user \"shell\" (this is necessary to use tmux)..."
 
           ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file sock_file { create getattr setattr write unlink }"  '
           ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell devpts chr_file { read write open }"'
@@ -624,8 +632,11 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
         echo "Enabling creating and using fifos for the user \"shell\" ..."
         ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file fifo_file { create read open write getattr unlink ioctl }" '
 
+      elif [ "${SELINUX_HELP_SCRIPT}"x != ""x ] ; then
+        echo "Adding missing SELinux policies using the script \"${SELINUX_HELP_SCRIPT}\" ..."
+        ${ROOT_PREFIX} ${SELINUX_HELP_SCRIPT}
       else
-        LogDebugMsg "Magisk is not installed on this machine - can not enable tmux for non-root user"
+        LogDebugMsg "Magisk is not installed on this machine and the SELinux helper script is missing - can not enable tmux for non-root user"
       fi
     fi
 
