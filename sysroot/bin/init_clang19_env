@@ -618,7 +618,8 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
       if [ "${MAGISKPOLICY}"x != ""x ] ; then
 
-	echo "Adding missing SELinux policies  using \"${MAGISKPOLICY}\" ..."
+	echo "Adding missing SELinux policies using \"${MAGISKPOLICY}\" ..."
+
         if which tmux 2>/dev/null 1>dev/null ; then
           echo "Enabling socket access for the user \"shell\" (this is necessary to use tmux)..."
 
@@ -633,10 +634,13 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
         ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file fifo_file { create read open write getattr unlink ioctl }" '
 
       elif [ "${SELINUX_HELP_SCRIPT}"x != ""x ] ; then
+
         echo "Adding missing SELinux policies using the script \"${SELINUX_HELP_SCRIPT}\" ..."
+
         ${ROOT_PREFIX} ${SELINUX_HELP_SCRIPT}
+
       else
-        LogDebugMsg "Magisk is not installed on this machine and the SELinux helper script is missing - can not enable tmux for non-root user"
+        LogDebugMsg "Magisk is not installed on this machine and the SELinux helper script is missing - can not add missing SELinux rules"
       fi
     fi
 
