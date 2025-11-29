@@ -110,7 +110,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # 
 # dig 9.11.37
 # 
-# nano 8.6 and nano 6.4 
+# nano 8.7, 8.6 and nano 6.4 
 # vim 9.1-672
 # ed 1.21
 # bvi /bmore 1.5.0
@@ -329,4 +329,5 @@ History
     added mksh "@(#)MIRBSD KSH R59 2025/06/02" (= Environment variable KSH_VERSION)
     added SELinux tools (chkcon  seinfo  sepol_check_access  sepol_compute_av  sepol_compute_member  sepol_compute_relabel  sepolicy-inject  sepol_validate_transition  sesearc)
     the script init_clang19_env now uses sepolicy-inject to add missing SELinux rules if Magisk is not installed
+    added nano-8.7; removed nano-8.2
 
