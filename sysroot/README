@@ -111,7 +111,7 @@ ln -s ./libmylib.so ./libpthreads.so
 # dig 9.11.37
 # 
 # nano 8.7, 8.6 and nano 6.4 
-# vim 9.1-672
+# vim 9.1-1942
 # ed 1.21
 # bvi /bmore 1.5.0
 # 
@@ -333,4 +333,5 @@ History
     removed nano-8.2
     updated curl to version 8.17
     updated sqlite to version 3.51.1
+    updated vim to version 9.1-1942
 
