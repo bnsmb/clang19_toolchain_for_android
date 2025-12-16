@@ -28,6 +28,8 @@
 //    added the definition for isblank, min and max
 //  03.10.2025
 //    added the functions tzalloc, tzfree, localtime_rz, mktime_z for API < 35
+//  18.12.2025
+//    added the function android_getpass
 //
 // This file defines
 //   quad_t
@@ -53,6 +55,7 @@
 //   tzfree 
 //   localtime_rz 
 //   mktime_z
+//   android_getpass
 //
 // This file defines the macros
 //
@@ -370,6 +373,42 @@ time_t mktime_z(void *tz, struct tm *tm) {
 
 // --------------------------------------------------------------------
 
+#if defined(__ANDROID__)
+#include <termios.h>
+#include <unistd.h>
+
+static char *android_getpass(const char *prompt)
+{
+    static char buf[512];
+    struct termios oldt, newt;
+
+    if (prompt)
+        write(STDOUT_FILENO, prompt, strlen(prompt));
+
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~ECHO;
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+    ssize_t len = read(STDIN_FILENO, buf, sizeof(buf) - 1);
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    write(STDOUT_FILENO, "\n", 1);
+
+    if (len > 0 && buf[len - 1] == '\n')
+        buf[len - 1] = '\0';
+    else
+        buf[len] = '\0';
+
+    return buf;
+}
+
+#define getpass android_getpass
+#endif
+
+
+// --------------------------------------------------------------------
+
 #endif  /* ADD_MISSING_DEFINITIONS_H */
 
 // --------------------------------------------------------------------
@@ -377,6 +416,7 @@ time_t mktime_z(void *tz, struct tm *tm) {
 
 
 // --------------------------------------------------------------------
+
 
 
 
