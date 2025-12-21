@@ -603,7 +603,9 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   done
 
   for i in /system_ext/bin/* ; do 
-    f=${i##*/} ; 
+    f=${i##*/} 
+    [[ " ${NEW_ALIAS} " == *\ $f\ * ]] && continue
+
     if [ -x "${CLANG_SYSROOT}/usr/bin/$f" ] ; then
       alias $f="${CLANG_SYSROOT}/usr/bin/$f"
       NEW_ALIAS="${NEW_ALIAS} $f"
