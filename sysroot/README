@@ -2,7 +2,7 @@
 This tar files contains clang and other tools to compile libraries and
 binaries in Android
 
-Also included is the Android NDK version r27b, r27c, r27d and r28b
+Also included is the Android NDK version r27d and r28b
 
 Note that tar files with the files from the older NDK versions can be found here:
 
@@ -53,13 +53,39 @@ The default pkg-config tool configured is pkg-config; to use pkgconf instead of 
 PKG_CONFIG=/data/local/tmp/sysroot/usr/clang19/bin/pkgconf
 
 
-The include file sysroot/usr/include/add_missing_definitions.h contains dummies for functions missing in Android
+The include file sysroot/usr/include/add_missing_definitions.h contains definitions and functions required by various Unix tools but missing in Android.
 
-The dummy library sysroot/usr/lib/libmylib.so can be used to create libraries that are needed in the Makefile of a tool but are not necessary in Android (like libpthreads.so).
-Simply create a symbolic link for the missing library to libmylib.so, e.g.:
 
-cd /data/local/tmp/sysroot/usr/lib
-ln -s ./libmylib.so ./libpthreads.so
+Some configure scripts and makefiles for standard Unix tools use libraries that are not available (and not needed) in Android, e.g. libpthread.so.
+
+A dummy (= empty) libpthread.so is part of the clang19 toolchain:
+
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot $ ls -l usr/lib/libpthread.*                                                                                                               
+-rw-r--r-- 1 shell shell 1218 2025-09-21 15:04 usr/lib/libpthread.a
+-rw-r--r-- 1 shell shell 5272 2025-09-21 15:04 usr/lib/libpthread.so
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot $ 
+
+
+To create another dummy (empty) library to satisfy the requirements of these configure scripts or make files the script
+
+bin/create_empty_library.sh
+
+can be used.
+
+
+Example:
+
+Create the dummy library libutil.so :
+
+
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot $ cd /data/local/tmp/sysroot/usr/lib                                                                                                       
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot/usr/lib $ 
+
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot/usr/lib $ create_dummy_lib.sh util                                                                                                         
+Creating the library "libutil" ....
+-rw-rw-rw- 1 shell shell 1218 2025-12-21 17:47 libutil.a
+-rwxrwxrwx 1 shell shell 5272 2025-12-21 17:47 libutil.so
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot/usr/lib $ 
 
 
 # The tools included in the tar file with the clang19 toolchain are:
@@ -170,6 +196,9 @@ Notes
 Some standard Android programs do not work very well with the new binaries in /data/local/tmp/sysroot/usr/bin -- therefore it is recommended that
 /system/bin/ and /system_ext/bin are placed in the PATH variable before /data/local/tmp/sysroot/usr/bin
 
+The script init_clang19_env creates some aliase for the executables from clang19. The script also creates aliase for each file in /system_ext/bin that is also part of the clang19_toolchain.
+The list of aliase created by the init script is stored in the environment variable NEW_ALIAS.
+ 
 
 Update 07.06.2025 /bs
 
@@ -312,24 +341,24 @@ History
     nmap, nping, ncat now use config files in  /data/local/tmp/sysroot/etc/ (except /etc/ethers)
     deleted not working binary bin/soelim (there is still a soelim in usr/bin)
 
-  21.11.2025 v1.6.0 beta /bs
+  01.01.2026 v1.6.0 beta /bs
     added the script ./create_empty_library.sh to create an empty library
     added the empty library libpthread.so (and libpthread.a)
     updated OpenSSL to version 3.5.4
-    relinked the OpenSSH binaries with the OpenSSL 3.5.4 libraries
-    relinked the OpenVPN binary with the OpenSSL 3.5.4 libraries
-    compiled all python binaries using the source code for the offical relase for Python 3.14 
+    re-linked the OpenSSH binaries with the OpenSSL 3.5.4 libraries
+    re-linked the OpenVPN binary with the OpenSSL 3.5.4 libraries
+    re-compiled all python binaries using the source code for the official release for Python 3.14 
     updated meson to version 1.9.1
     updated 7zz to version 25.01 
     added the library libexecinfo.a (https://github.com/mikroskeem/libexecinfo.git); this library implements the function backtrace)
     added the script create_dummy_lib.sh to create an empty dummy lib
     added the files from the Android NDK r29
-    added the script create_overlay_mount.sh  (this script needs root access)
+    added the script create_overlay_mount.sh  (this script needs root access; see http://bnsmb.de/android/Documentation_for_the_script_create_overlay_mount.sh.html for the script documentation)
     updated wget2 to version 2.2.0
     added the permissions "getattr unlink ioctl" to the SELinux permissions for fifos for the user shell
-    added mksh "@(#)MIRBSD KSH R59 2025/06/02" (= Environment variable KSH_VERSION)
+    added mksh "@(#)MIRBSD KSH R59 2025/06/02" (= environment variable KSH_VERSION)
     added SELinux tools (chkcon  seinfo  sepol_check_access  sepol_compute_av  sepol_compute_member  sepol_compute_relabel  sepolicy-inject  sepol_validate_transition  sesearc)
-    the script init_clang19_env now uses sepolicy-inject to add missing SELinux rules if Magisk is not installed
+    the script init_clang19_env now uses sepolicy-inject to add missing SELinux rules if root is enabled without but Magisk is not installed
     updated nano to version 8.7
     removed nano-8.2
     updated curl to version 8.17
@@ -338,4 +367,4 @@ History
     the script init_clang91_env now creates aliase for all binaries in /system_ext/bin that are also part of the clang19 toolchain
     updated unrar to version 7.20 beta 2
     added lua 5.4.8 (binaries, libraries, and include files, source: https://www.lua.org/download.html)
-
+    removed tar files with the files from the Android NDKs r27b and r27c 
