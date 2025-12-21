@@ -46,6 +46,8 @@
 #  31.10.2025 v1.5.0 /bs
 #    use sepolicy-inject (via helper script add_missing_selinux_rules.sh) to add missing SELinux policies if Magisk is not installed
 #
+#  21.12.2025 v1.5.1 /bs
+#    the script now creates an alias for each file in /system_ext/bin that is also part of the clang19 toolchain
 #
 __TRUE=0
 __FALSE=1
@@ -600,6 +602,13 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     fi
   done
 
+  for i in /system_ext/bin/* ; do 
+    f=${i##*/} ; 
+    if [ -x "${CLANG_SYSROOT}/usr/bin/$f" ] ; then
+      alias $f="${CLANG_SYSROOT}/usr/bin/$f"
+      NEW_ALIAS="${NEW_ALIAS} $f"
+    fi
+  done
 
   for i in ${NEW_ALIAS} ; do
     alias $i
