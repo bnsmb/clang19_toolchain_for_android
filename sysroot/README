@@ -337,5 +337,5 @@ History
     updated vim to version 9.1-1942
     the script init_clang91_env now creates aliase for all binaries in /system_ext/bin that are also part of the clang19 toolchain
     updated unrar to version 7.20 beta 2
-    added lua 5.4.8 (binaries, libraries, and include files)
+    added lua 5.4.8 (binaries, libraries, and include files, source: https://www.lua.org/download.html)
 
