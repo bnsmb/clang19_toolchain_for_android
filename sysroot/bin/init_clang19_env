@@ -49,6 +49,9 @@
 #  21.12.2025 v1.5.1 /bs
 #    the script now creates an alias for each file in /system_ext/bin that is also part of the clang19 toolchain
 #
+#  23.12.2025 v1.5.2 /bs
+#    the script now exports the environment variable CLANG_SYSROOT
+#
 __TRUE=0
 __FALSE=1
 
@@ -197,6 +200,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 #  sysroot for the clang binaries and the other tools (make, etc)
 #
   CLANG_SYSROOT="${CLANG_SYSROOT:=/data/local/tmp/sysroot}"
+  export CLANG_SYSROOT
 
   echo "The toolchain directory used is \"${CLANG_SYSROOT}\" "
 

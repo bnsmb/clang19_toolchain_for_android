@@ -370,4 +370,5 @@ History
     removed tar files with the files from the Android NDKs r27b and r27c 
     removed the dependency on the library libc++_shared.so from all binaries from the groff package
     removed ninja 1.12.1
+    added the script compile_examples.sh to compile the example executables
 
