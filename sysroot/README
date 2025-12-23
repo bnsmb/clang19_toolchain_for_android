@@ -2,7 +2,7 @@
 This tar files contains clang and other tools to compile libraries and
 binaries in Android
 
-Also included is the Android NDK version r27d and r28b
+Also included is the Android NDK version r27b, r27d and r29
 
 Note that tar files with the files from the older NDK versions can be found here:
 
@@ -367,7 +367,7 @@ History
     the script init_clang91_env now creates aliase for all binaries in /system_ext/bin that are also part of the clang19 toolchain
     updated unrar to version 7.20 beta 2
     added lua 5.4.8 (binaries, libraries, and include files, source: https://www.lua.org/download.html)
-    removed tar files with the files from the Android NDKs r27b and r27c 
+    removed tar files with the files from the Android NDK r27c 
     removed the dependency on the library libc++_shared.so from all binaries from the groff package
     removed ninja 1.12.1
     added the script compile_examples.sh to compile the example executables
