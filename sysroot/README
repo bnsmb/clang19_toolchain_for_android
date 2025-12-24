@@ -2,15 +2,28 @@
 This tar files contains clang and other tools to compile libraries and
 binaries in Android
 
-Also included is the Android NDK version r27b, r27d and r29
+Also included is the Android NDK version r27d, r28b, and r29
 
 Note that tar files with the files from the older NDK versions can be found here:
 
 http://bnsmb.de/files/public/Android/archive/ndk_for_clang19_toolchain/
 
 
+There is also a GitHub repository with the files from this tar file
 
-Usage:
+https://github.com/bnsmb/clang19_toolchain_for_android
+
+This repository always contain the latest version of all files from this tar file.
+
+Use the commnad
+
+git clone https://github.com/bnsmb/clang19_toolchain_for_android
+
+to download the latest version of the clang19 toolchain. 
+
+
+
+To use the clang19 toolchain execute the commands listed below:
 
 unpack the tar file in 
 
@@ -25,13 +38,26 @@ execute the script to configure the clang environment
 
 /data/local/tmp/sysroot/create_clang_env.sh
 
+(This command must only be executed once)
+
 
 To init the clang environment source the file
 
 /data/local/tmp/sysroot/bin/init_clang19_env
 
-Note: This must be done once in each adb session using this clang toolchain
+(This command must be executed once in each adb session using the clang toolchain)
 
+Now you can use the clang to compile binaries or libraries for Android.
+
+
+The tar file also contains some simple test programs to test the compiler. Use the command
+
+/data/local/tmp/sysroot/compile_examples.sh
+
+to compile the sample test programs.
+
+
+Notes:
 
 The default NDK version is stored in the variable NDK defined in the file init_clang91_env:
 
@@ -68,7 +94,7 @@ A dummy (= empty) libpthread.so is part of the clang19 toolchain:
 
 To create another dummy (empty) library to satisfy the requirements of these configure scripts or make files the script
 
-bin/create_empty_library.sh
+create_dummy_lib.sh
 
 can be used.
 
@@ -163,7 +189,8 @@ Creating the library "libutil" ....
 # btop 1.4.4 (btop needs root access)
 # 
 # Android SDK build tools 35.0.2 (aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs hprof-conv etc1tool mke2fs make_f2fs adb make_f2fs_casefold veridex)
-# ( the binaries are from this ZIP file: https://github.com/lzhiyong/android-sdk-tools/releases/download/35.0.2/android-sdk-tools-static-aarch64.zip )
+#   in the directories /data/local/tmp//usr/androidsdk35_0_2/*-tools 
+#   (the binaries are from this ZIP file: https://github.com/lzhiyong/android-sdk-tools/releases/download/35.0.2/android-sdk-tools-static-aarch64.zip)
 #
 # OpenVPN 2.7 (openvpn requires root access)
 #
@@ -342,7 +369,6 @@ History
     deleted not working binary bin/soelim (there is still a soelim in usr/bin)
 
   01.01.2026 v1.6.0 beta /bs
-    added the script ./create_empty_library.sh to create an empty library
     added the empty library libpthread.so (and libpthread.a)
     updated OpenSSL to version 3.5.4
     re-linked the OpenSSH binaries with the OpenSSL 3.5.4 libraries
@@ -368,7 +394,8 @@ History
     updated unrar to version 7.20 beta 2
     added lua 5.4.8 (binaries, libraries, and include files, source: https://www.lua.org/download.html)
     removed tar files with the files from the Android NDK r27c 
+    removed tar files with the files from the Android NDK r27b
     removed the dependency on the library libc++_shared.so from all binaries from the groff package
     removed ninja 1.12.1
-    added the script compile_examples.sh to compile the example executables
+    added the script compile_examples.sh to compile the examples
 
