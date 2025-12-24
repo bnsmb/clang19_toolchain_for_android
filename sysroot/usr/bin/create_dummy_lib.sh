@@ -42,10 +42,12 @@ int __bs_function_${CUR_LIB}_42() {
 
 EOT
 
-   $CC -fPIE -fPIC -c foo.c && \
+  $CC -fPIE -fPIC -c foo.c && \
   $AR rcs ${CUR_LIB}.a foo.o && \
   $CC $LDFLAGS -shared -o ${CUR_LIB}.so foo.o && \
-   ls -l ${CUR_LIB}*
+  ls -l ${CUR_LIB}*
+
+  \rm -f foo.c foo.o
 done
 
 
