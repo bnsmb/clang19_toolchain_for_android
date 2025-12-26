@@ -642,6 +642,11 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
           ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell devpts chr_file { read write open }"'
         fi
 
+        if which mtr 2>/dev/null 1>dev/null ; then
+          echo "Enabling icmp_socket access for the user \"shell\" (this is necessary to use mtr)..."
+	  ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell port icmp_socket { name_bind }"'     
+        fi
+
         echo "Enabling hard links for the user \"shell\" ..."
         ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file file link" '
 

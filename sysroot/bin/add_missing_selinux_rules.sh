@@ -37,6 +37,12 @@ if  [ "${SEPOLICY_INJECT}"x != ""x -a "${LOAD_POLICY}"x != ""x ] ; then
     sepolicy-inject -s shell -t shell_data_file -c fifo_file -p create,read,open,write,getattr,unlink,ioctl -P "${TMP_SEPOLICY_FILE}" -o "${TMP_SEPOLICY_FILE}"  
 
 
+# allow shell port icmp_socket { name_bind }
+#
+    echo "Enabling icmp_socket access for the user \"shell\" (this is necessary to use mtr)..."
+    sepolicy-inject -s shell -t port -c icmp_socket -p name_bind -P "${TMP_SEPOLICY_FILE}" -o "${TMP_SEPOLICY_FILE}" 
+
+
     echo "Reloading the SELinux policy from the file \"${TMP_SEPOLICY_FILE}\" ..."   
     cp "${TMP_SEPOLICY_FILE}" /sys/fs/selinux/policy  && \
       /system/bin/load_policy "${TMP_SEPOLICY_FILE}" 
