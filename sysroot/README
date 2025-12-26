@@ -160,6 +160,7 @@ Creating the library "libutil" ....
 # gpg 1.4.3
 # 
 # dig 9.11.37
+# mtr 0.96
 # 
 # nano 8.7, 8.6 and nano 6.4 
 # vim 9.1-1942
@@ -396,4 +397,5 @@ History
     removed the dependency on the library libc++_shared.so from all binaries from the groff package
     removed ninja 1.12.1
     added the script compile_examples.sh to compile the examples
+    added mtr 0.96 (mtr needs root access)
 
