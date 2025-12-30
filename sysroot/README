@@ -383,7 +383,7 @@ History
     added the permissions "getattr unlink ioctl" to the SELinux permissions for fifos for the user shell
     added mksh "@(#)MIRBSD KSH R59 2025/06/02" (= environment variable KSH_VERSION)
     added SELinux tools (chkcon  seinfo  sepol_check_access  sepol_compute_av  sepol_compute_member  sepol_compute_relabel  sepolicy-inject  sepol_validate_transition  sesearc)
-    the script init_clang19_env now uses sepolicy-inject to add missing SELinux rules if root is enabled without but Magisk is not installed
+    the script init_clang19_env now uses sepolicy-inject to add missing SELinux rules if root is enabled but Magisk is not installed
     updated nano to version 8.7
     removed nano-8.2
     updated curl to version 8.17
@@ -398,4 +398,13 @@ History
     removed ninja 1.12.1
     added the script compile_examples.sh to compile the examples
     added mtr 0.96 (mtr needs root access)
-
+    added the libraries required by the Python modules in the directory /data/local/tmp/sysroot/usr/lib/python3.14/lib-dynload :
+      libbz2.so.1.0.8
+      libexpat.so
+      libgdbm.so.3.0.0
+      liblzma.so.5.0.4
+      libreadline.so.8.2
+      libsqlite3.so.0.8.6
+      libz.so.1
+      libzstd.so.1.5.6
+       
