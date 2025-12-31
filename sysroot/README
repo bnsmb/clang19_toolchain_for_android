@@ -115,7 +115,7 @@ Creating the library "libutil" ....
 # The tools included in the tar file with the clang19 toolchain are:
 # 
 # clang 19.0.0
-# cmake 4.0.1
+# cmake 3.30.4 and 4.0.1
 # ninja 1.13.1
 # make 4.4.1
 # meson 1.9.1
@@ -412,5 +412,6 @@ History
       libnghttp3.so*
       libpsl.so* 
       libunistring.so*
-
-       
+    added man pages for a many tools in the clang91 toolchain
+    did some cleanup work to remove unneccessary files and dirs
+    added cmake 3.30 again ( usr/bin/cmake-3.30 )
