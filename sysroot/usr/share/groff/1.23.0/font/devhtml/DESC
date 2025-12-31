@@ -11,4 +11,4 @@ prepro  pre-grohtml
 use_charnames_in_special
 pass_filenames
 unicode
-image_generator gs
+image_generator missing

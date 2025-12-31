@@ -814,11 +814,11 @@ will scan directories given as arguments to any specified
 .B \-F
 options before these,
 then in a site-specific directory
-.RI ( /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%site\-font ),
+.RI ( /data/local/tmp/sysroot/usr/share/groff/site\-font ),
 a standard location
-.RI ( /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font ),
+.RI ( /data/local/tmp/sysroot/usr/share/groff/1.23.0/font ),
 and a compatibility directory
-.RI ( /usr/\:\%lib/\:\%font )
+.RI ( /usr/lib/font )
 after them.
 .
 .
@@ -835,12 +835,12 @@ then the current directory
 the user's home directory,
 .if !'no'no' \{\
 a platform-specific directory
-.RI ( /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%lib/\:\%groff/\:\%site\-tmac ),
+.RI ( /data/local/tmp/sysroot/usr/lib/groff/site\-tmac ),
 .\}
 a site-specific directory
-.RI ( /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%site\-tmac ),
+.RI ( /data/local/tmp/sysroot/usr/share/groff/site\-tmac ),
 and a standard location
-.RI ( /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac )
+.RI ( /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac )
 after them.
 .
 .
@@ -885,7 +885,7 @@ see
 .\" ====================================================================
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/\:\%troffrc
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/\:\%troffrc
 is an initialization macro file loaded before any macro packages
 specified with
 .B \-m
@@ -893,7 +893,7 @@ options.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/\:\%troffrc\-end
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/\:\%troffrc\-end
 is an initialization macro file loaded after all macro packages
 specified with
 .B \-m
@@ -901,19 +901,19 @@ options.
 .
 .
 .TP
-.IR /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/\: name \:.tmac
+.IR /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/\: name \:.tmac
 are macro files distributed with
 .IR groff .
 .
 .
 .TP
-.IR /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%dev name /\:DESC
+.IR /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%dev name /\:DESC
 describes the output device
 .IR name .
 .
 .
 .TP
-.IR /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%dev name / F
+.IR /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%dev name / F
 describes the font
 .I F
 of device

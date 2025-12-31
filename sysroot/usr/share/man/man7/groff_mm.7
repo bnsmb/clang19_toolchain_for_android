@@ -298,7 +298,7 @@ is designed to be easily localized.
 .
 For languages other than English,
 strings that can appear in output are collected in the file
-.IR /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/\: xx \:.tmac ,
+.IR /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/\: xx \:.tmac ,
 where
 .I xx
 is an ISO\~639 two-letter language identifier.
@@ -315,16 +315,16 @@ document with the command
 .P
 This package can also be localized by site or territory;
 for example,
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/\:\%mse\:.tmac
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/\:\%mse\:.tmac
 illustrates how to adapt the output to a national standard using its ISO
 3166 territory code.
 .
 Such a package can define a string that causes a macro file
-.IR /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/\:mm/\:\% territory _locale
+.IR /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/\:mm/\:\% territory _locale
 to be loaded at package initialization.
 .
 If this mechanism is not used,
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/\:mm/\:\%locale
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/\:mm/\:\%locale
 is loaded instead.
 .
 No diagnostic is produced if these files do not exist.
@@ -1096,7 +1096,7 @@ of a document.
 The argument
 .I style
 is used to construct the file name
-.IR /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/mm/\: style \:.cov
+.IR /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/mm/\: style \:.cov
 and load it with the
 .B mso
 request.
@@ -2716,7 +2716,7 @@ document.
 uses
 .I type
 to construct the file name
-.IR /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/mm/\:\% type \:.MT
+.IR /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/mm/\:\% type \:.MT
 and load it with the
 .B mso
 request.
@@ -5322,20 +5322,20 @@ to the string
 .\" ====================================================================
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/\%m.tmac
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/\%m.tmac
 is the
 .I groff
 implementation of the memorandum macros.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/mm.tmac
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/mm.tmac
 is wrapper to load
 .IR m.tmac .
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/refer\-mm.tmac
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/refer\-mm.tmac
 implements
 .MR \%refer 1
 support for
@@ -5343,29 +5343,29 @@ support for
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/mm/ms.cov
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/mm/ms.cov
 implements an
 .IR ms -like
 cover sheet.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/mm/0.MT
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/mm/0.MT
 implements memorandum types 0\[en]3 and 6.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/mm/4.MT
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/mm/4.MT
 implements memorandum type 4.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/mm/5.MT
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/mm/5.MT
 implements memorandum type 5.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/mm/locale
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/mm/locale
 performs any (further) desired necessary localization;
 empty by default.
 .

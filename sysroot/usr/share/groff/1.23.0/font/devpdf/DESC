@@ -9,4 +9,4 @@ family T
 fonts 8 0 0 0 0 0 0 S ZD
 tcommand
 postpro gropdf
-papersize a4
+papersize letter

@@ -10,5 +10,4 @@ fonts 9 0 0 0 0 0 SS S ZD ZDR
 tcommand
 postpro grops
 broken 0
-papersize a4
-print lpr
+papersize letter

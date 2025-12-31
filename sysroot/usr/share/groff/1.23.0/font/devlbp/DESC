@@ -7,5 +7,4 @@ fonts 20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 tcommand
 orientation portrait
 postpro grolbp
-papersize a4
-print lpr
+papersize letter

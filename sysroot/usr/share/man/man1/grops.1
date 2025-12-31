@@ -1338,7 +1338,7 @@ your own script.
 .RS 4
 .P
 .EX
-MAP=/data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/devps/generate/text.map
+MAP=/data/local/tmp/sysroot/usr/share/groff/1.23.0/font/devps/generate/text.map
 TTF=/usr/share/fonts/truetype/roboto/slab/RobotoSlab\-Regular.ttf
 BASE=$(basename \[dq]$TTF\[dq])
 INT=${BASE%.ttf}
@@ -1614,7 +1614,7 @@ the newer one has 314 glyphs and includes the Euro glyph.
 .
 For backwards compatibility,
 these old font descriptions are also installed in the
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%oldfont/\:\%devps
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/oldfont/\:\%devps
 directory.
 .
 .
@@ -1633,7 +1633,7 @@ command-line option,
 .RS
 .EX
 $ \c
-.B groff \-Tps \-P\-F \-P/data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%oldfont \c
+.B groff \-Tps \-P\-F \-P/data/local/tmp/sysroot/usr/share/groff/1.23.0/oldfont \c
 \&.\|.\|.
 .EE
 .RE
@@ -1645,7 +1645,7 @@ font and device description search path environment variable,
 .RS
 .EX
 $ \c
-.B GROFF_FONT_PATH=\:/data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%oldfont \[rs]
+.B GROFF_FONT_PATH=\:/data/local/tmp/sysroot/usr/share/groff/1.23.0/oldfont \[rs]
 .RS
 .B groff \-Tps \c
 \&.\|.\|.
@@ -1715,14 +1715,14 @@ see
 .\" ====================================================================
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%devps/\:DESC
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%devps/\:DESC
 describes the
 .B ps
 output device.
 .
 .
 .TP
-.IR /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%devps/ F
+.IR /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%devps/ F
 describes the font known
 .RI as\~ F
 on device
@@ -1730,18 +1730,18 @@ on device
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%devps/\:\%download
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%devps/\:\%download
 lists fonts available for embedding within the PostScript document
 (or download to the device).
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%devps/\:\%prologue
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%devps/\:\%prologue
 is the default PostScript prologue prefixed to every output file.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%devps/\:text.enc
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%devps/\:text.enc
 describes the encoding scheme used by most PostScript Type\~1 fonts;
 the
 .B \%encoding
@@ -1752,7 +1752,7 @@ device refers to it.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/\:ps.tmac
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/\:ps.tmac
 defines macros for use with the
 .B ps
 output device.
@@ -1765,7 +1765,7 @@ output device is selected.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/\:pspic.tmac
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/\:pspic.tmac
 defines the
 .B PSPIC
 macro for embedding images in a document;
@@ -1777,7 +1777,7 @@ It is automatically loaded by
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/psold.tmac
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/psold.tmac
 provides replacement glyphs for text fonts that lack complete coverage
 of the ISO Latin-1 character set;
 using it,

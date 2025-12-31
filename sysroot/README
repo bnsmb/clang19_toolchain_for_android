@@ -399,12 +399,18 @@ History
     added the script compile_examples.sh to compile the examples
     added mtr 0.96 (mtr needs root access)
     added the libraries required by the Python modules in the directory /data/local/tmp/sysroot/usr/lib/python3.14/lib-dynload :
-      libbz2.so.1.0.8
-      libexpat.so
-      libgdbm.so.3.0.0
-      liblzma.so.5.0.4
-      libreadline.so.8.2
-      libsqlite3.so.0.8.6
-      libz.so.1
-      libzstd.so.1.5.6
+      libbz2.so*
+      libexpat.so*
+      libgdbm.so*
+      liblzma.so*
+      libreadline.so*
+      libsqlite3.so*
+      libz.so*
+      libzstd.so*
+    added the libraries required by lib*curses.so, lib*wget*.so, and lib*curl*.so (the binaries wget2 and curl do not need these libraries)
+      libnghttp2.so*
+      libnghttp3.so*
+      libpsl.so* 
+      libunistring.so*
+
        

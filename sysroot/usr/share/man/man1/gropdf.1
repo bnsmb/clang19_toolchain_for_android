@@ -379,7 +379,7 @@ Fonts may be in PFA or PFB format.
 Any downloadable fonts which should, when required, be included by
 .I gropdf
 must be listed in the file
-.IR /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%devpdf/\:\%download ;
+.IR /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%devpdf/\:\%download ;
 this should consist of lines of the form
 .
 .IP
@@ -1692,14 +1692,14 @@ see
 .\" ====================================================================
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%devpdf/\:DESC
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%devpdf/\:DESC
 describes the
 .B pdf
 output device.
 .
 .
 .TP
-.IR /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%devpdf/ F
+.IR /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%devpdf/ F
 describes the font known
 .RI as\~ F
 on device
@@ -1707,7 +1707,7 @@ on device
 .
 .
 .TP
-.IR /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%devpdf/\:U\- F
+.IR /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%devpdf/\:U\- F
 describes the font
 from the URW foundry
 (versus the Adobe default)
@@ -1718,7 +1718,7 @@ on device
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%devpdf/\%download
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%devpdf/\%download
 lists fonts available for embedding within the PDF document
 (by analogy to the
 .B ps
@@ -1727,14 +1727,14 @@ device's downloadable font support).
 .
 .\" XXX: Why are we shipping this but not BuildFoundries.pl?
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%devpdf/\%Foundry
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%devpdf/\%Foundry
 is a data file used by the
 .I groff
 build system to locate PostScript Type\~1 fonts.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font/\:\%devpdf/\:enc/\:\%text\:.enc
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/font/\:\%devpdf/\:enc/\:\%text\:.enc
 describes the encoding scheme used by most PostScript Type\~1 fonts;
 the
 .B \%encoding
@@ -1745,7 +1745,7 @@ device refers to it.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/\:pdf\:.tmac
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/\:pdf\:.tmac
 defines macros for use with the
 .B pdf
 output device.
@@ -1758,7 +1758,7 @@ output device is selected.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/\:\%pdfpic\:.tmac
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/\:\%pdfpic\:.tmac
 defines the
 .B PDFPIC
 macro for embedding images in a document;
@@ -1770,7 +1770,7 @@ It is automatically loaded by
 .\"
 .\"
 .\" .TP
-.\" .B /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac/pspic.tmac
+.\" .B /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac/pspic.tmac
 .\" Definition of
 .\" .B PSPIC
 .\" macro,
@@ -1795,9 +1795,9 @@ Deri James
 .\" ====================================================================
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%doc/\:\%groff\-1.23.0/\:\%sboxes/\:\%msboxes\:.ms
+.I /data/local/tmp/sysroot/usr/share/doc/groff\-1.23.0/\:\%sboxes/\:\%msboxes\:.ms
 .TQ
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%doc/\:\%groff\-1.23.0/\:\%sboxes/\:\%msboxes\:.pdf
+.I /data/local/tmp/sysroot/usr/share/doc/groff\-1.23.0/\:\%sboxes/\:\%msboxes\:.pdf
 \[lq]Using PDF boxes with
 .I groff
 and the

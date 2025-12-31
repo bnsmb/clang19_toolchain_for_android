@@ -160,7 +160,6 @@ opts="-mtty-char$opts"
 
 # Set up the 'GROFF_BIN_PATH' variable to be exported in the current
 # 'GROFF_RUNTIME' environment.
-
 GROFF_RUNTIME="${GROFF_BIN_PATH=/data/local/tmp/sysroot/usr/bin}:"
 export GROFF_BIN_PATH
 

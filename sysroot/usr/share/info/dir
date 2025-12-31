@@ -22,3 +22,6 @@ Software development
 * SFrame: (sframe-spec).        The Simple Frame format.
 * Stabs: (stabs).               The "stabs" debugging information format.
 * gdbserver: (gdb) Server.      The GNU debugging server.
+
+Typesetting
+* Groff: (groff).               The GNU roff document formatting system.

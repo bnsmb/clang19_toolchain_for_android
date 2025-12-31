@@ -1,4 +1,4 @@
-#!/data/local/tmp/sysroot/bin/bash
+#!/system_ext/bin/bash
 # Copyright (C) 2004-2020 Free Software Foundation, Inc.
 # Written by Mike Bianchi <MBianchi@Foveal.com <mailto:MBianchi@Foveal.com>>
 # Thanks to Peter Bray for debugging.
@@ -170,7 +170,7 @@ RequiresArgument () {
 }
 
 HAVE_TEST_EF_OPTION=yes
-BASH_PROG=/usr/bin/bash
+BASH_PROG=/system_ext/bin/bash
 BADOPTION=
 DIFFCMD=diff
 SEDCMD=sed

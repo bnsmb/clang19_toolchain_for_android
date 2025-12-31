@@ -324,12 +324,12 @@ see
 .MR groff_font 5 .
 .
 If no such directive is present for the output device,
-.ie 'lpr'' \{\
+.ie ''' \{\
 this option is ignored.
 .\}
 .el \{\
 output is piped to
-.MR lpr 1 .
+.MR  1 .
 .\}
 .
 See options
@@ -851,7 +851,7 @@ see
 .MR groff_tmac 5 .
 .
 The formatter's default in this installation is
-.RB \[lq] \%A4 \[rq].
+.RB \[lq] \%letter \[rq].
 .
 .
 .P
@@ -1212,7 +1212,7 @@ is a modern package written by Peter Schaffter specifically for GNU
 .IR roff .
 .
 Consult the
-.UR file://\:/data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%doc/\:\%groff\-1.23.0/\:\%html/\:mom/\:toc\:.html
+.UR file://\:/data/local/tmp/sysroot/usr/share/doc/groff\-1.23.0/html/\:mom/\:toc\:.html
 .I mom
 HTML manual
 .UE
@@ -1729,7 +1729,7 @@ If it is not set,
 the installation directory of the GNU
 .I roff
 executables,
-.IR /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%bin ,
+.IR /data/local/tmp/sysroot/usr/bin ,
 is searched before
 .IR PATH .
 .
@@ -2060,25 +2060,25 @@ Application defaults directory for
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%bin
+.I /data/local/tmp/sysroot/usr/bin
 Directory containing
 .IR groff 's
 executable commands.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%eign
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/eign
 List of common words for
 .MR indxbib 1 .
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0
 Directory for data files.
 .
 .
 .TP
-.I /usr/\:\%dict/\:\%papers/\:\%Ind
+.I /usr/dict/papers/Ind
 Default index for
 .MR lkbib 1
 and
@@ -2086,51 +2086,51 @@ and
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%doc/\:\%groff\-1.23.0
+.I /data/local/tmp/sysroot/usr/share/doc/groff\-1.23.0
 Documentation directory.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%doc/\:\%groff\-1.23.0/\:\%examples
+.I /data/local/tmp/sysroot/usr/share/doc/groff\-1.23.0/examples
 Example directory.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/font
 Font directory.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%doc/\:\%groff\-1.23.0/\:\%html
+.I /data/local/tmp/sysroot/usr/share/doc/groff\-1.23.0/html
 HTML documentation directory.
 .
 .
 .TP
-.I /usr/\:\%lib/\:\%font
+.I /usr/lib/font
 Legacy font directory.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%site\-font
+.I /data/local/tmp/sysroot/usr/share/groff/site\-font
 Local font directory.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%site\-tmac
+.I /data/local/tmp/sysroot/usr/share/groff/site\-tmac
 Local macro package
 .RI ( tmac
 file) directory.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac
 Macro package
 .RI ( tmac
 file) directory.
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%oldfont
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/oldfont
 Font directory for compatibility with old versions of
 .IR groff ;
 see
@@ -2138,13 +2138,13 @@ see
 .
 .
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%doc/\:\%groff\-1.23.0/\:\%pdf
+.I /data/local/tmp/sysroot/usr/share/doc/groff\-1.23.0/pdf
 PDF documentation directory.
 .
 .
 .if !'no'no' \{\
 .TP
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%lib/\:\%groff/\:\%site\-tmac
+.I /data/local/tmp/sysroot/usr/lib/groff/site\-tmac
 System macro package
 .RI ( tmac
 file) directory.
@@ -2158,7 +2158,7 @@ file) directory.
 Most macro files supplied with GNU
 .I roff
 are stored in
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%tmac
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/tmac
 for the installation corresponding to this document.
 .
 As a rule,
@@ -2180,7 +2180,7 @@ see
 Device and font description files supplied with GNU
 .I roff
 are stored in
-.I /data/\:\%local/\:\%tmp/\:\%sysroot/\:\%usr/\:\%share/\:\%groff/\:\%1.23.0/\:\%font
+.I /data/local/tmp/sysroot/usr/share/groff/1.23.0/font
 for the installation corresponding to this document.
 .
 As a rule,

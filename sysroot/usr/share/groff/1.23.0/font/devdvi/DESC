@@ -9,5 +9,4 @@ family T
 fonts 13 0 0 0 0 0 0 0 0 0 MI S EX CW
 tcommand
 postpro grodvi
-papersize a4
-print lpr -d
+papersize letter
