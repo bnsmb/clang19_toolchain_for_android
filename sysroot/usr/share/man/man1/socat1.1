@@ -305,6 +305,7 @@ Option groups: FD,REG,NAMED
 .br 
 Useful options:
 mode,
+mode,
 user,
 group,
 unlink\-early,
@@ -873,8 +874,8 @@ socktype
 See also: unnamed pipe
 .IP 
 .IP "\fB\f(CWPOSIXMQ\-READ:/<mqueue>\fP\fP"
-Opens the specified POSIX message queue and reads messages (packets)\&. It
-keeps the boundaries\&.
+Opens or creates the specified POSIX message queue and reads messages
+(packets)\&. It keeps the packet boundaries\&.
 .br 
 This is a read\-only address, see options \-u and
 \-U and dual addresses\&.
@@ -882,53 +883,66 @@ This is a read\-only address, see options \-u and
 \fBSocat\fP provides this address type only on Linux because POSIX MQ is based
 on UNIX filedescriptors there\&.
 .br 
-This feature is new in version 1\&.8\&.0\&.0 and might change in the future,
-therefore it is experimental\&.
-.br 
 Useful options:
 posixmq\-priority,
 unlink\-early,
-unlink\-close
+unlink\-close,
+o\-nonblock,
+o\-creat,
+o\-excl,
+umask
 .IP 
 .IP "\fB\f(CWPOSIXMQ\-RECEIVE:/<mqueue>\fP\fP"
 .IP "\fB\f(CWPOSIXMQ\-RECV:/<mqueue>\fP\fP"
-Opens the specified POSIX message queue and reads one message (packet)\&.
+Opens or creates the specified POSIX message queue and reads one message
+(packet)\&.
 .br 
 This is a read\-only address\&. See POSIXMQ\-READ
 for more info\&.
 .br 
 Example: POSIX MQ recv with fork
 .br 
-This feature is experimental\&.
-.br 
 Useful options:
 posixmq\-priority,
 fork,
 max\-children,
 unlink\-early,
-unlink\-close
+unlink\-close,
+o\-creat,
+o\-excl,
+umask
 .IP 
 .IP "\fB\f(CWPOSIXMQ\-SEND:/<mqueue>\fP\fP"
-Opens the specified POSIX message queue and writes messages (packets)\&.
+Opens or creates the specified POSIX message queue and writes messages
+(packets)\&.
 .br 
 This is a write\-only address\&. See POSIXMQ\-READ
 for more info\&.
 .br 
 (Example)
 .br 
-This feature is experimental\&.
-.br 
 Useful options:
 posixmq\-priority,
+posixmq\-flush,
 fork,
 max\-children,
 unlink\-early,
-unlink\-close
+unlink\-close,
+o\-creat,
+o\-excl,
+umask
+.IP 
+.IP "\fB\f(CWPOSIXMQ\-WRITE:/<mqueue>\fP\fP"
+Does the same as POSIXMQ\-SEND\&.
 .IP 
 .IP "\fB\f(CWPOSIXMQ\-BIDIRECTIONAL:/mqueue\fP\fP"
-Opens the specified POSIX message queue and writes and reads messages
-(packet)\&. This is probably rarely useful but has been implemented for
-functional completeness\&.
+.IP "\fB\f(CWPOSIXMQ:/mqueue\fP\fP"
+Opens or creates the specified POSIX message queue in read and/or write mode
+depending on context, then reads and/or writes messages (packets)\&.
+In bidirectional mode this is just another echo service\&.
+.br 
+See POSIXMQ\-READ and
+POSIXMQ\-SEND for more info\&.
 .IP 
 .IP "\fB\f(CWPROXY:<proxy>:<hostname>:<port>\fP\fP"
 Connects to an HTTP proxy server on port 8080 using TCP/IP  version 4 or 6
@@ -1264,12 +1278,11 @@ Option groups: FD,SOCKET,IP4,IP6,TCP,SOCKS4,RETRY
 
 .IP 
 .IP "\fB\f(CWSOCKS5\-CONNECT:<socks\-server>:<socks\-port>:<target\-host>:<target\-port>\fP\fP"
+.IP "\fB\f(CWSOCKS5\-CONNECT:<socks\-server>:<target\-host>:<target\-port>\fP\fP"
 Connects via <socks\-server> [IP address]
 to <target\-host> [IPv4 address]
 on <target\-port> [TCP service],
 using socks version 5 protocol over TCP\&. Currently no authentication mechanism is provided\&.
-.br 
-This address type is experimental\&.
 .br 
 Option groups: FD, SOCKET, IP4, IP6, TCP, CHILD, RETRY
 .br 
@@ -1287,10 +1300,12 @@ PROXY,
 TCP
 .IP 
 .IP "\fB\f(CWSOCKS5\-LISTEN:<socks\-server>:<socks\-port>:<listen\-host>:<listen\-port>\fP\fP"
+.IP "\fB\f(CWSOCKS5\-LISTEN:<socks\-server>:<listen\-host>:<listen\-port>\fP\fP"
 Connects to <socks\-server> [IP address]
 using socks version 5 protocol over TCP
 and makes it listen for incoming connections on <listen\-port> [TCP service], binding to <\-listen\-host> [IPv4 address]
-Currently not authentication mechanism is provided\&. This address type is experimental\&.
+Currently not authentication mechanism is provided\&.
+.br 
 Option groups: FD, SOCKET, IP4, IP6, TCP, CHILD, RETRY
 .br 
 Useful options:
@@ -1493,7 +1508,7 @@ ipv6only
 Option groups: FD,SOCKET,LISTEN,CHILD,RANGE,IP6,TCP,RETRY 
 .br 
 .IP "\fB\f(CWTUN[:<if\-addr>/<bits>]\fP\fP"
-Creates a Linux TUN/TAP device and optionally assignes it the address and
+Creates a Linux TUN/TAP device and optionally assigns it the address and
 netmask given by the parameters\&. The resulting network interface is almost
 ready for use by other processes; socat serves its \(dq\&wire side\(dq\&\&. This address
 requires read and write access to the tunnel cloning device, usually
@@ -1646,6 +1661,7 @@ pf\&. It sends packets to and receives packets
 from that peer socket only\&.  
 This address effectively implements a datagram client\&.
 It works well with socat UDP\-RECVFROM and UDP\-RECV address peers\&.
+When the peer might send data first, UDP\-DATAGRAM is preferable\&.
 .br 
 Option groups: FD,SOCKET,IP4,IP6 
 .br 
@@ -1689,6 +1705,8 @@ or named\&. This address works well with socat UDP\-SENDTO address peers\&.
 Note: When the second address fails before entering the transfer loop the
 packet is dropped\&. Use option retry or
 forever on the second address to avoid data loss\&.
+When you know the peer address, UDP\-DATAGRAM is
+preferable\&.
 .br 
 Option groups: FD,SOCKET,IP4,IP6,CHILD,RANGE 
 .br 
@@ -2155,8 +2173,12 @@ filesystem entry or binding to the UNIX domain socket (race condition!)\&.
 Otherwise, \fBsocat\fP sets the mode of the stream
 using 
 \f(CWfchmod()\fP
-\&. 
+which, btw, might not have any effect\&.
+.br 
 These calls might require ownership or root privilege\&.
+.br 
+Note: this option can only tighten the permissions implied by processes
+umask\&. See option umask to loosen permissions\&.
 .IP "\fB\f(CWperm\-late=<mode>\fP\fP"
 Sets the permissions of the fd to value <mode>
 [mode_t] using the 
@@ -2458,9 +2480,11 @@ temporary setting\&.
 .IP "\fB\f(CWumask=<mode>\fP\fP"
 Sets the umask of the process to <mode> [mode_t] before
 opening the address\&. Useful when file system entries are created or a shell
-or program is invoked\&. Usually the value is specified as octal number\&.
+or program is invoked\&. Usually the value is specified as octal number with
+leading \(cq\&0\(cq\&\&.
 .br 
 The processes \f(CWumask\fP value is inherited by child processes\&.
+.br 
 Note: umask is an inverted value: creating a file with umask=0026 results in
 permissions 0640\&.
 
@@ -2490,7 +2514,7 @@ Changes the primary <group> of the process after
 processing the address\&. This call might require root privilege\&. Please note
 that this option does not drop other group related privileges\&.
 .IP "\fB\f(CWsetgid\-early=<group>\fP\fP"
-Like setgit but is performed before opening the address\&.
+Like setgid but is performed before opening the address\&.
 .IP "\fB\f(CWsetuid=<user>\fP\fP"
 Changes the <user> (owner) of the process after processing
 the address\&. This call might require root privilege\&. Please note that this
@@ -2518,9 +2542,9 @@ process group\&.
 Makes the process the leader of a new session (example)\&.
 .IP "\fB\f(CWnetns=<net\-namespace\-name>\fP\fP"
 Before opening the address it tries to switch to the named network namespace\&.
-After opening the address it switches back to the previous namespace\&.
-(Example with TCP forwarder,
-example with virtual network connection\&.
+After opening the address it switches back to the previous namespace
+(example with TCP forwarder,
+example with virtual network connection)\&.
 .br 
 Only on Linux; requires root; use option \f(CW\-\-experimental\fP\&.
 .br 
@@ -2544,7 +2568,7 @@ of the terminal\&.
 Specifies a regular pattern for a prompt that prevents the following input
 line from being displayed on the screen and from being added to the history\&.
 The prompt is defined as the text that was output to the readline address 
-after the lastest newline character and before an input character was
+after the last newline character and before an input character was
 typed\&. The pattern is a regular expression, e\&.g\&.
 \(dq\&^[Pp]assword:\&.*$\(dq\& or \(dq\&([Uu]ser:|[Pp]assword:)\(dq\&\&. See regex(7) for details\&.
 (example)
@@ -2739,6 +2763,22 @@ listening socket instead of the connected socket\&.
 Like \f(CWsetsockopt\fP, but <optval> is a string\&.
 This string is passed to the function with trailing null character, and the
 length parameter is automatically derived from the data\&.
+.IP "\fB\f(CWsetsockopt\-socket=<level>:<optname>:<optval>\fP\fP"
+Like \f(CWsetsockopt\fP, but is applied to the socket before other operations
+(
+\f(CWbind()\fP
+, 
+\f(CWconnect()\fP
+, 
+\f(CWaccept()\fP
+, \&.\&.\&.)
+.IP "\fB\f(CWsetsockopt\-connected=<level>:<optname>:<optval>\fP\fP"
+Like \f(CWsetsockopt\fP, but is applied only when the socket has been connected
+by a 
+\f(CWconnect()\fP
+or 
+\f(CWlisten()\fP
+call\&.
 
 .PP 
 .br 
@@ -2856,6 +2896,8 @@ IPv4 variant\&. The option takes the IP address of the multicast group,
 info about the desired network interface and the source IP address of the
 multicast traffic\&. The indices of active network interfaces can be shown
 using the utility \fBprocan\fP\&.
+.br 
+This feature is experimental\&.
 .IP "\fB\f(CWip\-multicast\-if=<hostname>\fP\fP"
 Specifies hostname or address of the network interface to be used for
 multicast traffic\&.
@@ -3332,6 +3374,9 @@ socat options \-b, \-t, \-D, \-l, \-v, \-x become useless
 .IP o 
 for both addresses, options ignoreeof, cr, and crnl become useless
 .IP o 
+for both addresses, address specific end/shutdown handling (e\&.g\&.,
+graceful socket shutdown) and related options become useless
+.IP o 
 for the second address (the one with option nofork), options 
 append,  cloexec, flock, user, group, mode, nonblock,
 perm\-late, setlk, and setpgid cannot be applied\&. Some of these could be
@@ -3704,7 +3749,7 @@ On systems where openssl cannot find an entropy source and where no entropy
 gathering daemon can be utilized, this option activates a mechanism for
 providing pseudo entropy\&. This is achieved by taking the current time in
 microseconds for feeding the libc pseudo random number generator with an
-initial value\&. openssl is then feeded with output from random() calls\&.
+initial value\&. openssl is then fed with output from random() calls\&.
 .br 
 NOTE:This mechanism is not sufficient for generation of secure keys!
 .IP "\fB\f(CWcompress\fP\fP"
@@ -3848,6 +3893,17 @@ Options that may be applied to POSIX\-MQ addresses\&.
 .IP "\fB\f(CWposixmq\-priority (mq\-prio)\fP\fP"
 Sets the priority of messages (packets) written to the queue, or the minimal
 priority of packet read from the queue\&.
+.IP "\fB\f(CWposixmq\-flush (mq\-flush)\fP\fP"
+\(dq\&Consumes\(dq\& (drops) all messages currently in the queue before starting
+transfers\&.
+.IP "\fB\f(CWposixmq\-maxmsg (mq\-maxmsg)\fP\fP"
+Sets the maxmsg parameter of the POSIX message queue when creating it\&.
+.br 
+Note: This option applies only when the queue does not already exist\&.
+.IP "\fB\f(CWposixmq\-msgsize (mq\-msgsize)\fP\fP"
+Sets the msgsize parameter of the POSIX message queue when creating it\&.
+.br 
+Note: This option applies only when the queue does not already exist\&.
 
 .PP 
 .SH "DATA VALUES"
@@ -3871,7 +3927,8 @@ An unsigned int number, read with
 A string specifying a program name and its arguments, separated by single
 spaces\&. 
 .IP "data"
-This is a more general data specification\&. The given text string contains
+This is a more general data specification, \(dq\&dalan\(dq\& (low level data
+description language)\&. The given text string contains
 information about the target data type and value\&. Generally a leading
 character specifies the type of the following data item\&. In its specific
 context a default data type may exist\&.
@@ -3905,14 +3962,14 @@ An unsigned byte (unsigned char)\&.
 .br 
 .IP "x"
 Following is an even number of hex digits, stored as sequence of
-bytes\&.
+bytes, the data length is the resulting number of bytes\&.
 .br 
 Example:    \fBx7f000001\fP (IP address 127\&.0\&.0\&.1)
 .IP "\(dq\&"
 Following is a string that is used with the common conversions 
 \en \er \et \ef \eb \ea \ee \e0; the string must be closed with \(cq\&\(dq\&\(cq\&\&. Please note
 that the quotes and backslashes need to be escaped from shell and \fBsocat\fP
-conversion\&.
+conversion\&. No implicit \e0 is appended\&.
 .br 
 Example:    \fB\(dq\&Hello world!\en\(dq\&\fP
 .IP "\(cq\&"
@@ -3973,10 +4030,10 @@ A number read with
 \f(CWstrtoll()\fP
 \&. The value must fit into a C long long\&.
 .IP "off_t"
-An implementation dependend signed number, usually 32 bits, read with strtol
+An implementation dependent signed number, usually 32 bits, read with strtol
 or strtoll\&.
 .IP "off64_t"
-An implementation dependend signed number, usually 64 bits, read with strtol
+An implementation dependent signed number, usually 64 bits, read with strtol
 or strtoll\&.
 .IP "mode_t"
 An unsigned integer, read with 
@@ -4609,7 +4666,7 @@ both devices\&. Use pppd on device \f(CW/var/run/ppp\fP then\&.
 .IP 
 \.LP
 \.nf
-\fBsocat --experimental -u \\
+\fBsocat -u \\
 \.RS
 \fBSTDIO \\ 
 POSIXMQ-SEND:/queue1,unlink-early,mq-prio=10\fP
@@ -4621,7 +4678,7 @@ into POSIX message queue, with priority 10\&.
 .IP 
 \.LP
 \.nf
-\fBsocat --experimental -u \\
+\fBsocat -u \\
 \.RS
 \fBPOSIXMQ-RECV:/queue1,fork,max-children=3 \\ 
 SYSTEM:"worker.sh"\fP
