@@ -1,4 +1,3 @@
-#!/system/bin/sh
 #
 # delete all temporary files and config files in the directory tree /data/local/tmp/sysroot
 #
