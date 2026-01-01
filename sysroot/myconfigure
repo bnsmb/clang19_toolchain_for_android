@@ -2,7 +2,7 @@
 #
 #
 
-# use these addtional CFLAGs for binaries should be executed using a debugger like gdb
+# use these additional CFLAGs for binaries that should be executed using a debugger like gdb
 # 
 #DEBUG_CFLAGS="-g -O0"
 
@@ -32,7 +32,7 @@ CXXFLAGS="${CFLAGS}"
 CONFIGURE_OPTIONS="
 "
 
-# target directory used by "make install"
+# default target directory used by "make install"
 #
 TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
 
