@@ -222,7 +222,7 @@ Notes
 Some standard Android programs do not work very well with the new binaries in /data/local/tmp/sysroot/usr/bin -- therefore it is recommended that
 /system/bin/ and /system_ext/bin are placed in the PATH variable before /data/local/tmp/sysroot/usr/bin
 
-The script init_clang19_env creates some aliase for the executables from clang19. The script also creates aliase for each file in /system_ext/bin that is also part of the clang19_toolchain.
+The script init_clang19_env creates some aliase for the executables from clang19. The script also creates aliase for each file in /system_ext/bin that is also part of the clang19 toolchain.
 The list of aliase created by the init script is stored in the environment variable NEW_ALIAS.
  
 
@@ -390,6 +390,7 @@ History
     updated sqlite to version 3.51.1
     updated vim to version 9.1-1942
     the script init_clang19_env now creates aliase for all binaries in /system_ext/bin that are also part of the clang19 toolchain
+    the script init_clang19_env now creates aliase for all binaries in /product/bin that are also part of the clang19 toolchain
     updated unrar to version 7.20 beta 2
     added lua 5.4.8 (binaries, libraries, and include files, source: https://www.lua.org/download.html)
     removed the tar file with the files from the Android NDK r27c 
@@ -412,6 +413,6 @@ History
       libnghttp3.so*
       libpsl.so* 
       libunistring.so*
-    added man pages for a many tools in the clang91 toolchain
-    did some cleanup work to remove unneccessary files and dirs
-    added cmake 3.30 again ( usr/bin/cmake-3.30 )
+    added man pages for many tools in the clang91 toolchain
+    did some cleanup work to remove unneccessary files and dirsA
+    cmake 3.30 has been added again (usr/bin/cmake-3.30), as old cmake configurations are no longer supported by cmake 4.x (see https://cmake.org/cmake/help/latest/release/4.0.html#deprecated-and-removed-features)  

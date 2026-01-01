@@ -606,7 +606,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     fi
   done
 
-  for i in /system_ext/bin/* ; do 
+  for i in /system_ext/bin/* /product/bin/* ; do 
     f=${i##*/} 
     [[ " ${NEW_ALIAS} " == *\ $f\ * ]] && continue
 
