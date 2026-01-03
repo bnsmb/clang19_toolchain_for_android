@@ -52,6 +52,9 @@
 #  23.12.2025 v1.5.2 /bs
 #    the script now exports the environment variable CLANG_SYSROOT
 #
+#  03.01.2025 v1.5.3 /bs
+#    the script now changes the working directory to ${CLANG_SYSROOT} if it is currently "/"
+#
 __TRUE=0
 __FALSE=1
 
@@ -719,6 +722,13 @@ ${CLANG_SYSROOT}/usr/bin/as -o helloworld_in_assembler_for_as.o helloworld_in_as
 
 EOT
 
+fi
 
+# change the working directory /data/local/tmp if it's currently /
+#
+if [ "$PWD"x = "/"x ] ; then
+  echo 
+  echo "Changing the working directory to \"${CLANG_SYSROOT}\" ..."
+  cd "${CLANG_SYSROOT}" 
 fi
 
