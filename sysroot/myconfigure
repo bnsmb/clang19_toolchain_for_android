@@ -2,11 +2,11 @@
 #
 #
 
+DEBUG_CFLAGS=""
+
 # use these additional CFLAGs for binaries that should be executed using a debugger like gdb
 # 
 #DEBUG_CFLAGS="-g -O0"
-
-DEBUG_CFLAGS=""
 
 # these configure options are required to compile the source code of a lot of  "old" unix programs with clang
 # 
@@ -40,4 +40,5 @@ TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
 # set PREFIX to "echo" or something similar before calling this script to run it in dry-run mode
 #
 ${PREFIX}  ./configure  --prefix=${TARGET_ROOT}/usr/ CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" ${CONFIGURE_OPTIONS} $* 
+
 
