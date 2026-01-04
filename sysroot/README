@@ -186,6 +186,7 @@ Creating the library "libutil" ....
 # less 679 
 # htop 3.4.1
 # btop 1.4.4 (btop needs root access)
+# strace 6.18
 # 
 # Android SDK build tools 35.0.2 (aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs hprof-conv etc1tool mke2fs make_f2fs adb make_f2fs_casefold veridex)
 #   in the directories /data/local/tmp//usr/androidsdk35_0_2/*-tools 
@@ -367,7 +368,7 @@ History
     nmap, nping, ncat now use config files in  /data/local/tmp/sysroot/etc/ (except /etc/ethers)
     deleted not working binary bin/soelim (there is still a soelim in usr/bin)
 
-  01.01.2026 v1.6.0 beta /bs
+  21.01.2026 v1.6.0 beta /bs
     added the empty library libpthread.so (and libpthread.a)
     updated OpenSSL to version 3.5.4
     re-linked the OpenSSH binaries with the OpenSSL 3.5.4 libraries
@@ -416,3 +417,5 @@ History
     added man pages for many tools in the clang91 toolchain
     did some cleanup work to remove unneccessary files and dirsA
     cmake 3.30 has been added again (usr/bin/cmake-3.30), as old cmake configurations are no longer supported by cmake 4.x (see https://cmake.org/cmake/help/latest/release/4.0.html#deprecated-and-removed-features)  
+    updated strace to version 6.18
+    recompiled htop (htop is now statically linked binary and use the config file /data/local/tmp/sysroot/etc/htoprc)
