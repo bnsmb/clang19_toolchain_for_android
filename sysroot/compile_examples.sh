@@ -1,5 +1,5 @@
 if [ "${CLANG_SYSROOT}"x = ""x ] ; then
-  echo "Please init the clang19 toolchain before executing this script"
+  echo "Please init the clang19 toolchain before executing this script using the command: \"source /data/local/tmp/sysroot/bin/init_clang19_env\" "
   exit 100
 fi
 
