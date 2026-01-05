@@ -30,11 +30,14 @@
 //    added the functions tzalloc, tzfree, localtime_rz, mktime_z for API < 35
 //  18.12.2025
 //    added the function android_getpass
+//  03.01.2025
+//    added the definition for PTR
 //
 // This file defines
 //   quad_t
 //   u_quad_t
 //   short
+//   PTR
 //
 // This file defines the functions
 //   strverscmp
@@ -104,6 +107,11 @@ typedef unsigned short ushort;
 
 #endif
 
+// --------------------------------------------------------------------
+//
+#ifndef PTR
+typedef void *PTR;
+#endif
 
 // --------------------------------------------------------------------
 //
