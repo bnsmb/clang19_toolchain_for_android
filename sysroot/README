@@ -119,7 +119,7 @@ Creating the library "libutil" ....
 # ninja 1.13.1
 # make 4.4.1
 # meson 1.9.1
-# binutils 2.44 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
+# binutils 2.45 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
 # 
 # autoconf 2.72
 # automake 1.17
@@ -377,7 +377,7 @@ History
     updated meson to version 1.9.1
     updated 7zz to version 25.01 
     added the library libexecinfo.a (https://github.com/mikroskeem/libexecinfo.git); this library implements the function backtrace)
-    added the script create_dummy_lib.sh to create an empty dummy lib
+    added the script create_dummy_lib.sh to create an empty dummy library file
     added the files from the Android NDK r29
     added the script create_overlay_mount.sh  (this script needs root access; see http://bnsmb.de/android/Documentation_for_the_script_create_overlay_mount.sh.html for the script documentation)
     updated wget2 to version 2.2.0
@@ -414,8 +414,11 @@ History
       libnghttp3.so*
       libpsl.so* 
       libunistring.so*
-    added man pages for many tools in the clang91 toolchain
-    did some cleanup work to remove unneccessary files and dirsA
+    added man pages for many tools in the clang19 toolchain
+    did some cleanup work to remove unneccessary files and dirs
     cmake 3.30 has been added again (usr/bin/cmake-3.30), as old cmake configurations are no longer supported by cmake 4.x (see https://cmake.org/cmake/help/latest/release/4.0.html#deprecated-and-removed-features)  
     updated strace to version 6.18
-    recompiled htop (htop is now statically linked binary and use the config file /data/local/tmp/sysroot/etc/htoprc)
+    recompiled htop (htop is now a statically linked binary and uses the config file /data/local/tmp/sysroot/etc/htoprc)
+    updated the binutils to version 2.45
+    now the complete binutils (including the data files) are part of the clang19 toolchain
+
