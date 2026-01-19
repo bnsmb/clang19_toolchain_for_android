@@ -416,7 +416,8 @@ History
       libunistring.so*
     added man pages for many tools in the clang19 toolchain
     did some cleanup work to remove unneccessary files and dirs
-    cmake 3.30 has been added again (usr/bin/cmake-3.30), as old cmake configurations are no longer supported by cmake 4.x (see https://cmake.org/cmake/help/latest/release/4.0.html#deprecated-and-removed-features)  
+    cmake 3.30 has been added again (usr/bin/cmake-3.30), as old cmake configurations are no longer supported by cmake 4.x 
+      (see https://cmake.org/cmake/help/latest/release/4.0.html#deprecated-and-removed-features)  
     updated strace to version 6.18
     recompiled htop (htop is now a statically linked binary and uses the config file /data/local/tmp/sysroot/etc/htoprc)
     updated the binutils to version 2.45

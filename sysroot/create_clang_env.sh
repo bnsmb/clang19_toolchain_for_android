@@ -22,6 +22,8 @@
 #       (That directory is only used by the sshd if started as user root)
 #   29.10.2025 1.3.3 /bs
 #     create the directory /data/local/tmp/sysroot/tmp if it's missing
+#   19.01.2026 1.3.4 /bs
+#     fixed a type in the instructions to create the temporary directory
 #
 
 
@@ -266,8 +268,8 @@ LogMsg ""
 
 TMP_DIR="${SYSROOT_DIR}/tmp"
 if [ ! -d "${TMP_DIR}" ] ; then
-  LogMsg "Creating the directory \"$TMP_DIR}\" ..."
-  mkdir -p "${TMPD_DIR}"
+  LogMsg "Creating the directory \"${TMP_DIR}\" ..."
+  mkdir -p "${TMP_DIR}"
 else
   LogMsg "The directory \"${TMP_DIR}\" already exists"
 fi
