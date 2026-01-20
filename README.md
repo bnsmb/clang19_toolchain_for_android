@@ -114,14 +114,18 @@ That unzip binary should run on any Android and is available here:
 To check, if unzip has created correct symbolic links, check if ./sysroot/usr/lib/libcrypto.so is a symbolic link after after you have uncompressed the ZIP file.
 
 
-The necessary files from the NDKs are part of the tar archive as a compressed tar archive and are unpacked by the script **create_clang_env.sh**.
+The necessary files from the Android NDKs are part of the tar archive as a compressed tar archive and are unpacked by the script **create_clang_env.sh**.
 
-As of **17.05.2025** the tar files with the NDK files are:
+As of **21.01.2026** the tar files with the Android NDK files are:
 
 ```
-[ OmniRom 15 - xtrnaw7@t15g /data/develop/git_repos/clang19_toolchain_for_android/sysroot ] $ ls -l usr/ndk/*.tar.gz
--rw-r--r--. 1 xtrnaw7 xtrnaw7 58624967 Mar 30 13:16 usr/ndk/r27b.tar.gz
--rw-r--r--. 1 xtrnaw7 xtrnaw7 92588841 Mar 30 14:44 usr/ndk/r27c.tar.gz
-[ OmniRom 15 - xtrnaw7@t15g /data/develop/git_repos/clang19_toolchain_for_android/sysroot ] $ 
+[xtrnaw7@t15g /data/develop/git_repos/clang19_toolchain_for_android/sysroot]$ ls -l usr/ndk/*tar.gz
+-rw-rw-r--. 1 xtrnaw7 xtrnaw7 59737567 Jan  5 16:41 usr/ndk/r27d.tar.gz
+-rw-rw-r--. 1 xtrnaw7 xtrnaw7 72213190 Jan  5 16:41 usr/ndk/r28b.tar.gz
+-rw-rw-r--. 1 xtrnaw7 xtrnaw7 78442811 Jan  5 16:41 usr/ndk/r29.tar.gz
+[xtrnaw7@t15g /data/develop/git_repos/clang19_toolchain_for_android/sysroot]$ 
 ```
+Tar files with the files from other Android NDK versions are available here:
+
+http://bnsmb.de/files/public/Android/archive/ndk_for_clang19_toolchain/
 
