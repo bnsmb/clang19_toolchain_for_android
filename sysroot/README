@@ -368,7 +368,7 @@ History
     nmap, nping, ncat now use config files in  /data/local/tmp/sysroot/etc/ (except /etc/ethers)
     deleted not working binary bin/soelim (there is still a soelim in usr/bin)
 
-  21.01.2026 v1.6.0 beta /bs
+  21.01.2026 v1.6.0 /bs
     added the empty library libpthread.so (and libpthread.a)
     updated OpenSSL to version 3.5.4
     re-linked the OpenSSH binaries with the OpenSSL 3.5.4 libraries
