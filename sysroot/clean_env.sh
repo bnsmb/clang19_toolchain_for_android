@@ -4,14 +4,25 @@
 # History
 #   24.12.2024 1.0.0 /bs
 #     initial version
+#   21.01.2026 1.1.0 /bs
+#     the files and sub directories for ./home are now copied from ./etc/template/home
 #
-SYSROOT="/data/local/tmp/sysroot"
+SYSROOT="${SYSROOT:=/data/local/tmp/sysroot}"
 
 if [ "$1"x != "-x"x -o $# -ne 1  ] ; then
   echo "Usage: $0 [-x]"
   echo "The script deletes all config files in the clang environment in ${SYSROOT} if called with the parameter \"-x\" "
   exit 1
 fi
+
+getprop ro.serialno 2>/dev/null >/dev/null
+if [ $? -eq 0 ] ; then
+  echo "The running OS seems to be Android ...."
+  cd ${SYSROOT}
+else
+  echo "The running OS is not Android"
+fi
+
 
 echo "Removing all config files and temporary files in \"${SYSROOT}\" ...."
 \rm -f helloworld_in_c++ helloworld_in_c
@@ -27,15 +38,13 @@ echo "Removing all config files and temporary files in \"${SYSROOT}\" ...."
 
 find var/cache -type f -exec \rm {} +
 
-\rm -rf /data/local/tmp/sysroot/home/shell/.ssh/known_hosts
-\rm -rf /data/local/tmp/sysroot/etc/ssh/ssh_config.d/*
+
+\rm -rf ./home/shell/.ssh/known_hosts
+\rm -rf ./etc/ssh/ssh_config.d/*
 
 
-\rm -rf home/shell
-mkdir  -p home/shell
-cp etc/.bashrc home/shell
-
-mkdir /data/local/tmp/sysroot/home/shell/.ssh
+\rm -rf home/
+\cp -r etc/template/home home
 
 echo " ... done."
 

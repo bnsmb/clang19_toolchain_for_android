@@ -423,3 +423,7 @@ History
     updated the binutils to version 2.45
     now the complete binutils (including the data files) are part of the clang19 toolchain
 
+  21.03.2026 v1.6.0 beta /bs
+    the initial files for ./home are now in the directory ./etc/template/home (see clean_env.sh)
+
+
