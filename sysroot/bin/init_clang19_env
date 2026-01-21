@@ -55,6 +55,10 @@
 #  03.01.2025 v1.5.3 /bs
 #    the script now changes the working directory to ${CLANG_SYSROOT} if it is currently "/"
 #
+#  21.01.2025 v1.5.4 /bs
+#    added the function define_aliase to define aliase for the binaries in the clang19 toolchain
+#    added the function clear_aliase to delete the alias for the binaries in the clang19 toolchain
+#
 __TRUE=0
 __FALSE=1
 
@@ -123,6 +127,42 @@ function add_library_path {
   done
 }
 
+# ---------------------------------------------------------------------
+
+
+function define_aliase {
+  NEW_ALIAS="sysroot setlibpath addlib"
+
+  for i in vi find tar bash sed awk dd nano curl ; do
+    if ${TEST} -x "${CLANG_SYSROOT}/usr/bin/$i"  ; then
+       alias $i="${CLANG_SYSROOT}/usr/bin/$i"
+      NEW_ALIAS="${NEW_ALIAS} $i"
+    fi
+  done
+
+  for i in /system_ext/bin/* /product/bin/* ; do 
+    f=${i##*/} 
+    [[ " ${NEW_ALIAS} " == *\ $f\ * ]] && continue
+
+    if [ -x "${CLANG_SYSROOT}/usr/bin/$f" ] ; then
+      alias $f="${CLANG_SYSROOT}/usr/bin/$f"
+      NEW_ALIAS="${NEW_ALIAS} $f"
+    fi
+  done
+
+  for i in ${NEW_ALIAS} ; do
+    alias $i
+  done
+
+}
+
+function clear_aliase {
+
+  for CUR_ALIAS in ${NEW_ALIAS} ; do
+    unalias ${CUR_ALIAS}
+  done
+}
+  
 # ---------------------------------------------------------------------
 # main function starts here
 #
@@ -600,29 +640,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   alias cp_crt_libs='cp ${NDK_DIR}/sysroot/usr/lib/${CPU_TYPE}-linux-android/${API}/crt*.o .'
 
-  NEW_ALIAS="sysroot setlibpath addlib"
-
-  for i in vi find tar bash sed awk dd nano curl ; do
-    if ${TEST} -x "${CLANG_SYSROOT}/usr/bin/$i"  ; then
-       alias $i="${CLANG_SYSROOT}/usr/bin/$i"
-      NEW_ALIAS="${NEW_ALIAS} $i"
-    fi
-  done
-
-  for i in /system_ext/bin/* /product/bin/* ; do 
-    f=${i##*/} 
-    [[ " ${NEW_ALIAS} " == *\ $f\ * ]] && continue
-
-    if [ -x "${CLANG_SYSROOT}/usr/bin/$f" ] ; then
-      alias $f="${CLANG_SYSROOT}/usr/bin/$f"
-      NEW_ALIAS="${NEW_ALIAS} $f"
-    fi
-  done
-
-  for i in ${NEW_ALIAS} ; do
-    alias $i
-  done
-
+  define_aliase
 
   echo ""
 

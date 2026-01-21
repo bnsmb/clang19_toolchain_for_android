@@ -221,13 +221,16 @@ Creating the library "libutil" ....
 Notes
 
 Some standard Android programs do not work very well with the new binaries in /data/local/tmp/sysroot/usr/bin -- therefore it is recommended that
-/system/bin/ and /system_ext/bin are placed in the PATH variable before /data/local/tmp/sysroot/usr/bin
+/system/bin/ is placed in the PATH variable before /data/local/tmp/sysroot/usr/bin
 
-The script init_clang19_env creates some aliase for the executables from clang19. The script also creates aliase for each file in /system_ext/bin that is also part of the clang19 toolchain.
+The script init_clang19_env creates some aliase for the executables in the clang19 toolchain. The script also creates aliase for each file in /system_ext/bin and
+in /product/bin that is also part of the clang19 toolchain.
 The list of aliase created by the init script is stored in the environment variable NEW_ALIAS.
- 
 
-Update 07.06.2025 /bs
+The script init_clang19_env also defines two functions to define or clear the aliase:
+
+Use the function "clear_aliase" to undefine all aliase for the binaries from the clang19 toolchain; use the function "define_aliase" to (re)define the aliase
+for the binaries from the clang19 toolchain. 
 
 The test for the execution permissions like this
 
@@ -425,5 +428,6 @@ History
 
   21.03.2026 v1.6.0 beta /bs
     the initial files for ./home are now in the directory ./etc/template/home (see clean_env.sh)
-
+    added the function define_aliase to define aliase for the binaries in the clang19 toolchain
+    added the function clear_aliase to delete the alias for the binaries in the clang19 toolchain
 
