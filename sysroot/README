@@ -431,4 +431,7 @@ History
     added the function define_aliase to define aliase for the binaries in the clang19 toolchain
     added the function clear_aliase to delete the alias for the binaries in the clang19 toolchain
     replaced r27b with r27d in bin/libtool
+    replaced r27b with r27d in the files:
+       usr/lib/perl5/5.40.0/aarch64-linux-android/Config.pm
+       usr/lib/perl5/5.40.0/aarch64-linux-android/Config_heavy.pl
 

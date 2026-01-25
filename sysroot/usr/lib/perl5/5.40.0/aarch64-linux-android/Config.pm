@@ -121,7 +121,7 @@ tie %Config, 'Config', {
     inc_version_list => ' ',
     intsize => '4',
     ldlibpthname => 'LD_LIBRARY_PATH',
-    libpth => '/data/local/tmp/sysroot/usr/clang19/lib /data/local/tmp/sysroot/usr/ndk/r27b/lib /data/local/tmp/develop/sysroot/usr/lib /data/local/tmp/sysroot/usr/clang19/lib/clang/19/lib /data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/lib/aarch64-linux-android /data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/lib /data/local/tmp/sysroot/usr/clang19/lib/clang/19 /data/local/tmp/sysroot/usr/ndk/r27b/lib/clang/19/lib/aarch64-unknown-linux-android /system/lib /vendor/lib',
+    libpth => '/data/local/tmp/sysroot/usr/clang19/lib /data/local/tmp/sysroot/usr/ndk/r27d/lib /data/local/tmp/develop/sysroot/usr/lib /data/local/tmp/sysroot/usr/clang19/lib/clang/19/lib /data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android /data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib /data/local/tmp/sysroot/usr/clang19/lib/clang/19 /data/local/tmp/sysroot/usr/ndk/r27d/lib/clang/19/lib/aarch64-unknown-linux-android /system/lib /vendor/lib',
     osname => 'android',
     osvers => '15',
     path_sep => ':',
