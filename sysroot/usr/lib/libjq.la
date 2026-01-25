@@ -17,7 +17,7 @@ old_library='libjq.a'
 inherited_linker_flags=' -pthread'
 
 # Libraries that this one depends upon.
-dependency_libs=' -L./modules/oniguruma/src -L/data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/lib/aarch64-linux-android/31 -L/data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/lib/aarch64-linux-android -L/data/local/tmp/develop/sysroot/usr/lib -lm /data/local/tmp/sysroot/usr/lib/libonig.la -lc'
+dependency_libs=' -L./modules/oniguruma/src -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/31 -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android -L/data/local/tmp/develop/sysroot/usr/lib -lm /data/local/tmp/sysroot/usr/lib/libonig.la -lc'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''

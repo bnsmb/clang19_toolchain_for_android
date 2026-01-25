@@ -56,7 +56,7 @@ TCL_SHLIB_CFLAGS='-fPIC -fno-common'
 TCL_CFLAGS_WARNING='-Wall -Wextra -Wshadow -Wundef -Wwrite-strings -Wpointer-arith -Wc++-compat -fextended-identifiers'
 
 # Extra flags to pass to cc:
-TCL_EXTRA_CFLAGS=' -I/system/usr/clang19/include -I/system/usr/ndk/r27b/include -I/system/usr/ndk/r27b/sysroot/usr/include --sysroot=/system/usr/ndk/r27b/sysroot -pipe -finput-charset=UTF-8  -I/system/usr/clang19/include -I/system/usr/ndk/r27b/include -I/system/usr/ndk/r27b/sysroot/usr/include --sysroot=/system/usr/ndk/r27b/sysroot'
+TCL_EXTRA_CFLAGS=' -I/system/usr/clang19/include -I/system/usr/ndk/r27d/include -I/system/usr/ndk/r27d/sysroot/usr/include --sysroot=/system/usr/ndk/r27d/sysroot -pipe -finput-charset=UTF-8  -I/system/usr/clang19/include -I/system/usr/ndk/r27d/include -I/system/usr/ndk/r27d/sysroot/usr/include --sysroot=/system/usr/ndk/r27d/sysroot'
 
 # Base command to use for combining object files into a shared library:
 TCL_SHLIB_LD='${CC} ${CFLAGS} ${LDFLAGS} -shared'
@@ -78,7 +78,7 @@ TCL_DL_LIBS='-ldl'
 
 # Flags to pass to the compiler when linking object files into
 # an executable tclsh or tcltest binary.
-TCL_LD_FLAGS=' -L/system/usr/ndk/r27b/sysroot/usr/lib/aarch64-linux-android/35 -L/system/usr/ndk/r27b/sysroot/usr/lib/aarch64-linux-android -B/system/usr/ndk/r27b/sysroot/usr/lib/aarch64-linux-android/35/ --sysroot=/system/usr/ndk/r27b/sysroot -lc   -Wl,--export-dynamic '
+TCL_LD_FLAGS=' -L/system/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/35 -L/system/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android -B/system/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/35/ --sysroot=/system/usr/ndk/r27d/sysroot -lc   -Wl,--export-dynamic '
 
 # Flags to pass to cc/ld, such as "-R /usr/local/tcl/lib", that tell the
 # run-time dynamic linker where to look for shared libraries such as
