@@ -173,7 +173,7 @@ lock_old_archive_extraction=no
 LTCC="/data/local/tmp/sysroot/usr/clang19/bin/clang"
 
 # LTCC compiler flags.
-LTCFLAGS=" -I/data/local/tmp/sysroot/usr/clang19/include -I/data/local/tmp/sysroot/usr/ndk/r27b/include -I/data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/include -I/data/local/tmp/develop/sysroot/usr/include --sysroot=/data/local/tmp/sysroot/usr/ndk/r27b/sysroot"
+LTCFLAGS=" -I/data/local/tmp/sysroot/usr/clang19/include -I/data/local/tmp/sysroot/usr/ndk/r27d/include -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include -I/data/local/tmp/develop/sysroot/usr/include --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot"
 
 # Take the output of nm and produce a listing of raw symbols and C names.
 global_symbol_pipe="/system/bin/sed -n -e 's/^.*[	 ]\\([ABCDGIRSTW][ABCDGIRSTW]*\\)[	 ][	 ]*\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 \\2 \\2/p' | /system/bin/sed '/ __gnu_lto/d'"
@@ -12028,7 +12028,7 @@ file_list_spec=""
 hardcode_action=immediate
 
 # The directories searched by this compiler when creating a shared library.
-compiler_lib_search_dirs="/data/local/tmp/sysroot/usr/clang19/lib/clang/19/lib/aarch64-unknown-linux-android /data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/lib/aarch64-linux-android /data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/lib"
+compiler_lib_search_dirs="/data/local/tmp/sysroot/usr/clang19/lib/clang/19/lib/aarch64-unknown-linux-android /data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android /data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib"
 
 # Dependencies to place before and after the objects being linked to
 # create a shared library.
@@ -12039,7 +12039,7 @@ postdeps="-lc++ -lm -l:libunwind.a -ldl -lc -l:libunwind.a -ldl"
 
 # The library search path used internally by the compiler when linking
 # a shared library.
-compiler_lib_search_path="-L/data/local/tmp/sysroot/usr/clang19/lib/clang/19/lib/aarch64-unknown-linux-android -L/data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/lib/aarch64-linux-android -L/data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/lib"
+compiler_lib_search_path="-L/data/local/tmp/sysroot/usr/clang19/lib/clang/19/lib/aarch64-unknown-linux-android -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib"
 
 # ### END LIBTOOL TAG CONFIG: CXX
 

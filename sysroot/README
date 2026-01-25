@@ -430,4 +430,5 @@ History
     the initial files for ./home are now in the directory ./etc/template/home (see clean_env.sh)
     added the function define_aliase to define aliase for the binaries in the clang19 toolchain
     added the function clear_aliase to delete the alias for the binaries in the clang19 toolchain
+    replaced r27b with r27d in bin/libtool
 
