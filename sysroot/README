@@ -434,4 +434,5 @@ History
     replaced r27b with r27d in the files:
        usr/lib/perl5/5.40.0/aarch64-linux-android/Config.pm
        usr/lib/perl5/5.40.0/aarch64-linux-android/Config_heavy.pl
+    corrected the file home/shell/.cpan/CPAN/MyConfig.pm
 
