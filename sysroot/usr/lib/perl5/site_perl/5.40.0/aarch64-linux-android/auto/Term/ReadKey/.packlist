@@ -1,0 +1,3 @@
+/data/local/tmp/sysroot/usr/lib/perl5/site_perl/5.40.0/aarch64-linux-android/Term/ReadKey.pm relocate_as=../../../Term/ReadKey.pm
+/data/local/tmp/sysroot/usr/lib/perl5/site_perl/5.40.0/aarch64-linux-android/auto/Term/ReadKey/PL_Term__ReadKey.so relocate_as=PL_Term__ReadKey.so
+/data/local/tmp/sysroot/usr/man/man3/Term::ReadKey.3 relocate_as=../../../../../../../../man/man3/Term::ReadKey.3

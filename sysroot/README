@@ -238,6 +238,10 @@ The test for the execution permissions like this
 
 does now work in the bash from this tar archive.
 
+To install additional Perl Modules with cpan, use this syntax
+
+PATH=/data/local/tmp/sysroot/usr/bin:$PATH cpan
+
 
 
 History
@@ -435,4 +439,7 @@ History
        usr/lib/perl5/5.40.0/aarch64-linux-android/Config.pm
        usr/lib/perl5/5.40.0/aarch64-linux-android/Config_heavy.pl
     corrected the file home/shell/.cpan/CPAN/MyConfig.pm
+    updated CPAN to version 2.38
+    added the Perl modules CPAN::DistnameInfo, Term::ReadKey, and Term::ReadLine::Perl. Use instmodsh to list the installed Perl Modules
+
 

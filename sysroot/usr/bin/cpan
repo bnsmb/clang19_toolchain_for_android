@@ -1,7 +1,4 @@
 #!/data/local/tmp/sysroot/usr/bin/perl
-    eval 'exec /data/local/tmp/sysroot/usr/bin/perl -S $0 ${1+"$@"}'
-	if 0; # ^ Run only under a shell
-#!/usr/local/bin/perl
 
 BEGIN { pop @INC if $INC[-1] eq '.' }
 use strict;

@@ -1,0 +1,2 @@
+/data/local/tmp/sysroot/usr/lib/perl5/site_perl/5.40.0/Term/ReadLine/Perl.pm relocate_as=../../../../Term/ReadLine/Perl.pm
+/data/local/tmp/sysroot/usr/lib/perl5/site_perl/5.40.0/Term/ReadLine/readline.pm relocate_as=../../../../Term/ReadLine/readline.pm
