@@ -443,4 +443,6 @@ History
     added the Perl modules CPAN::DistnameInfo, Term::ReadKey, and Term::ReadLine::Perl. Use instmodsh to list the installed Perl Modules
     updated OpenSSL to version 3.5.5
     relinked the rsync binary with the OpenSSL 3.5.5 library
+    relinked the openvpn binary with the OpenSSL 3.5.5 library
+    relinked the OpenSSH binaries with the OpenSSL 3.5.5 library
 
