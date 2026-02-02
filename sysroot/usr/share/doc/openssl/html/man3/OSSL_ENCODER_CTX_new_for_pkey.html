@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_ENCODER_CTX_new_for_pkey</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:root@localhost" />
+<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
 </head>
 
 <body>
@@ -62,6 +62,8 @@ int OSSL_ENCODER_CTX_set_passphrase_cb(OSSL_ENCODER_CTX *ctx,
 <p>Internally, OSSL_ENCODER_CTX_new_for_pkey() uses the names from the <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a> implementation associated with <i>pkey</i> to build a list of applicable encoder implementations that are used to process the <i>pkey</i> into the encoding named by <i>output_type</i>, with the outermost structure named by <i>output_structure</i> if that&#39;s relevant. All these implementations are implicitly fetched, with <i>propquery</i> for finer selection.</p>
 
 <p>If no suitable encoder implementation is found, OSSL_ENCODER_CTX_new_for_pkey() still creates a <b>OSSL_ENCODER_CTX</b>, but with no associated encoder (<a href="../man3/OSSL_ENCODER_CTX_get_num_encoders.html">OSSL_ENCODER_CTX_get_num_encoders(3)</a> returns zero). This helps the caller to distinguish between an error when creating the <b>OSSL_ENCODER_CTX</b> and missing encoder implementation, and allows it to act accordingly.</p>
+
+<p>Note that OSSL_ENCODER_CTX_new_for_pkey() finalises the OSSL_ENCODER_CTX; after that the OSSL_ENCODER_CTX_set_* and OSSL_ENCODER_CTX_add_* functions described in <a href="../man3/OSSL_ENCODER_CTX.html">OSSL_ENCODER_CTX(3)</a> shouldn&#39;t be called.</p>
 
 <p>OSSL_ENCODER_CTX_set_cipher() tells the implementation what cipher should be used to encrypt encoded keys. The cipher is given by name <i>cipher_name</i>. The interpretation of that <i>cipher_name</i> is implementation dependent. The implementation may implement the cipher directly itself or by other implementations, or it may choose to fetch it. If the implementation supports fetching the cipher, then it may use <i>propquery</i> as properties to be queried for when fetching. <i>cipher_name</i> may also be NULL, which will result in unencrypted encoding.</p>
 

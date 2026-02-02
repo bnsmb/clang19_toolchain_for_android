@@ -4,7 +4,7 @@
 <head>
 <title>SSL_set_quic_tls_cbs</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:root@localhost" />
+<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
 </head>
 
 <body>
@@ -77,6 +77,8 @@ int SSL_set_quic_tls_early_data_enabled(SSL *s, int enabled);</code></pre>
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
 <p>SSL_set_quic_tls_cbs() can be used to replace the standard TLS record layer with a custom record layer for use by a third party QUIC implementation. For the given SSL object <i>s</i>, a set of callbacks are supplied in an <b>OSSL_DISPATCH</b> table via <i>qtdis</i>. The <i>arg</i> parameter will be passed as an argument when the various callbacks are called.</p>
+
+<p>The above callbacks are invoked, as needed, by SSL_do_handshake() and SSL_read() (including SSL_read_ex, SSL_peek, SSL_peek_ex). Once the SSL handshake is complete, the QUIC stack must arrange to call one of the SSL_read() variants whenever a post-handshake CRYPTO frame is received. The number of bytes requested may be zero.</p>
 
 <p>An <b>OSSL_DISPATCH</b> table should consist of an array of <b>OSSL_DISPATCH</b> entries where each entry is a function id, and a function pointer. The array should be terminated with an empty entry (i.e. a 0 function id, and a NULL function pointer).</p>
 

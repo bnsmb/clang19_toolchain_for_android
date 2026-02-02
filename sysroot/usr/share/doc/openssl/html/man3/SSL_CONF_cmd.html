@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CONF_cmd</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:root@localhost" />
+<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
 </head>
 
 <body>
@@ -364,6 +364,8 @@ $ openssl list -tls1_3 -tls-groups</code></pre>
 <p>Controls use of TLSv1.3 record layer padding. <b>value</b> is a string of the form &quot;number[,number]&quot; where the (required) first number is the padding block size (in octets) for application data, and the optional second number is the padding block size for handshake and alert messages. If the optional second number is omitted, the same padding will be applied to all messages.</p>
 
 <p>Padding attempts to pad TLSv1.3 records so that they are a multiple of the set length on send. A value of 0 or 1 turns off padding as relevant. Otherwise, the values must be &gt;1 or &lt;=16384.</p>
+
+<p>Note that, for QUIC objects, padding is always performed at the packet level, and so cannot be done at the record level. Given that, when the config file is created, there is no knowledge of what kind of SSL objects are being created, this option is silently ignored for QUIC objects.</p>
 
 </dd>
 <dt id="SignatureAlgorithms"><b>SignatureAlgorithms</b></dt>

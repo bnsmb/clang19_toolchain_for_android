@@ -4,7 +4,7 @@
 <head>
 <title>EVP_SIGNATURE-ED25519</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:root@localhost" />
+<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
 </head>
 
 <body>
@@ -113,6 +113,8 @@
 <p>Ed25519 or Ed448 public keys can be set directly using <a href="../man3/EVP_PKEY_new_raw_public_key.html">EVP_PKEY_new_raw_public_key(3)</a> or loaded from a SubjectPublicKeyInfo structure in a PEM file using <a href="../man3/PEM_read_bio_PUBKEY.html">PEM_read_bio_PUBKEY(3)</a> (or similar function).</p>
 
 <p>Ed25519 and Ed448 can be tested with the <a href="../man1/openssl-speed.html">openssl-speed(1)</a> application since version 1.1.1. Valid algorithm names are <b>ed25519</b>, <b>ed448</b> and <b>eddsa</b>. If <b>eddsa</b> is specified, then both Ed25519 and Ed448 are benchmarked.</p>
+
+<p>Since Ed25519ctx is not included in FIPS 186-5, it is not present in the FIPS provider.</p>
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
