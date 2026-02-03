@@ -161,6 +161,7 @@ Creating the library "libutil" ....
 # 
 # dig 9.11.37
 # mtr 0.96
+# ngrep 1.48.3
 # 
 # nano 8.7, 8.6 and nano 6.4 
 # vim 9.1-1942
@@ -445,4 +446,6 @@ History
     relinked the rsync binary with the OpenSSL 3.5.5 library
     relinked the openvpn binary with the OpenSSL 3.5.5 library
     relinked the OpenSSH binaries with the OpenSSL 3.5.5 library
+    updated cpio to version 2.15
+    updated ngrep to version 1.48.3
 
