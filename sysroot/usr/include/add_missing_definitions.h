@@ -32,6 +32,9 @@
 //    added the function android_getpass
 //  03.01.2025
 //    added the definition for PTR
+//  03.02.2026
+//    added the definition for bcmp
+//
 //
 // This file defines
 //   quad_t
@@ -414,6 +417,11 @@ static char *android_getpass(const char *prompt)
 #define getpass android_getpass
 #endif
 
+// --------------------------------------------------------------------
+
+#ifdef __ANDROID__
+#define bcmp(a,b,n) memcmp((a),(b),(n))
+#endif
 
 // --------------------------------------------------------------------
 
@@ -424,6 +432,7 @@ static char *android_getpass(const char *prompt)
 
 
 // --------------------------------------------------------------------
+
 
 
 
