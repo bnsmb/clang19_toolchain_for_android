@@ -154,6 +154,7 @@ Creating the library "libutil" ....
 # sqlite3 3.51.1
 # 
 # sshd/ssh 10.0p2 
+# OpenSSL 3.5.5
 # 
 # git 2.49
 # 
