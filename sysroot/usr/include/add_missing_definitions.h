@@ -62,6 +62,7 @@
 //   localtime_rz 
 //   mktime_z
 //   android_getpass
+//   bcmp
 //
 // This file defines the macros
 //
