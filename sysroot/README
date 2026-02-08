@@ -449,4 +449,8 @@ History
     relinked the OpenSSH binaries with the OpenSSL 3.5.5 library
     updated cpio to version 2.15
     updated ngrep to version 1.48.3
+    updated git to version 2.53
+    added git-lfs v3.7.1 (using the pre-compiled arm64 binary from  https://github.com/git-lfs/git-lfs)
+    added git-extras v7.4
+
 

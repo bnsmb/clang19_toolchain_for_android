@@ -1,6 +1,6 @@
-#!/data/local/tmp/sysroot/usr/bin/perl
+#!/usr/bin/perl
 
-use lib (split(/:/, $ENV{GITPERLLIB} || '/data/local/tmp/sysroot/usr/share/perl5'));
+use lib (split(/:/, $ENV{GITPERLLIB} || '/data/local/tmp/sysroot//usr/share/perl5'));
 #
 # This tool is copyright (c) 2005, Martin Langhoff.
 # It is released under the Gnu Public License, version 2.

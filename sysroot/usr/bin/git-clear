@@ -1,0 +1,78 @@
+#!/system/bin/env bash
+# reset environment variables that could interfere with normal usage
+unset -v GREP_OPTIONS
+# put all utility functions here
+
+# make a temporary file
+git_extra_mktemp() {
+    mktemp -t "$(basename "$0")".XXXXXXX
+}
+
+git_extra_default_branch() {
+    local extras_default_branch init_default_branch
+    extras_default_branch=$(git config --get git-extras.default-branch)
+    init_default_branch=$(git config --get init.defaultBranch)
+    if [ -n "$extras_default_branch" ]; then
+        echo "$extras_default_branch"
+    elif [ -n "$init_default_branch" ]; then
+        echo "$init_default_branch"
+    else
+        echo "main"
+    fi
+}
+#
+# check whether current directory is inside a git repository
+#
+
+is_git_repo() {
+  git rev-parse --show-toplevel > /dev/null 2>&1
+  result=$?
+  if test $result != 0; then
+    >&2 echo 'Not a git repo!'
+    exit $result
+  fi
+}
+
+is_git_repo
+PROGNAME="git-clear"
+FORCE=0
+
+_usage() {
+cat << EOF
+usage: $PROGNAME options
+usage: $PROGNAME -h|help|?
+
+clear git repository
+
+OPTIONS:
+  -f, --force               Force clear without questioning user
+  -h, --help, ?             Show this message
+EOF
+}
+
+# Read arguments
+while [ "$1" != "" ]; do
+    case $1 in
+        -f|--force)
+            FORCE=1
+        ;;
+        -h|--help|?)
+            _usage
+            exit 1
+        ;;
+    esac
+
+    shift
+done
+
+# Only wait for answer if not forced by user
+if [[ $FORCE == 0 ]]; then
+    echo -n "Sure? - THIS COMMAND MAY DELETE FILES THAT CANNOT BE RECOVERED, including those in .gitignore [y/N]: "
+    read -r clean
+else
+    clean=y
+fi
+
+if [ "$clean" = "y" ]; then
+    git clean -d -f -x && git reset --hard
+fi

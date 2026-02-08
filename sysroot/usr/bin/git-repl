@@ -1,0 +1,93 @@
+#!/system/bin/env bash
+# reset environment variables that could interfere with normal usage
+unset -v GREP_OPTIONS
+# put all utility functions here
+
+# make a temporary file
+git_extra_mktemp() {
+    mktemp -t "$(basename "$0")".XXXXXXX
+}
+
+git_extra_default_branch() {
+    local extras_default_branch init_default_branch
+    extras_default_branch=$(git config --get git-extras.default-branch)
+    init_default_branch=$(git config --get init.defaultBranch)
+    if [ -n "$extras_default_branch" ]; then
+        echo "$extras_default_branch"
+    elif [ -n "$init_default_branch" ]; then
+        echo "$init_default_branch"
+    else
+        echo "main"
+    fi
+}
+#
+# check whether current directory is inside a git repository
+#
+
+is_git_repo() {
+  git rev-parse --show-toplevel > /dev/null 2>&1
+  result=$?
+  if test $result != 0; then
+    >&2 echo 'Not a git repo!'
+    exit $result
+  fi
+}
+
+is_git_repo
+
+git version
+echo "git-extras version ""$(git-extras -v)"
+echo "Type 'ls' to ls files below current directory; '!command' to execute any command or just 'subcommand' to execute any git subcommand; 'quit', 'exit', 'q', ^D, or ^C to exit the git repl."
+
+while true; do
+  # Current branch
+  cur=$(git symbolic-ref HEAD 2> /dev/null | cut -d/ -f3-)
+
+  # Prompt
+  if test -n "$cur"; then
+    cur_string=" ($cur)"
+  else
+    cur_string=""
+  fi
+  if test -n "$exit_status" && test "$exit_status" -ne 0; then
+    es_string=$' \e[31m['"$exit_status"$']\e[0m'
+  else
+    es_string=""
+  fi
+  prompt="git$cur_string$es_string> "
+
+  # Use arguments as a command if any are provided.
+  if [ $# -ne 0 ]; then
+    cmd=$*
+    set --
+    echo "$prompt" "$cmd" # It is as though you had entered a command.
+  else
+    # Readline
+    read -e -r -p "$prompt" cmd
+    # Check for EOF, and end the program if so (handles ^D).
+    test $? -ne 0 && break
+  fi
+
+  # History
+  history -s "$cmd"
+
+  # Built-in commands
+  case $cmd in
+    ls) cmd=ls-files;;
+    "") continue;;
+    quit|exit|q) break;;
+  esac
+
+  if [[ $cmd == !*  ]]; then
+    # shellcheck disable=SC2086
+    eval ${cmd:1}
+  elif [[ $cmd == git* ]]; then
+    # shellcheck disable=SC2086
+    eval $cmd
+  else
+    eval git "$cmd"
+  fi
+  exit_status=$?
+done
+
+echo

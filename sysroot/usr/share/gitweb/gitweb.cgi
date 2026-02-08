@@ -35,7 +35,7 @@ BEGIN {
 	CGI->compile() if $ENV{'MOD_PERL'};
 }
 
-our $version = "2.49.0";
+our $version = "2.53.0";
 
 our ($my_url, $my_uri, $base_url, $path_info, $home_link);
 sub evaluate_uri {
@@ -80,7 +80,7 @@ sub evaluate_uri {
 
 # core git executable to use
 # this can just be "git" if your webserver has a sensible PATH
-our $GIT = "/data/local/tmp/sysroot/usr/bin/git";
+our $GIT = "/data/local/tmp/sysroot//usr/bin/git";
 
 # absolute fs-path which will be prepended to the project path
 #our $projectroot = "/pub/scm";

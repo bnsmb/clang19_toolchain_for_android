@@ -1,6 +1,6 @@
-#!/data/local/tmp/sysroot/data/local/tmp/sysroot/usr/bin/perl
+#!/usr/bin/perl
 
-use lib (split(/:/, $ENV{GITPERLLIB} || '/data/local/tmp/sysroot/usr/share/perl5'));
+use lib (split(/:/, $ENV{GITPERLLIB} || '/data/local/tmp/sysroot//usr/share/perl5'));
 
 require v5.26;
 use strict;

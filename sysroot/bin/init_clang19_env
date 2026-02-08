@@ -59,6 +59,9 @@
 #    added the function define_aliase to define aliase for the binaries in the clang19 toolchain
 #    added the function clear_aliase to delete the alias for the binaries in the clang19 toolchain
 #
+#  08.02.2026 v1.5.5 /bs
+#    the selinux policy for working with sockets is now always enabled if root access is working
+#
 __TRUE=0
 __FALSE=1
 
@@ -656,12 +659,10 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
 	echo "Adding missing SELinux policies using \"${MAGISKPOLICY}\" ..."
 
-        if which tmux 2>/dev/null 1>dev/null ; then
-          echo "Enabling socket access for the user \"shell\" (this is necessary to use tmux)..."
+        echo "Enabling socket access for the user \"shell\" (this is necessary to use tmux or ssh-agent)..."
 
-          ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file sock_file { create getattr setattr write unlink }"  '
-          ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell devpts chr_file { read write open }"'
-        fi
+        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file sock_file { create getattr setattr write unlink }"  '
+        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell devpts chr_file { read write open }"'
 
         if which mtr 2>/dev/null 1>dev/null ; then
           echo "Enabling icmp_socket access for the user \"shell\" (this is necessary to use mtr)..."

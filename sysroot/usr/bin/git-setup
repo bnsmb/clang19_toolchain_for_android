@@ -1,0 +1,44 @@
+#!/system/bin/env bash
+# reset environment variables that could interfere with normal usage
+unset -v GREP_OPTIONS
+# put all utility functions here
+
+# make a temporary file
+git_extra_mktemp() {
+    mktemp -t "$(basename "$0")".XXXXXXX
+}
+
+git_extra_default_branch() {
+    local extras_default_branch init_default_branch
+    extras_default_branch=$(git config --get git-extras.default-branch)
+    init_default_branch=$(git config --get init.defaultBranch)
+    if [ -n "$extras_default_branch" ]; then
+        echo "$extras_default_branch"
+    elif [ -n "$init_default_branch" ]; then
+        echo "$init_default_branch"
+    else
+        echo "main"
+    fi
+}
+
+COMMIT_MESSAGE='Initial commit'
+
+if [ "$1" = "-m" ]; then
+    COMMIT_MESSAGE=$2
+    shift; shift
+fi
+
+gitdirexists(){
+    if [ -d ".git" ]; then
+        echo ".git directory already exists, aborting"
+        exit 1
+    fi
+}
+
+dir=$(test -z "$*" && echo "." || echo "$*")
+mkdir -p "$dir" \
+  && cd "$dir" \
+  && gitdirexists \
+  && git init \
+  && git add . \
+  && git commit --allow-empty -m "$COMMIT_MESSAGE"

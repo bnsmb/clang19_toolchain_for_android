@@ -1,0 +1,63 @@
+#!/system/bin/env bash
+# reset environment variables that could interfere with normal usage
+unset -v GREP_OPTIONS
+# put all utility functions here
+
+# make a temporary file
+git_extra_mktemp() {
+    mktemp -t "$(basename "$0")".XXXXXXX
+}
+
+git_extra_default_branch() {
+    local extras_default_branch init_default_branch
+    extras_default_branch=$(git config --get git-extras.default-branch)
+    init_default_branch=$(git config --get init.defaultBranch)
+    if [ -n "$extras_default_branch" ]; then
+        echo "$extras_default_branch"
+    elif [ -n "$init_default_branch" ]; then
+        echo "$init_default_branch"
+    else
+        echo "main"
+    fi
+}
+#
+# check whether current directory is inside a git repository
+#
+
+is_git_repo() {
+  git rev-parse --show-toplevel > /dev/null 2>&1
+  result=$?
+  if test $result != 0; then
+    >&2 echo 'Not a git repo!'
+    exit $result
+  fi
+}
+
+is_git_repo
+
+# Assert there is at least one tag provided
+test -z "$1" && echo "tag required." 1>&2 && exit 1
+
+# Detect the default remote exists or not
+default_remote=$(git config git-extras.default-remote)
+
+if [[ -n "$default_remote" ]]; then
+    origin="$default_remote"
+else
+    origin=origin
+fi
+
+# Concatenate all the tag references
+local_tags=""
+origin_refs=""
+for tagname in "$@"
+do
+  local_tags=$local_tags" $tagname"
+  origin_refs=$origin_refs" :refs/tags/$tagname"
+done
+
+# Delete all the tags
+# shellcheck disable=SC2086
+git tag -d $local_tags
+# shellcheck disable=SC2086
+git push "$origin" $origin_refs

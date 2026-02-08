@@ -1,0 +1,127 @@
+#!/system/bin/env bash
+# reset environment variables that could interfere with normal usage
+unset -v GREP_OPTIONS
+# put all utility functions here
+
+# make a temporary file
+git_extra_mktemp() {
+    mktemp -t "$(basename "$0")".XXXXXXX
+}
+
+git_extra_default_branch() {
+    local extras_default_branch init_default_branch
+    extras_default_branch=$(git config --get git-extras.default-branch)
+    init_default_branch=$(git config --get init.defaultBranch)
+    if [ -n "$extras_default_branch" ]; then
+        echo "$extras_default_branch"
+    elif [ -n "$init_default_branch" ]; then
+        echo "$init_default_branch"
+    else
+        echo "main"
+    fi
+}
+#
+# check whether current directory is inside a git repository
+#
+
+is_git_repo() {
+  git rev-parse --show-toplevel > /dev/null 2>&1
+  result=$?
+  if test $result != 0; then
+    >&2 echo 'Not a git repo!'
+    exit $result
+  fi
+}
+
+is_git_repo
+
+remote=${1:-""}
+branch=""
+filename=${2:-""}
+line1=${3:-""}
+line2=${4:-""}
+
+# get remote name
+if [[ $remote == "" ]]; then
+    branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+    remote=$(git config branch."${branch}".remote || echo "origin")
+fi
+
+if [[ $remote == "" ]]; then
+    echo "Remote not found"
+    exit 1
+fi
+
+remote_url=$(git remote get-url "$remote") || exit $?
+
+if [[ $remote_url = git@* ]]; then
+    url=$(echo "$remote_url" | sed -E -e 's/:/\//' -e 's/\.git$//' -e 's/.*@(.*)/http:\/\/\1/')
+elif [[ $remote_url = http* ]]; then
+    url=${remote_url%.git}
+fi
+
+# construct urls
+commit_hash=$(git rev-parse HEAD 2>/dev/null)
+commit_or_branch=${commit_hash:-${branch}}
+
+if [[ $remote_url =~ gitlab ]]; then
+    # construct gitlab urls
+    # https://gitlab.com/<user_or_group>/<repo>/-/blob/<commit_or_branch>/<filename>#L<line1>-<line2>
+    if [[ -n ${filename} ]]; then
+        url="${url}/-/blob/${commit_or_branch}/${filename}"
+        if [[ -n "${line1}" ]]; then
+            url="${url}#L${line1}"
+            if [[ -n "${line2}" ]]; then
+                url="${url}-${line2}"
+            fi
+        fi
+    fi
+elif [[ $remote_url =~ github ]]; then
+    # construct github urls
+    # https://github.com/<user_or_org>/<repo>/blob/<commit_or_branch>/<filename>#L<line1>-L<line2>
+    if [[ -n "${filename}" ]]; then
+        url="${url}/blob/${commit_or_branch}/${filename}"
+        if [[ -n "${line1}" ]]; then
+            url="${url}#L${line1}"
+            if [[ -n "${line2}" ]]; then
+                url="${url}-L${line2}"
+            fi
+        fi
+    fi
+elif [[ $remote_url =~ bitbucket ]]; then
+    # construct bitbucket urls
+    # https://bitbucket.org/<user_or_org>/<repo>/src/<commit_or_branch>/<filename>#lines-<line1>:<line2>
+    if [[ -n ${filename} ]]; then
+        url=${url}/src/${commit_or_branch}/${filename}
+        if [[ -n "${line1}" ]]; then
+            url="${url}#lines-${line1}"
+            if [[ -n "${line2}" ]]; then
+                url="${url}:${line2}"
+            fi
+        fi
+    fi
+fi
+
+# open url
+case "$OSTYPE" in
+darwin*)
+    # MacOS
+    open "$url"
+    ;;
+msys)
+    # Git-Bash on Windows
+    start "$url"
+    ;;
+linux*)
+    # Handle WSL on Windows
+    if uname -a | grep -i -q Microsoft && command -v powershell.exe; then
+        powershell.exe -NoProfile start "$url"
+    else
+        xdg-open "$url"
+    fi
+    ;;
+*)
+    # fall back to xdg-open for BSDs, etc.
+    xdg-open "$url"
+    ;;
+esac

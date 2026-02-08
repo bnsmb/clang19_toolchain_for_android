@@ -1,6 +1,6 @@
-#!/data/local/tmp/sysroot/usr/bin/perl
+#!/usr/bin/perl
 
-use lib (split(/:/, $ENV{GITPERLLIB} || '/data/local/tmp/sysroot/usr/share/perl5'));
+use lib (split(/:/, $ENV{GITPERLLIB} || '/data/local/tmp/sysroot//usr/share/perl5'));
 # Copyright (C) 2006, Eric Wong <normalperson@yhbt.net>
 # License: GPL v2 or later
 require v5.26;
@@ -11,7 +11,7 @@ use vars qw/	$AUTHOR $VERSION
 		$_revision $_repository
 		$_q $_authors $_authors_prog %users/;
 $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
-$VERSION = '2.49.0';
+$VERSION = '2.53.0';
 
 use Carp qw/croak/;
 use File::Basename qw/dirname basename/;

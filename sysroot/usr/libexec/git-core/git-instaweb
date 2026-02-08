@@ -38,8 +38,8 @@ conf="$GIT_DIR/gitweb/httpd.conf"
 # if installed, it doesn't need further configuration (module_path)
 test -z "$httpd" && httpd='lighttpd -f'
 
-# Default is /data/local/tmp/sysroot/usr/share/gitweb
-test -z "$root" && root='/data/local/tmp/sysroot/usr/share/gitweb'
+# Default is /data/local/tmp/sysroot//usr/share/gitweb
+test -z "$root" && root='/data/local/tmp/sysroot//usr/share/gitweb'
 
 # any untaken local port will do...
 test -z "$port" && port=1234
