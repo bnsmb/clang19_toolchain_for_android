@@ -454,4 +454,4 @@ History
     added git-extras v7.4
     add fsmon 1.8.8
     added itraf-ng 1.2.2 (iptraf-ng needs root access)
-
+    recompiled openvpn with the official source code for version 2.7
