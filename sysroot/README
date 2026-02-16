@@ -165,7 +165,7 @@ Creating the library "libutil" ....
 # ngrep 1.48.3
 # 
 # nano 8.7, 8.6 and nano 6.4 
-# vim 9.1-1942
+# vim 9.2
 # ed 1.21
 # bvi /bmore 1.5.0
 # 
@@ -455,3 +455,5 @@ History
     add fsmon 1.8.8
     added itraf-ng 1.2.2 (iptraf-ng needs root access)
     recompiled openvpn with the official source code for version 2.7
+    updated vim to version 9.2
+
