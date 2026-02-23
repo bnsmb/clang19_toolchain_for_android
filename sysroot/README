@@ -195,6 +195,7 @@ Creating the library "libutil" ....
 #   (the binaries are from this ZIP file: https://github.com/lzhiyong/android-sdk-tools/releases/download/35.0.2/android-sdk-tools-static-aarch64.zip)
 #
 # OpenVPN 2.7 (openvpn requires root access)
+# stunnel 5.77 
 #
 # unfsd 0.11.0 (a userland NFS daemon usable by non-root user; the default exports file for this binary is /data/local/tmp/sysroot/etc/exports)
 # darkhttpd 1.17 (a simple webserver; see https://github.com/emikulic/darkhttpd)
@@ -458,4 +459,6 @@ History
     recompiled openvpn with the official source code for version 2.7
     updated vim to version 9.2
     added darkhttpd (a simple webserver; see https://github.com/emikulic/darkhttpd)
+    added stunnel 5.77
+
 
