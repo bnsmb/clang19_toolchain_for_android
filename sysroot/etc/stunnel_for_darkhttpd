@@ -1,16 +1,19 @@
-; stunnel.conf - HTTPS wrapper for  darkstat (the config listens on the port 8443 and forwards the requests to port 8080)
+; stunnel.conf - HTTPS wrapper for  darkhttpd (stunnel is listening on the port 8443 and forwards the requests to port 8080)
 ;
 ; Based on : https://www.stunnel.org/static/stunnel.html
 
 ; global settings
+;
 ; create the directories if they do not yet exist (without the directories stunnel does not run):
 ;
 ; mkdir -p data/local/tmp/sysroot/var/run /data/local/tmp/sysroot/var/log
-; 
+;
 pid = /data/local/tmp/sysroot/var/run/stunnel.pid
 debug = 7
 output = /data/local/tmp/sysroot/var/log/stunnel.log
 syslog = no
+
+; run stunnel in the foreground; remove the line to start stunnel in the background
 foreground = yes
 
 ; create the directories and the certificate if it does not yet exist
@@ -20,9 +23,9 @@ foreground = yes
 ; use the command
 ;
 ; openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /data/local/tmp/sysroot/etc/ssl/private/server.key -out /data/local/tmp/sysroot/etc/ssl/certs/server.crt
-; 
+;
 ; to create a self-signed certificate
-; 
+;
 cert = /data/local/tmp/sysroot/etc/ssl/certs/server.crt
 key = /data/local/tmp/sysroot/etc/ssl/private/server.key
 
@@ -35,7 +38,7 @@ options = SINGLE_DH_USE
 options = SINGLE_ECDH_USE
 ciphers = HIGH:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!SRP
 
-; HTTPS service for darkstat
+; HTTPS service for darkhttpd
 [https]
 accept = 8443
 connect = 127.0.0.1:8080
