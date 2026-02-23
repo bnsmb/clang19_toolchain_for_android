@@ -1,0 +1,13 @@
+[Unit]
+Description=TLS tunnel for network daemons
+After=syslog.target network-online.target
+
+[Service]
+LimitNOFILE=20480
+ExecStart=/data/local/tmp/sysroot/bin/stunnel
+ExecReload=/bin/kill -HUP $MAINPID
+Type=forking
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
