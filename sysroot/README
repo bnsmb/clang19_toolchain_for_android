@@ -197,6 +197,7 @@ Creating the library "libutil" ....
 # OpenVPN 2.7 (openvpn requires root access)
 #
 # unfsd 0.11.0 (a userland NFS daemon usable by non-root user; the default exports file for this binary is /data/local/tmp/sysroot/etc/exports)
+# darkhttpd 1.17 (a simple webserver; see https://github.com/emikulic/darkhttpd)
 #
 # protoc v32.1.0 (currently the binary only)
 #
@@ -456,4 +457,5 @@ History
     added itraf-ng 1.2.2 (iptraf-ng needs root access)
     recompiled openvpn with the official source code for version 2.7
     updated vim to version 9.2
+    added darkhttpd (a simple webserver; see https://github.com/emikulic/darkhttpd)
 
