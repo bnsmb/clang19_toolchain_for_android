@@ -167,7 +167,8 @@ Creating the library "libutil" ....
 # nano 8.7, 8.6 and nano 6.4 
 # vim 9.2
 # ed 1.21
-# bvi /bmore 1.5.0
+# bvi /bmore 1.5.0 (a hex editor)
+# hexcurse 1.60.0 (a hex editor)
 # 
 # man 2.13
 # 
@@ -460,5 +461,6 @@ History
     updated vim to version 9.2
     added darkhttpd (a simple webserver; see https://github.com/emikulic/darkhttpd)
     added stunnel 5.77
+    added hexcurse 1.60.0
 
 
