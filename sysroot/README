@@ -123,7 +123,7 @@ Creating the library "libutil" ....
 # 
 # autoconf 2.72
 # automake 1.17
-# m4 1.4.20
+# m4 1.4.21
 # libtool 2.5.3
 # patch 2.8 (gnupatch)
 # patchelf 0.18
@@ -463,5 +463,5 @@ History
     added stunnel 5.77
     added hexcurse 1.60.0
     updated mksh to version '@(#)MIRBSD KSH R59 2025/12/23' (environment variable KSH_VERSION) and fixed some minor bugs
-
+    updated m4 to version 1.4.21
 
