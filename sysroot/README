@@ -462,5 +462,6 @@ History
     added darkhttpd (a simple webserver; see https://github.com/emikulic/darkhttpd)
     added stunnel 5.77
     added hexcurse 1.60.0
+    updated mksh to version '@(#)MIRBSD KSH R59 2025/12/23' (environment variable KSH_VERSION) and fixed some minor bugs
 
 
