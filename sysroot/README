@@ -164,7 +164,7 @@ Creating the library "libutil" ....
 # mtr 0.96
 # ngrep 1.48.3
 # 
-# nano 8.7, 8.6 and nano 6.4 
+# nano 8.7.1, 8.7, 8.6 and nano 6.4 
 # vim 9.2
 # ed 1.21
 # bvi /bmore 1.5.0 (a hex editor)
@@ -464,4 +464,5 @@ History
     added hexcurse 1.60.0
     updated mksh to version '@(#)MIRBSD KSH R59 2025/12/23' (environment variable KSH_VERSION) and fixed some minor bugs
     updated m4 to version 1.4.21
+    updated nano to version 8.7.1
 
