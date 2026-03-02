@@ -205,7 +205,7 @@ Creating the library "libutil" ....
 #
 # various compression tools:
 # 
-# 7zz 25.01
+# 7zz 26.00
 # bzip2 1.0.8
 # zip 3.0
 # unzip 5.52
@@ -465,4 +465,5 @@ History
     updated mksh to version '@(#)MIRBSD KSH R59 2025/12/23' (environment variable KSH_VERSION) and fixed some minor bugs
     updated m4 to version 1.4.21
     updated nano to version 8.7.1
+    updated 7zz to version 26.00
 
