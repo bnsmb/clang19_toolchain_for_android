@@ -24,6 +24,9 @@
 #     create the directory /data/local/tmp/sysroot/tmp if it's missing
 #   19.01.2026 1.3.4 /bs
 #     fixed a type in the instructions to create the temporary directory
+#   23.02.2026 1.3.5 /bs
+#     added code to create necessary directories if they are missing
+#
 #
 
 
@@ -60,6 +63,8 @@ BASE_HOME_DIR="${SYSROOT_DIR}/home"
 HOME="${BASE_HOME_DIR}/${CUR_USER}"
 
 TMP="${SYSROOT_DIR}/var/tmp"
+
+DIRS_TO_CREATE="./var/run ./var/log ./var/empty ./var/lib ./var/mail"
 
 PATH="$PATH:${SYSROOT_DIR}/usr/bin"
 
@@ -283,7 +288,21 @@ else
 fi
 
 LogMsg ""
-	
+
+# ----------------------------------------------------------------------
+
+LogMsg "Creating necessary directories if they are missing ..."
+
+for CUR_DIR in ${DIRS_TO_CREATE} ; do
+  [[ ${CUR_DIR} != /* ]] && CUR_DIR="${SYSROOT_DIR}/${CUR_DIR}"
+  if [ -d "${CUR_DIR}" ] ; then
+    LogMsg "The directory \"${CUR_DIR}\" already exists"
+  else
+    LogMsg "Creating the directory \"${CUR_DIR}\" ...."
+    mkdir -p "${CUR_DIR}"
+  fi
+done
+
 # ----------------------------------------------------------------------
 
 LogMsg "Processing the certificate files ..."
