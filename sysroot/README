@@ -435,7 +435,7 @@ History
     updated the binutils to version 2.45
     now the complete binutils (including the data files) are part of the clang19 toolchain
 
-  21.03.2026 v1.6.0 beta /bs
+  21.03.2026 v1.7.0 beta /bs
     the initial files for ./home are now in the directory ./etc/template/home (see clean_env.sh)
     added the function define_aliase to define aliase for the binaries in the clang19 toolchain
     added the function clear_aliase to delete the alias for the binaries in the clang19 toolchain
@@ -466,4 +466,5 @@ History
     updated m4 to version 1.4.21
     updated nano to version 8.7.1
     updated 7zz to version 26.00
+    relinked m4 to remove dependencies on non-Android libraries
 
