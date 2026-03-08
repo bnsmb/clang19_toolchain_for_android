@@ -64,7 +64,7 @@ HOME="${BASE_HOME_DIR}/${CUR_USER}"
 
 TMP="${SYSROOT_DIR}/var/tmp"
 
-DIRS_TO_CREATE="./var/run ./var/log ./var/empty ./var/lib ./var/mail"
+DIRS_TO_CREATE="./var/run ./var/log ./var/empty ./var/lib ./var/mail ./var/lock"
 
 PATH="$PATH:${SYSROOT_DIR}/usr/bin"
 
