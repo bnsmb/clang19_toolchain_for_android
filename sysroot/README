@@ -466,5 +466,3 @@ History
     updated m4 to version 1.4.21
     updated nano to version 8.7.1
     updated 7zz to version 26.00
-    relinked m4 to remove dependencies on non-Android libraries
-
