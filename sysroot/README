@@ -157,6 +157,7 @@ Creating the library "libutil" ....
 # OpenSSL 3.5.5
 # 
 # git 2.49
+# git-lfs 3.7.1
 # 
 # gpg 1.4.3
 # 
@@ -190,13 +191,14 @@ Creating the library "libutil" ....
 # htop 3.4.1
 # btop 1.4.4 (btop needs root access)
 # strace 6.18
+# expect 5.45.4
 # 
 # Android SDK build tools 35.0.2 (aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs hprof-conv etc1tool mke2fs make_f2fs adb make_f2fs_casefold veridex)
 #   in the directories /data/local/tmp//usr/androidsdk35_0_2/*-tools 
 #   (the binaries are from this ZIP file: https://github.com/lzhiyong/android-sdk-tools/releases/download/35.0.2/android-sdk-tools-static-aarch64.zip)
 #
 # OpenVPN 2.7 (openvpn requires root access)
-# stunnel 5.77 
+# stunnel 5.77  (Stunnel is a proxy designed to add TLS encryption functionality to existing clients and servers without any changes in the programs code, https://www.stunnel.org/)
 #
 # unfsd 0.11.0 (a userland NFS daemon usable by non-root user; the default exports file for this binary is /data/local/tmp/sysroot/etc/exports)
 # darkhttpd 1.17 (a simple webserver; see https://github.com/emikulic/darkhttpd)
@@ -460,9 +462,11 @@ History
     recompiled openvpn with the official source code for version 2.7
     updated vim to version 9.2
     added darkhttpd (a simple webserver; see https://github.com/emikulic/darkhttpd)
-    added stunnel 5.77
+    added stunnel 5.77 (a TLS proxy; see https://www.stunnel.org/)
     added hexcurse 1.60.0
     updated mksh to version '@(#)MIRBSD KSH R59 2025/12/23' (environment variable KSH_VERSION) and fixed some minor bugs
     updated m4 to version 1.4.21
     updated nano to version 8.7.1
     updated 7zz to version 26.00
+    added expect 5.45.4
+
