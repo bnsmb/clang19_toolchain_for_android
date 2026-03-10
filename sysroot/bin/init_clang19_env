@@ -134,7 +134,8 @@ function add_library_path {
 
 
 function define_aliase {
-  NEW_ALIAS="sysroot setlibpath addlib"
+
+  NEW_ALIAS=""
 
   for i in vi find tar bash sed awk dd nano curl ; do
     if ${TEST} -x "${CLANG_SYSROOT}/usr/bin/$i"  ; then
