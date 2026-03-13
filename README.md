@@ -129,3 +129,12 @@ Tar files with the files from other Android NDK versions are available here:
 
 http://bnsmb.de/files/public/Android/archive/ndk_for_clang19_toolchain/
 
+**Update 13.03.2026**
+
+A [Magisk](https://github.com/topjohnwu/Magisk/) module to automatically start the **sshd** from the **clang19 toolchain** after a reboot of the phone is available here:
+
+[https://github.com/bnsmb/magisk-modules/blob/main/Magisk_Modules/clang19_sshd_1.0.0.zip](https://github.com/bnsmb/magisk-modules/raw/refs/heads/main/Magisk_Modules/clang19_sshd_1.0.0.zip)
+
+
+
+
