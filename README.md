@@ -111,7 +111,7 @@ That unzip binary should run on any Android and is available here:
 
 [https://bnsmb.de/files/public/Android/binaries_for_arm64/unzip](https://bnsmb.de/files/public/Android/binaries_for_arm64/unzip)
 
-To check, if unzip has created correct symbolic links, check if ./sysroot/usr/lib/libcrypto.so is a symbolic link after after you have uncompressed the ZIP file.
+To check, if unzip has created correct symbolic links, check if **./sysroot/usr/lib/libcrypto.so** is a symbolic link after after you have uncompressed the ZIP file.
 
 
 The necessary files from the Android NDKs are part of the tar archive as a compressed tar archive and are unpacked by the script **create_clang_env.sh**.
