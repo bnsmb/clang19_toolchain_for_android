@@ -111,7 +111,7 @@ That unzip binary should run on any Android and is available here:
 
 [https://bnsmb.de/files/public/Android/binaries_for_arm64/unzip](https://bnsmb.de/files/public/Android/binaries_for_arm64/unzip)
 
-To check, if unzip has created correct symbolic links, check if ./sysroot/usr/lib/libcrypto.so is a symbolic link after after you have uncompressed the ZIP file.
+To check, if unzip has created correct symbolic links, check if **./sysroot/usr/lib/libcrypto.so** is a symbolic link after after you have uncompressed the ZIP file.
 
 
 The necessary files from the Android NDKs are part of the tar archive as a compressed tar archive and are unpacked by the script **create_clang_env.sh**.
@@ -128,4 +128,13 @@ As of **21.01.2026** the tar files with the Android NDK files are:
 Tar files with the files from other Android NDK versions are available here:
 
 http://bnsmb.de/files/public/Android/archive/ndk_for_clang19_toolchain/
+
+**Update 13.03.2026**
+
+A [Magisk](https://github.com/topjohnwu/Magisk/) module to automatically start the **sshd** from the **clang19 toolchain** after a reboot of the phone is available here:
+
+[https://github.com/bnsmb/magisk-modules/blob/main/Magisk_Modules/clang19_sshd_1.0.0.zip](https://github.com/bnsmb/magisk-modules/raw/refs/heads/main/Magisk_Modules/clang19_sshd_1.0.0.zip)
+
+
+
 
