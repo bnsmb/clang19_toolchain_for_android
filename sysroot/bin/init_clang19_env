@@ -62,6 +62,10 @@
 #  08.02.2026 v1.5.5 /bs
 #    the selinux policy for working with sockets is now always enabled if root access is working
 #
+#  18.03.2026 v1.5.6 /bs
+#    added the parameter "run"
+#
+
 __TRUE=0
 __FALSE=1
 
@@ -171,6 +175,8 @@ function clear_aliase {
 # main function starts here
 #
 
+USER_COMMAND=""
+
 if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   while [ $# -ne 0 ] ; do
@@ -191,12 +197,14 @@ $( grep ":=" ${THIS_SCRIPT} | grep -v SUPPORTED_ENV_VARIABLES )
         fi
         cat <<EOT
 
-Usage: . ${THIS_SCRIPT} [-h|--help] [init] [var=value] [examples] [nocpucheck]
+Usage: . ${THIS_SCRIPT} [-h|--help] [init] [var=value] [examples] [nocpucheck] [run "command1; command2; ..."]
+
  
-init        - clear the used enviroment variables at script start
+init        - clear the used environment variables at script start
 var=value   - set the environment variable "var" to "value" at start of the script
 examples    - print compile examples 
 nocpucheck  - disable the CPU check
+run         - init the environment; run the commands and exit
 
 ${SUPPORTED_ENV_VARIABLES}
 
@@ -204,9 +212,14 @@ To use another toolchain base directory use this syntax:
 
   CLANG_SYSROOT=${CLANG_SYSROOT}  source \${CLANG_SYSROOT}/bin/init_clang19_env
 
+To run only one or more commands use the parameter "run", e.g. to compile the examples use the command:
+
+sh /data/local/tmp/sysroot/bin/init_clang19_env run "/data/local/tmp/sysroot/compile_examples.sh"
+
 EOT
 
         CONTINUE=${__FALSE}
+	break
       ;;
 
       nocpucheck | no_cpucheck | no_cpu_check )
@@ -230,6 +243,17 @@ EOT
           CONTINUE=${__FALSE}
         fi
         ;;
+
+      run  )
+	USER_COMMAND="$*"
+	if [ "${USER_COMMAND}"x = ""x ] ; then
+          echo "ERROR: No command for the parameter \"run\" found"
+          CONTINUE=${__FALSE}
+        else
+          echo "Found command to execute in the parameter: \"${USER_COMMAND}\"  "
+        fi
+        break 
+	;;
 
       * )
         echo "ERROR: Unknown parameter found: \"${CUR_PARAMETER}\" "
@@ -364,11 +388,13 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   echo "Running as user \"${CUR_USER}\" "
 
   if [[ $0 == *init_clang*_env* ]] ; then
-    echo
-    echo "*******************************************************************************************"
-    echo " WARNING: The script $0 must be sourced in "
-    echo "*******************************************************************************************"
-    echo
+    if [[  "${USER_COMMAND}"x = ""x ]] ; then
+      echo
+      echo "*******************************************************************************************"
+      echo " WARNING: The script $0 must be sourced in "
+      echo "*******************************************************************************************"
+      echo
+    fi
     STANDALONE_SCRIPT=${__TRUE} 
   fi
 
@@ -744,9 +770,23 @@ EOT
 
 fi
 
+if [ "${USER_COMMAND}"x != ""x ] ; then
+  echo ""
+  echo " ---------------------------------------------------------------------------- "
+  echo "clang19 environment initialized"
+  echo ""
+  echo "Executing now \"${USER_COMMAND}\" ..."
+  echo ""
+  eval ${USER_COMMAND}
+  THISRC=$?
+  echo ""
+  echo "... done; RC=${THISRC}"
+  [ ${STANDALONE_SCRIPT} = ${__TRUE} ] && exit ${THISRC}
+fi
+
 # change the working directory /data/local/tmp if it's currently /
 #
-if [ "$PWD"x = "/"x ] ; then
+if [ "$PWD"x = "/"x -a ${CONTINUE} != ${__FALSE} -a ${STANDALONE_SCRIPT} != ${__TRUE} -a "${USER_COMMAND}"x = ""x ] ; then
   echo 
   echo "Changing the working directory to \"${CLANG_SYSROOT}\" ..."
   cd "${CLANG_SYSROOT}" 
