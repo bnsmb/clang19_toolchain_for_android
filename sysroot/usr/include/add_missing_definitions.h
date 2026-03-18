@@ -19,9 +19,9 @@
 //    added the functions getpwent and endpwent
 //    the definitions for nl_langinfo and nl_catd now also can be used in C programs
 //  13.04.2025
-//    added the defintion for CloseSocket
+//    added the definition for CloseSocket
 //  16.04.2025
-//    added the defintion for a replacement for the function mktime_z
+//    added the definition for a replacement for the function mktime_z
 //  16.06.2025 
 //    added the definition for a replacement for the function bzero
 //  07.07.2025

@@ -115,7 +115,7 @@ Creating the library "libutil" ....
 # The tools included in the tar file with the clang19 toolchain are:
 # 
 # clang 19.0.0
-# cmake 3.30.4 and 4.0.1
+# cmake 3.30.4, 4.0.1, and 4.3.0
 # ninja 1.13.1
 # make 4.4.1
 # meson 1.9.1
@@ -248,6 +248,17 @@ does now work in the bash from this tar archive.
 To install additional Perl Modules with cpan, use this syntax
 
 PATH=/data/local/tmp/sysroot/usr/bin:$PATH cpan
+
+There are multiple versions of cmake in the tar file:
+
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot/usr/bin $ ls -l cmake*
+lrwxrwxrwx 1 shell shell       13 2026-03-18 20:29 cmake -> ./cmake-4.3.0
+-rwxrwxr-x 1 shell shell 10033864 2026-01-05 16:41 cmake-3.30
+-rwxrwxr-x 1 shell shell 11735888 2026-01-05 16:41 cmake-4.0.1
+-rwxr-xr-x 1 shell shell 12848160 2026-03-18 18:15 cmake-4.3.0
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot/usr/bin $ 
+
+To use another cmake version just modify the symbolic link for cmake.
 
 
 
@@ -469,4 +480,5 @@ History
     updated nano to version 8.7.1
     updated 7zz to version 26.00
     added expect 5.45.4
+    added cmake 4.3.0
 
