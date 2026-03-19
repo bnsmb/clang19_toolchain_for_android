@@ -251,12 +251,13 @@ PATH=/data/local/tmp/sysroot/usr/bin:$PATH cpan
 
 There are multiple versions of cmake in the tar file:
 
-[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot/usr/bin $ ls -l cmake*
-lrwxrwxrwx 1 shell shell       13 2026-03-18 20:29 cmake -> ./cmake-4.3.0
--rwxrwxr-x 1 shell shell 10033864 2026-01-05 16:41 cmake-3.30
--rwxrwxr-x 1 shell shell 11735888 2026-01-05 16:41 cmake-4.0.1
--rwxr-xr-x 1 shell shell 12848160 2026-03-18 18:15 cmake-4.3.0
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot/usr/bin $ ls -hl cmake*                                                                                                                                                                             
+lrwxrwxrwx 1 shell shell  13 2026-03-18 20:30 cmake -> ./cmake-4.3.0
+-rwxrwxr-x 1 shell shell 10M 2026-01-05 16:41 cmake-3.30
+-rwxrwxr-x 1 shell shell 11M 2026-01-05 16:41 cmake-4.0.1
+-rwxr-xr-x 1 shell shell 19M 2026-03-19 15:53 cmake-4.3.0
 [clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot/usr/bin $ 
+
 
 To use another cmake version just modify the symbolic link for cmake.
 
@@ -448,7 +449,7 @@ History
     updated the binutils to version 2.45
     now the complete binutils (including the data files) are part of the clang19 toolchain
 
-  21.03.2026 v1.7.0 beta /bs
+  21.03.2026 v1.7.0 /bs
     the initial files for ./home are now in the directory ./etc/template/home (see clean_env.sh)
     added the function define_aliase to define aliase for the binaries in the clang19 toolchain
     added the function clear_aliase to delete the alias for the binaries in the clang19 toolchain
