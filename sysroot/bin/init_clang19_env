@@ -65,6 +65,10 @@
 #  18.03.2026 v1.5.6 /bs
 #    added the parameter "run"
 #
+#  19.03.2026 v1.5.7 /bs
+#    the script now changes the working directory to "/data/local/tmp/develop" if the current working directory is "/" and if  that directory exists. If this directory
+#    does not exist, the script changes the working directory to "/data/local/tmp/sysroot"
+#
 
 __TRUE=0
 __FALSE=1
@@ -788,7 +792,16 @@ fi
 #
 if [ "$PWD"x = "/"x -a ${CONTINUE} != ${__FALSE} -a ${STANDALONE_SCRIPT} != ${__TRUE} -a "${USER_COMMAND}"x = ""x ] ; then
   echo 
-  echo "Changing the working directory to \"${CLANG_SYSROOT}\" ..."
-  cd "${CLANG_SYSROOT}" 
+
+  WORKDIR="${CLANG_SYSROOT}"
+
+  if [ "${TARGET_ROOT}"x != ""x ] ; then
+    if ${TEST} -d  "${TARGET_ROOT%/sysroot*}"  ; then
+      WORKDIR="${TARGET_ROOT%/sysroot*}"
+    fi
+  fi
+
+  echo "Changing the working directory to \"${WORKDIR}\" ..."
+  cd "${WORKDIR}" 
 fi
 
