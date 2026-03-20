@@ -191,7 +191,6 @@ Creating the library "libutil" ....
 # htop 3.4.1
 # btop 1.4.4 (btop needs root access)
 # strace 6.18
-# expect 5.45.4
 # 
 # Android SDK build tools 35.0.2 (aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs hprof-conv etc1tool mke2fs make_f2fs adb make_f2fs_casefold veridex)
 #   in the directories /data/local/tmp//usr/androidsdk35_0_2/*-tools 
@@ -480,6 +479,5 @@ History
     updated m4 to version 1.4.21
     updated nano to version 8.7.1
     updated 7zz to version 26.00
-    added expect 5.45.4
     added cmake 4.3.0
 
