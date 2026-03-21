@@ -58,9 +58,3 @@ Software development
 * Stabs: (stabs).               The "stabs" debugging information format.
 * gdbserver: (gdb) Server.      The GNU debugging server.
 * gprof: (gprof).               Profiling your program's execution
-
-Text creation and manipulation
-* M4: (m4).                     A powerful macro processor.
-
-Typesetting
-* Groff: (groff).               The GNU roff document formatting system.

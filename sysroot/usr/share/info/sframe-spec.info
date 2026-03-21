@@ -1,4 +1,4 @@
-This is sframe-spec.info, produced by makeinfo version 7.1.1 from
+This is sframe-spec.info, produced by makeinfo version 7.2 from
 sframe-spec.texi.
 
 Copyright © 2021-2025 Free Software Foundation, Inc.
@@ -1015,32 +1015,31 @@ Index
 * The SFrame FRE Info Word:              SFrame Frame Row Entries.
                                                                (line 74)
 
-
 
 Tag Table:
-Node: Top565
-Node: Introduction1249
-Node: Overview1435
-Node: Changes from Version 1 to Version 23076
-Node: SFrame Section6253
-Node: SFrame Preamble6752
-Node: SFrame Magic Number and Endianness8351
-Node: SFrame Version8887
-Node: SFrame Flags9480
-Node: SFrame Header11202
-Node: SFrame ABI/arch Identifier16760
-Node: SFrame Function Descriptor Entries17908
-Node: The SFrame FDE Info Word23141
-Node: The SFrame FDE Types24371
-Node: The SFrame FRE Types26205
-Node: SFrame Frame Row Entries27709
-Node: The SFrame FRE Info Word30791
-Node: ABI/arch-specific Definition32897
-Node: AMD6434085
-Node: AArch6435209
-Node: s390x36448
-Node: Generating Stack Traces using SFrame40448
-Node: Index43547
+Node: Top563
+Node: Introduction1247
+Node: Overview1433
+Node: Changes from Version 1 to Version 23074
+Node: SFrame Section6251
+Node: SFrame Preamble6750
+Node: SFrame Magic Number and Endianness8349
+Node: SFrame Version8885
+Node: SFrame Flags9478
+Node: SFrame Header11200
+Node: SFrame ABI/arch Identifier16758
+Node: SFrame Function Descriptor Entries17906
+Node: The SFrame FDE Info Word23139
+Node: The SFrame FDE Types24369
+Node: The SFrame FRE Types26203
+Node: SFrame Frame Row Entries27707
+Node: The SFrame FRE Info Word30789
+Node: ABI/arch-specific Definition32895
+Node: AMD6434083
+Node: AArch6435207
+Node: s390x36446
+Node: Generating Stack Traces using SFrame40446
+Node: Index43545
 
 End Tag Table
 

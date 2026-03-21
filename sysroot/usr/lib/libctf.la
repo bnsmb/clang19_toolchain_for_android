@@ -17,7 +17,7 @@ old_library='libctf.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/data/local/tmp/sysroot/usr/lib -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/31 -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android -L/data/local/tmp/develop/sysroot/usr/lib -L/data/local/tmp/develop/binutils-2.45/libctf/../libiberty '/data/local/tmp/sysroot/usr/lib'/libbfd.la -L/data/local/tmp/develop/binutils-2.45/zlib '/data/local/tmp/sysroot/usr/lib'/libsframe.la -liberty -lz'
+dependency_libs=' -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/source/gdb-17.x_sysroot/libctf/../libiberty '/data/local/tmp/sysroot/usr/lib'/libbfd.la -L/data/develop/android/source/gdb-17.x_sysroot/zlib -lzstd '/data/local/tmp/sysroot/usr/lib'/libsframe.la -liberty -lz'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''

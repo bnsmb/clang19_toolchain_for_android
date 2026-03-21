@@ -468,7 +468,7 @@ History
     updated git to version 2.53
     added git-lfs v3.7.1 (using the pre-compiled arm64 binary from  https://github.com/git-lfs/git-lfs)
     added git-extras v7.4
-    add fsmon 1.8.8
+    added fsmon 1.8.8
     added itraf-ng 1.2.2 (iptraf-ng needs root access)
     recompiled openvpn with the official source code for version 2.7
     updated vim to version 9.2
@@ -480,4 +480,8 @@ History
     updated nano to version 8.7.1
     updated 7zz to version 26.00
     added cmake 4.3.0
+
+  21.05.2026 v1.8.0 beta /bs
+    updated gdb to version 17.1
+    updated the GNU BinUtils (as, ar, etc) to version 2.45.50
 

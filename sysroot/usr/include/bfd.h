@@ -166,6 +166,14 @@ startswith (const char *str, const char *prefix)
   return strncmp (str, prefix, strlen (prefix)) == 0;
 }
 
+/* Return true if plugin is enabled.  */
+
+static inline bool
+bfd_plugin_enabled (void)
+{
+  return BFD_SUPPORTS_PLUGINS != 0;
+}
+
 /* Extracted from libbfd.c.  */
 void *bfd_alloc (bfd *abfd, bfd_size_type wanted);
 
@@ -2903,14 +2911,7 @@ bool generic_core_file_matches_executable_p
    (bfd *core_bfd, bfd *exec_bfd);
 
 /* Extracted from format.c.  */
-bool bfd_check_format_lto (bfd *abfd, bfd_format format,
-    bool lto_sections_removed);
-
 bool bfd_check_format (bfd *abfd, bfd_format format);
-
-bool bfd_check_format_matches_lto
-   (bfd *abfd, bfd_format format, char ***matching,
-    bool lto_sections_removed);
 
 bool bfd_check_format_matches
    (bfd *abfd, bfd_format format, char ***matching);
