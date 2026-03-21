@@ -1,16 +1,16 @@
 # tcl pkg-config source file
 
-prefix=/data/local/tmp/develop/sysroot_temp/usr
-exec_prefix=/data/local/tmp/develop/sysroot_temp/usr
-libdir=/data/local/tmp/develop/sysroot_temp/usr/lib
+prefix=/data/local/tmp/sysroot/usr/
+exec_prefix=/data/local/tmp/sysroot/usr/
+libdir=/data/local/tmp/sysroot/usr//lib
 includedir=${prefix}/include
-libfile=libtcl9.0.so
+libfile=libtcl8.6.a
 
 Name: Tool Command Language
 Description: Tcl is a powerful, easy-to-learn dynamic programming language, suitable for a wide range of uses.
 URL: https://www.tcl-lang.org/
-Version: 9.0.1
-Requires.private:  zlib >= 1.2.3
-Libs: -L${libdir} -ltcl9.0 -ltclstub
-Libs.private: -ldl -lz  -lm
-Cflags: -I${includedir} 
+Version: 8.6.14
+Requires.private: zlib >= 1.2.3
+Libs: -L${libdir} -ltcl8.6 -ltclstub8.6
+Libs.private: -ldl -lz  -lpthread -lm
+Cflags: -I${includedir}

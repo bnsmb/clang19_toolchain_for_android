@@ -10,16 +10,20 @@
 # The information in this file is specific to a single platform.
 
 # Tcl's version number.
-TCL_VERSION='9.0'
-TCL_MAJOR_VERSION='9'
-TCL_MINOR_VERSION='0'
-TCL_PATCH_LEVEL='.1'
+TCL_VERSION='8.6'
+TCL_MAJOR_VERSION='8'
+TCL_MINOR_VERSION='6'
+TCL_PATCH_LEVEL='.14'
 
 # C compiler to use for compilation.
 TCL_CC='/data/local/tmp/sysroot/usr/clang19/bin/clang'
 
 # -D flags for use with the C compiler.
-TCL_DEFS='-DPACKAGE_NAME=\"tcl\" -DPACKAGE_TARNAME=\"tcl\" -DPACKAGE_VERSION=\"9.0\" -DPACKAGE_STRING=\"tcl\ 9.0\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DHAVE_SYS_TIME_H=1 -DSTDC_HEADERS=1 -DHAVE_SYS_PARAM_H=1 -DTCL_CFGVAL_ENCODING=\"utf-8\" -D_REENTRANT=1 -D_THREAD_SAFE=1 -DHAVE_PTHREAD_ATTR_SETSTACKSIZE=1 -DHAVE_PTHREAD_ATFORK=1 -DHAVE_DECL_PTHREAD_MUTEX_RECURSIVE=1 -DMODULE_SCOPE=extern\ __attribute__\(\(__visibility__\(\"hidden\"\)\)\) -DHAVE_HIDDEN=1 -DHAVE_CAST_TO_UNION=1 -DHAVE_STDBOOL_H=1 -DHAVE_VFORK=1 -DHAVE_POSIX_SPAWNP=1 -DHAVE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2=1 -DHAVE_POSIX_SPAWNATTR_SETFLAGS=1 -DTCL_SHLIB_EXT=\".so\" -DNDEBUG=1 -DTCL_CFG_OPTIMIZED=1 -DMP_PREC=4 -DTCL_WIDE_INT_IS_LONG=1 -DHAVE_GETCWD=1 -DHAVE_MKSTEMP=1 -DHAVE_WAITPID=1 -DNO_GETWD=1 -DNO_WAIT3=1 -DHAVE_GETNAMEINFO=1 -DHAVE_GETADDRINFO=1 -DHAVE_FREEADDRINFO=1 -DHAVE_GAI_STRERROR=1 -DHAVE_STRUCT_ADDRINFO=1 -DHAVE_STRUCT_IN6_ADDR=1 -DHAVE_STRUCT_SOCKADDR_IN6=1 -DHAVE_STRUCT_SOCKADDR_STORAGE=1 -DHAVE_GETPWUID_R_5=1 -DHAVE_GETPWUID_R=1 -DHAVE_GETPWNAM_R_5=1 -DHAVE_GETPWNAM_R=1 -DHAVE_GETGRGID_R_5=1 -DHAVE_GETGRGID_R=1 -DHAVE_GETGRNAM_R_5=1 -DHAVE_GETGRNAM_R=1 -DHAVE_DECL_GETHOSTBYNAME_R=1 -DHAVE_GETHOSTBYNAME_R_6=1 -DHAVE_GETHOSTBYNAME_R=1 -DHAVE_DECL_GETHOSTBYADDR_R=1 -DHAVE_GETHOSTBYADDR_R_8=1 -DHAVE_GETHOSTBYADDR_R=1 -DHAVE_TERMIOS_H=1 -DHAVE_SYS_IOCTL_H=1 -DHAVE_SYS_SELECT_H=1 -DHAVE_SYS_EPOLL_H=1 -DNOTIFIER_EPOLL=1 -DHAVE_SYS_EVENTFD_H=1 -DHAVE_EVENTFD=1 -DHAVE_SYS_TIME_H=1 -DHAVE_GMTIME_R=1 -DHAVE_LOCALTIME_R=1 -DHAVE_MKTIME=1 -DHAVE_TM_GMTOFF=1 -DHAVE_TIMEZONE_VAR=1 -DHAVE_STRUCT_STAT_ST_BLOCKS=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_STRUCT_STAT_ST_RDEV=1 -DHAVE_BLKCNT_T=1 -DHAVE_INTPTR_T=1 -DHAVE_UINTPTR_T=1 -DNO_UNION_WAIT=1 -D__CHAR_UNSIGNED__=1 -DHAVE_SIGNED_CHAR=1 -DHAVE_LANGINFO=1 -DHAVE_CFMAKERAW=1 -DHAVE_MKSTEMPS=1 -DHAVE_FTS=1 -DHAVE_SYS_IOCTL_H=1 -DTCL_UNLOAD_DLLS=1 -DZIPFS_BUILD=1'
+TCL_DEFS='-DPACKAGE_NAME=\"tcl\" -DPACKAGE_TARNAME=\"tcl\" -DPACKAGE_VERSION=\"8.6\" -DPACKAGE_STRING=\"tcl\ 8.6\" -DPACKAGE_BUGREPORT=\"\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DNO_VALUES_H=1 -DHAVE_SYS_PARAM_H=1 -DUSE_THREAD_ALLOC=1 -D_REENTRANT=1 -D_THREAD_SAFE=1 -DHAVE_PTHREAD_ATTR_SETSTACKSIZE=1 -DHAVE_PTHREAD_ATFORK=1 -DTCL_THREADS=1 -DTCL_CFGVAL_ENCODING=\"iso8859-1\" -DSTATIC_BUILD=1 -DHAVE_ZLIB=1 -DMODULE_SCOPE=extern\ __attribute__\(\(__visibility__\(\"hidden\"\)\)\) -DHAVE_HIDDEN=1 -DHAVE_CAST_TO_UNION=1 -DHAVE_VFORK=1 -DHAVE_POSIX_SPAWNP=1 -DHAVE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2=1 -DHAVE_POSIX_SPAWNATTR_SETFLAGS=1 -DTCL_SHLIB_EXT=\".so\" -DNDEBUG=1 -DTCL_CFG_OPTIMIZED=1 -DTCL_TOMMATH=1 -DMP_PREC=4 -DTCL_WIDE_INT_IS_LONG=1 -DHAVE_GETCWD=1 -DHAVE_MKSTEMP=1 -DHAVE_OPENDIR=1 -DHAVE_STRTOL=1 -DHAVE_WAITPID=1 -DNO_GETWD=1 -DNO_WAIT3=1 -DHAVE_GETNAMEINFO=1 -DHAVE_GETADDRINFO=1 -DHAVE_FREEADDRINFO=1 -DHAVE_GAI_STRERROR=1 -DHAVE_STRUCT_ADDRINFO=1 -DHAVE_STRUCT_IN6_ADDR=1 -DHAVE_STRUCT_SOCKADDR_IN6=1 -DHAVE_STRUCT_SOCKADDR_STORAGE=1 -DHAVE_GETPWUID_R_5=1 -DHAVE_GETPWUID_R=1 -DHAVE_GETPWNAM_R_5=1 -DHAVE_GETPWNAM_R=1 -DHAVE_GETGRGID_R_5=1 -DHAVE_GETGRGID_R=1 -DHAVE_GETGRNAM_R_5=1 -DHAVE_GETGRNAM_R=1 -DHAVE_DECL_GETHOSTBYNAME_R=1 -DHAVE_GETHOSTBYNAME_R_6=1 -DHAVE_GETHOSTBYNAME_R=1 -DHAVE_DECL_GETHOSTBYADDR_R=1 -DHAVE_GETHOSTBYADDR_R_8=1 -DHAVE_GETHOSTBYADDR_R=1 -DHAVE_TERMIOS_H=1 -DHAVE_SYS_IOCTL_H=1 -DHAVE_SYS_SELECT_H=1 -DHAVE_SYS_TIME_H=1 -DTIME_WITH_SYS_TIME=1 -DHAVE_GMTIME_R=1 -DHAVE_LOCALTIME_R=1 -DHAVE_MKTIME=1 -DHAVE_TM_GMTOFF=1 -DHAVE_TIMEZONE_VAR=1 -DHAVE_STRUCT_STAT_ST_BLOCKS=1 -DHAVE_STRUCT_STAT_ST_BLKSIZE=1 -DHAVE_BLKCNT_T=1 -DHAVE_INTPTR_T=1 -DHAVE_UINTPTR_T=1 -DNO_UNION_WAIT=1 -DHAVE_SIGNED_CHAR=1 -DHAVE_LANGINFO=1 -DHAVE_MKSTEMPS=1 -DHAVE_FTS=1 -DHAVE_SYS_IOCTL_H=1 -DTCL_UNLOAD_DLLS=1 '
+
+# TCL_DBGX used to be used to distinguish debug vs. non-debug builds.
+# This was a righteous pain so the core doesn't do that any more.
+TCL_DBGX=
 
 # Default flags used in an optimized and debuggable build, respectively.
 TCL_CFLAGS_DEBUG='-g'
@@ -30,33 +34,30 @@ TCL_LDFLAGS_DEBUG=''
 TCL_LDFLAGS_OPTIMIZE=''
 
 # Flag, 1: we built a shared lib, 0 we didn't
-TCL_SHARED_BUILD=1
+TCL_SHARED_BUILD=0
 
 # The name of the Tcl library (may be either a .a file or a shared library):
-TCL_LIB_FILE='libtcl9.0.so'
-
-# The name of a zip containing the /library and /encodings (may be either a .zip file or a shared library):
-TCL_ZIP_FILE='libtcl9.0.1.zip'
+TCL_LIB_FILE='libtcl8.6.a'
 
 # Additional libraries to use when linking Tcl.
-TCL_LIBS='-ldl -lz  -lm'
+TCL_LIBS='-ldl -lz  -lpthread -lm'
 
 # Top-level directory in which Tcl's platform-independent files are
 # installed.
-TCL_PREFIX='/data/local/tmp/sysroot/usr'
+TCL_PREFIX='/data/local/tmp/sysroot/usr/'
 
 # Top-level directory in which Tcl's platform-specific files (e.g.
 # executables) are installed.
-TCL_EXEC_PREFIX='/data/local/tmp/sysroot/usr'
+TCL_EXEC_PREFIX='/data/local/tmp/sysroot/usr/'
 
 # Flags to pass to cc when compiling the components of a shared library:
-TCL_SHLIB_CFLAGS='-fPIC -fno-common'
+TCL_SHLIB_CFLAGS='-fPIC'
 
 # Flags to pass to cc to get warning messages
-TCL_CFLAGS_WARNING='-Wall -Wextra -Wshadow -Wundef -Wwrite-strings -Wpointer-arith -Wc++-compat -fextended-identifiers'
+TCL_CFLAGS_WARNING='-Wall -Wpointer-arith'
 
 # Extra flags to pass to cc:
-TCL_EXTRA_CFLAGS=' -I/data/local/tmp/sysroot/usr/clang19/include -I/data/local/tmp/sysroot/usr/ndk/r27d/include -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot -pipe -finput-charset=UTF-8  -I/data/local/tmp/sysroot/usr/clang19/include -I/data/local/tmp/sysroot/usr/ndk/r27d/include -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot'
+TCL_EXTRA_CFLAGS=' -I/data/local/tmp/sysroot/usr/include -I/data/local/tmp/sysroot/usr/clang19/include -I/data/local/tmp/sysroot/usr/ndk/r27d/include -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include/aarch64-linux-android -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include -I/data/local/tmp/develop/sysroot/usr/include --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot  -pipe  -I/data/local/tmp/sysroot/usr/include -I/data/local/tmp/sysroot/usr/clang19/include -I/data/local/tmp/sysroot/usr/ndk/r27d/include -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include/aarch64-linux-android -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include -I/data/local/tmp/develop/sysroot/usr/include --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot'
 
 # Base command to use for combining object files into a shared library:
 TCL_SHLIB_LD='${CC} ${CFLAGS} ${LDFLAGS} -shared'
@@ -65,7 +66,7 @@ TCL_SHLIB_LD='${CC} ${CFLAGS} ${LDFLAGS} -shared'
 TCL_STLIB_LD='${AR} cr'
 
 # Either '$LIBS' (if dependent libraries should be included when linking
-# shared libraries) or an empty string.  See Tcl's configure.ac for more
+# shared libraries) or an empty string.  See Tcl's configure.in for more
 # explanation.
 TCL_SHLIB_LD_LIBS='${LIBS}'
 
@@ -78,7 +79,7 @@ TCL_DL_LIBS='-ldl'
 
 # Flags to pass to the compiler when linking object files into
 # an executable tclsh or tcltest binary.
-TCL_LD_FLAGS=' -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/35 -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android -B/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/35/ --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot -lc   -Wl,--export-dynamic '
+TCL_LD_FLAGS=' -L/data/local/tmp/sysroot/usr/lib -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/31 -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android -L/data/local/tmp/develop/sysroot/usr/lib -B/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/31/ --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot -lc  -static -Wl,--allow-multiple-definition -Wl,--export-dynamic '
 
 # Flags to pass to cc/ld, such as "-R /usr/local/tcl/lib", that tell the
 # run-time dynamic linker where to look for shared libraries such as
@@ -92,22 +93,22 @@ TCL_LD_SEARCH_FLAGS='"-Wl,-rpath,${LIB_RUNTIME_DIR}"'
 TCL_COMPAT_OBJS=''
 
 # Name of the ranlib program to use.
-TCL_RANLIB='ranlib'
+TCL_RANLIB='/data/local/tmp/sysroot/usr/clang19/bin/llvm-ranlib'
 
 # -l flag to pass to the linker to pick up the Tcl library
-TCL_LIB_FLAG='-ltcl9.0'
+TCL_LIB_FLAG='-ltcl8.6'
 
 # String to pass to linker to pick up the Tcl library from its
 # build directory.
-TCL_BUILD_LIB_SPEC='-L/data/local/tmp/develop/tcl/unix -ltcl9.0'
+TCL_BUILD_LIB_SPEC='-L/data/local/tmp/develop/tcl8.6.14/unix -ltcl8.6'
 
 # String to pass to linker to pick up the Tcl library from its
 # installed directory.
-TCL_LIB_SPEC='-L/data/local/tmp/sysroot/usr/lib -ltcl9.0'
+TCL_LIB_SPEC='-L/data/local/tmp/sysroot/usr//lib -ltcl8.6'
 
 # String to pass to the compiler so that an extension can
 # find installed Tcl headers.
-TCL_INCLUDE_SPEC='-I/data/local/tmp/sysroot/usr/include'
+TCL_INCLUDE_SPEC='-I/data/local/tmp/sysroot/usr//include'
 
 # Indicates whether a version numbers should be used in -l switches
 # ("ok" means it's safe to use switches like -ltcl7.5;  "nodots" means
@@ -134,32 +135,35 @@ TCL_UNSHARED_LIB_SUFFIX='${VERSION}.a'
 # different place than the directory containing the source files, this
 # points to the location of the sources, not the location where Tcl was
 # compiled.
-TCL_SRC_DIR='/data/local/tmp/develop/tcl'
+TCL_SRC_DIR='/data/local/tmp/develop/tcl8.6.14'
 
 # List of standard directories in which to look for packages during
 # "package require" commands.  Contains the "prefix" directory plus also
 # the "exec_prefix" directory, if it is different.
-TCL_PACKAGE_PATH='/data/local/tmp/sysroot/usr/lib'
+TCL_PACKAGE_PATH='{/data/local/tmp/sysroot/usr//lib} '
 
 # Tcl supports stub.
 TCL_SUPPORTS_STUBS=1
 
 # The name of the Tcl stub library (.a):
-TCL_STUB_LIB_FILE='libtclstub.a'
+TCL_STUB_LIB_FILE='libtclstub8.6.a'
 
 # -l flag to pass to the linker to pick up the Tcl stub library
-TCL_STUB_LIB_FLAG='-ltclstub'
+TCL_STUB_LIB_FLAG='-ltclstub8.6'
 
 # String to pass to linker to pick up the Tcl stub library from its
 # build directory.
-TCL_BUILD_STUB_LIB_SPEC='-L/data/local/tmp/develop/tcl/unix -ltclstub'
+TCL_BUILD_STUB_LIB_SPEC='-L/data/local/tmp/develop/tcl8.6.14/unix -ltclstub8.6'
 
 # String to pass to linker to pick up the Tcl stub library from its
 # installed directory.
-TCL_STUB_LIB_SPEC='-L/data/local/tmp/sysroot/usr/lib -ltclstub'
+TCL_STUB_LIB_SPEC='-L/data/local/tmp/sysroot/usr//lib -ltclstub8.6'
 
 # Path to the Tcl stub library in the build directory.
-TCL_BUILD_STUB_LIB_PATH='/data/local/tmp/develop/tcl/unix/libtclstub.a'
+TCL_BUILD_STUB_LIB_PATH='/data/local/tmp/develop/tcl8.6.14/unix/libtclstub8.6.a'
 
 # Path to the Tcl stub library in the install directory.
-TCL_STUB_LIB_PATH='/data/local/tmp/sysroot/usr/lib/libtclstub.a'
+TCL_STUB_LIB_PATH='/data/local/tmp/sysroot/usr//lib/libtclstub8.6.a'
+
+# Flag, 1: we built Tcl with threads enabled, 0 we didn't
+TCL_THREADS=1

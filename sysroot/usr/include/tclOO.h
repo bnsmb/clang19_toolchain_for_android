@@ -24,8 +24,8 @@
  * win/tclooConfig.sh
  */
 
-#define TCLOO_VERSION "1.3"
-#define TCLOO_PATCHLEVEL TCLOO_VERSION ".0"
+#define TCLOO_VERSION "1.1.0"
+#define TCLOO_PATCHLEVEL TCLOO_VERSION
 
 #include "tcl.h"
 
@@ -40,7 +40,7 @@ extern "C" {
 extern const char *TclOOInitializeStubs(
 	Tcl_Interp *, const char *version);
 #define Tcl_OOInitStubs(interp) \
-    TclOOInitializeStubs((interp), TCLOO_PATCHLEVEL)
+    TclOOInitializeStubs((interp), TCLOO_VERSION)
 #ifndef USE_TCL_STUBS
 #   define TclOOInitializeStubs(interp, version) (TCLOO_PATCHLEVEL)
 #endif
@@ -62,12 +62,6 @@ typedef struct Tcl_ObjectContext_ *Tcl_ObjectContext;
 
 typedef int (Tcl_MethodCallProc)(void *clientData, Tcl_Interp *interp,
 	Tcl_ObjectContext objectContext, int objc, Tcl_Obj *const *objv);
-#if TCL_MAJOR_VERSION > 8
-typedef int (Tcl_MethodCallProc2)(void *clientData, Tcl_Interp *interp,
-	Tcl_ObjectContext objectContext, Tcl_Size objc, Tcl_Obj *const *objv);
-#else
-#define Tcl_MethodCallProc2 Tcl_MethodCallProc
-#endif
 typedef void (Tcl_MethodDeleteProc)(void *clientData);
 typedef int (Tcl_CloneProc)(Tcl_Interp *interp, void *oldClientData,
 	void **newClientData);
@@ -81,9 +75,9 @@ typedef int (Tcl_ObjectMapMethodNameProc)(Tcl_Interp *interp,
  * how to create a clone of it (when the object or class is copied).
  */
 
-typedef struct Tcl_MethodType {
+typedef struct {
     int version;		/* Structure version field. Always to be equal
-				 * to TCL_OO_METHOD_VERSION_(1|CURRENT) in
+				 * to TCL_OO_METHOD_VERSION_CURRENT in
 				 * declarations. */
     const char *name;		/* Name of this type of method, mostly for
 				 * debugging purposes. */
@@ -98,47 +92,13 @@ typedef struct Tcl_MethodType {
 				 * be copied directly. */
 } Tcl_MethodType;
 
-#if TCL_MAJOR_VERSION > 8
-typedef struct Tcl_MethodType2 {
-    int version;		/* Structure version field. Always to be equal
-				 * to TCL_OO_METHOD_VERSION_2 in
-				 * declarations. */
-    const char *name;		/* Name of this type of method, mostly for
-				 * debugging purposes. */
-    Tcl_MethodCallProc2 *callProc;
-				/* How to invoke this method. */
-    Tcl_MethodDeleteProc *deleteProc;
-				/* How to delete this method's type-specific
-				 * data, or NULL if the type-specific data
-				 * does not need deleting. */
-    Tcl_CloneProc *cloneProc;	/* How to copy this method's type-specific
-				 * data, or NULL if the type-specific data can
-				 * be copied directly. */
-} Tcl_MethodType2;
-#else
-#define Tcl_MethodType2 Tcl_MethodType
-#endif
-
 /*
  * The correct value for the version field of the Tcl_MethodType structure.
  * This allows new versions of the structure to be introduced without breaking
  * binary compatibility.
  */
-enum TclOOMethodVersion {
-    TCL_OO_METHOD_VERSION_1 = 1,
-    TCL_OO_METHOD_VERSION_2 = 2
-};
-#define TCL_OO_METHOD_VERSION_CURRENT TCL_OO_METHOD_VERSION_1
 
-/*
- * Visibility constants for the flags parameter to Tcl_NewMethod and
- * Tcl_NewInstanceMethod.
- */
-enum TclOOMethodVisibilityFlags {
-    TCL_OO_METHOD_PUBLIC = 1,
-    TCL_OO_METHOD_UNEXPORTED = 0,
-    TCL_OO_METHOD_PRIVATE = 0x20
-};
+#define TCL_OO_METHOD_VERSION_CURRENT 1
 
 /*
  * The type of some object (or class) metadata. This describes how to delete
@@ -146,7 +106,7 @@ enum TclOOMethodVisibilityFlags {
  * clone of it (when the object or class is copied).
  */
 
-typedef struct Tcl_ObjectMetadataType {
+typedef struct {
     int version;		/* Structure version field. Always to be equal
 				 * to TCL_OO_METADATA_VERSION_CURRENT in
 				 * declarations. */
@@ -165,10 +125,7 @@ typedef struct Tcl_ObjectMetadataType {
  * without breaking binary compatibility.
  */
 
-enum TclOOMetadataVersion {
-    TCL_OO_METADATA_VERSION_1 = 1
-};
-#define TCL_OO_METADATA_VERSION_CURRENT TCL_OO_METADATA_VERSION_1
+#define TCL_OO_METADATA_VERSION_CURRENT 1
 
 /*
  * Include all the public API, generated from tclOO.decls.

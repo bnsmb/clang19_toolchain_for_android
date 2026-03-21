@@ -39,6 +39,8 @@ if [ "$1"x = "release"x ] ; then
   
   ${SYSROOT_DIR}/clean_env.sh -x
 
+elif [ "$1"x = "develop"x -o "$1"x = "dev"x -o "$1"x = "devel"x ] ; then
+  POSTFIX="_dev_${TAR_FILE_TIMESTAMP}_"
 elif [ $# -ne 0 ] ; then
   POSTFIX="_$( date +%Y-%m-%d )_$( echo $* | tr " " "_" )_"
 else
