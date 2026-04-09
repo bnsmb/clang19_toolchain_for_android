@@ -1,0 +1,8 @@
+# hosts file for dnsmasq
+#
+# Note: The networks and DNS domains used in the next two entries are reserved for test purposes and should never be used in a public or private network
+# 
+203.0.113.1 testhost01.testnet01.example
+198.51.100.3 testhost02.testnet02.example
+
+

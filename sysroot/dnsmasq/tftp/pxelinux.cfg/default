@@ -1,0 +1,167 @@
+#  Doc: https://wiki.syslinux.org/wiki/index.php?title=Config
+#
+
+#
+# define the password for the PXE boot menu
+#
+# MENU MASTER PASSWD start
+# # MENU PASSPROMPT Enter Password:
+
+# Set the default command line
+#   we use this command to define the module to use for the menu
+#
+#DEFAULT vesamenu.c32
+DEFAULT menu.c32
+
+# port is a number (0 =/dev/ttyS0 = COM1, etc.) or an I/O port address (e.g. 0x3F8).
+# If baudrate is omitted, the baud rate defaults to 9600 bps. The serial parameters are hardcoded to be 8 bits, no parity, 1 stop bit.
+#
+# SERIAL port [baudrate [flowcontrol]]
+
+# Load a new configuration file. The new configuration file is read, the Working Directory is optionally changed
+# (if specified via an optional second parameter), and then the new configuration file is parsed.
+# If new_WD is not specified, then the Current Working Directory is maintained, unchanged.
+#
+# The Working Directory may be different from the path to the config file.
+#
+# CONFIG config_file [new_WD]
+
+
+# [0] Boot-Prompt ausblenden [1] Boot-Prompt standardmäßig angezeig
+#
+prompt 0
+
+# TIMEOUT timeout
+#
+# If more than one label entry is available, this directive indicates how long to wait at the "boot:" prompt until booting automatically, in units of 1/10 s.
+# The timeout is cancelled as soon as the user types anything on the keyboard; the assumption being that the user will complete the command line already begun.
+# The timer is reset to timeout upon return from an unsuccessful attempt to boot or from a module. A timeout of zero (the default) will disable the timeout completely.
+#
+# Note: The maximum possible timeout value is 35996 (just under an hour).
+# Timeout 30 seconds -> 300
+#
+# timeout 300
+#
+timeout 0
+
+
+# TOTALTIMEOUT timeout
+#
+# Indicate how long to wait until booting automatically, in units of 1/10 s. This timeout is not cancelled by user input, and can thus be used to deal with
+# serial port glitches or "the user walked away" type of situations. A timeout of zero (the default) will disable the timeout completely.
+#
+# Both TIMEOUT and TOTALTIMEOUT can be used together,
+#
+totaltimeout 0
+
+
+# ONTIMEOUT
+#
+#  ONTIMEOUT kernel options...
+#
+# Set the command line (which often references a LABEL) to be invoked on timeout. If not specified, then UI (if present) or DEFAULT is used.
+#
+# on timeout boot from local disk (timeout is disabled in this menu but you never know ...)
+#
+# ontimeout local
+
+
+# NOCOMPLETE
+#
+#  NOCOMPLETE flag_val
+#
+# If flag_val is 1, the [Tab] key does not display labels at the "boot:" prompt.
+#
+
+
+# NOESCAPE
+#
+#  NOESCAPE flag_val
+#
+# If flag_val is 1, ignore the [Shift] / [Alt] / [Caps Lock] / [Scroll Lock] "escape" keys. Use this (together with "PROMPT 0")
+# so as to force the default boot alternative.
+#
+noescape 0
+
+
+# PROMPT
+#
+#  PROMPT flag_val
+#
+# If flag_val is 0 (default), do not display the "boot:" prompt, unless either the [Shift] or the [Alt] key is pressed,
+# or unless either [Caps Lock] or [Scroll Lock] is set. If flag_val is 1, always display the "boot:" prompt.
+
+
+# ALLOWOPTIONS
+#
+#  ALLOWOPTIONS flag_val
+#
+# If flag_val is 0, the user is not allowed to specify any arguments on the kernel command line.
+# The only options recognized are those specified in an APPEND statement. The default is 1.
+#
+allowoptions 1
+
+
+menu title ########## Rescue DEFAULT PXE Boot Menu ##########
+
+menu include pxelinux.cfg/graphics.conf
+
+# MENU AUTOBOOT Starting Local System in # seconds
+
+# define a background graphik for the boot menu (Size: 640x480 Format: PNG)
+# menu background bootgraphik.png
+
+# Description of the entries in zthe boot menu
+# LABEL      : unique name of this entry
+# MENU LABEL : description for this entry for the menu
+# KERNEL     : kernel to use
+# APPEND     : initrd and/or kernel options
+
+
+LABEL local
+  MENU LABEL ^Boot local harddisk
+  MENU DEFAULT
+  LOCALBOOT 0
+
+MENU SEPARATOR
+
+
+LABEL slitaz
+       menu LABEL Boot Sli^Taz 
+       kernel slitaz/bzImage64 
+       append initrd=slitaz/rootfs.gz root=/dev/null vga771 verbose
+
+MENU SEPARATOR
+
+LABEL grml
+       menu LABEL Boot ^grml Live Image (via http)
+       kernel grml/vmlinuz
+       append  initrd=grml/initrd.img boot=live fetch=http://192.168.1.148:8080/grml/live/live/grml-full-amd64/grml-full-amd64.squashfs lang=de nomce apm=power-off noprompt noeject
+       IPAPPEND 3
+
+label sysresccd
+       menu label Boot ^SystemRescue Live Image (via http)
+       kernel systemrescue/sysresccd/boot/x86_64/vmlinuz
+       append initrd=systemrescue/sysresccd/boot/intel_ucode.img,systemrescue/sysresccd/boot/amd_ucode.img,systemrescue/sysresccd/boot/x86_64/sysresccd.img archisobasedir=systemrescue/sysresccd  archiso_http_srv=http://192.168.1.148:8080/ verbose setkmap=de
+       IPAPPEND 3
+
+label clonezilla
+        menu label Boot ^CloneZilla Live image
+        kernel clonezilla/live/vmlinuz
+        append initrd=clonezilla/live/initrd.img boot=live username=user union=overlay config components noswap nodmraid locales= keyboard-layouts= ocs_live_run="ocs-live-general" ocs_live_extra_param="" ocs_live_batch=no net.ifnames=0 nosplash noprompt fetch=tftp://192.168.1.148/clonezilla/live/filesystem.squashfs vga=788 verbose ocs_lang="de_DE.UTF-8" ocs_live_keymap=/usr/share/keymaps/i386/qwertz/de-latin1.kmap.gz" keyboard-layouts=de locales="de_DE.UTF-8"  ocs_daemonon="ssh" keyboard-layouts=NONE
+
+MENU SEPARATOR
+
+label puppy
+        menu label Boot ^Puppy Live Image
+        kernel puppy/vmlinuz
+        append initrd=puppy/initrd.gz debug verbose pfix=ram pkeys=de
+
+MENU SEPARATOR
+
+label memtest
+        menu label Boot ^Memtest
+        kernel memtest
+
+
+

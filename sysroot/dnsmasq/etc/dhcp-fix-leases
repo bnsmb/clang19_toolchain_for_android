@@ -1,0 +1,4 @@
+# fix dhcp leases for dnsmasq
+# dhcp-host=:08:00:27:f7:c0:ca,fedora01,192.168.1.64
+# dhcp-host=:08:00:27:22:22:66,rocky01,192.168.1.179
+

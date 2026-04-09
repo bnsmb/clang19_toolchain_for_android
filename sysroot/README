@@ -489,4 +489,6 @@ History
     added tcl 8.6.14 (this version is required by expect)
     updated curl to version 8.19
     added pagemon 0.02.06 (https://github.com/ColinIanKing/pagemon, pagemon needs root access)
+    added inotifywatch and inotifywait 4.23.9.0 (https://github.com/inotify-tools/inotify-tools)
+    added dnsmasq 2.92rc3 (see  http://bnsmb.de/Magisk_Modules.html#Documentation_for_the_Magisk_Module_with_dnsmasq for the documentation)
 
