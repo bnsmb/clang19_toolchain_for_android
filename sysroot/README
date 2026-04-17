@@ -494,4 +494,5 @@ History
     updated the script lmm to version 1.3.1
     added OpenSSL 4.0
     updated OpenSSL 3.5.5 to version OpenSSL 3.5.6
+    relinked the OpenSSH tools to libcrypto library from OpenSSL 3.5.6
 
