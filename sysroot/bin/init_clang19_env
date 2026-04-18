@@ -72,7 +72,9 @@
 #  02.04.2026 v1.5.8 /bs
 #    added the alias gdb="gdb -tui"
 #
-
+#  18.04.2026 v1.5.9 /bs
+#    the script now creates also alias for executables in ./sysroot/sbin
+#
 __TRUE=0
 __FALSE=1
 
@@ -159,8 +161,11 @@ function define_aliase {
     f=${i##*/} 
     [[ " ${NEW_ALIAS} " == *\ $f\ * ]] && continue
 
-    if [ -x "${CLANG_SYSROOT}/usr/bin/$f" ] ; then
+    if [ -x "${CLANG_SYSROOT}/usr/bin/$f"  ] ; then
       alias $f="${CLANG_SYSROOT}/usr/bin/$f"
+      NEW_ALIAS="${NEW_ALIAS} $f"
+    elif [ "${CLANG_SYSROOT}/usr/sbin/$f" ] ; then
+      alias $f="${CLANG_SYSROOT}/usr/sbin/$f"
       NEW_ALIAS="${NEW_ALIAS} $f"
     fi
   done
