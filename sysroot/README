@@ -495,4 +495,6 @@ History
     added OpenSSL 4.0
     updated OpenSSL 3.5.5 to version OpenSSL 3.5.6
     relinked the OpenSSH tools to libcrypto library from OpenSSL 3.5.6
-    updated dd to version 9.11 
+    updated dd to the binary from the coreutilsversion 9.11 
+    added cut from the coreutils 9.11
+
