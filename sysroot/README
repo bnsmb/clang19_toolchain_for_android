@@ -497,4 +497,5 @@ History
     relinked the OpenSSH tools to libcrypto library from OpenSSL 3.5.6
     updated dd to the binary from the coreutilsversion 9.11 
     added cut from the coreutils 9.11
+    added date from the coreutils 9.11
 
