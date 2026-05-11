@@ -493,9 +493,12 @@ History
     added dnsmasq 2.92rc3 (see  http://bnsmb.de/Magisk_Modules.html#Documentation_for_the_Magisk_Module_with_dnsmasq for the documentation, dnsmasq needs root access)
     updated the script lmm to version 1.3.1
     added OpenSSL 4.0
-    updated OpenSSL 3.5.5 to version OpenSSL 3.5.6
+    updated OpenSSL to version OpenSSL 3.5.6
     relinked the OpenSSH tools to libcrypto library from OpenSSL 3.5.6
-    updated dd to the binary from the coreutilsversion 9.11 
+    updated dd to the binary from the coreutils version 9.11 
     added cut from the coreutils 9.11
     added date from the coreutils 9.11
+    added some Python modules: build click execnet iniconfig invoke packaging pip-tools pluggy Pygments pyproject_hooks pytest pytest-xdist setuptools sh wheel 
+    updated pip to version 26.0.1
+
 

@@ -1,0 +1,6 @@
+#!/data/local/tmp/sysroot/usr/bin/python3
+import sys
+from invoke.main import program
+if __name__ == '__main__':
+    sys.argv[0] = sys.argv[0].removesuffix('.exe')
+    sys.exit(program.run())
