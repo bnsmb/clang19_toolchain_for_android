@@ -165,7 +165,7 @@ Creating the library "libutil" ....
 # mtr 0.96
 # ngrep 1.48.3
 # 
-# nano 8.7.1, 8.7, 8.6 and nano 6.4 
+# nano 9.0, 8.7.1, and nano 6.4 
 # vim 9.2
 # ed 1.21
 # bvi /bmore 1.5.0 (a hex editor)
@@ -481,7 +481,7 @@ History
     updated 7zz to version 26.00
     added cmake 4.3.0
 
-  21.05.2026 v1.8.0 beta /bs
+  21.07.2026 v1.8.0 beta /bs
     updated gdb to version 17.1
     updated the GNU BinUtils (as, ar, etc) to version 2.45.50
     updated sqlite3 to version 3.51.3 
@@ -500,5 +500,7 @@ History
     added date from the coreutils 9.11
     added some Python modules: build click execnet iniconfig invoke packaging pip-tools pluggy Pygments pyproject_hooks pytest pytest-xdist setuptools sh wheel 
     updated pip to version 26.0.1
-
+    updated nano to version 9.0
+    removed nano 8.6 and nano 8.7
+    added mount_dynamic_partitions (this program needs root access)
 
