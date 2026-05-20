@@ -23,7 +23,7 @@
 # check filesystems in VGs that have at least 256MB (or so) of
 # free space.
 
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+PATH=/usr/local/data/local/tmp/sysroot/usr/bin:/usr/local/bin:/data/local/tmp/sysroot/usr/bin:/bin:/usr/data/local/tmp/sysroot/usr/bin:/usr/bin
 
 if (( $EUID != 0 )); then
     echo "e2scrub must be run as root"
