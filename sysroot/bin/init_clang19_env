@@ -75,6 +75,10 @@
 #  18.04.2026 v1.5.9 /bs
 #    the script now creates also alias for executables in ./sysroot/sbin
 #
+#  25.05.2026 v1.5.10 /bs
+#    the SELinux rule to allow the user shell to create hardlinks is now only defined if the Android version is 14 or newer
+#    added the variable OS_VERSION; this is the main version of the running Android, e.g 13, 14, 15, 16, etc
+#    
 __TRUE=0
 __FALSE=1
 
@@ -84,12 +88,16 @@ CONTINUE=${__TRUE}
 
 if [ ${CONTINUE} = ${__TRUE} ] ; then
 
-# this variable is set to ture if the parameter "examples" is used
+# this variable is set to true if the parameter "examples" is used
 #
   PRINT_EXAMPLES=${__FALSE}
 
   alias LogDebugMsg='[ "${DEBUG}"x != ""x ] && echo "DEBUG: $*" >&2 '
 
+# get the current Android version
+#
+  OS_VERSION="$( getprop ro.build.version.release  )"
+  OS_VERSION="${OS_VERSION:=99}"
 
 # the test binary to use
 #
@@ -712,9 +720,12 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
         echo "Enabling hard links for the user \"shell\" ..."
         ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file file link" '
+ 
 
-        echo "Enabling creating and using fifos for the user \"shell\" ..."
-        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file fifo_file { create read open write getattr unlink ioctl }" '
+        if [ ${OS_VERSION} -gt 13 ] ; then	
+          echo "Enabling creating and using fifos for the user \"shell\" ..."
+          ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file fifo_file { create read open write getattr unlink ioctl }" '
+        fi
 
       elif [ "${SELINUX_HELP_SCRIPT}"x != ""x ] ; then
 
