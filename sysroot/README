@@ -504,3 +504,5 @@ History
     removed nano 8.6 and nano 8.7
     added mount_dynamic_partitions (this program needs root access)
     updated e2fsprogs tools to version 1.47.4
+    updated 7zz to version 26.01
+
