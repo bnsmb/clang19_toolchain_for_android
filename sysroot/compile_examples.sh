@@ -31,5 +31,18 @@ ${CLANG_SYSROOT}/usr/bin/as -o helloworld_in_assembler_for_as.o helloworld_in_as
   ${CLANG_SYSROOT}//usr/bin/ld -o helloworld_in_assembler_for_as helloworld_in_assembler_for_as.o && \
   ./helloworld_in_assembler_for_as
 
-echo 
+if [ -x ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/gcc ] ; then
+  echo
+  echo "*** Testing the compiler \"gcc\" ..."
+  echo
+  ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/gcc -o helloworld_in_c_with_gcc helloworld_in_c.c  && ./helloworld_in_c_with_gcc
+fi
 
+if [ -x ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/g++ ] ; then
+  echo
+  echo "*** Testing the compiler \"gcc\" ..."
+  echo
+  ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/g++   -o helloworld_in_c++_with_gcc ./helloworld_in_c++.cpp && ./helloworld_in_c++_with_gcc
+fi
+
+echo

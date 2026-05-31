@@ -1,0 +1,31 @@
+#!/data/local/tmp/sysroot/usr/bin/bash
+
+export PINO_RUNTIME_RPATH='true'
+export PINO_NEON='true'
+
+export PINO_SYSTEM_PREFIX="$(dirname "${PREFIX}")"
+export PINO_SYSTEM_LIBRARIES='true'
+
+export LD_LIBRARY_PATH="/data/local/tmp/sysroot/usr/lib/android-gcc-cross/lib:${LD_LIBRARY_PATH}"
+
+declare -r secondary_target='armv7-unknown-linux-androideabi'
+declare -r multilib='-m32'
+
+if [[ " ${@} " = *" ${multilib} "* ]]; then
+	unset PINO_SYSTEM_PREFIX
+	unset PINO_SYSTEM_LIBRARIES
+	
+	declare -a args=()
+	
+	for arg in "${@}"; do
+		if [ "${arg}" = "${multilib}" ]; then
+			continue
+		fi
+		
+		args+=("${arg}")
+	done
+	
+	exec '/data/local/tmp/sysroot/usr/lib/android-gcc-cross/bin/armv7-unknown-linux-androideabi36-gcc' "${args[@]}"
+else
+	exec '/data/local/tmp/sysroot/usr/lib/android-gcc-cross/bin/aarch64-unknown-linux-android36-gcc' -march=native "${@}"
+fi

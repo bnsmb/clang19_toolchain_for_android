@@ -8,12 +8,16 @@
 # History
 #  25.12.2024 v1.0.0 /bs
 #    initial release
+#
 #  18.01.2025 v1.1.0 /bs
 #    added the directory /data/local/tmp/sysroot/usr/ndk/r27b/sysroot/usr/include/aarch64-linux-android to the include dirs in CFLAGS
+#
 #  26.01.2025 v1.1.1 /bs
 #    the script does not change the SELinux policies anymore if running as user root
+#
 #  02.02.2025 v1.2.0 /bs
 #    added the directory /data/local/tmp/sysroot/usr/lib to the list of directories with libraries in the environment variable LDFLAGS
+#
 #  30.03.2025 v1.2.1 /bs
 #    added the directory /data/local/tmp/sysroot/usr/include to the list of directories with include files in the environment variable CFLAGS
 #    added the alias nano for /data/local/tmp/sysroot/usr/bin/nano
@@ -78,7 +82,11 @@
 #  25.05.2026 v1.5.10 /bs
 #    the SELinux rule to allow the user shell to create hardlinks is now only defined if the Android version is 14 or newer
 #    added the variable OS_VERSION; this is the main version of the running Android, e.g 13, 14, 15, 16, etc
-#    
+#
+#  30.05.2026 v1.5.11 /bs
+#    the script now adds the directory with the gcc toolchain to the path if it exists (use the parameter no_gcc_dir to disable this feature)
+#    added the parameter no_gcc_dir
+#
 __TRUE=0
 __FALSE=1
 
@@ -103,16 +111,21 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 #
   TEST="$( which test )"
 
-# this is NOT a supported environment variable -> use this code to avoid adding the variable to the list of supported environment variables in the usage output
+# this is NOT a supported environment variable -> use this syntax to avoid adding the variable to the list of supported environment variables in the usage output
 #
   [ "${TEST}"x = ""x ] && TEST="test"
 
 
-# set to ${__FALSE} to disable the CPU check
+#  set this variable to ${__TRUE} to disable adding the directory with the gcc toolchain to the PATH
+#
+  IGNORE_GCC_TOOLCHAIN=${__FALSE}
+  
+# set this variable to ${__FALSE} to disable the CPU check
 #
   CHECK_CPU="${CHECK_CPU:=${__TRUE}}"
 
-
+# the name of this script
+#
   THIS_SCRIPT="$0"
 
 # check if this script was sourced in
@@ -217,13 +230,14 @@ $( grep ":=" ${THIS_SCRIPT} | grep -v SUPPORTED_ENV_VARIABLES )
         fi
         cat <<EOT
 
-Usage: . ${THIS_SCRIPT} [-h|--help] [init] [var=value] [examples] [nocpucheck] [run "command1; command2; ..."]
+Usage: . ${THIS_SCRIPT} [-h|--help] [init] [var=value] [examples] [nocpucheck] [no_gcc_dir] [run "command1; command2; ..."]
 
  
 init        - clear the used environment variables at script start
 var=value   - set the environment variable "var" to "value" at start of the script
 examples    - print compile examples 
 nocpucheck  - disable the CPU check
+no_gcc_dir  - do not add the directory with the gcc toolchain to the path
 run         - init the environment; run the commands and exit
 
 ${SUPPORTED_ENV_VARIABLES}
@@ -239,8 +253,12 @@ sh /data/local/tmp/sysroot/bin/init_clang19_env run "/data/local/tmp/sysroot/com
 EOT
 
         CONTINUE=${__FALSE}
-	break
+      break
       ;;
+
+     no_gcc_dir | nogccdir | no_gccdir )
+        IGNORE_GCC_TOOLCHAIN=${__TRUE}
+        ;;
 
       nocpucheck | no_cpucheck | no_cpu_check )
         CHECK_CPU=${__FALSE}
@@ -265,15 +283,15 @@ EOT
         ;;
 
       run  )
-	USER_COMMAND="$*"
-	if [ "${USER_COMMAND}"x = ""x ] ; then
+        USER_COMMAND="$*"
+        if [ "${USER_COMMAND}"x = ""x ] ; then
           echo "ERROR: No command for the parameter \"run\" found"
           CONTINUE=${__FALSE}
         else
           echo "Found command to execute in the parameter: \"${USER_COMMAND}\"  "
         fi
         break 
-	;;
+        ;;
 
       * )
         echo "ERROR: Unknown parameter found: \"${CUR_PARAMETER}\" "
@@ -302,6 +320,10 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 # optional additional sysroot for additional libaries and include files
 # 
   TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
+
+# directory with GCC binaries
+#
+  GCC_BIN_DIR="${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain"
 
 # clang version 
 #
@@ -332,8 +354,8 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 #
   MAGISKPOLICY="$( which magiskpolicy 2>/dev/null )"
 
-  # SELinux helpler script for machines without Magisk
-  #
+# SELinux helpler script for machines without Magisk
+#
   SELINUX_HELP_SCRIPT="$( which add_missing_selinux_rules.sh )"
 
 
@@ -346,6 +368,17 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   add_path "${CLANG_SYSROOT}/usr/bin" "${CLANG_SYSROOT}/bin"
 
   add_library_path "${CLANG_SYSROOT}/usr/lib"
+
+
+  if [ ${IGNORE_GCC_TOOLCHAIN}x != ${__TRUE}x ] ; then
+    if [ -d "${GCC_BIN_DIR}" ] ; then
+      add_path "${GCC_BIN_DIR}"
+    else
+      LogMsg "No GCC toolchain found"
+    fi
+  else
+    LogMsg "Adding the GCC toolchain to the path is disabled"
+  fi
 
   export HOME TERMINFO PATH LD_LIBRARY_PATH MAN_PATH
 
@@ -453,7 +486,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
       SYSROOT_CONFIGURE_OPTION="--sysroot ${SYSROOT}"
 
     else
-      echo "WARNING: The sysroot directory ${SYSROOT} does not exist"	
+      echo "WARNING: The sysroot directory ${SYSROOT} does not exist"
     fi
   fi
 
@@ -676,8 +709,8 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   export CC=${CLANG}
   export LD=${LLD}
 
-  # define aliase
-  #
+# define aliase
+#
   echo "Define some aliase ..."
 
   NEW_ALIAS=""
@@ -706,7 +739,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
       if [ "${MAGISKPOLICY}"x != ""x ] ; then
 
-	echo "Adding missing SELinux policies using \"${MAGISKPOLICY}\" ..."
+        echo "Adding missing SELinux policies using \"${MAGISKPOLICY}\" ..."
 
         echo "Enabling socket access for the user \"shell\" (this is necessary to use tmux or ssh-agent)..."
 
@@ -715,14 +748,14 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
         if which mtr 2>/dev/null 1>dev/null ; then
           echo "Enabling icmp_socket access for the user \"shell\" (this is necessary to use mtr)..."
-	  ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell port icmp_socket { name_bind }"'     
+          ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell port icmp_socket { name_bind }"'     
         fi
 
         echo "Enabling hard links for the user \"shell\" ..."
         ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file file link" '
  
 
-        if [ ${OS_VERSION} -gt 13 ] ; then	
+        if [ ${OS_VERSION} -gt 13 ] ; then
           echo "Enabling creating and using fifos for the user \"shell\" ..."
           ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file fifo_file { create read open write getattr unlink ioctl }" '
         fi

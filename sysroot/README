@@ -8,6 +8,10 @@ Note that tar files with the files from the older Android NDK versions can be fo
 http://bnsmb.de/files/public/Android/archive/ndk_for_clang19_toolchain/
 
 
+Since version June 2026 this tar file also contains the toolchain with gcc 16.1.1 and the other necessary files to compile C/C++ source with gcc or g++.
+Note: The gcc toolchain contains all necessary files to compile C and C++ programs with GCC - an Android NDK is not required for this toolchain.
+
+
 There is also a GitHub repository with the files for the clang19 toolchain:
 
 https://github.com/bnsmb/clang19_toolchain_for_android
@@ -112,9 +116,21 @@ Creating the library "libutil" ....
 [clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot/usr/lib $ 
 
 
+
+To init the environment only for gcc open an adb session and execute the command
+
+source bin/init_gcc_env
+
+Now you can use gcc and c++ to compile C and C++ source files.
+
+
+Please note that the directory /data/local/tmp/sysroot is hardcoded in the binaries and scripts used for gcc.
+
+
 # The tools included in the tar file with the clang19 toolchain are:
 # 
 # clang 19.0.0
+# gcc 16.1.1
 # cmake 3.30.4, 4.0.1, and 4.3.0
 # ninja 1.13.1
 # make 4.4.1
@@ -259,6 +275,13 @@ lrwxrwxrwx 1 shell shell  13 2026-03-18 20:30 cmake -> ./cmake-4.3.0
 
 
 To use another cmake version just modify the symbolic link for cmake.
+
+
+Credits
+
+The gcc toolchain was copied from this GitHub repository:
+
+https://github.com/AmanoTeam/android-gcc-cross/
 
 
 
@@ -505,4 +528,7 @@ History
     added mount_dynamic_partitions (this program needs root access)
     updated e2fsprogs tools to version 1.47.4
     updated 7zz to version 26.01
+    added the toolchain with gcc 16.1
+    added the script bin/init_gcc_env
+    tmux is now dynamically linked; tmux_static is a statically linked tmux binary (in the statically linked tmux no hostname resolution is possible)
 

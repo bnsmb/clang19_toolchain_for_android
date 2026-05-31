@@ -1,0 +1,751 @@
+#!/system/bin/sh
+#
+# Script to init the environment for GCC in /data/local/tmp/sysroot
+#
+# Usage: see below or execute the script with the parameter "--help" 
+#
+#
+# History
+#  30.05.2026 v1.0.0 /bs
+#    initial release
+#    
+#    
+__TRUE=0
+__FALSE=1
+
+STANDALONE_SCRIPT=${__FALSE}
+
+CONTINUE=${__TRUE}
+
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+
+# this variable is set to true if the parameter "examples" is used
+#
+  PRINT_EXAMPLES=${__FALSE}
+
+  alias LogDebugMsg='[ "${DEBUG}"x != ""x ] && echo "DEBUG: $*" >&2 '
+
+# get the current Android version
+#
+  OS_VERSION="$( getprop ro.build.version.release  )"
+  OS_VERSION="${OS_VERSION:=99}"
+
+# the test binary to use
+#
+  TEST="$( which test )"
+
+# this is NOT a supported environment variable -> use this syntax to avoid adding the variable to the list of supported environment variables in the usage output
+#
+  [ "${TEST}"x = ""x ] && TEST="test"
+
+
+# set to ${__FALSE} to disable the CPU check
+#
+  CHECK_CPU="${CHECK_CPU:=${__TRUE}}"
+
+  THIS_SCRIPT="$0"
+
+# check if this script was sourced in
+#
+  if [[ "${THIS_SCRIPT}" != */init_gcc*_env ]] ; then
+    THIS_SCRIPT="/data/local/tmp/sysroot/bin/init_gcc_env"
+  else
+    GCC_SYSROOT="$( cd "${THIS_SCRIPT%/bin/*}" && pwd )"
+  fi
+
+# ---------------------------------------------------------------------
+# the variable TMPDIR is used by the /sytem/bin/sh to get the default directory for temporary files
+#
+  TMPDIR="${TMPDIR:=/data/local/tmp}"
+  export TMPDIR
+
+fi
+
+# ---------------------------------------------------------------------
+
+function add_path {
+
+  while [ $# -ne 0 ] ; do
+    CUR_DIR="$1"
+    shift
+    [[ *:${PATH}:* != *:${CUR_DIR}:* ]]  && PATH="${PATH}:${CUR_DIR}"
+  done
+}
+
+function add_library_path {
+
+  while [ $# -ne 0 ] ; do
+    CUR_DIR="$1"
+    shift
+    [[ *:${LD_LIBRARY_PATH}:* != *:${CUR_DIR}:* ]]  && LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${CUR_DIR}"
+  done
+}
+
+# ---------------------------------------------------------------------
+
+function define_aliase {
+
+  NEW_ALIAS=""
+
+  for i in vi find tar bash sed awk dd nano curl ; do
+    if ${TEST} -x "${GCC_SYSROOT}/usr/bin/$i"  ; then
+       alias $i="${GCC_SYSROOT}/usr/bin/$i"
+      NEW_ALIAS="${NEW_ALIAS} $i"
+    fi
+  done
+
+  for i in /system_ext/bin/* /product/bin/* ; do 
+    f=${i##*/} 
+    [[ " ${NEW_ALIAS} " == *\ $f\ * ]] && continue
+
+    if [ -x "${GCC_SYSROOT}/usr/bin/$f"  ] ; then
+      alias $f="${GCC_SYSROOT}/usr/bin/$f"
+      NEW_ALIAS="${NEW_ALIAS} $f"
+    elif [ "${GCC_SYSROOT}/usr/sbin/$f" ] ; then
+      alias $f="${GCC_SYSROOT}/usr/sbin/$f"
+      NEW_ALIAS="${NEW_ALIAS} $f"
+    fi
+  done
+
+  for i in ${NEW_ALIAS} ; do
+    alias $i
+  done
+
+}
+
+function clear_aliase {
+
+  for CUR_ALIAS in ${NEW_ALIAS} ; do
+    unalias ${CUR_ALIAS}
+  done
+}
+  
+# ---------------------------------------------------------------------
+# main function starts here
+#
+
+USER_COMMAND=""
+
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+
+  while [ $# -ne 0 ] ; do
+    CUR_PARAMETER="$1"
+    shift
+
+    case ${CUR_PARAMETER} in
+ 
+      -h | --help | help )
+
+        if ${TEST} -r "${THIS_SCRIPT}"  ; then
+          SUPPORTED_ENV_VARIABLES="Supported environment variables are:
+
+$( grep ":=" ${THIS_SCRIPT} | grep -v SUPPORTED_ENV_VARIABLES )
+"
+        else
+           SUPPORTED_ENV_VARIABLES=""
+        fi
+        cat <<EOT
+
+Usage: . ${THIS_SCRIPT} [-h|--help] [init] [var=value] [examples] [nocpucheck] [run "command1; command2; ..."]
+
+ 
+init        - clear the used environment variables at script start
+var=value   - set the environment variable "var" to "value" at start of the script
+examples    - print compile examples 
+nocpucheck  - disable the CPU check
+run         - init the environment; run the commands and exit
+
+${SUPPORTED_ENV_VARIABLES}
+
+To use another toolchain base directory use this syntax:
+
+  GCC_SYSROOT=${GCC_SYSROOT}  source \${GCC_SYSROOT}/bin/init_gcc_env
+
+To run only one or more commands use the parameter "run", e.g. to compile the examples use the command:
+
+sh /data/local/tmp/sysroot/bin/init_gcc_env run "gcc --version"
+
+EOT
+
+        CONTINUE=${__FALSE}
+      break
+      ;;
+
+      nocpucheck | no_cpucheck | no_cpu_check )
+        CHECK_CPU=${__FALSE}
+        ;;
+
+      examples | example | ex )
+        PRINT_EXAMPLES=${__TRUE}
+        ;;
+
+      init | clear )
+        echo "Clearing all used variables ..."
+        unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS API SYSROOT TARGET_ROOT GCC_DIR GCC_VERSION NDK_DIR
+        ;;
+
+      *=* )
+        echo "Executing now \"${CUR_PARAMETER}\" ..."
+        eval ${CUR_PARAMETER}
+        if [ $? -ne 0 ] ; then
+          echo "ERROR: Error executing \"${CUR_PARAMETER}\" "
+          CONTINUE=${__FALSE}
+        fi
+        ;;
+
+      run  )
+        USER_COMMAND="$*"
+        if [ "${USER_COMMAND}"x = ""x ] ; then
+          echo "ERROR: No command for the parameter \"run\" found"
+          CONTINUE=${__FALSE}
+        else
+          echo "Found command to execute in the parameter: \"${USER_COMMAND}\"  "
+        fi
+        break 
+        ;;
+
+      * )
+        echo "ERROR: Unknown parameter found: \"${CUR_PARAMETER}\" "
+        CONTINUE=${__FALSE}
+        ;;
+    esac
+  done
+fi
+
+# ---------------------------------------------------------------------
+
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+
+#
+#  sysroot for the gcc binaries and the other tools (make, etc)
+#
+  GCC_SYSROOT="${GCC_SYSROOT:=/data/local/tmp/sysroot}"
+  export GCC_SYSROOT
+
+  echo "The toolchain directory used is \"${GCC_SYSROOT}\" "
+
+# certificate file
+#
+  DEFAULT_SSL_CERT_FILE="${GCC_SYSROOT}/etc/security/ca-certificates.crt"
+
+# optional additional sysroot for additional libaries and include files
+# 
+  TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
+
+# gcc version 
+#
+  GCC_VERSION="${GCC_VERSION:=16.1}"
+
+# directory with the binaries for gcc
+# 
+  GCC_DIR="${GCC_BIN_DIR:=${GCC_SYSROOT}/usr/gcc/bin/gcc-toolchain}"
+
+# NDK to use (the NDKs after r14b do not support gcc anymore!)
+#
+  NDK="${NDK:=r14b}"
+
+# directory with the files from the NDK
+#
+  NDK_DIR="${NDK_DIR:=${GCC_SYSROOT}/usr/ndk/${NDK}}"
+
+
+# sysroot directory from the NDK
+#
+  SYSROOT="${SYSROOT:=${NDK_DIR}/sysroot}"
+
+# API version (the variable is currently not used in this script)
+#
+  API=${API:=31}
+ 
+# magiskpolicy is optional used to change SELinux permissions 
+#
+  MAGISKPOLICY="$( which magiskpolicy 2>/dev/null )"
+
+# SELinux helpler script for machines without Magisk
+#
+  SELINUX_HELP_SCRIPT="$( which add_missing_selinux_rules.sh )"
+
+
+  MANPATH=${GCC_SYSROOT}/usr/share/man
+
+  HOME="${GCC_SYSROOT}/home/shell"
+
+  TERMINFO="${GCC_SYSROOT}/usr/share/terminfo"
+
+  add_path "${GCC_SYSROOT}/usr/bin" "${GCC_SYSROOT}/bin"
+
+  add_library_path "${GCC_SYSROOT}/usr/lib"
+
+  export HOME TERMINFO PATH LD_LIBRARY_PATH MAN_PATH
+
+fi
+
+# ---------------------------------------------------------------------
+
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+
+  ROOT_ACCESS_AVAILABLE=${__FALSE}
+  ROOT_PREFIX=""
+
+  CUR_USER="$( id -un )"
+
+  if [ "${CUR_USER}"x = "root"x ] ; then
+    ROOT_ACCESS_AVAILABLE=${__TRUE}
+  else 
+    su - -c id 2>/dev/null 1>/dev/null 
+    if [ $? -eq 0 ] ; then
+      ROOT_ACCESS_AVAILABLE=${__TRUE}
+      ROOT_PREFIX="su - -c "
+    fi
+  fi
+fi
+
+# ---------------------------------------------------------------------
+
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+
+#
+# 06.06.2025 /bs : CPU_TYPE is hardcoded now; CUR_CPU_TYPE is only used for messages
+#
+  CPU_TYPE="aarch64"
+
+  CUR_CPU_TYPE="$( uname -m )"
+
+#
+# check, if the current CPU can execute binaries compiled for arm64
+#
+  if [ ${CHECK_CPU}x != ${__FALSE}x ] ; then
+    CHECK_CPU_TEST_PROGRAM="${GCC_SYSROOT}/bin/testcpu"
+    if [ -x "${CHECK_CPU_TEST_PROGRAM}" ] ; then
+      echo "Checking if the current CPU can execute binaries for arm64 CPUs using the binary \"${CHECK_CPU_TEST_PROGRAM}\" ..."
+      ${CHECK_CPU_TEST_PROGRAM}
+      if [ $? -ne 0 ] ; then
+        echo "ERROR: Looks like the current CPU can NOT execute binaries for arm64 CPUs"
+        echo "       Note: To disable this test either use the parameter \"nocpucheck\" or delete or rename the file \"${CHECK_CPU_TEST_PROGRAM}\" "
+        CONTINUE=${__FALSE}
+      fi
+    else
+      echo "The CPU check program  \"${CHECK_CPU_TEST_PROGRAM}\" does not exist or is not executable - no CPU check done"
+    fi
+  fi
+fi
+
+# ---------------------------------------------------------------------
+
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+
+  echo "Running as user \"${CUR_USER}\" "
+
+  if [[ $0 == *init_gcc*_env* ]] ; then
+    if [[  "${USER_COMMAND}"x = ""x ]] ; then
+      echo
+      echo "*******************************************************************************************"
+      echo " WARNING: The script $0 must be sourced in "
+      echo "*******************************************************************************************"
+      echo
+    fi
+    STANDALONE_SCRIPT=${__TRUE} 
+  fi
+
+# ---------------------------------------------------------------------
+
+  LIB_DIRS="${GCC_SYSROOT}/usr/lib"
+
+  OBJ_DIRS=""
+
+  INCLUDE_DIRS="${GCC_SYSROOT}/usr/include"
+
+  BIN_DIRS="${GCC_DIR}"
+
+  SYSROOT_CONFIGURE_OPTION=""
+ 
+  if [ "${NDK_DIR}"x != ""x ] ; then
+    if ${TEST} -d "${NDK_DIR}" ; then
+       INCLUDE_DIRS="${INCLUDE_DIRS} ${NDK_DIR}/include ${NDK_DIR}/sysroot/usr/include/${CPU_TYPE}-linux-android"
+    fi
+  fi
+
+  if [ "${SYSROOT}"x != ""x ] ; then
+    if ${TEST} -d  "${SYSROOT}" ; then
+
+      SYSROOT_LIB_DIR="${SYSROOT}/usr/lib"
+
+      INCLUDE_DIRS="${INCLUDE_DIRS} ${SYSROOT}/usr/include"
+
+      LIB_DIRS="${LIB_DIRS} ${SYSROOT_LIB_DIR}"
+      OBJ_DIRS="${OBJ_DIRS} ${SYSROOT_LIB_DIR}"
+
+      LIB_DIRS="${LIB_DIRS} ${SYSROOT_LIB_DIR}"
+
+      ${TEST} -d ${SYSROOT}/usr/bin && BIN_DIRS="${BIN_DIRS} ${SYSROOT}/usr/bin"
+
+      SYSROOT_CONFIGURE_OPTION="--sysroot ${SYSROOT}"
+
+    else
+      echo "WARNING: The sysroot directory ${SYSROOT} does not exist"
+    fi
+  fi
+
+  GCC="${GCC_BIN_DIR}/gcc"
+
+  add_path "${GCC_BIN_DIR}"
+
+# ---------------------------------------------------------------------
+
+  if ${TEST} ! -x "${GCC}"  ; then
+    echo "ERROR: The binary \"${GCC}\" does not exist or is not executable"
+    CONTINUE=${__FALSE}
+  fi
+fi
+
+# ---------------------------------------------------------------------
+
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+
+  echo
+  echo "Preparing the gcc environment for creating binaries for the CPU type ${CPU_TYPE}"
+
+  if [ "${CUR_CPU_TYPE}"x != "${CPU_TYPE}"x ] ; then
+    echo "The current CPU type is \"${CUR_CPU_TYPE}\" "
+  fi
+
+  if [ "${TARGET_ROOT}"x != ""x ] ; then
+    if ${TEST} -d  "${TARGET_ROOT}"  ; then
+      INCLUDE_DIRS="${INCLUDE_DIRS} ${TARGET_ROOT}/usr/include"
+      BIN_DIRS="${BIN_DIRS} ${TARGET_ROOT}/usr/bin"
+      LIB_DIRS="${LIB_DIRS} ${TARGET_ROOT}/usr/lib"
+    else
+     echo "INFO: The target root directory ${TARGET_ROOT} does not exist"
+    fi
+  fi
+
+  echo ""
+
+  printf "%-90s %s\n" "Using gcc ${GCC_VERSION}" 
+  printf "\n"
+
+  if [ "${NDK_DIR}"x != ""x ] ; then
+    printf "%-90s %s\n" "Using the NDK ${NDK_DIR}" "(environment variable NDK_DIR)"
+  fi
+
+  if [ "${SYSROOT}"x != ""x ] ; then
+    printf "%-90s %s\n" "Using the sysroot directory ${SYSROOT}" "(environment variable SYSROOT)"
+  fi
+
+  if [ "${TARGET_ROOT}"x != ""x ] ; then
+    printf "%-90s %s\n" "Using the target root directory ${TARGET_ROOT}" "(environment variable TARGET_ROOT)"
+  fi
+
+  printf "\n"
+
+  echo ""
+
+  for CUR_DIR in ${BIN_DIRS} ; do
+    echo ":${PATH}:" | grep ":${CUR_DIR}:" >/dev/null
+    if [ $? -ne 0 ] ; then
+      if ! ${TEST} -d "${CUR_DIR}" ; then
+        echo "WARNING: The directory with binaries \"${CUR_DIR}\" does not exist"
+      fi
+      [[ :${PATH}: != *:${CUR_DIR}: ]] && PATH="${CUR_DIR}:${PATH}"
+    fi
+  done
+ 
+ 
+  for CUR_DIR in ${INCLUDE_DIRS} ; do
+    if ! ${TEST} -d "${CUR_DIR}" ; then
+      echo "WARNING: The directory with include files \"${CUR_DIR}\" does not exist"
+    fi
+
+    echo "${CFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
+    if [ $? -ne 0 ] ; then
+    echo "${CFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
+      CFLAGS="${CFLAGS} -I${CUR_DIR}"
+    fi
+
+    echo "${CPPFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
+    if [ $? -ne 0 ] ; then
+      CPPFLAGS="${CPPFLAGS} -I${CUR_DIR}"
+    fi
+
+    echo "${CXXFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
+    if [ $? -ne 0 ] ; then
+      CXXFLAGS="${CXXFLAGS} -I${CUR_DIR}"
+    fi
+
+  done
+
+ 
+  for CUR_DIR in ${LIB_DIRS} ; do
+    if ! ${TEST} -d "${CUR_DIR}" ; then
+      echo "WARNING: The directory with libraries \"${CUR_DIR}\" does not exist"
+    fi
+
+    echo "${LDFLAGS} " | grep -- "-L${CUR_DIR} " >/dev/null
+    if [ $? -ne 0 ] ; then
+      LDFLAGS="${LDFLAGS} -L${CUR_DIR}"
+    fi
+  done
+
+
+  for CUR_DIR in ${OBJ_DIRS} ; do
+    if ! ${TEST} -d "${CUR_DIR}" ; then
+      echo "WARNING: The directory with object files \"${CUR_DIR}\" does not exist"
+    fi
+
+    echo "${LDFLAGS} " | grep -- "-B${CUR_DIR}/ " >/dev/null
+    if [ $? -ne 0 ] ; then
+      LDFLAGS="${LDFLAGS} -B${CUR_DIR}/"
+    fi
+  done
+
+
+  if [ "${SYSROOT_CONFIGURE_OPTION}"x != ""x ] ; then 
+    echo "$CFLAGS" | grep -- " --sysroot" >/dev/null ||
+      CFLAGS="$CFLAGS --sysroot=${SYSROOT}"
+
+    echo "$CPPFLAGS" | grep -- " --sysroot" >/dev/null ||
+      CPPFLAGS="$CPPFLAGS --sysroot=${SYSROOT}"
+
+    echo "$CXXLAGS" | grep -- " --sysroot " >/dev/null ||
+      CXXFLAGS="$CXXFLAGS --sysroot=${SYSROOT}"
+
+
+    echo "$LDFLAGS" | grep -- " --sysroot " >/dev/null ||
+      LDFLAGS="$LDFLAGS --sysroot=${SYSROOT}"
+
+  fi
+
+  echo " $LDFLAGS " | grep -- " -lc " >/dev/null ||
+    LDFLAGS="$LDFLAGS -lc "
+
+
+  add_library_path "${SYSROOT}/usr/lib/${CPU_TYPE}-linux-android"
+  
+  for CUR_PKG_CONFIG_PATH  in /data/local/tmp/sysroot/usr/lib/pkgconfig/ /data/local/tmp/develop/sysroot/usr/lib/pkgconfig/ ; do
+    if [[ " :${PKG_CONFIG_PATH}: " != *:${CUR_PKG_CONFIG_PATH}:* ]] ; then
+      export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:${CUR_PKG_CONFIG_PATH}"
+    fi 
+  done
+
+  export CFLAGS CXXFLAGS CPPFLAGS LDFLAGS SYSROOT TARGET_ROOT API NDK SYSROOT PKG_CONFIG_PATH
+
+  export CC="${GCC_BIN_DIR}/gcc"
+  export CXX="${GCC_BIN_DIR}/c++"
+  export AR="${GCC_BIN_DIR}/ar"
+  export AS="${GCC_BIN_DIR}/as"
+  export LD="${GCC_BIN_DIR}/ld"
+  export RANLIB="${GCC_BIN_DIR}/ranlib"
+  export STRIP="${GCC_BIN_DIR}/strip"
+  export CPP="${GCC_BIN_DIR}/cpp"
+  export CXXCPP="${GCC_BIN_DIR}/cpp"
+
+  echo "Environment variables used:"
+
+  CUR_VAR_NAME_FIELD_LENGTH=25
+
+  printf "\n"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "PATH is now:"             "${PATH}"
+  printf "\n"
+
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "LD_LIBRARY_PATH:"         "${LD_LIBRARY_PATH}"
+  printf "\n"
+
+# the variable API is currently not used in this script
+#  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "API is now:"              "${API}"
+
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "NDK_DIR is now:"          "${NDK_DIR}"
+  printf "\n"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "SYSROOT is now:"          "${SYSROOT}"
+  printf "\n"
+
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "CFLAGS are now:"          "${CFLAGS}"
+  printf "\n"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "CPPFLAGS are now:"        "${CPPFLAGS}"
+  printf "\n"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "CXXFLAGS are now:"        "${CXXFLAGS}"
+  printf "\n"
+  printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "LDFLAGS are now:"         "${LDFLAGS}"
+  printf "\n"
+
+  for CUR_VAR in CC CXX CPP CXXCPP AR AS LD RANLIB STRIP PKG_CONFIG PKG_CONFIG_PATH ; do
+    eval CUR_VALUE="\$$CUR_VAR"
+    printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "${CUR_VAR} is now:" "${CUR_VALUE}"
+  done
+ 
+  echo
+
+  if  ! ${TEST} -d /tmp  ; then
+    if [ "${TMP}"x = ""x ] ; then
+      if ${TEST} -d /data/local/tmp  ; then
+        export TMP="/data/local/tmp"
+        printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "TMP is now:"         "${TMP}"
+      else
+        echo "WARNING: The directories /tmp and /data/local/tmp do not exist - please set the variable TMP before using gcc"
+      fi
+    fi
+  fi 
+
+  echo "Checking the gcc binary ..."
+  echo
+  ${GCC} --version
+  THISRC=$?
+  echo
+  if [ ${THISRC} != 0 ] ; then
+    echo "WARNING: Executing \"${GCC} --version\" ended with RC=${THISRC}"
+  fi
+
+  if [ $API -lt 30 ] ; then
+    echo
+    echo "WARNING: Compling C++ program using API version less then 30 will probably not work"
+    echo 
+  fi
+
+  export CC=${GCC}
+  export LD=${LLD}
+
+# define aliase
+#
+  echo "Define some aliase ..."
+
+  NEW_ALIAS=""
+
+  alias sysroot="cd ${GCC_SYSROOT}; pwd"
+
+  alias setlibpath="export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}"
+ 
+  alias addlib='LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/local/tmp/develop/sysroot/usr/lib '
+
+  alias cp_crt_libs='cp ${NDK_DIR}/sysroot/usr/lib/${CPU_TYPE}-linux-android/${API}/crt*.o .'
+
+  alias gdb="gdb -tui "
+
+  define_aliase
+
+  echo ""
+
+  if [ ${ROOT_ACCESS_AVAILABLE} = ${__TRUE} ] ; then
+
+    if [ "${ROOT_PREFIX}"x = ""x ] ; then
+      echo "The user running this script is the user \"root\" "
+    else
+      echo "Root access is enabled on this machine"
+      echo ""
+
+      if [ "${MAGISKPOLICY}"x != ""x ] ; then
+
+        echo "Adding missing SELinux policies using \"${MAGISKPOLICY}\" ..."
+
+        echo "Enabling socket access for the user \"shell\" (this is necessary to use tmux or ssh-agent)..."
+
+        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file sock_file { create getattr setattr write unlink }"  '
+        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell devpts chr_file { read write open }"'
+
+        if which mtr 2>/dev/null 1>dev/null ; then
+          echo "Enabling icmp_socket access for the user \"shell\" (this is necessary to use mtr)..."
+          ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell port icmp_socket { name_bind }"'     
+        fi
+
+        echo "Enabling hard links for the user \"shell\" ..."
+        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file file link" '
+ 
+
+        if [ ${OS_VERSION} -gt 13 ] ; then	
+          echo "Enabling creating and using fifos for the user \"shell\" ..."
+          ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file fifo_file { create read open write getattr unlink ioctl }" '
+        fi
+
+      elif [ "${SELINUX_HELP_SCRIPT}"x != ""x ] ; then
+
+        echo "Adding missing SELinux policies using the script \"${SELINUX_HELP_SCRIPT}\" ..."
+
+        ${ROOT_PREFIX} ${SELINUX_HELP_SCRIPT}
+
+      else
+        LogDebugMsg "Magisk is not installed on this machine and the SELinux helper script is missing - can not add missing SELinux rules"
+      fi
+    fi
+
+    echo ""
+  else
+    LogDebugMsg  "root access is NOT enabled on this machine"
+  fi
+
+  if ${TEST} -r  ${DEFAULT_SSL_CERT_FILE}  ; then
+    echo "Setting the variable \"SSL_CERT_FILE\" to \"${DEFAULT_SSL_CERT_FILE}\" ..."
+    export SSL_CERT_FILE=${DEFAULT_SSL_CERT_FILE}
+  else
+    echo "WARNING: Certificate file \"${DEFAULT_SSL_CERT_FILE}\" not found "
+  fi
+
+  echo "$PS1" | grep "\[gcc" 2>/dev/null >/dev/null || export PS1="[gcc toolchain] $PS1" 
+
+  GCC_ENV_INIT_DONE=${__TRUE}
+
+  echo ""
+
+  if [ "${HOSTNAME}"x = ""x ] ; then
+    if [ $( hostname )x != "localhost"x ] ; then
+      export HOSTNAME="$( hostname )"
+    else
+      export HOSTNAME="$( getprop ro.product.device ) $( getprop ro.serialno )"
+    fi
+  fi
+fi
+
+if [ ${PRINT_EXAMPLES} = ${__TRUE} ] ; then
+
+  cat <<EOT
+
+To test the gcc environment use
+
+cd ${GCC_SYSROOT}
+
+gcc  -o ./helloworld_in_c_compiled_with_gcc helloworld_in_c.c  && ./helloworld_in_c_compiled_with_gcc
+
+To test the C++ compiler use
+
+cd ${GCC_SYSROOT}
+g++  -o ./helloworld_in_c++_with_g++ ./helloworld_in_c++.cpp && ./helloworld_in_c++_with_g++
+
+To test the assembler from the gcc use
+
+cd ${GCC_SYSROOT}
+as -o helloworld_in_assembler_for_as.o helloworld_in_assembler_for_as.s && \
+  ld -o helloworld_in_assembler_for_as helloworld_in_assembler_for_as.o && \
+  ./helloworld_in_assembler_for_as
+
+EOT
+
+fi
+
+if [ "${USER_COMMAND}"x != ""x ] ; then
+  echo ""
+  echo " ---------------------------------------------------------------------------- "
+  echo "gcc environment initialized"
+  echo ""
+  echo "Executing now \"${USER_COMMAND}\" ..."
+  echo ""
+  eval ${USER_COMMAND}
+  THISRC=$?
+  echo ""
+  echo "... done; RC=${THISRC}"
+  [ ${STANDALONE_SCRIPT} = ${__TRUE} ] && exit ${THISRC}
+fi
+
+# change the working directory /data/local/tmp if it's currently /
+#
+if [ "$PWD"x = "/"x -a ${CONTINUE} != ${__FALSE} -a ${STANDALONE_SCRIPT} != ${__TRUE} -a "${USER_COMMAND}"x = ""x ] ; then
+  echo 
+
+  WORKDIR="${GCC_SYSROOT}"
+
+  if [ "${TARGET_ROOT}"x != ""x ] ; then
+    if ${TEST} -d  "${TARGET_ROOT%/sysroot*}"  ; then
+      WORKDIR="${TARGET_ROOT%/sysroot*}"
+    fi
+  fi
+
+  echo "Changing the working directory to \"${WORKDIR}\" ..."
+  cd "${WORKDIR}" 
+fi
+

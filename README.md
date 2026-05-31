@@ -6,6 +6,7 @@ The clang19 toolchain contains these programs:
 The toolchain contains :
 
 - clang 19.0 binaries and files
+- gcc 16.1.x binaries and files
 - make
 - cmake
 - ninja
