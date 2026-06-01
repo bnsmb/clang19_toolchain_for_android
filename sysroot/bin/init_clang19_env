@@ -374,10 +374,10 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     if [ -d "${GCC_BIN_DIR}" ] ; then
       add_path "${GCC_BIN_DIR}"
     else
-      LogMsg "No GCC toolchain found"
+      echo "No GCC toolchain found"
     fi
   else
-    LogMsg "Adding the GCC toolchain to the path is disabled"
+    echo "Adding the GCC toolchain to the path is disabled"
   fi
 
   export HOME TERMINFO PATH LD_LIBRARY_PATH MAN_PATH
