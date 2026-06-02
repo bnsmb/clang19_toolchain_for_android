@@ -40,7 +40,7 @@ fi
 
 if [ -x ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/g++ ] ; then
   echo
-  echo "*** Testing the compiler \"gcc\" ..."
+  echo "*** Testing the compiler \"g++\" ..."
   echo
   ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/g++   -o helloworld_in_c++_with_gcc ./helloworld_in_c++.cpp && ./helloworld_in_c++_with_gcc
 fi
