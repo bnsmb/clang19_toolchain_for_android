@@ -87,6 +87,9 @@
 #    the script now adds the directory with the gcc toolchain to the path if it exists (use the parameter no_gcc_dir to disable this feature)
 #    added the parameter no_gcc_dir
 #
+#  02.06.2026 v1.5.12 /bs
+#    fixed a bug in the function define_aliase
+#
 __TRUE=0
 __FALSE=1
 
@@ -185,7 +188,7 @@ function define_aliase {
     if [ -x "${CLANG_SYSROOT}/usr/bin/$f"  ] ; then
       alias $f="${CLANG_SYSROOT}/usr/bin/$f"
       NEW_ALIAS="${NEW_ALIAS} $f"
-    elif [ "${CLANG_SYSROOT}/usr/sbin/$f" ] ; then
+    elif [ -x "${CLANG_SYSROOT}/usr/sbin/$f" ] ; then
       alias $f="${CLANG_SYSROOT}/usr/sbin/$f"
       NEW_ALIAS="${NEW_ALIAS} $f"
     fi
