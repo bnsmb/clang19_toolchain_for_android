@@ -531,4 +531,5 @@ History
     added the toolchain with gcc 16.1
     added the script bin/init_gcc_env
     tmux is now dynamically linked; tmux_static is a statically linked tmux binary (in the statically linked tmux no hostname resolution is possible)
+    updated vim to version 9.2_1-588
 
