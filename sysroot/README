@@ -155,7 +155,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # bison 3.8
 # flex 2.6.4
 # 
-# gdb 16.3 (dynamically and statically linked binaries)
+# gdb 17.2 (dynamically and statically linked binaries)
 # 
 # rsync 3.4.1 
 # 
@@ -212,7 +212,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 #   in the directories /data/local/tmp//usr/androidsdk35_0_2/*-tools 
 #   (the binaries are from this ZIP file: https://github.com/lzhiyong/android-sdk-tools/releases/download/35.0.2/android-sdk-tools-static-aarch64.zip)
 #
-# OpenVPN 2.7 (openvpn requires root access)
+# OpenVPN 2.7.4 (openvpn requires root access)
 # stunnel 5.77  (Stunnel is a proxy designed to add TLS encryption functionality to existing clients and servers without any changes in the programs code, https://www.stunnel.org/)
 #
 # unfsd 0.11.0 (a userland NFS daemon usable by non-root user; the default exports file for this binary is /data/local/tmp/sysroot/etc/exports)
@@ -532,4 +532,7 @@ History
     added the script bin/init_gcc_env
     tmux is now dynamically linked; tmux_static is a statically linked tmux binary (in the statically linked tmux no hostname resolution is possible)
     updated vim to version 9.2_1-588
+    updated openvpn to version 2.7.4
+    added a sample openvpn config in ./sysroot/etc/openvpn/vpngate
+    updated gdb, gdbserver, and run to version 17.2
 
