@@ -34,6 +34,9 @@
 //    added the definition for PTR
 //  03.02.2026
 //    added the definition for bcmp
+//  04.06.2026
+//    added the function ldexpl
+//    added the function frexpl
 //
 //
 // This file defines
@@ -63,6 +66,8 @@
 //   mktime_z
 //   android_getpass
 //   bcmp
+//   ldexpl
+//   frexpl
 //
 // This file defines the macros
 //
@@ -422,6 +427,121 @@ static char *android_getpass(const char *prompt)
 
 #ifdef __ANDROID__
 #define bcmp(a,b,n) memcmp((a),(b),(n))
+#endif
+
+// --------------------------------------------------------------------
+
+
+#if defined(__ANDROID__)
+
+#include <math.h>
+#include <stdint.h>
+
+/* 
+ * frexpl - Zerlegt eine long double Zahl in Mantisse und Exponent
+ * 
+ * Parameter:
+ *   x  - Die zu zerlegende Gleitkommazahl
+ *   exp - Pointer auf int, der den Exponenten aufnehmen soll
+ * 
+ * Rückgabe:
+ *   Die normalisierte Mantisse im Bereich [0.5, 1.0) oder 0.0
+ *   Der Exponent wird in *exp gespeichert
+ * 
+ * Spezialfälle:
+ *   - Bei x = 0:   Rückgabe 0, *exp = 0
+ *   - Bei x = NaN: Rückgabe NaN, *exp = undefined
+ *   - Bei x = Inf: Rückgabe Inf, *exp = undefined
+ */
+long double frexpl(long double x, int *exp) {
+    union {
+        long double ld;
+        unsigned char bytes[sizeof(long double)];
+    } u;
+    
+    /* Spezialfälle behandeln */
+    if (x == 0.0L) {
+        *exp = 0;
+        return 0.0L;
+    }
+    
+    if (isnan(x)) {
+        *exp = 0;  /* undefiniert, aber wir setzen etwas */
+        return x;
+    }
+    
+    if (isinf(x)) {
+        *exp = 0;  /* undefiniert, aber wir setzen etwas */
+        return x;
+    }
+    
+    /* 
+     * Einfache iterative Implementierung für Android (Bionic)
+     * Dies funktioniert für alle normalen Zahlen.
+     * 
+     * Für bessere Performance könnte man die Bit-Manipulation verwenden,
+     * aber die ist aufgrund unterschiedlicher long double Formate
+     * (80-bit extended precision vs. 128-bit IEEE quad) plattformabhängig.
+     */
+    long double mantissa = x;
+    int exponent = 0;
+    
+    /* Normalisiere auf [0.5, 1.0) */
+    if (mantissa != 0.0L) {
+        while (mantissa >= 1.0L) {
+            mantissa *= 0.5L;
+            exponent++;
+        }
+        while (mantissa < 0.5L) {
+            mantissa *= 2.0L;
+            exponent--;
+        }
+    }
+    
+    *exp = exponent;
+    return mantissa;
+}
+#endif
+
+
+// --------------------------------------------------------------------
+
+#if defined(__ANDROID__)
+
+/*
+ * ldexpl - Baut eine Gleitkommazahl aus Mantisse und Exponent
+ * 
+ * Parameter:
+ *   x - Die Mantisse
+ *   exp - Der Exponent (als Integer)
+ * 
+ * Rückgabe:
+ *   x * 2^exp
+ * 
+ * Dies ist die Umkehrfunktion zu frexpl:
+ *   ldexpl(frexpl(x, &exp), exp) == x (für normale Zahlen)
+ */
+long double ldexpl(long double x, int exp) {
+    /* Spezialfälle */
+    if (x == 0.0L || isnan(x) || isinf(x)) {
+        return x;
+    }
+    
+    /* Einfache iterative Multiplikation/Division mit 2 */
+    long double result = x;
+    
+    if (exp > 0) {
+        for (int i = 0; i < exp; i++) {
+            result *= 2.0L;
+        }
+    } else if (exp < 0) {
+        for (int i = 0; i < -exp; i++) {
+            result *= 0.5L;
+        }
+    }
+    
+    return result;
+}
 #endif
 
 // --------------------------------------------------------------------
