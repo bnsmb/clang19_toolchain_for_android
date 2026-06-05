@@ -1,5 +1,7 @@
 #!/data/local/tmp/sysroot/usr/bin/bash
 
+API=${API:=36}
+
 export PINO_RUNTIME_RPATH='true'
 export PINO_NEON='true'
 
@@ -25,7 +27,7 @@ if [[ " ${@} " = *" ${multilib} "* ]]; then
 		args+=("${arg}")
 	done
 	
-	exec '/data/local/tmp/sysroot/usr/lib/android-gcc-cross/bin/armv7-unknown-linux-androideabi36-g++' "${args[@]}"
+	exec "/data/local/tmp/sysroot/usr/lib/android-gcc-cross/bin/armv7-unknown-linux-androideabi${API}-g++" "${args[@]}"
 else
-	exec '/data/local/tmp/sysroot/usr/lib/android-gcc-cross/bin/aarch64-unknown-linux-android36-g++' -march=native "${@}"
+	exec "/data/local/tmp/sysroot/usr/lib/android-gcc-cross/bin/aarch64-unknown-linux-android${API}-g++" -march=native "${@}"
 fi
