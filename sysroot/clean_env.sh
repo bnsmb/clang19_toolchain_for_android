@@ -35,6 +35,7 @@ echo "Removing all config files and temporary files in \"${SYSROOT}\" ...."
 \rm -rf tmp/*
 
 \rm -rf var/cache/python/*
+find usr/lib -name __pycache__ -exec \rm -rf {} +
 
 find var/cache -type f -exec \rm {} +
 
