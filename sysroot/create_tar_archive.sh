@@ -54,6 +54,6 @@ TAR_FILE="${TARGET_DIR}/${TAR_FILE_NAME}" ;
 echo "Creating the tar file \"${TAR_FILE}\" ..."
 
 
-cd ${BASE_DIR} && ${PREFIX} tar -cf ${TAR_FILE} sysroot ; ls -l ${TAR_FILE}  
+cd ${BASE_DIR} && ${PREFIX} tar -cf ${TAR_FILE} sysroot ; ls -hl ${TAR_FILE}  
 
 
