@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/data/local/tmp/sysroot/usr/bin/bash
 
 declare -r APP_DIRECTORY="$(realpath "$(( [ -n "${BASH_SOURCE}" ] && dirname "$(realpath "${BASH_SOURCE[0]}")" ) || dirname "$(realpath "${0}")")")"
 

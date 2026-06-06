@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/data/local/tmp/sysroot/usr/bin/bash
 
 REMOTE_HOST="www.mirt.net:443"
 echo "client script connecting $REMOTE_HOST"
