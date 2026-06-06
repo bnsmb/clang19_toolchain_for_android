@@ -1,4 +1,4 @@
-#!/system/bin/env bash
+#!/data/local/tmp/sysroot/usr/bin/bash
 # reset environment variables that could interfere with normal usage
 unset -v GREP_OPTIONS
 # put all utility functions here
