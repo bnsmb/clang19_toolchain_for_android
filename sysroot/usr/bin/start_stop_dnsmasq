@@ -3,34 +3,58 @@
 # start/stop script for dnsmasq
 #
 # History
-#   04.04.2026 /bs
+#   04.06.2026 /bs
 #     initial release
-#     
+#
 
 __TRUE=0
 __FALSE=1
 
-PID_FILE="/data/local/tmp/sysroot/dnsmasq/var/dnsmasq.pid"
+# The dnsmasq command needs root acces
+#
+ROOT_PREFIX=""
+
+if [ "$( id -un )"x != "root"x ] ; then
+  ${ROOT_PREFIX} id 2>/dev/null 1>/dev/null 
+  if [ $? -ne 0 ] ; then
+
+    echo "ERROR: The script \"$0\" needs root access"
+    exit 254
+  else
+    ROOT_PREFIX="su - -c "
+  fi
+fi
+
+ENV_FILE="/data/local/tmp/sysroot/dnsmasq/etc/dnsmasq_env.sh"
+
+if ! ${ROOT_PREFIX} test -r  "${ENV_FILE}"  ; then
+  echo "ERROR: The env file \"${ENV_FILE}\" needed by \"$0\" does not exist"
+  exit 253
+fi
+
+PID_FILE="$(  ${ROOT_PREFIX} sh "${ENV_FILE}" PID_FILE )"
 
 CUR_PID=""
 
 # read the optional additional start options for dnsmasq from the environment file in the Magisk module
 # 
-DNSMASQ_START_OPTIONS_FILE="$( su - -c sh /data/adb/modules/dnsmasq/dnsmasq_env.sh DNSMASQ_START_OPTIONS_FILE  )"
+DNSMASQ_START_OPTIONS_FILE="$( ${ROOT_PREFIX}  sh  "${ENV_FILE}"  DNSMASQ_START_OPTIONS_FILE  )"
 [ -r "${DNSMASQ_START_OPTIONS_FILE}" ] && DNSMASQ_OPTIONS=$( grep -E -v "^$|^#" "${DNSMASQ_START_OPTIONS_FILE}" )
+
+echo "${DNSMASQ_OPTIONS}" | grep -- "--pid-file=" >/dev/null || DNSMASQ_OPTIONS="${DNSMASQ_OPTIONS} --pid-file=${PID_FILE}"
 
 # semaphor to disable the automatic start of the dnsmasq
 #
-DNSMASQ_STOP_FILE="$( su - -c sh /data/adb/modules/dnsmasq/dnsmasq_env.sh DNSMASQ_STOP_FILE )"
+DNSMASQ_STOP_FILE="$( ${ROOT_PREFIX} sh  "${ENV_FILE}" DNSMASQ_STOP_FILE )"
 
 # dnsmasq binary
 #
-DNSMASQ_BINARY="/system/bin/dnsmasq"
+DNSMASQ_BINARY="$( ${ROOT_PREFIX} sh  "${ENV_FILE}" DNSMASQ_BINARY )"
 
 
 function get_dnsmasq_status {
   DNSMASQ_IS_RUNNING=${__FALSE}
-  
+
   if [ -r "${PID_FILE}" ] ; then
     CUR_PID="$( grep -v "^#" "${PID_FILE}" )"
     if [ "${CUR_PID}"x != ""x ] ; then
@@ -51,7 +75,7 @@ if [ ${DNSMASQ_IS_RUNNING} != ${__TRUE} ] ; then
 #
 # check for other processes using the port 53 
 #
-  CUR_OUTPUT="$( su - -c netstat -tnlp | grep ":53 " 2>&1 )"
+  CUR_OUTPUT="$( ${ROOT_PREFIX} netstat -tnlp 2>/dev/null | grep ":53 " 2>&1 )"
   if [ "${CUR_OUTPUT}"x != ""x ] ; then
     echo "ERROR: There is a unknown process listening on the port 53:"
     echo 
@@ -75,14 +99,6 @@ if [ $# -eq 0 ] ; then
       PARAMETER="--help"
       ;;
 
-    *enable_dnsmasq )
-      PARAMETER="enable"
-      ;;
-
-   *disable_dnsmasq )
-      PARAMETER="disable"
-      ;;
-
     *restart_dnsmasq )
       PARAMETER="restart"
       ;;
@@ -103,10 +119,6 @@ if [ $# -eq 0 ] ; then
       PARAMETER="status"
       ;;
 
-    *is_enabled_dnsmasq )
-      PARAMETER="is-enabled"
-      ;;
-
     * ) 
       echo "ERROR: Unknown script name \"$0\" "
       exit 5
@@ -125,36 +137,8 @@ while [ $# -ne 0 ] ; do
   case ${CUR_PARAMETER} in 
   
     -h | --help )
-      echo "Usage: $0 [start|stop|status|restart|reload|enable|disable|is-enabled"
+      echo "Usage: $0 [start|stop|status|restart|reload"
       exit 0
-      ;;
-
-    enable )
-      if su - -c test ! -r ${DNSMASQ_STOP_FILE} ; then
-        echo "The automatic start of the dnsmasq is already enabled"
-      else
-        echo "Enabling the automatically start of the dnsmasq now ..."
-        su - -c rm -f "${DNSMASQ_STOP_FILE}"
-      fi
-      ;;
-
-    disable )
-      if su - -c test  -r ${DNSMASQ_STOP_FILE} ; then
-        echo "The automatic start of the dnsmasq is already disabled"
-      else
-        echo "Disabling the automatically start of the dnsmasq now ..."
-        su - -c touch "${DNSMASQ_STOP_FILE}"    
-      fi
-      ;;
-
-    is-enabled )
-      if su - -c test  -r ${DNSMASQ_STOP_FILE} ; then
-        echo "The automatic start of the dnsmasq is disabled"
-	exit 1
-      else
-        echo "The automatic start of the dnsmasq is enabled"
-	exit 0
-      fi
       ;;
 
     start )
@@ -164,7 +148,7 @@ while [ $# -ne 0 ] ; do
         exit 0
       else
         echo "Starting the dnsmasq ..."
-        su - -c ${DNSMASQ_BINARY} ${DNSMASQ_OPTIONS}
+        ${ROOT_PREFIX} ${DNSMASQ_BINARY} ${DNSMASQ_OPTIONS}
 
         get_dnsmasq_status
         if [ ${DNSMASQ_IS_RUNNING} != ${__TRUE} ] ; then
@@ -180,18 +164,18 @@ while [ $# -ne 0 ] ; do
         exit 0
       else
         echo "Stopping the dnsmasq ..."
-        su - -c kill ${CUR_PID}
+        ${ROOT_PREFIX} kill ${CUR_PID}
       fi
       ;;
   
     restart )
       if [ ${DNSMASQ_IS_RUNNING} = ${__TRUE} ] ; then
         echo "Stopping the dnsmasq ..."
-        su - -c kill ${CUR_PID}
+        ${ROOT_PREFIX} kill ${CUR_PID}
       fi
   
       echo "Starting the dnsmasq ..."
-      su - -c ${DNSMASQ_BINARY} ${DNSMASQ_OPTIONS}
+      ${ROOT_PREFIX} ${DNSMASQ_BINARY} ${DNSMASQ_OPTIONS}
 
       get_dnsmasq_status
       if [ ${DNSMASQ_IS_RUNNING} != ${__TRUE} ] ; then
@@ -217,7 +201,7 @@ while [ $# -ne 0 ] ; do
         THISRC=1
       else
         echo "Reloading the dnsmasq config ..."
-        su - -c kill -HUP ${CUR_PID}
+        ${ROOT_PREFIX} kill -HUP ${CUR_PID}
 
         get_dnsmasq_status
         if [ ${DNSMASQ_IS_RUNNING} != ${__TRUE} ] ; then
