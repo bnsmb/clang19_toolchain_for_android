@@ -1,4 +1,5 @@
-#! /usr/bin/env perl
+#!/data/local/tmp/sysroot/usr/bin/perl
+
 
 package main;
 

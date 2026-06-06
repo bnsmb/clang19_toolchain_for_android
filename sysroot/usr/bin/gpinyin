@@ -1,4 +1,4 @@
-#! /usr/bin/env perl
+#!/data/local/tmp/sysroot/usr/bin/perl
 
 # gpinyin - European-like Chinese writing 'pinyin' into 'groff'
 

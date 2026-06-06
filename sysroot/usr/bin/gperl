@@ -1,4 +1,4 @@
-#! /usr/bin/env perl
+#!/data/local/tmp/sysroot/usr/bin/perl
 
 # gperl - add Perl part to groff files, this is the preprocessor for that
 
