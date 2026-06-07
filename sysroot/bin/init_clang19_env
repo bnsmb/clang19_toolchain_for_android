@@ -90,6 +90,10 @@
 #  02.06.2026 v1.5.12 /bs
 #    fixed a bug in the function define_aliase
 #
+#  07.06.2026 v1.5.13 /bs
+#    added code to check the gcc compiler 
+#    added examples for the gcc and g++ compiler
+#
 __TRUE=0
 __FALSE=1
 
@@ -103,6 +107,8 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 #
   PRINT_EXAMPLES=${__FALSE}
 
+# alias to print debug messages if requested
+#
   alias LogDebugMsg='[ "${DEBUG}"x != ""x ] && echo "DEBUG: $*" >&2 '
 
 # get the current Android version
@@ -119,7 +125,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   [ "${TEST}"x = ""x ] && TEST="test"
 
 
-#  set this variable to ${__TRUE} to disable adding the directory with the gcc toolchain to the PATH
+# set this variable to ${__TRUE} to disable adding the directory with the gcc toolchain to the PATH
 #
   IGNORE_GCC_TOOLCHAIN=${__FALSE}
   
@@ -168,7 +174,6 @@ function add_library_path {
 }
 
 # ---------------------------------------------------------------------
-
 
 function define_aliase {
 
@@ -372,10 +377,13 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   add_library_path "${CLANG_SYSROOT}/usr/lib"
 
-
+  GCC=""
   if [ ${IGNORE_GCC_TOOLCHAIN}x != ${__TRUE}x ] ; then
     if [ -d "${GCC_BIN_DIR}" ] ; then
       add_path "${GCC_BIN_DIR}"
+
+      [ -x "${GCC_BIN_DIR}/gcc" ] && GCC="${GCC_BIN_DIR}/gcc" 
+
     else
       echo "No GCC toolchain found"
     fi
@@ -703,10 +711,24 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     echo "WARNING: Executing \"${CLANG} --version\" ended with RC=${THISRC}"
   fi
 
+  
   if [ $API -lt 30 ] ; then
     echo
     echo "WARNING: Compling C++ program using API version less then 30 will probably not work"
     echo 
+  fi
+
+  if [ "${GCC}"x != ""x ] ; then
+    echo "Checking the gcc binary ..."
+    echo
+    ${GCC} --version
+    THISRC=$?
+    echo
+    if [ ${THISRC} != 0 ] ; then
+      echo "WARNING: Executing \"${GCC} --version\" ended with RC=${THISRC}"
+    fi
+  else
+    echo "INFO: The gcc does not exist in this environment"
   fi
 
   export CC=${CLANG}
@@ -805,22 +827,30 @@ if [ ${PRINT_EXAMPLES} = ${__TRUE} ] ; then
 
   cat <<EOT
 
-To test the clang environment use
+# ---------------------------------------------------------------------
+#
+# To test the C compiler "clang" use
 
 cd ${CLANG_SYSROOT}
 clang \${CFLAGS} \${LDFLAGS} -o helloworld_in_c helloworld_in_c.c  && ./helloworld_in_c
 
-To test the C++ compiler use
+# ---------------------------------------------------------------------
+#
+# To test the C++ compiler "clang++" use
 
 cd ${CLANG_SYSROOT}
 clang++ \${CPPFLAGS} \${LDFLAGS}  -o helloworld_in_c++ ./helloworld_in_c++.cpp && ./helloworld_in_c++
 
-To test the assembler from CLANG use
+# ---------------------------------------------------------------------
+#
+# To test the assembler from "clang" use
 
 cd ${CLANG_SYSROOT}
 clang -nostdlib -static -Wl,--entry=_start -o helloworld_in_assembler helloworld_in_assembler.s && ./helloworld_in_assembler
 
-To test the assembler from the binutils use
+# ---------------------------------------------------------------------
+#
+# To test the assembler from the binutils "as" use
 
 cd ${CLANG_SYSROOT}
 ${CLANG_SYSROOT}/usr/bin/as -o helloworld_in_assembler_for_as.o helloworld_in_assembler_for_as.s && \
@@ -828,6 +858,26 @@ ${CLANG_SYSROOT}/usr/bin/as -o helloworld_in_assembler_for_as.o helloworld_in_as
   ./helloworld_in_assembler_for_as
 
 EOT
+
+  if [ "${GCC}"x != ""x ] ; then
+  cat <<EOT
+
+# ---------------------------------------------------------------------
+#
+# To test the C compiler "gcc" use
+
+cd ${CLANG_SYSROOT}
+gcc -o helloworld_in_c helloworld_in_c.c  && ./helloworld_in_c
+
+# ---------------------------------------------------------------------
+#
+# To test the C++ compiler "g++" use
+
+cd ${CLANG_SYSROOT}
+g++  -o helloworld_in_c++ ./helloworld_in_c++.cpp && ./helloworld_in_c++
+
+EOT
+  fi
 
 fi
 
