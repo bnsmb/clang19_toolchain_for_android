@@ -90,9 +90,11 @@
 #  02.06.2026 v1.5.12 /bs
 #    fixed a bug in the function define_aliase
 #
+
 #  07.06.2026 v1.5.13 /bs
 #    added code to check the gcc compiler 
 #    added examples for the gcc and g++ compiler
+#    added the function add_option to add the options to various environment variables with compiler/linker flags
 #
 __TRUE=0
 __FALSE=1
@@ -154,9 +156,14 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 fi
 
 # ---------------------------------------------------------------------
-
+# add a directory to the variable PATH if it is not already included
+#
+# usage:  add_path dir_with_executables [...]
+#
 function add_path {
 
+  typeset CUR_DIR=""
+  
   while [ $# -ne 0 ] ; do
     CUR_DIR="$1"
     shift
@@ -164,13 +171,30 @@ function add_path {
   done
 }
 
+# ---------------------------------------------------------------------
+# add a directory to the variable LD_LIBRARY_PATH if it is not already included
+#
+# usage: add_library_path dir_with_libraries [...]
+#
 function add_library_path {
+
+  typeset CUR_DIR=""
 
   while [ $# -ne 0 ] ; do
     CUR_DIR="$1"
     shift
     [[ *:${LD_LIBRARY_PATH}:* != *:${CUR_DIR}:* ]]  && LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${CUR_DIR}"
   done
+}
+
+# ---------------------------------------------------------------------
+# add an option an environment variable if it is not already included
+#
+# usage: add_option env_variable option
+#
+function add_option {
+  eval echo \" \$$1 \" | grep -- " $2 " >/dev/null || \
+    eval $1=\"\$$1 $2 \"
 }
 
 # ---------------------------------------------------------------------
@@ -234,7 +258,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 $( grep ":=" ${THIS_SCRIPT} | grep -v SUPPORTED_ENV_VARIABLES )
 "
         else
-           SUPPORTED_ENV_VARIABLES=""
+          SUPPORTED_ENV_VARIABLES=""
         fi
         cat <<EOT
 
@@ -243,7 +267,7 @@ Usage: . ${THIS_SCRIPT} [-h|--help] [init] [var=value] [examples] [nocpucheck] [
  
 init        - clear the used environment variables at script start
 var=value   - set the environment variable "var" to "value" at start of the script
-examples    - print compile examples 
+examples    - print compile examples after initializing the environment
 nocpucheck  - disable the CPU check
 no_gcc_dir  - do not add the directory with the gcc toolchain to the path
 run         - init the environment; run the commands and exit
@@ -350,7 +374,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   NDK_DIR="${NDK_DIR:=${CLANG_SYSROOT}/usr/ndk/${NDK}}"
 
 
-# sysrot directory from the NDK
+# sysroot directory from the NDK
 #
   SYSROOT="${SYSROOT:=${NDK_DIR}/sysroot}"
 
@@ -362,7 +386,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 #
   MAGISKPOLICY="$( which magiskpolicy 2>/dev/null )"
 
-# SELinux helpler script for machines without Magisk
+# SELinux helpler script for machines with root access but without Magisk
 #
   SELINUX_HELP_SCRIPT="$( which add_missing_selinux_rules.sh )"
 
@@ -377,6 +401,8 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   add_library_path "${CLANG_SYSROOT}/usr/lib"
 
+# check if the gcc is part of this version of the clang19 toolchain
+#
   GCC=""
   if [ ${IGNORE_GCC_TOOLCHAIN}x != ${__TRUE}x ] ; then
     if [ -d "${GCC_BIN_DIR}" ] ; then
@@ -571,21 +597,9 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
       echo "WARNING: The directory with include files \"${CUR_DIR}\" does not exist"
     fi
 
-    echo "${CFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
-    if [ $? -ne 0 ] ; then
-    echo "${CFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
-      CFLAGS="${CFLAGS} -I${CUR_DIR}"
-    fi
-
-    echo "${CPPFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
-    if [ $? -ne 0 ] ; then
-      CPPFLAGS="${CPPFLAGS} -I${CUR_DIR}"
-    fi
-
-    echo "${CXXFLAGS} " | grep -- "-I${CUR_DIR} " >/dev/null
-    if [ $? -ne 0 ] ; then
-      CXXFLAGS="${CXXFLAGS} -I${CUR_DIR}"
-    fi
+    add_option   CFLAGS "-I${CUR_DIR} "
+    add_option CPPFLAGS "-I${CUR_DIR} "
+    add_option CXXFLAGS "-I${CUR_DIR} "
 
   done
 
@@ -595,10 +609,8 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
       echo "WARNING: The directory with libraries \"${CUR_DIR}\" does not exist"
     fi
 
-    echo "${LDFLAGS} " | grep -- "-L${CUR_DIR} " >/dev/null
-    if [ $? -ne 0 ] ; then
-      LDFLAGS="${LDFLAGS} -L${CUR_DIR}"
-    fi
+    add_option LDFLAGS "-L${CUR_DIR} "
+
   done
 
 
@@ -607,31 +619,21 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
       echo "WARNING: The directory with object files \"${CUR_DIR}\" does not exist"
     fi
 
-    echo "${LDFLAGS} " | grep -- "-B${CUR_DIR}/ " >/dev/null
-    if [ $? -ne 0 ] ; then
-      LDFLAGS="${LDFLAGS} -B${CUR_DIR}/"
-    fi
+    add_option LDFLAGS "-B${CUR_DIR}/ "
+
   done
 
 
   if [ "${SYSROOT_CONFIGURE_OPTION}"x != ""x ] ; then 
-    echo "$CFLAGS" | grep -- " --sysroot" >/dev/null ||
-      CFLAGS="$CFLAGS --sysroot=${SYSROOT}"
 
-    echo "$CPPFLAGS" | grep -- " --sysroot" >/dev/null ||
-      CPPFLAGS="$CPPFLAGS --sysroot=${SYSROOT}"
-
-    echo "$CXXLAGS" | grep -- " --sysroot " >/dev/null ||
-      CXXFLAGS="$CXXFLAGS --sysroot=${SYSROOT}"
-
-
-    echo "$LDFLAGS" | grep -- " --sysroot " >/dev/null ||
-      LDFLAGS="$LDFLAGS --sysroot=${SYSROOT}"
+    add_option   CFLAGS "--sysroot=${SYSROOT}"
+    add_option CPPFLAGS "--sysroot=${SYSROOT}"
+    add_option CXXFLAGS "--sysroot=${SYSROOT}"
+    add_option  LDFLAGS "--sysroot=${SYSROOT}"
 
   fi
 
-  echo " $LDFLAGS " | grep -- " -lc " >/dev/null ||
-    LDFLAGS="$LDFLAGS -lc "
+  add_option  LDFLAGS "-lc"
 
 
   add_library_path "${SYSROOT}/usr/lib/${CPU_TYPE}-linux-android" "${CLANG_DIR}/lib"
@@ -714,7 +716,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   
   if [ $API -lt 30 ] ; then
     echo
-    echo "WARNING: Compling C++ program using API version less then 30 will probably not work"
+    echo "WARNING: Compling C++ program using API version less then 30 with clang/clang++ will probably not work"
     echo 
   fi
 
