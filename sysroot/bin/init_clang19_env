@@ -728,7 +728,9 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
       echo "WARNING: Executing \"${GCC} --version\" ended with RC=${THISRC}"
     fi
   else
-    echo "INFO: The gcc does not exist in this environment"
+    if [ ${IGNORE_GCC_TOOLCHAIN} = ${__FALSE} ] ; then
+      echo "INFO: The gcc does not exist in this environment"
+    fi
   fi
 
   export CC=${CLANG}
