@@ -1,2 +1,2 @@
 #!/system/bin/sh
-/system/bin/less -rU "$@"
+/data/local/tmp/sysroot/usr/bin/less  -rU "$@"
