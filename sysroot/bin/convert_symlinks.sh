@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/system/bin/env python3
 # convert_symlinks.py - Konvertiert absolute Symlinks zu relativen
 
 import os

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/system/bin/env python
 # -*- coding: utf-8 -*-
 
 """Methods for reporting bugs."""

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/system/bin/env python3
 
 # gh-115832: An object destructor running during the final GC of interpreter
 # shutdown triggered an infinite loop in the instrumentation code.

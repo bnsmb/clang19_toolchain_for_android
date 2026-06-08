@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/system/bin/env perl
 
 # pltags - create a tags file for Perl code, for use by vi(m)
 #

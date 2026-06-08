@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/data/local/tmp/sysroot/usr/bin/perl
 
 $config   = "/var/openssl/openssl.cnf";
 $capath   = "/usr/bin/openssl";

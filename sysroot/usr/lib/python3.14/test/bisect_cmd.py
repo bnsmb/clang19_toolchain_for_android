@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/system/bin/env python3
 """
 Command line tool to bisect failing CPython tests.
 

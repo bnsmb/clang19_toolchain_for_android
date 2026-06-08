@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/system/bin/env python
 """ Python Character Mapping Codec for ROT13.
 
 This codec de/encodes from str to str.

@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/system/bin/env perl
 #
 # shtags: create a tags file for perl scripts
 #

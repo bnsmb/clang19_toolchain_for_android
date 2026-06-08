@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/data/local/tmp/sysroot/usr/bin/python
 #
 # Server that will accept connections from a Vim channel.
 # Run this server and then in Vim you can open the channel:

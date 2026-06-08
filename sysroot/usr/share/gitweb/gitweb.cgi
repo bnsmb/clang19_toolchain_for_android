@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/data/local/tmp/sysroot/usr/bin/perl
 
 # gitweb - simple web interface to track changes in git repositories
 #

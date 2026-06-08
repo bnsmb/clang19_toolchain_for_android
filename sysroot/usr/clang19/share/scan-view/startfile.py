@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/system/bin/env python
 # -*- coding: utf-8 -*-
 
 """Utility for opening a file using the default application in a cross-platform
