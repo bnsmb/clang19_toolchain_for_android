@@ -26,6 +26,8 @@
 #     fixed a type in the instructions to create the temporary directory
 #   23.02.2026 1.3.5 /bs
 #     added code to create necessary directories if they are missing
+#   08.06.2026 1.3.6 /bs
+#     added the directories ./var/cache ./var/cache/man  to the list of directories to create
 #
 #
 
@@ -64,7 +66,7 @@ HOME="${BASE_HOME_DIR}/${CUR_USER}"
 
 TMP="${SYSROOT_DIR}/var/tmp"
 
-DIRS_TO_CREATE="./var/run ./var/log ./var/empty ./var/lib ./var/mail ./var/lock"
+DIRS_TO_CREATE="./var/run ./var/log ./var/empty ./var/lib ./var/mail ./var/lock ./var/cache ./var/cache/man " 
 
 PATH="$PATH:${SYSROOT_DIR}/usr/bin"
 
