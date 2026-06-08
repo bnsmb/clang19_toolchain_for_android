@@ -203,7 +203,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # find 4.9
 # xtargs 4.9
 # bc 1.08.2
-# less 679 
+# less 704 
 # htop 3.4.1
 # btop 1.4.4 (btop needs root access)
 # strace 6.18
@@ -534,4 +534,5 @@ History
     updated openvpn to version 2.7.4
     added a sample openvpn config for the free VPN server from https://www.vpngate.net in ./sysroot/etc/openvpn/vpngate
     updated gdb, gdbserver, and run to version 17.2
+    updated less to version 704
 
