@@ -10,6 +10,7 @@ export PINO_SYSTEM_PREFIX="$(dirname "${PREFIX}")"
 export PINO_SYSTEM_LIBRARIES='true'
 
 export LD_LIBRARY_PATH="/data/local/tmp/sysroot/usr/lib/android-gcc-cross/lib:${LD_LIBRARY_PATH}"
+export PATH="/data/local/tmp/sysroot/usr/lib/android-gcc-cross/bin:$PATH"
 
 declare -r secondary_target='armv7-unknown-linux-androideabi'
 declare -r multilib='-m32'

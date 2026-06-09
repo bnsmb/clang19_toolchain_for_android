@@ -1,1 +1,1 @@
-../../../lib/android-gcc-cross/bin/aarch64-unknown-linux-android-ld.gold
+./gcc_tool_wrapper

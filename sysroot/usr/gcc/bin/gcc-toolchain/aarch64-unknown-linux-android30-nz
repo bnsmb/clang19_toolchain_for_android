@@ -1,1 +1,1 @@
-../../../lib/android-gcc-cross/bin/aarch64-unknown-linux-android30-nz
+./gcc_tool_wrapper
