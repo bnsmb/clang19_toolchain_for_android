@@ -535,4 +535,5 @@ History
     added a sample openvpn config for the free VPN server from https://www.vpngate.net in ./sysroot/etc/openvpn/vpngate
     updated gdb, gdbserver, and run to version 17.2
     updated less to version 704
+    moved the binaries from the package mandoc (https://mandoc.bsd.lv/) to ./sysroot/usr/mandoc
 
