@@ -8,14 +8,14 @@ echo
 echo "*** Testing the compiler \"clang\" ...."
 echo
 cd ${CLANG_SYSROOT}
-clang ${CFLAGS} ${LDFLAGS} -o helloworld_in_c helloworld_in_c.c  && ./helloworld_in_c
+clang ${CFLAGS} ${LDFLAGS} -D__ANDROID_API__=$API -o helloworld_in_c helloworld_in_c.c  && ./helloworld_in_c
 
 
 echo
 echo "*** Testing the compiler \"clang++\" ..."
 echo
 cd ${CLANG_SYSROOT}
-clang++ ${CPPFLAGS} ${LDFLAGS}  -o helloworld_in_c++ ./helloworld_in_c++.cpp && ./helloworld_in_c++
+clang++ ${CPPFLAGS} ${LDFLAGS} -D__ANDROID_API__=$API -o helloworld_in_c++ ./helloworld_in_c++.cpp && ./helloworld_in_c++
 
 echo
 echo "*** Testing the assembler from clang ..."
@@ -42,7 +42,7 @@ if [ -x ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/g++ ] ; then
   echo
   echo "*** Testing the compiler \"g++\" ..."
   echo
-  ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/g++   -o helloworld_in_c++_with_gcc ./helloworld_in_c++.cpp && ./helloworld_in_c++_with_gcc
+  ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/g++   -o helloworld_in_c++_with_g++  ./helloworld_in_c++.cpp && ./helloworld_in_c++_with_g++
 fi
 
 echo
