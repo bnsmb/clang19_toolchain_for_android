@@ -25,7 +25,12 @@ fi
 
 
 echo "Removing all config files and temporary files in \"${SYSROOT}\" ...."
-\rm -f helloworld_in_c++ helloworld_in_c
+\rm -f helloworld_in_c++ 
+\rm -f helloworld_in_c
+\rm -f helloworld_in_c_with_gcc
+\rm -f helloworld_in_c++_with_g++
+\rm -f helloworld_in_c++_with_g++_*
+\rm -f helloworld_in_c_with_gcc_*
 \rm -f ls etc/ssh/*key*
 \rm -f etc/security/ca-certificates.crt
 \rm -rf etc/security/cacerts/*
