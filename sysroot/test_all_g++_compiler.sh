@@ -4,6 +4,10 @@ TOOLCHAIN_DIR="${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain"
 
 API_LIST=$( ls  ${TOOLCHAIN_DIR}/aarch64-unknown-linux-android*-g++ | sed "s/.*-android//g" | cut -f1 -d "-" | tr "\n" " "  )
 
+if [ ! -r helloworld_in_c++.cpp ] ; then
+  echo "ERROR: The source file \"helloworld_in_c++.cpp\" does not exist in the current directory"
+  exit 5
+fi
 
 for i in ${API_LIST} ;  do
   echo
