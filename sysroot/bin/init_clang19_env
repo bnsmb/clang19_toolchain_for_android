@@ -85,16 +85,22 @@
 #
 #  30.05.2026 v1.5.11 /bs
 #    the script now adds the directory with the gcc toolchain to the path if it exists (use the parameter no_gcc_dir to disable this feature)
-#    added the parameter no_gcc_dir
+#    added the parameter "no_gcc_dir" to ignore the gcc toolchain
 #
 #  02.06.2026 v1.5.12 /bs
 #    fixed a bug in the function define_aliase
 #
-
 #  07.06.2026 v1.5.13 /bs
 #    added code to check the gcc compiler 
 #    added examples for the gcc and g++ compiler
-#    added the function add_option to add the options to various environment variables with compiler/linker flags
+#    added the function "add_option" to add the options to the environment variables with compiler/linker flags
+#
+#  10.06.2026 v1.5.14 /bs
+#    added the parameter "norootcheck" to disable the check for root access
+#    added the environment variable CHECK_ROOT_ACCESS to disable the check for root access
+#    fixed a bug in the code to get the value for the variable CLANG_SYSROOT
+#    added the environment variable IGNORE_GCC_TOOLCHAIN to ignore the gcc toolchain
+#    renamed the parameter "no_gcc_dir" with "ignoregcc"
 #
 __TRUE=0
 __FALSE=1
@@ -116,7 +122,12 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 # get the current Android version
 #
   OS_VERSION="$( getprop ro.build.version.release  )"
-  OS_VERSION="${OS_VERSION:=99}"
+
+# this is NOT a supported environment variable -> use this syntax to avoid adding the variable to the list of supported environment variables in the usage output
+#  
+  if [ "${OS_VERSION}"x = ""x ] ; then
+    OS_VERSION="99}"
+  fi
 
 # the test binary to use
 #
@@ -129,11 +140,15 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
 # set this variable to ${__TRUE} to disable adding the directory with the gcc toolchain to the PATH
 #
-  IGNORE_GCC_TOOLCHAIN=${__FALSE}
+  IGNORE_GCC_TOOLCHAIN="${IGNORE_GCC_TOOLCHAIN:=${__FALSE}}"
   
 # set this variable to ${__FALSE} to disable the CPU check
 #
   CHECK_CPU="${CHECK_CPU:=${__TRUE}}"
+
+# set this variable to ${__FALSE} to disable the check for root access
+#
+  CHECK_ROOT_ACCESS="${CHECK_ROOT_ACCESS:=${__TRUE}}"
 
 # the name of this script
 #
@@ -255,21 +270,22 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
         if ${TEST} -r "${THIS_SCRIPT}"  ; then
           SUPPORTED_ENV_VARIABLES="Supported environment variables are:
 
-$( grep ":=" ${THIS_SCRIPT} | grep -v SUPPORTED_ENV_VARIABLES )
+$( grep ":=" ${THIS_SCRIPT} | grep -v SUPPORTED_ENV_VARIABLES  )
 "
         else
           SUPPORTED_ENV_VARIABLES=""
         fi
         cat <<EOT
 
-Usage: . ${THIS_SCRIPT} [-h|--help] [init] [var=value] [examples] [nocpucheck] [no_gcc_dir] [run "command1; command2; ..."]
+Usage: . ${THIS_SCRIPT} [-h|--help] [init] [var=value] [examples] [nocpucheck] [norootcheck] [ignoregcc] [run "command1; command2; ..."]
 
  
 init        - clear the used environment variables at script start
 var=value   - set the environment variable "var" to "value" at start of the script
 examples    - print compile examples after initializing the environment
 nocpucheck  - disable the CPU check
-no_gcc_dir  - do not add the directory with the gcc toolchain to the path
+norootcheck - disable the check for root access
+ignoregcc   - ignore the gcc 
 run         - init the environment; run the commands and exit
 
 ${SUPPORTED_ENV_VARIABLES}
@@ -285,16 +301,20 @@ sh /data/local/tmp/sysroot/bin/init_clang19_env run "/data/local/tmp/sysroot/com
 EOT
 
         CONTINUE=${__FALSE}
-      break
-      ;;
+        break
+        ;;
 
-     no_gcc_dir | nogccdir | no_gccdir )
+      ignoregcc | ignore_gcc )
         IGNORE_GCC_TOOLCHAIN=${__TRUE}
         ;;
 
       nocpucheck | no_cpucheck | no_cpu_check )
         CHECK_CPU=${__FALSE}
         ;;
+
+      norootcheck | no_rootcheck | no_root_check )
+	CHECK_ROOT_ACCESS=${__FALSE}
+	;;
 
       examples | example | ex )
         PRINT_EXAMPLES=${__TRUE}
@@ -428,16 +448,20 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   ROOT_ACCESS_AVAILABLE=${__FALSE}
   ROOT_PREFIX=""
 
-  CUR_USER="$( id -un )"
+  if [ ${CHECK_ROOT_ACCESS} = ${__TRUE} ] ; then 
+    CUR_USER="$( id -un )"
 
-  if [ "${CUR_USER}"x = "root"x ] ; then
-    ROOT_ACCESS_AVAILABLE=${__TRUE}
-  else 
-    su - -c id 2>/dev/null 1>/dev/null 
-    if [ $? -eq 0 ] ; then
+    if [ "${CUR_USER}"x = "root"x ] ; then
       ROOT_ACCESS_AVAILABLE=${__TRUE}
-      ROOT_PREFIX="su - -c "
+    else 
+      su - -c id 2>/dev/null 1>/dev/null 
+      if [ $? -eq 0 ] ; then
+        ROOT_ACCESS_AVAILABLE=${__TRUE}
+        ROOT_PREFIX="su - -c "
+      fi
     fi
+  else
+    echo "Checking for root access is disabled"
   fi
 fi
 
@@ -899,20 +923,23 @@ if [ "${USER_COMMAND}"x != ""x ] ; then
   [ ${STANDALONE_SCRIPT} = ${__TRUE} ] && exit ${THISRC}
 fi
 
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+
 # change the working directory /data/local/tmp if it's currently /
 #
-if [ "$PWD"x = "/"x -a ${CONTINUE} != ${__FALSE} -a ${STANDALONE_SCRIPT} != ${__TRUE} -a "${USER_COMMAND}"x = ""x ] ; then
-  echo 
+  if [ "$PWD"x = "/"x -a ${CONTINUE} != ${__FALSE} -a ${STANDALONE_SCRIPT} != ${__TRUE} -a "${USER_COMMAND}"x = ""x ] ; then
+    echo 
 
-  WORKDIR="${CLANG_SYSROOT}"
+    WORKDIR="${CLANG_SYSROOT}"
 
-  if [ "${TARGET_ROOT}"x != ""x ] ; then
-    if ${TEST} -d  "${TARGET_ROOT%/sysroot*}"  ; then
-      WORKDIR="${TARGET_ROOT%/sysroot*}"
+    if [ "${TARGET_ROOT}"x != ""x ] ; then
+      if ${TEST} -d  "${TARGET_ROOT%/sysroot*}"  ; then
+        WORKDIR="${TARGET_ROOT%/sysroot*}"
+      fi
     fi
-  fi
 
-  echo "Changing the working directory to \"${WORKDIR}\" ..."
-  cd "${WORKDIR}" 
+    echo "Changing the working directory to \"${WORKDIR}\" ..."
+    cd "${WORKDIR}" 
+  fi
 fi
 

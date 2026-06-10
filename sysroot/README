@@ -536,4 +536,6 @@ History
     updated gdb, gdbserver, and run to version 17.2
     updated less to version 704
     moved the binaries from the package mandoc (https://mandoc.bsd.lv/) to ./sysroot/usr/mandoc
+    added the parameter "norootcheck" to the script bin/init_clang19_env to disable the check for root access
+    added code to check the gcc compiler to the script bin/init_clang19_env
 
