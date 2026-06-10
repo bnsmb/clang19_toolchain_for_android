@@ -1,7 +1,13 @@
-for i in 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 ; do  
+#!/system/bin/sh
+
+TOOLCHAIN_DIR="${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain"
+
+API_LIST=$( ls  ${TOOLCHAIN_DIR}/aarch64-unknown-linux-android*-gcc | sed "s/.*-android//g" | cut -f1 -d "-" | tr "\n" " "  )
+
+for i in ${API_LIST} ; do
   echo 
-  echo "Testing ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/aarch64-unknown-linux-android${i}-gcc ..."
-  ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/aarch64-unknown-linux-android${i}-gcc -o helloworld_in_c_with_gcc_$i helloworld_in_c.c  && \
+  echo "Testing ${TOOLCHAIN_DIR}/aarch64-unknown-linux-android${i}-gcc ..."
+  ${TOOLCHAIN_DIR}/aarch64-unknown-linux-android${i}-gcc -o helloworld_in_c_with_gcc_$i helloworld_in_c.c  && \
      file ./helloworld_in_c_with_gcc_$i  && \
      ./helloworld_in_c_with_gcc_$i
 done
