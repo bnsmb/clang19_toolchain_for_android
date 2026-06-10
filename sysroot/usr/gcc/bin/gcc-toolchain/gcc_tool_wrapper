@@ -2,7 +2,7 @@
 
 BINARY="${0##*/}"
 
-if [ "${BINARY}"x = "gcc_tool_wrapper" ] ; then
+if [ "${BINARY}"x = "gcc_tool_wrapper"x ] ; then
   echo "ERROR: This is a wrapper for the binaries in the GCC toolchain. This script can not run as standalone script" 
   exit 126
 fi
