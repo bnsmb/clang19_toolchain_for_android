@@ -55,7 +55,7 @@
 .\" ========================================================================
 .\"
 .IX Title "CPAN 3"
-.TH CPAN 3 2024-02-27 "perl v5.40.0" "Perl Programmers Reference Guide"
+.TH CPAN 3 2024-10-03 "perl v5.40.0" "User Contributed Perl Documentation"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -420,13 +420,14 @@ versions of CPAN.pm
 This commands provides a statistical overview over recent download
 activities. The data for this is collected in the YAML file
 \&\f(CW\*(C`FTPstats.yml\*(C'\fR in your \f(CW\*(C`cpan_home\*(C'\fR directory. If no YAML module is
-configured or YAML not installed, no stats are provided.
-.IP install_tested 4
-.IX Item "install_tested"
+configured or YAML not installed, or if \f(CW\*(C`ftpstats_size\*(C'\fR is set to a
+value \f(CW\*(C`<=0\*(C'\fR, no stats are provided.
+.SS install_tested
+.IX Subsection "install_tested"
 Install all distributions that have been tested successfully but have
 not yet been installed. See also \f(CW\*(C`is_tested\*(C'\fR.
-.IP is_tested 4
-.IX Item "is_tested"
+.SS is_tested
+.IX Subsection "is_tested"
 List all build directories of distributions that have been tested
 successfully but have not yet been installed. See also
 \&\f(CW\*(C`install_tested\*(C'\fR.
@@ -658,6 +659,19 @@ overridden in a user specific file: CPAN/MyConfig.pm. Such a file is
 best placed in \f(CW\*(C`$HOME/.cpan/CPAN/MyConfig.pm\*(C'\fR, because \f(CW\*(C`$HOME/.cpan\*(C'\fR is
 added to the search path of the CPAN module before the \fBuse()\fR or
 \&\fBrequire()\fR statements. The mkmyconfig command writes this file for you.
+.PP
+If you want to keep your own CPAN/MyConfig.pm somewhere else, you
+should load it before loading CPAN.pm, e.g.:
+.PP
+.Vb 1
+\&  perl \-I/tmp/somewhere \-MCPAN::MyConfig \-MCPAN \-eshell
+\&
+\&  \-\-or\-\-
+\&
+\& perl \-I/tmp/somewhere \-MCPAN::MyConfig \-S cpan
+.Ve
+.PP
+Once you are in the shell you can change your configuration as follows.
 .PP
 The \f(CW\*(C`o conf\*(C'\fR command has various bells and whistles:
 .IP "completion support" 4
@@ -2351,10 +2365,18 @@ When an install fails for some reason and then I correct the error
 condition and retry, CPAN.pm refuses to install the module, saying
 \&\f(CW\*(C`Already tried without success\*(C'\fR.
 .Sp
-Use the force pragma like so
+You could use the force pragma like so
 .Sp
 .Vb 1
 \&  force install Foo::Bar
+.Ve
+.Sp
+Or, to avoid a force install (which would install even if the tests
+fail), you can force only the test and then install:
+.Sp
+.Vb 2
+\&  force test Foo::Bar
+\&  install Foo::Bar
 .Ve
 .Sp
 Or you can use
@@ -2478,6 +2500,36 @@ probably followed by
 .Vb 1
 \&  o conf commit
 .Ve
+.IP 20) 4
+.IX Item "20)"
+How do recommends_policy and suggests_policy work, exactly?
+.Sp
+The terms \f(CW\*(C`recommends\*(C'\fR and \f(CW\*(C`suggests\*(C'\fR have been standardized in
+https://metacpan.org/pod/CPAN::Meta::Spec
+.Sp
+In CPAN.pm, if you set \f(CW\*(C`recommands_policy\*(C'\fR to a true value, that
+means: if you then install a distribution \f(CW\*(C`Foo\*(C'\fR that \fIrecommends\fR a
+module \f(CW\*(C`Bar\*(C'\fR, both \f(CW\*(C`Foo\*(C'\fR and \f(CW\*(C`Bar\*(C'\fR will be tested and potentially
+installed.
+.Sp
+Similarly, if you set \f(CW\*(C`suggests_policy\*(C'\fR to a true value, it means: if
+you install a distribution \f(CW\*(C`Foo\*(C'\fR that \fIsuggests\fR a module \f(CW\*(C`Bar\*(C'\fR,
+both \f(CW\*(C`Foo\*(C'\fR and \f(CW\*(C`Bar\*(C'\fR will be tested and potentially installed.
+.Sp
+In either case, when \f(CW\*(C`Foo\*(C'\fR passes its tests and \f(CW\*(C`Bar\*(C'\fR does not pass
+its tests, \f(CW\*(C`Foo\*(C'\fR will be installed nontheless. But if \f(CW\*(C`Foo\*(C'\fR does not
+pass its tests, neither will be installed.
+.Sp
+This also works recursively for all recommends and suggests of the
+module \f(CW\*(C`Bar\*(C'\fR.
+.Sp
+This has also been illustrated by a cpan tester, who wrote:
+.Sp
+I just tested Starlink\-AST\-3.03 which recommends Tk::Zinc;
+Tk\-Zinc\-3.306 fails with
+http://www.cpantesters.org/cpan/report/a2de7c38\-810d\-11ee\-9ad4\-e2167316189a
+; nonetheless Starlink\-AST\-3.03 succeeds with
+http://www.cpantesters.org/cpan/report/9352e754\-810d\-11ee\-90e9\-46117316189a
 .SH COMPATIBILITY
 .IX Header "COMPATIBILITY"
 .SS "OLD PERL VERSIONS"
