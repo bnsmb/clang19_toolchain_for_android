@@ -504,7 +504,7 @@ History
     updated 7zz to version 26.00
     added cmake 4.3.0
 
-  21.06.2026 v2.0.0 beta /bs
+  14.06.2026 v2.0.0 /bs
     updated the GNU BinUtils (as, ar, etc) to version 2.45.50
     updated sqlite3 to version 3.51.3 
     added expect 5.45.4
