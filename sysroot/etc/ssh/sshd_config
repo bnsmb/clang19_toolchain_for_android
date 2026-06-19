@@ -1,25 +1,25 @@
-#	$OpenBSD: sshd_config,v 1.104 2021/07/02 05:11:21 dtucker Exp $
+#	$OpenBSD: sshd_config,v 1.105 2024/12/03 14:12:47 dtucker Exp $
 
 # This is the sshd server system-wide configuration file.  See
 # sshd_config(5) for more information.
 
-# This sshd was compiled with PATH=/data/local/tmp/sysroot/bin
+# This sshd was compiled with PATH=/data/local/tmp/sysroot/usr/bin
 
 # The strategy used for options in the default sshd_config shipped with
 # OpenSSH is to specify options with their default value where
 # possible, but leave them commented.  Uncommented options override the
 # default value.
 
-Include /data/local/tmp/sysroot/etc/ssh/sshd_config.d/*.conf
+Include /data/local/tmp/sysroot/data/local/tmp/sysroot/etc/ssh/sshd_config.d/*.conf
 
-Port 9022
+#Port 8022
 #AddressFamily any
 #ListenAddress 0.0.0.0
 #ListenAddress ::
 
-HostKey /data/local/tmp/sysroot/etc/ssh/ssh_host_rsa_key
-HostKey /data/local/tmp/sysroot/etc/ssh/ssh_host_ecdsa_key
-HostKey /data/local/tmp/sysroot/etc/ssh/ssh_host_ed25519_key
+#HostKey /data/local/tmp/sysroot/etc/ssh/ssh_host_rsa_key
+#HostKey /data/local/tmp/sysroot/etc/ssh/ssh_host_ecdsa_key
+#HostKey /data/local/tmp/sysroot/etc/ssh/ssh_host_ed25519_key
 
 # Ciphers and keying
 #RekeyLimit default none
@@ -32,20 +32,15 @@ HostKey /data/local/tmp/sysroot/etc/ssh/ssh_host_ed25519_key
 
 #LoginGraceTime 2m
 #PermitRootLogin prohibit-password
-#
-
-# StrictModes must be disabled because /data is NOT owned by the user running the sshd
-# 
-StrictModes no
-
+#StrictModes yes
 #MaxAuthTries 6
 #MaxSessions 10
 
-PubkeyAuthentication yes
+#PubkeyAuthentication yes
 
 # The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
 # but this is overridden so installations will only check .ssh/authorized_keys
-AuthorizedKeysFile	/data/local/tmp/sysroot/etc/ssh/authorized_keys
+AuthorizedKeysFile	.ssh/authorized_keys
 
 #AuthorizedPrincipalsFile none
 
@@ -60,11 +55,13 @@ AuthorizedKeysFile	/data/local/tmp/sysroot/etc/ssh/authorized_keys
 # Don't read the user's ~/.rhosts and ~/.shosts files
 #IgnoreRhosts yes
 
-# To disable tunneled clear text passwords, change to no here!
-PasswordAuthentication yes
+# To disable tunneled clear text passwords, change to "no" here!
+#PasswordAuthentication yes
 #PermitEmptyPasswords no
 
-# Change to no to disable s/key passwords
+# Change to "no" to disable keyboard-interactive authentication.  Depending on
+# the system's configuration, this may involve passwords, challenge-response,
+# one-time passwords or some combination of these and other methods.
 #KbdInteractiveAuthentication yes
 
 # Kerberos options
