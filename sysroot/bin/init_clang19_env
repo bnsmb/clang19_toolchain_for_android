@@ -102,12 +102,20 @@
 #    added the environment variable IGNORE_GCC_TOOLCHAIN to ignore the gcc toolchain
 #    renamed the parameter "no_gcc_dir" with "ignoregcc"
 #
+#  15.06.2026 v1.5.15 /bs
+#    the script now prints a summary of all warnings at script end
+#    the script now prints also the contents of the variable GCC if gcc was found and not disabled
+#
 __TRUE=0
 __FALSE=1
 
 STANDALONE_SCRIPT=${__FALSE}
 
 CONTINUE=${__TRUE}
+
+# list of warning messages to print a script end
+#
+WARNING_MESSAGES=""
 
 if [ ${CONTINUE} = ${__TRUE} ] ; then
 
@@ -250,7 +258,19 @@ function clear_aliase {
     unalias ${CUR_ALIAS}
   done
 }
-  
+
+# ---------------------------------------------------------------------
+
+function print_warning {
+  typeset CUR_WARNING="$*"
+
+  WARNING_MESSAGES="${WARNING_MESSAGES}
+${CUR_WARNING}"    
+
+   echo "${CUR_WARNING}"
+
+}
+
 # ---------------------------------------------------------------------
 # main function starts here
 #
@@ -313,8 +333,8 @@ EOT
         ;;
 
       norootcheck | no_rootcheck | no_root_check )
-	CHECK_ROOT_ACCESS=${__FALSE}
-	;;
+        CHECK_ROOT_ACCESS=${__FALSE}
+        ;;
 
       examples | example | ex )
         PRINT_EXAMPLES=${__TRUE}
@@ -421,6 +441,8 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   add_library_path "${CLANG_SYSROOT}/usr/lib"
 
+# ---------------------------------------------------------------------
+#
 # check if the gcc is part of this version of the clang19 toolchain
 #
   GCC=""
@@ -429,17 +451,17 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
       add_path "${GCC_BIN_DIR}"
 
       [ -x "${GCC_BIN_DIR}/gcc" ] && GCC="${GCC_BIN_DIR}/gcc" 
-
     else
       echo "No GCC toolchain found"
     fi
   else
     echo "Adding the GCC toolchain to the path is disabled"
   fi
+fi
+
+# ---------------------------------------------------------------------
 
   export HOME TERMINFO PATH LD_LIBRARY_PATH MAN_PATH
-
-fi
 
 # ---------------------------------------------------------------------
 
@@ -505,7 +527,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     if [[  "${USER_COMMAND}"x = ""x ]] ; then
       echo
       echo "*******************************************************************************************"
-      echo " WARNING: The script $0 must be sourced in "
+      print_warning "WARNING: The script $0 must be sourced in "
       echo "*******************************************************************************************"
       echo
     fi
@@ -547,7 +569,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
       SYSROOT_CONFIGURE_OPTION="--sysroot ${SYSROOT}"
 
     else
-      echo "WARNING: The sysroot directory ${SYSROOT} does not exist"
+      print_warning "WARNING: The sysroot directory ${SYSROOT} does not exist"
     fi
   fi
 
@@ -609,7 +631,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     echo ":${PATH}:" | grep ":${CUR_DIR}:" >/dev/null
     if [ $? -ne 0 ] ; then
       if ! ${TEST} -d "${CUR_DIR}" ; then
-        echo "WARNING: The directory with binaries \"${CUR_DIR}\" does not exist"
+        print_warning "WARNING: The directory with binaries \"${CUR_DIR}\" does not exist"
       fi
       [[ :${PATH}: != *:${CUR_DIR}: ]] && PATH="${CUR_DIR}:${PATH}"
     fi
@@ -618,7 +640,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
  
   for CUR_DIR in ${INCLUDE_DIRS} ; do
     if ! ${TEST} -d "${CUR_DIR}" ; then
-      echo "WARNING: The directory with include files \"${CUR_DIR}\" does not exist"
+      print_warning "WARNING: The directory with include files \"${CUR_DIR}\" does not exist"
     fi
 
     add_option   CFLAGS "-I${CUR_DIR} "
@@ -627,10 +649,9 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   done
 
- 
   for CUR_DIR in ${LIB_DIRS} ; do
     if ! ${TEST} -d "${CUR_DIR}" ; then
-      echo "WARNING: The directory with libraries \"${CUR_DIR}\" does not exist"
+      print_warning "WARNING: The directory with libraries \"${CUR_DIR}\" does not exist"
     fi
 
     add_option LDFLAGS "-L${CUR_DIR} "
@@ -640,7 +661,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   for CUR_DIR in ${OBJ_DIRS} ; do
     if ! ${TEST} -d "${CUR_DIR}" ; then
-      echo "WARNING: The directory with object files \"${CUR_DIR}\" does not exist"
+      print_warning "WARNING: The directory with object files \"${CUR_DIR}\" does not exist"
     fi
 
     add_option LDFLAGS "-B${CUR_DIR}/ "
@@ -710,8 +731,10 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "LDFLAGS are now:"         "${LDFLAGS}"
   printf "\n"
 
-  for CUR_VAR in CC CXX CPP CXXCPP AR AS LD RANLIB STRIP PKG_CONFIG PKG_CONFIG_PATH ; do
+  for CUR_VAR in CC CXX CPP CXXCPP AR AS LD RANLIB STRIP GCC PKG_CONFIG PKG_CONFIG_PATH  ; do
     eval CUR_VALUE="\$$CUR_VAR"
+    [ "${CUR_VALUE}"x = ""x ] && continue
+    
     printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "${CUR_VAR} is now:" "${CUR_VALUE}"
   done
  
@@ -723,7 +746,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
         export TMP="/data/local/tmp"
         printf "%-${CUR_VAR_NAME_FIELD_LENGTH}s %s\n" "TMP is now:"         "${TMP}"
       else
-        echo "WARNING: The directories /tmp and /data/local/tmp do not exist - please set the variable TMP before using clang"
+        print_warning "WARNING: The directories /tmp and /data/local/tmp do not exist - please set the variable TMP before using clang"
       fi
     fi
   fi 
@@ -734,14 +757,11 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   THISRC=$?
   echo
   if [ ${THISRC} != 0 ] ; then
-    echo "WARNING: Executing \"${CLANG} --version\" ended with RC=${THISRC}"
+    print_warning "WARNING: Executing \"${CLANG} --version\" ended with RC=${THISRC}"
   fi
 
-  
   if [ $API -lt 30 ] ; then
-    echo
-    echo "WARNING: Compling C++ program using API version less then 30 with clang/clang++ will probably not work"
-    echo 
+    print_warning "WARNING: The current API version is ${API} -- compiling C++ program using API version less then 30 with clang or clang++ will probably not work"
   fi
 
   if [ "${GCC}"x != ""x ] ; then
@@ -751,7 +771,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     THISRC=$?
     echo
     if [ ${THISRC} != 0 ] ; then
-      echo "WARNING: Executing \"${GCC} --version\" ended with RC=${THISRC}"
+      print_warning "WARNING: Executing \"${GCC} --version\" ended with RC=${THISRC}"
     fi
   else
     if [ ${IGNORE_GCC_TOOLCHAIN} = ${__FALSE} ] ; then
@@ -833,7 +853,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     echo "Setting the variable \"SSL_CERT_FILE\" to \"${DEFAULT_SSL_CERT_FILE}\" ..."
     export SSL_CERT_FILE=${DEFAULT_SSL_CERT_FILE}
   else
-    echo "WARNING: Certificate file \"${DEFAULT_SSL_CERT_FILE}\" not found "
+    print_warning "WARNING: Certificate file \"${DEFAULT_SSL_CERT_FILE}\" not found "
   fi
 
   echo "$PS1" | grep "\[clang19" 2>/dev/null >/dev/null || export PS1="[clang19 toolchain] $PS1" 
@@ -943,3 +963,14 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   fi
 fi
 
+if [ ${CONTINUE} = ${__TRUE} ] ; then
+
+  if [ "${WARNING_MESSAGES}"x != ""x ] ; then
+    echo "
+Issues found while initializing the environment:
+
+${WARNING_MESSAGES}
+
+"
+  fi
+fi
