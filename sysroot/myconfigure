@@ -2,6 +2,18 @@
 #
 #
 
+APP="$( echo $PWD | awk -F/ '{ print $NF}' | cut -f1 -d"-" )"
+
+# APP="openvpn"
+
+# default target directory used by "make install"
+#
+TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
+
+#TARGET_ROOT="/data/local/tmp/sysroot"
+#
+echo "Configuring \"${APP}\" for the target root \"${TARGET_ROOT}\" ..."
+
 DEBUG_CFLAGS=""
 
 # use these additional CFLAGs for binaries that should be executed using a debugger like gdb
@@ -30,15 +42,40 @@ CXXFLAGS="${CFLAGS}"
 # add additional configure options here
 #
 CONFIGURE_OPTIONS="
-"
 
-# default target directory used by "make install"
-#
-TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
+  --prefix=${TARGET_ROOT}/usr 
+  --exec-prefix=${TARGET_ROOT}/usr 
+
+  --bindir=${TARGET_ROOT}/usr/bin 
+
+  --sbindir=${TARGET_ROOT}/usr/bin
+  --libexecdir=${TARGET_ROOT}/usr/libexec
+  --sysconfdir=${TARGET_ROOT}/etc
+  --sharedstatedir=${TARGET_ROOT}/usr/share/com
+  --localstatedir=${TARGET_ROOT}/var
+  --runstatedir=${TARGET_ROOT}/usr/run
+  --libdir=${TARGET_ROOT}/usr/lib
+  --includedir=${TARGET_ROOT}/usr/include
+  --oldincludedir=${TARGET_ROOT}/usr/include
+  --datarootdir=${TARGET_ROOT}/usr/share
+  --datadir=${TARGET_ROOT}/usr/share
+  --infodir=${TARGET_ROOT}/usr/share/info
+  --localedir=${TARGET_ROOT}/usr/share/locale
+  --mandir=${TARGET_ROOT}/usr/share/man
+  --docdir=${TARGET_ROOT}/usr/share/doc/${APP}
+  --htmldir=${TARGET_ROOT}/usr/share/doc/${APP}
+  --dvidir=${TARGET_ROOT}/usr/share/doc/${APP}
+  --pdfdir=${TARGET_ROOT}/usr/share/doc/${APP}
+  --psdir=${TARGET_ROOT}/usr/share/doc/${APP}
+"
 
 #
 # set PREFIX to "echo" or something similar before calling this script to run it in dry-run mode
 #
-${PREFIX}  ./configure  --prefix=${TARGET_ROOT}/usr/ CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" ${CONFIGURE_OPTIONS} $* 
+${PREFIX}  ./configure  CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" ${CONFIGURE_OPTIONS} $* 
+THISRC=$?
+
+echo
+echo "Configuring \"${APP}\" for the target root \"${TARGET_ROOT}\" ended with RC=${THISRC}"
 
 
