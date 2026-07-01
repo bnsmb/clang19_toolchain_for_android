@@ -181,7 +181,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # mtr 0.96
 # ngrep 1.48.3
 # 
-# nano 9.0, 8.7.1, and nano 6.4 
+# nano 9.1, 9.0, 8.7.1, and nano 6.4 
 # vim 9.2
 # ed 1.21
 # bvi /bmore 1.5.0 (a hex editor)
@@ -548,4 +548,5 @@ History
     added bpftool 5.16.0
     updated htop to version 3.5,1
     updated curl to version 8.2.1
+    added nano 9.1
 
