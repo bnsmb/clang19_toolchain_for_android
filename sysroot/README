@@ -547,4 +547,5 @@ History
     updated OpenSSH to version 10.3p1 with OpenSSL 3.5.7 (the ssh binaries now use only the HOME variable to detect the home directory)
     added bpftool 5.16.0
     updated htop to version 3.5,1
+    updated curl to version 8.2.1
 
