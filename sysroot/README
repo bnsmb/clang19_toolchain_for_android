@@ -157,7 +157,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # 
 # gdb 17.2 (dynamically and statically linked binaries)
 # 
-# rsync 3.4.1 
+# rsync 3.4.4
 # 
 # wget 2.2.0
 # curl 8.19.0
@@ -169,8 +169,8 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # lua 5.4.8
 # sqlite3 3.51.1
 # 
-# sshd/ssh 10.0p2 
-# OpenSSL 3.5.6 and 4.0.0
+# sshd/ssh 10.3p1
+# OpenSSL 3.5.7 and 4.0.0
 # 
 # git 2.49
 # git-lfs 3.7.1
@@ -538,4 +538,13 @@ History
     moved the binaries from the package mandoc (https://mandoc.bsd.lv/) to ./sysroot/usr/mandoc
     added the parameter "norootcheck" to the script bin/init_clang19_env to disable the check for root access
     added code to check the gcc compiler to the script bin/init_clang19_env
+
+  21.09.2026 v2.1.0 beta /bs
+    updated lmm to version 4.0.0
+    updated rsync to version 3.4.4 with OpenSSL 3.5.7
+    updated OpenSSL 3.5.x to version 3.5.7
+    relinked OpenVPN 2.7.4 with OpenSSL 3.5.7
+    updated OpenSSH to version 10.3p1 with OpenSSL 3.5.7 (the ssh binaries now use only the HOME variable to detect the home directory)
+    added bpftool 5.16.0
+    updated htop to version 3.5,1
 
