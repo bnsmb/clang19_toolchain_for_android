@@ -47,6 +47,8 @@ find var/cache -type f -exec \rm {} +
 
 \rm -rf ./home/shell/.ssh/known_hosts
 \rm -rf ./etc/ssh/ssh_config.d/*
+\rm -f  ./etc/ssh/ssh_config
+\rm -f  ./etc/ssh/sshd_config
 
 
 \rm -rf home/

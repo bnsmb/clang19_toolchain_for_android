@@ -28,6 +28,9 @@
 #     added code to create necessary directories if they are missing
 #   08.06.2026 1.3.6 /bs
 #     added the directories ./var/cache ./var/cache/man  to the list of directories to create
+#   09.07.2026 1.3.7 Bs
+#     the script now copies ./etc/ssh/sshd_config.new to ./etc/ssh/sshd_config if that file does not existi (./etc/ssh/sshd_config is deleted by the cleanup script for "release" and "dev" tar files now)
+#     the script now copies ./etc/ssh/ssh_config.new to ./etc/ssh/ssh_config if that file does not exist (./etc/ssh/ssh_config is deleted by the cleanup script for "release" and "dev" tar files now)  
 #
 #
 
@@ -475,6 +478,17 @@ if [ ${ROOT_ACCESS_AVAILABLE} = ${__TRUE} ] ; then
     LogMsg "Changing the owner of the directory \"/data/local/tmp/sysroot/var/empty\" to \"root\" ..."
   fi
 fi
+
+if [ -r ${SYSROOT_DIR}/etc/ssh/sshd_config.new -a ! -r  ${SYSROOT_DIR}/etc/ssh/sshd_config ] ; then
+  LogMsg "Creating the file \"${SYSROOT_DIR}/etc/ssh/sshd_config\" ..." 
+  cp ${SYSROOT_DIR}/etc/ssh/sshd_config.new ${SYSROOT_DIR}/etc/ssh/sshd_config
+fi
+
+if [ -r ${SYSROOT_DIR}/etc/ssh/ssh_config.new -a ! -r  ${SYSROOT_DIR}/etc/ssh/ssh_config ] ; then
+  LogMsg "Creating the file \"${SYSROOT_DIR}/etc/ssh/ssh_config\" ..."
+  cp ${SYSROOT_DIR}/etc/ssh/ssh_config.new ${SYSROOT_DIR}/etc/ssh/ssh_config
+fi
+
 
 if [ -x ${SYSROOT_DIR}/create_ssh_env.sh ] ; then
   LogMsg ""

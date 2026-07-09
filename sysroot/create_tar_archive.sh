@@ -39,6 +39,7 @@ TAR_FILE_TIMESTAMP="$( echo "${TAR_FILE_HIST_LINE}" | awk '{ print $1 }' )"
 
 TAR_COMPRESS_OPTION=""
 
+
 if [ "$1"x = "release"x ] ; then
   POSTFIX="_release_${TAR_FILE_TIMESTAMP}_"
   
@@ -48,6 +49,8 @@ if [ "$1"x = "release"x ] ; then
 
 elif [ "$1"x = "develop"x -o "$1"x = "dev"x -o "$1"x = "devel"x ] ; then
   POSTFIX="_dev_${TAR_FILE_TIMESTAMP}_"
+   ${SYSROOT_DIR}/clean_env.sh -x
+
 elif [ $# -ne 0 ] ; then
   POSTFIX="_$( date +%Y-%m-%d )_$( echo $* | tr " " "_" )_"
 else
