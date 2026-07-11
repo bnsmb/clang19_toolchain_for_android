@@ -170,7 +170,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # sqlite3 3.51.1
 # 
 # sshd/ssh 10.3p1
-# OpenSSL 3.5.7 and 4.0.0
+# OpenSSL 3.5.7 and 4.0.1
 # 
 # git 2.49
 # git-lfs 3.7.1
@@ -550,5 +550,5 @@ History
     updated curl to version 8.2.1
     added nano 9.1
     the files etc/ssh/ssh_config and etc/ssh/sshd_config are now deleted by the script clean_env.sh for 'release' and 'dev' tar files and created again by the script create_clang_env.sh using the *.new files
-
+    updated OpenSSL to version 4.0.1
 
