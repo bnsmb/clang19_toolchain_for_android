@@ -207,6 +207,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # htop 3.4.1
 # btop 1.4.4 (btop needs root access)
 # strace 6.18
+# ltrace 0.8.1
 # 
 # Android SDK build tools 35.0.2 (aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs hprof-conv etc1tool mke2fs make_f2fs adb make_f2fs_casefold veridex)
 #   in the directories /data/local/tmp//usr/androidsdk35_0_2/*-tools 
@@ -551,4 +552,5 @@ History
     added nano 9.1
     the files etc/ssh/ssh_config and etc/ssh/sshd_config are now deleted by the script clean_env.sh for 'release' and 'dev' tar files and created again by the script create_clang_env.sh using the *.new files
     updated OpenSSL to version 4.0.1
+    added ltrace 0.8.1
 
