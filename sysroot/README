@@ -553,4 +553,4 @@ History
     the files etc/ssh/ssh_config and etc/ssh/sshd_config are now deleted by the script clean_env.sh for 'release' and 'dev' tar files and created again by the script create_clang_env.sh using the *.new files
     updated OpenSSL to version 4.0.1
     added ltrace 0.8.1
-
+    added bat 0.26.1 (https://github.com/sharkdp/bat; a better replacement for cat)
