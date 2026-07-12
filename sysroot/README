@@ -186,6 +186,9 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # ed 1.21
 # bvi /bmore 1.5.0 (a hex editor)
 # hexcurse 1.60.0 (a hex editor)
+# bat 0.26.1 (xhttps://github.com/sharkdp/bat; a better replacement for cat)
+# exa 0.10.1 (https://github.com/ogham/exa, a better replacement for ls)
+
 # 
 # man 2.13
 # 
@@ -554,3 +557,5 @@ History
     updated OpenSSL to version 4.0.1
     added ltrace 0.8.1
     added bat 0.26.1 (https://github.com/sharkdp/bat; a better replacement for cat)
+    added exa 0.10.1 (https://github.com/ogham/exa, a better replacement for ls)
+
