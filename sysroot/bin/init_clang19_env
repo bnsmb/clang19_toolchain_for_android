@@ -106,6 +106,10 @@
 #    the script now prints a summary of all warnings at script end
 #    the script now prints also the contents of the variable GCC if gcc was found and not disabled
 #
+#  12.07.2026 v1.5.16 /bs
+#    added the alias update_config_guess to update config.guess and config.sub in the current directory
+#
+#
 __TRUE=0
 __FALSE=1
 
@@ -795,6 +799,8 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   alias addlib='LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/local/tmp/develop/sysroot/usr/lib '
 
   alias cp_crt_libs='cp ${NDK_DIR}/sysroot/usr/lib/${CPU_TYPE}-linux-android/${API}/crt*.o .'
+
+  alias update_config_guess='wget https://raw.githubusercontent.com/gcc-mirror/gcc/master/config.guess -O config.guess ; wget https://raw.githubusercontent.com/gcc-mirror/gcc/master/config.sub -O config.sub'
 
   alias gdb="gdb -tui "
 
