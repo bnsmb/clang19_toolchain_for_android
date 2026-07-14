@@ -566,7 +566,6 @@ History
     updated OpenSSL to version 4.0.1
     added ltrace 0.8.1
     added bat 0.26.1 (https://github.com/sharkdp/bat; a better replacement for cat)
-    added exa 0.10.1 (https://github.com/ogham/exa, a better replacement for ls)
     added ripgrep 15.1.0 (rg) (https://github.com/BurntSushi/ripgrep, a recursively searching grep)
     added fd 10.4.2 (https://github.com/sharkdp/fd, a replacement for fd)
     added procs 0.14.12 (https://github.com/dalance/procs, a replacement for ps)
