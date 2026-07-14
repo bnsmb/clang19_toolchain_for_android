@@ -187,11 +187,6 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # ed 1.21
 # bvi /bmore 1.5.0 (a hex editor)
 # hexcurse 1.60.0 (a hex editor)
-# bat 0.26.1 (https://github.com/sharkdp/bat; a better replacement for cat)
-# exa 0.10.1 (https://github.com/ogham/exa, a better replacement for ls)
-# ripgrep 15.1.0 (https://github.com/BurntSushi/ripgrep/, a replacement for recursive grep)
-# fd 10.4.2 (https://github.com/sharkdp/fd, a replacement for find)
-
 # 
 # man 2.13
 # 
@@ -215,9 +210,12 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # strace 6.18
 # ltrace 0.8.1
 # 
-# Android SDK build tools 35.0.2 (aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs hprof-conv etc1tool mke2fs make_f2fs adb make_f2fs_casefold veridex)
-#   in the directories /data/local/tmp//usr/androidsdk35_0_2/*-tools 
-#   (the binaries are from this ZIP file: https://github.com/lzhiyong/android-sdk-tools/releases/download/35.0.2/android-sdk-tools-static-aarch64.zip)
+# Android SDK build tools 35.0.2:
+#   aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs 
+#   hprof-conv etc1tool mke2fs make_f2fs adb make_f2fs_casefold veridex)
+# in the directories /data/local/tmp//usr/androidsdk35_0_2/*-tools 
+# (the binaries are from this ZIP file: 
+#    https://github.com/lzhiyong/android-sdk-tools/releases/download/35.0.2/android-sdk-tools-static-aarch64.zip)
 #
 # OpenVPN 2.7.4 (openvpn requires root access)
 # stunnel 5.77  (Stunnel is a proxy designed to add TLS encryption functionality to existing clients and servers without any changes in the programs code, https://www.stunnel.org/)
@@ -245,7 +243,15 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # unrar 7.20 beta 2 
 # lzip 1.25
 #
-
+# and some tools written Rust as replacement for existing Unix tools:
+#
+# bat 0.26.1 (https://github.com/sharkdp/bat; a better replacement for cat)
+# exa 0.10.1 (https://github.com/ogham/exa, a better replacement for ls)
+# ripgrep 15.1.0 (https://github.com/BurntSushi/ripgrep/, a replacement for recursive grep)
+# fd 10.4.2 (https://github.com/sharkdp/fd, a replacement for find)
+# procs 0.14.12 (https://github.com/dalance/procs, a replacement for ps)
+# dust 1.2.4 (https://github.com/bootandy/dust, a replacement for du)
+# eza 0.23.5 (https://github.com/eza-community/eza, a replacement for ls) 
 
 Notes
 
