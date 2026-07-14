@@ -246,7 +246,6 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # and some tools written Rust as replacement for existing Unix tools:
 #
 # bat 0.26.1 (https://github.com/sharkdp/bat; a better replacement for cat)
-# exa 0.10.1 (https://github.com/ogham/exa, a better replacement for ls)
 # ripgrep 15.1.0 (https://github.com/BurntSushi/ripgrep/, a replacement for recursive grep)
 # fd 10.4.2 (https://github.com/sharkdp/fd, a replacement for find)
 # procs 0.14.12 (https://github.com/dalance/procs, a replacement for ps)
