@@ -566,4 +566,5 @@ History
     added procs 0.14.12 (https://github.com/dalance/procs, a replacement for ps)
     added dust 1.2.4 (https://github.com/bootandy/dust, a replacement for du)
     added gitui 0.28.1 (https://github.com/gitui-org/gitui, a textmode GUI for git commands)
+    added eza 0.23.5 (https://github.com/eza-community/eza, a replacement for ls)
 
