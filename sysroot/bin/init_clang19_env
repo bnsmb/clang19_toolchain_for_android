@@ -109,7 +109,6 @@
 #  12.07.2026 v1.5.16 /bs
 #    added the alias update_config_guess to update config.guess and config.sub in the current directory
 #    added the alias ll=exa
-#    added the alias cat=bat
 #
 #
 #
@@ -807,8 +806,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   alias gdb="gdb -tui "
 
-  [ -x ${CLANG_SYSROOT}/usr/bin/bat ] && alias cat="${CLANG_SYSROOT}/usr/bin/bat"
-  [ -x ${CLANG_SYSROOT}/usr/bin/exa ] && alias ll="${CLANG_SYSROOT}/usr/bin/exa"
+  [ -x ${CLANG_SYSROOT}/usr/bin/eza ] && alias ll="${CLANG_SYSROOT}/usr/bin/eza"
 
   define_aliase
 
