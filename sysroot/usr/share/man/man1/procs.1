@@ -1,0 +1,836 @@
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+.TH procs 1  "procs " 
+.SH NAME
+procs \- A modern replacement for ps
+.SH SYNOPSIS
+\fBprocs\fR [\fB\-\-text\fR] [\fB\-\-regex\fR] [\fB\-\-smart\fR] [\fB\-a\fR|\fB\-\-and\fR] [\fB\-o\fR|\fB\-\-or\fR] [\fB\-d\fR|\fB\-\-nand\fR] [\fB\-r\fR|\fB\-\-nor\fR] [\fB\-l\fR|\fB\-\-list\fR] [\fB\-\-thread\fR] [\fB\-t\fR|\fB\-\-tree\fR] [\fB\-w\fR|\fB\-\-watch\fR] [\fB\-W\fR|\fB\-\-watch\-interval\fR] [\fB\-i\fR|\fB\-\-insert\fR] [\fB\-\-only\fR] [\fB\-\-sorta\fR] [\fB\-\-sortd\fR] [\fB\-c\fR|\fB\-\-color\fR] [\fB\-\-theme\fR] [\fB\-p\fR|\fB\-\-pager\fR] [\fB\-\-json\fR] [\fB\-\-interval\fR] [\fB\-\-use\-config\fR] [\fB\-\-load\-config\fR] [\fB\-\-gen\-config\fR] [\fB\-\-gen\-completion\fR] [\fB\-\-gen\-completion\-out\fR] [\fB\-\-gen\-man\-page\fR] [\fB\-\-no\-header\fR] [\fB\-\-procfs\fR] [\fB\-h\fR|\fB\-\-help\fR] [\fB\-V\fR|\fB\-\-version\fR] [\fIKEYWORD\fR] 
+.SH DESCRIPTION
+A modern replacement for ps
+.PP
+please see https://github.com/dalance/procs#configuration to configure columns
+.SH OPTIONS
+.TP
+\fB\-\-text\fR
+Use plain text search mode (default)
+.TP
+\fB\-\-regex\fR
+Use regex search mode (single PATTERN)
+.TP
+\fB\-\-smart\fR
+Use smart mode (auto\-detect regex syntax)
+.TP
+\fB\-a\fR, \fB\-\-and\fR
+AND  logic for multi\-keyword
+.TP
+\fB\-o\fR, \fB\-\-or\fR
+OR   logic for multi\-keyword
+.TP
+\fB\-d\fR, \fB\-\-nand\fR
+NAND logic for multi\-keyword
+.TP
+\fB\-r\fR, \fB\-\-nor\fR
+NOR  logic for multi\-keyword
+.TP
+\fB\-l\fR, \fB\-\-list\fR
+Show list of kind
+.TP
+\fB\-\-thread\fR
+Show thread
+.TP
+\fB\-t\fR, \fB\-\-tree\fR
+Tree view
+.TP
+\fB\-w\fR, \fB\-\-watch\fR
+Watch mode with default interval (1s)
+.TP
+\fB\-W\fR, \fB\-\-watch\-interval\fR \fI<second>\fR
+Watch mode with custom interval
+.TP
+\fB\-i\fR, \fB\-\-insert\fR \fI<kind>\fR
+Insert column to slot
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+ccgroup: Control group by compressed format
+.IP \(bu 2
+cgroup: Control group
+.IP \(bu 2
+command: Command with all arguments
+.IP \(bu 2
+contextsw: Context switch count
+.IP \(bu 2
+voluntarycontextsw: Voluntary context switch count
+.IP \(bu 2
+involuntarycontextsw: Involuntary context switch count
+.IP \(bu 2
+cputime: Cumulative CPU time
+.IP \(bu 2
+docker: Docker container name
+.IP \(bu 2
+eip: Instruction pointer
+.IP \(bu 2
+elapsedtime: Elapsed time
+.IP \(bu 2
+empty: Empty
+.IP \(bu 2
+env: Environment variables
+.IP \(bu 2
+esp: Stack pointer
+.IP \(bu 2
+filename: File name
+.IP \(bu 2
+gid: Group ID
+.IP \(bu 2
+gidfs: File system group ID
+.IP \(bu 2
+gidreal: Real group ID
+.IP \(bu 2
+gidsaved: Saved group ID
+.IP \(bu 2
+group: Group name
+.IP \(bu 2
+groupfs: File system group name
+.IP \(bu 2
+groupreal: Real group name
+.IP \(bu 2
+groupsaved: Saved group name
+.IP \(bu 2
+majflt: Major page fault count
+.IP \(bu 2
+minflt: Minor page fault count
+.IP \(bu 2
+multislot: Slot for `\-\-insert` option
+.IP \(bu 2
+nice: Nice value
+.IP \(bu 2
+pgid: Process group ID
+.IP \(bu 2
+pid: Process ID
+.IP \(bu 2
+policy: Scheduling policy
+.IP \(bu 2
+ppid: Parent process ID
+.IP \(bu 2
+priority: Priority
+.IP \(bu 2
+processor: Currently assigned processor
+.IP \(bu 2
+readbytes: Read bytes from storage
+.IP \(bu 2
+rtpriority: Real\-time priority
+.IP \(bu 2
+seccontext: Security context
+.IP \(bu 2
+separator: Show | for column separation
+.IP \(bu 2
+session: Process Session ID
+.IP \(bu 2
+shdpnd: Pending signal mask for process
+.IP \(bu 2
+slot: Slot for `\-\-insert` option
+.IP \(bu 2
+sigblk: Blocked signal mask
+.IP \(bu 2
+sigcgt: Caught signal mask
+.IP \(bu 2
+sigign: Ignored signal mask
+.IP \(bu 2
+sigpnd: Pending signal mask for thread
+.IP \(bu 2
+ssb: Speculative store bypass status
+.IP \(bu 2
+starttime: Starting time
+.IP \(bu 2
+state: Process state
+.IP \(bu 2
+tcpport: Bound TCP ports
+.IP \(bu 2
+threads: Thread count
+.IP \(bu 2
+treeslot: Slot for tree column
+.IP \(bu 2
+tty: Controlling TTY
+.IP \(bu 2
+udpport: Bound UDP ports
+.IP \(bu 2
+uid: User ID
+.IP \(bu 2
+uidfs: File system user ID
+.IP \(bu 2
+uidlogin: Login user ID
+.IP \(bu 2
+uidreal: Real user ID
+.IP \(bu 2
+uidsaved: Saved user ID
+.IP \(bu 2
+usagecpu: CPU utilization
+.IP \(bu 2
+usagemem: Memory utilization
+.IP \(bu 2
+user: User name
+.IP \(bu 2
+userfs: File system user name
+.IP \(bu 2
+userlogin: Login user name
+.IP \(bu 2
+userreal: Real user name
+.IP \(bu 2
+usersaved: Saved user name
+.IP \(bu 2
+vmdata: Data size
+.IP \(bu 2
+vmexe: Text segments size
+.IP \(bu 2
+vmhwm: Peak resident set size
+.IP \(bu 2
+vmlib: Library code size
+.IP \(bu 2
+vmlock: Locked memory size
+.IP \(bu 2
+vmpeak: Peak virtual memory size
+.IP \(bu 2
+vmpin: Pinned memory size
+.IP \(bu 2
+vmpte: Page table entries size
+.IP \(bu 2
+vmrss: Resident set size
+.IP \(bu 2
+vmsize: Physical page size
+.IP \(bu 2
+vmstack: Stack size
+.IP \(bu 2
+vmswap: Swapped\-out virtual memory size
+.IP \(bu 2
+wchan: Process sleeping kernel function
+.IP \(bu 2
+workdir: Current working directory
+.IP \(bu 2
+writebytes: Write bytes to storage
+.RE
+.TP
+\fB\-\-only\fR \fI<kind>\fR
+Specified column only
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+ccgroup: Control group by compressed format
+.IP \(bu 2
+cgroup: Control group
+.IP \(bu 2
+command: Command with all arguments
+.IP \(bu 2
+contextsw: Context switch count
+.IP \(bu 2
+voluntarycontextsw: Voluntary context switch count
+.IP \(bu 2
+involuntarycontextsw: Involuntary context switch count
+.IP \(bu 2
+cputime: Cumulative CPU time
+.IP \(bu 2
+docker: Docker container name
+.IP \(bu 2
+eip: Instruction pointer
+.IP \(bu 2
+elapsedtime: Elapsed time
+.IP \(bu 2
+empty: Empty
+.IP \(bu 2
+env: Environment variables
+.IP \(bu 2
+esp: Stack pointer
+.IP \(bu 2
+filename: File name
+.IP \(bu 2
+gid: Group ID
+.IP \(bu 2
+gidfs: File system group ID
+.IP \(bu 2
+gidreal: Real group ID
+.IP \(bu 2
+gidsaved: Saved group ID
+.IP \(bu 2
+group: Group name
+.IP \(bu 2
+groupfs: File system group name
+.IP \(bu 2
+groupreal: Real group name
+.IP \(bu 2
+groupsaved: Saved group name
+.IP \(bu 2
+majflt: Major page fault count
+.IP \(bu 2
+minflt: Minor page fault count
+.IP \(bu 2
+multislot: Slot for `\-\-insert` option
+.IP \(bu 2
+nice: Nice value
+.IP \(bu 2
+pgid: Process group ID
+.IP \(bu 2
+pid: Process ID
+.IP \(bu 2
+policy: Scheduling policy
+.IP \(bu 2
+ppid: Parent process ID
+.IP \(bu 2
+priority: Priority
+.IP \(bu 2
+processor: Currently assigned processor
+.IP \(bu 2
+readbytes: Read bytes from storage
+.IP \(bu 2
+rtpriority: Real\-time priority
+.IP \(bu 2
+seccontext: Security context
+.IP \(bu 2
+separator: Show | for column separation
+.IP \(bu 2
+session: Process Session ID
+.IP \(bu 2
+shdpnd: Pending signal mask for process
+.IP \(bu 2
+slot: Slot for `\-\-insert` option
+.IP \(bu 2
+sigblk: Blocked signal mask
+.IP \(bu 2
+sigcgt: Caught signal mask
+.IP \(bu 2
+sigign: Ignored signal mask
+.IP \(bu 2
+sigpnd: Pending signal mask for thread
+.IP \(bu 2
+ssb: Speculative store bypass status
+.IP \(bu 2
+starttime: Starting time
+.IP \(bu 2
+state: Process state
+.IP \(bu 2
+tcpport: Bound TCP ports
+.IP \(bu 2
+threads: Thread count
+.IP \(bu 2
+treeslot: Slot for tree column
+.IP \(bu 2
+tty: Controlling TTY
+.IP \(bu 2
+udpport: Bound UDP ports
+.IP \(bu 2
+uid: User ID
+.IP \(bu 2
+uidfs: File system user ID
+.IP \(bu 2
+uidlogin: Login user ID
+.IP \(bu 2
+uidreal: Real user ID
+.IP \(bu 2
+uidsaved: Saved user ID
+.IP \(bu 2
+usagecpu: CPU utilization
+.IP \(bu 2
+usagemem: Memory utilization
+.IP \(bu 2
+user: User name
+.IP \(bu 2
+userfs: File system user name
+.IP \(bu 2
+userlogin: Login user name
+.IP \(bu 2
+userreal: Real user name
+.IP \(bu 2
+usersaved: Saved user name
+.IP \(bu 2
+vmdata: Data size
+.IP \(bu 2
+vmexe: Text segments size
+.IP \(bu 2
+vmhwm: Peak resident set size
+.IP \(bu 2
+vmlib: Library code size
+.IP \(bu 2
+vmlock: Locked memory size
+.IP \(bu 2
+vmpeak: Peak virtual memory size
+.IP \(bu 2
+vmpin: Pinned memory size
+.IP \(bu 2
+vmpte: Page table entries size
+.IP \(bu 2
+vmrss: Resident set size
+.IP \(bu 2
+vmsize: Physical page size
+.IP \(bu 2
+vmstack: Stack size
+.IP \(bu 2
+vmswap: Swapped\-out virtual memory size
+.IP \(bu 2
+wchan: Process sleeping kernel function
+.IP \(bu 2
+workdir: Current working directory
+.IP \(bu 2
+writebytes: Write bytes to storage
+.RE
+.TP
+\fB\-\-sorta\fR \fI<kind>\fR
+Sort column by ascending
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+ccgroup: Control group by compressed format
+.IP \(bu 2
+cgroup: Control group
+.IP \(bu 2
+command: Command with all arguments
+.IP \(bu 2
+contextsw: Context switch count
+.IP \(bu 2
+voluntarycontextsw: Voluntary context switch count
+.IP \(bu 2
+involuntarycontextsw: Involuntary context switch count
+.IP \(bu 2
+cputime: Cumulative CPU time
+.IP \(bu 2
+docker: Docker container name
+.IP \(bu 2
+eip: Instruction pointer
+.IP \(bu 2
+elapsedtime: Elapsed time
+.IP \(bu 2
+empty: Empty
+.IP \(bu 2
+env: Environment variables
+.IP \(bu 2
+esp: Stack pointer
+.IP \(bu 2
+filename: File name
+.IP \(bu 2
+gid: Group ID
+.IP \(bu 2
+gidfs: File system group ID
+.IP \(bu 2
+gidreal: Real group ID
+.IP \(bu 2
+gidsaved: Saved group ID
+.IP \(bu 2
+group: Group name
+.IP \(bu 2
+groupfs: File system group name
+.IP \(bu 2
+groupreal: Real group name
+.IP \(bu 2
+groupsaved: Saved group name
+.IP \(bu 2
+majflt: Major page fault count
+.IP \(bu 2
+minflt: Minor page fault count
+.IP \(bu 2
+multislot: Slot for `\-\-insert` option
+.IP \(bu 2
+nice: Nice value
+.IP \(bu 2
+pgid: Process group ID
+.IP \(bu 2
+pid: Process ID
+.IP \(bu 2
+policy: Scheduling policy
+.IP \(bu 2
+ppid: Parent process ID
+.IP \(bu 2
+priority: Priority
+.IP \(bu 2
+processor: Currently assigned processor
+.IP \(bu 2
+readbytes: Read bytes from storage
+.IP \(bu 2
+rtpriority: Real\-time priority
+.IP \(bu 2
+seccontext: Security context
+.IP \(bu 2
+separator: Show | for column separation
+.IP \(bu 2
+session: Process Session ID
+.IP \(bu 2
+shdpnd: Pending signal mask for process
+.IP \(bu 2
+slot: Slot for `\-\-insert` option
+.IP \(bu 2
+sigblk: Blocked signal mask
+.IP \(bu 2
+sigcgt: Caught signal mask
+.IP \(bu 2
+sigign: Ignored signal mask
+.IP \(bu 2
+sigpnd: Pending signal mask for thread
+.IP \(bu 2
+ssb: Speculative store bypass status
+.IP \(bu 2
+starttime: Starting time
+.IP \(bu 2
+state: Process state
+.IP \(bu 2
+tcpport: Bound TCP ports
+.IP \(bu 2
+threads: Thread count
+.IP \(bu 2
+treeslot: Slot for tree column
+.IP \(bu 2
+tty: Controlling TTY
+.IP \(bu 2
+udpport: Bound UDP ports
+.IP \(bu 2
+uid: User ID
+.IP \(bu 2
+uidfs: File system user ID
+.IP \(bu 2
+uidlogin: Login user ID
+.IP \(bu 2
+uidreal: Real user ID
+.IP \(bu 2
+uidsaved: Saved user ID
+.IP \(bu 2
+usagecpu: CPU utilization
+.IP \(bu 2
+usagemem: Memory utilization
+.IP \(bu 2
+user: User name
+.IP \(bu 2
+userfs: File system user name
+.IP \(bu 2
+userlogin: Login user name
+.IP \(bu 2
+userreal: Real user name
+.IP \(bu 2
+usersaved: Saved user name
+.IP \(bu 2
+vmdata: Data size
+.IP \(bu 2
+vmexe: Text segments size
+.IP \(bu 2
+vmhwm: Peak resident set size
+.IP \(bu 2
+vmlib: Library code size
+.IP \(bu 2
+vmlock: Locked memory size
+.IP \(bu 2
+vmpeak: Peak virtual memory size
+.IP \(bu 2
+vmpin: Pinned memory size
+.IP \(bu 2
+vmpte: Page table entries size
+.IP \(bu 2
+vmrss: Resident set size
+.IP \(bu 2
+vmsize: Physical page size
+.IP \(bu 2
+vmstack: Stack size
+.IP \(bu 2
+vmswap: Swapped\-out virtual memory size
+.IP \(bu 2
+wchan: Process sleeping kernel function
+.IP \(bu 2
+workdir: Current working directory
+.IP \(bu 2
+writebytes: Write bytes to storage
+.RE
+.TP
+\fB\-\-sortd\fR \fI<kind>\fR
+Sort column by descending
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+ccgroup: Control group by compressed format
+.IP \(bu 2
+cgroup: Control group
+.IP \(bu 2
+command: Command with all arguments
+.IP \(bu 2
+contextsw: Context switch count
+.IP \(bu 2
+voluntarycontextsw: Voluntary context switch count
+.IP \(bu 2
+involuntarycontextsw: Involuntary context switch count
+.IP \(bu 2
+cputime: Cumulative CPU time
+.IP \(bu 2
+docker: Docker container name
+.IP \(bu 2
+eip: Instruction pointer
+.IP \(bu 2
+elapsedtime: Elapsed time
+.IP \(bu 2
+empty: Empty
+.IP \(bu 2
+env: Environment variables
+.IP \(bu 2
+esp: Stack pointer
+.IP \(bu 2
+filename: File name
+.IP \(bu 2
+gid: Group ID
+.IP \(bu 2
+gidfs: File system group ID
+.IP \(bu 2
+gidreal: Real group ID
+.IP \(bu 2
+gidsaved: Saved group ID
+.IP \(bu 2
+group: Group name
+.IP \(bu 2
+groupfs: File system group name
+.IP \(bu 2
+groupreal: Real group name
+.IP \(bu 2
+groupsaved: Saved group name
+.IP \(bu 2
+majflt: Major page fault count
+.IP \(bu 2
+minflt: Minor page fault count
+.IP \(bu 2
+multislot: Slot for `\-\-insert` option
+.IP \(bu 2
+nice: Nice value
+.IP \(bu 2
+pgid: Process group ID
+.IP \(bu 2
+pid: Process ID
+.IP \(bu 2
+policy: Scheduling policy
+.IP \(bu 2
+ppid: Parent process ID
+.IP \(bu 2
+priority: Priority
+.IP \(bu 2
+processor: Currently assigned processor
+.IP \(bu 2
+readbytes: Read bytes from storage
+.IP \(bu 2
+rtpriority: Real\-time priority
+.IP \(bu 2
+seccontext: Security context
+.IP \(bu 2
+separator: Show | for column separation
+.IP \(bu 2
+session: Process Session ID
+.IP \(bu 2
+shdpnd: Pending signal mask for process
+.IP \(bu 2
+slot: Slot for `\-\-insert` option
+.IP \(bu 2
+sigblk: Blocked signal mask
+.IP \(bu 2
+sigcgt: Caught signal mask
+.IP \(bu 2
+sigign: Ignored signal mask
+.IP \(bu 2
+sigpnd: Pending signal mask for thread
+.IP \(bu 2
+ssb: Speculative store bypass status
+.IP \(bu 2
+starttime: Starting time
+.IP \(bu 2
+state: Process state
+.IP \(bu 2
+tcpport: Bound TCP ports
+.IP \(bu 2
+threads: Thread count
+.IP \(bu 2
+treeslot: Slot for tree column
+.IP \(bu 2
+tty: Controlling TTY
+.IP \(bu 2
+udpport: Bound UDP ports
+.IP \(bu 2
+uid: User ID
+.IP \(bu 2
+uidfs: File system user ID
+.IP \(bu 2
+uidlogin: Login user ID
+.IP \(bu 2
+uidreal: Real user ID
+.IP \(bu 2
+uidsaved: Saved user ID
+.IP \(bu 2
+usagecpu: CPU utilization
+.IP \(bu 2
+usagemem: Memory utilization
+.IP \(bu 2
+user: User name
+.IP \(bu 2
+userfs: File system user name
+.IP \(bu 2
+userlogin: Login user name
+.IP \(bu 2
+userreal: Real user name
+.IP \(bu 2
+usersaved: Saved user name
+.IP \(bu 2
+vmdata: Data size
+.IP \(bu 2
+vmexe: Text segments size
+.IP \(bu 2
+vmhwm: Peak resident set size
+.IP \(bu 2
+vmlib: Library code size
+.IP \(bu 2
+vmlock: Locked memory size
+.IP \(bu 2
+vmpeak: Peak virtual memory size
+.IP \(bu 2
+vmpin: Pinned memory size
+.IP \(bu 2
+vmpte: Page table entries size
+.IP \(bu 2
+vmrss: Resident set size
+.IP \(bu 2
+vmsize: Physical page size
+.IP \(bu 2
+vmstack: Stack size
+.IP \(bu 2
+vmswap: Swapped\-out virtual memory size
+.IP \(bu 2
+wchan: Process sleeping kernel function
+.IP \(bu 2
+workdir: Current working directory
+.IP \(bu 2
+writebytes: Write bytes to storage
+.RE
+.TP
+\fB\-c\fR, \fB\-\-color\fR \fI<COLOR>\fR
+Color mode
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+auto
+.IP \(bu 2
+always
+.IP \(bu 2
+disable
+.RE
+.TP
+\fB\-\-theme\fR \fI<THEME>\fR
+Theme mode
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+auto
+.IP \(bu 2
+dark
+.IP \(bu 2
+light
+.RE
+.TP
+\fB\-p\fR, \fB\-\-pager\fR \fI<PAGER>\fR
+Pager mode
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+auto
+.IP \(bu 2
+always
+.IP \(bu 2
+disable
+.RE
+.TP
+\fB\-\-json\fR
+JSON output
+.TP
+\fB\-\-interval\fR \fI<millisec>\fR [default: 100]
+Interval to calculate throughput
+.TP
+\fB\-\-use\-config\fR \fI<name>\fR
+Use built\-in configuration
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+default
+.IP \(bu 2
+large
+.RE
+.TP
+\fB\-\-load\-config\fR \fI<path>\fR
+Load configuration from file
+.TP
+\fB\-\-gen\-config\fR
+Generate configuration sample file
+.TP
+\fB\-\-gen\-completion\fR \fI<shell>\fR
+Generate shell completion file
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+bash
+.IP \(bu 2
+elvish
+.IP \(bu 2
+fish
+.IP \(bu 2
+powershell
+.IP \(bu 2
+zsh
+.RE
+.TP
+\fB\-\-gen\-completion\-out\fR \fI<shell>\fR
+Generate shell completion file and write to stdout
+.br
+
+.br
+\fIPossible values:\fR
+.RS 14
+.IP \(bu 2
+bash
+.IP \(bu 2
+elvish
+.IP \(bu 2
+fish
+.IP \(bu 2
+powershell
+.IP \(bu 2
+zsh
+.RE
+.TP
+\fB\-\-gen\-man\-page\fR
+Generate man page and write to stdout
+.TP
+\fB\-\-no\-header\fR
+Suppress header
+.TP
+\fB\-\-procfs\fR \fI<PROCFS>\fR
+Path to procfs
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print help (see a summary with \*(Aq\-h\*(Aq)
+.TP
+\fB\-V\fR, \fB\-\-version\fR
+Print version
+.TP
+[\fIKEYWORD\fR]
+Keywords for search
+.SH VERSION
+v0.14.12
