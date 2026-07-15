@@ -574,4 +574,4 @@ History
     added eza 0.23.5 (https://github.com/eza-community/eza, a replacement for ls)
     added dog  0.2.0 (https://github.com/ogham/dog, a replacement for dig or nslookup)
     added xcp 0.24.8 (https://github.com/tarka/xcp, a companion for the cp command)
-    added dua 2.38.0 (https://github.com/Byron, a replacment for du)
+    added dua 2.38.0 (https://github.com/Byron/dua-cli, a replacement for du)
