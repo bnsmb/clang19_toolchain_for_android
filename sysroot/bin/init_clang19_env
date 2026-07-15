@@ -110,7 +110,8 @@
 #    added the alias update_config_guess to update config.guess and config.sub in the current directory
 #    added the alias ll=exa
 #
-#
+# 15.07.2026 v1.5.17 /bs
+#    added the alias cat="bat --paging=never"
 #
 __TRUE=0
 __FALSE=1
@@ -807,6 +808,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   alias gdb="gdb -tui "
 
   [ -x ${CLANG_SYSROOT}/usr/bin/eza ] && alias ll="${CLANG_SYSROOT}/usr/bin/eza"
+  [ -x ${CLANG_SYSROOT}/usr/bin/bat ] && alias cat="${CLANG_SYSROOT}/usr/bin/bat --paging=never"
 
   define_aliase
 
