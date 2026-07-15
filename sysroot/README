@@ -251,6 +251,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # procs 0.14.12 (https://github.com/dalance/procs, a replacement for ps)
 # dust 1.2.4 (https://github.com/bootandy/dust, a replacement for du)
 # eza 0.23.5 (https://github.com/eza-community/eza, a replacement for ls) 
+# cp 0.24.8 (https://github.com/tarka/xcp, a companion for the cp command)
 
 Notes
 
@@ -571,4 +572,6 @@ History
     added dust 1.2.4 (https://github.com/bootandy/dust, a replacement for du)
     added gitui 0.28.1 (https://github.com/gitui-org/gitui, a textmode GUI for git commands)
     added eza 0.23.5 (https://github.com/eza-community/eza, a replacement for ls)
+    added dog  0.2.0 (https://github.com/ogham/dog, a replacement for dig or nslookup)
+    added xcp 0.24.8 (https://github.com/tarka/xcp, a companion for the cp command)
 
