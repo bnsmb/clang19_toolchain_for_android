@@ -44,8 +44,8 @@ __BEGIN_DECLS
  *
  * Available since API level 34.
  */
-ASurfaceControl* _Nonnull ASurfaceControl_fromJava(JNIEnv* _Nonnull env,
-        jobject _Nonnull surfaceControlObj) __INTRODUCED_IN_API_U__;
+ASurfaceControl* ASurfaceControl_fromJava(JNIEnv* env,
+        jobject surfaceControlObj) __INTRODUCED_IN_API_U__ __attribute__((nonnull(1,2)));
 
 /**
  * Return the ASurfaceTransaction wrapped by a Java Transaction object.
@@ -59,8 +59,8 @@ ASurfaceControl* _Nonnull ASurfaceControl_fromJava(JNIEnv* _Nonnull env,
  *
  * Available since API level 34.
  */
-ASurfaceTransaction* _Nonnull ASurfaceTransaction_fromJava(JNIEnv* _Nonnull env,
-        jobject _Nonnull transactionObj) __INTRODUCED_IN_API_U__;
+ASurfaceTransaction* ASurfaceTransaction_fromJava(JNIEnv* env,
+        jobject transactionObj) __INTRODUCED_IN_API_U__ __attribute__((nonnull(1,2)));
 
 __END_DECLS
 

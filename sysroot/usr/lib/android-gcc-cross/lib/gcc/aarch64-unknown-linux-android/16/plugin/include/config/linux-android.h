@@ -19,7 +19,7 @@
    along with GCC; see the file COPYING3.  If not see
    <http://www.gnu.org/licenses/>.  */
 
-#if !defined(USED_FOR_TARGET)
+#if DEFAULT_LIBC == LIBC_BIONIC
 extern void android_driver_init(unsigned int*, struct cl_decoded_option**);
 #define GCC_DRIVER_HOST_INITIALIZATION android_driver_init(&decoded_options_count, &decoded_options)
 
@@ -31,17 +31,13 @@ extern void android_override_options(void);
 #define BIONIC_PAGE_SIZE_16K "0x4000"
 
 #if !defined(ANDROID_MIN_SDK_VERSION)
- /* This is the minimum Android version supported on all architectures */
+/* Minimum Android API level supported across all architectures. */
 #define ANDROID_MIN_SDK_VERSION "21"
 #endif
 
 #if !defined(BIONIC_PAGE_SIZE)
 /* This is the default for all architectures except AArch64 and x86_64. */
 #define BIONIC_PAGE_SIZE BIONIC_PAGE_SIZE_4K
-#endif
-
-#if defined(ENABLE_DEFAULT_PIE)
-#define ANDROID_PIE_SPEC ""
 #endif
 
 #define ANDROID_TARGET_OS_CPP_BUILTINS()			\
@@ -63,60 +59,48 @@ extern void android_override_options(void);
 #define LINUX_OR_ANDROID_LD(LINUX_SPEC, ANDROID_SPEC) \
   "%{" NOANDROID "|tno-android-ld:" LINUX_SPEC ";:" ANDROID_SPEC "}"
 
-#define ANDROID_IF_NOT_PIE(spec) \
-    "%{!static: %{!static-pie: %{!shared: %{!no-pie: %{!fno-pie: %{!fno-PIE: %{!pie: %{!fpie: %{!fPIE: " spec " }}}}}}}}} "
-
-#define ANDROID_IF_NOT_LLD(spec) \
-    "%{!fuse-ld=lld: %{!fuse-ld=mold: " spec " }} "
-
-#define ANDROID_IF_LLD(spec) \
-    "%{fuse-ld=lld|fuse-ld=mold: " spec " } "
-
-#define ANDROID_BFD_RELR_SPEC \
-	ANDROID_IF_NOT_LLD("%:version-compare(>= 28 mandroid-version-min= -z)") \
-	ANDROID_IF_NOT_LLD("%:version-compare(>= 28 mandroid-version-min= pack-relative-relocs)")
-
-#define ANDROID_LLD_RELR_SPEC \
-	ANDROID_IF_LLD("%:version-compare(>= 28 mandroid-version-min= --use-android-relr-tags)") \
-	ANDROID_IF_LLD("%:version-compare(>= 28 mandroid-version-min= --pack-dyn-relocs=relr)")
-
-/*
-* Position Independent Executable (PIE) on Android
-* 
-* - Android 4.0.4 (API level 15) and below: PIE is not supported.
-* - Android 4.1 (API level 16) to Android 4.4W (API level 20): PIE is supported, but not mandatory.
-* - Android 5.0 (API level 21) and above: PIE is supported and mandatory.
-*/
-#if !defined(ANDROID_PIE_SPEC)
+#if defined(ENABLE_DEFAULT_PIE)
+#define ANDROID_PIE_SPEC ""
+#else
+/* Enable PIE on Android 4.1+ (API level 16). */
 #define ANDROID_PIE_SPEC \
-    ANDROID_IF_NOT_PIE("%:version-compare(!> 15 mandroid-version-min= -no-pie)") \
-    ANDROID_IF_NOT_PIE("%:version-compare(>= 16 mandroid-version-min= -pie)")
+  "%{!static: %{!shared: %{!no-pie: %{!fno-pie: %{!fno-PIE: %{!pie: %{!fpie: %{!fPIE: " \
+  "%:version-compare(!> 15 mandroid-version-min= -no-pie) " \
+  "%:version-compare(>= 16 mandroid-version-min= -pie) " \
+  "}}}}}}}} "
 #endif
 
 /*
-* DT_RELR (relative relocation format) on Android
-* 
-* - Android 9 (API level 28) and above: DT_RELR is supported and optional.
+* Enable DT_RELR packed relocations on Android 9+ (API level 28).
 */
 #define ANDROID_RELR_SPEC \
-  ANDROID_BFD_RELR_SPEC \
-  ANDROID_LLD_RELR_SPEC
+  "%{fuse-ld=lld|fuse-ld=mold: " \
+  " %:version-compare(>= 23 mandroid-version-min= --pack-dyn-relocs=android) " \
+  " %:version-compare(>= 28 mandroid-version-min= --use-android-relr-tags) " \
+  " %:version-compare(>= 28 mandroid-version-min= --pack-dyn-relocs=android+relr) " \
+  " ;: " \
+  " %:version-compare(>= 30 mandroid-version-min= -z) " \
+  " %:version-compare(>= 30 mandroid-version-min= pack-relative-relocs) " \
+  " } "
+
+/* Use read-only segments on Android 10+ (API level 29). */
+#define ANDROID_ROSEGMENT_SPEC \
+  "%:version-compare(!> 28 mandroid-version-min= --no-rosegment) " \
+  "%:version-compare(>= 29 mandroid-version-min= -z) " \
+  "%:version-compare(>= 29 mandroid-version-min= separate-code) " \
+  "%:version-compare(>= 29 mandroid-version-min= --rosegment) "
 
 #define ANDROID_LINK_SPEC \
   "-z noexecstack " \
   "-z relro " \
   "-z now " \
-  "-z text " \
-  "-z separate-code " \
   "-z max-page-size=" BIONIC_PAGE_SIZE " " \
   "%{!no-eh-frame-hdr: --eh-frame-hdr} " \
+  "--enable-new-dtags " \
+  "--undefined-version " \
   ANDROID_PIE_SPEC \
   ANDROID_RELR_SPEC \
-  "%:version-compare(!> 28 mandroid-version-min= --no-rosegment) " \
-  "%:version-compare(>= 29 mandroid-version-min= --rosegment) " \
-  "%{%:sanitize(hwaddress): %{!shared: %:version-compare(>= 34 mandroid-version-min= --dynamic-linker=" BIONIC_DYNAMIC_LINKER_HWSAN64 ")}} " \
-  "--enable-new-dtags " \
-  "--undefined-version "
+  ANDROID_ROSEGMENT_SPEC
 
 #define ANDROID_CC1_SPEC \
   "%{!mglibc: %{!muclibc: %{!mbionic: -mbionic}}} "			\
@@ -125,11 +109,6 @@ extern void android_override_options(void);
   "%{D__ANDROID_UNAVAILABLE_SYMBOLS_ARE_WEAK__*: %eenabling support for weak symbols using the '__ANDROID_UNAVAILABLE_SYMBOLS_ARE_WEAK__' macro is not supported: use '-mandroid-weak-symbols' instead} " \
   "%{mandroid-version-min=*: -D __ANDROID_MIN_SDK_VERSION__=%* -D __ANDROID_API__=__ANDROID_MIN_SDK_VERSION__} " \
   "%{mandroid-weak-symbols: -D __ANDROID_UNAVAILABLE_SYMBOLS_ARE_WEAK__} "
-
-#define ANDROID_CC1PLUS_SPEC ""
-
-#define ANDROID_ASM_SPEC \
-  "--noexecstack"
 
 #define ANDROID_LIB_SPEC \
   "%{!static: -ldl} -landroid-stb"
@@ -140,3 +119,21 @@ extern void android_override_options(void);
 
 #define ANDROID_ENDFILE_SPEC \
   "%{shared: crtend_so%O%s;: crtend_android%O%s}"
+
+/* __builtin_available hooks for the Linux/Android target.  These
+   overrides are in scope whenever linux-android.h is included in
+   tm_file (i.e. all *-*-linux*-android* triples), and they consult the
+   -mandroid-version-min option recorded in `android_version_min` by
+   gcc/config/linux-android.opt.  See gcc/c-family/c-availability.cc for
+   the consumer and clang/lib/Basic/Targets/OSTargets.h:364-374 (which
+   sets Clang's PlatformName to "android") for the Clang analog.  */
+#undef TARGET_C_AVAILABILITY_PLATFORM_NAME
+#define TARGET_C_AVAILABILITY_PLATFORM_NAME android_availability_platform_name
+#undef TARGET_C_AVAILABILITY_MIN_VERSION
+#define TARGET_C_AVAILABILITY_MIN_VERSION android_availability_min_version
+
+/* Intentionally do NOT override TARGET_C_AVAILABILITY_PLATFORM_ID: Android
+   uses the non-Darwin runtime helper __isOSVersionAtLeast (major, minor,
+   sub) rather than __isPlatformVersionAtLeast (platform_id, ...), so the
+   default hook returning 0 gives the correct behavior in
+   c_build_builtin_available.  */

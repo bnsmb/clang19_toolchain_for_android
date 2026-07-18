@@ -54,7 +54,7 @@
 #endif
 #include <ext/atomicity.h>     // __gnu_cxx::__is_single_threaded
 
-#if defined _GLIBCXX_HAS_GTHREADS && ! defined _GLIBCXX_HAVE_TLS
+#if defined _GLIBCXX_HAS_GTHREADS && (!defined(_GLIBCXX_HAVE_TLS) || defined(__ANDROID__))
 # include <bits/std_function.h>  // std::function
 #endif
 
@@ -814,7 +814,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   };
 
   /// @cond undocumented
-# ifdef _GLIBCXX_HAVE_TLS
+# if defined(_GLIBCXX_HAVE_TLS) && !defined(__ANDROID__)
   // If TLS is available use thread-local state for the type-erased callable
   // that is being run by std::call_once in the current thread.
 #  ifdef _GLIBCXX_NO_EXTERN_THREAD_LOCAL

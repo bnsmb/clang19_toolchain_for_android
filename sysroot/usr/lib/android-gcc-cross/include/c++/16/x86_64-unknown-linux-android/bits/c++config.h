@@ -46,7 +46,7 @@
 
 // The datestamp of the C++ library in compressed ISO date format.
 #undef __GLIBCXX__ /* The testsuite defines it to 99999999 to block PCH.  */
-#define __GLIBCXX__ 20260529
+#define __GLIBCXX__ 20260716
 
 // Macros for various attributes.
 //   _GLIBCXX_PURE
@@ -1471,7 +1471,7 @@ namespace __gnu_cxx
 /* #undef _GLIBCXX_HAVE_TLHELP32_H */
 
 /* Define to 1 if the target supports thread-local storage. */
-#define _GLIBCXX_HAVE_TLS 1
+/* #undef _GLIBCXX_HAVE_TLS */
 
 /* Define if truncate is available in <unistd.h>. */
 #define _GLIBCXX_HAVE_TRUNCATE 1

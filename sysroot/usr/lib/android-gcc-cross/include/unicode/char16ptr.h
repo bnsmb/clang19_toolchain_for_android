@@ -9,10 +9,13 @@
 
 #include "unicode/utypes.h"
 
-#if LIBICU_U_SHOW_CPLUSPLUS_API
+#if LIBICU_U_SHOW_CPLUSPLUS_API || U_SHOW_CPLUSPLUS_HEADER_API
 
 #include <cstddef>
 #include <string_view>
+#include <type_traits>
+
+#endif
 
 /**
  * @addtogroup icu4c ICU4C
@@ -22,8 +25,6 @@
  *        implicit conversion from bit-compatible raw pointer types.
  *        Also conversion functions from char16_t * to UChar * and OldUChar *.
  */
-
-U_NAMESPACE_BEGIN
 
 /**
  * \def U_ALIASING_BARRIER
@@ -37,6 +38,11 @@ U_NAMESPACE_BEGIN
 #elif defined(U_IN_DOXYGEN)
 #   define U_ALIASING_BARRIER(ptr)
 #endif
+
+// ICU DLL-exported
+#if LIBICU_U_SHOW_CPLUSPLUS_API
+
+U_NAMESPACE_BEGIN
 
 /**
  * char16_t * wrapper with implicit conversion from distinct but bit-compatible pointer types.
@@ -253,6 +259,60 @@ const char16_t *ConstChar16Ptr::get() const { return u_.cp; }
 #endif
 /// \endcond
 
+U_NAMESPACE_END
+
+#endif  // LIBICU_U_SHOW_CPLUSPLUS_API
+
+// Usable in header-only definitions
+#if LIBICU_U_SHOW_CPLUSPLUS_API || U_SHOW_CPLUSPLUS_HEADER_API
+
+namespace U_ICU_NAMESPACE_OR_INTERNAL {
+
+#ifndef U_FORCE_HIDE_INTERNAL_API
+/** \xrefitem internal "Internal"  "Internal List"  Do not use. This API is for internal use only. */
+template<typename T, typename = std::enable_if_t<std::is_same_v<T, UChar>>>
+inline const char16_t *uprv_char16PtrFromUChar(const T *p) {
+    if constexpr (std::is_same_v<UChar, char16_t>) {
+        return p;
+    } else {
+#if LIBICU_U_SHOW_CPLUSPLUS_API
+        return ConstChar16Ptr(p).get();
+#else
+#ifdef U_ALIASING_BARRIER
+        U_ALIASING_BARRIER(p);
+#endif
+        return reinterpret_cast<const char16_t *>(p);
+#endif
+    }
+}
+#if !U_CHAR16_IS_TYPEDEF && (!defined(_LIBCPP_VERSION) || _LIBCPP_VERSION < 180000)
+/** \xrefitem internal "Internal"  "Internal List"  Do not use. This API is for internal use only. */
+inline const char16_t *uprv_char16PtrFromUint16(const uint16_t *p) {
+#if LIBICU_U_SHOW_CPLUSPLUS_API
+    return ConstChar16Ptr(p).get();
+#else
+#ifdef U_ALIASING_BARRIER
+    U_ALIASING_BARRIER(p);
+#endif
+    return reinterpret_cast<const char16_t *>(p);
+#endif
+}
+#endif
+#if U_SIZEOF_WCHAR_T==2
+/** \xrefitem internal "Internal"  "Internal List"  Do not use. This API is for internal use only. */
+inline const char16_t *uprv_char16PtrFromWchar(const wchar_t *p) {
+#if LIBICU_U_SHOW_CPLUSPLUS_API
+    return ConstChar16Ptr(p).get();
+#else
+#ifdef U_ALIASING_BARRIER
+    U_ALIASING_BARRIER(p);
+#endif
+    return reinterpret_cast<const char16_t *>(p);
+#endif
+}
+#endif
+#endif
+
 /**
  * Converts from const char16_t * to const UChar *.
  * Includes an aliasing barrier if available.
@@ -308,6 +368,15 @@ inline OldUChar *toOldUCharPtr(char16_t *p) {
 #endif
     return reinterpret_cast<OldUChar *>(p);
 }
+
+}  // U_ICU_NAMESPACE_OR_INTERNAL
+
+#endif  // LIBICU_U_SHOW_CPLUSPLUS_API || U_SHOW_CPLUSPLUS_HEADER_API
+
+// ICU DLL-exported
+#if LIBICU_U_SHOW_CPLUSPLUS_API
+
+U_NAMESPACE_BEGIN
 
 #ifndef U_FORCE_HIDE_INTERNAL_API
 /**
@@ -381,7 +450,7 @@ inline std::u16string_view toU16StringViewNullable(const T& text) {
 
 U_NAMESPACE_END
 
-#endif /* LIBICU_U_SHOW_CPLUSPLUS_API */
+#endif  // LIBICU_U_SHOW_CPLUSPLUS_API
 
 #endif  // __CHAR16PTR_H__
 

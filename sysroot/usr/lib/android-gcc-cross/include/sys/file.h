@@ -46,6 +46,6 @@ __BEGIN_DECLS
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int flock(int __fd, int __op);
+int flock(int __fd, int __op)__THROW ;
 
 __END_DECLS

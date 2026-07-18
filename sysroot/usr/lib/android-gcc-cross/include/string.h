@@ -41,22 +41,22 @@ __BEGIN_DECLS
 #include <strings.h>
 #endif
 
-void* _Nullable memccpy(void* _Nonnull __dst, const void* _Nonnull __src, int __stop_char, size_t __n);
-void* _Nullable memchr(const void* _Nonnull __s, int __ch, size_t __n) __attribute_pure__;
+void* memccpy(void* __dst, const void* __src, int __stop_char, size_t __n) __THROW __attribute__((nonnull(1,2)));
+void* memchr(const void* __s, int __ch, size_t __n) __THROW __attribute_pure__ __attribute__((nonnull(1)));
 #if defined(__cplusplus)
-extern "C++" void* _Nullable memrchr(void* _Nonnull __s, int __ch, size_t __n) __RENAME(memrchr) __attribute_pure__;
-extern "C++" const void* _Nullable memrchr(const void* _Nonnull __s, int __ch, size_t __n) __RENAME(memrchr) __attribute_pure__;
+extern "C++" void* memrchr(void* __s, int __ch, size_t __n) __REDIRECT_NTH(memrchr) __attribute_pure__ __attribute__((nonnull(1)));
+extern "C++" const void* memrchr(const void* __s, int __ch, size_t __n) __REDIRECT_NTH(memrchr) __attribute_pure__ __attribute__((nonnull(1)));
 #else
-void* _Nullable memrchr(const void* _Nonnull __s, int __ch, size_t __n) __attribute_pure__;
+void* memrchr(const void* __s, int __ch, size_t __n) __THROW __attribute_pure__ __attribute__((nonnull(1)));
 #endif
-int memcmp(const void* _Nonnull __lhs, const void* _Nonnull __rhs, size_t __n) __attribute_pure__;
-void* _Nonnull memcpy(void* _Nonnull, const void* _Nonnull, size_t);
+int memcmp(const void* __lhs, const void* __rhs, size_t __n) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
+void* memcpy(void*, const void*, size_t) __THROW __attribute__((nonnull(1,2)));
 
 #if defined(__USE_GNU)
-void* _Nonnull mempcpy(void* _Nonnull __dst, const void* _Nonnull __src, size_t __n);
+void* mempcpy(void* __dst, const void* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
 #endif
 
-void* _Nonnull memmove(void* _Nonnull __dst, const void* _Nonnull __src, size_t __n);
+void* memmove(void* __dst, const void* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
 
 /**
  * [memset(3)](https://man7.org/linux/man-pages/man3/memset.3.html) writes the
@@ -64,8 +64,9 @@ void* _Nonnull memmove(void* _Nonnull __dst, const void* _Nonnull __src, size_t 
  *
  * Returns `dst`.
  */
-void* _Nonnull memset(void* _Nonnull __dst, int __ch, size_t __n);
+void* memset(void* __dst, int __ch, size_t __n) __THROW __attribute__((nonnull(1)));
 
+#if __ANDROID_API__ >= 34
 /**
  * [memset_explicit(3)](https://man7.org/linux/man-pages/man3/memset_explicit.3.html)
  * writes the bottom 8 bits of the given int to the next `n` bytes of `dst`,
@@ -75,57 +76,56 @@ void* _Nonnull memset(void* _Nonnull __dst, int __ch, size_t __n);
  *
  * Available from API level 34, or with __ANDROID_UNAVAILABLE_SYMBOLS_ARE_WEAK__.
  */
-#if __ANDROID_API__ >= 34
-void* _Nonnull memset_explicit(void* _Nonnull __dst, int __ch, size_t __n) __INTRODUCED_IN_API_U__;
+void* memset_explicit(void* __dst, int __ch, size_t __n) __INTRODUCED_IN_API_U__ __attribute__((nonnull(1)));
 #elif defined(__ANDROID_UNAVAILABLE_SYMBOLS_ARE_WEAK__)
 #define __BIONIC_MEMSET_EXPLICIT_INLINE static __inline
 #include <bits/memset_explicit_impl.h>
 #undef __BIONIC_MEMSET_EXPLICIT_INLINE
 #endif
 
-void* _Nullable memmem(const void* _Nonnull __haystack, size_t __haystack_size, const void* _Nonnull __needle, size_t __needle_size) __attribute_pure__;
+void* memmem(const void* __haystack, size_t __haystack_size, const void* __needle, size_t __needle_size) __THROW __attribute_pure__ __attribute__((nonnull(1,3)));
 
-char* _Nullable strchr(const char* _Nonnull __s, int __ch) __attribute_pure__;
+char* strchr(const char* __s, int __ch) __THROW __attribute_pure__ __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(18)
-char* _Nullable __strchr_chk(const char* _Nonnull __s, int __ch, size_t __n) __INTRODUCED_IN_API_J_MR2__;
+char* __strchr_chk(const char* __s, int __ch, size_t __n) __INTRODUCED_IN_API_J_MR2__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(18) */
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(24)
 #if defined(__cplusplus)
-extern "C++" char* _Nonnull strchrnul(char* _Nonnull __s, int __ch) __RENAME(strchrnul) __attribute_pure__ __INTRODUCED_IN_API_N__;
-extern "C++" const char* _Nonnull strchrnul(const char* _Nonnull __s, int __ch) __RENAME(strchrnul) __attribute_pure__ __INTRODUCED_IN_API_N__;
+extern "C++" char* strchrnul(char* __s, int __ch) __REDIRECT_NTH(strchrnul) __attribute_pure__ __INTRODUCED_IN_API_N__;
+extern "C++" const char* strchrnul(const char* __s, int __ch) __REDIRECT_NTH(strchrnul) __attribute_pure__ __INTRODUCED_IN_API_N__;
 #else
-char* _Nonnull strchrnul(const char* _Nonnull __s, int __ch) __attribute_pure__ __INTRODUCED_IN_API_N__;
+char* strchrnul(const char* __s, int __ch) __THROW __attribute_pure__ __INTRODUCED_IN_API_N__;
 #endif
 #endif
 
-char* _Nullable strrchr(const char* _Nonnull __s, int __ch) __attribute_pure__;
+char* strrchr(const char* __s, int __ch) __THROW __attribute_pure__ __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(18)
-char* _Nullable __strrchr_chk(const char* _Nonnull __s, int __ch, size_t __n) __INTRODUCED_IN_API_J_MR2__;
+char* __strrchr_chk(const char* __s, int __ch, size_t __n) __INTRODUCED_IN_API_J_MR2__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(18) */
 
-size_t strlen(const char* _Nonnull __s) __attribute_pure__;
+size_t strlen(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(17)
-size_t __strlen_chk(const char* _Nonnull __s, size_t __n) __INTRODUCED_IN_API_J_MR1__;
+size_t __strlen_chk(const char* __s, size_t __n) __INTRODUCED_IN_API_J_MR1__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 
-int strcmp(const char* _Nonnull __lhs, const char* _Nonnull __rhs) __attribute_pure__;
+int strcmp(const char* __lhs, const char* __rhs) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-char* _Nonnull stpcpy(char* _Nonnull __dst, const char* _Nonnull __src) __INTRODUCED_IN_API_L__;
+char* stpcpy(char* __dst, const char* __src) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
 #else
-__static_inline__ char* _Nonnull stpcpy(char* _Nonnull __dst, const char* _Nonnull __src) { return __builtin_stpcpy(__dst, __src); }
+__static_inline__ char* __attribute__((nonnull(1,2))) stpcpy(char* __dst, const char* __src) { return __builtin_stpcpy(__dst, __src); }
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-char* _Nonnull strcpy(char* _Nonnull __dst, const char* _Nonnull __src);
-char* _Nonnull strcat(char* _Nonnull __dst, const char* _Nonnull __src);
-char* _Nullable strdup(const char* _Nonnull __s);
+char* strcpy(char* __dst, const char* __src) __THROW __attribute__((nonnull(1,2)));
+char* strcat(char* __dst, const char* __src) __THROW __attribute__((nonnull(1,2)));
+char* strdup(const char* __s) __THROW __attribute__((nonnull(1)));
 
-char* _Nullable strstr(const char* _Nonnull __haystack, const char* _Nonnull __needle) __attribute_pure__;
-char* _Nullable strcasestr(const char* _Nonnull __haystack, const char* _Nonnull __needle) __attribute_pure__;
+char* strstr(const char* __haystack, const char* __needle) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
+char* strcasestr(const char* __haystack, const char* __needle) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
 
 /**
  * [strtok(3)](https://man7.org/linux/man-pages/man3/strtok.3.html)
@@ -136,8 +136,8 @@ char* _Nullable strcasestr(const char* _Nonnull __haystack, const char* _Nonnull
  *
  * See strsep() if you want empty tokens returned too.
  */
-char* _Nullable strtok(char* _Nullable __s, const char* _Nonnull __delimiter)
-    __attribute__((__deprecated__("strtok() is not thread-safe; use strtok_r() instead")));
+char* strtok(char* __s, const char* __delimiter)
+    __THROW __attribute__((__deprecated__("strtok() is not thread-safe; use strtok_r() instead")));
 
 /**
  * [strtok_r(3)](https://man7.org/linux/man-pages/man3/strtok_r.3.html)
@@ -145,7 +145,7 @@ char* _Nullable strtok(char* _Nullable __s, const char* _Nonnull __delimiter)
  *
  * See strsep() if you want empty tokens returned too.
  */
-char* _Nullable strtok_r(char* _Nullable __s, const char* _Nonnull __delimiter, char* _Nonnull * _Nonnull __pos_ptr);
+char* strtok_r(char* __s, const char* __delimiter, char* * __pos_ptr) __THROW __attribute__((nonnull(2,3)));
 
 /**
  * [strerror(3)](https://man7.org/linux/man-pages/man3/strerror.3.html)
@@ -158,13 +158,14 @@ char* _Nullable strtok_r(char* _Nullable __s, const char* _Nonnull __delimiter, 
  *
  * Returns a pointer to a string.
  */
-char* _Nonnull strerror(int __errno_value);
+char* strerror(int __errno_value)__THROW ;
 
 /**
  * Equivalent to strerror() on Android where only C/POSIX locales are available.
  */
-char* _Nonnull strerror_l(int __errno_value, locale_t _Nonnull __l) __RENAME(strerror);
+char* strerror_l(int __errno_value, locale_t __l) __REDIRECT_NTH(strerror) __attribute__((nonnull(2)));
 
+#if defined(__USE_GNU) && __ANDROID_API__ >= 23
 /**
  * [strerror_r(3)](https://man7.org/linux/man-pages/man3/strerror_r.3.html)
  * writes a string describing the given errno value into the given buffer.
@@ -176,12 +177,12 @@ char* _Nonnull strerror_l(int __errno_value, locale_t _Nonnull __l) __RENAME(str
  * The GNU variant is available since API level 23 if `_GNU_SOURCE` is defined.
  * The POSIX variant is available otherwise.
  */
-#if defined(__USE_GNU) && __ANDROID_API__ >= 23
-char* _Nonnull strerror_r(int __errno_value, char* _Nullable __buf, size_t __n) __RENAME(__gnu_strerror_r) __INTRODUCED_IN_API_M__;
+char* strerror_r(int __errno_value, char* __buf, size_t __n) __REDIRECT_NTH(__gnu_strerror_r) __INTRODUCED_IN_API_M__;
 #else /* POSIX */
-int strerror_r(int __errno_value, char* _Nonnull __buf, size_t __n);
+int strerror_r(int __errno_value, char* __buf, size_t __n) __THROW __attribute__((nonnull(2)));
 #endif
 
+#if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(35)
 /**
  * [strerrorname_np(3)](https://man7.org/linux/man-pages/man3/strerrorname_np.3.html)
  * returns the name of the errno constant corresponding to its argument.
@@ -194,10 +195,10 @@ int strerror_r(int __errno_value, char* _Nonnull __buf, size_t __n);
  *
  * Available since API level 35 when compiling with `_GNU_SOURCE`.
  */
-#if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(35)
-const char* _Nullable strerrorname_np(int __errno_value) __INTRODUCED_IN_API_V__;
+const char* strerrorname_np(int __errno_value) __THROW __INTRODUCED_IN_API_V__;
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [strerrordesc_np(3)](https://man7.org/linux/man-pages/man3/strerrordesc_np.3.html)
  * is like strerror() but without localization. Since Android's strerror()
@@ -207,27 +208,26 @@ const char* _Nullable strerrorname_np(int __errno_value) __INTRODUCED_IN_API_V__
  *
  * Available when compiling with `_GNU_SOURCE`.
  */
-#if defined(__USE_GNU)
-const char* _Nonnull strerrordesc_np(int __errno_value) __RENAME(strerror);
+const char* strerrordesc_np(int __errno_value) __REDIRECT_NTH(strerror);
 #endif
 
-size_t strnlen(const char* _Nonnull __s, size_t __n) __attribute_pure__;
-char* _Nonnull strncat(char* _Nonnull __dst, const char* _Nonnull __src, size_t __n);
-char* _Nullable strndup(const char* _Nonnull __s, size_t __n);
-int strncmp(const char* _Nonnull __lhs, const char* _Nonnull __rhs, size_t __n) __attribute_pure__;
+size_t strnlen(const char* __s, size_t __n) __THROW __attribute_pure__ __attribute__((nonnull(1)));
+char* strncat(char* __dst, const char* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
+char* strndup(const char* __s, size_t __n) __THROW __attribute__((nonnull(1)));
+int strncmp(const char* __lhs, const char* __rhs, size_t __n) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
 
-char* _Nonnull stpncpy(char* _Nonnull __dst, const char* _Nonnull __src, size_t __n);
-char* _Nonnull strncpy(char* _Nonnull __dst, const char* _Nonnull __src, size_t __n);
+char* stpncpy(char* __dst, const char* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
+char* strncpy(char* __dst, const char* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
 
-size_t strlcat(char* _Nonnull __dst, const char* _Nonnull __src, size_t __n);
-size_t strlcpy(char* _Nonnull __dst, const char* _Nonnull __src, size_t __n);
+size_t strlcat(char* __dst, const char* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
+size_t strlcpy(char* __dst, const char* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
 
 /**
  * [strcspn(3)](https://man7.org/linux/man-pages/man3/strcspn.3.html)
  * returns the length of the prefix containing only characters _not_ in
  * the reject set.
  */
-size_t strcspn(const char* _Nonnull __s, const char* _Nonnull __reject) __attribute_pure__;
+size_t strcspn(const char* __s, const char* __reject) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
 
 /**
  * [strpbrk(3)](https://man7.org/linux/man-pages/man3/strpbrk.3.html)
@@ -236,7 +236,7 @@ size_t strcspn(const char* _Nonnull __s, const char* _Nonnull __reject) __attrib
  *
  * See strspn() if you want an index instead.
  */
-char* _Nullable strpbrk(const char* _Nonnull __s, const char* _Nonnull __accept) __attribute_pure__;
+char* strpbrk(const char* __s, const char* __accept) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
 
 /**
  * [strsep(3)](https://man7.org/linux/man-pages/man3/strsep.3.html)
@@ -244,7 +244,7 @@ char* _Nullable strpbrk(const char* _Nonnull __s, const char* _Nonnull __accept)
  *
  * See strtok_r() if you don't want empty tokens.
  */
-char* _Nullable strsep(char* _Nullable * _Nonnull __s_ptr, const char* _Nonnull __delimiter);
+char* strsep(char* * __s_ptr, const char* __delimiter) __THROW __attribute__((nonnull(1,2)));
 
 /**
  * [strspn(3)](https://man7.org/linux/man-pages/man3/strspn.3.html)
@@ -253,7 +253,7 @@ char* _Nullable strsep(char* _Nullable * _Nonnull __s_ptr, const char* _Nonnull 
  *
  * See strpbrk() if you want a pointer instead.
  */
-size_t strspn(const char* _Nonnull __s, const char* _Nonnull __accept);
+size_t strspn(const char* __s, const char* __accept) __THROW __attribute__((nonnull(1,2)));
 
 /**
  * [strsignal(3)](https://man7.org/linux/man-pages/man3/strsignal.3.html)
@@ -265,22 +265,22 @@ size_t strspn(const char* _Nonnull __s, const char* _Nonnull __accept);
  *
  * Returns a pointer to a string. For invalid signals, the string is in TLS.
  */
-char* _Nonnull strsignal(int __signal);
+char* strsignal(int __signal)__THROW ;
 
 /** Equivalent to strcmp() on Android. */
-int strcoll(const char* _Nonnull __lhs, const char* _Nonnull __rhs) __attribute_pure__;
+int strcoll(const char* __lhs, const char* __rhs) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** Equivalent to strcmp() on Android. */
-int strcoll_l(const char* _Nonnull __lhs, const char* _Nonnull __rhs, locale_t _Nonnull __l) __attribute_pure__ __INTRODUCED_IN_API_L__;
+int strcoll_l(const char* __lhs, const char* __rhs, locale_t __l) __THROW __attribute_pure__ __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /** Equivalent to strlcpy() on Android. */
-size_t strxfrm(char* __BIONIC_COMPLICATED_NULLNESS __dst, const char* _Nonnull __src, size_t __n);
+size_t strxfrm(char* __dst, const char* __src, size_t __n) __THROW __attribute__((nonnull(2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** Equivalent to strlcpy() on Android. */
-size_t strxfrm_l(char* __BIONIC_COMPLICATED_NULLNESS __dst, const char* _Nonnull __src, size_t __n, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
+size_t strxfrm_l(char* __dst, const char* __src, size_t __n, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2,4)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /*
@@ -289,10 +289,10 @@ size_t strxfrm_l(char* __BIONIC_COMPLICATED_NULLNESS __dst, const char* _Nonnull
  */
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(23) && !defined(basename)
 #if defined(__cplusplus)
-extern "C++" char* _Nonnull basename(char* _Nullable __path) __RENAME(__gnu_basename) __INTRODUCED_IN_API_M__;
-extern "C++" const char* _Nonnull basename(const char* _Nonnull __path) __RENAME(__gnu_basename) __INTRODUCED_IN_API_M__;
+extern "C++" char* basename(char* __path) __REDIRECT_NTH(__gnu_basename) __INTRODUCED_IN_API_M__;
+extern "C++" const char* basename(const char* __path) __REDIRECT_NTH(__gnu_basename) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #else
-char* _Nonnull basename(const char* _Nonnull __path) __RENAME(__gnu_basename) __INTRODUCED_IN_API_M__;
+char* basename(const char* __path) __RENAME(__gnu_basename) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 #endif
 
@@ -308,95 +308,95 @@ char* _Nonnull basename(const char* _Nonnull __path) __RENAME(__gnu_basename) __
 #define __prefer_this_overload __enable_if(true, "")
 extern "C++" {
 inline __always_inline
-void* _Nullable __bionic_memchr(const void* _Nonnull const s __pass_object_size, int c, size_t n) {
+void* __attribute__((nonnull(1))) __bionic_memchr(const void* const s __pass_object_size, int c, size_t n) {
     return memchr(s, c, n);
 }
 
 inline __always_inline
-const void* _Nullable memchr(const void* _Nonnull const s __pass_object_size, int c, size_t n)
+const void* memchr(const void* const s __pass_object_size, int c, size_t n)
         __prefer_this_overload {
     return __bionic_memchr(s, c, n);
 }
 
 inline __always_inline
-void* _Nullable memchr(void* _Nonnull const s __pass_object_size, int c, size_t n) __prefer_this_overload {
+void* memchr(void* const s __pass_object_size, int c, size_t n) __prefer_this_overload {
     return __bionic_memchr(s, c, n);
 }
 
 inline __always_inline
-char* _Nullable __bionic_strchr(const char* _Nonnull const s __pass_object_size, int c) {
+char* __attribute__((nonnull(1))) __bionic_strchr(const char* const s __pass_object_size, int c) {
     return strchr(s, c);
 }
 
 inline __always_inline
-const char* _Nullable strchr(const char* _Nonnull const s __pass_object_size, int c)
+const char* strchr(const char* const s __pass_object_size, int c)
         __prefer_this_overload {
     return __bionic_strchr(s, c);
 }
 
 inline __always_inline
-char* _Nullable strchr(char* _Nonnull const s __pass_object_size, int c)
+char* strchr(char* const s __pass_object_size, int c)
         __prefer_this_overload {
     return __bionic_strchr(s, c);
 }
 
 inline __always_inline
-char* _Nullable __bionic_strrchr(const char* _Nonnull const s __pass_object_size, int c) {
+char* __attribute__((nonnull(1))) __bionic_strrchr(const char* const s __pass_object_size, int c) {
     return strrchr(s, c);
 }
 
 inline __always_inline
-const char* _Nullable strrchr(const char* _Nonnull const s __pass_object_size, int c) __prefer_this_overload {
+const char* strrchr(const char* const s __pass_object_size, int c) __prefer_this_overload {
     return __bionic_strrchr(s, c);
 }
 
 inline __always_inline
-char* _Nullable strrchr(char* _Nonnull const s __pass_object_size, int c) __prefer_this_overload {
+char* strrchr(char* const s __pass_object_size, int c) __prefer_this_overload {
     return __bionic_strrchr(s, c);
 }
 
 /* Functions with no FORTIFY counterpart. */
 
 inline __always_inline
-char* _Nullable __bionic_strcasestr(const char* _Nonnull h, const char* _Nonnull n) {
+char* __attribute__((nonnull(1,2))) __bionic_strcasestr(const char* h, const char* n) {
     return strcasestr(h, n);
 }
 
 inline __always_inline
-const char* _Nullable strcasestr(const char* _Nonnull h, const char* _Nonnull n) __prefer_this_overload {
+const char* strcasestr(const char* h, const char* n) __prefer_this_overload {
     return __bionic_strcasestr(h, n);
 }
 
 inline __always_inline
-char* _Nullable strcasestr(char* _Nonnull h, const char* _Nonnull n) __prefer_this_overload {
+char* strcasestr(char* h, const char* n) __prefer_this_overload {
     return __bionic_strcasestr(h, n);
 }
 
 inline __always_inline
-char* _Nullable __bionic_strstr(const char* _Nonnull h, const char* _Nonnull n) {
+char* __attribute__((nonnull(1,2))) __bionic_strstr(const char* h, const char* n) {
     return strstr(h, n);
 }
 
 inline __always_inline
-const char* _Nullable strstr(const char* _Nonnull h, const char* _Nonnull n) __prefer_this_overload {
+const char* strstr(const char* h, const char* n) __prefer_this_overload {
     return __bionic_strstr(h, n);
 }
 
 inline __always_inline
-char* _Nullable strstr(char* _Nonnull h, const char* _Nonnull n) __prefer_this_overload {
+char* strstr(char* h, const char* n) __prefer_this_overload {
     return __bionic_strstr(h, n);
 }
 
 inline __always_inline
-char* _Nullable __bionic_strpbrk(const char* _Nonnull h, const char* _Nonnull n) { return strpbrk(h, n); }
+char* __attribute__((nonnull(1,2))) __bionic_strpbrk(const char* h, const char* n) { return strpbrk(h, n); }
 
 inline __always_inline
-char* _Nullable strpbrk(char* _Nonnull h, const char* _Nonnull n) __prefer_this_overload {
+char* strpbrk(char* h, const char* n) __prefer_this_overload {
     return __bionic_strpbrk(h, n);
 }
 
 inline __always_inline
-const char* _Nullable strpbrk(const char* _Nonnull h, const char* _Nonnull n) __prefer_this_overload {
+const char* strpbrk(const char* h, const char* n) __prefer_this_overload {
     return __bionic_strpbrk(h, n);
 }
 }

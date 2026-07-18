@@ -47,14 +47,14 @@ __BEGIN_DECLS
  *
  * Returns the file descriptor on success, and returns -1 and sets `errno` on failure.
  */
-int signalfd(int __fd, const sigset_t* _Nonnull __mask, int __flags) __INTRODUCED_IN_API_J_MR2__;
+int signalfd(int __fd, const sigset_t* __mask, int __flags) __THROW __INTRODUCED_IN_API_J_MR2__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(18) */
 
+#if __BIONIC_AVAILABILITY_GUARD(28)
 /**
  * Like signalfd() but allows setting a signal mask with RT signals even from a 32-bit process.
  */
-#if __BIONIC_AVAILABILITY_GUARD(28)
-int signalfd64(int __fd, const sigset64_t* _Nonnull __mask, int __flags) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+int signalfd64(int __fd, const sigset64_t* __mask, int __flags) __INTRODUCED_IN_API_P__ __attribute__((nonnull(2)));
+#endif
 
 __END_DECLS

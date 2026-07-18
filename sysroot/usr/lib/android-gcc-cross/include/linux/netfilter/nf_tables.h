@@ -501,6 +501,7 @@ enum nft_meta_keys {
   NFT_META_SDIFNAME,
   NFT_META_BRI_BROUTE,
   __NFT_META_IIFTYPE,
+  NFT_META_BRI_IIFHWADDR,
 };
 enum nft_rt_keys {
   NFT_RT_CLASSID,
@@ -919,6 +920,7 @@ enum nft_synproxy_attributes {
 enum nft_devices_attributes {
   NFTA_DEVICE_UNSPEC,
   NFTA_DEVICE_NAME,
+  NFTA_DEVICE_PREFIX,
   __NFTA_DEVICE_MAX
 };
 #define NFTA_DEVICE_MAX (__NFTA_DEVICE_MAX - 1)

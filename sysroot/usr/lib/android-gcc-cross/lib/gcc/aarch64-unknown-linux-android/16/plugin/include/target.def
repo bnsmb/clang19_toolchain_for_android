@@ -6604,12 +6604,52 @@ are zero or sign extended depending on if it is\n\
 
 DEFHOOK
 (mode_for_floating_type,
-"Return machine mode for a C floating point type which is indicated by\n\
- a given @code{enum tree_index} @var{ti}, @var{ti} should be\n\
- @code{TI_FLOAT_TYPE}, @code{TI_DOUBLE_TYPE} or @code{TI_LONG_DOUBLE_TYPE}.\n\
- The default implementation returns @code{SFmode} for @code{TI_FLOAT_TYPE},\n\
- and @code{DFmode} for @code{TI_DOUBLE_TYPE} or @code{TI_LONG_DOUBLE_TYPE}.",
+ "Return machine mode for a C floating point type which is indicated by\n\
+  a given @code{enum tree_index} @var{ti}, @var{ti} should be\n\
+  @code{TI_FLOAT_TYPE}, @code{TI_DOUBLE_TYPE} or @code{TI_LONG_DOUBLE_TYPE}.\n\
+  The default implementation returns @code{SFmode} for @code{TI_FLOAT_TYPE},\n\
+  and @code{DFmode} for @code{TI_DOUBLE_TYPE} or @code{TI_LONG_DOUBLE_TYPE}.",
  machine_mode, (enum tree_index ti), default_mode_for_floating_type)
+
+/* The remainder of this group of hooks supports the @code{__builtin_available}\n\
+   expression shared by the C and C++ front ends.\n\
+   See @file{c-availability.cc}.  */
+
+DEFHOOK
+(availability_platform_name,
+ "Return the canonical, lowercase name of the @code{__builtin_available}\n\
+runtime platform, or @code{NULL} if the target has no notion of a runtime\n\
+platform that the expression can usefully check (this is the case for, e.g.,\nbare-metal or non-Apple targets).  The returned string is permanently owned\n\
+by the target and must not be freed by the caller.  On Darwin, this returns\n\
+the platform spelling implied by, e.g., @option{-mmacosx-version-min}.\n\
+The default implementation returns @code{NULL}.",
+ const char *, (void),
+ default_availability_platform_name)
+
+DEFHOOK
+(availability_min_version,
+ "If the target platform recognized by\n\
+@code{TARGET_AVAILABILITY_PLATFORM_NAME} has a minimum version known at\n\
+compile time (from, e.g., @option{-mmacosx-version-min}), write the major,\n\
+minor, and subminor components into *@var{major_p}, *@var{minor_p}, and\n\
+*@var{subminor_p} respectively, in the canonical convention used by\n\
+@code{__builtin_available}, and return true.  If the target does not have a\n\
+compile-time minimum version known, return false.  The default\n\
+implementation returns false.  The behaviour is undefined if\n\
+@code{TARGET_AVAILABILITY_PLATFORM_NAME} returns @code{NULL}.",
+ bool, (unsigned *major_p, unsigned *minor_p, unsigned *subminor_p),
+ default_availability_min_version)
+
+DEFHOOK
+(availability_platform_id,
+ "If the target platform recognized by\n\
+@code{TARGET_AVAILABILITY_PROGRAM_NAME} uses the Darwin-style runtime check\n\
+@code{__isPlatformVersionAtLeast (platform_id, major, minor, subminor)},\n\
+return the integer platform ID that the runtime function expects for the\n\
+current target.  This is consulted only for Darwin-family targets and is\n\
+otherwise ignored.  The default implementation returns 0.",
+ int, (void),
+ default_availability_platform_id)
 
 HOOK_VECTOR_END (c)
 

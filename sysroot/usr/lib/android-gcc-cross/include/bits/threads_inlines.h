@@ -48,46 +48,41 @@ __static_inline__ int __bionic_thrd_error(int __pthread_code) {
   }
 }
 
-__static_inline__ void call_once(once_flag* _Nonnull __flag,
-                                       void (* _Nonnull __function)(void)) {
-  pthread_once(__flag, __function);
-}
 
 
-
-__static_inline__ int cnd_broadcast(cnd_t* _Nonnull __cnd) {
+__static_inline__ int __attribute__((nonnull(1))) cnd_broadcast(cnd_t* __cnd) {
   return __bionic_thrd_error(pthread_cond_broadcast(__cnd));
 }
 
-__static_inline__ void cnd_destroy(cnd_t* _Nonnull __cnd) {
+__static_inline__ void __attribute__((nonnull(1))) cnd_destroy(cnd_t* __cnd) {
   pthread_cond_destroy(__cnd);
 }
 
-__static_inline__ int cnd_init(cnd_t* _Nonnull __cnd) {
+__static_inline__ int __attribute__((nonnull(1))) cnd_init(cnd_t* __cnd) {
   return __bionic_thrd_error(pthread_cond_init(__cnd, NULL));
 }
 
-__static_inline__ int cnd_signal(cnd_t* _Nonnull __cnd) {
+__static_inline__ int __attribute__((nonnull(1))) cnd_signal(cnd_t* __cnd) {
   return __bionic_thrd_error(pthread_cond_signal(__cnd));
 }
 
-__static_inline__ int cnd_timedwait(cnd_t* _Nonnull __cnd,
-                                          mtx_t* _Nonnull __mtx,
-                                          const struct timespec* _Nullable __timeout) {
+__static_inline__ int __attribute__((nonnull(1,2))) cnd_timedwait(cnd_t* __cnd,
+                                          mtx_t* __mtx,
+                                          const struct timespec* __timeout) {
   return __bionic_thrd_error(pthread_cond_timedwait(__cnd, __mtx, __timeout));
 }
 
-__static_inline__ int cnd_wait(cnd_t* _Nonnull __cnd, mtx_t* _Nonnull __mtx) {
+__static_inline__ int __attribute__((nonnull(1,2))) cnd_wait(cnd_t* __cnd, mtx_t* __mtx) {
   return __bionic_thrd_error(pthread_cond_wait(__cnd, __mtx));
 }
 
 
 
-__static_inline__ void mtx_destroy(mtx_t* _Nonnull __mtx) {
+__static_inline__ void __attribute__((nonnull(1))) mtx_destroy(mtx_t* __mtx) {
   pthread_mutex_destroy(__mtx);
 }
 
-__static_inline__ int mtx_init(mtx_t* _Nonnull __mtx, int __type) {
+__static_inline__ int __attribute__((nonnull(1))) mtx_init(mtx_t* __mtx, int __type) {
   int __pthread_type = (__type & mtx_recursive) ? PTHREAD_MUTEX_RECURSIVE
                                                 : PTHREAD_MUTEX_NORMAL;
   __type &= ~mtx_recursive;
@@ -99,29 +94,29 @@ __static_inline__ int mtx_init(mtx_t* _Nonnull __mtx, int __type) {
   return __bionic_thrd_error(pthread_mutex_init(__mtx, &__attr));
 }
 
-__static_inline__ int mtx_lock(mtx_t* _Nonnull __mtx) {
+__static_inline__ int __attribute__((nonnull(1))) mtx_lock(mtx_t* __mtx) {
   return __bionic_thrd_error(pthread_mutex_lock(__mtx));
 }
 
-__static_inline__ int mtx_timedlock(mtx_t* _Nonnull __mtx,
-                                          const struct timespec* _Nullable __timeout) {
+__static_inline__ int __attribute__((nonnull(1))) mtx_timedlock(mtx_t* __mtx,
+                                          const struct timespec* __timeout) {
   return __bionic_thrd_error(pthread_mutex_timedlock(__mtx, __timeout));
 }
 
-__static_inline__ int mtx_trylock(mtx_t* _Nonnull __mtx) {
+__static_inline__ int __attribute__((nonnull(1))) mtx_trylock(mtx_t* __mtx) {
   return __bionic_thrd_error(pthread_mutex_trylock(__mtx));
 }
 
-__static_inline__ int mtx_unlock(mtx_t* _Nonnull __mtx) {
+__static_inline__ int __attribute__((nonnull(1))) mtx_unlock(mtx_t* __mtx) {
   return __bionic_thrd_error(pthread_mutex_unlock(__mtx));
 }
 
 struct __bionic_thrd_data {
-  thrd_start_t _Nonnull __func;
-  void* _Nullable __arg;
+  thrd_start_t __func;
+  void* __arg;
 };
 
-__static_inline__ void* _Nonnull __bionic_thrd_trampoline(void* _Nonnull __arg) {
+__static_inline__ void* __attribute__((nonnull(1))) __bionic_thrd_trampoline(void* __arg) {
   struct __bionic_thrd_data __data =
       *__BIONIC_CAST(static_cast, struct __bionic_thrd_data*, __arg);
   free(__arg);
@@ -130,9 +125,9 @@ __static_inline__ void* _Nonnull __bionic_thrd_trampoline(void* _Nonnull __arg) 
                        __BIONIC_CAST(static_cast, uintptr_t, __result));
 }
 
-__static_inline__ int thrd_create(thrd_t* _Nonnull __thrd,
-                                        thrd_start_t _Nonnull __func,
-                                        void* _Nullable __arg) {
+__static_inline__ int __attribute__((nonnull(1,2))) thrd_create(thrd_t* __thrd,
+                                        thrd_start_t __func,
+                                        void* __arg) {
   struct __bionic_thrd_data* __pthread_arg =
       __BIONIC_CAST(static_cast, struct __bionic_thrd_data*,
                     malloc(sizeof(struct __bionic_thrd_data)));
@@ -162,7 +157,7 @@ __static_inline__ void thrd_exit(int __result) {
                              __BIONIC_CAST(static_cast, uintptr_t, __result)));
 }
 
-__static_inline__ int thrd_join(thrd_t __thrd, int* _Nullable __result) {
+__static_inline__ int thrd_join(thrd_t __thrd, int* __result) {
   void* __pthread_result;
   if (pthread_join(__thrd, &__pthread_result) != 0) return thrd_error;
   if (__result) {
@@ -171,8 +166,8 @@ __static_inline__ int thrd_join(thrd_t __thrd, int* _Nullable __result) {
   return thrd_success;
 }
 
-__static_inline__ int thrd_sleep(const struct timespec* _Nonnull __duration,
-                                       struct timespec* _Nullable __remaining) {
+__static_inline__ int __attribute__((nonnull(1))) thrd_sleep(const struct timespec* __duration,
+                                       struct timespec* __remaining) {
   int __rc = nanosleep(__duration, __remaining);
   if (__rc == 0) return 0;
   return (errno == EINTR) ? -1 : -2;
@@ -184,7 +179,7 @@ __static_inline__ void thrd_yield(void) {
 
 
 
-__static_inline__ int tss_create(tss_t* _Nonnull __key, tss_dtor_t _Nullable __dtor) {
+__static_inline__ int __attribute__((nonnull(1))) tss_create(tss_t* __key, tss_dtor_t __dtor) {
   return __bionic_thrd_error(pthread_key_create(__key, __dtor));
 }
 
@@ -192,11 +187,11 @@ __static_inline__ void tss_delete(tss_t __key) {
   pthread_key_delete(__key);
 }
 
-__static_inline__ void* _Nullable tss_get(tss_t __key) {
+__static_inline__ void* tss_get(tss_t __key) {
   return pthread_getspecific(__key);
 }
 
-__static_inline__ int tss_set(tss_t __key, void* _Nonnull __value) {
+__static_inline__ int __attribute__((nonnull(2))) tss_set(tss_t __key, void* __value) {
   return __bionic_thrd_error(pthread_setspecific(__key, __value));
 }
 

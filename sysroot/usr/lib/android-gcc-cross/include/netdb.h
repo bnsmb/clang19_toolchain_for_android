@@ -100,7 +100,7 @@ struct servent {
 	char	*s_name;	/* official service name */
 	char	**s_aliases;	/* alias list */
 	int	s_port;		/* port # */
-	char	* _Nullable s_proto;	/* protocol to use */
+	char	* s_proto;	/* protocol to use */
 };
 
 struct protoent {
@@ -196,80 +196,81 @@ struct addrinfo {
 
 #define IPPORT_RESERVED 1024
 
-int getaddrinfo(const char* _Nullable __node, const char* _Nullable __service, const struct addrinfo* _Nullable __hints, struct addrinfo* _Nullable * _Nonnull __result);
-void freeaddrinfo(struct addrinfo* _Nullable __ptr);
+int getaddrinfo(const char* __node, const char* __service, const struct addrinfo* __hints, struct addrinfo* * __result) __attribute__((nonnull(4)));
+void freeaddrinfo(struct addrinfo* __ptr)__THROW ;
 
 /* Android ABI error: POSIX getnameinfo(3) uses socklen_t rather than size_t. */
-int getnameinfo(const struct sockaddr* _Nonnull __sa, socklen_t __sa_length, char* _Nullable __host, size_t __host_length, char* _Nullable __service, size_t __service_length, int __flags);
-const char* _Nonnull gai_strerror(int __error);
+int getnameinfo(const struct sockaddr* __sa, socklen_t __sa_length, char* __host, size_t __host_length, char* __service, size_t __service_length, int __flags) __attribute__((nonnull(1)));
+const char* gai_strerror(int __error)__THROW ;
 
 /* These functions are obsolete. Use getaddrinfo/getnameinfo instead. */
 #define h_errno (*__get_h_errno())
-int* _Nonnull __get_h_errno(void);
-void herror(const char* _Nonnull __s);
-const char* _Nonnull hstrerror(int __error);
-struct hostent* _Nullable gethostbyaddr(const void* _Nonnull __addr, socklen_t __length, int __type);
+int* __get_h_errno(void);
+void herror(const char* __s) __THROW __attribute__((nonnull(1)));
+const char* hstrerror(int __error)__THROW ;
+struct hostent* gethostbyaddr(const void* __addr, socklen_t __length, int __type) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-int gethostbyaddr_r(const void* _Nonnull __addr, socklen_t __length, int __type, struct hostent* _Nonnull __ret, char* _Nonnull __buf, size_t __buf_size, struct hostent* _Nullable * _Nonnull __result, int* _Nonnull __h_errno_ptr) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+int gethostbyaddr_r(const void* __addr, socklen_t __length, int __type, struct hostent* __ret, char* __buf, size_t __buf_size, struct hostent* * __result, int* __h_errno_ptr) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1,4,5,7,8)));
+#endif
 
-struct hostent* _Nullable gethostbyname(const char* _Nonnull __name);
-int gethostbyname_r(const char* _Nonnull __name, struct hostent* _Nonnull __ret, char* _Nonnull __buf, size_t __buf_size, struct hostent* _Nullable * _Nonnull __result, int* _Nonnull __h_errno_ptr);
-struct hostent* _Nullable gethostbyname2(const char* _Nonnull __name, int __af);
+struct hostent* gethostbyname(const char* __name) __attribute__((nonnull(1)));
+int gethostbyname_r(const char* __name, struct hostent* __ret, char* __buf, size_t __buf_size, struct hostent* * __result, int* __h_errno_ptr) __attribute__((nonnull(1,2,3,5,6)));
+struct hostent* gethostbyname2(const char* __name, int __af) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-int gethostbyname2_r(const char* _Nonnull __name, int __af, struct hostent* _Nonnull __ret, char* _Nonnull __buf, size_t __buf_size, struct hostent* _Nullable * _Nonnull __result, int* _Nonnull __h_errno_ptr) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+int gethostbyname2_r(const char* __name, int __af, struct hostent* __ret, char* __buf, size_t __buf_size, struct hostent* * __result, int* __h_errno_ptr) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1,3,4,6,7)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 void endhostent(void) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+#endif
 
-struct hostent* _Nullable gethostent(void);
+struct hostent* gethostent(void);
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 void sethostent(int __stay_open) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+#endif
 
 /* These functions are obsolete. None of these functions return anything but nullptr. */
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 void endnetent(void) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+#endif
 
-struct netent* _Nullable getnetbyaddr(uint32_t __net, int __type);
-struct netent* _Nullable getnetbyname(const char* _Nonnull __name);
+struct netent* getnetbyaddr(uint32_t __net, int __type);
+struct netent* getnetbyname(const char* __name) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-struct netent* _Nullable getnetent(void) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+struct netent* getnetent(void) __INTRODUCED_IN_API_P__;
+#endif
+
 #if __BIONIC_AVAILABILITY_GUARD(28)
 void setnetent(int __stay_open) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+#endif
 
 /* None of these functions return anything but nullptr. */
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 void endprotoent(void) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+#endif
 
-struct protoent* _Nullable getprotobyname(const char* _Nonnull __name);
-struct protoent* _Nullable getprotobynumber(int __proto);
+struct protoent* getprotobyname(const char* __name) __attribute__((nonnull(1)));
+struct protoent* getprotobynumber(int __proto);
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-struct protoent* _Nullable getprotoent(void) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+struct protoent* getprotoent(void) __INTRODUCED_IN_API_P__;
+#endif
+
 #if __BIONIC_AVAILABILITY_GUARD(28)
 void setprotoent(int __stay_open) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
-
+#endif
 
 /* These functions return entries from a built-in database. */
 void endservent(void);
-struct servent* _Nullable getservbyname(const char* _Nonnull __name, const char* _Nullable __proto);
-struct servent* _Nullable getservbyport(int __port_in_network_order, const char* _Nullable __proto);
-struct servent* _Nullable getservent(void);
+struct servent* getservbyname(const char* __name, const char* __proto) __attribute__((nonnull(1)));
+struct servent* getservbyport(int __port_in_network_order, const char* __proto);
+struct servent* getservent(void);
 void setservent(int __stay_open);
 
 __END_DECLS

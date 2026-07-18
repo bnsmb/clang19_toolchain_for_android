@@ -58,13 +58,13 @@ __BEGIN_DECLS
 
 /** Deprecated. Use memmove() instead. */
 #define bcopy(b1, b2, len) __bionic_bcopy((b1), (b2), (len))
-__static_inline__ void __bionic_bcopy(const void* _Nonnull b1, void* _Nonnull b2, size_t len) {
+__static_inline__ void __attribute__((nonnull(1,2))) __bionic_bcopy(const void* b1, void* b2, size_t len) {
   __builtin_memmove(b2, b1, len);
 }
 
 /** Deprecated. Use memset() instead. */
 #define bzero(b, len) __bionic_bzero((b), (len))
-__static_inline__ void __bionic_bzero(void* _Nonnull b, size_t len) {
+__static_inline__ void __attribute__((nonnull(1))) __bionic_bzero(void* b, size_t len) {
   __builtin_memset(b, 0, len);
 }
 

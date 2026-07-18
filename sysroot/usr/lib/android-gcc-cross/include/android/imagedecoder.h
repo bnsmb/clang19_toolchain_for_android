@@ -141,7 +141,7 @@ enum {
  * Errors:
  * - Returns null for a value out of range.
  */
-const char* _Nullable AImageDecoder_resultToString(int)__INTRODUCED_IN_API_S__;
+const char* AImageDecoder_resultToString(int)__INTRODUCED_IN_API_S__;
 
 struct AImageDecoder;
 
@@ -193,9 +193,9 @@ typedef struct AImageDecoder AImageDecoder;
  * - {@link ANDROID_IMAGE_DECODER_UNSUPPORTED_FORMAT}: The format is not
  *   supported.
  */
-int AImageDecoder_createFromAAsset(struct AAsset* _Nonnull asset,
-                                   AImageDecoder* _Nullable * _Nonnull outDecoder)
-        __INTRODUCED_IN_API_R__;
+int AImageDecoder_createFromAAsset(struct AAsset* asset,
+                                   AImageDecoder* * outDecoder)
+        __INTRODUCED_IN_API_R__ __attribute__((nonnull(1,2)));
 
 /**
  * Create a new {@link AImageDecoder} from a file descriptor.
@@ -225,8 +225,8 @@ int AImageDecoder_createFromAAsset(struct AAsset* _Nonnull asset,
  * - {@link ANDROID_IMAGE_DECODER_UNSUPPORTED_FORMAT}: The format is not
  *   supported.
  */
-int AImageDecoder_createFromFd(int fd, AImageDecoder* _Nullable * _Nonnull outDecoder)
-        __INTRODUCED_IN_API_R__;
+int AImageDecoder_createFromFd(int fd, AImageDecoder* * outDecoder)
+        __INTRODUCED_IN_API_R__ __attribute__((nonnull(2)));
 
 /**
  * Create a new AImageDecoder from a buffer.
@@ -255,9 +255,9 @@ int AImageDecoder_createFromFd(int fd, AImageDecoder* _Nullable * _Nonnull outDe
  * - {@link ANDROID_IMAGE_DECODER_UNSUPPORTED_FORMAT}: The format is not
  *   supported.
  */
-int AImageDecoder_createFromBuffer(const void* _Nonnull buffer, size_t length,
-                                   AImageDecoder* _Nullable * _Nonnull outDecoder)
-        __INTRODUCED_IN_API_R__;
+int AImageDecoder_createFromBuffer(const void* buffer, size_t length,
+                                   AImageDecoder* * outDecoder)
+        __INTRODUCED_IN_API_R__ __attribute__((nonnull(1,3)));
 
 /**
  * Delete the AImageDecoder.
@@ -265,7 +265,7 @@ int AImageDecoder_createFromBuffer(const void* _Nonnull buffer, size_t length,
  *        functions.
  * Available since API level 30.
  */
-void AImageDecoder_delete(AImageDecoder* _Nullable decoder) __INTRODUCED_IN_API_R__;
+void AImageDecoder_delete(AImageDecoder* decoder) __INTRODUCED_IN_API_R__;
 
 /**
  * Choose the desired output format.
@@ -293,8 +293,8 @@ void AImageDecoder_delete(AImageDecoder* _Nullable decoder) __INTRODUCED_IN_API_
  * - {@link ANDROID_IMAGE_DECODER_INVALID_STATE}: The animation is not on
  *   the first frame.
  */
-int AImageDecoder_setAndroidBitmapFormat(AImageDecoder* _Nonnull decoder,
-        int32_t format) __INTRODUCED_IN_API_R__;
+int AImageDecoder_setAndroidBitmapFormat(AImageDecoder* decoder,
+        int32_t format) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Specify whether the output's pixels should be unpremultiplied.
@@ -323,8 +323,8 @@ int AImageDecoder_setAndroidBitmapFormat(AImageDecoder* _Nonnull decoder,
  * - {@link ANDROID_IMAGE_DECODER_INVALID_STATE}: The animation is not on
  *   the first frame.
  */
-int AImageDecoder_setUnpremultipliedRequired(AImageDecoder* _Nonnull decoder,
-                                             bool unpremultipliedRequired) __INTRODUCED_IN_API_R__;
+int AImageDecoder_setUnpremultipliedRequired(AImageDecoder* decoder,
+                                             bool unpremultipliedRequired) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Choose the dataspace for the output.
@@ -355,8 +355,8 @@ int AImageDecoder_setUnpremultipliedRequired(AImageDecoder* _Nonnull decoder,
  * - {@link ANDROID_IMAGE_DECODER_INVALID_STATE}: The animation is not on
  *   the first frame.
  */
-int AImageDecoder_setDataSpace(AImageDecoder* _Nonnull decoder, int32_t dataspace)
-        __INTRODUCED_IN_API_R__;
+int AImageDecoder_setDataSpace(AImageDecoder* decoder, int32_t dataspace)
+        __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Specify the output size for a decoded image.
@@ -396,8 +396,8 @@ int AImageDecoder_setDataSpace(AImageDecoder* _Nonnull decoder, int32_t dataspac
  * - {@link ANDROID_IMAGE_DECODER_INVALID_STATE}: The animation is not on
  *   the first frame.
  */
-int AImageDecoder_setTargetSize(AImageDecoder* _Nonnull decoder, int32_t width,
-                                int32_t height) __INTRODUCED_IN_API_R__;
+int AImageDecoder_setTargetSize(AImageDecoder* decoder, int32_t width,
+                                int32_t height) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Compute the dimensions to use for a given sampleSize.
@@ -426,9 +426,9 @@ int AImageDecoder_setTargetSize(AImageDecoder* _Nonnull decoder, int32_t width,
  * - {@link ANDROID_IMAGE_DECODER_BAD_PARAMETER}: The
  *   {@link AImageDecoder}, |width| or |height| is null or |sampleSize| is < 1.
  */
-int AImageDecoder_computeSampledSize(const AImageDecoder* _Nonnull decoder, int sampleSize,
-                                     int32_t* _Nonnull width, int32_t* _Nonnull height)
-        __INTRODUCED_IN_API_R__;
+int AImageDecoder_computeSampledSize(const AImageDecoder* decoder, int sampleSize,
+                                     int32_t* width, int32_t* height)
+        __INTRODUCED_IN_API_R__ __attribute__((nonnull(1,3,4)));
 
 /**
  * Specify how to crop the output after scaling (if any).
@@ -462,7 +462,7 @@ int AImageDecoder_computeSampledSize(const AImageDecoder* _Nonnull decoder, int 
  * - {@link ANDROID_IMAGE_DECODER_INVALID_STATE}: The animation is not on
  *   the first frame.
  */
-int AImageDecoder_setCrop(AImageDecoder* _Nonnull decoder, ARect crop) __INTRODUCED_IN_API_R__;
+int AImageDecoder_setCrop(AImageDecoder* decoder, ARect crop) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 struct AImageDecoderHeaderInfo;
 /**
@@ -486,8 +486,8 @@ typedef struct AImageDecoderHeaderInfo AImageDecoderHeaderInfo;
  *
  * Available since API level 30.
  */
-const AImageDecoderHeaderInfo* _Nonnull  AImageDecoder_getHeaderInfo(
-        const AImageDecoder* _Nonnull decoder) __INTRODUCED_IN_API_R__;
+const AImageDecoderHeaderInfo*  AImageDecoder_getHeaderInfo(
+        const AImageDecoder* decoder) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Report the native width of the encoded image. This is also the logical
@@ -497,7 +497,7 @@ const AImageDecoderHeaderInfo* _Nonnull  AImageDecoder_getHeaderInfo(
  *
  * Available since API level 30.
  */
-int32_t AImageDecoderHeaderInfo_getWidth(const AImageDecoderHeaderInfo* _Nonnull)
+int32_t AImageDecoderHeaderInfo_getWidth(const AImageDecoderHeaderInfo* )
         __INTRODUCED_IN_API_R__;
 
 /**
@@ -508,7 +508,7 @@ int32_t AImageDecoderHeaderInfo_getWidth(const AImageDecoderHeaderInfo* _Nonnull
  *
  * Available since API level 30.
  */
-int32_t AImageDecoderHeaderInfo_getHeight(const AImageDecoderHeaderInfo* _Nonnull)
+int32_t AImageDecoderHeaderInfo_getHeight(const AImageDecoderHeaderInfo* )
         __INTRODUCED_IN_API_R__;
 
 /**
@@ -518,8 +518,8 @@ int32_t AImageDecoderHeaderInfo_getHeight(const AImageDecoderHeaderInfo* _Nonnul
  *
  * @return a string literal describing the mime type.
  */
-const char* _Nonnull  AImageDecoderHeaderInfo_getMimeType(
-        const AImageDecoderHeaderInfo* _Nonnull) __INTRODUCED_IN_API_R__;
+const char*  AImageDecoderHeaderInfo_getMimeType(
+        const AImageDecoderHeaderInfo* ) __INTRODUCED_IN_API_R__;
 
 /**
  * Report the {@link AndroidBitmapFormat} the AImageDecoder will decode to
@@ -530,7 +530,7 @@ const char* _Nonnull  AImageDecoderHeaderInfo_getMimeType(
  * Available since API level 30.
  */
 int32_t AImageDecoderHeaderInfo_getAndroidBitmapFormat(
-        const AImageDecoderHeaderInfo* _Nonnull) __INTRODUCED_IN_API_R__;
+        const AImageDecoderHeaderInfo* ) __INTRODUCED_IN_API_R__;
 
 /**
  * Report how the {@link AImageDecoder} will handle alpha by default. If the image
@@ -546,7 +546,7 @@ int32_t AImageDecoderHeaderInfo_getAndroidBitmapFormat(
  * alpha.
  */
 int AImageDecoderHeaderInfo_getAlphaFlags(
-        const AImageDecoderHeaderInfo* _Nonnull) __INTRODUCED_IN_API_R__;
+        const AImageDecoderHeaderInfo* ) __INTRODUCED_IN_API_R__;
 
 /**
  * Report the dataspace the AImageDecoder will decode to by default.
@@ -567,7 +567,7 @@ int AImageDecoderHeaderInfo_getAlphaFlags(
  *         no corresponding {@link ADataSpace}.
  */
 int32_t AImageDecoderHeaderInfo_getDataSpace(
-        const AImageDecoderHeaderInfo* _Nonnull) __INTRODUCED_IN_API_R__;
+        const AImageDecoderHeaderInfo* ) __INTRODUCED_IN_API_R__;
 
 /**
  * Return the minimum stride that can be used in
@@ -584,7 +584,7 @@ int32_t AImageDecoderHeaderInfo_getDataSpace(
  *
  * Available since API level 30.
  */
-size_t AImageDecoder_getMinimumStride(AImageDecoder* _Nonnull decoder) __INTRODUCED_IN_API_R__;
+size_t AImageDecoder_getMinimumStride(AImageDecoder* decoder) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Decode the image into pixels, using the settings of the {@link AImageDecoder}.
@@ -663,9 +663,9 @@ size_t AImageDecoder_getMinimumStride(AImageDecoder* _Nonnull decoder) __INTRODU
  *   {@link AImageDecoder_rewind} before calling
  *   {@link AImageDecoder_decodeImage} again.
  */
-int AImageDecoder_decodeImage(AImageDecoder* _Nonnull decoder,
-                              void* _Nonnull pixels, size_t stride,
-                              size_t size) __INTRODUCED_IN_API_R__;
+int AImageDecoder_decodeImage(AImageDecoder* decoder,
+                              void* pixels, size_t stride,
+                              size_t size) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1,2)));
 
 /**
  * Return true iff the image is animated - i.e. has multiple frames.
@@ -680,8 +680,8 @@ int AImageDecoder_decodeImage(AImageDecoder* _Nonnull decoder,
  * Errors:
  * - returns false if |decoder| is null.
  */
-bool AImageDecoder_isAnimated(AImageDecoder* _Nonnull decoder)
-        __INTRODUCED_IN_API_S__;
+bool AImageDecoder_isAnimated(AImageDecoder* decoder)
+        __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 enum {
     /**
@@ -717,8 +717,8 @@ enum {
  * - {@link ANDROID_IMAGE_DECODER_BAD_PARAMETER}: The AImageDecoder
  *   is null.
  */
-int32_t AImageDecoder_getRepeatCount(AImageDecoder* _Nonnull decoder)
-        __INTRODUCED_IN_API_S__;
+int32_t AImageDecoder_getRepeatCount(AImageDecoder* decoder)
+        __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 /**
  * Advance to the next frame in the animation.
@@ -762,8 +762,8 @@ int32_t AImageDecoder_getRepeatCount(AImageDecoder* _Nonnull decoder)
  *   more frames. The client must call {@link AImageDecoder_rewind}
  *   before calling {@link AImageDecoder_decodeImage} again.
  */
-int AImageDecoder_advanceFrame(AImageDecoder* _Nonnull decoder)
-        __INTRODUCED_IN_API_S__;
+int AImageDecoder_advanceFrame(AImageDecoder* decoder)
+        __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 /**
  * Return to the beginning of the animation.
@@ -787,8 +787,8 @@ int AImageDecoder_advanceFrame(AImageDecoder* _Nonnull decoder)
  * - {@link ANDROID_IMAGE_DECODER_SEEK_ERROR}: The asset or file
  *   descriptor failed to seek.
  */
-int AImageDecoder_rewind(AImageDecoder* _Nonnull decoder)
-        __INTRODUCED_IN_API_S__;
+int AImageDecoder_rewind(AImageDecoder* decoder)
+        __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 struct AImageDecoderFrameInfo;
 
@@ -815,7 +815,7 @@ typedef struct AImageDecoderFrameInfo AImageDecoderFrameInfo;
  *
  * Must be deleted with {@link AImageDecoderFrameInfo_delete}.
  */
-AImageDecoderFrameInfo* _Nullable AImageDecoderFrameInfo_create()
+AImageDecoderFrameInfo* AImageDecoderFrameInfo_create()
         __INTRODUCED_IN_API_S__;
 
 /**
@@ -824,7 +824,7 @@ AImageDecoderFrameInfo* _Nullable AImageDecoderFrameInfo_create()
  * Introduced in API 31.
  */
 void AImageDecoderFrameInfo_delete(
-        AImageDecoderFrameInfo* _Nullable info) __INTRODUCED_IN_API_S__;
+        AImageDecoderFrameInfo* info) __INTRODUCED_IN_API_S__;
 
 /**
  * Fill |info| with information about the current frame.
@@ -854,8 +854,8 @@ void AImageDecoderFrameInfo_delete(
  *   more frames. The client must call {@link AImageDecoder_rewind} to reset the
  *   current frame to a valid frame (0).
  */
-int AImageDecoder_getFrameInfo(AImageDecoder* _Nonnull decoder,
-        AImageDecoderFrameInfo* _Nonnull info) __INTRODUCED_IN_API_S__;
+int AImageDecoder_getFrameInfo(AImageDecoder* decoder,
+        AImageDecoderFrameInfo* info) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1,2)));
 
 /**
  * Report the number of nanoseconds to show the current frame.
@@ -866,7 +866,7 @@ int AImageDecoder_getFrameInfo(AImageDecoder* _Nonnull decoder,
  * - returns {@link ANDROID_IMAGE_DECODER_BAD_PARAMETER} if |info| is null.
  */
 int64_t AImageDecoderFrameInfo_getDuration(
-        const AImageDecoderFrameInfo* _Nonnull info) __INTRODUCED_IN_API_S__;
+        const AImageDecoderFrameInfo* info) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 /**
  * The rectangle of the image (within 0, 0,
@@ -891,7 +891,7 @@ int64_t AImageDecoderFrameInfo_getDuration(
  * - returns an empty ARect if |info| is null.
  */
 ARect AImageDecoderFrameInfo_getFrameRect(
-        const AImageDecoderFrameInfo* _Nonnull info) __INTRODUCED_IN_API_S__;
+        const AImageDecoderFrameInfo* info) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 /**
  * Whether the new portion of this frame may contain alpha.
@@ -921,7 +921,7 @@ ARect AImageDecoderFrameInfo_getFrameRect(
  * - returns false if |info| is null.
  */
 bool AImageDecoderFrameInfo_hasAlphaWithinBounds(
-        const AImageDecoderFrameInfo* _Nonnull info) __INTRODUCED_IN_API_S__;
+        const AImageDecoderFrameInfo* info) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 /**
  * How a frame is “disposed” before showing the next one.
@@ -964,7 +964,7 @@ enum {
  * - {@link ANDROID_IMAGE_DECODER_BAD_PARAMETER} if |info| is null.
  */
 int32_t AImageDecoderFrameInfo_getDisposeOp(
-        const AImageDecoderFrameInfo* _Nonnull info) __INTRODUCED_IN_API_S__;
+        const AImageDecoderFrameInfo* info) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 /**
  * How a frame is blended with the previous frame.
@@ -1001,8 +1001,8 @@ enum {
  * - {@link ANDROID_IMAGE_DECODER_BAD_PARAMETER} if |info| is null.
  */
 int32_t AImageDecoderFrameInfo_getBlendOp(
-        const AImageDecoderFrameInfo* _Nonnull info)
-        __INTRODUCED_IN_API_S__;
+        const AImageDecoderFrameInfo* info)
+        __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 /**
  * Whether to have AImageDecoder store the frame prior to a
@@ -1037,8 +1037,8 @@ int32_t AImageDecoderFrameInfo_getBlendOp(
  *               frames.
  */
 void AImageDecoder_setInternallyHandleDisposePrevious(
-        AImageDecoder* _Nonnull decoder, bool handleInternally)
-        __INTRODUCED_IN_API_S__;
+        AImageDecoder* decoder, bool handleInternally)
+        __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 
 #ifdef __cplusplus

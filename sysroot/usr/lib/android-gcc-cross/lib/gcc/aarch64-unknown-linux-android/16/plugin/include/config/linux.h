@@ -93,7 +93,6 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 #define BIONIC_DYNAMIC_LINKER "/system/bin/linker"
 #define BIONIC_DYNAMIC_LINKER32 "/system/bin/linker"
 #define BIONIC_DYNAMIC_LINKER64 "/system/bin/linker64"
-#define BIONIC_DYNAMIC_LINKER_HWSAN64 "/system/bin/linker_hwasan64"
 #define BIONIC_DYNAMIC_LINKERX32 "/system/bin/linkerx32"
 /* Should be redefined for each target that supports musl.  */
 #define MUSL_DYNAMIC_LINKER "/dev/null"
@@ -219,4 +218,9 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 #undef TARGET_FORTIFY_SOURCE_DEFAULT_LEVEL
 #define TARGET_FORTIFY_SOURCE_DEFAULT_LEVEL linux_fortify_source_default_level
 
+#endif
+
+#if DEFAULT_LIBC == LIBC_BIONIC
+#undef LOCAL_INCLUDE_DIR
+#define LOCAL_INCLUDE_DIR "/include/" TARGET
 #endif

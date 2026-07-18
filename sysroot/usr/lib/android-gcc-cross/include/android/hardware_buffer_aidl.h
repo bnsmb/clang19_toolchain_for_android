@@ -54,8 +54,8 @@ __BEGIN_DECLS
  *                         an AHardwareBuffer type
  *         STATUS_NO_MEMORY if an allocation fails
  */
-binder_status_t AHardwareBuffer_readFromParcel(const AParcel* _Nonnull parcel,
-        AHardwareBuffer* _Nullable* _Nonnull outBuffer) __INTRODUCED_IN_API_U__;
+binder_status_t AHardwareBuffer_readFromParcel(const AParcel* parcel,
+        AHardwareBuffer** outBuffer) __INTRODUCED_IN_API_U__ __attribute__((nonnull(1,2)));
 
 /**
  * Write an AHardwareBuffer to an AParcel.
@@ -69,8 +69,8 @@ binder_status_t AHardwareBuffer_readFromParcel(const AParcel* _Nonnull parcel,
  *                          unable to allocate more
  *         STATUS_FDS_NOT_ALLOWED if the parcel does not allow storing FDs
  */
-binder_status_t AHardwareBuffer_writeToParcel(const AHardwareBuffer* _Nonnull buffer,
-        AParcel* _Nonnull parcel) __INTRODUCED_IN_API_U__;
+binder_status_t AHardwareBuffer_writeToParcel(const AHardwareBuffer* buffer,
+        AParcel* parcel) __INTRODUCED_IN_API_U__ __attribute__((nonnull(1,2)));
 
 __END_DECLS
 
@@ -93,7 +93,7 @@ public:
         reset();
     }
 
-    binder_status_t readFromParcel(const AParcel* _Nonnull parcel) {
+    binder_status_t __attribute__((nonnull(1))) readFromParcel(const AParcel* parcel) {
         reset();
         if (__builtin_available(android __ANDROID_API_U__, *)) {
             return AHardwareBuffer_readFromParcel(parcel, &mBuffer);
@@ -102,7 +102,7 @@ public:
         }
     }
 
-    binder_status_t writeToParcel(AParcel* _Nonnull parcel) const {
+    binder_status_t writeToParcel(AParcel* parcel) const {
         if (!mBuffer) {
             return STATUS_BAD_VALUE;
         }
@@ -119,7 +119,7 @@ public:
      *
      * @param buffer The buffer to take ownership of
      */
-    void reset(AHardwareBuffer* _Nullable buffer = nullptr) noexcept {
+    void reset(AHardwareBuffer* buffer = nullptr) noexcept {
         if (mBuffer) {
             AHardwareBuffer_release(mBuffer);
             mBuffer = nullptr;
@@ -127,8 +127,8 @@ public:
         mBuffer = buffer;
     }
 
-    inline AHardwareBuffer* _Nullable operator-> () const { return mBuffer;  }
-    inline AHardwareBuffer* _Nullable get() const { return mBuffer; }
+    inline AHardwareBuffer* operator-> () const { return mBuffer;  }
+    inline AHardwareBuffer* get() const { return mBuffer; }
     inline explicit operator bool () const { return mBuffer != nullptr; }
 
     inline bool operator!=(const HardwareBuffer& rhs) const { return get() != rhs.get(); }
@@ -148,8 +148,8 @@ public:
      * is released.
      * @return AHardwareBuffer* or null if this was empty
      */
-    [[nodiscard]] AHardwareBuffer* _Nullable release() noexcept {
-        AHardwareBuffer* _Nullable ret = mBuffer;
+    [[nodiscard]] AHardwareBuffer* release() noexcept {
+        AHardwareBuffer* ret = mBuffer;
         mBuffer = nullptr;
         return ret;
     }
@@ -171,7 +171,7 @@ private:
     HardwareBuffer(const HardwareBuffer& other) = delete;
     HardwareBuffer& operator=(const HardwareBuffer& other) = delete;
 
-    AHardwareBuffer* _Nullable mBuffer = nullptr;
+    AHardwareBuffer* mBuffer = nullptr;
 };
 
 } // aidl::android::hardware

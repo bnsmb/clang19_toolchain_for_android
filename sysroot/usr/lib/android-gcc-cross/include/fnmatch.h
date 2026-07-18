@@ -65,6 +65,6 @@ __BEGIN_DECLS
  *
  * Returns 0 on success, and returns `FNM_NOMATCH` on failure.
  */
-int fnmatch(const char* _Nonnull __pattern, const char* _Nonnull __string, int __flags);
+int fnmatch(const char* __pattern, const char* __string, int __flags) __attribute__((nonnull(1,2)));
 
 __END_DECLS

@@ -31,17 +31,17 @@
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-void* _Nullable __memchr_chk(const void* _Nonnull, int, size_t, size_t) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+void* __memchr_chk(const void*, int, size_t, size_t) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-void* _Nullable __memrchr_chk(const void* _Nonnull, int, size_t, size_t) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+void* __memrchr_chk(const void*, int, size_t, size_t) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
 
-char* _Nonnull __stpncpy_chk2(char* _Nonnull, const char* _Nonnull, size_t, size_t, size_t);
-char* _Nonnull __strncpy_chk2(char* _Nonnull, const char* _Nonnull, size_t, size_t, size_t);
-size_t __strlcpy_chk(char* _Nonnull, const char* _Nonnull, size_t, size_t);
-size_t __strlcat_chk(char* _Nonnull, const char* _Nonnull, size_t, size_t);
+char* __stpncpy_chk2(char*, const char*, size_t, size_t, size_t) __attribute__((nonnull(1,2)));
+char* __strncpy_chk2(char*, const char*, size_t, size_t, size_t) __attribute__((nonnull(1,2)));
+size_t __strlcpy_chk(char*, const char*, size_t, size_t) __attribute__((nonnull(1,2)));
+size_t __strlcat_chk(char*, const char*, size_t, size_t) __attribute__((nonnull(1,2)));
 
 #if defined(__BIONIC_FORTIFY)
 
@@ -49,7 +49,7 @@ size_t __strlcat_chk(char* _Nonnull, const char* _Nonnull, size_t, size_t);
 #if __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED && !__has_feature(hwaddress_sanitizer)
 /* No diag -- clang diagnoses misuses of this on its own.  */
 __BIONIC_FORTIFY_INLINE
-void* _Nonnull memcpy(void* _Nonnull const dst __pass_object_size0, const void* _Nonnull src, size_t copy_amount)
+void* memcpy(void* const dst __pass_object_size0, const void* src, size_t copy_amount)
         __diagnose_as_builtin(__builtin_memcpy, 1, 2, 3)
         __overloadable {
     return __builtin___memcpy_chk(dst, src, copy_amount, __bos0(dst));
@@ -60,7 +60,7 @@ void* _Nonnull memcpy(void* _Nonnull const dst __pass_object_size0, const void* 
 #if __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED && !__has_feature(hwaddress_sanitizer)
 /* No diag -- clang diagnoses misuses of this on its own.  */
 __BIONIC_FORTIFY_INLINE
-void* _Nonnull memmove(void* _Nonnull const dst __pass_object_size0, const void* _Nonnull src, size_t len)
+void* memmove(void* const dst __pass_object_size0, const void* src, size_t len)
         __diagnose_as_builtin(__builtin_memmove, 1, 2, 3)
         __overloadable {
     return __builtin___memmove_chk(dst, src, len, __bos0(dst));
@@ -69,7 +69,7 @@ void* _Nonnull memmove(void* _Nonnull const dst __pass_object_size0, const void*
 
 /* TODO: remove __clang_warning_if when https://issuetracker.google.com/400937647 is fixed. */
 __BIONIC_FORTIFY_INLINE
-void* _Nonnull memset(void* _Nonnull const s __pass_object_size0, int c, size_t n)
+void* memset(void* const s __pass_object_size0, int c, size_t n)
         __diagnose_as_builtin(__builtin_memset, 1, 2, 3)
         __overloadable
         /* If you're a user who wants this warning to go away: use `(&memset)(foo, bar, baz)`. */
@@ -84,7 +84,7 @@ void* _Nonnull memset(void* _Nonnull const s __pass_object_size0, int c, size_t 
 
 #if defined(__USE_GNU) && __ANDROID_API__ >= 30
 __BIONIC_FORTIFY_INLINE
-void* _Nonnull mempcpy(void* _Nonnull const dst __pass_object_size0, const void* _Nonnull src, size_t copy_amount)
+void* mempcpy(void* const dst __pass_object_size0, const void* src, size_t copy_amount)
         __diagnose_as_builtin(__builtin_mempcpy, 1, 2, 3)
         __overloadable {
 #if __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
@@ -98,7 +98,7 @@ void* _Nonnull mempcpy(void* _Nonnull const dst __pass_object_size0, const void*
 #endif
 
 __BIONIC_FORTIFY_INLINE
-char* _Nonnull stpcpy(char* _Nonnull const dst __pass_object_size, const char* _Nonnull src)
+char* stpcpy(char* const dst __pass_object_size, const char* src)
         __overloadable
         __clang_error_if(__bos_unevaluated_le(__bos(dst), __builtin_strlen(src)),
                          "'stpcpy' called with string bigger than buffer") {
@@ -110,7 +110,7 @@ char* _Nonnull stpcpy(char* _Nonnull const dst __pass_object_size, const char* _
 }
 
 __BIONIC_FORTIFY_INLINE
-char* _Nonnull strcpy(char* _Nonnull const dst __pass_object_size, const char* _Nonnull src)
+char* strcpy(char* const dst __pass_object_size, const char* src)
         __diagnose_as_builtin(__builtin_strcpy, 1, 2)
         __overloadable {
 #if __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
@@ -121,7 +121,7 @@ char* _Nonnull strcpy(char* _Nonnull const dst __pass_object_size, const char* _
 }
 
 __BIONIC_FORTIFY_INLINE
-char* _Nonnull strcat(char* _Nonnull const dst __pass_object_size, const char* _Nonnull src)
+char* strcat(char* const dst __pass_object_size, const char* src)
         __overloadable
         __clang_error_if(__bos_unevaluated_le(__bos(dst), __builtin_strlen(src)),
                          "'strcat' called with string bigger than buffer") {
@@ -135,7 +135,7 @@ char* _Nonnull strcat(char* _Nonnull const dst __pass_object_size, const char* _
 #if __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
 /* No diag -- clang diagnoses misuses of this on its own.  */
 __BIONIC_FORTIFY_INLINE
-char* _Nonnull strncat(char* _Nonnull const dst __pass_object_size, const char* _Nonnull src, size_t n)
+char* strncat(char* const dst __pass_object_size, const char* src, size_t n)
        __diagnose_as_builtin(__builtin_strncat, 1, 2, 3)
        __overloadable {
     return __builtin___strncat_chk(dst, src, n, __bos(dst));
@@ -144,7 +144,7 @@ char* _Nonnull strncat(char* _Nonnull const dst __pass_object_size, const char* 
 
 #if __ANDROID_API__ >= 23 && __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
 __BIONIC_FORTIFY_INLINE
-void* _Nullable memchr(const void* _Nonnull const s __pass_object_size, int c, size_t n) __overloadable {
+void* memchr(const void* const s __pass_object_size, int c, size_t n) __overloadable {
     size_t bos = __bos(s);
 
     if (__bos_trivially_ge(bos, n)) {
@@ -154,10 +154,10 @@ void* _Nullable memchr(const void* _Nonnull const s __pass_object_size, int c, s
     return __memchr_chk(s, c, n, bos);
 }
 
-void* _Nullable __memrchr_real(const void* _Nonnull, int, size_t) __RENAME(memrchr);
+void* __memrchr_real(const void*, int, size_t) __RENAME(memrchr) __attribute__((nonnull(1)));
 
 __BIONIC_FORTIFY_INLINE
-void* _Nullable __memrchr_fortify(const void* _Nonnull const __pass_object_size s, int c, size_t n) __overloadable {
+void* __memrchr_fortify(const void* const __pass_object_size s, int c, size_t n) __overloadable {
     size_t bos = __bos(s);
 
     if (__bos_trivially_ge(bos, n)) {
@@ -171,7 +171,7 @@ void* _Nullable __memrchr_fortify(const void* _Nonnull const __pass_object_size 
 #if __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
 /* No diag -- clang diagnoses misuses of this on its own.  */
 __BIONIC_FORTIFY_INLINE
-char* _Nonnull stpncpy(char* _Nonnull const dst __pass_object_size, const char* _Nonnull const src __pass_object_size, size_t n)
+char* stpncpy(char* const dst __pass_object_size, const char* const src __pass_object_size, size_t n)
         __diagnose_as_builtin(__builtin_stpncpy, 1, 2, 3)
         __overloadable {
     size_t bos_dst = __bos(dst);
@@ -187,7 +187,7 @@ char* _Nonnull stpncpy(char* _Nonnull const dst __pass_object_size, const char* 
 
 /* No diag -- clang diagnoses misuses of this on its own.  */
 __BIONIC_FORTIFY_INLINE
-char* _Nonnull strncpy(char* _Nonnull const dst __pass_object_size, const char* _Nonnull const src __pass_object_size, size_t n)
+char* strncpy(char* const dst __pass_object_size, const char* const src __pass_object_size, size_t n)
         __diagnose_as_builtin(__builtin_strncpy, 1, 2, 3)
         __overloadable {
     size_t bos_dst = __bos(dst);
@@ -203,7 +203,7 @@ char* _Nonnull strncpy(char* _Nonnull const dst __pass_object_size, const char* 
 #endif
 
 __BIONIC_FORTIFY_INLINE
-size_t strlcpy(char* _Nonnull const dst __pass_object_size, const char* _Nonnull src, size_t size)
+size_t strlcpy(char* const dst __pass_object_size, const char* src, size_t size)
         __overloadable
         __clang_error_if(__bos_unevaluated_lt(__bos(dst), size),
                          "'strlcpy' called with size bigger than buffer") {
@@ -215,7 +215,7 @@ size_t strlcpy(char* _Nonnull const dst __pass_object_size, const char* _Nonnull
 }
 
 __BIONIC_FORTIFY_INLINE
-size_t strlcat(char* _Nonnull const dst __pass_object_size, const char* _Nonnull src, size_t size)
+size_t strlcat(char* const dst __pass_object_size, const char* src, size_t size)
         __overloadable
         __clang_error_if(__bos_unevaluated_lt(__bos(dst), size),
                          "'strlcat' called with size bigger than buffer") {
@@ -233,13 +233,13 @@ size_t strlcat(char* _Nonnull const dst __pass_object_size, const char* _Nonnull
  * can't use `__pass_object_size0` here, but that's fine: it doesn't help much
  * on __always_inline functions.
  */
-extern __always_inline __inline__ __attribute__((gnu_inline)) size_t strlen(const char* _Nonnull s) {
+extern __always_inline __inline__ __attribute__((gnu_inline)) size_t __attribute__((nonnull(1))) strlen(const char* s) {
     return __strlen_chk(s, __bos0(s));
 }
 #endif
 
 __BIONIC_FORTIFY_INLINE
-char* _Nullable strchr(const char* _Nonnull const s __pass_object_size, int c) __overloadable {
+char* strchr(const char* const s __pass_object_size, int c) __overloadable {
 #if __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
     size_t bos = __bos(s);
 
@@ -251,7 +251,7 @@ char* _Nullable strchr(const char* _Nonnull const s __pass_object_size, int c) _
 }
 
 __BIONIC_FORTIFY_INLINE
-char* _Nullable strrchr(const char* _Nonnull const s __pass_object_size, int c) __overloadable {
+char* strrchr(const char* const s __pass_object_size, int c) __overloadable {
 #if __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
     size_t bos = __bos(s);
 
@@ -266,18 +266,18 @@ char* _Nullable strrchr(const char* _Nonnull const s __pass_object_size, int c) 
 #if defined(__cplusplus)
 extern "C++" {
 __BIONIC_FORTIFY_INLINE
-void* _Nullable memrchr(void* _Nonnull const __pass_object_size s, int c, size_t n) {
+void* __attribute__((nonnull(1))) memrchr(void* const __pass_object_size s, int c, size_t n) {
     return __memrchr_fortify(s, c, n);
 }
 
 __BIONIC_FORTIFY_INLINE
-const void* _Nullable memrchr(const void* _Nonnull const __pass_object_size s, int c, size_t n) {
+const void* __attribute__((nonnull(1))) memrchr(const void* const __pass_object_size s, int c, size_t n) {
     return __memrchr_fortify(s, c, n);
 }
 }
 #else
 __BIONIC_FORTIFY_INLINE
-void* _Nullable memrchr(const void* _Nonnull const __pass_object_size s, int c, size_t n) __overloadable {
+void* memrchr(const void* const __pass_object_size s, int c, size_t n) __overloadable {
     return __memrchr_fortify(s, c, n);
 }
 #endif

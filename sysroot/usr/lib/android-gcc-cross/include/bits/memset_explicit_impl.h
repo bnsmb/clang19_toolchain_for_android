@@ -26,7 +26,7 @@
  * SUCH DAMAGE.
  */
 
-__BIONIC_MEMSET_EXPLICIT_INLINE void* _Nonnull memset_explicit(void* _Nonnull __dst, int __ch, size_t __n) {
+__BIONIC_MEMSET_EXPLICIT_INLINE void* __attribute__((nonnull(1))) memset_explicit(void* __dst, int __ch, size_t __n) {
   void* __result = memset(__dst, __ch, __n);
   // https://bugs.llvm.org/show_bug.cgi?id=15495
   __asm__ __volatile__("" : : "r"(__dst) : "memory");

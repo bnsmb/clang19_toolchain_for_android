@@ -321,4 +321,9 @@ extern rtx default_memtag_set_tag (rtx, rtx, rtx);
 extern rtx default_memtag_extract_tag (rtx, rtx);
 extern rtx default_memtag_untagged_pointer (rtx, rtx);
 
+/* Default TARGET_AVAILABILITY_* hooks for __builtin_available.  */
+extern const char *default_availability_platform_name (void);
+extern bool default_availability_min_version (unsigned *, unsigned *, unsigned *);
+extern int default_availability_platform_id (void);
+
 #endif /* GCC_TARGHOOKS_H */

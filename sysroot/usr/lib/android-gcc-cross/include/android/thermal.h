@@ -112,7 +112,7 @@ typedef struct AThermalManager AThermalManager;
  * It's passed the updated thermal status as parameter, as well as the
  * pointer provided by the client that registered a callback.
  */
-typedef void (*AThermal_StatusCallback)(void* _Nullable data, AThermalStatus status);
+typedef void (*AThermal_StatusCallback)(void* data, AThermalStatus status);
 
 /**
   * Acquire an instance of the thermal manager. This must be freed using
@@ -122,7 +122,7 @@ typedef void (*AThermal_StatusCallback)(void* _Nullable data, AThermalStatus sta
   *
   * @return manager instance on success, nullptr on failure.
   */
-AThermalManager* _Nonnull AThermal_acquireManager() __INTRODUCED_IN_API_R__;
+AThermalManager* AThermal_acquireManager() __INTRODUCED_IN_API_R__;
 
 /**
  * Release the thermal manager pointer acquired via
@@ -132,7 +132,7 @@ AThermalManager* _Nonnull AThermal_acquireManager() __INTRODUCED_IN_API_R__;
  *
  * @param manager The manager to be released.
  */
-void AThermal_releaseManager(AThermalManager* _Nonnull manager) __INTRODUCED_IN_API_R__;
+void AThermal_releaseManager(AThermalManager* manager) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
   * Gets the current thermal status.
@@ -145,7 +145,7 @@ void AThermal_releaseManager(AThermalManager* _Nonnull manager) __INTRODUCED_IN_
   * @return current thermal status, ATHERMAL_STATUS_ERROR on failure.
   */
 AThermalStatus
-AThermal_getCurrentThermalStatus(AThermalManager *_Nonnull manager) __INTRODUCED_IN_API_R__;
+AThermal_getCurrentThermalStatus(AThermalManager* manager) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Register a thermal status listener for thermal status change.
@@ -163,9 +163,9 @@ AThermal_getCurrentThermalStatus(AThermalManager *_Nonnull manager) __INTRODUCED
  *         EPIPE if communication with the system service has failed, the listener will not get
  *               removed and this call should be retried
  */
-int AThermal_registerThermalStatusListener(AThermalManager *_Nonnull manager,
-                                           AThermal_StatusCallback _Nullable callback,
-                                           void* _Nullable data) __INTRODUCED_IN_API_R__;
+int AThermal_registerThermalStatusListener(AThermalManager* manager,
+                                           AThermal_StatusCallback callback,
+                                           void* data) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Unregister a thermal status listener previously registered.
@@ -183,9 +183,9 @@ int AThermal_registerThermalStatusListener(AThermalManager *_Nonnull manager,
  *         EINVAL if the listener and data pointer were not previously added.
  *         EPIPE if communication with the system service has failed.
  */
-int AThermal_unregisterThermalStatusListener(AThermalManager* _Nonnull manager,
-                                             AThermal_StatusCallback _Nullable callback,
-                                             void* _Nullable data) __INTRODUCED_IN_API_R__;
+int AThermal_unregisterThermalStatusListener(AThermalManager* manager,
+                                             AThermal_StatusCallback callback,
+                                             void* data) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Provides an estimate of how much thermal headroom the device currently has before
@@ -225,8 +225,8 @@ int AThermal_unregisterThermalStatusListener(AThermalManager* _Nonnull manager,
  *         as described above. Returns NaN if the device does not support this functionality or
  *         if this function is called significantly faster than once per second.
   */
-float AThermal_getThermalHeadroom(AThermalManager* _Nonnull manager,
-                                  int forecastSeconds) __INTRODUCED_IN_API_S__;
+float AThermal_getThermalHeadroom(AThermalManager* manager,
+                                  int forecastSeconds) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 /**
  * This struct defines an instance of headroom threshold value and its status.
@@ -295,10 +295,10 @@ typedef struct AThermalHeadroomThreshold AThermalHeadroomThreshold;
  *         EPIPE if communication with the system service has failed.
  *         ENOSYS if the feature is disabled by the current system.
  */
-int AThermal_getThermalHeadroomThresholds(AThermalManager* _Nonnull manager,
-                                          const AThermalHeadroomThreshold* _Nonnull
-                                          * _Nullable outThresholds,
-                                          size_t* _Nonnull size) __INTRODUCED_IN_API_V__;
+int AThermal_getThermalHeadroomThresholds(AThermalManager* manager,
+                                          const AThermalHeadroomThreshold*
+                                          * outThresholds,
+                                          size_t* size) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Prototype of the function that is called when thermal headroom or thresholds changes.
@@ -337,11 +337,11 @@ int AThermal_getThermalHeadroomThresholds(AThermalManager* _Nonnull manager,
  *                   persist the values, it should make a copy of it during the callback.
  * @param thresholdsCount The count of thresholds.
  */
-typedef void (*AThermal_HeadroomCallback)(void *_Nullable data,
+typedef void (*AThermal_HeadroomCallback)(void* data,
                                           float headroom,
                                           float forecastHeadroom,
                                           int forecastSeconds,
-                                          const AThermalHeadroomThreshold* _Nullable thresholds,
+                                          const AThermalHeadroomThreshold* thresholds,
                                           size_t thresholdsCount);
 
 /**
@@ -359,9 +359,9 @@ typedef void (*AThermal_HeadroomCallback)(void *_Nullable data,
  *         EINVAL if the listener and data pointer were previously added and not removed.
  *         EPIPE if communication with the system service has failed.
  */
-int AThermal_registerThermalHeadroomListener(AThermalManager* _Nonnull manager,
-                                             AThermal_HeadroomCallback _Nullable callback,
-                                             void* _Nullable data) __INTRODUCED_IN_API_W__;
+int AThermal_registerThermalHeadroomListener(AThermalManager* manager,
+                                             AThermal_HeadroomCallback callback,
+                                             void* data) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Unregister a thermal headroom listener previously registered.
@@ -381,9 +381,9 @@ int AThermal_registerThermalHeadroomListener(AThermalManager* _Nonnull manager,
  *               removed and this call should be retried
  */
 
-int AThermal_unregisterThermalHeadroomListener(AThermalManager* _Nonnull manager,
-                                               AThermal_HeadroomCallback _Nullable callback,
-                                               void* _Nullable data) __INTRODUCED_IN_API_W__;
+int AThermal_unregisterThermalHeadroomListener(AThermalManager* manager,
+                                               AThermal_HeadroomCallback callback,
+                                               void* data) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 #ifdef __cplusplus
 }

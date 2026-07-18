@@ -71,9 +71,9 @@ typedef struct {
 #define __FDS_BITS(type, set) (__BIONIC_CAST(static_cast, type, set)->fds_bits)
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-void __FD_CLR_chk(int, fd_set* _Nonnull , size_t) __INTRODUCED_IN_API_L__;
-void __FD_SET_chk(int, fd_set* _Nonnull, size_t) __INTRODUCED_IN_API_L__;
-int __FD_ISSET_chk(int, const fd_set* _Nonnull, size_t) __INTRODUCED_IN_API_L__;
+void __FD_CLR_chk(int, fd_set* , size_t) __INTRODUCED_IN_API_L__;
+void __FD_SET_chk(int, fd_set*, size_t) __INTRODUCED_IN_API_L__;
+int __FD_ISSET_chk(int, const fd_set*, size_t) __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -142,7 +142,7 @@ int __FD_ISSET_chk(int, const fd_set* _Nonnull, size_t) __INTRODUCED_IN_API_L__;
  * Returns the number of ready file descriptors on success, 0 for timeout,
  * and returns -1 and sets `errno` on failure.
  */
-int select(int __max_fd_plus_one, fd_set* _Nullable __read_fds, fd_set* _Nullable __write_fds, fd_set* _Nullable __exception_fds, struct timeval* _Nullable __timeout);
+int select(int __max_fd_plus_one, fd_set* __read_fds, fd_set* __write_fds, fd_set* __exception_fds, struct timeval* __timeout);
 
 /**
  * [pselect(2)](https://man7.org/linux/man-pages/man2/pselect.2.html) waits on a
@@ -154,8 +154,9 @@ int select(int __max_fd_plus_one, fd_set* _Nullable __read_fds, fd_set* _Nullabl
  * Returns the number of ready file descriptors on success, 0 for timeout,
  * and returns -1 and sets `errno` on failure.
  */
-int pselect(int __max_fd_plus_one, fd_set* _Nullable __read_fds, fd_set* _Nullable __write_fds, fd_set* _Nullable __exception_fds, const struct timespec* _Nullable __timeout, const sigset_t* _Nullable __mask);
+int pselect(int __max_fd_plus_one, fd_set* __read_fds, fd_set* __write_fds, fd_set* __exception_fds, const struct timespec* __timeout, const sigset_t* __mask);
 
+#if __BIONIC_AVAILABILITY_GUARD(28)
 /**
  * [pselect64(2)](https://man7.org/linux/man-pages/man2/select.2.html) waits on a
  * set of file descriptors.
@@ -168,8 +169,7 @@ int pselect(int __max_fd_plus_one, fd_set* _Nullable __read_fds, fd_set* _Nullab
  *
  * Available since API level 28.
  */
-#if __BIONIC_AVAILABILITY_GUARD(28)
-int pselect64(int __max_fd_plus_one, fd_set* _Nullable __read_fds, fd_set* _Nullable __write_fds, fd_set* _Nullable __exception_fds, const struct timespec* _Nullable __timeout, const sigset64_t* _Nullable __mask) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+int pselect64(int __max_fd_plus_one, fd_set* __read_fds, fd_set* __write_fds, fd_set* __exception_fds, const struct timespec* __timeout, const sigset64_t* __mask) __INTRODUCED_IN_API_P__;
+#endif
 
 __END_DECLS

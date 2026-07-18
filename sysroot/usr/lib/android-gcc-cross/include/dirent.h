@@ -96,7 +96,7 @@ typedef struct DIR DIR;
  *
  * Returns null and sets `errno` on failure.
  */
-DIR* _Nullable opendir(const char* _Nonnull __path);
+DIR* opendir(const char* __path) __attribute__((nonnull(1)));
 
 /**
  * [fdopendir(3)](https://man7.org/linux/man-pages/man3/fdopendir.3.html)
@@ -104,7 +104,7 @@ DIR* _Nullable opendir(const char* _Nonnull __path);
  *
  * Returns null and sets `errno` on failure.
  */
-DIR* _Nullable fdopendir(int __dir_fd);
+DIR* fdopendir(int __dir_fd);
 
 /**
  * [readdir(3)](https://man7.org/linux/man-pages/man3/readdir.3.html)
@@ -114,7 +114,7 @@ DIR* _Nullable fdopendir(int __dir_fd);
  * or returns null and leaves `errno` unchanged at the end of the directory,
  * or returns null and sets `errno` on failure.
  */
-struct dirent* _Nullable readdir(DIR* _Nonnull __dir);
+struct dirent* readdir(DIR* __dir) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /**
@@ -125,11 +125,11 @@ struct dirent* _Nullable readdir(DIR* _Nonnull __dir);
  * or returns null and leaves `errno` unchanged at the end of the directory,
  * or returns null and sets `errno` on failure.
  */
-struct dirent64* _Nullable readdir64(DIR* _Nonnull __dir) __INTRODUCED_IN_API_L__;
-int readdir64_r(DIR* _Nonnull __dir, struct dirent64* _Nonnull __entry, struct dirent64* _Nullable * _Nonnull __buffer)  __INTRODUCED_IN_API_L__ __attribute__((__deprecated__("readdir64_r is deprecated; use readdir64 instead")));
+struct dirent64* readdir64(DIR* __dir) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+int readdir64_r(DIR* __dir, struct dirent64* __entry, struct dirent64* * __buffer)  __INTRODUCED_IN_API_L__ __attribute__((__deprecated__("readdir64_r is deprecated; use readdir64 instead")));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-int readdir_r(DIR* _Nonnull __dir, struct dirent* _Nonnull __entry, struct dirent* _Nullable * _Nonnull __buffer) __attribute__((__deprecated__("readdir_r is deprecated; use readdir instead")));
+int readdir_r(DIR* __dir, struct dirent* __entry, struct dirent* * __buffer) __attribute__((__deprecated__("readdir_r is deprecated; use readdir instead")));
 
 /**
  * [closedir(3)](https://man7.org/linux/man-pages/man3/closedir.3.html)
@@ -137,14 +137,15 @@ int readdir_r(DIR* _Nonnull __dir, struct dirent* _Nonnull __entry, struct diren
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int closedir(DIR* _Nonnull __dir);
+int closedir(DIR* __dir) __attribute__((nonnull(1)));
 
 /**
  * [rewinddir(3)](https://man7.org/linux/man-pages/man3/rewinddir.3.html)
  * rewinds a directory stream to the first entry.
  */
-void rewinddir(DIR* _Nonnull __dir);
+void rewinddir(DIR* __dir) __THROW __attribute__((nonnull(1)));
 
+#if __BIONIC_AVAILABILITY_GUARD(23)
 /**
  * [seekdir(3)](https://man7.org/linux/man-pages/man3/seekdir.3.html)
  * seeks a directory stream to the given entry, which must be a value returned
@@ -152,10 +153,10 @@ void rewinddir(DIR* _Nonnull __dir);
  *
  * Available since API level 23.
  */
-#if __BIONIC_AVAILABILITY_GUARD(23)
-void seekdir(DIR* _Nonnull __dir, long __location) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+void seekdir(DIR* __dir, long __location) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
 
+#if __BIONIC_AVAILABILITY_GUARD(23)
 /**
  * [telldir(3)](https://man7.org/linux/man-pages/man3/telldir.3.html)
  * returns a value representing the current position in the directory
@@ -165,10 +166,8 @@ void seekdir(DIR* _Nonnull __dir, long __location) __INTRODUCED_IN_API_M__;
  *
  * Available since API level 23.
  */
-#if __BIONIC_AVAILABILITY_GUARD(23)
-long telldir(DIR* _Nonnull __dir) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
-
+long telldir(DIR* __dir) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
 
 /**
  * [dirfd(3)](https://man7.org/linux/man-pages/man3/dirfd.3.html)
@@ -176,20 +175,20 @@ long telldir(DIR* _Nonnull __dir) __INTRODUCED_IN_API_M__;
  *
  * Returns a file descriptor on success and returns -1 and sets `errno` on failure.
  */
-int dirfd(DIR* _Nonnull __dir);
+int dirfd(DIR* __dir) __THROW __attribute__((nonnull(1)));
 
 /**
  * [alphasort(3)](https://man7.org/linux/man-pages/man3/alphasort.3.html) is a
  * comparator for use with scandir() that uses strcoll().
  */
-int alphasort(const struct dirent* _Nonnull * _Nonnull __lhs, const struct dirent* _Nonnull * _Nonnull __rhs);
+int alphasort(const struct dirent* * __lhs, const struct dirent* * __rhs) __THROW __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /**
  * [alphasort64(3)](https://man7.org/linux/man-pages/man3/alphasort.3.html) is a
  * comparator for use with scandir64() that uses strcmp().
  */
-int alphasort64(const struct dirent64* _Nonnull * _Nonnull __lhs, const struct dirent64* _Nonnull * _Nonnull __rhs) __INTRODUCED_IN_API_L__;
+int alphasort64(const struct dirent64* * __lhs, const struct dirent64* * __rhs) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -202,7 +201,7 @@ int alphasort64(const struct dirent64* _Nonnull * _Nonnull __lhs, const struct d
  * Returns the number of entries returned in the list on success,
  * and returns -1 and sets `errno` on failure.
  */
-int scandir(const char* _Nonnull __path, struct dirent* _Nonnull * _Nonnull * _Nonnull __name_list, int (* _Nullable __filter)(const struct dirent* _Nonnull), int (* _Nullable __comparator)(const struct dirent* _Nonnull * _Nonnull, const struct dirent* _Nonnull * _Nonnull));
+int scandir(const char* __path, struct dirent* * * __name_list, int (* __filter)(const struct dirent* ), int (* __comparator)(const struct dirent* *, const struct dirent* * )) __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /**
@@ -215,9 +214,10 @@ int scandir(const char* _Nonnull __path, struct dirent* _Nonnull * _Nonnull * _N
  * Returns the number of entries returned in the list on success,
  * and returns -1 and sets `errno` on failure.
  */
-int scandir64(const char* _Nonnull __path, struct dirent64* _Nonnull * _Nonnull * _Nonnull __name_list, int (* _Nullable __filter)(const struct dirent64* _Nonnull), int (* _Nullable __comparator)(const struct dirent64* _Nonnull * _Nonnull, const struct dirent64* _Nonnull * _Nonnull)) __INTRODUCED_IN_API_L__;
+int scandir64(const char* __path, struct dirent64* * * __name_list, int (* __filter)(const struct dirent64* ), int (* __comparator)(const struct dirent64* *, const struct dirent64* * )) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
+#if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(24)
 /**
  * [scandirat64(3)](https://man7.org/linux/man-pages/man3/scandirat.3.html)
  * scans all the directory referenced by the pair of `__dir_fd` and `__path`,
@@ -231,10 +231,10 @@ int scandir64(const char* _Nonnull __path, struct dirent64* _Nonnull * _Nonnull 
  *
  * Available since API level 24 when compiling with `_GNU_SOURCE`.
  */
-#if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(24)
-int scandirat64(int __dir_fd, const char* _Nonnull __path, struct dirent64* _Nonnull * _Nonnull * _Nonnull __name_list, int (* _Nullable __filter)(const struct dirent64* _Nonnull), int (* _Nullable __comparator)(const struct dirent64* _Nonnull * _Nonnull, const struct dirent64* _Nonnull * _Nonnull)) __INTRODUCED_IN_API_N__;
+int scandirat64(int __dir_fd, const char* __path, struct dirent64* * * __name_list, int (* __filter)(const struct dirent64* ), int (* __comparator)(const struct dirent64* *, const struct dirent64* * )) __INTRODUCED_IN_API_N__ __attribute__((nonnull(2,3)));
 #endif
 
+#if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(24)
 /**
  * [scandirat(3)](https://man7.org/linux/man-pages/man3/scandirat.3.html)
  * scans all the directory referenced by the pair of `__dir_fd` and `__path`,
@@ -248,8 +248,7 @@ int scandirat64(int __dir_fd, const char* _Nonnull __path, struct dirent64* _Non
  *
  * Available since API level 24 when compiling with `_GNU_SOURCE`.
  */
-#if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(24)
-int scandirat(int __dir_fd, const char* _Nonnull __path, struct dirent* _Nonnull * _Nonnull * _Nonnull __name_list, int (* _Nullable __filter)(const struct dirent* _Nonnull), int (* _Nullable __comparator)(const struct dirent* _Nonnull * _Nonnull, const struct dirent* _Nonnull * _Nonnull)) __INTRODUCED_IN_API_N__;
+int scandirat(int __dir_fd, const char* __path, struct dirent* * * __name_list, int (* __filter)(const struct dirent* ), int (* __comparator)(const struct dirent* *, const struct dirent* * )) __INTRODUCED_IN_API_N__ __attribute__((nonnull(2,3)));
 #endif
 
 __END_DECLS

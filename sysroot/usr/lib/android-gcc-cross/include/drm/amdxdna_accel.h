@@ -30,6 +30,7 @@ enum amdxdna_drm_ioctl_id {
   DRM_AMDXDNA_EXEC_CMD,
   DRM_AMDXDNA_GET_INFO,
   DRM_AMDXDNA_SET_STATE,
+  DRM_AMDXDNA_GET_ARRAY = 10,
 };
 struct amdxdna_qos_info {
   __u32 gops;
@@ -84,6 +85,15 @@ enum amdxdna_bo_type {
   AMDXDNA_BO_DEV_HEAP,
   AMDXDNA_BO_DEV,
   AMDXDNA_BO_CMD,
+};
+struct amdxdna_drm_va_entry {
+  __u64 vaddr;
+  __u64 len;
+};
+struct amdxdna_drm_va_tbl {
+  __s32 dmabuf_fd;
+  __u32 num_entries;
+  struct amdxdna_drm_va_entry va_entries[];
 };
 struct amdxdna_drm_create_bo {
   __u64 flags;
@@ -213,16 +223,85 @@ enum amdxdna_drm_get_param {
   DRM_AMDXDNA_QUERY_HW_CONTEXTS,
   DRM_AMDXDNA_QUERY_FIRMWARE_VERSION = 8,
   DRM_AMDXDNA_GET_POWER_MODE,
+  DRM_AMDXDNA_QUERY_TELEMETRY,
+  DRM_AMDXDNA_GET_FORCE_PREEMPT_STATE,
+  DRM_AMDXDNA_QUERY_RESOURCE_INFO,
+  DRM_AMDXDNA_GET_FRAME_BOUNDARY_PREEMPT_STATE,
+};
+struct amdxdna_drm_get_resource_info {
+  __u64 npu_clk_max;
+  __u64 npu_tops_max;
+  __u64 npu_task_max;
+  __u64 npu_tops_curr;
+  __u64 npu_task_curr;
+};
+struct amdxdna_drm_attribute_state {
+  __u8 state;
+  __u8 pad[7];
+};
+struct amdxdna_drm_query_telemetry_header {
+  __u32 major;
+  __u32 minor;
+  __u32 type;
+  __u32 map_num_elements;
+  __u32 map[];
 };
 struct amdxdna_drm_get_info {
   __u32 param;
   __u32 buffer_size;
   __u64 buffer;
 };
+#define AMDXDNA_HWCTX_STATE_IDLE 0
+#define AMDXDNA_HWCTX_STATE_ACTIVE 1
+struct amdxdna_drm_hwctx_entry {
+  __u32 context_id;
+  __u32 start_col;
+  __u32 num_col;
+  __u32 hwctx_id;
+  __s64 pid;
+  __u64 command_submissions;
+  __u64 command_completions;
+  __u64 migrations;
+  __u64 preemptions;
+  __u64 errors;
+  __u64 priority;
+  __u64 heap_usage;
+  __u64 suspensions;
+  __u32 state;
+  __u32 pasid;
+  __u32 gops;
+  __u32 fps;
+  __u32 dma_bandwidth;
+  __u32 latency;
+  __u32 frame_exec_time;
+  __u32 txn_op_idx;
+  __u32 ctx_pc;
+  __u32 fatal_error_type;
+  __u32 fatal_error_exception_type;
+  __u32 fatal_error_exception_pc;
+  __u32 fatal_error_app_module;
+  __u32 pad;
+};
+struct amdxdna_async_error {
+  __u64 err_code;
+  __u64 ts_us;
+  __u64 ex_err_code;
+};
+#define DRM_AMDXDNA_HW_CONTEXT_ALL 0
+#define DRM_AMDXDNA_HW_LAST_ASYNC_ERR 2
+struct amdxdna_drm_get_array {
+  __u32 param;
+  __u32 element_size;
+  __u32 num_element;
+  __u32 pad;
+  __u64 buffer;
+};
 enum amdxdna_drm_set_param {
   DRM_AMDXDNA_SET_POWER_MODE,
   DRM_AMDXDNA_WRITE_AIE_MEM,
   DRM_AMDXDNA_WRITE_AIE_REG,
+  DRM_AMDXDNA_SET_FORCE_PREEMPT,
+  DRM_AMDXDNA_SET_FRAME_BOUNDARY_PREEMPT,
 };
 struct amdxdna_drm_set_state {
   __u32 param;
@@ -242,6 +321,7 @@ struct amdxdna_drm_set_power_mode {
 #define DRM_IOCTL_AMDXDNA_EXEC_CMD DRM_IOWR(DRM_COMMAND_BASE + DRM_AMDXDNA_EXEC_CMD, struct amdxdna_drm_exec_cmd)
 #define DRM_IOCTL_AMDXDNA_GET_INFO DRM_IOWR(DRM_COMMAND_BASE + DRM_AMDXDNA_GET_INFO, struct amdxdna_drm_get_info)
 #define DRM_IOCTL_AMDXDNA_SET_STATE DRM_IOWR(DRM_COMMAND_BASE + DRM_AMDXDNA_SET_STATE, struct amdxdna_drm_set_state)
+#define DRM_IOCTL_AMDXDNA_GET_ARRAY DRM_IOWR(DRM_COMMAND_BASE + DRM_AMDXDNA_GET_ARRAY, struct amdxdna_drm_get_array)
 #ifdef __cplusplus
 }
 #endif

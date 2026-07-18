@@ -42,19 +42,19 @@ __BEGIN_DECLS
 // Supporting separate input and output speeds would require an ABI
 // change for `struct termios`.
 
-__static_inline__ speed_t cfgetspeed(const struct termios* _Nonnull s) {
+__static_inline__ speed_t __attribute__((nonnull(1))) cfgetspeed(const struct termios* s) {
   return __BIONIC_CAST(static_cast, speed_t, s->c_cflag & CBAUD);
 }
 
-__static_inline__ speed_t cfgetispeed(const struct termios* _Nonnull s) {
+__static_inline__ speed_t __attribute__((nonnull(1))) cfgetispeed(const struct termios* s) {
   return cfgetspeed(s);
 }
 
-__static_inline__ speed_t cfgetospeed(const struct termios* _Nonnull s) {
+__static_inline__ speed_t __attribute__((nonnull(1))) cfgetospeed(const struct termios* s) {
   return cfgetspeed(s);
 }
 
-__static_inline__ void cfmakeraw(struct termios* _Nonnull s) {
+__static_inline__ void __attribute__((nonnull(1))) cfmakeraw(struct termios* s) {
   s->c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL|IXON);
   s->c_oflag &= ~OPOST;
   s->c_lflag &= ~(ECHO|ECHONL|ICANON|ISIG|IEXTEN);
@@ -64,7 +64,7 @@ __static_inline__ void cfmakeraw(struct termios* _Nonnull s) {
   s->c_cc[VTIME] = 0;
 }
 
-__static_inline__ int cfsetspeed(struct termios* _Nonnull s, speed_t speed) {
+__static_inline__ int __attribute__((nonnull(1))) cfsetspeed(struct termios* s, speed_t speed) {
   // CBAUD is 0x100f, and every matching bit pattern has a Bxxx constant.
   if ((speed & ~CBAUD) != 0) {
     errno = EINVAL;
@@ -74,11 +74,11 @@ __static_inline__ int cfsetspeed(struct termios* _Nonnull s, speed_t speed) {
   return 0;
 }
 
-__static_inline__ int cfsetispeed(struct termios* _Nonnull s, speed_t speed) {
+__static_inline__ int __attribute__((nonnull(1))) cfsetispeed(struct termios* s, speed_t speed) {
   return cfsetspeed(s, speed);
 }
 
-__static_inline__ int cfsetospeed(struct termios* _Nonnull s, speed_t speed) {
+__static_inline__ int __attribute__((nonnull(1))) cfsetospeed(struct termios* s, speed_t speed) {
   return cfsetspeed(s, speed);
 }
 
@@ -96,7 +96,7 @@ __static_inline__ int tcflush(int fd, int queue) {
   return ioctl(fd, TCFLSH, __BIONIC_CAST(static_cast, unsigned long, queue));
 }
 
-__static_inline__ int tcgetattr(int fd, struct termios* _Nonnull s) {
+__static_inline__ int __attribute__((nonnull(2))) tcgetattr(int fd, struct termios* s) {
   return ioctl(fd, TCGETS, s);
 }
 
@@ -109,7 +109,7 @@ __static_inline__ int tcsendbreak(int fd, int duration) {
   return ioctl(fd, TCSBRKP, __BIONIC_CAST(static_cast, unsigned long, duration));
 }
 
-__static_inline__ int tcsetattr(int fd, int optional_actions, const struct termios* _Nonnull s) {
+__static_inline__ int __attribute__((nonnull(3))) tcsetattr(int fd, int optional_actions, const struct termios* s) {
   int cmd;
   switch (optional_actions) {
     case TCSANOW: cmd = TCSETS; break;

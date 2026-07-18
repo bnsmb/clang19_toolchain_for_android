@@ -101,7 +101,7 @@ typedef struct AFont AFont;
  * \param font a font returned by ASystemFontIterator_next or AFontMatchert_match.
  *        Do nothing if NULL is passed.
  */
-void AFont_close(AFont* _Nullable font) __INTRODUCED_IN_API_Q__;
+void AFont_close(AFont* font) __INTRODUCED_IN_API_Q__;
 
 /**
  * Return an absolute path to the current font file.
@@ -123,7 +123,7 @@ void AFont_close(AFont* _Nullable font) __INTRODUCED_IN_API_Q__;
  * \param font a font object. Passing NULL is not allowed.
  * \return a string of the font file path.
  */
-const char* _Nonnull AFont_getFontFilePath(const AFont* _Nonnull font) __INTRODUCED_IN_API_Q__;
+const char* AFont_getFontFilePath(const AFont* font) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Return a weight value associated with the current font.
@@ -193,7 +193,7 @@ const char* _Nonnull AFont_getFontFilePath(const AFont* _Nonnull font) __INTRODU
  * \param font a font object. Passing NULL is not allowed.
  * \return a positive integer less than or equal to {@link AFONT_WEIGHT_MAX} is returned.
  */
-uint16_t AFont_getWeight(const AFont* _Nonnull font) __INTRODUCED_IN_API_Q__;
+uint16_t AFont_getWeight(const AFont* font) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Return true if the current font is italic, otherwise returns false.
@@ -203,7 +203,7 @@ uint16_t AFont_getWeight(const AFont* _Nonnull font) __INTRODUCED_IN_API_Q__;
  * \param font a font object. Passing NULL is not allowed.
  * \return true if italic, otherwise false.
  */
-bool AFont_isItalic(const AFont* _Nonnull font) __INTRODUCED_IN_API_Q__;
+bool AFont_isItalic(const AFont* font) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Return a IETF BCP47 compliant language tag associated with the current font.
@@ -217,7 +217,7 @@ bool AFont_isItalic(const AFont* _Nonnull font) __INTRODUCED_IN_API_Q__;
  * \param font a font object. Passing NULL is not allowed.
  * \return a IETF BCP47 compliant language tag or nullptr if not available.
  */
-const char* _Nullable AFont_getLocale(const AFont* _Nonnull font) __INTRODUCED_IN_API_Q__;
+const char* AFont_getLocale(const AFont* font) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Return a font collection index value associated with the current font.
@@ -231,7 +231,7 @@ const char* _Nullable AFont_getLocale(const AFont* _Nonnull font) __INTRODUCED_I
  * \param font a font object. Passing NULL is not allowed.
  * \return a font collection index.
  */
-size_t AFont_getCollectionIndex(const AFont* _Nonnull font) __INTRODUCED_IN_API_Q__;
+size_t AFont_getCollectionIndex(const AFont* font) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Return a count of font variation settings associated with the current font
@@ -264,7 +264,7 @@ size_t AFont_getCollectionIndex(const AFont* _Nonnull font) __INTRODUCED_IN_API_
  * \param font a font object. Passing NULL is not allowed.
  * \return a number of font variation settings.
  */
-size_t AFont_getAxisCount(const AFont* _Nonnull font) __INTRODUCED_IN_API_Q__;
+size_t AFont_getAxisCount(const AFont* font) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 
 /**
@@ -279,8 +279,8 @@ size_t AFont_getAxisCount(const AFont* _Nonnull font) __INTRODUCED_IN_API_Q__;
  *        equal to {@link AFont_getAxisCount} is not allowed.
  * \return an OpenType axis tag value for the given font variation setting.
  */
-uint32_t AFont_getAxisTag(const AFont* _Nonnull font, uint32_t axisIndex)
-      __INTRODUCED_IN_API_Q__;
+uint32_t AFont_getAxisTag(const AFont* font, uint32_t axisIndex)
+      __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Return an OpenType axis value associated with the current font.
@@ -294,8 +294,8 @@ uint32_t AFont_getAxisTag(const AFont* _Nonnull font, uint32_t axisIndex)
  *         equal to {@link AFont_getAxisCount} is not allowed.
  * \return a float value for the given font variation setting.
  */
-float AFont_getAxisValue(const AFont* _Nonnull font, uint32_t axisIndex)
-      __INTRODUCED_IN_API_Q__;
+float AFont_getAxisValue(const AFont* font, uint32_t axisIndex)
+      __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 __END_DECLS
 

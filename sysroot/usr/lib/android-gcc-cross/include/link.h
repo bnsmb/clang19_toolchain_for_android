@@ -57,9 +57,9 @@ struct dl_phdr_info {
   /** The address of the shared object. */
   ElfW(Addr) dlpi_addr;
   /** The name of the shared object. */
-  const char* _Nullable dlpi_name;
+  const char* dlpi_name;
   /** Pointer to the shared object's program headers. */
-  const ElfW(Phdr)* _Nullable dlpi_phdr;
+  const ElfW(Phdr)* dlpi_phdr;
   /** Number of program headers pointed to by `dlpi_phdr`. */
   ElfW(Half) dlpi_phnum;
 
@@ -96,7 +96,7 @@ struct dl_phdr_info {
    * passed to the callback to determine whether you have the full struct,
    * or just the fields up to and including `dlpi_phnum`.
    */
-  void* _Nullable dlpi_tls_data;
+  void* dlpi_tls_data;
 };
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
@@ -119,27 +119,27 @@ struct dl_phdr_info {
  *
  * Returns the value returned by the final call to the callback.
  */
-int dl_iterate_phdr(int (* _Nonnull __callback)(struct dl_phdr_info* _Nonnull __info, size_t __size, void* _Nullable __data), void* _Nullable __data) __INTRODUCED_IN_API_L__;
+int dl_iterate_phdr(int (* __callback)(struct dl_phdr_info* __info, size_t __size, void* __data), void* __data) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #ifdef __arm__
 typedef uintptr_t _Unwind_Ptr;
-_Unwind_Ptr dl_unwind_find_exidx(_Unwind_Ptr, int* _Nonnull);
+_Unwind_Ptr dl_unwind_find_exidx(_Unwind_Ptr, int* );
 #endif
 
 /** Used by the dynamic linker to communicate with the debugger. */
 struct link_map {
   ElfW(Addr) l_addr;
-  char* _Nullable l_name;
-  ElfW(Dyn)* _Nullable l_ld;
-  struct link_map* _Nullable l_next;
-  struct link_map* _Nullable l_prev;
+  char* l_name;
+  ElfW(Dyn)* l_ld;
+  struct link_map* l_next;
+  struct link_map* l_prev;
 };
 
 /** Used by the dynamic linker to communicate with the debugger. */
 struct r_debug {
   int32_t r_version;
-  struct link_map* _Nullable r_map;
+  struct link_map* r_map;
   ElfW(Addr) r_brk;
   enum {
     RT_CONSISTENT,

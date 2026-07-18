@@ -37,7 +37,7 @@ struct io_uring_sqe {
   };
   __u32 len;
   union {
-    __kernel_rwf_t rw_flags;
+    __u32 rw_flags;
     __u32 fsync_flags;
     __u16 poll_events;
     __u32 poll32_events;
@@ -139,6 +139,8 @@ enum io_uring_sqe_flags_bit {
 #define IORING_SETUP_REGISTERED_FD_ONLY (1U << 15)
 #define IORING_SETUP_NO_SQARRAY (1U << 16)
 #define IORING_SETUP_HYBRID_IOPOLL (1U << 17)
+#define IORING_SETUP_CQE_MIXED (1U << 18)
+#define IORING_SETUP_SQE_MIXED (1U << 19)
 enum io_uring_op {
   IORING_OP_NOP,
   IORING_OP_READV,
@@ -203,10 +205,13 @@ enum io_uring_op {
   IORING_OP_READV_FIXED,
   IORING_OP_WRITEV_FIXED,
   IORING_OP_PIPE,
+  IORING_OP_NOP128,
+  IORING_OP_URING_CMD128,
   IORING_OP_LAST,
 };
 #define IORING_URING_CMD_FIXED (1U << 0)
-#define IORING_URING_CMD_MASK IORING_URING_CMD_FIXED
+#define IORING_URING_CMD_MULTISHOT (1U << 1)
+#define IORING_URING_CMD_MASK (IORING_URING_CMD_FIXED | IORING_URING_CMD_MULTISHOT)
 #define IORING_FSYNC_DATASYNC (1U << 0)
 #define IORING_TIMEOUT_ABS (1U << 0)
 #define IORING_TIMEOUT_UPDATE (1U << 1)
@@ -233,6 +238,7 @@ enum io_uring_op {
 #define IORING_RECVSEND_FIXED_BUF (1U << 2)
 #define IORING_SEND_ZC_REPORT_USAGE (1U << 3)
 #define IORING_RECVSEND_BUNDLE (1U << 4)
+#define IORING_SEND_VECTORIZED (1U << 5)
 #define IORING_NOTIF_USAGE_ZC_COPIED (1U << 31)
 #define IORING_ACCEPT_MULTISHOT (1U << 0)
 #define IORING_ACCEPT_DONTWAIT (1U << 1)
@@ -248,6 +254,8 @@ enum io_uring_msg_ring_flags {
 #define IORING_NOP_FILE (1U << 1)
 #define IORING_NOP_FIXED_FILE (1U << 2)
 #define IORING_NOP_FIXED_BUFFER (1U << 3)
+#define IORING_NOP_TW (1U << 4)
+#define IORING_NOP_CQE32 (1U << 5)
 struct io_uring_cqe {
   __u64 user_data;
   __s32 res;
@@ -259,6 +267,8 @@ struct io_uring_cqe {
 #define IORING_CQE_F_SOCK_NONEMPTY (1U << 2)
 #define IORING_CQE_F_NOTIF (1U << 3)
 #define IORING_CQE_F_BUF_MORE (1U << 4)
+#define IORING_CQE_F_SKIP (1U << 5)
+#define IORING_CQE_F_32 (1U << 15)
 #define IORING_CQE_BUFFER_SHIFT 16
 #define IORING_OFF_SQ_RING 0ULL
 #define IORING_OFF_CQ_RING 0x8000000ULL
@@ -366,6 +376,8 @@ enum io_uring_register_op {
   IORING_REGISTER_ZCRX_IFQ = 32,
   IORING_REGISTER_RESIZE_RINGS = 33,
   IORING_REGISTER_MEM_REGION = 34,
+  IORING_REGISTER_QUERY = 35,
+  IORING_REGISTER_ZCRX_CTRL = 36,
   IORING_REGISTER_LAST,
   IORING_REGISTER_USE_REGISTERED_RING = 1U << 31
 };
@@ -560,6 +572,15 @@ enum io_uring_socket_op {
   SOCKET_URING_OP_SIOCOUTQ,
   SOCKET_URING_OP_GETSOCKOPT,
   SOCKET_URING_OP_SETSOCKOPT,
+  SOCKET_URING_OP_TX_TIMESTAMP,
+  SOCKET_URING_OP_GETSOCKNAME,
+};
+#define IORING_TIMESTAMP_HW_SHIFT 16
+#define IORING_TIMESTAMP_TYPE_SHIFT (IORING_TIMESTAMP_HW_SHIFT + 1)
+#define IORING_CQE_F_TSTAMP_HW ((__u32) 1 << IORING_TIMESTAMP_HW_SHIFT)
+struct io_timespec {
+  __u64 tv_sec;
+  __u64 tv_nsec;
 };
 struct io_uring_zcrx_rqe {
   __u64 off;
@@ -590,6 +611,9 @@ struct io_uring_zcrx_area_reg {
   __u32 dmabuf_fd;
   __u64 __resv2[2];
 };
+enum zcrx_reg_flags {
+  ZCRX_REG_IMPORT = 1,
+};
 struct io_uring_zcrx_ifq_reg {
   __u32 if_idx;
   __u32 if_rxq;
@@ -601,6 +625,27 @@ struct io_uring_zcrx_ifq_reg {
   __u32 zcrx_id;
   __u32 __resv2;
   __u64 __resv[3];
+};
+enum zcrx_ctrl_op {
+  ZCRX_CTRL_FLUSH_RQ,
+  ZCRX_CTRL_EXPORT,
+  __ZCRX_CTRL_LAST,
+};
+struct zcrx_ctrl_flush_rq {
+  __u64 __resv[6];
+};
+struct zcrx_ctrl_export {
+  __u32 zcrx_fd;
+  __u32 __resv1[11];
+};
+struct zcrx_ctrl {
+  __u32 zcrx_id;
+  __u32 op;
+  __u64 __resv[2];
+  union {
+    struct zcrx_ctrl_export zc_export;
+    struct zcrx_ctrl_flush_rq zc_flush;
+  };
 };
 #ifdef __cplusplus
 }

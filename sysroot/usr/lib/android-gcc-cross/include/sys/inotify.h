@@ -36,14 +36,14 @@
 
 __BEGIN_DECLS
 
-int inotify_init(void);
+int inotify_init(void)__THROW ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int inotify_init1(int __flags) __INTRODUCED_IN_API_L__;
+int inotify_init1(int __flags) __THROW __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-int inotify_add_watch(int __fd, const char* _Nonnull __path, uint32_t __mask);
-int inotify_rm_watch(int __fd, uint32_t __watch_descriptor);
+int inotify_add_watch(int __fd, const char* __path, uint32_t __mask) __THROW __attribute__((nonnull(2)));
+int inotify_rm_watch(int __fd, uint32_t __watch_descriptor)__THROW ;
 
 __END_DECLS
 

@@ -45,7 +45,7 @@ __BEGIN_DECLS
 
 typedef uint16_t in_port_t;
 
-int bindresvport(int __fd, struct sockaddr_in* _Nullable __sin);
+int bindresvport(int __fd, struct sockaddr_in* __sin)__THROW ;
 
 #if __ANDROID_API__ >= 24
 extern const struct in6_addr in6addr_any __INTRODUCED_IN_API_N__;

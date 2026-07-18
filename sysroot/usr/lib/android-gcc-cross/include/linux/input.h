@@ -114,6 +114,7 @@ struct input_mask {
 #define BUS_CEC 0x1E
 #define BUS_INTEL_ISHTP 0x1F
 #define BUS_AMD_SFH 0x20
+#define BUS_SDW 0x21
 #define MT_TOOL_FINGER 0x00
 #define MT_TOOL_PEN 0x01
 #define MT_TOOL_PALM 0x02
@@ -167,6 +168,14 @@ struct ff_rumble_effect {
   __u16 strong_magnitude;
   __u16 weak_magnitude;
 };
+struct ff_haptic_effect {
+  __u16 hid_usage;
+  __u16 vendor_id;
+  __u8 vendor_waveform_page;
+  __u16 intensity;
+  __u16 repeat_count;
+  __u16 retrigger_period;
+};
 struct ff_effect {
   __u16 type;
   __s16 id;
@@ -179,8 +188,10 @@ struct ff_effect {
     struct ff_periodic_effect periodic;
     struct ff_condition_effect condition[2];
     struct ff_rumble_effect rumble;
+    struct ff_haptic_effect haptic;
   } u;
 };
+#define FF_HAPTIC 0x4f
 #define FF_RUMBLE 0x50
 #define FF_PERIODIC 0x51
 #define FF_CONSTANT 0x52
@@ -189,7 +200,7 @@ struct ff_effect {
 #define FF_DAMPER 0x55
 #define FF_INERTIA 0x56
 #define FF_RAMP 0x57
-#define FF_EFFECT_MIN FF_RUMBLE
+#define FF_EFFECT_MIN FF_HAPTIC
 #define FF_EFFECT_MAX FF_RAMP
 #define FF_SQUARE 0x58
 #define FF_TRIANGLE 0x59

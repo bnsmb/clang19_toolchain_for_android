@@ -51,7 +51,7 @@ __BEGIN_DECLS
  *
  * New code should consider error() in `<error.h>`.
  */
-__noreturn void err(int __status, const char* _Nullable __fmt, ...) __printflike(2, 3);
+__noreturn void err(int __status, const char* __fmt, ...) __printflike(2, 3);
 
 /**
  * [verr(3)](https://man7.org/linux/man-pages/man3/verr.3.html) outputs the program name,
@@ -61,7 +61,7 @@ __noreturn void err(int __status, const char* _Nullable __fmt, ...) __printflike
  *
  * New code should consider error() in `<error.h>`.
  */
-__noreturn void verr(int __status, const char* _Nullable __fmt, va_list __args) __printflike(2, 0);
+__noreturn void verr(int __status, const char* __fmt, va_list __args) __printflike(2, 0);
 
 /**
  * [errx(3)](https://man7.org/linux/man-pages/man3/errx.3.html) outputs the program name, and
@@ -71,7 +71,7 @@ __noreturn void verr(int __status, const char* _Nullable __fmt, va_list __args) 
  *
  * New code should consider error() in `<error.h>`.
  */
-__noreturn void errx(int __status, const char* _Nullable __fmt, ...) __printflike(2, 3);
+__noreturn void errx(int __status, const char* __fmt, ...) __printflike(2, 3);
 
 /**
  * [verrx(3)](https://man7.org/linux/man-pages/man3/verrx.3.html) outputs the program name, and
@@ -81,7 +81,7 @@ __noreturn void errx(int __status, const char* _Nullable __fmt, ...) __printflik
  *
  * New code should consider error() in `<error.h>`.
  */
-__noreturn void verrx(int __status, const char* _Nullable __fmt, va_list __args) __printflike(2, 0);
+__noreturn void verrx(int __status, const char* __fmt, va_list __args) __printflike(2, 0);
 
 /**
  * [warn(3)](https://man7.org/linux/man-pages/man3/warn.3.html) outputs the program name,
@@ -89,7 +89,7 @@ __noreturn void verrx(int __status, const char* _Nullable __fmt, va_list __args)
  *
  * New code should consider error() in `<error.h>`.
  */
-void warn(const char* _Nullable __fmt, ...) __printflike(1, 2);
+void warn(const char* __fmt, ...) __printflike(1, 2);
 
 /**
  * [vwarn(3)](https://man7.org/linux/man-pages/man3/vwarn.3.html) outputs the program name,
@@ -97,7 +97,7 @@ void warn(const char* _Nullable __fmt, ...) __printflike(1, 2);
  *
  * New code should consider error() in `<error.h>`.
  */
-void vwarn(const char* _Nullable __fmt, va_list __args) __printflike(1, 0);
+void vwarn(const char* __fmt, va_list __args) __printflike(1, 0);
 
 /**
  * [warnx(3)](https://man7.org/linux/man-pages/man3/warnx.3.html) outputs the program name, and
@@ -105,7 +105,7 @@ void vwarn(const char* _Nullable __fmt, va_list __args) __printflike(1, 0);
  *
  * New code should consider error() in `<error.h>`.
  */
-void warnx(const char* _Nullable __fmt, ...) __printflike(1, 2);
+void warnx(const char* __fmt, ...) __printflike(1, 2);
 
 /**
  * [vwarnx(3)](https://man7.org/linux/man-pages/man3/vwarnx.3.html) outputs the program name, and
@@ -113,6 +113,6 @@ void warnx(const char* _Nullable __fmt, ...) __printflike(1, 2);
  *
  * New code should consider error() in `<error.h>`.
  */
-void vwarnx(const char* _Nullable __fmt, va_list __args) __printflike(1, 0);
+void vwarnx(const char* __fmt, va_list __args) __printflike(1, 0);
 
 __END_DECLS

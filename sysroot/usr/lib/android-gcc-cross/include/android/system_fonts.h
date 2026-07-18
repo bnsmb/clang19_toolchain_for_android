@@ -105,7 +105,7 @@ typedef struct ASystemFontIterator ASystemFontIterator;
  *
  * \return a pointer for a newly allocated iterator, nullptr on failure.
  */
-ASystemFontIterator* _Nullable ASystemFontIterator_open() __INTRODUCED_IN_API_Q__;
+ASystemFontIterator* ASystemFontIterator_open() __INTRODUCED_IN_API_Q__;
 
 /**
  * Close an opened system font iterator, freeing any related resources.
@@ -114,7 +114,7 @@ ASystemFontIterator* _Nullable ASystemFontIterator_open() __INTRODUCED_IN_API_Q_
  *
  * \param iterator a pointer of an iterator for the system fonts. Do nothing if NULL is passed.
  */
-void ASystemFontIterator_close(ASystemFontIterator* _Nullable iterator) __INTRODUCED_IN_API_Q__;
+void ASystemFontIterator_close(ASystemFontIterator* iterator) __INTRODUCED_IN_API_Q__;
 
 /**
  * Move to the next system font.
@@ -125,7 +125,7 @@ void ASystemFontIterator_close(ASystemFontIterator* _Nullable iterator) __INTROD
  * \return a font. If no more font is available, returns nullptr. You need to release the returned
  *         font with AFont_close() when it is no longer needed.
  */
-AFont* _Nullable ASystemFontIterator_next(ASystemFontIterator* _Nonnull iterator) __INTRODUCED_IN_API_Q__;
+AFont* ASystemFontIterator_next(ASystemFontIterator* iterator) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 __END_DECLS
 

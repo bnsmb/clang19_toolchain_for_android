@@ -34,6 +34,7 @@
  */
 
 #include <sys/cdefs.h>
+#include <stddef.h>
 
 #include <bits/timespec.h>
 #include <linux/sched.h>
@@ -106,7 +107,7 @@ struct sched_param {
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int sched_setscheduler(pid_t __pid, int __policy, const struct sched_param* _Nonnull __param);
+int sched_setscheduler(pid_t __pid, int __policy, const struct sched_param* __param) __THROW __attribute__((nonnull(3)));
 
 /**
  * [sched_getscheduler(2)](https://man7.org/linux/man-pages/man2/sched_getscheduler.2)
@@ -115,7 +116,7 @@ int sched_setscheduler(pid_t __pid, int __policy, const struct sched_param* _Non
  * Returns a non-negative thread policy on success and returns -1 and sets
  * `errno` on failure.
  */
-int sched_getscheduler(pid_t __pid);
+int sched_getscheduler(pid_t __pid)__THROW ;
 
 /**
  * [sched_yield(2)](https://man7.org/linux/man-pages/man2/sched_yield.2.html)
@@ -123,7 +124,7 @@ int sched_getscheduler(pid_t __pid);
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int sched_yield(void);
+int sched_yield(void)__THROW ;
 
 /**
  * [sched_get_priority_max(2)](https://man7.org/linux/man-pages/man2/sched_get_priority_max.2.html)
@@ -131,7 +132,7 @@ int sched_yield(void);
  *
  * Returns a priority on success and returns -1 and sets `errno` on failure.
  */
-int sched_get_priority_max(int __policy);
+int sched_get_priority_max(int __policy)__THROW ;
 
 /**
  * [sched_get_priority_min(2)](https://man7.org/linux/man-pages/man2/sched_get_priority_min.2.html)
@@ -139,7 +140,7 @@ int sched_get_priority_max(int __policy);
  *
  * Returns a priority on success and returns -1 and sets `errno` on failure.
  */
-int sched_get_priority_min(int __policy);
+int sched_get_priority_min(int __policy)__THROW ;
 
 /**
  * [sched_setparam(2)](https://man7.org/linux/man-pages/man2/sched_setparam.2.html)
@@ -147,7 +148,7 @@ int sched_get_priority_min(int __policy);
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int sched_setparam(pid_t __pid, const struct sched_param* _Nonnull __param);
+int sched_setparam(pid_t __pid, const struct sched_param* __param) __THROW __attribute__((nonnull(2)));
 
 /**
  * [sched_getparam(2)](https://man7.org/linux/man-pages/man2/sched_getparam.2.html)
@@ -155,16 +156,19 @@ int sched_setparam(pid_t __pid, const struct sched_param* _Nonnull __param);
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int sched_getparam(pid_t __pid, struct sched_param* _Nonnull __param);
+int sched_getparam(pid_t __pid, struct sched_param* __param) __THROW __attribute__((nonnull(2)));
 
+#if __BIONIC_AVAILABILITY_GUARD(17)
 /**
  * [sched_rr_get_interval(2)](https://man7.org/linux/man-pages/man2/sched_rr_get_interval.2.html)
  * queries the round-robin time quantum for the given thread.
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int sched_rr_get_interval(pid_t __pid, struct timespec* _Nonnull __quantum);
+int sched_rr_get_interval(pid_t __pid, struct timespec* __quantum) __THROW __INTRODUCED_IN_API_J_MR1__ __attribute__((nonnull(2)));
+#endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 
+#if defined(__USE_GNU)
 #if __BIONIC_AVAILABILITY_GUARD(17)
 /**
  * [clone(2)](https://man7.org/linux/man-pages/man2/clone.2.html)
@@ -173,21 +177,36 @@ int sched_rr_get_interval(pid_t __pid, struct timespec* _Nonnull __quantum);
  * Returns the pid of the child to the caller on success and
  * returns -1 and sets `errno` on failure.
  */
-#if defined(__USE_GNU)
-int clone(int (* __BIONIC_COMPLICATED_NULLNESS __fn)(void* __BIONIC_COMPLICATED_NULLNESS ), void* __BIONIC_COMPLICATED_NULLNESS __child_stack, int __flags, void* _Nullable __arg, ...) __INTRODUCED_IN_API_J_MR1__;
+int clone(int (* __fn)(void* ), void* __child_stack, int __flags, void* __arg, ...) __THROW __INTRODUCED_IN_API_J_MR1__;
+#endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 #endif
 
+#if defined(__USE_GNU)
+/**
+ * [clone3(2)](https://man7.org/linux/man-pages/man2/clone3.2.html )
+ * creates a new child process.
+ *
+ * Returns the pid of the child to the caller on success and
+ * returns -1 and sets `errno` on failure.
+ *
+ * Available since API level 38.
+ */
+int clone3(struct clone_args* __cl_args, size_t __size, int (* __fn)(void* ), void* __arg) __INTRODUCED_IN(38);
+#endif
+
+#if defined(__USE_GNU)
+#if __BIONIC_AVAILABILITY_GUARD(17)
 /**
  * [unshare(2)](https://man7.org/linux/man-pages/man2/unshare.2.html)
  * disassociates part of the caller's execution context.
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-#if defined(__USE_GNU)
-int unshare(int __flags) __INTRODUCED_IN_API_J_MR1__;
-#endif
+int unshare(int __flags) __THROW __INTRODUCED_IN_API_J_MR1__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(17) */
+#endif
 
+#if defined(__USE_GNU)
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /**
  * [setns(2)](https://man7.org/linux/man-pages/man2/setns.2.html)
@@ -195,11 +214,11 @@ int unshare(int __flags) __INTRODUCED_IN_API_J_MR1__;
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-#if defined(__USE_GNU)
-int setns(int __fd, int __ns_type) __INTRODUCED_IN_API_L__;
-#endif
+int setns(int __fd, int __ns_type) __THROW __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
- 
+#endif
+
+#if defined(__USE_GNU)
 /**
  * [sched_getcpu(3)](https://man7.org/linux/man-pages/man3/sched_getcpu.3.html)
  * reports which CPU the caller is running on.
@@ -207,8 +226,7 @@ int setns(int __fd, int __ns_type) __INTRODUCED_IN_API_L__;
  * Returns a non-negative CPU number on success and returns -1 and sets
  * `errno` on failure.
  */
-#if defined(__USE_GNU)
-int sched_getcpu(void);
+int sched_getcpu(void)__THROW ;
 #endif
 
 #if defined(__USE_GNU)
@@ -235,36 +253,37 @@ int sched_getcpu(void);
 #define __CPU_MASK(x)  ((__CPU_BITTYPE)1 << ((x) & (__CPU_BITS - 1)))
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [cpu_set_t](https://man7.org/linux/man-pages/man3/CPU_SET.3.html) is a
  * statically-sized CPU set. See `CPU_ALLOC` for dynamically-sized CPU sets.
  */
-#if defined(__USE_GNU)
 typedef struct {
   __CPU_BITTYPE  __bits[ CPU_SETSIZE / __CPU_BITS ];
 } cpu_set_t;
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [sched_setaffinity(2)](https://man7.org/linux/man-pages/man2/sched_setaffinity.2.html)
  * sets the CPU affinity mask for the given thread.
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-#if defined(__USE_GNU)
-int sched_setaffinity(pid_t __pid, size_t __cpu_set_size, const cpu_set_t* _Nonnull __cpu_set);
+int sched_setaffinity(pid_t __pid, size_t __cpu_set_size, const cpu_set_t* __cpu_set) __THROW __attribute__((nonnull(3)));
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [sched_getaffinity(2)](https://man7.org/linux/man-pages/man2/sched_getaffinity.2.html)
  * gets the CPU affinity mask for the given thread.
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-#if defined(__USE_GNU)
-int sched_getaffinity(pid_t __pid, size_t __cpu_set_size, cpu_set_t* _Nonnull __cpu_set);
+int sched_getaffinity(pid_t __pid, size_t __cpu_set_size, cpu_set_t* __cpu_set) __THROW __attribute__((nonnull(3)));
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [sched_setattr(2)](https://man7.org/linux/man-pages/man2/sched_setattr.2.html)
  * sets the scheduling attributes for the given thread.
@@ -274,49 +293,48 @@ int sched_getaffinity(pid_t __pid, size_t __cpu_set_size, cpu_set_t* _Nonnull __
  * the kernel writes the expected size into the given `sched_attr`,
  * which is why that argument is not `const`.
  */
-#if defined(__USE_GNU)
-int sched_setattr(pid_t __pid, struct sched_attr* _Nonnull __attr, unsigned __flags) __INTRODUCED_IN(37);
+int sched_setattr(pid_t __pid, struct sched_attr* __attr, unsigned __flags) __INTRODUCED_IN(37) __attribute__((nonnull(2)));
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [sched_getattr(2)](https://man7.org/linux/man-pages/man2/sched_getattr.2.html)
  * gets the scheduling attributes for the given thread.
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-#if defined(__USE_GNU)
-int sched_getattr(pid_t __pid, struct sched_attr* _Nonnull __attr, unsigned __size, unsigned __flags) __INTRODUCED_IN(37);
+int sched_getattr(pid_t __pid, struct sched_attr* __attr, unsigned __size, unsigned __flags) __INTRODUCED_IN(37) __attribute__((nonnull(2)));
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_ZERO](https://man7.org/linux/man-pages/man3/CPU_ZERO.3.html) clears all
  * bits in a static CPU set.
  */
-#if defined(__USE_GNU)
 #define CPU_ZERO(set)          CPU_ZERO_S(sizeof(cpu_set_t), set)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_ZERO_S](https://man7.org/linux/man-pages/man3/CPU_ZERO_S.3.html) clears all
  * bits in a dynamic CPU set allocated by `CPU_ALLOC`.
  */
-#if defined(__USE_GNU)
 #define CPU_ZERO_S(setsize, set)  __builtin_memset(set, 0, setsize)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_SET](https://man7.org/linux/man-pages/man3/CPU_SET.3.html) sets one
  * bit in a static CPU set.
  */
-#if defined(__USE_GNU)
 #define CPU_SET(cpu, set)      CPU_SET_S(cpu, sizeof(cpu_set_t), set)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_SET_S](https://man7.org/linux/man-pages/man3/CPU_SET_S.3.html) sets one
  * bit in a dynamic CPU set allocated by `CPU_ALLOC`.
  */
-#if defined(__USE_GNU)
 #define CPU_SET_S(cpu, setsize, set) \
   do { \
     size_t __cpu = (cpu); \
@@ -325,19 +343,19 @@ int sched_getattr(pid_t __pid, struct sched_attr* _Nonnull __attr, unsigned __si
   } while (0)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_CLR](https://man7.org/linux/man-pages/man3/CPU_CLR.3.html) clears one
  * bit in a static CPU set.
  */
-#if defined(__USE_GNU)
 #define CPU_CLR(cpu, set)      CPU_CLR_S(cpu, sizeof(cpu_set_t), set)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_CLR_S](https://man7.org/linux/man-pages/man3/CPU_CLR_S.3.html) clears one
  * bit in a dynamic CPU set allocated by `CPU_ALLOC`.
  */
-#if defined(__USE_GNU)
 #define CPU_CLR_S(cpu, setsize, set) \
   do { \
     size_t __cpu = (cpu); \
@@ -346,19 +364,19 @@ int sched_getattr(pid_t __pid, struct sched_attr* _Nonnull __attr, unsigned __si
   } while (0)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_ISSET](https://man7.org/linux/man-pages/man3/CPU_ISSET.3.html) tests
  * whether the given bit is set in a static CPU set.
  */
-#if defined(__USE_GNU)
 #define CPU_ISSET(cpu, set)    CPU_ISSET_S(cpu, sizeof(cpu_set_t), set)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_ISSET_S](https://man7.org/linux/man-pages/man3/CPU_ISSET_S.3.html) tests
  * whether the given bit is set in a dynamic CPU set allocated by `CPU_ALLOC`.
  */
-#if defined(__USE_GNU)
 #define CPU_ISSET_S(cpu, setsize, set) \
   (__extension__ ({ \
     size_t __cpu = (cpu); \
@@ -368,85 +386,85 @@ int sched_getattr(pid_t __pid, struct sched_attr* _Nonnull __attr, unsigned __si
   }))
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_COUNT](https://man7.org/linux/man-pages/man3/CPU_COUNT.3.html) counts
  * how many bits are set in a static CPU set.
  */
-#if defined(__USE_GNU)
 #define CPU_COUNT(set)         CPU_COUNT_S(sizeof(cpu_set_t), set)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_COUNT_S](https://man7.org/linux/man-pages/man3/CPU_COUNT_S.3.html) counts
  * how many bits are set in a dynamic CPU set allocated by `CPU_ALLOC`.
  */
-#if defined(__USE_GNU)
 #define CPU_COUNT_S(setsize, set)  __sched_cpucount((setsize), (set))
-int __sched_cpucount(size_t __cpu_set_size, const cpu_set_t* _Nonnull __cpu_set);
+int __sched_cpucount(size_t __cpu_set_size, const cpu_set_t* __cpu_set) __THROW __attribute__((nonnull(2)));
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_EQUAL](https://man7.org/linux/man-pages/man3/CPU_EQUAL.3.html) tests
  * whether two static CPU sets have the same bits set and cleared as each other.
  */
-#if defined(__USE_GNU)
 #define CPU_EQUAL(set1, set2)  CPU_EQUAL_S(sizeof(cpu_set_t), set1, set2)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_EQUAL_S](https://man7.org/linux/man-pages/man3/CPU_EQUAL_S.3.html) tests
  * whether two dynamic CPU sets allocated by `CPU_ALLOC` have the same bits
  * set and cleared as each other.
  */
-#if defined(__USE_GNU)
 #define CPU_EQUAL_S(setsize, set1, set2)  (__builtin_memcmp(set1, set2, setsize) == 0)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_AND](https://man7.org/linux/man-pages/man3/CPU_AND.3.html) ands two
  * static CPU sets.
  */
-#if defined(__USE_GNU)
 #define CPU_AND(dst, set1, set2)  __CPU_OP(dst, set1, set2, &)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_AND_S](https://man7.org/linux/man-pages/man3/CPU_AND_S.3.html) ands two
  * dynamic CPU sets allocated by `CPU_ALLOC`.
  */
-#if defined(__USE_GNU)
 #define CPU_AND_S(setsize, dst, set1, set2)  __CPU_OP_S(setsize, dst, set1, set2, &)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_OR](https://man7.org/linux/man-pages/man3/CPU_OR.3.html) ors two
  * static CPU sets.
  */
-#if defined(__USE_GNU)
 #define CPU_OR(dst, set1, set2)   __CPU_OP(dst, set1, set2, |)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_OR_S](https://man7.org/linux/man-pages/man3/CPU_OR_S.3.html) ors two
  * dynamic CPU sets allocated by `CPU_ALLOC`.
  */
-#if defined(__USE_GNU)
 #define CPU_OR_S(setsize, dst, set1, set2)   __CPU_OP_S(setsize, dst, set1, set2, |)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_XOR](https://man7.org/linux/man-pages/man3/CPU_XOR.3.html)
  * exclusive-ors two static CPU sets.
  */
-#if defined(__USE_GNU)
 #define CPU_XOR(dst, set1, set2)  __CPU_OP(dst, set1, set2, ^)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_XOR_S](https://man7.org/linux/man-pages/man3/CPU_XOR_S.3.html)
  * exclusive-ors two dynamic CPU sets allocated by `CPU_ALLOC`.
  */
-#if defined(__USE_GNU)
 #define CPU_XOR_S(setsize, dst, set1, set2)  __CPU_OP_S(setsize, dst, set1, set2, ^)
 #endif
 
@@ -466,31 +484,31 @@ int __sched_cpucount(size_t __cpu_set_size, const cpu_set_t* _Nonnull __cpu_set)
   } while (0)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_ALLOC_SIZE](https://man7.org/linux/man-pages/man3/CPU_ALLOC_SIZE.3.html)
  * returns the size of a CPU set large enough for CPUs in the range 0..count-1.
  */
-#if defined(__USE_GNU)
 #define CPU_ALLOC_SIZE(count) \
   __CPU_ELT((count) + (__CPU_BITS - 1)) * sizeof(__CPU_BITTYPE)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_ALLOC](https://man7.org/linux/man-pages/man3/CPU_ALLOC.3.html)
  * allocates a CPU set large enough for CPUs in the range 0..count-1.
  */
-#if defined(__USE_GNU)
 #define CPU_ALLOC(count)  __sched_cpualloc((count))
-cpu_set_t* _Nullable __sched_cpualloc(size_t __count);
+cpu_set_t* __sched_cpualloc(size_t __count)__THROW ;
 #endif
 
+#if defined(__USE_GNU)
 /**
  * [CPU_FREE](https://man7.org/linux/man-pages/man3/CPU_FREE.3.html)
  * deallocates a CPU set allocated by `CPU_ALLOC`.
  */
-#if defined(__USE_GNU)
 #define CPU_FREE(set)     __sched_cpufree((set))
-void __sched_cpufree(cpu_set_t* _Nonnull __cpu_set);
+void __sched_cpufree(cpu_set_t* __cpu_set) __THROW __attribute__((nonnull(1)));
 #endif
 
 __END_DECLS

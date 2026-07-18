@@ -223,27 +223,27 @@ void closelog(void);
  * the log tag to `__prefix`, which can be NULL to return to the default of
  * getprogname(). On Android, the other two arguments are ignored.
  */
-void openlog(const char* _Nullable __prefix, int __option, int __facility);
+void openlog(const char* __prefix, int __option, int __facility);
 
 /**
  * [setlogmask(3)](https://man7.org/linux/man-pages/man3/setlogmask.3.html)
  * sets which log priorities will actually be logged. See `LOG_MASK` and
  * `LOG_UPTO`.
  */
-int setlogmask(int __mask);
+int setlogmask(int __mask)__THROW ;
 
 /**
  * [syslog(3)](https://man7.org/linux/man-pages/man3/syslog.3.html) formats
  * the printf()-like message and logs it with the given priority, unless
  * suppressed by setlogmask(). On Android, the output goes to logcat.
  */
-void syslog(int __priority, const char* _Nonnull __fmt, ...) __printflike(2, 3);
+void syslog(int __priority, const char* __fmt, ...) __printflike(2, 3) __attribute__((nonnull(2)));
 
 /**
  * [vsyslog(3)](https://man7.org/linux/man-pages/man3/vsyslog.3.html) formats
  * the vprintf()-like message and logs it with the given priority, unless
  * suppressed by setlogmask(). On Android, the output goes to logcat.
  */
-void vsyslog(int __priority, const char* _Nonnull __fmt, va_list __args) __printflike(2, 0);
+void vsyslog(int __priority, const char* __fmt, va_list __args) __printflike(2, 0) __attribute__((nonnull(2)));
 
 __END_DECLS

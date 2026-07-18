@@ -107,7 +107,7 @@ typedef struct ANativeWindow_Buffer {
     int32_t format;
 
     /// The actual bits.
-    void* _Nullable bits;
+    void* bits;
 
     /// Do not touch.
     uint32_t reserved[6];
@@ -117,33 +117,33 @@ typedef struct ANativeWindow_Buffer {
  * Acquire a reference on the given {@link ANativeWindow} object. This prevents the object
  * from being deleted until the reference is removed.
  */
-void ANativeWindow_acquire(ANativeWindow* _Nonnull window);
+void ANativeWindow_acquire(ANativeWindow* window) __attribute__((nonnull(1)));
 
 /**
  * Remove a reference that was previously acquired with {@link ANativeWindow_acquire()}.
  */
-void ANativeWindow_release(ANativeWindow* _Nonnull window);
+void ANativeWindow_release(ANativeWindow* window) __attribute__((nonnull(1)));
 
 /**
  * Return the current width in pixels of the window surface.
  *
  * \return negative value on error.
  */
-int32_t ANativeWindow_getWidth(ANativeWindow* _Nonnull window);
+int32_t ANativeWindow_getWidth(ANativeWindow* window) __attribute__((nonnull(1)));
 
 /**
  * Return the current height in pixels of the window surface.
  *
  * \return a negative value on error.
  */
-int32_t ANativeWindow_getHeight(ANativeWindow* _Nonnull window);
+int32_t ANativeWindow_getHeight(ANativeWindow* window) __attribute__((nonnull(1)));
 
 /**
  * Return the current pixel format (AHARDWAREBUFFER_FORMAT_*) of the window surface.
  *
  * \return a negative value on error.
  */
-int32_t ANativeWindow_getFormat(ANativeWindow* _Nonnull window);
+int32_t ANativeWindow_getFormat(ANativeWindow* window) __attribute__((nonnull(1)));
 
 /**
  * Change the format and size of the window buffers.
@@ -163,8 +163,8 @@ int32_t ANativeWindow_getFormat(ANativeWindow* _Nonnull window);
  * \param format one of the AHardwareBuffer_Format constants.
  * \return 0 for success, or a negative value on error.
  */
-int32_t ANativeWindow_setBuffersGeometry(ANativeWindow* _Nonnull window,
-        int32_t width, int32_t height, int32_t format);
+int32_t ANativeWindow_setBuffersGeometry(ANativeWindow* window,
+        int32_t width, int32_t height, int32_t format) __attribute__((nonnull(1)));
 
 /**
  * Lock the window's next drawing surface for writing.
@@ -176,8 +176,8 @@ int32_t ANativeWindow_setBuffersGeometry(ANativeWindow* _Nonnull window,
  *
  * \return 0 for success, or a negative value on error.
  */
-int32_t ANativeWindow_lock(ANativeWindow* _Nonnull window, ANativeWindow_Buffer* _Nonnull outBuffer,
-        ARect* _Nullable inOutDirtyBounds);
+int32_t ANativeWindow_lock(ANativeWindow* window, ANativeWindow_Buffer* outBuffer,
+        ARect* inOutDirtyBounds) __attribute__((nonnull(1,2)));
 
 /**
  * Unlock the window's drawing surface after previously locking it,
@@ -185,7 +185,7 @@ int32_t ANativeWindow_lock(ANativeWindow* _Nonnull window, ANativeWindow_Buffer*
  *
  * \return 0 for success, or a negative value on error.
  */
-int32_t ANativeWindow_unlockAndPost(ANativeWindow* _Nonnull window);
+int32_t ANativeWindow_unlockAndPost(ANativeWindow* window) __attribute__((nonnull(1)));
 
 /**
  * Set a transform that will be applied to future buffers posted to the window.
@@ -196,7 +196,7 @@ int32_t ANativeWindow_unlockAndPost(ANativeWindow* _Nonnull window);
  * \param transform combination of {@link ANativeWindowTransform} flags
  * \return 0 for success, or -EINVAL if \p transform is invalid
  */
-int32_t ANativeWindow_setBuffersTransform(ANativeWindow* _Nonnull window, int32_t transform) __INTRODUCED_IN_API_O__;
+int32_t ANativeWindow_setBuffersTransform(ANativeWindow* window, int32_t transform) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * All buffers queued after this call will be associated with the dataSpace
@@ -215,7 +215,7 @@ int32_t ANativeWindow_setBuffersTransform(ANativeWindow* _Nonnull window, int32_
  * \return 0 for success, -EINVAL if window is invalid or the dataspace is not
  * supported.
  */
-int32_t ANativeWindow_setBuffersDataSpace(ANativeWindow* _Nonnull window, int32_t dataSpace) __INTRODUCED_IN_API_P__;
+int32_t ANativeWindow_setBuffersDataSpace(ANativeWindow* window, int32_t dataSpace) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 
 /**
  * Get the dataspace of the buffers in window.
@@ -225,7 +225,7 @@ int32_t ANativeWindow_setBuffersDataSpace(ANativeWindow* _Nonnull window, int32_
  * \return the dataspace of buffers in window, ADATASPACE_UNKNOWN is returned if
  * dataspace is unknown, or -EINVAL if window is invalid.
  */
-int32_t ANativeWindow_getBuffersDataSpace(ANativeWindow* _Nonnull window) __INTRODUCED_IN_API_P__;
+int32_t ANativeWindow_getBuffersDataSpace(ANativeWindow* window) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 
 /**
  * Get the default dataspace of the buffers in window as set by the consumer.
@@ -235,7 +235,7 @@ int32_t ANativeWindow_getBuffersDataSpace(ANativeWindow* _Nonnull window) __INTR
  * \return the dataspace of buffers in window, ADATASPACE_UNKNOWN is returned if
  * dataspace is unknown, or -EINVAL if window is invalid.
  */
-int32_t ANativeWindow_getBuffersDefaultDataSpace(ANativeWindow* _Nonnull window) __INTRODUCED_IN_API_U__;
+int32_t ANativeWindow_getBuffersDefaultDataSpace(ANativeWindow* window) __INTRODUCED_IN_API_U__ __attribute__((nonnull(1)));
 
 /** Compatibility value for ANativeWindow_setFrameRate. */
 enum ANativeWindow_FrameRateCompatibility {
@@ -273,8 +273,8 @@ enum ANativeWindow_FrameRateCompatibility {
  *
  * Available since API level 30.
  */
-int32_t ANativeWindow_setFrameRate(ANativeWindow* _Nonnull window, float frameRate, int8_t compatibility)
-        __INTRODUCED_IN_API_R__;
+int32_t ANativeWindow_setFrameRate(ANativeWindow* window, float frameRate, int8_t compatibility)
+        __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Provides a hint to the window that buffers should be preallocated ahead of
@@ -285,7 +285,7 @@ int32_t ANativeWindow_setFrameRate(ANativeWindow* _Nonnull window, float frameRa
  *
  * Available since API level 30.
  */
-void ANativeWindow_tryAllocateBuffers(ANativeWindow* _Nonnull window) __INTRODUCED_IN_API_R__;
+void ANativeWindow_tryAllocateBuffers(ANativeWindow* window) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /** Change frame rate strategy value for ANativeWindow_setFrameRate. */
 enum ANativeWindow_ChangeFrameRateStrategy {
@@ -346,9 +346,9 @@ enum ANativeWindow_ChangeFrameRateStrategy {
  * \return 0 for success, -EINVAL if the window, frame rate, or compatibility
  * value are invalid.
  */
-int32_t ANativeWindow_setFrameRateWithChangeStrategy(ANativeWindow* _Nonnull window, float frameRate,
+int32_t ANativeWindow_setFrameRateWithChangeStrategy(ANativeWindow* window, float frameRate,
         int8_t compatibility, int8_t changeFrameRateStrategy)
-        __INTRODUCED_IN_API_S__;
+        __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 /**
  * Clears the frame rate which is set for this window.
@@ -378,11 +378,54 @@ int32_t ANativeWindow_setFrameRateWithChangeStrategy(ANativeWindow* _Nonnull win
  *
  * \return 0 for success, -EINVAL if the window value is invalid.
  */
-__INTRODUCED_IN_API_S__ inline int32_t ANativeWindow_clearFrameRate(ANativeWindow* _Nonnull window) {
+__INTRODUCED_IN_API_S__ inline int32_t __attribute__((nonnull(1))) ANativeWindow_clearFrameRate(ANativeWindow* window) {
     return ANativeWindow_setFrameRateWithChangeStrategy(window, 0,
             ANATIVEWINDOW_FRAME_RATE_COMPATIBILITY_DEFAULT,
             ANATIVEWINDOW_CHANGE_FRAME_RATE_ONLY_IF_SEAMLESS);
 }
+
+/**
+ * Control CPU throttling for Vulkan/EGL producers.
+ *
+ * By default Vulkan and EGL producers are CPU throttled when they queue a buffer and the
+ * consumer is still processing the previous buffer. In practice, it means that eglSwapBuffers()
+ * or vkPresentKHR() calls will stall the CPU until the GPU is done processing the previous
+ * frame. This API allows to disable this throttling while queueing a buffer.
+ *
+ * While the default is to have throttling enabled, the more correct and efficient behavior
+ * is to have it disabled. Unfortunately, some Vulkan applications may inadvertently rely
+ * on this stall which effectively behaves as consumer/producer synchronization, albeit,
+ * inefficiently. It is therefore recommended to always disable throttling and perform
+ * proper synchronization in Vulkan.
+ *
+ * If the CPU produces frames faster than the GPU, natural throttling will happen when a
+ * buffer is dequeued, based on the size of the queue. This typically happen during the
+ * first drawing in OpenGL ES and in vkAcquireNextImageKHR() in Vulkan.
+ *
+ * This API has no effect in asynchronous mode, where throttling is always enabled.
+ *
+ * Available since API level 37.
+ *
+ * \param window pointer to an ANativeWindow object.
+ * \param enabled true to enable throttling, false to disable it.
+ *
+ * \return 0 for success, -EINVAL if the window value is invalid.
+ */
+int32_t ANativeWindow_setProducerThrottlingEnabled(ANativeWindow* window, bool enabled)
+        __INTRODUCED_IN(37) __attribute__((nonnull(1)));
+
+/**
+ * Check if CPU throttling is enabled.
+ *
+ * Available since API level 37.
+ *
+ * \param window pointer to an ANativeWindow object.
+ * \param outEnabled pointer to a bool to store the result.
+ *
+ * \return 0 if successful, -EINVAL if the window value is invalid
+ */
+int32_t ANativeWindow_isProducerThrottlingEnabled(ANativeWindow* window,
+                                                  bool* outEnabled) __INTRODUCED_IN(37) __attribute__((nonnull(1,2)));
 
 #ifdef __cplusplus
 }

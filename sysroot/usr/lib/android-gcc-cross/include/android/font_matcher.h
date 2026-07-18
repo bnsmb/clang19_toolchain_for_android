@@ -134,7 +134,7 @@ typedef struct AFontMatcher AFontMatcher;
  *
  * Available since API level 29.
  */
-AFontMatcher* _Nonnull AFontMatcher_create() __INTRODUCED_IN_API_Q__;
+AFontMatcher* AFontMatcher_create() __INTRODUCED_IN_API_Q__;
 
 /**
  * Destroy the matcher object.
@@ -143,7 +143,7 @@ AFontMatcher* _Nonnull AFontMatcher_create() __INTRODUCED_IN_API_Q__;
  *
  * \param matcher a matcher object. Passing NULL is not allowed.
  */
-void AFontMatcher_destroy(AFontMatcher* _Nonnull matcher) __INTRODUCED_IN_API_Q__;
+void AFontMatcher_destroy(AFontMatcher* matcher) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Set font style to matcher.
@@ -158,9 +158,9 @@ void AFontMatcher_destroy(AFontMatcher* _Nonnull matcher) __INTRODUCED_IN_API_Q_
  * \param italic true if italic, otherwise false.
  */
 void AFontMatcher_setStyle(
-        AFontMatcher* _Nonnull matcher,
+        AFontMatcher* matcher,
         uint16_t weight,
-        bool italic) __INTRODUCED_IN_API_Q__;
+        bool italic) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Set font locales to matcher.
@@ -174,8 +174,8 @@ void AFontMatcher_setStyle(
  *                     tags.
  */
 void AFontMatcher_setLocales(
-        AFontMatcher* _Nonnull matcher,
-        const char* _Nonnull languageTags) __INTRODUCED_IN_API_Q__;
+        AFontMatcher* matcher,
+        const char* languageTags) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * Set family variant to matcher.
@@ -189,8 +189,8 @@ void AFontMatcher_setLocales(
  *                      {@link AFAMILY_VARIANT_COMPACT} or {@link AFAMILY_VARIANT_ELEGANT} is valid.
  */
 void AFontMatcher_setFamilyVariant(
-        AFontMatcher* _Nonnull matcher,
-        uint32_t familyVariant) __INTRODUCED_IN_API_Q__;
+        AFontMatcher* matcher,
+        uint32_t familyVariant) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Performs the matching from the generic font family for the text and select one font.
@@ -210,12 +210,12 @@ void AFontMatcher_setFamilyVariant(
  * \return a font to be used for given text and params. You need to release the returned font by
  *         AFont_close when it is no longer needed.
  */
-AFont* _Nonnull AFontMatcher_match(
-        const AFontMatcher* _Nonnull matcher,
-        const char* _Nonnull familyName,
-        const uint16_t* _Nonnull text,
+AFont* AFontMatcher_match(
+        const AFontMatcher* matcher,
+        const char* familyName,
+        const uint16_t* text,
         const uint32_t textLength,
-        uint32_t* _Nullable runLengthOut) __INTRODUCED_IN_API_Q__;
+        uint32_t* runLengthOut) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2,3)));
 
 __END_DECLS
 

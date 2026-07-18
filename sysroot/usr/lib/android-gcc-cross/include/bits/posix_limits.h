@@ -86,7 +86,7 @@ __BEGIN_DECLS
 #define _POSIX_THREAD_SAFE_FUNCTIONS _POSIX_VERSION
 #define _POSIX_THREAD_SPORADIC_SERVER __BIONIC_POSIX_FEATURE_MISSING /* No SCHED_SPORADIC. */
 #define _POSIX_THREADS _POSIX_VERSION /* Strictly, pthread_cancel/pthread_testcancel are missing. */
-#define _POSIX_TIMEOUTS __BIONIC_POSIX_FEATURE_SINCE(21) /* pthread_mutex_timedlock arrived late. */
+#define _POSIX_TIMEOUTS __BIONIC_POSIX_FEATURE_SINCE(21) /* pthread_mutex_timedlock. */
 #define _POSIX_TIMERS _POSIX_VERSION /* clock_getres/clock_gettime/clock_settime/nanosleep/timer_create/timer_delete/timer_gettime/timer_getoverrun/timer_settime. */
 #define _POSIX_TRACE __BIONIC_POSIX_FEATURE_MISSING
 #define _POSIX_TRACE_EVENT_FILTER __BIONIC_POSIX_FEATURE_MISSING

@@ -45,7 +45,7 @@ __BEGIN_DECLS
  *
  * Returns the previous persona on success, and returns -1 and sets `errno` on failure.
  */
-int personality(unsigned int __persona) __INTRODUCED_IN(15);
+int personality(unsigned int __persona) __THROW __INTRODUCED_IN(15);
 #endif /* __BIONIC_AVAILABILITY_GUARD(15) */
 
 __END_DECLS

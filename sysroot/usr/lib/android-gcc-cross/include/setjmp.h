@@ -101,22 +101,22 @@ typedef long jmp_buf[_JBLEN];
  * Equivalent to sigsetjmp() with the second argument 0, so that the signal
  * mask is not saved.
  */
-int _setjmp(jmp_buf __env) __returns_twice;
+int _setjmp(jmp_buf __env) __THROWNL __returns_twice;
 
 /** Equivalent to siglongjmp(). */
-__noreturn void _longjmp(jmp_buf __env, int __value);
+__noreturn void _longjmp(jmp_buf __env, int __value)__THROWNL ;
 
 /**
  * Equivalent to sigsetjmp() with the second argument 1, so that the signal
  * mask is saved.
  */
-int setjmp(jmp_buf __env) __returns_twice;
+int setjmp(jmp_buf __env) __THROWNL __returns_twice;
 
 /** C11 says setjmp() must be a macro, but Android already had a function. */
 #define setjmp(__env) setjmp(__env)
 
 /** Equivalent to siglongjmp(). */
-__noreturn void longjmp(jmp_buf __env, int __value);
+__noreturn void longjmp(jmp_buf __env, int __value)__THROWNL ;
 
 /**
  * [sigsetjmp(3)](https://man7.org/linux/man-pages/man3/sigsetjmp.3.html)
@@ -135,6 +135,6 @@ int sigsetjmp(sigjmp_buf __env, int __save_signal_mask) __returns_twice;
  *
  * Does not return.
  */
-__noreturn void siglongjmp(sigjmp_buf __env, int __value);
+__noreturn void siglongjmp(sigjmp_buf __env, int __value)__THROWNL ;
 
 __END_DECLS

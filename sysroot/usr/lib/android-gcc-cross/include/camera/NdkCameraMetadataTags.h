@@ -1913,7 +1913,8 @@ typedef enum acamera_metadata_tag {
      * <p>Some camera devices support additional digital sensitivity boosting in the
      * camera processing pipeline after sensor RAW image is captured.
      * Such a boost will be applied to YUV/JPEG format output images but will not
-     * have effect on RAW output formats like RAW_SENSOR, RAW10, RAW12 or RAW_OPAQUE.</p>
+     * have effect on RAW output formats like RAW_SENSOR, RAW10, RAW12, RAW14
+     * or RAW_OPAQUE.</p>
      * <p>This key will be <code>null</code> for devices that do not support any RAW format
      * outputs. For devices that do support RAW format outputs, this key will always
      * present, and if a device does not support post RAW sensitivity boost, it will
@@ -3826,11 +3827,13 @@ typedef enum acamera_metadata_tag {
      * <ul>
      * <li>Processed (but stalling): any non-RAW format with a stallDurations &gt; 0.
      *   Typically {@link AIMAGE_FORMAT_JPEG JPEG format}.</li>
-     * <li>Raw formats: {@link AIMAGE_FORMAT_RAW16 RAW_SENSOR}, {@link AIMAGE_FORMAT_RAW10 RAW10}, or
-     *   {@link AIMAGE_FORMAT_RAW12 RAW12}.</li>
+     * <li>Raw formats: {@link AIMAGE_FORMAT_RAW16 RAW_SENSOR},
+     *   {@link AIMAGE_FORMAT_RAW10 RAW10},
+     *   {@link AIMAGE_FORMAT_RAW12 RAW12}, or
+     *   {@link AIMAGE_FORMAT_RAW12 RAW14}</li>
      * <li>Processed (but not-stalling): any non-RAW format without a stall duration.  Typically
      *   {@link AIMAGE_FORMAT_YUV_420_888 YUV_420_888},
-     *   <a href="https://developer.android.com/reference/android/graphics/ImageFormat.html#NV21">NV21</a>, <a href="https://developer.android.com/reference/android/graphics/ImageFormat.html#YV12">YV12</a>, or {@link AIMAGE_FORMAT_Y8 Y8} .</li>
+     *   or {@link AIMAGE_FORMAT_Y8 Y8} .</li>
      * </ul>
      *
      * @see ACAMERA_SCALER_AVAILABLE_STREAM_CONFIGURATIONS
@@ -4461,6 +4464,7 @@ typedef enum acamera_metadata_tag {
      * <li>{@link AIMAGE_FORMAT_YUV_420_888 }</li>
      * <li>{@link AIMAGE_FORMAT_RAW10 }</li>
      * <li>{@link AIMAGE_FORMAT_RAW12 }</li>
+     * <li>{@link AIMAGE_FORMAT_RAW14 }</li>
      * <li>{@link AIMAGE_FORMAT_Y8 }</li>
      * </ul>
      * <p>All other formats may or may not have an allowed stall duration on
@@ -4971,6 +4975,21 @@ typedef enum acamera_metadata_tag {
      */
     ACAMERA_SCALER_RAW_CROP_REGION =                            // int32[4]
             ACAMERA_SCALER_START + 27,
+    /**
+     * <p>The MultiResolutionImageReader formats supporting concurrent readers.</p>
+     *
+     * <p>Type: int32[n]</p>
+     *
+     * <p>This tag may appear in:
+     * <ul>
+     *   <li>ACameraMetadata from ACameraManager_getCameraCharacteristics</li>
+     * </ul></p>
+     *
+     * <p>Among all of the MultiResolutionImageReader formats this camera device supports,
+     * this list contains the formats that support concurrent reader outputs.</p>
+     */
+    ACAMERA_SCALER_CONCURRENT_MULTI_RESOLUTION_FORMATS =        // int32[n]
+            ACAMERA_SCALER_START + 28,
     ACAMERA_SCALER_END,
 
     /**
@@ -5906,8 +5925,8 @@ typedef enum acamera_metadata_tag {
      * by lens geometric distortion correction.</p>
      * <p>In general, application should always refer to active array size for controls like
      * metering regions or crop region. Two exceptions are when the application is dealing with
-     * RAW image buffers (RAW_SENSOR, RAW10, RAW12 etc), or when application explicitly set
-     * ACAMERA_DISTORTION_CORRECTION_MODE to OFF. In these cases, application should refer
+     * RAW image buffers (RAW_SENSOR, RAW10, RAW12, RAW14 etc), or when application explicitly
+     * set ACAMERA_DISTORTION_CORRECTION_MODE to OFF. In these cases, application should refer
      * to ACAMERA_SENSOR_INFO_PRE_CORRECTION_ACTIVE_ARRAY_SIZE.</p>
      * <p>The data representation is <code>int[4]</code>, which maps to <code>(left, top, width, height)</code>.</p>
      *
@@ -7271,6 +7290,42 @@ typedef enum acamera_metadata_tag {
      */
     ACAMERA_INFO_DEVICE_STATE_ORIENTATIONS =                    // int64[2*n]
             ACAMERA_INFO_START + 3,
+    /**
+     * <p>A classification of the underlying hardware and source of image data for this
+     * camera device, or for a specific camera output frame.</p>
+     *
+     * <p>Type: byte (acamera_metadata_enum_android_info_device_type_t)</p>
+     *
+     * <p>This tag may appear in:
+     * <ul>
+     *   <li>ACameraMetadata from ACameraManager_getCameraCharacteristics</li>
+     *   <li>ACameraMetadata from ACameraCaptureSession_captureCallback_result callbacks</li>
+     * </ul></p>
+     *
+     * <p>Historically, camera devices listed by the camera2 API could be assumed to be built-in
+     * cameras on the Android device, or in the case of the <code>EXTERNAL</code>
+     * <code>ACAMERA_INFO_SUPPORTED_HARDWARE_LEVEL</code>, USB webcams.</p>
+     * <p>However, it is increasingly possible for camera devices to not be restricted to
+     * device-internal sensors and processing pipelines. Such devices can provide a wide range
+     * of useful capabilities to applications, but may also not be suitable for all camera use
+     * cases.</p>
+     * <p>This key provides a basic classification of the type of camera this camera ID
+     * represents, so that applications may decide on the appropriate level of trust to extend
+     * to the image data produced by it.</p>
+     * <p>Note that in some cases, it is possible for the user to swap the definition of a camera
+     * ID to a different one, such as when connecting a remote camera to act as the front
+     * camera of the device. This is normally transparent to the camera-using application to
+     * minimize user friction, but applications that care about this possibility should always
+     * verify the value of this key in the
+     * <a href="https://developer.android.com/reference/android/hardware/camera2/CameraCharacteristics.html">CameraCharacteristics</a> before opening
+     * a camera, instead of caching it, and should also watch the value of this key in
+     * <a href="https://developer.android.com/reference/android/hardware/camera2/CaptureResult.html">CaptureResults</a> as well, since it may
+     * change mid-session.</p>
+     *
+     * @see ACAMERA_INFO_SUPPORTED_HARDWARE_LEVEL
+     */
+    ACAMERA_INFO_DEVICE_TYPE =                                  // byte (acamera_metadata_enum_android_info_device_type_t)
+            ACAMERA_INFO_START + 6,
     ACAMERA_INFO_END,
 
     /**
@@ -7853,6 +7908,34 @@ typedef enum acamera_metadata_tag {
     ACAMERA_LOGICAL_MULTI_CAMERA_ACTIVE_PHYSICAL_SENSOR_CROP_REGION = 
                                                                 // int32[4]
             ACAMERA_LOGICAL_MULTI_CAMERA_START + 3,
+    /**
+     * <p>Controls whether the camera device could also return additional
+     * physical cameras' metadata in the results.</p>
+     *
+     * <p>Type: byte (acamera_metadata_enum_android_logical_multi_camera_additional_results_t)</p>
+     *
+     * <p>This tag may appear in:
+     * <ul>
+     *   <li>ACameraMetadata from ACameraCaptureSession_captureCallback_result callbacks</li>
+     *   <li>ACaptureRequest</li>
+     * </ul></p>
+     *
+     * <p>This control must only be turned on when device is using logical camera,
+     * which are devices that have
+     * <a href="https://developer.android.com/reference/android/hardware/camera2/CameraMetadata.html#REQUEST_AVAILABLE_CAPABILITIES_LOGICAL_MULTI_CAMERA">CameraMetadata#REQUEST_AVAILABLE_CAPABILITIES_LOGICAL_MULTI_CAMERA</a>
+     * capability and the key is supported in the device's
+     * <a href="https://developer.android.com/reference/android/hardware/camera2/CameraCharacteristics.html#getAvailableCaptureRequestKeys">CameraCharacteristics#getAvailableCaptureRequestKeys</a>.
+     * Once this key is set to ON, if the camera device has
+     * multiple physical cameras active, the TotalCaptureResult will contain
+     * additional physical camera metadata in the result. One of such
+     * scenario is at the time of lens switch during zoom, where in addition
+     * to the active physical camera, a secondary physical camera runs as a
+     * "follower" and produces an additional physical camera CaptureResult.
+     * The application can call <a href="https://developer.android.com/reference/android/hardware/camera2/TotalCaptureResult.html#getPhysicalCameraTotalResults">TotalCaptureResult#getPhysicalCameraTotalResults</a>
+     * to get the additional results.</p>
+     */
+    ACAMERA_LOGICAL_MULTI_CAMERA_ADDITIONAL_RESULTS =           // byte (acamera_metadata_enum_android_logical_multi_camera_additional_results_t)
+            ACAMERA_LOGICAL_MULTI_CAMERA_START + 4,
     ACAMERA_LOGICAL_MULTI_CAMERA_END,
 
     /**
@@ -10388,7 +10471,7 @@ typedef enum acamera_metadata_enum_acamera_request_available_capabilities {
      * less than 24 megapixels. Also the ACAMERA_CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES entry
      * lists at least one FPS range where the minimum FPS is &gt;= 1 / minimumFrameDuration
      * for the largest YUV_420_888 size.</p>
-     * <p>If the device supports the {@link AIMAGE_FORMAT_RAW10 }, {@link AIMAGE_FORMAT_RAW12 }, {@link AIMAGE_FORMAT_Y8 }, then those can also be
+     * <p>If the device supports the {@link AIMAGE_FORMAT_RAW10 }, {@link AIMAGE_FORMAT_RAW12 }, {@link AIMAGE_FORMAT_RAW14 }, {@link AIMAGE_FORMAT_Y8 }, then those can also be
      * captured at the same rate as the maximum-size YUV_420_888 resolution is.</p>
      * <p>In addition, the ACAMERA_SYNC_MAX_LATENCY field is guaranteed to have a value between 0
      * and 4, inclusive. ACAMERA_CONTROL_AE_LOCK_AVAILABLE and ACAMERA_CONTROL_AWB_LOCK_AVAILABLE
@@ -10799,6 +10882,102 @@ typedef enum acamera_metadata_enum_acamera_request_available_dynamic_range_profi
      */
     ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_MAX         = 0x1000,
 
+    /**
+     * <p>8-bit profile with additional SMPTE 2094-50 per-frame metadata.</p>
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_STANDARD_SMPTE_2094_50
+                                                                      = 0x2000,
+
+    /**
+     * <p>10-bit pixel samples encoded using the Hybrid log-gamma transfer function with
+     * additional SMPTE 2094-50 per-frame metadata.</p>
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_HLG10_SMPTE_2094_50
+                                                                      = 0x4000,
+
+    /**
+     * <p>10-bit pixel samples encoded using the SMPTE ST 2084 transfer function.
+     * This profile utilizes internal static metadata to increase the quality
+     * of the capture and also includes SMPTE 2094-50 per-frame metadata.</p>
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_HDR10_SMPTE_2094_50
+                                                                      = 0x8000,
+
+    /**
+     * <p>10-bit pixel samples encoded using the SMPTE ST 2084 transfer function.
+     * In contrast to HDR10, this profile uses internal per-frame metadata
+     * to further enhance the quality of the capture and includes
+     * additional SMPTE 2094-50 per-frame metadata.</p>
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_HDR10_PLUS_SMPTE_2094_50
+                                                                      = 0x10000,
+
+    /**
+     * <p>This is a camera mode for Dolby Vision capture optimized for a more scene
+     * accurate capture. This would typically differ from what a specific device
+     * might want to tune for a consumer optimized Dolby Vision general capture and
+     * also includes additional SMPTE 2094-50 per-frame metadata.</p>
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_DOLBY_VISION_10B_HDR_REF_SMPTE_2094_50
+                                                                      = 0x20000,
+
+    /**
+     * <p>This is the power optimized mode for 10-bit Dolby Vision HDR Reference Mode
+     * with additional SMPTE 2094-50 per-frame metadata.</p>
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_DOLBY_VISION_10B_HDR_REF_PO_SMPTE_2094_50
+                                                                      = 0x40000,
+
+    /**
+     * <p>This is the camera mode for the default Dolby Vision capture mode for the
+     * specific device. This would be tuned by each specific device for consumer
+     * pleasing results that resonate with their particular audience. We expect
+     * that each specific device would have a different look for their default
+     * Dolby Vision capture and also include additional SMPTE 2094-50 per-frame metadata.</p>
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_DOLBY_VISION_10B_HDR_OEM_SMPTE_2094_50
+                                                                      = 0x80000,
+
+    /**
+     * <p>This is the power optimized mode for 10-bit Dolby Vision HDR device specific
+     * capture Mode and also includes additional SMPTE 2094-50 per-frame metadata.</p>
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_DOLBY_VISION_10B_HDR_OEM_PO_SMPTE_2094_50
+                                                                      = 0x100000,
+
+    /**
+     * <p>This is the 8-bit version of the Dolby Vision reference capture mode optimized
+     * for scene accuracy and also includes additional SMPTE 2094-50 per-frame metadata.</p>
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_DOLBY_VISION_8B_HDR_REF_SMPTE_2094_50
+                                                                      = 0x200000,
+
+    /**
+     * <p>This is the power optimized mode for 8-bit Dolby Vision HDR Reference Mode and
+     * also includes additional SMPTE 2094-50 per-frame metadata.</p>
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_DOLBY_VISION_8B_HDR_REF_PO_SMPTE_2094_50
+                                                                      = 0x400000,
+
+    /**
+     * <p>This is the 8-bit version of device specific tuned and optimized Dolby Vision
+     * capture mode and also includes additional SMPTE 2094-50 per-frame metadata.</p>
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_DOLBY_VISION_8B_HDR_OEM_SMPTE_2094_50
+                                                                      = 0x800000,
+
+    /**
+     * <p>This is the power optimized mode for 8-bit Dolby Vision HDR device specific
+     * capture Mode and also includes additional SMPTE 2094-50 per-frame metadata.</p>
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_DOLBY_VISION_8B_HDR_OEM_PO_SMPTE_2094_50
+                                                                      = 0x1000000,
+
+    /**
+     *
+     */
+    ACAMERA_REQUEST_AVAILABLE_DYNAMIC_RANGE_PROFILES_MAP_MAX_312     = 0x2000000,
+
 } acamera_metadata_enum_android_request_available_dynamic_range_profiles_map_t;
 
 // ACAMERA_REQUEST_AVAILABLE_COLOR_SPACE_PROFILES_MAP
@@ -11095,6 +11274,7 @@ typedef enum acamera_metadata_enum_acamera_scaler_available_stream_use_cases {
      * <li>{@link AIMAGE_FORMAT_RAW16 RAW_SENSOR}</li>
      * <li>{@link AIMAGE_FORMAT_RAW10 RAW10}</li>
      * <li>{@link AIMAGE_FORMAT_RAW12 RAW12}</li>
+     * <li>{@link AIMAGE_FORMAT_RAW14 RAW14}</li>
      * </ul>
      * <p>session configuration is not guaranteed to succeed.</p>
      * <p>This stream use case may not be supported on some devices.</p>
@@ -11691,6 +11871,50 @@ typedef enum acamera_metadata_enum_acamera_info_supported_hardware_level {
 
 } acamera_metadata_enum_android_info_supported_hardware_level_t;
 
+// ACAMERA_INFO_DEVICE_TYPE
+typedef enum acamera_metadata_enum_acamera_info_device_type {
+    /**
+     * <p>This camera device is physically a part of this Android device, and the data produced
+     * is always within the device's control before it reaches the application requesting it.</p>
+     */
+    ACAMERA_INFO_DEVICE_TYPE_BUILT_IN                                = 0,
+
+    /**
+     * <p>This camera device is not permanently connected to this Android device.  It may be
+     * connected by a wired connection, such as a USB webcam, or it might be connected
+     * wirelessly, such as via WiFi or other communication mechanism.</p>
+     * <p>The provenance of the image data from the external camera cannot be guaranteed, since it
+     * is produced by hardware that is not controlled by this Android device.</p>
+     * <p>Note that an <code>EXTERNAL</code> <code>ACAMERA_INFO_DEVICE_TYPE</code> does not mean the
+     * <code>ACAMERA_INFO_SUPPORTED_HARDWARE_LEVEL</code> must be <code>EXTERNAL</code>. A basic USB webcam would
+     * likely have an <code>EXTERNAL</code> hardware level, but more sophisticated remote camera systems
+     * may have more capabilities than that, and be listed with a <code>LIMITED</code> or better
+     * hardware level.</p>
+     *
+     * @see ACAMERA_INFO_DEVICE_TYPE
+     * @see ACAMERA_INFO_SUPPORTED_HARDWARE_LEVEL
+     */
+    ACAMERA_INFO_DEVICE_TYPE_EXTERNAL                                = 1,
+
+    /**
+     * <p>This camera device produces purely virtual images, though they may be based on the
+     * output of a real hardware camera in some cases. For example, a virtual reality headset
+     * may have a virtual camera as the front-facing camera, producing a virtual avatar to
+     * represent the user, which is animated based on sensors on the headset.</p>
+     * <p>The image data should not be assumed to be real.</p>
+     */
+    ACAMERA_INFO_DEVICE_TYPE_VIRTUAL                                 = 2,
+
+    /**
+     * <p>This camera device has an unknown classification.</p>
+     * <p>This value will be used when new device classifications need to be added in future
+     * Android versions, so that applications targeting older SDK levels do not have to
+     * handle unknown enumeration values.</p>
+     */
+    ACAMERA_INFO_DEVICE_TYPE_UNKNOWN                                 = 3,
+
+} acamera_metadata_enum_android_info_device_type_t;
+
 
 // ACAMERA_BLACK_LEVEL_LOCK
 typedef enum acamera_metadata_enum_acamera_black_level_lock {
@@ -11823,6 +12047,14 @@ typedef enum acamera_metadata_enum_acamera_logical_multi_camera_sensor_sync_type
     ACAMERA_LOGICAL_MULTI_CAMERA_SENSOR_SYNC_TYPE_CALIBRATED         = 1,
 
 } acamera_metadata_enum_android_logical_multi_camera_sensor_sync_type_t;
+
+// ACAMERA_LOGICAL_MULTI_CAMERA_ADDITIONAL_RESULTS
+typedef enum acamera_metadata_enum_acamera_logical_multi_camera_additional_results {
+    ACAMERA_LOGICAL_MULTI_CAMERA_ADDITIONAL_RESULTS_OFF              = 0,
+
+    ACAMERA_LOGICAL_MULTI_CAMERA_ADDITIONAL_RESULTS_ON               = 1,
+
+} acamera_metadata_enum_android_logical_multi_camera_additional_results_t;
 
 
 // ACAMERA_DISTORTION_CORRECTION_MODE

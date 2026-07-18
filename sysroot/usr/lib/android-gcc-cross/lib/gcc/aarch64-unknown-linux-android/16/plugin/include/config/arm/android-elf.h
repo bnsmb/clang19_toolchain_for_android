@@ -1,4 +1,4 @@
-/* Configuration file for Linux Android targets.
+/* Configuration file for Android ARM targets.
    Copyright (C) 2026 Free Software Foundation, Inc.
 
    This file is part of GCC.
@@ -17,13 +17,14 @@
    along with GCC; see the file COPYING3.  If not see
    <http://www.gnu.org/licenses/>.  */
 
-#if !defined(USED_FOR_TARGET)
-/* Android requires thread-local variables on ARM targets to be aligned to (BITS_PER_WORD * 8) bits. */
+/* Android requires thread-local variables on ARM targets to be aligned to BITS_PER_WORD * 8. */
+#define ANDROID_TLS_ALIGNMENT (BITS_PER_WORD * 8)
+
 #undef DATA_ABI_ALIGNMENT
-#define DATA_ABI_ALIGNMENT(TYPE, ALIGN)  (targetm.have_tls && DECL_THREAD_LOCAL_P (decl) ? BITS_PER_WORD * 8 : (ALIGN))
+#define DATA_ABI_ALIGNMENT(TYPE, ALIGN) (targetm.have_tls && DECL_THREAD_LOCAL_P (decl) && ALIGN < ANDROID_TLS_ALIGNMENT ? ANDROID_TLS_ALIGNMENT : ALIGN)
 
 /* Android reserves the x18 register for ShadowCallStack. */
 #undef FIXED_X18
 #define FIXED_X18 1
-#endif
+
 

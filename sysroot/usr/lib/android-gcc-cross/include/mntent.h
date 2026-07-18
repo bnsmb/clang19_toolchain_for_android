@@ -50,28 +50,28 @@ __BEGIN_DECLS
 #define MNTOPT_SUID "suid"
 
 struct mntent {
-  char* _Nullable mnt_fsname;
-  char* _Nullable mnt_dir;
-  char* _Nullable mnt_type;
-  char* _Nullable mnt_opts;
+  char* mnt_fsname;
+  char* mnt_dir;
+  char* mnt_type;
+  char* mnt_opts;
   int mnt_freq;
   int mnt_passno;
 };
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int endmntent(FILE* _Nullable __fp) __INTRODUCED_IN_API_L__;
+int endmntent(FILE* __fp) __THROW __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-struct mntent* _Nullable getmntent(FILE* _Nonnull __fp);
+struct mntent* getmntent(FILE* __fp) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-struct mntent* _Nullable getmntent_r(FILE* _Nonnull __fp, struct mntent* _Nonnull __entry, char* _Nonnull __buf, int __size) __INTRODUCED_IN_API_L__;
-FILE* _Nullable setmntent(const char* _Nonnull __filename, const char* _Nonnull __type) __INTRODUCED_IN_API_L__;
+struct mntent* getmntent_r(FILE* __fp, struct mntent* __entry, char* __buf, int __size) __attribute__((nonnull(1,2,3)));
+FILE* setmntent(const char* __filename, const char* __type) __THROW __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-char* _Nullable hasmntopt(const struct mntent* _Nonnull __entry, const char* _Nonnull __option) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+char* hasmntopt(const struct mntent* __entry, const char* __option) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2)));
+#endif
 
 __END_DECLS
 

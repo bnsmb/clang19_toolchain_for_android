@@ -3,13 +3,14 @@
 BINARY="${0##*/}"
 
 if [ "${BINARY}"x = "gcc_tool_wrapper"x ] ; then
-  echo "ERROR: This is a wrapper for the binaries in the GCC toolchain. This script can not run as standalone script" 
+  echo "ERROR: This is a wrapper for the binaries in the GCC toolchain. This script can not run as standalone script"
   exit 126
 fi
 
 GCC_BASEDIR="/data/local/tmp/sysroot/usr/lib/android-gcc-cross"
 
 API=${API:=36}
+
 
 export PINO_RUNTIME_RPATH='true'
 export PINO_NEON='true'
@@ -21,17 +22,21 @@ export LD_LIBRARY_PATH="${GCC_BASEDIR}/lib:${LD_LIBRARY_PATH}"
 
 export PATH="${GCC_BASEDIR}/bin:$PATH"
 
-
 if [ -x "${GCC_BASEDIR}/bin/${BINARY}"  ] ; then
-  REAL_BINARY="${GCC_BASEDIR}/bin/${BINARY}" 
-elif [ -x "${GCC_BASEDIR}/bin/aarch64-unknown-linux-android-${BINARY}" ] ; then 
-  REAL_BINARY="${GCC_BASEDIR}/bin/aarch64-unknown-linux-android-${BINARY}"
+  REAL_BINARY="${GCC_BASEDIR}/bin/${BINARY}"
+elif [ -x "${GCC_BASEDIR}/bin/aarch64-unknown-linux-android${API}-${BINARY}" ] ; then
+  REAL_BINARY="${GCC_BASEDIR}/bin/aarch64-unknown-linux-android${API}-${BINARY}"
 else
   echo "ERROR: There is no executable for \"${BINARY}\" in the directory \"${GCC_BASEDIR}/bin\" "
   exit 126
 fi
 
-[ "${VERBOSE}"x != ""x ] && ( echo; echo "Eexcuting now \"${REAL_BINARY}  ${@}\" ... " ; echo )  >&2
+declare -r secondary_target='armv7-unknown-linux-androideabi'
+declare -r multilib='-m32'
 
-exec "${REAL_BINARY}"  "${@}"
 
+[ "${VERBOSE}"x != ""x ] && ( echo; echo "Eexcuting now \"${REAL_BINARY} -march=native  ${@}\" ... " ; echo )  >&2
+
+exec ${REAL_BINARY}  -march=native "${@}"
+        
+#	exec '/data/local/tmp/sysroot/usr/lib/android-gcc-cross/bin/aarch64-unknown-linux-android36-gcc' -march=native "${@}"

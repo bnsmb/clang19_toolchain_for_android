@@ -23,3 +23,10 @@ extern bool linux_libc_has_function (enum function_class fn_class, tree);
 
 extern unsigned linux_libm_function_max_error (unsigned, machine_mode, bool);
 extern unsigned linux_fortify_source_default_level ();
+
+/* TARGET_C_AVAILABILITY_* hooks for Android.  Defined in
+   gcc/config/android.cc and only meaningful for Android triples.
+   See gcc/c-family/c-availability.cc for the consumer.  */
+extern const char *android_availability_platform_name (void);
+extern bool android_availability_min_version (unsigned *, unsigned *, unsigned *);
+extern int android_availability_platform_id (void);

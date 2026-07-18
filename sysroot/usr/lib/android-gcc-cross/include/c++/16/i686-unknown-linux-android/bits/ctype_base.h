@@ -28,20 +28,6 @@
 
 // Information as gleaned from /usr/include/ctype.h
 
-#if !defined(_U)
-#if !defined(_CTYPE_U)
-#error Bionic header ctype.h does not define either _U nor _CTYPE_U
-#endif
-#define _U _CTYPE_U
-#define _L _CTYPE_L
-#define _N _CTYPE_N
-#define _S _CTYPE_S
-#define _P _CTYPE_P
-#define _C _CTYPE_C
-#define _X _CTYPE_X
-#define _B _CTYPE_B
-#endif
-
 namespace std _GLIBCXX_VISIBILITY(default)
 {
 _GLIBCXX_BEGIN_NAMESPACE_VERSION
@@ -54,20 +40,21 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
     // NB: Offsets into ctype<char>::_M_table force a particular size
     // on the mask type. Because of this, we don't use an enum.
-    typedef char 		mask;
-    static const mask upper    	= _U;
-    static const mask lower 	= _L;
-    static const mask alpha 	= _U | _L;
-    static const mask digit 	= _N;
-    static const mask xdigit 	= _X | _N;
-    static const mask space 	= _S;
-    static const mask print 	= _P | _U | _L | _N | _B;
-    static const mask graph 	= _P | _U | _L | _N;
-    static const mask cntrl 	= _C;
-    static const mask punct 	= _P;
-    static const mask alnum 	= _U | _L | _N;
+    typedef char 	mask;
+
+    static const mask upper    	= _CTYPE_U;
+    static const mask lower 	= _CTYPE_L;
+    static const mask alpha 	= _CTYPE_U | _CTYPE_L;
+    static const mask digit 	= _CTYPE_N;
+    static const mask xdigit 	= _CTYPE_X | _CTYPE_N;
+    static const mask space 	= _CTYPE_S;
+    static const mask print 	= _CTYPE_P | _CTYPE_U | _CTYPE_L | _CTYPE_N | _CTYPE_B;
+    static const mask graph 	= _CTYPE_P | _CTYPE_U | _CTYPE_L | _CTYPE_N;
+    static const mask cntrl 	= _CTYPE_C;
+    static const mask punct 	= _CTYPE_P;
+    static const mask alnum 	= _CTYPE_U | _CTYPE_L | _CTYPE_N;
 #if __cplusplus >= 201103L
-    static const mask blank 	= space;
+    static const mask blank	= space;
 #endif
   };
 

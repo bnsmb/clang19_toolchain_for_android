@@ -45,26 +45,26 @@ __BEGIN_DECLS
 
 union semun {
   int val;
-  struct semid_ds* _Nullable buf;
-  unsigned short* _Nullable array;
-  struct seminfo* _Nullable __buf;
-  void* _Nullable __pad;
+  struct semid_ds* buf;
+  unsigned short* array;
+  struct seminfo* __buf;
+  void* __pad;
 };
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-int semctl(int __sem_id, int __sem_num, int __op, ...) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+int semctl(int __sem_id, int __sem_num, int __op, ...) __THROW __INTRODUCED_IN_API_O__;
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-int semget(key_t __key, int __sem_count, int __flags) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+int semget(key_t __key, int __sem_count, int __flags) __THROW __INTRODUCED_IN_API_O__;
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-int semop(int __sem_id, struct sembuf* _Nonnull __ops, size_t __op_count) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+int semop(int __sem_id, struct sembuf* __ops, size_t __op_count) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(2)));
+#endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(26)
-int semtimedop(int __sem_id, struct sembuf* _Nonnull __ops, size_t __op_count, const struct timespec* _Nullable __timeout) __INTRODUCED_IN_API_O__;
+int semtimedop(int __sem_id, struct sembuf* __ops, size_t __op_count, const struct timespec* __timeout) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(2)));
 #endif
 
 __END_DECLS

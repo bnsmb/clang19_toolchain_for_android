@@ -46,7 +46,7 @@
 
 // The datestamp of the C++ library in compressed ISO date format.
 #undef __GLIBCXX__ /* The testsuite defines it to 99999999 to block PCH.  */
-#define __GLIBCXX__ 20260529
+#define __GLIBCXX__ 20260716
 
 // Macros for various attributes.
 //   _GLIBCXX_PURE
@@ -1371,10 +1371,10 @@ namespace __gnu_cxx
 #define _GLIBCXX_HAVE_STRING_H 1
 
 /* Define to 1 if you have the `strtof' function. */
-/* #undef _GLIBCXX_HAVE_STRTOF */
+#define _GLIBCXX_HAVE_STRTOF 1
 
 /* Define to 1 if you have the `strtold' function. */
-/* #undef _GLIBCXX_HAVE_STRTOLD */
+#define _GLIBCXX_HAVE_STRTOLD 1
 
 /* Define to 1 if `d_type' is a member of `struct dirent'. */
 #define _GLIBCXX_HAVE_STRUCT_DIRENT_D_TYPE 1
@@ -1471,7 +1471,7 @@ namespace __gnu_cxx
 /* #undef _GLIBCXX_HAVE_TLHELP32_H */
 
 /* Define to 1 if the target supports thread-local storage. */
-#define _GLIBCXX_HAVE_TLS 1
+/* #undef _GLIBCXX_HAVE_TLS */
 
 /* Define if truncate is available in <unistd.h>. */
 /* #undef _GLIBCXX_HAVE_TRUNCATE */

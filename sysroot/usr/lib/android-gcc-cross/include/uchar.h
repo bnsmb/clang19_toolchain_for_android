@@ -63,7 +63,7 @@ typedef __CHAR32_TYPE__ char32_t;
  * Returns the number of bytes written to `__buf` on success, and returns -1 and sets `errno`
  * on failure.
  */
-size_t c16rtomb(char* _Nullable __buf, char16_t __ch16, mbstate_t* _Nullable __ps) __INTRODUCED_IN_API_L__;
+size_t c16rtomb(char* __buf, char16_t __ch16, mbstate_t* __ps) __THROW __INTRODUCED_IN_API_L__;
 
 /**
  * [c32rtomb(3)](https://man7.org/linux/man-pages/man3/c32rtomb.3.html) converts a single UTF-32
@@ -72,19 +72,19 @@ size_t c16rtomb(char* _Nullable __buf, char16_t __ch16, mbstate_t* _Nullable __p
  * Returns the number of bytes written to `__buf` on success, and returns -1 and sets `errno`
  * on failure.
  */
-size_t c32rtomb(char* _Nullable __buf, char32_t __ch32, mbstate_t* _Nullable __ps) __INTRODUCED_IN_API_L__;
+size_t c32rtomb(char* __buf, char32_t __ch32, mbstate_t* __ps) __THROW __INTRODUCED_IN_API_L__;
 
 /**
  * [mbrtoc16(3)](https://man7.org/linux/man-pages/man3/mbrtoc16.3.html) converts the next UTF-8
  * sequence to a UTF-16 code point.
  */
-size_t mbrtoc16(char16_t* _Nullable __ch16, const char* _Nullable __s, size_t __n, mbstate_t* _Nullable __ps) __INTRODUCED_IN_API_L__;
+size_t mbrtoc16(char16_t* __ch16, const char* __s, size_t __n, mbstate_t* __ps) __THROW __INTRODUCED_IN_API_L__;
 
 /**
  * [mbrtoc32(3)](https://man7.org/linux/man-pages/man3/mbrtoc32.3.html) converts the next UTF-8
  * sequence to a UTF-32 code point.
  */
-size_t mbrtoc32(char32_t* _Nullable __ch32, const char* _Nullable __s, size_t __n, mbstate_t* _Nullable __ps) __INTRODUCED_IN_API_L__;
+size_t mbrtoc32(char32_t* __ch32, const char* __s, size_t __n, mbstate_t* __ps) __THROW __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 __END_DECLS

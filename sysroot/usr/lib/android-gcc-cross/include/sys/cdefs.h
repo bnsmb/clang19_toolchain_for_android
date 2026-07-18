@@ -325,13 +325,63 @@
 #define __LIBC32_LEGACY_PUBLIC__ __attribute__((__visibility__("default")))
 #endif
 
-/* Used to rename functions so that the compiler emits a call to 'x' rather than the function this was applied to. */
+/*
+ * Used to rename functions so that the compiler emits a call to 'x' rather
+ * than the function this macro was applied to.
+ *
+ * This has a variety of uses:
+ * 1. _FORTIFY_SOURCE uses __RENAME() to retain access to the "real" functions.
+ * 1. _FILE_OFFSET_BITS=64, though usually via __RENAME_IF_FILE_OFFSET64().
+ * 1. Handling the POSIX vs non-POSIX basename() mess.
+ * 1. const-correct C++ overloads for C functions.
+ *    There may be a better way to do this that lets us implement the C23
+ *    equivalent https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3020.pdf
+ *    at the same time/without too much duplication.
+ * 1. Redirecting _l() functions to the non-locale variant;
+ *    they're the same on Android, and because of this they were often added
+ *    quite a lot later. Using __RENAME() for these lets us (a) make them
+ *    available at earlier API levels and also (b) not even require an extra
+ *    relocation in the resulting ELF file. (But if we ever get to the point
+ *    where (a) is no longer relevant, (b) is probably not worthwhile alone.)
+ *    An interesting side-effect of this is that it means that if we ever did
+ *    decide to implement locale-specific behavior (which seems unlikely
+ *    because the POSIX APIs aren't particularly useful; you really need
+ *    something more like icu for serious i18n work) apps wouldn't suddenly
+ *    be faced with a behavior change --- they'd only get it when recompiling,
+ *    and we could trivially offer an opt-in/opt-out system similar to
+ *    _FILE_OFFSET_BITS.
+ * 1. Upgrading non-POSIX extensions when they're added to POSIX while
+ *    retaining compatibility with older API levels. This is rare, but
+ *    posix_spawn_file_actions_addchdir() is an example; fpurge() vs __fpurge()
+ *    is different but similar.
+ */
 #define __RENAME(x) __asm__(#x)
 
 #if defined(__cplusplus)
 	#define __static_inline__ static inline
 #else
 	#define __static_inline__ static __inline
+#endif
+
+#if defined(__cplusplus)
+	#if __cplusplus >= 201103L
+		#define __THROW noexcept (true)
+	#else
+		#define __THROW throw ()
+	#endif
+	
+	#define __THROWNL __THROW
+#else
+	#define __THROW __attribute__((__nothrow__ , __leaf__))
+	#define __THROWNL __attribute__((__nothrow__))
+#endif
+
+#if defined(__cplusplus)
+	#define __REDIRECT_NTH(name) __THROW __RENAME(#name)
+	#define __REDIRECT_IF_FILE_OFFSET64_NTH(name) __THROW __RENAME_IF_FILE_OFFSET64(#name)
+#else
+	#define __REDIRECT_NTH(name) __RENAME(#name) __THROW
+	#define __REDIRECT_IF_FILE_OFFSET64_NTH(name) __RENAME_IF_FILE_OFFSET64(#name) __THROW
 #endif
 
 #define _Nonnull
@@ -560,4 +610,7 @@
 #include <android/api-level.h>
 #if __has_include(<android/ndk-version.h>)
 #include <android/ndk-version.h>
+#if !defined(__ANDROID_MIN_SDK_VERSION__)
+#error Unversioned target triples are not supported!
+#endif
 #endif

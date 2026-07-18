@@ -1,4 +1,4 @@
-#!/data/local/tmp/sysroot/usr/bin/bash
+#!/bin/bash
 
 declare PKG_CONFIG_PATH=''
 declare PKG_CONFIG_LIBDIR=''

@@ -243,6 +243,12 @@
 #if defined(__NR_fgetxattr)
   #define SYS_fgetxattr __NR_fgetxattr
 #endif
+#if defined(__NR_file_getattr)
+  #define SYS_file_getattr __NR_file_getattr
+#endif
+#if defined(__NR_file_setattr)
+  #define SYS_file_setattr __NR_file_setattr
+#endif
 #if defined(__NR_finit_module)
   #define SYS_finit_module __NR_finit_module
 #endif
@@ -554,6 +560,9 @@
 #endif
 #if defined(__NR_listmount)
   #define SYS_listmount __NR_listmount
+#endif
+#if defined(__NR_listns)
+  #define SYS_listns __NR_listns
 #endif
 #if defined(__NR_listxattr)
   #define SYS_listxattr __NR_listxattr
@@ -1382,6 +1391,9 @@
 #endif
 #if defined(__NR_unshare)
   #define SYS_unshare __NR_unshare
+#endif
+#if defined(__NR_uprobe)
+  #define SYS_uprobe __NR_uprobe
 #endif
 #if defined(__NR_uretprobe)
   #define SYS_uretprobe __NR_uretprobe

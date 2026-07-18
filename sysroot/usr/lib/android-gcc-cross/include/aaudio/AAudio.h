@@ -1100,8 +1100,43 @@ typedef enum AAudio_DeviceType : int32_t {
     /**
      * A device type describing the audio device associated with a dock using an analog connection.
      */
-    AAUDIO_DEVICE_DOCK_ANALOG = 31
+    AAUDIO_DEVICE_DOCK_ANALOG = 31,
+
+    /**
+     * A Bluetooth LE Hearing Aid
+     * Introduced in API 37.
+     */
+    AAUDIO_DEVICE_BLE_HEARING_AID = 32,
+
+    /**
+     * A device corresponding to the receive or transmit path in an android implementation
+     * operating in a Bluetooth LE Audio peripheral mode.
+     * Introduced in API 37.
+     */
+    AAUDIO_DEVICE_BLE_CENTRAL = 33,
+    /**
+     * A device corresponding to the receive path in an android implementation
+     * operating in a Bluetooth LE Audio peripheral mode part of a broadcast group.
+     * Introduced in API 37.
+     */
+    AAUDIO_DEVICE_BLE_CENTRAL_BROADCAST = 34
 } AAudio_DeviceType;
+
+/**
+ * The constants for the levels of flush from frame support.
+ */
+typedef enum AAudio_FlushFromFrameSupport : int32_t {
+    /**
+     * Constant value to indicate {@link AAudioStream_flushFromFrame}
+     * is not supported.
+     */
+    AAUDIO_FLUSH_FROM_FRAME_UNSUPPORTED = 0,
+    /**
+     * Constant flag value to indicate {@link AAudioStream_flushFromFrame}
+     * is supported.
+     */
+    AAUDIO_FLUSH_FROM_FRAME_SUPPORTED = 1 << 0,
+} AAudio_FlushFromFrameSupport;
 
 typedef struct AAudioStreamStruct         AAudioStream;
 typedef struct AAudioStreamBuilderStruct  AAudioStreamBuilder;
@@ -1124,7 +1159,7 @@ typedef struct AAudioStreamBuilderStruct  AAudioStreamBuilder;
  *
  * @return pointer to a text representation of an AAudio result code.
  */
-AAUDIO_API const char * _Nonnull AAudio_convertResultToText(aaudio_result_t returnCode)
+AAUDIO_API const char * AAudio_convertResultToText(aaudio_result_t returnCode)
         __INTRODUCED_IN_API_O__;
 
 /**
@@ -1137,8 +1172,28 @@ AAUDIO_API const char * _Nonnull AAudio_convertResultToText(aaudio_result_t retu
  *
  * @return pointer to a text representation of an AAudio state.
  */
-AAUDIO_API const char * _Nonnull AAudio_convertStreamStateToText(aaudio_stream_state_t state)
+AAUDIO_API const char * AAudio_convertStreamStateToText(aaudio_stream_state_t state)
         __INTRODUCED_IN_API_O__;
+
+/**
+ * Returns a bit mask representing the current feature support for
+ * {@link AAudioStream_flushFromFrame} for the AudioStream that would
+ * be created with the given AAudioStreamBuilder.
+ *
+ * @param builder pointer to the AAudioStreamBuilder that is going to be used to
+ *                create an AudioStream. {@link AAudioStream_flushFromFrame} is
+ *                only supported for offload playback. In that case, the performance
+ *                mode must be {@link AAUDIO_PERFORMANCE_MODE_POWER_SAVING_OFFLOADED}.
+ *                The format, channel mask and sample rate must be set to construct
+ *                a valid builder to open an offload stream.
+ * @return a bitmask representing the {@link AAudioStream_flushFromFrame}
+ *         support. If {@link AAudioStream_flushFromFrame} is not supported,
+ *         {@link AAUDIO_FLUSH_FROM_FRAME_UNSUPPORTED} is returned. If
+ *         {@link AAudioStream_flushFromFrame} is supported, a bitmask
+ *         containing {@link AAUDIO_FLUSH_FROM_FRAME_SUPPORTED} is returned.
+ */
+AAUDIO_API AAudio_FlushFromFrameSupport AAudio_getFlushFromFrameSupport(
+        const AAudioStreamBuilder* builder) __INTRODUCED_IN(37) __attribute__((nonnull(1)));
 
 // ============================================================
 // StreamBuilder
@@ -1158,8 +1213,8 @@ AAUDIO_API const char * _Nonnull AAudio_convertStreamStateToText(aaudio_stream_s
  *
  * Available since API level 26.
  */
-AAUDIO_API aaudio_result_t AAudio_createStreamBuilder(AAudioStreamBuilder* _Nullable* _Nonnull
-                                                      builder) __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t AAudio_createStreamBuilder(AAudioStreamBuilder**
+                                                      builder) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Request an audio device identified by an ID.
@@ -1181,8 +1236,8 @@ AAUDIO_API aaudio_result_t AAudio_createStreamBuilder(AAudioStreamBuilder* _Null
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param deviceId device identifier or {@link #AAUDIO_UNSPECIFIED}
  */
-AAUDIO_API void AAudioStreamBuilder_setDeviceId(AAudioStreamBuilder* _Nonnull builder,
-                                                int32_t deviceId) __INTRODUCED_IN_API_O__;
+AAUDIO_API void AAudioStreamBuilder_setDeviceId(AAudioStreamBuilder* builder,
+                                                int32_t deviceId) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Declare the name of the package creating the stream.
@@ -1201,8 +1256,8 @@ AAUDIO_API void AAudioStreamBuilder_setDeviceId(AAudioStreamBuilder* _Nonnull bu
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param packageName packageName of the calling app.
  */
-AAUDIO_API void AAudioStreamBuilder_setPackageName(AAudioStreamBuilder* _Nonnull builder,
-        const char * _Nonnull packageName) __INTRODUCED_IN_API_S__;
+AAUDIO_API void AAudioStreamBuilder_setPackageName(AAudioStreamBuilder* builder,
+        const char * packageName) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1,2)));
 
 /**
  * Declare the attribution tag of the context creating the stream.
@@ -1216,8 +1271,8 @@ AAUDIO_API void AAudioStreamBuilder_setPackageName(AAudioStreamBuilder* _Nonnull
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param attributionTag attributionTag of the calling context.
  */
-AAUDIO_API void AAudioStreamBuilder_setAttributionTag(AAudioStreamBuilder* _Nonnull builder,
-        const char * _Nonnull attributionTag) __INTRODUCED_IN_API_S__;
+AAUDIO_API void AAudioStreamBuilder_setAttributionTag(AAudioStreamBuilder* builder,
+        const char * attributionTag) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1,2)));
 
 /**
  * Request a sample rate in Hertz.
@@ -1235,8 +1290,8 @@ AAUDIO_API void AAudioStreamBuilder_setAttributionTag(AAudioStreamBuilder* _Nonn
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param sampleRate frames per second. Common rates include 44100 and 48000 Hz.
  */
-AAUDIO_API void AAudioStreamBuilder_setSampleRate(AAudioStreamBuilder* _Nonnull builder,
-                                                  int32_t sampleRate) __INTRODUCED_IN_API_O__;
+AAUDIO_API void AAudioStreamBuilder_setSampleRate(AAudioStreamBuilder* builder,
+                                                  int32_t sampleRate) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Request a number of channels for the stream.
@@ -1265,8 +1320,8 @@ AAUDIO_API void AAudioStreamBuilder_setSampleRate(AAudioStreamBuilder* _Nonnull 
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param channelCount Number of channels desired.
  */
-AAUDIO_API void AAudioStreamBuilder_setChannelCount(AAudioStreamBuilder* _Nonnull builder,
-                                                    int32_t channelCount) __INTRODUCED_IN_API_O__;
+AAUDIO_API void AAudioStreamBuilder_setChannelCount(AAudioStreamBuilder* builder,
+                                                    int32_t channelCount) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Identical to AAudioStreamBuilder_setChannelCount().
@@ -1278,8 +1333,8 @@ AAUDIO_API void AAudioStreamBuilder_setChannelCount(AAudioStreamBuilder* _Nonnul
  *
  * @deprecated use {@link AAudioStreamBuilder_setChannelCount}
  */
-AAUDIO_API void AAudioStreamBuilder_setSamplesPerFrame(AAudioStreamBuilder* _Nonnull builder,
-                                                       int32_t samplesPerFrame) __INTRODUCED_IN_API_O__;
+AAUDIO_API void AAudioStreamBuilder_setSamplesPerFrame(AAudioStreamBuilder* builder,
+                                                       int32_t samplesPerFrame) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Request a sample data format, for example {@link #AAUDIO_FORMAT_PCM_I16}.
@@ -1298,8 +1353,8 @@ AAUDIO_API void AAudioStreamBuilder_setSamplesPerFrame(AAudioStreamBuilder* _Non
  * @param format common formats are {@link #AAUDIO_FORMAT_PCM_FLOAT} and
  *               {@link #AAUDIO_FORMAT_PCM_I16}.
  */
-AAUDIO_API void AAudioStreamBuilder_setFormat(AAudioStreamBuilder* _Nonnull builder,
-                                              aaudio_format_t format) __INTRODUCED_IN_API_O__;
+AAUDIO_API void AAudioStreamBuilder_setFormat(AAudioStreamBuilder* builder,
+                                              aaudio_format_t format) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Request a mode for sharing the device.
@@ -1314,8 +1369,8 @@ AAUDIO_API void AAudioStreamBuilder_setFormat(AAudioStreamBuilder* _Nonnull buil
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param sharingMode {@link #AAUDIO_SHARING_MODE_SHARED} or {@link #AAUDIO_SHARING_MODE_EXCLUSIVE}
  */
-AAUDIO_API void AAudioStreamBuilder_setSharingMode(AAudioStreamBuilder* _Nonnull builder,
-        aaudio_sharing_mode_t sharingMode) __INTRODUCED_IN_API_O__;
+AAUDIO_API void AAudioStreamBuilder_setSharingMode(AAudioStreamBuilder* builder,
+        aaudio_sharing_mode_t sharingMode) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Request the direction for a stream.
@@ -1327,8 +1382,8 @@ AAUDIO_API void AAudioStreamBuilder_setSharingMode(AAudioStreamBuilder* _Nonnull
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param direction {@link #AAUDIO_DIRECTION_OUTPUT} or {@link #AAUDIO_DIRECTION_INPUT}
  */
-AAUDIO_API void AAudioStreamBuilder_setDirection(AAudioStreamBuilder* _Nonnull builder,
-        aaudio_direction_t direction) __INTRODUCED_IN_API_O__;
+AAUDIO_API void AAudioStreamBuilder_setDirection(AAudioStreamBuilder* builder,
+        aaudio_direction_t direction) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Set the requested buffer capacity in frames.
@@ -1342,7 +1397,7 @@ AAUDIO_API void AAudioStreamBuilder_setDirection(AAudioStreamBuilder* _Nonnull b
  * @param numFrames the desired buffer capacity in frames or {@link #AAUDIO_UNSPECIFIED}
  */
 AAUDIO_API void AAudioStreamBuilder_setBufferCapacityInFrames(
-        AAudioStreamBuilder* _Nonnull builder, int32_t numFrames) __INTRODUCED_IN_API_O__;
+        AAudioStreamBuilder* builder, int32_t numFrames) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Set the requested performance mode.
@@ -1362,8 +1417,8 @@ AAUDIO_API void AAudioStreamBuilder_setBufferCapacityInFrames(
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param mode the desired performance mode, eg. {@link #AAUDIO_PERFORMANCE_MODE_LOW_LATENCY}
  */
-AAUDIO_API void AAudioStreamBuilder_setPerformanceMode(AAudioStreamBuilder* _Nonnull builder,
-        aaudio_performance_mode_t mode) __INTRODUCED_IN_API_O__;
+AAUDIO_API void AAudioStreamBuilder_setPerformanceMode(AAudioStreamBuilder* builder,
+        aaudio_performance_mode_t mode) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Set the intended use case for the output stream.
@@ -1390,8 +1445,8 @@ AAUDIO_API void AAudioStreamBuilder_setPerformanceMode(AAudioStreamBuilder* _Non
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param usage the desired usage, eg. {@link #AAUDIO_USAGE_GAME}
  */
-AAUDIO_API void AAudioStreamBuilder_setUsage(AAudioStreamBuilder* _Nonnull builder,
-        aaudio_usage_t usage) __INTRODUCED_IN_API_P__;
+AAUDIO_API void AAudioStreamBuilder_setUsage(AAudioStreamBuilder* builder,
+        aaudio_usage_t usage) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 
 /**
  * Set the type of audio data that the output stream will carry.
@@ -1418,8 +1473,8 @@ AAUDIO_API void AAudioStreamBuilder_setUsage(AAudioStreamBuilder* _Nonnull build
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param contentType the type of audio data, eg. {@link #AAUDIO_CONTENT_TYPE_SPEECH}
  */
-AAUDIO_API void AAudioStreamBuilder_setContentType(AAudioStreamBuilder* _Nonnull builder,
-        aaudio_content_type_t contentType) __INTRODUCED_IN_API_P__;
+AAUDIO_API void AAudioStreamBuilder_setContentType(AAudioStreamBuilder* builder,
+        aaudio_content_type_t contentType) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 
 /**
  * Sets the behavior affecting whether spatialization will be used.
@@ -1434,8 +1489,8 @@ AAUDIO_API void AAudioStreamBuilder_setContentType(AAudioStreamBuilder* _Nonnull
  *     {@link #AAUDIO_SPATIALIZATION_BEHAVIOR_AUTO}
  */
 AAUDIO_API void AAudioStreamBuilder_setSpatializationBehavior(
-        AAudioStreamBuilder* _Nonnull builder,
-        aaudio_spatialization_behavior_t spatializationBehavior) __INTRODUCED_IN(32);
+        AAudioStreamBuilder* builder,
+        aaudio_spatialization_behavior_t spatializationBehavior) __INTRODUCED_IN(32) __attribute__((nonnull(1)));
 
 /**
  * Specifies whether the audio data of this output stream has already been processed for
@@ -1450,8 +1505,8 @@ AAUDIO_API void AAudioStreamBuilder_setSpatializationBehavior(
  * @param isSpatialized true if the content is already processed for binaural or transaural spatial
  *     rendering, false otherwise.
  */
-AAUDIO_API void AAudioStreamBuilder_setIsContentSpatialized(AAudioStreamBuilder* _Nonnull builder,
-        bool isSpatialized) __INTRODUCED_IN(32);
+AAUDIO_API void AAudioStreamBuilder_setIsContentSpatialized(AAudioStreamBuilder* builder,
+        bool isSpatialized) __INTRODUCED_IN(32) __attribute__((nonnull(1)));
 
 /**
  * Set the input (capture) preset for the stream.
@@ -1470,8 +1525,8 @@ AAUDIO_API void AAudioStreamBuilder_setIsContentSpatialized(AAudioStreamBuilder*
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param inputPreset the desired configuration for recording
  */
-AAUDIO_API void AAudioStreamBuilder_setInputPreset(AAudioStreamBuilder* _Nonnull builder,
-        aaudio_input_preset_t inputPreset) __INTRODUCED_IN_API_P__;
+AAUDIO_API void AAudioStreamBuilder_setInputPreset(AAudioStreamBuilder* builder,
+        aaudio_input_preset_t inputPreset) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 
 /**
  * Specify whether this stream audio may or may not be captured by other apps or the system.
@@ -1488,8 +1543,8 @@ AAUDIO_API void AAudioStreamBuilder_setInputPreset(AAudioStreamBuilder* _Nonnull
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param capturePolicy the desired level of opt-out from being captured.
  */
-AAUDIO_API void AAudioStreamBuilder_setAllowedCapturePolicy(AAudioStreamBuilder* _Nonnull builder,
-        aaudio_allowed_capture_policy_t capturePolicy) __INTRODUCED_IN_API_Q__;
+AAUDIO_API void AAudioStreamBuilder_setAllowedCapturePolicy(AAudioStreamBuilder* builder,
+        aaudio_allowed_capture_policy_t capturePolicy) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /** Set the requested session ID.
  *
@@ -1518,8 +1573,8 @@ AAUDIO_API void AAudioStreamBuilder_setAllowedCapturePolicy(AAudioStreamBuilder*
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param sessionId an allocated sessionID or {@link #AAUDIO_SESSION_ID_ALLOCATE}
  */
-AAUDIO_API void AAudioStreamBuilder_setSessionId(AAudioStreamBuilder* _Nonnull builder,
-        aaudio_session_id_t sessionId) __INTRODUCED_IN_API_P__;
+AAUDIO_API void AAudioStreamBuilder_setSessionId(AAudioStreamBuilder* builder,
+        aaudio_session_id_t sessionId) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 
 
 /** Indicates whether this input stream must be marked as privacy sensitive or not.
@@ -1540,8 +1595,8 @@ AAUDIO_API void AAudioStreamBuilder_setSessionId(AAudioStreamBuilder* _Nonnull b
  * @param privacySensitive true if capture from this stream must be marked as privacy sensitive,
  * false otherwise.
  */
-AAUDIO_API void AAudioStreamBuilder_setPrivacySensitive(AAudioStreamBuilder* _Nonnull builder,
-        bool privacySensitive) __INTRODUCED_IN_API_R__;
+AAUDIO_API void AAudioStreamBuilder_setPrivacySensitive(AAudioStreamBuilder* builder,
+        bool privacySensitive) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Return one of these values from the data callback function.
@@ -1614,9 +1669,9 @@ typedef int32_t aaudio_data_callback_result_t;
  * @return AAUDIO_CALLBACK_RESULT_*
  */
 typedef aaudio_data_callback_result_t (*AAudioStream_dataCallback)(
-        AAudioStream* _Nonnull stream,
-        void* _Nullable userData,
-        void* _Nonnull audioData,
+        AAudioStream* stream,
+        void* userData,
+        void* audioData,
         int32_t numFrames);
 
 /**
@@ -1648,9 +1703,9 @@ typedef aaudio_data_callback_result_t (*AAudioStream_dataCallback)(
  * @param userData pointer to an application data structure that will be passed
  *          to the callback functions.
  */
-AAUDIO_API void AAudioStreamBuilder_setDataCallback(AAudioStreamBuilder* _Nonnull builder,
-        AAudioStream_dataCallback _Nullable callback, void* _Nullable userData)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API void AAudioStreamBuilder_setDataCallback(AAudioStreamBuilder* builder,
+        AAudioStream_dataCallback callback, void* userData)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Prototype for the data function that is passed to AAudioStreamBuilder_setPartialDataCallback().
@@ -1709,9 +1764,9 @@ AAUDIO_API void AAudioStreamBuilder_setDataCallback(AAudioStreamBuilder* _Nonnul
  *         if the returned value is greater than numFrames, the stream will stop.
  */
 typedef int32_t (*AAudioStream_partialDataCallback)(
-        AAudioStream* _Nonnull stream,
-        void* _Nullable userData,
-        void* _Nonnull audioData,
+        AAudioStream* stream,
+        void* userData,
+        void* audioData,
         int32_t numFrames);
 
 /**
@@ -1746,9 +1801,9 @@ typedef int32_t (*AAudioStream_partialDataCallback)(
  *         is not supported.
  */
 AAUDIO_API aaudio_result_t AAudioStreamBuilder_setPartialDataCallback(
-        AAudioStreamBuilder* _Nonnull builder,
-        AAudioStream_partialDataCallback _Nullable callback,
-        void* _Nullable userData) __INTRODUCED_IN(37);
+        AAudioStreamBuilder* builder,
+        AAudioStream_partialDataCallback callback,
+        void* userData) __INTRODUCED_IN(37) __attribute__((nonnull(1)));
 
 /**
  * Set the requested data callback buffer size in frames.
@@ -1775,8 +1830,8 @@ AAUDIO_API aaudio_result_t AAudioStreamBuilder_setPartialDataCallback(
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param numFrames the desired buffer size in frames or {@link #AAUDIO_UNSPECIFIED}
  */
-AAUDIO_API void AAudioStreamBuilder_setFramesPerDataCallback(AAudioStreamBuilder* _Nonnull builder,
-        int32_t numFrames) __INTRODUCED_IN_API_O__;
+AAUDIO_API void AAudioStreamBuilder_setFramesPerDataCallback(AAudioStreamBuilder* builder,
+        int32_t numFrames) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Prototype for the callback function that is passed to
@@ -1803,8 +1858,8 @@ AAUDIO_API void AAudioStreamBuilder_setFramesPerDataCallback(AAudioStreamBuilder
  * @param error an AAUDIO_ERROR_* value.
  */
 typedef void (*AAudioStream_errorCallback)(
-        AAudioStream* _Nonnull stream,
-        void* _Nullable userData,
+        AAudioStream* stream,
+        void* userData,
         aaudio_result_t error);
 
 /**
@@ -1830,9 +1885,9 @@ typedef void (*AAudioStream_errorCallback)(
  * @param userData pointer to an application data structure that will be passed
  *          to the callback functions.
  */
-AAUDIO_API void AAudioStreamBuilder_setErrorCallback(AAudioStreamBuilder* _Nonnull builder,
-        AAudioStream_errorCallback _Nullable callback, void* _Nullable userData)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API void AAudioStreamBuilder_setErrorCallback(AAudioStreamBuilder* builder,
+        AAudioStream_errorCallback callback, void* userData)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Prototype for the callback function that is passed to
@@ -1847,8 +1902,8 @@ AAUDIO_API void AAudioStreamBuilder_setErrorCallback(AAudioStreamBuilder* _Nonnu
  * @param userData the same address that was passed to
  *                 AAudioStreamBuilder_setPresentationEndCallback().
  */
-typedef void (*AAudioStream_presentationEndCallback)(AAudioStream* _Nonnull stream,
-                                                     void* _Null_unspecified userData);
+typedef void (*AAudioStream_presentationEndCallback)(AAudioStream* stream,
+                                                     void* userData);
 
 /**
  * Request that AAudio call this function when all the buffers of an offloaded stream that were
@@ -1875,9 +1930,52 @@ typedef void (*AAudioStream_presentationEndCallback)(AAudioStream* _Nonnull stre
  *                 to the callback functions.
  */
 AAUDIO_API void AAudioStreamBuilder_setPresentationEndCallback(
-        AAudioStreamBuilder* _Nonnull builder,
-        AAudioStream_presentationEndCallback _Nonnull callback,
-        void* _Nullable userData) __INTRODUCED_IN_API_W__;
+        AAudioStreamBuilder* builder,
+        AAudioStream_presentationEndCallback callback,
+        void* userData) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
+
+/**
+ * Prototype for the routing changed function that is passed to
+ * {@link AAudioStreamBuilder_setRoutingChangedCallback}.
+ *
+ * This will be called when the routed devices of the stream are changed.
+ * The callback will return a list of current routed device ids. The ids
+ * could be obtained from the Java AudioManager. AudioManager.getDevices()
+ * returns an array of {@link AudioDeviceInfo}, which contains a getId() method.
+ *
+ * @param stream reference provided by AAudioStreamBuilder_openStream().
+ * @param userData the same address that was passed to
+ *                 {@link AAudioStreamBuilder_setRoutingChangedCallback}.
+ * @param deviceIds a pointer to a list of current routed device ids.
+ * @param numDevices the number of current routed devices.
+ */
+typedef void (*AAudioStream_routingChangedCallback)(AAudioStream* stream,
+                                                    void* userData,
+                                                    const int32_t* deviceIds,
+                                                    int32_t numDevices);
+
+/**
+ * Request that AAudio call this function when the routed devices for the stream are changed.
+ * This may happen when the stream is started or there is any event, such as plugging a peripheral
+ * devices, that affects the routed devices happens.
+ *
+ * The callback function will not be called after AAudioStream_close() is called or the stream
+ * is disconnected.
+ *
+ * The routing changed callback will be called from a dedicated thread owned by audio framework.
+ *
+ * Available since API level 37.
+ *
+ * @param builder reference provided by AAudio_createStreamBuilder().
+ * @param callback pointer to a function that will be called when routed devices for the
+ *                 stream are changed.
+ * @param userData pointer to an application data structure that will be passed
+ *                 to the callback functions.
+ */
+AAUDIO_API void AAudioStreamBuilder_setRoutingChangedCallback(
+        AAudioStreamBuilder* builder,
+        AAudioStream_routingChangedCallback callback,
+        void* userData) __INTRODUCED_IN(37) __attribute__((nonnull(1,2)));
 
 /**
  * Open a stream based on the options in the StreamBuilder.
@@ -1891,8 +1989,8 @@ AAUDIO_API void AAudioStreamBuilder_setPresentationEndCallback(
  * @param stream pointer to a variable to receive the new stream reference
  * @return {@link #AAUDIO_OK} or a negative error.
  */
-AAUDIO_API aaudio_result_t  AAudioStreamBuilder_openStream(AAudioStreamBuilder* _Nonnull builder,
-        AAudioStream* _Nullable* _Nonnull stream) __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t  AAudioStreamBuilder_openStream(AAudioStreamBuilder* builder,
+        AAudioStream** stream) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2)));
 
 /**
  * Delete the resources associated with the StreamBuilder.
@@ -1902,8 +2000,8 @@ AAUDIO_API aaudio_result_t  AAudioStreamBuilder_openStream(AAudioStreamBuilder* 
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @return {@link #AAUDIO_OK} or a negative error.
  */
-AAUDIO_API aaudio_result_t  AAudioStreamBuilder_delete(AAudioStreamBuilder* _Nonnull builder)
-    __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t  AAudioStreamBuilder_delete(AAudioStreamBuilder* builder)
+    __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Set audio channel mask for the stream.
@@ -1928,8 +2026,8 @@ AAUDIO_API aaudio_result_t  AAudioStreamBuilder_delete(AAudioStreamBuilder* _Non
  * @param builder reference provided by AAudio_createStreamBuilder()
  * @param channelMask Audio channel mask desired.
  */
-AAUDIO_API void AAudioStreamBuilder_setChannelMask(AAudioStreamBuilder* _Nonnull builder,
-        aaudio_channel_mask_t channelMask) __INTRODUCED_IN(32);
+AAUDIO_API void AAudioStreamBuilder_setChannelMask(AAudioStreamBuilder* builder,
+        aaudio_channel_mask_t channelMask) __INTRODUCED_IN(32) __attribute__((nonnull(1)));
 
 // ============================================================
 // Stream Control
@@ -1957,8 +2055,8 @@ AAUDIO_API void AAudioStreamBuilder_setChannelMask(AAudioStreamBuilder* _Nonnull
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return {@link #AAUDIO_OK} or a negative error.
  */
-AAUDIO_API aaudio_result_t  AAudioStream_release(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_R__;
+AAUDIO_API aaudio_result_t  AAudioStream_release(AAudioStream* stream)
+        __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Delete the internal data structures associated with the stream created
@@ -1971,7 +2069,7 @@ AAUDIO_API aaudio_result_t  AAudioStream_release(AAudioStream* _Nonnull stream)
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return {@link #AAUDIO_OK} or a negative error.
  */
-AAUDIO_API aaudio_result_t  AAudioStream_close(AAudioStream* _Nonnull stream) __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t  AAudioStream_close(AAudioStream* stream) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Asynchronously request to start playing the stream. For output streams, one should
@@ -1985,8 +2083,8 @@ AAUDIO_API aaudio_result_t  AAudioStream_close(AAudioStream* _Nonnull stream) __
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return {@link #AAUDIO_OK} or a negative error.
  */
-AAUDIO_API aaudio_result_t  AAudioStream_requestStart(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t  AAudioStream_requestStart(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Asynchronous request for the stream to pause.
@@ -2003,8 +2101,8 @@ AAUDIO_API aaudio_result_t  AAudioStream_requestStart(AAudioStream* _Nonnull str
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return {@link #AAUDIO_OK} or a negative error.
  */
-AAUDIO_API aaudio_result_t  AAudioStream_requestPause(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t  AAudioStream_requestPause(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Asynchronous request for the stream to flush.
@@ -2024,8 +2122,8 @@ AAUDIO_API aaudio_result_t  AAudioStream_requestPause(AAudioStream* _Nonnull str
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return {@link #AAUDIO_OK} or a negative error.
  */
-AAUDIO_API aaudio_result_t  AAudioStream_requestFlush(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t  AAudioStream_requestFlush(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Asynchronous request for the stream to stop.
@@ -2038,8 +2136,8 @@ AAUDIO_API aaudio_result_t  AAudioStream_requestFlush(AAudioStream* _Nonnull str
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return {@link #AAUDIO_OK} or a negative error.
  */
-AAUDIO_API aaudio_result_t  AAudioStream_requestStop(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t  AAudioStream_requestStop(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Query the current state of the client, eg. {@link #AAUDIO_STREAM_STATE_PAUSING}
@@ -2053,8 +2151,8 @@ AAUDIO_API aaudio_result_t  AAudioStream_requestStop(AAudioStream* _Nonnull stre
  *
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  */
-AAUDIO_API aaudio_stream_state_t AAudioStream_getState(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_stream_state_t AAudioStream_getState(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Wait until the current state no longer matches the input state.
@@ -2080,9 +2178,9 @@ AAUDIO_API aaudio_stream_state_t AAudioStream_getState(AAudioStream* _Nonnull st
  * @param timeoutNanoseconds Maximum number of nanoseconds to wait for completion.
  * @return {@link #AAUDIO_OK} or a negative error.
  */
-AAUDIO_API aaudio_result_t AAudioStream_waitForStateChange(AAudioStream* _Nonnull stream,
-        aaudio_stream_state_t inputState, aaudio_stream_state_t* _Nullable nextState,
-        int64_t timeoutNanoseconds) __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t AAudioStream_waitForStateChange(AAudioStream* stream,
+        aaudio_stream_state_t inputState, aaudio_stream_state_t* nextState,
+        int64_t timeoutNanoseconds) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 // ============================================================
 // Stream I/O
@@ -2110,8 +2208,8 @@ AAUDIO_API aaudio_result_t AAudioStream_waitForStateChange(AAudioStream* _Nonnul
  * @param timeoutNanoseconds Maximum number of nanoseconds to wait for completion.
  * @return The number of frames actually read or a negative error.
  */
-AAUDIO_API aaudio_result_t AAudioStream_read(AAudioStream* _Nonnull stream,
-        void* _Nonnull buffer, int32_t numFrames, int64_t timeoutNanoseconds) __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t AAudioStream_read(AAudioStream* stream,
+        void* buffer, int32_t numFrames, int64_t timeoutNanoseconds) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2)));
 
 /**
  * Write data to the stream.
@@ -2135,9 +2233,9 @@ AAUDIO_API aaudio_result_t AAudioStream_read(AAudioStream* _Nonnull stream,
  * @param timeoutNanoseconds Maximum number of nanoseconds to wait for completion.
  * @return The number of frames actually written or a negative error.
  */
-AAUDIO_API aaudio_result_t AAudioStream_write(AAudioStream* _Nonnull stream,
-        const void* _Nonnull buffer, int32_t numFrames, int64_t timeoutNanoseconds)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t AAudioStream_write(AAudioStream* stream,
+        const void* buffer, int32_t numFrames, int64_t timeoutNanoseconds)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2)));
 
 // ============================================================
 // Stream - queries
@@ -2161,8 +2259,8 @@ AAUDIO_API aaudio_result_t AAudioStream_write(AAudioStream* _Nonnull stream,
  * @param numFrames requested number of frames that can be filled without blocking
  * @return actual buffer size in frames or a negative error
  */
-AAUDIO_API aaudio_result_t AAudioStream_setBufferSizeInFrames(AAudioStream* _Nonnull stream,
-        int32_t numFrames) __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t AAudioStream_setBufferSizeInFrames(AAudioStream* stream,
+        int32_t numFrames) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Query the maximum number of frames that can be filled without blocking.
@@ -2172,8 +2270,8 @@ AAUDIO_API aaudio_result_t AAudioStream_setBufferSizeInFrames(AAudioStream* _Non
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return buffer size in frames.
  */
-AAUDIO_API int32_t AAudioStream_getBufferSizeInFrames(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API int32_t AAudioStream_getBufferSizeInFrames(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Query the number of frames that the application should read or write at
@@ -2190,8 +2288,8 @@ AAUDIO_API int32_t AAudioStream_getBufferSizeInFrames(AAudioStream* _Nonnull str
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return burst size
  */
-AAUDIO_API int32_t AAudioStream_getFramesPerBurst(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API int32_t AAudioStream_getFramesPerBurst(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Query maximum buffer capacity in frames.
@@ -2201,8 +2299,8 @@ AAUDIO_API int32_t AAudioStream_getFramesPerBurst(AAudioStream* _Nonnull stream)
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return  buffer capacity in frames
  */
-AAUDIO_API int32_t AAudioStream_getBufferCapacityInFrames(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API int32_t AAudioStream_getBufferCapacityInFrames(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Query the size of the buffer that will be passed to the dataProc callback
@@ -2225,8 +2323,8 @@ AAUDIO_API int32_t AAudioStream_getBufferCapacityInFrames(AAudioStream* _Nonnull
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return callback buffer size in frames or {@link #AAUDIO_UNSPECIFIED}
  */
-AAUDIO_API int32_t AAudioStream_getFramesPerDataCallback(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API int32_t AAudioStream_getFramesPerDataCallback(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * An XRun is an Underrun or an Overrun.
@@ -2245,7 +2343,7 @@ AAUDIO_API int32_t AAudioStream_getFramesPerDataCallback(AAudioStream* _Nonnull 
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return the underrun or overrun count
  */
-AAUDIO_API int32_t AAudioStream_getXRunCount(AAudioStream* _Nonnull stream) __INTRODUCED_IN_API_O__;
+AAUDIO_API int32_t AAudioStream_getXRunCount(AAudioStream* stream) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Available since API level 26.
@@ -2253,7 +2351,7 @@ AAUDIO_API int32_t AAudioStream_getXRunCount(AAudioStream* _Nonnull stream) __IN
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return actual sample rate of the stream
  */
-AAUDIO_API int32_t AAudioStream_getSampleRate(AAudioStream* _Nonnull stream) __INTRODUCED_IN_API_O__;
+AAUDIO_API int32_t AAudioStream_getSampleRate(AAudioStream* stream) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * There may be sample rate conversions in the Audio framework.
@@ -2268,8 +2366,8 @@ AAUDIO_API int32_t AAudioStream_getSampleRate(AAudioStream* _Nonnull stream) __I
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return actual sample rate of the underlying hardware
  */
-AAUDIO_API int32_t AAudioStream_getHardwareSampleRate(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_U__;
+AAUDIO_API int32_t AAudioStream_getHardwareSampleRate(AAudioStream* stream)
+        __INTRODUCED_IN_API_U__ __attribute__((nonnull(1)));
 
 /**
  * A stream has one or more channels of data.
@@ -2280,7 +2378,7 @@ AAUDIO_API int32_t AAudioStream_getHardwareSampleRate(AAudioStream* _Nonnull str
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return actual number of channels of the stream
  */
-AAUDIO_API int32_t AAudioStream_getChannelCount(AAudioStream* _Nonnull stream) __INTRODUCED_IN_API_O__;
+AAUDIO_API int32_t AAudioStream_getChannelCount(AAudioStream* stream) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * There may be channel conversions in the Audio framework.
@@ -2296,8 +2394,8 @@ AAUDIO_API int32_t AAudioStream_getChannelCount(AAudioStream* _Nonnull stream) _
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return actual number of channels of the underlying hardware
  */
-AAUDIO_API int32_t AAudioStream_getHardwareChannelCount(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_U__;
+AAUDIO_API int32_t AAudioStream_getHardwareChannelCount(AAudioStream* stream)
+        __INTRODUCED_IN_API_U__ __attribute__((nonnull(1)));
 
 /**
  * Identical to AAudioStream_getChannelCount().
@@ -2307,8 +2405,8 @@ AAUDIO_API int32_t AAudioStream_getHardwareChannelCount(AAudioStream* _Nonnull s
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return actual number of samples frame
  */
-AAUDIO_API int32_t AAudioStream_getSamplesPerFrame(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API int32_t AAudioStream_getSamplesPerFrame(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Available since API level 26.
@@ -2317,7 +2415,7 @@ AAUDIO_API int32_t AAudioStream_getSamplesPerFrame(AAudioStream* _Nonnull stream
  * @return actual device id. If there are multiple device ids used,
  *         this will return the first device id from AAudioStream_getDeviceIds().
  */
-AAUDIO_API int32_t AAudioStream_getDeviceId(AAudioStream* _Nonnull stream) __INTRODUCED_IN_API_O__;
+AAUDIO_API int32_t AAudioStream_getDeviceId(AAudioStream* stream) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Call this function after AAudioStreamBuilder_openStream().
@@ -2336,8 +2434,8 @@ AAUDIO_API int32_t AAudioStream_getDeviceId(AAudioStream* _Nonnull stream) __INT
  *         {@link #AAUDIO_ERROR_OUT_OF_RANGE}. The value of numIds will still be updated.
  *         Otherwise, if ids is null, return {@link #AAUDIO_ERROR_ILLEGAL_ARGUMENT}.
  */
-AAUDIO_API aaudio_result_t AAudioStream_getDeviceIds(AAudioStream* _Nonnull stream,
-        int32_t* _Nullable ids, int32_t* _Nullable numIds) __INTRODUCED_IN_API_W__;
+AAUDIO_API aaudio_result_t AAudioStream_getDeviceIds(AAudioStream* stream,
+        int32_t* ids, int32_t* numIds) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Available since API level 26.
@@ -2345,8 +2443,8 @@ AAUDIO_API aaudio_result_t AAudioStream_getDeviceIds(AAudioStream* _Nonnull stre
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return actual data format of the stream
  */
-AAUDIO_API aaudio_format_t AAudioStream_getFormat(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_format_t AAudioStream_getFormat(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * There may be data format conversions in the Audio framework.
@@ -2368,8 +2466,8 @@ AAUDIO_API aaudio_format_t AAudioStream_getFormat(AAudioStream* _Nonnull stream)
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return actual data format of the underlying hardware.
  */
-AAUDIO_API aaudio_format_t AAudioStream_getHardwareFormat(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_U__;
+AAUDIO_API aaudio_format_t AAudioStream_getHardwareFormat(AAudioStream* stream)
+        __INTRODUCED_IN_API_U__ __attribute__((nonnull(1)));
 
 /**
  * Provide actual sharing mode.
@@ -2379,8 +2477,8 @@ AAUDIO_API aaudio_format_t AAudioStream_getHardwareFormat(AAudioStream* _Nonnull
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return  actual sharing mode
  */
-AAUDIO_API aaudio_sharing_mode_t AAudioStream_getSharingMode(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_sharing_mode_t AAudioStream_getSharingMode(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Get the performance mode used by the stream.
@@ -2389,8 +2487,8 @@ AAUDIO_API aaudio_sharing_mode_t AAudioStream_getSharingMode(AAudioStream* _Nonn
  *
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  */
-AAUDIO_API aaudio_performance_mode_t AAudioStream_getPerformanceMode(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_performance_mode_t AAudioStream_getPerformanceMode(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Available since API level 26.
@@ -2398,8 +2496,8 @@ AAUDIO_API aaudio_performance_mode_t AAudioStream_getPerformanceMode(AAudioStrea
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return direction
  */
-AAUDIO_API aaudio_direction_t AAudioStream_getDirection(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_direction_t AAudioStream_getDirection(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Passes back the number of frames that have been written since the stream was created.
@@ -2414,8 +2512,8 @@ AAUDIO_API aaudio_direction_t AAudioStream_getDirection(AAudioStream* _Nonnull s
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return frames written
  */
-AAUDIO_API int64_t AAudioStream_getFramesWritten(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API int64_t AAudioStream_getFramesWritten(AAudioStream* stream)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Passes back the number of frames that have been read since the stream was created.
@@ -2430,7 +2528,7 @@ AAUDIO_API int64_t AAudioStream_getFramesWritten(AAudioStream* _Nonnull stream)
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return frames read
  */
-AAUDIO_API int64_t AAudioStream_getFramesRead(AAudioStream* _Nonnull stream) __INTRODUCED_IN_API_O__;
+AAUDIO_API int64_t AAudioStream_getFramesRead(AAudioStream* stream) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Passes back the session ID associated with this stream.
@@ -2455,8 +2553,8 @@ AAUDIO_API int64_t AAudioStream_getFramesRead(AAudioStream* _Nonnull stream) __I
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return session ID or {@link #AAUDIO_SESSION_ID_NONE}
  */
-AAUDIO_API aaudio_session_id_t AAudioStream_getSessionId(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_P__;
+AAUDIO_API aaudio_session_id_t AAudioStream_getSessionId(AAudioStream* stream)
+        __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 
 /**
  * Returns the time at which a particular frame was played on a speaker or headset,
@@ -2492,9 +2590,9 @@ AAUDIO_API aaudio_session_id_t AAudioStream_getSessionId(AAudioStream* _Nonnull 
  * @param[out] timeNanoseconds pointer to a variable to receive the time
  * @return {@link #AAUDIO_OK} or a negative error
  */
-AAUDIO_API aaudio_result_t AAudioStream_getTimestamp(AAudioStream* _Nonnull stream,
-        clockid_t clockid, int64_t* _Nonnull framePosition, int64_t* _Nonnull timeNanoseconds)
-        __INTRODUCED_IN_API_O__;
+AAUDIO_API aaudio_result_t AAudioStream_getTimestamp(AAudioStream* stream,
+        clockid_t clockid, int64_t* framePosition, int64_t* timeNanoseconds)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,3,4)));
 
 /**
  * Return the use case for the stream.
@@ -2504,7 +2602,7 @@ AAUDIO_API aaudio_result_t AAudioStream_getTimestamp(AAudioStream* _Nonnull stre
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return frames read
  */
-AAUDIO_API aaudio_usage_t AAudioStream_getUsage(AAudioStream* _Nonnull stream) __INTRODUCED_IN_API_P__;
+AAUDIO_API aaudio_usage_t AAudioStream_getUsage(AAudioStream* stream) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 
 /**
  * Return the content type for the stream.
@@ -2514,8 +2612,8 @@ AAUDIO_API aaudio_usage_t AAudioStream_getUsage(AAudioStream* _Nonnull stream) _
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return content type, for example {@link #AAUDIO_CONTENT_TYPE_MUSIC}
  */
-AAUDIO_API aaudio_content_type_t AAudioStream_getContentType(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_P__;
+AAUDIO_API aaudio_content_type_t AAudioStream_getContentType(AAudioStream* stream)
+        __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 
 /**
  * Return the spatialization behavior for the stream.
@@ -2529,7 +2627,7 @@ AAUDIO_API aaudio_content_type_t AAudioStream_getContentType(AAudioStream* _Nonn
  * @return spatialization behavior, for example {@link #AAUDIO_SPATIALIZATION_BEHAVIOR_AUTO}
  */
 AAUDIO_API aaudio_spatialization_behavior_t AAudioStream_getSpatializationBehavior(
-        AAudioStream* _Nonnull stream) __INTRODUCED_IN(32);
+        AAudioStream* stream) __INTRODUCED_IN(32) __attribute__((nonnull(1)));
 
 /**
  * Return whether the content of the stream is spatialized.
@@ -2539,8 +2637,8 @@ AAUDIO_API aaudio_spatialization_behavior_t AAudioStream_getSpatializationBehavi
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return true if the content is spatialized
  */
-AAUDIO_API bool AAudioStream_isContentSpatialized(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN(32);
+AAUDIO_API bool AAudioStream_isContentSpatialized(AAudioStream* stream)
+        __INTRODUCED_IN(32) __attribute__((nonnull(1)));
 
 
 /**
@@ -2551,8 +2649,8 @@ AAUDIO_API bool AAudioStream_isContentSpatialized(AAudioStream* _Nonnull stream)
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return input preset, for example {@link #AAUDIO_INPUT_PRESET_CAMCORDER}
  */
-AAUDIO_API aaudio_input_preset_t AAudioStream_getInputPreset(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_P__;
+AAUDIO_API aaudio_input_preset_t AAudioStream_getInputPreset(AAudioStream* stream)
+        __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 
 /**
  * Return the policy that determines whether the audio may or may not be captured
@@ -2564,7 +2662,7 @@ AAUDIO_API aaudio_input_preset_t AAudioStream_getInputPreset(AAudioStream* _Nonn
  * @return the allowed capture policy, for example {@link #AAUDIO_ALLOW_CAPTURE_BY_ALL}
  */
 AAUDIO_API aaudio_allowed_capture_policy_t AAudioStream_getAllowedCapturePolicy(
-        AAudioStream* _Nonnull stream) __INTRODUCED_IN_API_Q__;
+        AAudioStream* stream) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 
 /**
@@ -2577,8 +2675,8 @@ AAUDIO_API aaudio_allowed_capture_policy_t AAudioStream_getAllowedCapturePolicy(
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return true if privacy sensitive, false otherwise
  */
-AAUDIO_API bool AAudioStream_isPrivacySensitive(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_R__;
+AAUDIO_API bool AAudioStream_isPrivacySensitive(AAudioStream* stream)
+        __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 
 /**
  * Return the channel mask for the stream. This will be the mask set using
@@ -2589,8 +2687,8 @@ AAUDIO_API bool AAudioStream_isPrivacySensitive(AAudioStream* _Nonnull stream)
  * @param stream reference provided by AAudioStreamBuilder_openStream()
  * @return actual channel mask
  */
-AAUDIO_API aaudio_channel_mask_t AAudioStream_getChannelMask(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN(32);
+AAUDIO_API aaudio_channel_mask_t AAudioStream_getChannelMask(AAudioStream* stream)
+        __INTRODUCED_IN(32) __attribute__((nonnull(1)));
 
 /**
  * Configures the delay and padding values for the current stream playing in offload mode.
@@ -2614,8 +2712,8 @@ AAUDIO_API aaudio_channel_mask_t AAudioStream_getChannelMask(AAudioStream* _Nonn
  *         or {@link #AAUDIO_ERROR_INVALID_STATE} if the stream is not yet initialized.
  */
 AAUDIO_API aaudio_result_t AAudioStream_setOffloadDelayPadding(
-        AAudioStream* _Nonnull stream, int32_t delayInFrames, int32_t paddingInFrames)
-        __INTRODUCED_IN_API_W__;
+        AAudioStream* stream, int32_t delayInFrames, int32_t paddingInFrames)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Return the decoder delay of an offloaded stream in frames.
@@ -2630,7 +2728,7 @@ AAUDIO_API aaudio_result_t AAudioStream_setOffloadDelayPadding(
  *         performance mode is {@link #AAUDIO_PERFORMANCE_MODE_POWER_SAVING_OFFLOADED},
  *         or {@link #AAUDIO_ERROR_INVALID_STATE} if the stream is not yet initialized.
  */
-AAUDIO_API int32_t AAudioStream_getOffloadDelay(AAudioStream* _Nonnull stream) __INTRODUCED_IN_API_W__;
+AAUDIO_API int32_t AAudioStream_getOffloadDelay(AAudioStream* stream) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Return the decoder padding of an offloaded stream in frames.
@@ -2645,8 +2743,8 @@ AAUDIO_API int32_t AAudioStream_getOffloadDelay(AAudioStream* _Nonnull stream) _
  *         performance mode is {@link #AAUDIO_PERFORMANCE_MODE_POWER_SAVING_OFFLOADED},
  *         or {@link #AAUDIO_ERROR_INVALID_STATE} if the stream is not yet initialized.
  */
-AAUDIO_API int32_t AAudioStream_getOffloadPadding(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_W__;
+AAUDIO_API int32_t AAudioStream_getOffloadPadding(AAudioStream* stream)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Declares that the last data writing operation on this stream provided the last buffer of this
@@ -2663,12 +2761,13 @@ AAUDIO_API int32_t AAudioStream_getOffloadPadding(AAudioStream* _Nonnull stream)
  *         performance mode is {@link #AAUDIO_PERFORMANCE_MODE_POWER_SAVING_OFFLOADED},
  *         or {@link #AAUDIO_ERROR_INVALID_STATE} if the stream is not yet initialized.
  */
-AAUDIO_API aaudio_result_t AAudioStream_setOffloadEndOfStream(AAudioStream* _Nonnull stream)
-        __INTRODUCED_IN_API_W__;
+AAUDIO_API aaudio_result_t AAudioStream_setOffloadEndOfStream(AAudioStream* stream)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * The values are defined to be used for the accuracy requirement when calling
- * {@link AAudioStream_flushFromFrame}.
+ * {@link Constant value to indicate {@link #flushWrittenFramesFromPosition(long, int)}
+     * is not supported.}.
  */
 typedef enum AAudio_FlushFromAccuracy : int32_t {
     /**
@@ -2689,7 +2788,9 @@ typedef enum AAudio_FlushFromAccuracy : int32_t {
  * data will be written from the returned position.
  *
  * This method will only work when the performance mode is
- * {@link AAUDIO_PERFORMANCE_MODE_POWER_SAVING_OFFLOADED}.
+ * {@link AAUDIO_PERFORMANCE_MODE_POWER_SAVING_OFFLOADED}. Call
+ * {@link AAudio_getFlushFromFrameSupport} to know if this method is supported or not before
+ * opening the stream.
  *
  * The requested position must not be negative or greater than the written frames. The current
  * written position can be known by querying {@link AAudioStream_getFramesWritten}.
@@ -2726,9 +2827,9 @@ typedef enum AAudio_FlushFromAccuracy : int32_t {
  *         AAUDIO_ERROR_DISCONNECTED if aaudio service is dead or the stream is disconnected.
  */
 AAUDIO_API aaudio_result_t AAudioStream_flushFromFrame(
-        AAudioStream* _Nonnull stream,
+        AAudioStream* stream,
         AAudio_FlushFromAccuracy accuracy,
-        int64_t* _Nonnull inOutPosition) __INTRODUCED_IN(37);
+        int64_t* inOutPosition) __INTRODUCED_IN(37) __attribute__((nonnull(1,3)));
 
 /**
  * Behavior when the values for speed and / or pitch are out of the applicable range.
@@ -2807,8 +2908,8 @@ typedef struct AAudioPlaybackParameters {
  *         AAUDIO_ERROR_INVALID_STATE if the stream is not initialized successfully.
  */
 AAUDIO_API aaudio_result_t AAudioStream_setPlaybackParameters(
-        AAudioStream* _Nonnull stream,
-        const AAudioPlaybackParameters* _Nonnull parameters) __INTRODUCED_IN(37);
+        AAudioStream* stream,
+        const AAudioPlaybackParameters* parameters) __INTRODUCED_IN(37) __attribute__((nonnull(1,2)));
 
 /**
  * Get current playback parameters for the given stream.
@@ -2823,8 +2924,8 @@ AAUDIO_API aaudio_result_t AAudioStream_setPlaybackParameters(
  *         AAUDIO_ERROR_INVALID_STATE if the stream is not initialized successfully.
  */
 AAUDIO_API aaudio_result_t AAudioStream_getPlaybackParameters(
-        AAudioStream* _Nonnull stream,
-        AAudioPlaybackParameters* _Nonnull outParameters) __INTRODUCED_IN(37);
+        AAudioStream* stream,
+        AAudioPlaybackParameters* outParameters) __INTRODUCED_IN(37) __attribute__((nonnull(1,2)));
 
 /************************************************************************************
  * Helper functions for AAudio MMAP.
@@ -2907,7 +3008,7 @@ AAUDIO_API aaudio_policy_t AAudio_getMMapPolicy() __INTRODUCED_IN_API_W__;
  *
  * @return true if the stream uses the MMAP data path
  */
-AAUDIO_API bool AAudioStream_isMMapUsed(AAudioStream* _Nonnull stream) __INTRODUCED_IN_API_W__;
+AAUDIO_API bool AAudioStream_isMMapUsed(AAudioStream* stream) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 #ifdef __cplusplus
 }

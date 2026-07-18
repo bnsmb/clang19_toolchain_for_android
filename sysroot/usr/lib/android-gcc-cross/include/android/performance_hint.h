@@ -164,7 +164,7 @@ typedef struct ASurfaceControl ASurfaceControl;
   *
   * @return APerformanceHintManager instance on success, nullptr on failure.
   */
-APerformanceHintManager* _Nullable APerformanceHint_getManager()
+APerformanceHintManager* APerformanceHint_getManager()
                          __INTRODUCED_IN_API_T__;
 
 /**
@@ -179,10 +179,10 @@ APerformanceHintManager* _Nullable APerformanceHint_getManager()
  *     This must be positive if using the work duration API, or 0 otherwise.
  * @return APerformanceHintSession pointer on success, nullptr on failure.
  */
-APerformanceHintSession* _Nullable APerformanceHint_createSession(
-        APerformanceHintManager* _Nonnull manager,
-        const int32_t* _Nonnull threadIds, size_t size,
-        int64_t initialTargetWorkDurationNanos) __INTRODUCED_IN_API_T__;
+APerformanceHintSession* APerformanceHint_createSession(
+        APerformanceHintManager* manager,
+        const int32_t* threadIds, size_t size,
+        int64_t initialTargetWorkDurationNanos) __INTRODUCED_IN_API_T__ __attribute__((nonnull(1,2)));
 
 /**
  * Creates a session using arguments from a corresponding {@link ASessionCreationConfig}.
@@ -204,9 +204,9 @@ APerformanceHintSession* _Nullable APerformanceHint_createSession(
  *         EBUSY if too many graphics pipeline threads are passed.
  */
 int APerformanceHint_createSessionUsingConfig(
-        APerformanceHintManager* _Nonnull manager,
-        ASessionCreationConfig* _Nonnull config,
-        APerformanceHintSession * _Nullable * _Nonnull sessionOut) __INTRODUCED_IN_API_W__;
+        APerformanceHintManager* manager,
+        ASessionCreationConfig* config,
+        APerformanceHintSession * * sessionOut) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Get preferred update rate information for this device.
@@ -219,7 +219,7 @@ int APerformanceHint_createSessionUsingConfig(
  * @return the preferred update rate supported by device software.
  */
 int64_t APerformanceHint_getPreferredUpdateRateNanos(
-        APerformanceHintManager* _Nonnull manager)
+        APerformanceHintManager* manager)
         __INTRODUCED_IN_API_T__ __DEPRECATED_IN(36, "Client-side rate limiting is not"
         " necessary, use APerformanceHint_isFeatureSupported for support checking.");
 
@@ -230,7 +230,7 @@ int64_t APerformanceHint_getPreferredUpdateRateNanos(
  * @return the maximum number of graphics pipeline threads supported by device.
  */
  int APerformanceHint_getMaxGraphicsPipelineThreadsCount(
-        APerformanceHintManager* _Nonnull manager) __INTRODUCED_IN_API_W__;
+        APerformanceHintManager* manager) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Updates this session's target duration for each cycle of work.
@@ -244,8 +244,8 @@ int64_t APerformanceHint_getPreferredUpdateRateNanos(
  *         EPIPE if communication with the system service has failed.
  */
 int APerformanceHint_updateTargetWorkDuration(
-        APerformanceHintSession* _Nonnull session,
-        int64_t targetDurationNanos) __INTRODUCED_IN_API_T__;
+        APerformanceHintSession* session,
+        int64_t targetDurationNanos) __INTRODUCED_IN_API_T__ __attribute__((nonnull(1)));
 
 /**
  * Reports the actual duration for the last cycle of work.
@@ -261,8 +261,8 @@ int APerformanceHint_updateTargetWorkDuration(
  *         EPIPE if communication with the system service has failed.
  */
 int APerformanceHint_reportActualWorkDuration(
-        APerformanceHintSession* _Nonnull session,
-        int64_t actualDurationNanos) __INTRODUCED_IN_API_T__;
+        APerformanceHintSession* session,
+        int64_t actualDurationNanos) __INTRODUCED_IN_API_T__ __attribute__((nonnull(1)));
 
 /**
  * Release the performance hint manager pointer acquired via
@@ -274,7 +274,7 @@ int APerformanceHint_reportActualWorkDuration(
  * @param session The performance hint session instance to release.
  */
 void APerformanceHint_closeSession(
-        APerformanceHintSession* _Nonnull session) __INTRODUCED_IN_API_T__;
+        APerformanceHintSession* session) __INTRODUCED_IN_API_T__ __attribute__((nonnull(1)));
 
 /**
  * Set a list of threads to the performance hint session. This operation will replace
@@ -296,9 +296,9 @@ void APerformanceHint_closeSession(
  *         EBUSY if too many graphics pipeline threads were passed.
  */
 int APerformanceHint_setThreads(
-        APerformanceHintSession* _Nonnull session,
-        const pid_t* _Nonnull threadIds,
-        size_t size) __INTRODUCED_IN_API_U__;
+        APerformanceHintSession* session,
+        const pid_t* threadIds,
+        size_t size) __INTRODUCED_IN_API_U__ __attribute__((nonnull(1,2)));
 
 /**
  * This tells the session that these threads can be
@@ -310,8 +310,8 @@ int APerformanceHint_setThreads(
  *         EPIPE if communication with the system service has failed.
  */
 int APerformanceHint_setPreferPowerEfficiency(
-        APerformanceHintSession* _Nonnull session,
-        bool enabled) __INTRODUCED_IN_API_V__;
+        APerformanceHintSession* session,
+        bool enabled) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Reports the durations for the last cycle of work.
@@ -334,8 +334,8 @@ int APerformanceHint_setPreferPowerEfficiency(
  *         EPIPE if communication with the system service has failed.
  */
 int APerformanceHint_reportActualWorkDuration2(
-        APerformanceHintSession* _Nonnull session,
-        AWorkDuration* _Nonnull workDuration) __INTRODUCED_IN_API_V__;
+        APerformanceHintSession* session,
+        AWorkDuration* workDuration) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Informs the framework of an upcoming increase in the workload of this session.
@@ -360,8 +360,8 @@ int APerformanceHint_reportActualWorkDuration2(
  *         EPIPE if communication with the system service has failed.
  */
 int APerformanceHint_notifyWorkloadIncrease(
-        APerformanceHintSession* _Nonnull session,
-        bool cpu, bool gpu, const char* _Nonnull identifier) __INTRODUCED_IN_API_W__;
+        APerformanceHintSession* session,
+        bool cpu, bool gpu, const char* identifier) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,4)));
 
 /**
  * Informs the framework that the workload associated with this session is about to start, or that
@@ -388,8 +388,8 @@ int APerformanceHint_notifyWorkloadIncrease(
  *         EPIPE if communication with the system service has failed.
  */
 int APerformanceHint_notifyWorkloadReset(
-        APerformanceHintSession* _Nonnull session,
-        bool cpu, bool gpu, const char* _Nonnull identifier) __INTRODUCED_IN_API_W__;
+        APerformanceHintSession* session,
+        bool cpu, bool gpu, const char* identifier) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,4)));
 
 /**
  * Informs the framework of an upcoming one-off expensive workload cycle for a given session.
@@ -416,8 +416,8 @@ int APerformanceHint_notifyWorkloadReset(
  *         EPIPE if communication with the system service has failed.
  */
 int APerformanceHint_notifyWorkloadSpike(
-        APerformanceHintSession* _Nonnull session,
-        bool cpu, bool gpu, const char* _Nonnull identifier) __INTRODUCED_IN_API_W__;
+        APerformanceHintSession* session,
+        bool cpu, bool gpu, const char* identifier) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,4)));
 
 /**
  * Associates a session with any {@link ASurfaceControl} or {@link ANativeWindow}
@@ -450,10 +450,10 @@ int APerformanceHint_notifyWorkloadSpike(
  *         ENOTSUP if this is not supported on the device.
  */
 
-int APerformanceHint_setNativeSurfaces(APerformanceHintSession* _Nonnull session,
-        ANativeWindow* _Nonnull* _Nullable nativeWindows, size_t nativeWindowsSize,
-        ASurfaceControl* _Nonnull* _Nullable surfaceControls, size_t surfaceControlsSize)
-        __INTRODUCED_IN_API_W__;
+int APerformanceHint_setNativeSurfaces(APerformanceHintSession* session,
+        ANativeWindow** nativeWindows, size_t nativeWindowsSize,
+        ASurfaceControl** surfaceControls, size_t surfaceControlsSize)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2,4)));
 
 /**
  * This enum represents different aspects of performance hint functionality. These can be passed
@@ -524,15 +524,15 @@ bool APerformanceHint_isFeatureSupported(APerformanceHintFeature feature) __INTR
  *
  * @return AWorkDuration pointer.
  */
-AWorkDuration* _Nonnull AWorkDuration_create() __INTRODUCED_IN_API_V__;
+AWorkDuration* AWorkDuration_create() __INTRODUCED_IN_API_V__;
 
 /**
  * Destroys a {@link AWorkDuration} and frees all resources associated with it.
  *
  * @param aWorkDuration The {@link AWorkDuration} created by calling {@link AWorkDuration_create()}
  */
-void AWorkDuration_release(AWorkDuration* _Nonnull aWorkDuration)
-     __INTRODUCED_IN_API_V__;
+void AWorkDuration_release(AWorkDuration* aWorkDuration)
+     __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Sets the work period start timestamp in nanoseconds.
@@ -541,8 +541,8 @@ void AWorkDuration_release(AWorkDuration* _Nonnull aWorkDuration)
  * @param workPeriodStartTimestampNanos The work period start timestamp in nanoseconds based on
  *        CLOCK_MONOTONIC about when the work starts. This timestamp must be greater than zero.
  */
-void AWorkDuration_setWorkPeriodStartTimestampNanos(AWorkDuration* _Nonnull aWorkDuration,
-        int64_t workPeriodStartTimestampNanos) __INTRODUCED_IN_API_V__;
+void AWorkDuration_setWorkPeriodStartTimestampNanos(AWorkDuration* aWorkDuration,
+        int64_t workPeriodStartTimestampNanos) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Sets the actual total work duration in nanoseconds.
@@ -551,8 +551,8 @@ void AWorkDuration_setWorkPeriodStartTimestampNanos(AWorkDuration* _Nonnull aWor
  * @param actualTotalDurationNanos The actual total work duration in nanoseconds. This number must
  *        be greater than zero.
  */
-void AWorkDuration_setActualTotalDurationNanos(AWorkDuration* _Nonnull aWorkDuration,
-        int64_t actualTotalDurationNanos) __INTRODUCED_IN_API_V__;
+void AWorkDuration_setActualTotalDurationNanos(AWorkDuration* aWorkDuration,
+        int64_t actualTotalDurationNanos) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Sets the actual CPU work duration in nanoseconds.
@@ -562,8 +562,8 @@ void AWorkDuration_setActualTotalDurationNanos(AWorkDuration* _Nonnull aWorkDura
  *        greater than or equal to zero. If it is equal to zero, that means the CPU was not
  *        measured.
  */
-void AWorkDuration_setActualCpuDurationNanos(AWorkDuration* _Nonnull aWorkDuration,
-        int64_t actualCpuDurationNanos) __INTRODUCED_IN_API_V__;
+void AWorkDuration_setActualCpuDurationNanos(AWorkDuration* aWorkDuration,
+        int64_t actualCpuDurationNanos) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Sets the actual GPU work duration in nanoseconds.
@@ -573,8 +573,8 @@ void AWorkDuration_setActualCpuDurationNanos(AWorkDuration* _Nonnull aWorkDurati
  *        greater than or equal to zero. If it is equal to zero, that means the GPU was not
  *        measured.
  */
-void AWorkDuration_setActualGpuDurationNanos(AWorkDuration* _Nonnull aWorkDuration,
-        int64_t actualGpuDurationNanos) __INTRODUCED_IN_API_V__;
+void AWorkDuration_setActualGpuDurationNanos(AWorkDuration* aWorkDuration,
+        int64_t actualGpuDurationNanos) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Return the APerformanceHintSession wrapped by a Java PerformanceHintManager.Session object.
@@ -592,8 +592,8 @@ void AWorkDuration_setActualGpuDurationNanos(AWorkDuration* _Nonnull aWorkDurati
  *
  * @return A pointer to the APerformanceHintSession that backs the Java Session.
  */
-APerformanceHintSession* _Nonnull APerformanceHint_borrowSessionFromJava(
-        JNIEnv* _Nonnull env, jobject _Nonnull sessionObj) __INTRODUCED_IN_API_W__;
+APerformanceHintSession* APerformanceHint_borrowSessionFromJava(
+        JNIEnv* env, jobject sessionObj) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /*
  * Creates a new ASessionCreationConfig.
@@ -605,7 +605,7 @@ APerformanceHintSession* _Nonnull APerformanceHint_borrowSessionFromJava(
  *
  * @return ASessionCreationConfig pointer.
  */
-ASessionCreationConfig* _Nonnull ASessionCreationConfig_create()
+ASessionCreationConfig* ASessionCreationConfig_create()
                 __INTRODUCED_IN_API_W__;
 
 /**
@@ -616,7 +616,7 @@ ASessionCreationConfig* _Nonnull ASessionCreationConfig_create()
  *        created by calling {@link ASessionCreationConfig_create()}.
  */
 void ASessionCreationConfig_release(
-                ASessionCreationConfig* _Nonnull config) __INTRODUCED_IN_API_W__;
+                ASessionCreationConfig* config) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Sets the tids to be associated with the session to be created.
@@ -628,8 +628,8 @@ void ASessionCreationConfig_release(
  * @param size The size of the list of tids.
  */
 void ASessionCreationConfig_setTids(
-        ASessionCreationConfig* _Nonnull config,
-        const pid_t* _Nonnull tids, size_t size)  __INTRODUCED_IN_API_W__;
+        ASessionCreationConfig* config,
+        const pid_t* tids, size_t size)  __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Sets the initial target work duration in nanoseconds for the session to be created.
@@ -641,8 +641,8 @@ void ASessionCreationConfig_setTids(
  *        otherwise or set to zero. Negative values are invalid.
  */
 void ASessionCreationConfig_setTargetWorkDurationNanos(
-        ASessionCreationConfig* _Nonnull config,
-        int64_t targetWorkDurationNanos)  __INTRODUCED_IN_API_W__;
+        ASessionCreationConfig* config,
+        int64_t targetWorkDurationNanos)  __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Sets whether power efficiency mode will be enabled for the session.
@@ -654,7 +654,7 @@ void ASessionCreationConfig_setTargetWorkDurationNanos(
  * @param enabled Whether power efficiency mode will be enabled.
  */
 void ASessionCreationConfig_setPreferPowerEfficiency(
-        ASessionCreationConfig* _Nonnull config, bool enabled)  __INTRODUCED_IN_API_W__;
+        ASessionCreationConfig* config, bool enabled)  __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Sessions setting this hint are expected to time the critical path of
@@ -670,7 +670,7 @@ void ASessionCreationConfig_setPreferPowerEfficiency(
  * @param enabled Whether this session manages a graphics pipeline's critical path.
  */
 void ASessionCreationConfig_setGraphicsPipeline(
-        ASessionCreationConfig* _Nonnull config, bool enabled)  __INTRODUCED_IN_API_W__;
+        ASessionCreationConfig* config, bool enabled)  __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Associates the created session with any {@link ASurfaceControl} or {@link ANativeWindow}
@@ -699,10 +699,10 @@ void ASessionCreationConfig_setGraphicsPipeline(
  * @param surfaceControlsSize The number of ASurfaceControls in the list.
  */
 void ASessionCreationConfig_setNativeSurfaces(
-        ASessionCreationConfig* _Nonnull config,
-        ANativeWindow* _Nonnull* _Nullable nativeWindows, size_t nativeWindowsSize,
-        ASurfaceControl* _Nonnull* _Nullable surfaceControls, size_t surfaceControlsSize)
-        __INTRODUCED_IN_API_W__;
+        ASessionCreationConfig* config,
+        ANativeWindow** nativeWindows, size_t nativeWindowsSize,
+        ASurfaceControl** surfaceControls, size_t surfaceControlsSize)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2,4)));
 
 /**
  * Enable automatic timing mode for sessions using the GRAPHICS_PIPELINE API with an attached
@@ -736,7 +736,7 @@ void ASessionCreationConfig_setNativeSurfaces(
  * @param gpu Whether to enable automatic timing for the GPU for this session.
  */
 void ASessionCreationConfig_setUseAutoTiming(
-        ASessionCreationConfig* _Nonnull config, bool cpu, bool gpu) __INTRODUCED_IN_API_W__;
+        ASessionCreationConfig* config, bool cpu, bool gpu) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 __END_DECLS
 

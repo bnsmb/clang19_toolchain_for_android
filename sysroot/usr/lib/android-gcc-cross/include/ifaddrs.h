@@ -44,26 +44,26 @@ __BEGIN_DECLS
  */
 struct ifaddrs {
   /** Pointer to the next element in the linked list. */
-  struct ifaddrs* _Nullable ifa_next;
+  struct ifaddrs* ifa_next;
 
   /** Interface name. */
-  char* _Nullable ifa_name;
+  char* ifa_name;
   /** Interface flags (like `SIOCGIFFLAGS`). */
   unsigned int ifa_flags;
   /** Interface address. */
-  struct sockaddr* _Nullable ifa_addr;
+  struct sockaddr* ifa_addr;
   /** Interface netmask. */
-  struct sockaddr* _Nullable ifa_netmask;
+  struct sockaddr* ifa_netmask;
 
   union {
     /** Interface broadcast address (if IFF_BROADCAST is set). */
-    struct sockaddr* _Nullable ifu_broadaddr;
+    struct sockaddr* ifu_broadaddr;
     /** Interface destination address (if IFF_POINTOPOINT is set). */
-    struct sockaddr* _Nullable ifu_dstaddr;
+    struct sockaddr* ifu_dstaddr;
   } ifa_ifu;
 
   /** Unused. */
-  void* _Nullable ifa_data;
+  void* ifa_data;
 };
 
 /** Synonym for `ifa_ifu.ifu_broadaddr` in `struct ifaddrs`. */
@@ -71,6 +71,7 @@ struct ifaddrs {
 /** Synonym for `ifa_ifu.ifu_dstaddr` in `struct ifaddrs`. */
 #define ifa_dstaddr ifa_ifu.ifu_dstaddr
 
+#if __BIONIC_AVAILABILITY_GUARD(24)
 /**
  * [getifaddrs(3)](https://man7.org/linux/man-pages/man3/getifaddrs.3.html) creates a linked list
  * of `struct ifaddrs`. The list must be freed by freeifaddrs().
@@ -80,18 +81,17 @@ struct ifaddrs {
  *
  * Available since API level 24.
  */
-#if __BIONIC_AVAILABILITY_GUARD(24)
-int getifaddrs(struct ifaddrs* _Nullable * _Nonnull __list_ptr) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+int getifaddrs(struct ifaddrs* * __list_ptr) __THROW __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
+#endif
 
+#if __BIONIC_AVAILABILITY_GUARD(24)
 /**
  * [freeifaddrs(3)](https://man7.org/linux/man-pages/man3/freeifaddrs.3.html) frees a linked list
  * of `struct ifaddrs` returned by getifaddrs().
  *
  * Available since API level 24.
  */
-#if __BIONIC_AVAILABILITY_GUARD(24)
-void freeifaddrs(struct ifaddrs* _Nullable __ptr) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+void freeifaddrs(struct ifaddrs* __ptr) __THROW __INTRODUCED_IN_API_N__;
+#endif
 
 __END_DECLS

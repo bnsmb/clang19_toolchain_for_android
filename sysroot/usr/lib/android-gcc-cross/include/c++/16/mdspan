@@ -907,7 +907,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
     template<typename _Tp>
       constexpr bool __is_constant_wrapper = false;
 
-    template<_CwFixedValue _Xv, typename _Tp>
+    template<auto _Xv, typename _Tp>
       constexpr bool __is_constant_wrapper<constant_wrapper<_Xv, _Tp>>
 	= true;
 

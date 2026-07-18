@@ -47,7 +47,7 @@ __BEGIN_DECLS
  * Returns the corresponding value on success,
  * and returns 0 and sets `errno` to `ENOENT` on failure.
  */
-unsigned long int getauxval(unsigned long int __type) __INTRODUCED_IN_API_J_MR2__;
+unsigned long int getauxval(unsigned long int __type) __THROW __INTRODUCED_IN_API_J_MR2__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(18) */
 
 #if __BIONIC_AVAILABILITY_GUARD(18)

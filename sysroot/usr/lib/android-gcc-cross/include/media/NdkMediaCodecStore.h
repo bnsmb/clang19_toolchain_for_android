@@ -55,7 +55,7 @@ typedef struct AMediaCodecSupportedMediaType {
     };
 
     // Encoded as ASCII.
-    const char* _Nonnull mMediaType;
+    const char* mMediaType;
     // bitfields for modes.
     uint32_t mMode;
 } AMediaCodecSupportedMediaType;
@@ -72,8 +72,8 @@ typedef struct AMediaCodecSupportedMediaType {
  * @return AMEDIA_ERROR_INVALID_PARAMETER if the @param outMediaTypes is invalid.
  */
 media_status_t AMediaCodecStore_getSupportedMediaTypes(
-        const AMediaCodecSupportedMediaType* _Nullable * _Nonnull outMediaTypes,
-        size_t* _Nonnull outCount) __INTRODUCED_IN_API_W__;
+        const AMediaCodecSupportedMediaType* * outMediaTypes,
+        size_t* outCount) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the next decoder info that supports the format.
@@ -99,8 +99,8 @@ media_status_t AMediaCodecStore_getSupportedMediaTypes(
  * and a different @param format during an iteration.
  */
 media_status_t AMediaCodecStore_findNextDecoderForFormat(
-        const AMediaFormat* _Nonnull format,
-        const AMediaCodecInfo* _Nullable * _Nonnull outCodecInfo) __INTRODUCED_IN_API_W__;
+        const AMediaFormat* format,
+        const AMediaCodecInfo* * outCodecInfo) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the next encoder info that supports the format.
@@ -128,8 +128,8 @@ media_status_t AMediaCodecStore_findNextDecoderForFormat(
  * No secure encoder will show in the output.
  */
 media_status_t AMediaCodecStore_findNextEncoderForFormat(
-        const AMediaFormat* _Nonnull format,
-        const AMediaCodecInfo* _Nullable * _Nonnull outCodecInfo) __INTRODUCED_IN_API_W__;
+        const AMediaFormat* format,
+        const AMediaCodecInfo* * outCodecInfo) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the codecInfo corresponding to a given codec name.
@@ -149,8 +149,8 @@ media_status_t AMediaCodecStore_findNextEncoderForFormat(
  * @return AMEDIA_ERROR_INVALID_PARAMETER if @param outCodecInfo or @param name is invalid.
  */
 media_status_t AMediaCodecStore_getCodecInfo(
-        const char*  _Nonnull name,
-        const AMediaCodecInfo* _Nullable * _Nonnull outCodecInfo) __INTRODUCED_IN_API_W__;
+        const char*  name,
+        const AMediaCodecInfo* * outCodecInfo) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 __END_DECLS
 

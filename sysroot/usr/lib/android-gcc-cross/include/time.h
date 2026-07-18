@@ -58,7 +58,7 @@ typedef struct __timezone_t* timezone_t;
  * The name of the current timezone's non-daylight savings (`tzname[0]`) and
  * daylight savings (`tzname[1]`) variants. See tzset().
  */
-extern char* _Nonnull tzname[];
+extern char* tzname[];
 
 /** Whether the current timezone ever uses daylight savings time. See tzset(). */
 extern int daylight;
@@ -93,7 +93,7 @@ struct tm {
   /** Offset from UTC (GMT) in seconds for this time. */
   long int tm_gmtoff;
   /** Name of the timezone for this time. */
-  const char* _Nullable tm_zone;
+  const char* tm_zone;
 };
 
 /** Alternative name for `tm_zone` in `struct tm`. */
@@ -105,7 +105,7 @@ struct tm {
  *
  * Returns the time in seconds on success, and returns -1 and sets `errno` on failure.
  */
-time_t time(time_t* _Nullable __t);
+time_t time(time_t* __t)__THROW ;
 
 /**
  * [nanosleep(2)](https://man7.org/linux/man-pages/man2/nanosleep.2.html) sleeps
@@ -115,7 +115,7 @@ time_t time(time_t* _Nullable __t);
  * was interrupted by a signal, `errno` will be `EINTR` and `remainder` will be
  * the amount of time remaining.
  */
-int nanosleep(const struct timespec* _Nonnull __duration, struct timespec* _Nullable __remainder);
+int nanosleep(const struct timespec* __duration, struct timespec* __remainder) __attribute__((nonnull(1)));
 
 /**
  * [asctime(3)](https://man7.org/linux/man-pages/man3/asctime.3p.html) formats
@@ -127,7 +127,7 @@ int nanosleep(const struct timespec* _Nonnull __duration, struct timespec* _Null
  *
  * New code should prefer strftime().
  */
-char* _Nullable asctime(const struct tm* _Nonnull __tm);
+char* asctime(const struct tm* __tm) __THROW __attribute__((nonnull(1)));
 
 /**
  * [asctime_r(3)](https://man7.org/linux/man-pages/man3/asctime_r.3p.html) formats
@@ -141,7 +141,7 @@ char* _Nullable asctime(const struct tm* _Nonnull __tm);
  *
  * New code should prefer strftime().
  */
-char* _Nullable asctime_r(const struct tm* _Nonnull __tm, char* _Nonnull __buf);
+char* asctime_r(const struct tm* __tm, char* __buf) __THROW __attribute__((nonnull(1,2)));
 
 /**
  * [ctime(3)](https://man7.org/linux/man-pages/man3/ctime.3p.html) formats
@@ -153,7 +153,7 @@ char* _Nullable asctime_r(const struct tm* _Nonnull __tm, char* _Nonnull __buf);
  *
  * New code should prefer strftime().
  */
-char* _Nullable ctime(const time_t* _Nonnull __t);
+char* ctime(const time_t* __t) __THROW __attribute__((nonnull(1)));
 
 /**
  * [ctime_r(3)](https://man7.org/linux/man-pages/man3/ctime_r.3p.html) formats
@@ -167,7 +167,7 @@ char* _Nullable ctime(const time_t* _Nonnull __t);
  *
  * New code should prefer strftime().
  */
-char* _Nullable ctime_r(const time_t* _Nonnull __t, char* _Nonnull __buf);
+char* ctime_r(const time_t* __t, char* __buf) __THROW __attribute__((nonnull(1,2)));
 
 /**
  * [difftime(3)](https://man7.org/linux/man-pages/man3/difftime.3.html) returns
@@ -175,7 +175,7 @@ char* _Nullable ctime_r(const time_t* _Nonnull __t, char* _Nonnull __buf);
  *
  * Returns the difference in seconds.
  */
-double difftime(time_t __time1, time_t __time0);
+double difftime(time_t __time1, time_t __time0)__THROW ;
 
 /**
  * [mktime(3)](https://man7.org/linux/man-pages/man3/mktime.3p.html) converts
@@ -186,8 +186,9 @@ double difftime(time_t __time1, time_t __time0);
  *
  * Returns the time in seconds on success, and returns -1 and sets `errno` on failure.
  */
-time_t mktime(struct tm* _Nonnull __tm);
+time_t mktime(struct tm* __tm) __THROW __attribute__((nonnull(1)));
 
+#if __BIONIC_AVAILABILITY_GUARD(35)
 /**
  * mktime_z(3) converts broken-down time `tm` into the number of seconds
  * since the Unix epoch, assuming the given timezone.
@@ -196,10 +197,8 @@ time_t mktime(struct tm* _Nonnull __tm);
  *
  * Available since API level 35.
  */
-#if __BIONIC_AVAILABILITY_GUARD(35)
-time_t mktime_z(timezone_t _Nonnull __tz, struct tm* _Nonnull __tm) __INTRODUCED_IN_API_V__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(35) */
-
+time_t mktime_z(timezone_t __tz, struct tm* __tm) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
+#endif
 
 /**
  * [localtime(3)](https://man7.org/linux/man-pages/man3/localtime.3p.html) converts
@@ -210,7 +209,7 @@ time_t mktime_z(timezone_t _Nonnull __tz, struct tm* _Nonnull __tm) __INTRODUCED
  *
  * Returns a pointer to a broken-down time on success, and returns null and sets `errno` on failure.
  */
-struct tm* _Nullable localtime(const time_t* _Nonnull __t);
+struct tm* localtime(const time_t* __t) __attribute__((nonnull(1)));
 
 /**
  * [localtime_r(3)](https://man7.org/linux/man-pages/man3/localtime_r.3p.html) converts
@@ -222,8 +221,9 @@ struct tm* _Nullable localtime(const time_t* _Nonnull __t);
  *
  * Returns a pointer to a broken-down time on success, and returns null and sets `errno` on failure.
  */
-struct tm* _Nullable localtime_r(const time_t* _Nonnull __t, struct tm* _Nonnull __tm);
+struct tm* localtime_r(const time_t* __t, struct tm* __tm) __attribute__((nonnull(1,2)));
 
+#if __BIONIC_AVAILABILITY_GUARD(35)
 /**
  * localtime_rz(3) converts the number of seconds since the Unix epoch in
  * `t` to a broken-down time, assuming the given timezone. That broken-down
@@ -233,15 +233,13 @@ struct tm* _Nullable localtime_r(const time_t* _Nonnull __t, struct tm* _Nonnull
  *
  * Available since API level 35.
  */
-#if __BIONIC_AVAILABILITY_GUARD(35)
-struct tm* _Nullable localtime_rz(timezone_t _Nonnull __tz, const time_t* _Nonnull __t, struct tm* _Nonnull __tm) __INTRODUCED_IN_API_V__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(35) */
-
+struct tm* localtime_rz(timezone_t __tz, const time_t* __t, struct tm* __tm) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
+#endif
 
 /**
  * Inverse of localtime().
  */
-time_t timelocal(struct tm* _Nonnull __tm);
+time_t timelocal(struct tm* __tm) __THROW __attribute__((nonnull(1)));
 
 /**
  * [gmtime(3)](https://man7.org/linux/man-pages/man3/gmtime.3p.html) converts
@@ -252,7 +250,7 @@ time_t timelocal(struct tm* _Nonnull __tm);
  *
  * Returns a pointer to a broken-down time on success, and returns null and sets `errno` on failure.
  */
-struct tm* _Nullable gmtime(const time_t* _Nonnull __t);
+struct tm* gmtime(const time_t* __t) __attribute__((nonnull(1)));
 
 /**
  * [gmtime_r(3)](https://man7.org/linux/man-pages/man3/gmtime_r.3p.html) converts
@@ -263,12 +261,12 @@ struct tm* _Nullable gmtime(const time_t* _Nonnull __t);
  *
  * Returns a pointer to a broken-down time on success, and returns null and sets `errno` on failure.
  */
-struct tm* _Nullable gmtime_r(const time_t* _Nonnull __t, struct tm* _Nonnull __tm);
+struct tm* gmtime_r(const time_t* __t, struct tm* __tm) __attribute__((nonnull(1,2)));
 
 /**
  * Inverse of gmtime().
  */
-time_t timegm(struct tm* _Nonnull __tm);
+time_t timegm(struct tm* __tm) __THROW __attribute__((nonnull(1)));
 
 /**
  * [strptime(3)](https://man7.org/linux/man-pages/man3/strptime.3.html) parses
@@ -276,12 +274,12 @@ time_t timegm(struct tm* _Nonnull __tm);
  *
  * Returns a pointer to the first character _not_ parsed, or null if no characters were parsed.
  */
-char* _Nullable strptime(const char* _Nonnull __s, const char* _Nonnull __fmt, struct tm* _Nonnull __tm) __strftimelike(2);
+char* strptime(const char* __s, const char* __fmt, struct tm* __tm) __THROW __strftimelike(2) __attribute__((nonnull(1,2,3)));
 
 /**
  * Equivalent to strptime() on Android where only C/POSIX locales are available.
  */
-char* _Nullable strptime_l(const char* _Nonnull __s, const char* _Nonnull __fmt, struct tm* _Nonnull __tm, locale_t _Nonnull __l) __RENAME(strptime) __strftimelike(2);
+char* strptime_l(const char* __s, const char* __fmt, struct tm* __tm, locale_t __l) __REDIRECT_NTH(strptime) __strftimelike(2) __attribute__((nonnull(1,2,3,4)));
 
 /**
  * [strftime(3)](https://man7.org/linux/man-pages/man3/strftime.3.html) formats
@@ -290,13 +288,13 @@ char* _Nullable strptime_l(const char* _Nonnull __s, const char* _Nonnull __fmt,
  * Returns the number of bytes written (not including the NUL),
  * or zero if the buffer is too small.
  */
-size_t strftime(char* _Nonnull __buf, size_t __n, const char* _Nonnull __fmt, const struct tm* _Nullable __tm) __strftimelike(3);
+size_t strftime(char* __buf, size_t __n, const char* __fmt, const struct tm* __tm) __THROW __strftimelike(3) __attribute__((nonnull(1,3)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /**
  * Equivalent to strftime() on Android where only C/POSIX locales are available.
  */
-size_t strftime_l(char* _Nonnull __buf, size_t __n, const char* _Nonnull __fmt, const struct tm* _Nullable __tm, locale_t _Nonnull __l) __strftimelike(3) __INTRODUCED_IN_API_L__;
+size_t strftime_l(char* __buf, size_t __n, const char* __fmt, const struct tm* __tm, locale_t __l) __THROW __strftimelike(3) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,3,5)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -311,8 +309,9 @@ size_t strftime_l(char* _Nonnull __buf, size_t __n, const char* _Nonnull __fmt, 
  * inherently thread-unsafe. See tzalloc(), localtime_rz(), mktime_z(),
  * and tzfree() for an alternative.
  */
-void tzset(void);
+void tzset(void)__THROW ;
 
+#if __BIONIC_AVAILABILITY_GUARD(35)
 /**
  * tzalloc(3) allocates a timezone corresponding to the given Olson ID.
  *
@@ -331,10 +330,10 @@ void tzset(void);
  *
  * Available since API level 35.
  */
-#if __BIONIC_AVAILABILITY_GUARD(35)
-timezone_t _Nullable tzalloc(const char* _Nullable __id) __INTRODUCED_IN_API_V__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(35) */
+timezone_t tzalloc(const char* __id) __INTRODUCED_IN_API_V__;
+#endif
 
+#if __BIONIC_AVAILABILITY_GUARD(35)
 /**
  * tzfree(3) frees a timezone object returned by tzalloc().
  *
@@ -344,9 +343,8 @@ timezone_t _Nullable tzalloc(const char* _Nullable __id) __INTRODUCED_IN_API_V__
  *
  * Available since API level 35.
  */
-#if __BIONIC_AVAILABILITY_GUARD(35)
-void tzfree(timezone_t _Nullable __tz) __INTRODUCED_IN_API_V__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(35) */
+void tzfree(timezone_t __tz) __INTRODUCED_IN_API_V__;
+#endif
 
 /**
  * [clock(3)](https://man7.org/linux/man-pages/man3/clock.3.html)
@@ -358,18 +356,17 @@ void tzfree(timezone_t _Nullable __tz) __INTRODUCED_IN_API_V__;
  *
  * New code should prefer `clock_gettime(CLOCK_PROCESS_CPUTIME_ID)`.
  */
-clock_t clock(void);
+clock_t clock(void)__THROW ;
 
+#if __BIONIC_AVAILABILITY_GUARD(23)
 /**
  * [clock_getcpuclockid(3)](https://man7.org/linux/man-pages/man3/clock_getcpuclockid.3.html)
  * gets the clock ID of the cpu-time clock for the given `pid`.
  *
  * Returns 0 on success, and returns an error number on failure (unlike other clock functions).
  */
-#if __BIONIC_AVAILABILITY_GUARD(23)
-int clock_getcpuclockid(pid_t __pid, clockid_t* _Nonnull __clock) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
-
+int clock_getcpuclockid(pid_t __pid, clockid_t* __clock) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(2)));
+#endif
 
 /**
  * [clock_getres(2)](https://man7.org/linux/man-pages/man2/clock_getres.2.html)
@@ -377,7 +374,7 @@ int clock_getcpuclockid(pid_t __pid, clockid_t* _Nonnull __clock) __INTRODUCED_I
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int clock_getres(clockid_t __clock, struct timespec* _Nullable __resolution);
+int clock_getres(clockid_t __clock, struct timespec* __resolution)__THROW ;
 
 /**
  * [clock_gettime(2)](https://man7.org/linux/man-pages/man2/clock_gettime.2.html)
@@ -385,7 +382,7 @@ int clock_getres(clockid_t __clock, struct timespec* _Nullable __resolution);
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int clock_gettime(clockid_t __clock, struct timespec* _Nonnull __ts);
+int clock_gettime(clockid_t __clock, struct timespec* __ts) __THROW __attribute__((nonnull(2)));
 
 /**
  * [clock_nanosleep(2)](https://man7.org/linux/man-pages/man2/clock_nanosleep.2.html)
@@ -396,7 +393,7 @@ int clock_gettime(clockid_t __clock, struct timespec* _Nonnull __ts);
  * If the sleep was interrupted by a signal, the return value will be `EINTR`
  * and `remainder` will be the amount of time remaining.
  */
-int clock_nanosleep(clockid_t __clock, int __flags, const struct timespec* _Nonnull __time, struct timespec* _Nullable __remainder);
+int clock_nanosleep(clockid_t __clock, int __flags, const struct timespec* __time, struct timespec* __remainder) __attribute__((nonnull(3)));
 
 /**
  * [clock_settime(2)](https://man7.org/linux/man-pages/man2/clock_settime.2.html)
@@ -404,7 +401,7 @@ int clock_nanosleep(clockid_t __clock, int __flags, const struct timespec* _Nonn
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int clock_settime(clockid_t __clock, const struct timespec* _Nonnull __ts);
+int clock_settime(clockid_t __clock, const struct timespec* __ts) __THROW __attribute__((nonnull(2)));
 
 /**
  * [timer_create(2)](https://man7.org/linux/man-pages/man2/timer_create.2.html)
@@ -412,7 +409,7 @@ int clock_settime(clockid_t __clock, const struct timespec* _Nonnull __ts);
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int timer_create(clockid_t __clock, struct sigevent* _Nullable __event, timer_t _Nonnull * _Nonnull __timer_ptr);
+int timer_create(clockid_t __clock, struct sigevent* __event, timer_t * __timer_ptr) __THROW __attribute__((nonnull(3)));
 
 /**
  * [timer_delete(2)](https://man7.org/linux/man-pages/man2/timer_delete.2.html)
@@ -420,7 +417,7 @@ int timer_create(clockid_t __clock, struct sigevent* _Nullable __event, timer_t 
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int timer_delete(timer_t _Nonnull __timer);
+int timer_delete(timer_t __timer) __THROW __attribute__((nonnull(1)));
 
 /**
  * [timer_settime(2)](https://man7.org/linux/man-pages/man2/timer_settime.2.html)
@@ -428,7 +425,7 @@ int timer_delete(timer_t _Nonnull __timer);
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int timer_settime(timer_t _Nonnull __timer, int __flags, const struct itimerspec* _Nonnull __new_value, struct itimerspec* _Nullable __old_value);
+int timer_settime(timer_t __timer, int __flags, const struct itimerspec* __new_value, struct itimerspec* __old_value) __THROW __attribute__((nonnull(1,3)));
 
 /**
  * [timer_gettime(2)](https://man7.org/linux/man-pages/man2/timer_gettime.2.html)
@@ -436,7 +433,7 @@ int timer_settime(timer_t _Nonnull __timer, int __flags, const struct itimerspec
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int timer_gettime(timer_t _Nonnull _timer, struct itimerspec* _Nonnull __ts);
+int timer_gettime(timer_t _timer, struct itimerspec* __ts) __THROW __attribute__((nonnull(1,2)));
 
 /**
  * [timer_getoverrun(2)](https://man7.org/linux/man-pages/man2/timer_getoverrun.2.html)
@@ -445,7 +442,7 @@ int timer_gettime(timer_t _Nonnull _timer, struct itimerspec* _Nonnull __ts);
  *
  * Returns the overrun count on success, and returns -1 and sets `errno` on failure.
  */
-int timer_getoverrun(timer_t _Nonnull __timer);
+int timer_getoverrun(timer_t __timer) __THROW __attribute__((nonnull(1)));
 
 /**
  * The timebase for timespec_get() and timespec_getres() corresponding to CLOCK_REALTIME.
@@ -475,6 +472,7 @@ int timer_getoverrun(timer_t _Nonnull __timer);
  */
 #define TIME_THREAD_ACTIVE (CLOCK_THREAD_CPUTIME_ID+1)
 
+#if __BIONIC_AVAILABILITY_GUARD(29)
 /**
  * timespec_get(3) is equivalent to clock_gettime() for the clock corresponding to the given base.
  *
@@ -483,10 +481,10 @@ int timer_getoverrun(timer_t _Nonnull __timer);
  * Available since API level 29 for TIME_UTC; other bases arrived later.
  * Code for Android should prefer clock_gettime().
  */
-#if __BIONIC_AVAILABILITY_GUARD(29)
-int timespec_get(struct timespec* _Nonnull __ts, int __base) __INTRODUCED_IN_API_Q__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(29) */
+int timespec_get(struct timespec* __ts, int __base) __THROW __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
+#endif
 
+#if __BIONIC_AVAILABILITY_GUARD(35)
 /**
  * timespec_getres(3) is equivalent to clock_getres() for the clock corresponding to the given base.
  *
@@ -495,8 +493,7 @@ int timespec_get(struct timespec* _Nonnull __ts, int __base) __INTRODUCED_IN_API
  * Available since API level 35.
  * Code for Android should prefer clock_gettime().
  */
-#if __BIONIC_AVAILABILITY_GUARD(35)
-int timespec_getres(struct timespec* _Nonnull __ts, int __base) __INTRODUCED_IN_API_V__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(35) */
+int timespec_getres(struct timespec* __ts, int __base) __THROW __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
+#endif
 
 __END_DECLS

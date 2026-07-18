@@ -57,14 +57,14 @@ __BEGIN_DECLS
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int swapon(const char* _Nonnull __path,  int __flags) __INTRODUCED_IN_API_K__;
+int swapon(const char* __path,  int __flags) __THROW __INTRODUCED_IN_API_K__ __attribute__((nonnull(1)));
 
 /**
  * [swapoff(2)](https://man7.org/linux/man-pages/man2/swapoff.2.html) disables swapping.
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int swapoff(const char* _Nonnull __path) __INTRODUCED_IN_API_K__;
+int swapoff(const char* __path) __THROW __INTRODUCED_IN_API_K__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(19) */
 
 __END_DECLS

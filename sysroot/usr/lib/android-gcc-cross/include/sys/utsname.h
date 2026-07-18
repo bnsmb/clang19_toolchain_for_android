@@ -62,6 +62,6 @@ struct utsname {
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int uname(struct utsname* _Nonnull __buf);
+int uname(struct utsname* __buf) __THROW __attribute__((nonnull(1)));
 
 __END_DECLS

@@ -68,6 +68,7 @@ extern size_t lhd_tree_size (enum tree_code);
 extern HOST_WIDE_INT lhd_to_target_charset (HOST_WIDE_INT);
 extern tree lhd_expr_to_decl (tree, bool *, bool *);
 extern tree lhd_builtin_function (tree);
+extern tree lhd_make_runtime_function_decl (const char *name, tree type);
 extern tree lhd_enum_underlying_base_type (const_tree);
 
 /* Declarations of default tree inlining hooks.  */
@@ -144,6 +145,7 @@ extern const char *lhd_get_sarif_source_language (const char *);
 #define LANG_HOOKS_BUILTIN_FUNCTION	lhd_builtin_function
 #define LANG_HOOKS_BUILTIN_FUNCTION_EXT_SCOPE	LANG_HOOKS_BUILTIN_FUNCTION
 #define LANG_HOOKS_SIMULATE_BUILTIN_FUNCTION_DECL LANG_HOOKS_BUILTIN_FUNCTION
+#define LANG_HOOKS_MAKE_RUNTIME_FUNCTION_DECL lhd_make_runtime_function_decl
 #define LANG_HOOKS_EXPR_TO_DECL		lhd_expr_to_decl
 #define LANG_HOOKS_TO_TARGET_CHARSET	lhd_to_target_charset
 #define LANG_HOOKS_INIT_TS		lhd_do_nothing
@@ -400,6 +402,7 @@ extern void lhd_end_section (void);
   LANG_HOOKS_BUILTIN_FUNCTION, \
   LANG_HOOKS_BUILTIN_FUNCTION_EXT_SCOPE, \
   LANG_HOOKS_SIMULATE_BUILTIN_FUNCTION_DECL, \
+  LANG_HOOKS_MAKE_RUNTIME_FUNCTION_DECL, \
   LANG_HOOKS_INIT_TS,          \
   LANG_HOOKS_EXPR_TO_DECL, \
   LANG_HOOKS_EH_PERSONALITY, \

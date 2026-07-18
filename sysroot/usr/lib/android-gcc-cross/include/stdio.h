@@ -59,9 +59,9 @@ struct __sFILE;
 typedef struct __sFILE FILE;
 
 #if __ANDROID_API__ >= 23
-extern FILE* _Nonnull stdin __INTRODUCED_IN_API_M__;
-extern FILE* _Nonnull stdout __INTRODUCED_IN_API_M__;
-extern FILE* _Nonnull stderr __INTRODUCED_IN_API_M__;
+extern FILE* stdin __INTRODUCED_IN_API_M__;
+extern FILE* stdout __INTRODUCED_IN_API_M__;
+extern FILE* stderr __INTRODUCED_IN_API_M__;
 
 /* C99 and earlier plus current C++ standards say these must be macros. */
 #define stdin stdin
@@ -103,20 +103,29 @@ extern FILE __sF[] /* __REMOVED_IN(23, "Use stdin/stdout/stderr") */;
 #define L_tmpnam 4096
 #define TMP_MAX 308915776
 
-void clearerr(FILE* _Nonnull __fp);
-int fclose(FILE* _Nonnull __fp);
-__nodiscard int feof(FILE* _Nonnull __fp);
-__nodiscard int ferror(FILE* _Nonnull __fp);
-int fflush(FILE* _Nullable __fp);
-__nodiscard int fgetc(FILE* _Nonnull __fp);
-char* _Nullable fgets(char* _Nonnull __buf, int __size, FILE* _Nonnull __fp);
-int fprintf(FILE* _Nonnull __fp , const char* _Nonnull __fmt, ...) __printflike(2, 3);
-int fputc(int __ch, FILE* _Nonnull __fp);
-int fputs(const char* _Nonnull __s, FILE* _Nonnull __fp);
-size_t fread(void* _Nonnull __buf, size_t __size, size_t __count, FILE* _Nonnull __fp);
-int fscanf(FILE* _Nonnull __fp, const char* _Nonnull __fmt, ...) __scanflike(2, 3);
-size_t fwrite(const void* _Nonnull __buf, size_t __size, size_t __count, FILE* _Nonnull __fp);
-__nodiscard int getc(FILE* _Nonnull __fp);
+void clearerr(FILE* __fp) __THROW __attribute__((nonnull(1)));
+int fclose(FILE* __fp) __attribute__((nonnull(1)));
+__nodiscard int feof(FILE* __fp) __THROW __attribute__((nonnull(1)));
+__nodiscard int ferror(FILE* __fp) __THROW __attribute__((nonnull(1)));
+int fflush(FILE* __fp);
+__nodiscard int fgetc(FILE* __fp) __attribute__((nonnull(1)));
+char* fgets(char* __buf, int __size, FILE* __fp) __attribute__((nonnull(1,3)));
+int fprintf(FILE* __fp , const char* __fmt, ...) __printflike(2, 3) __attribute__((nonnull(1,2)));
+int fputc(int __ch, FILE* __fp) __attribute__((nonnull(2)));
+int fputs(const char* __s, FILE* __fp) __attribute__((nonnull(1,2)));
+size_t fread(void* __buf, size_t __size, size_t __count, FILE* __fp) __attribute__((nonnull(1,4)));
+
+/**
+ * [fscanf(3)](https://man7.org/linux/man-pages/man3/fscanf.3.html)
+ * parses input from a file using a format string.
+ *
+ * Returns the number of successful matches,
+ * or EOF if there are no matches before end of file.
+ */
+int fscanf(FILE* __fp, const char* __fmt, ...) __scanflike(2, 3) __attribute__((nonnull(1,2)));
+
+size_t fwrite(const void* __buf, size_t __size, size_t __count, FILE* __fp) __attribute__((nonnull(1,4)));
+__nodiscard int getc(FILE* __fp) __attribute__((nonnull(1)));
 __nodiscard int getchar(void);
 
 #if __BIONIC_AVAILABILITY_GUARD(18)
@@ -133,35 +142,55 @@ __nodiscard int getchar(void);
  * Returns the length of the chunk (excluding the terminating NUL),
  * and returns -1 and sets `errno` on failure.
  */
-ssize_t getdelim(char* _Nullable * _Nonnull __line_ptr, size_t* _Nonnull __allocated_size_ptr, int __delimiter, FILE* _Nonnull __fp) __INTRODUCED_IN_API_J_MR2__;
+ssize_t getdelim(char* * __line_ptr, size_t* __allocated_size_ptr, int __delimiter, FILE* __fp) __INTRODUCED_IN_API_J_MR2__ __attribute__((nonnull(1,2,4)));
 
 /**
  * Equivalent to getdelim() with '\n' as the delimiter.
  */
-ssize_t getline(char* _Nullable * _Nonnull __line_ptr, size_t* _Nonnull __allocated_size_ptr, FILE* _Nonnull __fp) __INTRODUCED_IN_API_J_MR2__;
+ssize_t getline(char* * __line_ptr, size_t* __allocated_size_ptr, FILE* __fp) __INTRODUCED_IN_API_J_MR2__ __attribute__((nonnull(1,2,3)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(18) */
 
-void perror(const char* _Nullable __msg);
-int printf(const char* _Nonnull __fmt, ...) __printflike(1, 2);
-int putc(int __ch, FILE* _Nonnull __fp);
+void perror(const char* __msg);
+int printf(const char* __fmt, ...) __printflike(1, 2) __attribute__((nonnull(1)));
+int putc(int __ch, FILE* __fp) __attribute__((nonnull(2)));
 int putchar(int __ch);
-int puts(const char* _Nonnull __s);
-int remove(const char* _Nonnull __path);
-void rewind(FILE* _Nonnull __fp);
-int scanf(const char* _Nonnull __fmt, ...) __scanflike(1, 2);
-void setbuf(FILE* _Nonnull __fp, char* _Nullable __buf);
-int setvbuf(FILE* _Nonnull __fp, char* _Nullable __buf, int __mode, size_t __size);
-int sscanf(const char* _Nonnull __s, const char* _Nonnull __fmt, ...) __scanflike(2, 3);
-int ungetc(int __ch, FILE* _Nonnull __fp);
-int vfprintf(FILE* _Nonnull __fp, const char* _Nonnull __fmt, va_list __args) __printflike(2, 0);
-int vprintf(const char* _Nonnull __fp, va_list __args) __printflike(1, 0);
+int puts(const char* __s) __attribute__((nonnull(1)));
+int remove(const char* __path) __THROW __attribute__((nonnull(1)));
+void rewind(FILE* __fp) __attribute__((nonnull(1)));
+
+/**
+ * Equivalent to fscanf() with stdin as the file.
+ */
+int scanf(const char* __fmt, ...) __scanflike(1, 2) __attribute__((nonnull(1)));
+
+void setbuf(FILE* __fp, char* __buf) __THROW __attribute__((nonnull(1)));
+int setvbuf(FILE* __fp, char* __buf, int __mode, size_t __size) __THROW __attribute__((nonnull(1)));
+
+/**
+ * [sscanf(3)](https://man7.org/linux/man-pages/man3/sscanf.3.html)
+ * parses input from a string using a format string.
+ *
+ * Note that many sscanf() implementations, including Android's,
+ * call strlen() on the input which can lead to quadratic behavior on long strings.
+ * In particular, this means that if you're working with a file,
+ * you should prefer to call fscanf() rather than read a line into a string
+ * and then using sscanf().
+ *
+ * Returns the number of successful matches,
+ * or EOF if there are no matches before the end of the string.
+ */
+int sscanf(const char* __s, const char* __fmt, ...) __THROW __scanflike(2, 3) __attribute__((nonnull(1,2)));
+
+int ungetc(int __ch, FILE* __fp) __attribute__((nonnull(2)));
+int vfprintf(FILE* __fp, const char* __fmt, va_list __args) __printflike(2, 0) __attribute__((nonnull(1,2)));
+int vprintf(const char* __fp, va_list __args) __printflike(1, 0) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int dprintf(int __fd, const char* _Nonnull __fmt, ...) __printflike(2, 3) __INTRODUCED_IN_API_L__;
-int vdprintf(int __fd, const char* _Nonnull __fmt, va_list __args) __printflike(2, 0) __INTRODUCED_IN_API_L__;
+int dprintf(int __fd, const char* __fmt, ...) __printflike(2, 3) __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int vdprintf(int __fd, const char* __fmt, va_list __args) __printflike(2, 0) __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 #else
-int dprintf(int __fd, const char* _Nonnull __fmt, ...) __RENAME(fdprintf) __printflike(2, 3);
-int vdprintf(int __fd, const char* _Nonnull __fmt, va_list __args) __RENAME(vfdprintf) __printflike(2, 0);
+int dprintf(int __fd, const char* __fmt, ...) __RENAME(fdprintf) __printflike(2, 3) __attribute__((nonnull(2)));
+int vdprintf(int __fd, const char* __fmt, va_list __args) __RENAME(vfdprintf) __printflike(2, 0) __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if (defined(__STDC_VERSION__) && __STDC_VERSION__ < 201112L) || \
@@ -172,18 +201,18 @@ int vdprintf(int __fd, const char* _Nonnull __fmt, va_list __args) __RENAME(vfdp
  * It was removed in C11 and C++14,
  * and should not be used by new code.
  */
-char* _Nullable gets(char* _Nonnull __buf) __attribute__((__deprecated__("gets() is unsafe, use getline() instead")));
+char* gets(char* __buf) __attribute__((__deprecated__("gets() is unsafe, use getline() instead")));
 #endif
 
-int sprintf(char* __BIONIC_COMPLICATED_NULLNESS __s, const char* _Nonnull __fmt, ...)
-    __printflike(2, 3) __warnattr_strict("sprintf is often misused; please use snprintf");
-int vsprintf(char* __BIONIC_COMPLICATED_NULLNESS __s, const char* _Nonnull __fmt, va_list __args)
-    __printflike(2, 0) __warnattr_strict("vsprintf is often misused; please use vsnprintf");
-char* _Nullable tmpnam(char* _Nullable __s)
-    __attribute__((__deprecated__("tmpnam is unsafe, use mkstemp or tmpfile instead")));
+int sprintf(char* __s, const char* __fmt, ...)
+    __THROWNL __printflike(2, 3) __warnattr_strict("sprintf is often misused; please use snprintf") __attribute__((nonnull(2)));
+int vsprintf(char* __s, const char* __fmt, va_list __args)
+    __THROWNL __printflike(2, 0) __warnattr_strict("vsprintf is often misused; please use vsnprintf") __attribute__((nonnull(2)));
+char* tmpnam(char* __s)
+    __THROW __attribute__((__deprecated__("tmpnam is unsafe, use mkstemp or tmpfile instead")));
 #define P_tmpdir "/tmp/" /* deprecated */
-char* _Nullable tempnam(const char* _Nullable __dir, const char* _Nullable __prefix)
-    __attribute__((__deprecated__("tempnam is unsafe, use mkstemp or tmpfile instead")));
+char* tempnam(const char* __dir, const char* __prefix)
+    __THROW __attribute__((__deprecated__("tempnam is unsafe, use mkstemp or tmpfile instead")));
 
 /**
  * [rename(2)](https://man7.org/linux/man-pages/man2/rename.2.html) changes
@@ -191,7 +220,7 @@ char* _Nullable tempnam(const char* _Nullable __dir, const char* _Nullable __pre
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int rename(const char* _Nonnull __old_path, const char* _Nonnull __new_path);
+int rename(const char* __old_path, const char* __new_path) __THROW __attribute__((nonnull(1,2)));
 
 /**
  * [renameat(2)](https://man7.org/linux/man-pages/man2/renameat.2.html) changes
@@ -199,32 +228,33 @@ int rename(const char* _Nonnull __old_path, const char* _Nonnull __new_path);
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int renameat(int __old_dir_fd, const char* _Nonnull __old_path, int __new_dir_fd, const char* _Nonnull __new_path);
+int renameat(int __old_dir_fd, const char* __old_path, int __new_dir_fd, const char* __new_path) __THROW __attribute__((nonnull(2,4)));
 
+#if defined(__USE_GNU)
 /**
  * Flag for [renameat2(2)](https://man7.org/linux/man-pages/man2/renameat2.2.html)
  * to fail if the new path already exists.
  */
-#if defined(__USE_GNU)
 #define RENAME_NOREPLACE (1<<0)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * Flag for [renameat2(2)](https://man7.org/linux/man-pages/man2/renameat2.2.html)
  * to atomically exchange the two paths.
  */
-#if defined(__USE_GNU)
 #define RENAME_EXCHANGE (1<<1)
 #endif
 
+#if defined(__USE_GNU)
 /**
  * Flag for [renameat2(2)](https://man7.org/linux/man-pages/man2/renameat2.2.html)
  * to create a union/overlay filesystem object.
  */
-#if defined(__USE_GNU)
 #define RENAME_WHITEOUT (1<<2)
 #endif
 
+#if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(30)
 /**
  * [renameat2(2)](https://man7.org/linux/man-pages/man2/renameat2.2.html) changes
  * the name or location of a file, interpreting relative paths using an fd,
@@ -234,133 +264,130 @@ int renameat(int __old_dir_fd, const char* _Nonnull __old_path, int __new_dir_fd
  *
  * Available since API level 30 when compiling with `_GNU_SOURCE`.
  */
-#if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(30)
-int renameat2(int __old_dir_fd, const char* _Nonnull __old_path, int __new_dir_fd, const char* _Nonnull __new_path, unsigned __flags) __INTRODUCED_IN_API_R__;
+int renameat2(int __old_dir_fd, const char* __old_path, int __new_dir_fd, const char* __new_path, unsigned __flags) __THROW __INTRODUCED_IN_API_R__ __attribute__((nonnull(2,4)));
 #endif
 
-int fseek(FILE* _Nonnull __fp, long __offset, int __whence);
-__nodiscard long ftell(FILE* _Nonnull __fp);
+int fseek(FILE* __fp, long __offset, int __whence) __attribute__((nonnull(1)));
+__nodiscard long ftell(FILE* __fp) __attribute__((nonnull(1)));
 
 /* See https://android.googlesource.com/platform/bionic/+/main/docs/32-bit-abi.md */
 #if defined(__USE_FILE_OFFSET64)
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-int fgetpos(FILE* _Nonnull __fp, fpos_t* _Nonnull __pos) __RENAME(fgetpos64) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+int fgetpos(FILE* __fp, fpos_t* __pos) __RENAME(fgetpos64) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,2)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-int fsetpos(FILE* _Nonnull __fp, const fpos_t* _Nonnull __pos) __RENAME(fsetpos64) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+int fsetpos(FILE* __fp, const fpos_t* __pos) __RENAME(fsetpos64) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,2)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-int fseeko(FILE* _Nonnull __fp, off_t __offset, int __whence) __RENAME(fseeko64) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+int fseeko(FILE* __fp, off_t __offset, int __whence) __RENAME(fseeko64) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-__nodiscard off_t ftello(FILE* _Nonnull __fp) __RENAME(ftello64) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+__nodiscard off_t ftello(FILE* __fp) __RENAME(ftello64) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
+#endif
 
 /* If __read_fn and __write_fn are both nullptr, it will cause EINVAL */
 #if defined(__USE_BSD) && __BIONIC_AVAILABILITY_GUARD(24)
-__nodiscard FILE* _Nullable funopen(const void* _Nullable __cookie,
-              int (* __BIONIC_COMPLICATED_NULLNESS __read_fn)(void* _Nonnull, char* _Nonnull, int),
-              int (* __BIONIC_COMPLICATED_NULLNESS __write_fn)(void* _Nonnull, const char* _Nonnull, int),
-              fpos_t (* _Nullable __seek_fn)(void* _Nonnull, fpos_t, int),
-              int (* _Nullable __close_fn)(void* _Nonnull)) __RENAME(funopen64) __INTRODUCED_IN_API_N__;
+__nodiscard FILE* funopen(const void* __cookie,
+              int (* __read_fn)(void*, char*, int),
+              int (* __write_fn)(void*, const char*, int),
+              fpos_t (* __seek_fn)(void*, fpos_t, int),
+              int (* __close_fn)(void* )) __RENAME(funopen64) __INTRODUCED_IN_API_N__;
 #endif
 
 #else
-int fgetpos(FILE* _Nonnull __fp, fpos_t* _Nonnull __pos);
-int fsetpos(FILE* _Nonnull __fp, const fpos_t* _Nonnull __pos);
-int fseeko(FILE* _Nonnull __fp, off_t __offset, int __whence);
-__nodiscard off_t ftello(FILE* _Nonnull __fp);
+int fgetpos(FILE* __fp, fpos_t* __pos) __attribute__((nonnull(1,2)));
+int fsetpos(FILE* __fp, const fpos_t* __pos) __attribute__((nonnull(1,2)));
+int fseeko(FILE* __fp, off_t __offset, int __whence) __attribute__((nonnull(1)));
+__nodiscard off_t ftello(FILE* __fp) __attribute__((nonnull(1)));
 #if defined(__USE_BSD)
 /* If __read_fn and __write_fn are both nullptr, it will cause EINVAL */
-__nodiscard FILE* _Nullable funopen(const void* _Nullable __cookie,
-              int (* __BIONIC_COMPLICATED_NULLNESS __read_fn)(void* _Nonnull, char* _Nonnull, int),
-              int (* __BIONIC_COMPLICATED_NULLNESS __write_fn)(void* _Nonnull, const char* _Nonnull, int),
-              fpos_t (* _Nullable __seek_fn)(void* _Nonnull, fpos_t, int),
-              int (* _Nullable __close_fn)(void* _Nonnull));
+__nodiscard FILE* funopen(const void* __cookie,
+              int (* __read_fn)(void*, char*, int),
+              int (* __write_fn)(void*, const char*, int),
+              fpos_t (* __seek_fn)(void*, fpos_t, int),
+              int (* __close_fn)(void* ));
 #endif
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-int fgetpos64(FILE* _Nonnull __fp, fpos64_t* _Nonnull __pos) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+int fgetpos64(FILE* __fp, fpos64_t* __pos) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,2)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-int fsetpos64(FILE* _Nonnull __fp, const fpos64_t* _Nonnull __pos) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+int fsetpos64(FILE* __fp, const fpos64_t* __pos) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,2)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-int fseeko64(FILE* _Nonnull __fp, off64_t __offset, int __whence) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+int fseeko64(FILE* __fp, off64_t __offset, int __whence) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-__nodiscard off64_t ftello64(FILE* _Nonnull __fp) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+__nodiscard off64_t ftello64(FILE* __fp) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
+#endif
 
 /* If __read_fn and __write_fn are both nullptr, it will cause EINVAL */
 #if defined(__USE_BSD) && __BIONIC_AVAILABILITY_GUARD(24)
-__nodiscard FILE* _Nullable funopen64(const void* _Nullable __cookie,
-                int (* __BIONIC_COMPLICATED_NULLNESS __read_fn)(void* _Nonnull, char* _Nonnull, int),
-                int (* __BIONIC_COMPLICATED_NULLNESS __write_fn)(void* _Nonnull, const char* _Nonnull, int),
-                fpos64_t (* _Nullable __seek_fn)(void* _Nonnull, fpos64_t, int),
-                int (* _Nullable __close_fn)(void* _Nonnull)) __INTRODUCED_IN_API_N__;
+__nodiscard FILE* funopen64(const void* __cookie,
+                int (* __read_fn)(void*, char*, int),
+                int (* __write_fn)(void*, const char*, int),
+                fpos64_t (* __seek_fn)(void*, fpos64_t, int),
+                int (* __close_fn)(void* )) __INTRODUCED_IN_API_N__;
 #endif
 
-__nodiscard FILE* _Nullable fopen(const char* _Nonnull __path, const char* _Nonnull __mode);
+__nodiscard FILE* fopen(const char* __path, const char* __mode) __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-__nodiscard FILE* _Nullable fopen64(const char* _Nonnull __path, const char* _Nonnull __mode) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+__nodiscard FILE* fopen64(const char* __path, const char* __mode) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,2)));
+#endif
 
-FILE* _Nullable freopen(const char* _Nullable __path, const char* _Nonnull __mode, FILE* _Nonnull __fp);
-
-#if __BIONIC_AVAILABILITY_GUARD(24)
-FILE* _Nullable freopen64(const char* _Nullable __path, const char* _Nonnull __mode, FILE* _Nonnull __fp) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
-
-__nodiscard FILE* _Nullable tmpfile(void);
+FILE* freopen(const char* __path, const char* __mode, FILE* __fp) __attribute__((nonnull(2,3)));
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-__nodiscard FILE* _Nullable tmpfile64(void) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+FILE* freopen64(const char* __path, const char* __mode, FILE* __fp) __INTRODUCED_IN_API_N__ __attribute__((nonnull(2,3)));
+#endif
 
+__nodiscard FILE* tmpfile(void);
 
-int snprintf(char* __BIONIC_COMPLICATED_NULLNESS __buf, size_t __size, const char* _Nonnull __fmt, ...) __printflike(3, 4);
-int vfscanf(FILE* _Nonnull __fp, const char* _Nonnull __fmt, va_list __args) __scanflike(2, 0);
-int vscanf(const char* _Nonnull __fmt , va_list __args) __scanflike(1, 0);
-int vsnprintf(char* __BIONIC_COMPLICATED_NULLNESS __buf, size_t __size, const char* _Nonnull __fmt, va_list __args) __printflike(3, 0);
-int vsscanf(const char* _Nonnull __s, const char* _Nonnull __fmt, va_list __args) __scanflike(2, 0);
+#if __BIONIC_AVAILABILITY_GUARD(24)
+__nodiscard FILE* tmpfile64(void) __INTRODUCED_IN_API_N__;
+#endif
+
+int snprintf(char* __buf, size_t __size, const char* __fmt, ...) __THROWNL __printflike(3, 4) __attribute__((nonnull(3)));
+int vfscanf(FILE* __fp, const char* __fmt, va_list __args) __scanflike(2, 0) __attribute__((nonnull(1,2)));
+int vscanf(const char* __fmt , va_list __args) __scanflike(1, 0) __attribute__((nonnull(1)));
+int vsnprintf(char* __buf, size_t __size, const char* __fmt, va_list __args) __THROWNL __printflike(3, 0) __attribute__((nonnull(3)));
+int vsscanf(const char* __s, const char* __fmt, va_list __args) __THROW __scanflike(2, 0) __attribute__((nonnull(1,2)));
 
 #define L_ctermid 1024 /* size for ctermid() */
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-char* _Nonnull ctermid(char* _Nullable __buf) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+char* ctermid(char* __buf) __THROW __INTRODUCED_IN_API_O__;
+#endif
 
-
-__nodiscard FILE* _Nullable fdopen(int __fd, const char* _Nonnull __mode);
-__nodiscard int fileno(FILE* _Nonnull __fp);
-int pclose(FILE* _Nonnull __fp);
-__nodiscard FILE* _Nullable popen(const char* _Nonnull __command, const char* _Nonnull __mode);
-void flockfile(FILE* _Nonnull  __fp);
-int ftrylockfile(FILE* _Nonnull __fp);
-void funlockfile(FILE* _Nonnull __fp);
-__nodiscard int getc_unlocked(FILE* _Nonnull __fp);
+__nodiscard FILE* fdopen(int __fd, const char* __mode) __THROW __attribute__((nonnull(2)));
+__nodiscard int fileno(FILE* __fp) __THROW __attribute__((nonnull(1)));
+int pclose(FILE* __fp) __attribute__((nonnull(1)));
+__nodiscard FILE* popen(const char* __command, const char* __mode) __attribute__((nonnull(1,2)));
+void flockfile(FILE*  __fp) __THROW __attribute__((nonnull(1)));
+int ftrylockfile(FILE* __fp) __THROW __attribute__((nonnull(1)));
+void funlockfile(FILE* __fp) __THROW __attribute__((nonnull(1)));
+__nodiscard int getc_unlocked(FILE* __fp) __attribute__((nonnull(1)));
 __nodiscard int getchar_unlocked(void);
-int putc_unlocked(int __ch, FILE* _Nonnull __fp);
+int putc_unlocked(int __ch, FILE* __fp) __attribute__((nonnull(2)));
 int putchar_unlocked(int __ch);
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-__nodiscard FILE* _Nullable fmemopen(void* _Nullable __buf, size_t __size, const char* _Nonnull __mode) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+__nodiscard FILE* fmemopen(void* __buf, size_t __size, const char* __mode) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(3)));
+#endif
 #if __BIONIC_AVAILABILITY_GUARD(23)
-__nodiscard FILE* _Nullable open_memstream(char* _Nonnull * _Nonnull __ptr, size_t* _Nonnull __size_ptr) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+__nodiscard FILE* open_memstream(char* * __ptr, size_t* __size_ptr) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1,2)));
+#endif
 
-int  asprintf(char* _Nullable * _Nonnull __s_ptr, const char* _Nonnull __fmt, ...) __printflike(2, 3);
+int  asprintf(char* * __s_ptr, const char* __fmt, ...) __THROWNL __printflike(2, 3) __attribute__((nonnull(1,2)));
 
 /**
  * fgetln() is a less portable and harder to use variant of getline().
@@ -368,56 +395,56 @@ int  asprintf(char* _Nullable * _Nonnull __s_ptr, const char* _Nonnull __fmt, ..
  *
  * New code should use getline().
  */
-char* _Nullable fgetln(FILE* _Nonnull __fp, size_t* _Nonnull __length_ptr);
+char* fgetln(FILE* __fp, size_t* __length_ptr) __attribute__((nonnull(1,2)));
 
-int fpurge(FILE* _Nonnull __fp);
-void setbuffer(FILE* _Nonnull __fp, char* _Nullable __buf, int __size);
-int setlinebuf(FILE* _Nonnull __fp);
-int vasprintf(char* _Nullable * _Nonnull __s_ptr, const char* _Nonnull __fmt, va_list __args) __printflike(2, 0);
+int fpurge(FILE* __fp) __attribute__((nonnull(1)));
+void setbuffer(FILE* __fp, char* __buf, int __size) __THROW __attribute__((nonnull(1)));
+int setlinebuf(FILE* __fp) __THROW __attribute__((nonnull(1)));
+int vasprintf(char* * __s_ptr, const char* __fmt, va_list __args) __THROWNL __printflike(2, 0) __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-void clearerr_unlocked(FILE* _Nonnull __fp) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+void clearerr_unlocked(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
 #if __BIONIC_AVAILABILITY_GUARD(23)
-__nodiscard int feof_unlocked(FILE* _Nonnull __fp) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+__nodiscard int feof_unlocked(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
 #if __BIONIC_AVAILABILITY_GUARD(23)
-__nodiscard int ferror_unlocked(FILE* _Nonnull __fp) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+__nodiscard int ferror_unlocked(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-__nodiscard int fileno_unlocked(FILE* _Nonnull __fp) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+__nodiscard int fileno_unlocked(FILE* __fp) __THROW __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
+#endif
 
 #define fropen(cookie, fn) funopen(cookie, fn, 0, 0, 0)
 #define fwopen(cookie, fn) funopen(cookie, 0, fn, 0, 0)
 
 #if defined(__USE_BSD) && __BIONIC_AVAILABILITY_GUARD(28)
-int fflush_unlocked(FILE* _Nullable __fp) __INTRODUCED_IN_API_P__;
+int fflush_unlocked(FILE* __fp) __INTRODUCED_IN_API_P__;
 #endif
 
 #if defined(__USE_BSD) && __BIONIC_AVAILABILITY_GUARD(28)
-__nodiscard int fgetc_unlocked(FILE* _Nonnull __fp) __INTRODUCED_IN_API_P__;
+__nodiscard int fgetc_unlocked(FILE* __fp) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if defined(__USE_BSD) && __BIONIC_AVAILABILITY_GUARD(28)
-int fputc_unlocked(int __ch, FILE* _Nonnull __fp) __INTRODUCED_IN_API_P__;
+int fputc_unlocked(int __ch, FILE* __fp) __INTRODUCED_IN_API_P__ __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_BSD) && __BIONIC_AVAILABILITY_GUARD(28)
-size_t fread_unlocked(void* _Nonnull __buf, size_t __size, size_t __count, FILE* _Nonnull __fp) __INTRODUCED_IN_API_P__;
+size_t fread_unlocked(void* __buf, size_t __size, size_t __count, FILE* __fp) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,4)));
 #endif
 
 #if defined(__USE_BSD) && __BIONIC_AVAILABILITY_GUARD(28)
-size_t fwrite_unlocked(const void* _Nonnull __buf, size_t __size, size_t __count, FILE* _Nonnull __fp) __INTRODUCED_IN_API_P__;
+size_t fwrite_unlocked(const void* __buf, size_t __size, size_t __count, FILE* __fp) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,4)));
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(28)
-int fputs_unlocked(const char* _Nonnull __s, FILE* _Nonnull __fp) __INTRODUCED_IN_API_P__;
+int fputs_unlocked(const char* __s, FILE* __fp) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(28)
-char* _Nullable fgets_unlocked(char* _Nonnull __buf, int __size, FILE* _Nonnull __fp) __INTRODUCED_IN_API_P__;
+char* fgets_unlocked(char* __buf, int __size, FILE* __fp) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,3)));
 #endif
 
 #if defined(__BIONIC_INCLUDE_FORTIFY_HEADERS)

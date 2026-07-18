@@ -39,6 +39,7 @@
 
 __BEGIN_DECLS
 
+#if __BIONIC_AVAILABILITY_GUARD(24)
 /**
  * [adjtimex(2)](https://man7.org/linux/man-pages/man2/adjtimex.2.html) adjusts the kernel clock.
  *
@@ -46,10 +47,10 @@ __BEGIN_DECLS
  *
  * Available since API level 24.
  */
-#if __BIONIC_AVAILABILITY_GUARD(24)
-int adjtimex(struct timex* _Nonnull __buf) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+int adjtimex(struct timex* __buf) __THROW __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
+#endif
 
+#if __BIONIC_AVAILABILITY_GUARD(24)
 /**
  * clock_adjtime adjusts a specific kernel clock.
  *
@@ -57,8 +58,7 @@ int adjtimex(struct timex* _Nonnull __buf) __INTRODUCED_IN_API_N__;
  *
  * Available since API level 24.
  */
-#if __BIONIC_AVAILABILITY_GUARD(24)
-int clock_adjtime(clockid_t __clock, struct timex* _Nonnull __tx) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+int clock_adjtime(clockid_t __clock, struct timex* __tx) __THROW __INTRODUCED_IN_API_N__ __attribute__((nonnull(2)));
+#endif
 
 __END_DECLS

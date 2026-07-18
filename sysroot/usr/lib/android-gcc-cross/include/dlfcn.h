@@ -54,13 +54,13 @@ __BEGIN_DECLS
  */
 typedef struct {
   /** Pathname of the shared object that contains the given address. */
-  const char* _Nullable dli_fname;
+  const char* dli_fname;
   /** Address at which the shared object is loaded. */
-  void* _Nullable dli_fbase;
+  void* dli_fbase;
   /** Name of the nearest symbol with an address lower than the given address. */
-  const char* _Nullable dli_sname;
+  const char* dli_sname;
   /** Exact address of the symbol named in `dli_sname`. */
-  void* _Nullable dli_saddr;
+  void* dli_saddr;
 } Dl_info, Dl_info_t;
 
 /**
@@ -89,7 +89,7 @@ typedef struct {
  * on success, and returns NULL on failure, in which case dlerror() can be used
  * to retrieve the specific error.
  */
-void* _Nullable dlopen(const char* _Nullable __filename, int __flag);
+void* dlopen(const char* __filename, int __flag)__THROWNL ;
 
 /**
  * [dlclose(3)](https://man7.org/linux/man-pages/man3/dlclose.3.html)
@@ -115,7 +115,7 @@ void* _Nullable dlopen(const char* _Nullable __filename, int __flag);
  * Returns 0 on success, and returns -1 on failure, in which case
  * dlerror() can be used to retrieve the specific error.
  */
-int dlclose(void* _Nonnull __handle);
+int dlclose(void* __handle) __THROWNL __attribute__((nonnull(1)));
 
 /**
  * [dlerror(3)](https://man7.org/linux/man-pages/man3/dlerror.3.html)
@@ -128,7 +128,7 @@ int dlclose(void* _Nonnull __handle);
  * Returns a pointer to an error on success, and returns NULL if no
  * error is pending.
  */
-char* _Nullable dlerror(void);
+char* dlerror(void)__THROW ;
 
 /**
  * [dlsym(3)](https://man7.org/linux/man-pages/man3/dlsym.3.html)
@@ -139,8 +139,9 @@ char* _Nullable dlerror(void);
  * Returns the address of the symbol on success, and returns NULL on failure,
  * in which case dlerror() can be used to retrieve the specific error.
  */
-void* _Nullable dlsym(void* __BIONIC_COMPLICATED_NULLNESS __handle, const char* _Nullable __symbol);
+void* dlsym(void* __handle, const char* __symbol)__THROW ;
 
+#if __BIONIC_AVAILABILITY_GUARD(24)
 /**
  * [dlvsym(3)](https://man7.org/linux/man-pages/man3/dlvsym.3.html)
  * returns a pointer to the symbol with the given name and version in the shared
@@ -149,10 +150,11 @@ void* _Nullable dlsym(void* __BIONIC_COMPLICATED_NULLNESS __handle, const char* 
  *
  * Returns the address of the symbol on success, and returns NULL on failure,
  * in which case dlerror() can be used to retrieve the specific error.
+ *
+ * Available since API level 24.
  */
-#if __BIONIC_AVAILABILITY_GUARD(24)
-void* _Nullable dlvsym(void* __BIONIC_COMPLICATED_NULLNESS __handle, const char* _Nullable __symbol, const char* _Nullable __version) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+void* dlvsym(void* __handle, const char* __symbol, const char* __version) __THROW __INTRODUCED_IN_API_N__;
+#endif
 
 
 /**
@@ -163,7 +165,7 @@ void* _Nullable dlvsym(void* __BIONIC_COMPLICATED_NULLNESS __handle, const char*
  * the other <dlfcn.h> functions, in this case dlerror() will _not_ have
  * more information.
  */
-int dladdr(const void* _Nonnull __addr, Dl_info* _Nonnull __info);
+int dladdr(const void* __addr, Dl_info* __info) __THROW __attribute__((nonnull(1,2)));
 
 /**
  * A dlsym()/dlvsym() handle that returns the first symbol found in any

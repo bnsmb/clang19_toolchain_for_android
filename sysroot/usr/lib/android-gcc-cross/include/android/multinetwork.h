@@ -289,6 +289,30 @@ int android_tag_socket(int sockfd, uint32_t tag) __INTRODUCED_IN_API_T__;
  */
 int android_untag_socket(int sockfd) __INTRODUCED_IN_API_T__;
 
+/**
+ * Possible values of the blocked reason returned by android_getnetworkblockedreason
+ */
+enum NetworkBlockedReason: int32_t {
+    /**
+     * The packet was not blocked, or no blocked reason is available.
+     */
+    ANDROID_NETWORK_BLOCKED_REASON_NONE,
+
+    /**
+     * The packet was blocked by Local Network Protection (LNP).
+     */
+    ANDROID_NETWORK_BLOCKED_REASON_LNP,
+};
+
+/**
+ * Returns the recorded blocked reason for the socket and clears it.
+ *
+ * @param sockfd Socket file descriptor.
+ * @return A value from {@link NetworkBlockedReason} on success, or a negative POSIX error
+ *         code if an error occurs.
+ */
+int32_t android_getnetworkblockedreason(int sockfd) __INTRODUCED_IN(37);
+
 __END_DECLS
 
 #endif  // ANDROID_MULTINETWORK_H

@@ -93,15 +93,12 @@ __BEGIN_DECLS
 #define CRNCYSTR 55
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-char* _Nonnull nl_langinfo(nl_item __item) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
-
-#if __BIONIC_AVAILABILITY_GUARD(26)
-char* _Nonnull nl_langinfo_l(nl_item __item, locale_t _Nonnull __l) __INTRODUCED_IN_API_O__;
+char* nl_langinfo(nl_item __item) __THROW __INTRODUCED_IN_API_O__;
+char* nl_langinfo_l(nl_item __item, locale_t __l) __INTRODUCED_IN_API_O__ __attribute__((nonnull(2)));
 #else
-__static_inline__ char* _Nonnull nl_langinfo(nl_item __item) { return "ASCII"; }
-__static_inline__ char* _Nonnull nl_langinfo_l(nl_item __item, locale_t _Nonnull __l) { return "ASCII"; }
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+__static_inline__ char* nl_langinfo(nl_item __item) { return "ASCII"; }
+__static_inline__ char* __attribute__((nonnull(2))) nl_langinfo_l(nl_item __item, locale_t __l) { return "ASCII"; }
+#endif
 
 __END_DECLS
 

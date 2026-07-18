@@ -37,66 +37,187 @@
 #include <stddef.h>
 #include <xlocale.h>
 
+#if !defined(__cplusplus) && __STDC_VERSION__ >= 202311L
+// C23 has call_once() in <stdlib.h> as well as <threads.h>,
+// but that conflicts with C++'s std::call_once() in <mutex>.
+// We don't make this available for earlier C versions
+// because that conflicts with code (such as mesa) that tries
+// to implement <threads.h> itself.
+#include <bits/call_once.h>
+#endif
+
 __BEGIN_DECLS
 
 #define EXIT_FAILURE 1
 #define EXIT_SUCCESS 0
 
-__noreturn void abort(void);
-__noreturn void exit(int __status);
+__noreturn void abort(void)__THROW ;
+__noreturn void exit(int __status)__THROW ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-__noreturn void _Exit(int __status) __INTRODUCED_IN_API_L__;
+__noreturn void _Exit(int __status) __THROW __INTRODUCED_IN_API_L__;
 #else
-__noreturn void _Exit(int __status) __RENAME(_exit);
+__noreturn void _Exit(int __status) __REDIRECT_NTH(_exit);
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-int atexit(void (* _Nonnull __fn)(void));
+int atexit(void (* __fn)(void)) __THROW __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int at_quick_exit(void (* _Nonnull __fn)(void)) __INTRODUCED_IN_API_L__;
-void quick_exit(int __status) __noreturn __INTRODUCED_IN_API_L__;
+int at_quick_exit(void (* __fn)(void)) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+void quick_exit(int __status) __THROW __noreturn __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-char* _Nullable getenv(const char* _Nonnull __name);
-int putenv(char* _Nonnull __assignment);
-int setenv(const char* _Nonnull __name, const char* _Nonnull __value, int __overwrite);
-int unsetenv(const char* _Nonnull __name);
-int clearenv(void);
+/**
+ * [getenv(3)](https://man7.org/linux/man-pages/man3/getenv.3.html)
+ * returns a pointer to the value of the given environment variable.
+ *
+ * Returns a pointer to the value on success and returns a null
+ * pointer on failure.
+ *
+ * This function is not thread safe until API level 38.
+ * Before then, calls to getenv() may crash if made while a call to
+ * clearenv()/putenv()/setenv() is modifying the environment.
+ * Note that even if your code doesn't call getenv() directly,
+ * the operating system might: <time.h> functions check $TZ, for example,
+ * and various <stdlib.h> and <stdio.h> functions check $TMPDIR.
+ */
+char* getenv(const char* __name) __THROW __attribute__((nonnull(1)));
 
-char* _Nullable mkdtemp(char* _Nonnull __template);
-char* _Nullable mktemp(char* _Nonnull __template) __attribute__((__deprecated__("mktemp is unsafe, use mkstemp or tmpfile instead")));
+/**
+ * [putenv(3)](https://man7.org/linux/man-pages/man3/putenv.3.html)
+ * adds/updates an environment variable.
+ *
+ * Returns 0 on success and returns non-zero and sets `errno` on failure.
+ *
+ * This function is not thread safe until API level 38.
+ * Before then, calls to getenv() may crash if made while this function is modifying the environment.
+ * Note that even if your code doesn't call getenv() directly,
+ * the operating system might: <time.h> functions check $TZ, for example,
+ * and various <stdlib.h> and <stdio.h> functions check $TMPDIR.
+ *
+ * The given pointer is added directly to the environment,
+ * so the caller must ensure it is neither freed nor modified.
+ *
+ * To ensure that any value returned by getenv() is safe for use indefinitely,
+ * the implementation never frees assignment strings.
+ * This means that it is safe to pass a string literal.
+ * Despite the need to cast away `const`,
+ * passing a string literal to putenv() is probably the safest way to use it,
+ * because it ensures you can neither free nor modify the assignment;
+ * it's also cheap because it doesn't require any heap allocation.
+ * That said, this behavior is not guaranteed by POSIX,
+ * so portable code may prefer to always use heap-allocated assignment strings,
+ * or to let setenv() create them behind the scenes.
+ */
+int putenv(char* __assignment) __THROW __attribute__((nonnull(1)));
 
+/**
+ * [setenv(3)](https://man7.org/linux/man-pages/man3/setenv.3.html)
+ * adds/updates an environment variable.
+ *
+ * Returns 0 on success and returns non-zero and sets `errno` on failure.
+ * (If the environment variable already exists and `overwrite` is 0,
+ * the environment is left unchanged and this is considered success.)
+ *
+ * This function is not thread safe until API level 38.
+ * Before then, calls to getenv() may crash if made while this function is modifying the environment.
+ * Note that even if your code doesn't call getenv() directly,
+ * the operating system might: <time.h> functions check $TZ, for example,
+ * and various <stdlib.h> and <stdio.h> functions check $TMPDIR.
+ *
+ * This function leaks memory (by allocating a new "name=value" string),
+ * but this does mean that the caller's pointers only need be valid and
+ * immutable for the duration of the call to setenv().
+ * It also means that putenv() is more efficient if both name and value
+ * are constants: you can pass putenv() a string literal
+ * of the form "name=value" to avoid heap allocation.
+ */
+int setenv(const char* __name, const char* __value, int __overwrite) __THROW __attribute__((nonnull(1,2)));
+
+/**
+ * [unsetenv(3)](https://man7.org/linux/man-pages/man3/unsetenv.3.html)
+ * removes an environment variable.
+ *
+ * Returns 0 on success and returns non-zero and sets `errno` on failure.
+ *
+ * This function is not thread safe until API level 38.
+ * Before then, calls to getenv() may crash if made while this function is modifying the environment.
+ * Note that even if your code doesn't call getenv() directly,
+ * the operating system might: <time.h> functions check $TZ, for example,
+ * and various <stdlib.h> and <stdio.h> functions check $TMPDIR.
+ *
+ * This function leaks memory rather than free anything so that pointers
+ * already handed out by getenv() are not invalidated.
+ */
+int unsetenv(const char* __name) __THROW __attribute__((nonnull(1)));
+
+/**
+ * [clearenv(3)](https://man7.org/linux/man-pages/man3/unsetenv.3.html)
+ * removes all environment variables.
+ *
+ * Returns 0 on success and returns non-zero and sets `errno` on failure.
+ *
+ * This function is not thread safe until API level 38.
+ * Before then, calls to getenv() may crash if made while this function is modifying the environment.
+ * Note that even if your code doesn't call getenv() directly,
+ * the operating system might: <time.h> functions check $TZ, for example,
+ * and various <stdlib.h> and <stdio.h> functions check $TMPDIR.
+ *
+ * This function leaks memory rather than free anything so that pointers
+ * already handed out by getenv() are not invalidated.
+ */
+int clearenv(void)__THROW ;
+
+char* mkdtemp(char* __template) __THROW __attribute__((nonnull(1)));
+char* mktemp(char* __template) __THROW __attribute__((__deprecated__("mktemp is unsafe, use mkstemp or tmpfile instead")));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-int mkostemp64(char* _Nonnull __template, int __flags) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+int mkostemp64(char* __template, int __flags) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
+
 #if __BIONIC_AVAILABILITY_GUARD(23)
-int mkostemp(char* _Nonnull __template, int __flags) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+int mkostemp(char* __template, int __flags) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
+
 #if __BIONIC_AVAILABILITY_GUARD(23)
-int mkostemps64(char* _Nonnull __template, int __suffix_length, int __flags) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+int mkostemps64(char* __template, int __suffix_length, int __flags) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
+
 #if __BIONIC_AVAILABILITY_GUARD(23)
-int mkostemps(char* _Nonnull __template, int __suffix_length, int __flags) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+int mkostemps(char* __template, int __suffix_length, int __flags) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int mkstemp64(char* _Nonnull __template) __INTRODUCED_IN_API_L__;
+int mkstemp64(char* __template) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-int mkstemp(char* _Nonnull __template);
+int mkstemp(char* __template) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-int mkstemps64(char* _Nonnull __template, int __flags) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+int mkstemps64(char* __template, int __flags) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
 
-int mkstemps(char* _Nonnull __template, int __flags);
+int mkstemps(char* __template, int __flags) __attribute__((nonnull(1)));
+
+/**
+* Deallocates memory on the heap and may check if the given size is correct.
+*
+* Available since API level 37.
+*/
+void free_sized(void* __ptr, size_t __size) __INTRODUCED_IN(37);
+
+/**
+* Deallocates memory on the heap and may check if the given size and alignment are correct.
+*
+* Available since API level 37.
+*/
+void free_aligned_sized(void* __ptr, size_t __alignment, size_t __size) __INTRODUCED_IN(37);
 
 #if __BIONIC_AVAILABILITY_GUARD(16)
-int posix_memalign(void* _Nullable * _Nullable __memptr, size_t __alignment, size_t __size) __INTRODUCED_IN_API_J__;
+int posix_memalign(void* * __memptr, size_t __alignment, size_t __size) __THROW __INTRODUCED_IN_API_J__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(16) */
 
+#if __BIONIC_AVAILABILITY_GUARD(28)
 /**
  * [aligned_alloc(3)](https://man7.org/linux/man-pages/man3/aligned_alloc.3.html)
  * allocates the given number of bytes with the given alignment.
@@ -106,13 +227,10 @@ int posix_memalign(void* _Nullable * _Nullable __memptr, size_t __alignment, siz
  *
  * Available since API level 28.
  */
+__nodiscard void* aligned_alloc(size_t __alignment, size_t __size) __THROW __INTRODUCED_IN_API_P__;
+#endif
 
-#if __BIONIC_AVAILABILITY_GUARD(28)
-__nodiscard void* _Nullable aligned_alloc(size_t __alignment, size_t __size) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
-
-
-__nodiscard char* _Nullable realpath(const char* _Nonnull __path, char* _Nullable __resolved);
+__nodiscard char* realpath(const char* __path, char* __resolved) __THROW __attribute__((nonnull(1)));
 
 /**
  * [system(3)](https://man7.org/linux/man-pages/man3/system.3.html) executes
@@ -129,7 +247,7 @@ __nodiscard char* _Nullable realpath(const char* _Nonnull __path, char* _Nullabl
  * [waitpid(2)](https://man7.org/linux/man-pages/man2/waitpid.2.html)
  * status otherwise.
  */
-int system(const char* _Nonnull __command);
+int system(const char* __command) __attribute__((nonnull(1)));
 
 /**
  * [bsearch(3)](https://man7.org/linux/man-pages/man3/bsearch.3.html) searches
@@ -138,7 +256,7 @@ int system(const char* _Nonnull __command);
  * Returns a pointer to a matching item on success,
  * or NULL if no matching item is found.
  */
-__nodiscard void* _Nullable bsearch(const void* _Nonnull __key, const void* _Nullable __base, size_t __nmemb, size_t __size, int (* _Nonnull __comparator)(const void* _Nonnull __lhs, const void* _Nonnull __rhs));
+__nodiscard void* bsearch(const void* __key, const void* __base, size_t __nmemb, size_t __size, int (* __comparator)(const void* __lhs, const void* __rhs)) __attribute__((nonnull(1,5)));
 
 /**
  * [qsort(3)](https://man7.org/linux/man-pages/man3/qsort.3.html) sorts an array
@@ -147,8 +265,9 @@ __nodiscard void* _Nullable bsearch(const void* _Nonnull __key, const void* _Nul
  * qsort() is not stable, so elements with the same key might be reordered.
  * libc++ offers both std::sort() and std::stable_sort().
  */
-void qsort(void* _Nullable __array, size_t __n, size_t __size, int (* _Nonnull __comparator)(const void* _Nullable __lhs, const void* _Nullable __rhs));
+void qsort(void* __array, size_t __n, size_t __size, int (* __comparator)(const void* __lhs, const void* __rhs)) __attribute__((nonnull(4)));
 
+#if __BIONIC_AVAILABILITY_GUARD(36)
 /**
  * [qsort_r(3)](https://man7.org/linux/man-pages/man3/qsort_r.3.html) sorts an
  * array of n elements each of the given size, using the given comparator,
@@ -160,37 +279,36 @@ void qsort(void* _Nullable __array, size_t __n, size_t __size, int (* _Nonnull _
  * Available since API level 36.
  * std::sort() is available at all API levels.
  */
-#if __BIONIC_AVAILABILITY_GUARD(36)
-void qsort_r(void* _Nullable __array, size_t __n, size_t __size, int (* _Nonnull __comparator)(const void* _Nullable __lhs, const void* _Nullable __rhs, void* _Nullable __context), void* _Nullable __context) __INTRODUCED_IN_API_W__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(36) */
+void qsort_r(void* __array, size_t __n, size_t __size, int (* __comparator)(const void* __lhs, const void* __rhs, void* __context), void* __context) __INTRODUCED_IN_API_W__ __attribute__((nonnull(4)));
+#endif
 
-uint32_t arc4random(void);
-uint32_t arc4random_uniform(uint32_t __upper_bound);
-void arc4random_buf(void* _Nonnull __buf, size_t __n);
+uint32_t arc4random(void)__THROW ;
+uint32_t arc4random_uniform(uint32_t __upper_bound)__THROW ;
+void arc4random_buf(void* __buf, size_t __n) __THROW __attribute__((nonnull(1)));
 
 #define RAND_MAX 0x7fffffff
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int rand_r(unsigned int* _Nonnull __seed_ptr) __INTRODUCED_IN_API_L__;
+int rand_r(unsigned int* __seed_ptr) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-double drand48(void);
-double erand48(unsigned short __xsubi[_Nonnull 3]);
-long jrand48(unsigned short __xsubi[_Nonnull 3]);
+double drand48(void)__THROW ;
+double erand48(unsigned short __xsubi[3]) __THROW __attribute__((nonnull(1)));
+long jrand48(unsigned short __xsubi[3]) __THROW __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-void lcong48(unsigned short __param[_Nonnull 7]) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+void lcong48(unsigned short __param[7]) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
 
-long lrand48(void);
-long mrand48(void);
-long nrand48(unsigned short __xsubi[_Nonnull 3]);
-unsigned short* _Nonnull seed48(unsigned short __seed16v[_Nonnull 3]);
-void srand48(long __seed);
+long lrand48(void)__THROW ;
+long mrand48(void)__THROW ;
+long nrand48(unsigned short __xsubi[3]) __THROW __attribute__((nonnull(1)));
+unsigned short* seed48(unsigned short __seed16v[3]) __THROW __attribute__((nonnull(1)));
+void srand48(long __seed)__THROW ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-char* _Nullable initstate(unsigned int __seed, char* _Nonnull __state, size_t __n) __INTRODUCED_IN_API_L__;
-char* _Nullable setstate(char* _Nonnull __state) __INTRODUCED_IN_API_L__;
+char* initstate(unsigned int __seed, char* __state, size_t __n) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+char* setstate(char* __state) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 int getpt(void);
@@ -199,13 +317,13 @@ int getpt(void);
 int posix_openpt(int __flags) __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-char* _Nullable ptsname(int __fd);
-int ptsname_r(int __fd, char* _Nonnull __buf, size_t __n);
-int unlockpt(int __fd);
+char* ptsname(int __fd)__THROW ;
+int ptsname_r(int __fd, char* __buf, size_t __n) __THROW __attribute__((nonnull(2)));
+int unlockpt(int __fd)__THROW ;
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-int getsubopt(char* _Nonnull * _Nonnull __option, char* _Nonnull const* _Nonnull __tokens, char* _Nullable * _Nonnull __value_ptr) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+int getsubopt(char* * __option, char* const* __tokens, char* * __value_ptr) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2,3)));
+#endif
 
 typedef struct {
   int quot;
@@ -219,7 +337,7 @@ typedef struct {
  * This function was useful for portability before C99,
  * where `/` and `%` were also defined to truncate towards zero.
  */
-div_t div(int __numerator, int __denominator) __attribute_const__;
+div_t div(int __numerator, int __denominator) __THROW __attribute_const__;
 
 typedef struct {
   long int quot;
@@ -233,7 +351,7 @@ typedef struct {
  * This function was useful for portability before C99,
  * where `/` and `%` were also defined to truncate towards zero.
  */
-ldiv_t ldiv(long __numerator, long __denominator) __attribute_const__;
+ldiv_t ldiv(long __numerator, long __denominator) __THROW __attribute_const__;
 
 typedef struct {
   long long int quot;
@@ -247,8 +365,9 @@ typedef struct {
  * This function was useful for portability before C99,
  * where `/` and `%` were also defined to truncate towards zero.
  */
-lldiv_t lldiv(long long __numerator, long long __denominator) __attribute_const__;
+lldiv_t lldiv(long long __numerator, long long __denominator) __THROW __attribute_const__;
 
+#if __BIONIC_AVAILABILITY_GUARD(29)
 /**
  * [getloadavg(3)](https://man7.org/linux/man-pages/man3/getloadavg.3.html) queries the
  * number of runnable processes averaged over time. The Linux kernel supports averages
@@ -256,33 +375,32 @@ lldiv_t lldiv(long long __numerator, long long __denominator) __attribute_const_
  *
  * Returns the number of samples written to `__averages` (at most 3), and returns -1 on failure.
  */
-#if __BIONIC_AVAILABILITY_GUARD(29)
-int getloadavg(double __averages[_Nonnull], int __n) __INTRODUCED_IN_API_Q__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(29) */
+int getloadavg(double __averages[], int __n) __THROW __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
+#endif
 
 
 /* BSD compatibility. */
 #if __BIONIC_AVAILABILITY_GUARD(21)
-const char* _Nullable getprogname(void) __INTRODUCED_IN_API_L__;
+const char* getprogname(void) __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-void setprogname(const char* _Nonnull __name);
+void setprogname(const char* __name) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-int mblen(const char* _Nullable __s, size_t __n) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+int mblen(const char* __s, size_t __n) __THROW __INTRODUCED_IN_API_O__;
+#endif
 
-size_t mbstowcs(wchar_t* _Nullable __dst, const char* _Nullable __src, size_t __n);
+size_t mbstowcs(wchar_t* __dst, const char* __src, size_t __n)__THROW ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int mbtowc(wchar_t* _Nullable __wc_ptr, const char*  _Nullable __s, size_t __n) __INTRODUCED_IN_API_L__;
-int wctomb(char* _Nullable __dst, wchar_t __wc) __INTRODUCED_IN_API_L__;
+int mbtowc(wchar_t* __wc_ptr, const char*  __s, size_t __n) __THROW __INTRODUCED_IN_API_L__;
+int wctomb(char* __dst, wchar_t __wc) __THROW __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-size_t wcstombs(char* _Nullable __dst, const wchar_t* _Nullable __src, size_t __n);
+size_t wcstombs(char* __dst, const wchar_t* __src, size_t __n)__THROW ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21) && !defined(__ANDROID_UNAVAILABLE_SYMBOLS_ARE_WEAK__)
-size_t __ctype_get_mb_cur_max(void) __INTRODUCED_IN_API_L__;
+size_t __ctype_get_mb_cur_max(void) __THROW __INTRODUCED_IN_API_L__;
 #define MB_CUR_MAX __ctype_get_mb_cur_max()
 #else
 #define MB_CUR_MAX 1
@@ -292,30 +410,29 @@ size_t __ctype_get_mb_cur_max(void) __INTRODUCED_IN_API_L__;
 #include <bits/fortify/stdlib.h>
 #endif
 
-#if __BIONIC_AVAILABILITY_GUARD(21)
 /**
  * Returns the absolute value where possible.
  * For the most negative value, the result is unchanged (and thus also negative).
  */
-int abs(int __x) __attribute_const__ __INTRODUCED_IN_API_L__;
+int abs(int __x) __THROW __attribute_const__;
 
 /**
  * Returns the absolute value where possible.
  * For the most negative value, the result is unchanged (and thus also negative).
  */
-long labs(long __x) __attribute_const__ __INTRODUCED_IN_API_L__;
+long labs(long __x) __THROW __attribute_const__;
 
 /**
  * Returns the absolute value where possible.
  * For the most negative value, the result is unchanged (and thus also negative).
  */
-long long llabs(long long __x) __attribute_const__ __INTRODUCED_IN_API_L__;
+long long llabs(long long __x) __THROW __attribute_const__;
 
-int rand(void) __INTRODUCED_IN_API_L__;
-void srand(unsigned int __seed) __INTRODUCED_IN_API_L__;
-long random(void) __INTRODUCED_IN_API_L__;
-void srandom(unsigned int __seed) __INTRODUCED_IN_API_L__;
-int grantpt(int __fd) __INTRODUCED_IN_API_L__;
+int rand(void)__THROW ;
+void srand(unsigned int __seed)__THROW ;
+long random(void)__THROW ;
+void srandom(unsigned int __seed)__THROW ;
+int grantpt(int __fd)__THROW ;
 
 /**
  * [atof(3)](https://man7.org/linux/man-pages/man3/atof.3.html) converts a
@@ -323,8 +440,7 @@ int grantpt(int __fd) __INTRODUCED_IN_API_L__;
  *
  * Returns the double; use strtof() or strtod() if you need to detect errors.
  */
-double atof(const char* _Nonnull __s) __attribute_pure__ __INTRODUCED_IN_API_L__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(21) */
+double atof(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1)));
 
 /**
  * [atoi(3)](https://man7.org/linux/man-pages/man3/atoi.3.html) converts a
@@ -332,7 +448,7 @@ double atof(const char* _Nonnull __s) __attribute_pure__ __INTRODUCED_IN_API_L__
  *
  * Returns the int or 0 on error; use strtol() if you need to detect errors.
  */
-int atoi(const char* _Nonnull __s) __attribute_pure__;
+int atoi(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1)));
 
 /**
  * [atol(3)](https://man7.org/linux/man-pages/man3/atol.3.html) converts a
@@ -340,7 +456,7 @@ int atoi(const char* _Nonnull __s) __attribute_pure__;
  *
  * Returns the long or 0 on error; use strtol() if you need to detect errors.
  */
-long atol(const char* _Nonnull __s) __attribute_pure__;
+long atol(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1)));
 
 /**
  * [atoll(3)](https://man7.org/linux/man-pages/man3/atoll.3.html) converts a
@@ -348,7 +464,7 @@ long atol(const char* _Nonnull __s) __attribute_pure__;
  *
  * Returns the long long or 0 on error; use strtol() if you need to detect errors.
  */
-long long atoll(const char* _Nonnull __s) __attribute_pure__;
+long long atoll(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1)));
 
 /**
  * [strtol(3)](https://man7.org/linux/man-pages/man3/strtol.3.html) converts a
@@ -358,10 +474,10 @@ long long atoll(const char* _Nonnull __s) __attribute_pure__;
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-long strtol(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, int __base);
+long strtol(const char* __s, char* * __end_ptr, int __base) __THROW __attribute__((nonnull(1)));
 
 /** Equivalent to strtol() on Android. */
-long strtol_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, int, locale_t _Nonnull __l) __RENAME(strtol);
+long strtol_l(const char* __s, char* * __end_ptr, int, locale_t __l) __REDIRECT_NTH(strtol) __attribute__((nonnull(1,4)));
 
 /**
  * [strtoll(3)](https://man7.org/linux/man-pages/man3/strtoll.3.html) converts a
@@ -371,17 +487,10 @@ long strtol_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, i
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-long long strtoll(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, int __base);
+long long strtoll(const char* __s, char* * __end_ptr, int __base) __THROW __attribute__((nonnull(1)));
 
-#if __BIONIC_AVAILABILITY_GUARD(21)
 /** Equivalent to strtoll() on Android. */
-long long strtoll_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, int __base, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-#else
-__static_inline__ long long strtoll_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, int __base, locale_t _Nonnull __l) {
-	(void) __l;
-	return strtoll(__s, __end_ptr, __base);
-}
-#endif /* __BIONIC_AVAILABILITY_GUARD(21) */
+long long strtoll_l(const char* __s, char* * __end_ptr, int __base, locale_t __l) __REDIRECT_NTH(strtoll) __attribute__((nonnull(1,4)));
 
 /**
  * [strtoul(3)](https://man7.org/linux/man-pages/man3/strtoul.3.html) converts a
@@ -391,10 +500,10 @@ __static_inline__ long long strtoll_l(const char* _Nonnull __s, char* _Nullable 
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-unsigned long strtoul(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, int __base);
+unsigned long strtoul(const char* __s, char* * __end_ptr, int __base) __THROW __attribute__((nonnull(1)));
 
 /** Equivalent to strtoul() on Android. */
-unsigned long strtoul_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, int __base, locale_t _Nonnull __l) __RENAME(strtoul);
+unsigned long strtoul_l(const char* __s, char* * __end_ptr, int __base, locale_t __l) __REDIRECT_NTH(strtoul) __attribute__((nonnull(1,4)));
 
 /**
  * [strtoull(3)](https://man7.org/linux/man-pages/man3/strtoull.3.html) converts a
@@ -404,14 +513,11 @@ unsigned long strtoul_l(const char* _Nonnull __s, char* _Nullable * _Nullable __
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-unsigned long long strtoull(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, int __base);
+unsigned long long strtoull(const char* __s, char* * __end_ptr, int __base) __THROW __attribute__((nonnull(1)));
 
-#if __BIONIC_AVAILABILITY_GUARD(21)
 /** Equivalent to strtoull() on Android. */
-unsigned long long strtoull_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, int __base, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(21) */
+unsigned long long strtoull_l(const char* __s, char* * __end_ptr, int __base, locale_t __l) __REDIRECT_NTH(strtoull) __attribute__((nonnull(1,4)));
 
-#if __BIONIC_AVAILABILITY_GUARD(21)
 /**
  * [strtof(3)](https://man7.org/linux/man-pages/man3/strtof.3.html) converts a
  * string to a float.
@@ -420,10 +526,10 @@ unsigned long long strtoull_l(const char* _Nonnull __s, char* _Nullable * _Nulla
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-float strtof(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr) __INTRODUCED_IN_API_L__;
-#else
-__static_inline__ float strtof(const char* nptr, char** endptr);
-#endif /* __BIONIC_AVAILABILITY_GUARD(21) */
+float strtof(const char* __s, char* * __end_ptr) __THROW __attribute__((nonnull(1)));
+
+/** Equivalent to strtof() on Android. */
+float strtof_l(const char* __s, char* * __end_ptr, locale_t __l) __REDIRECT_NTH(strtof) __attribute__((nonnull(1,3)));
 
 /**
  * [strtod(3)](https://man7.org/linux/man-pages/man3/strtod.3.html) converts a
@@ -433,9 +539,11 @@ __static_inline__ float strtof(const char* nptr, char** endptr);
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-double strtod(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr);
+double strtod(const char* __s, char* * __end_ptr) __THROW __attribute__((nonnull(1)));
 
-#if __BIONIC_AVAILABILITY_GUARD(21)
+/** Equivalent to strtod() on Android. */
+double strtod_l(const char* __s, char* * __end_ptr, locale_t __l) __REDIRECT_NTH(strtod) __attribute__((nonnull(1,3)));
+
 /**
  * [strtold(3)](https://man7.org/linux/man-pages/man3/strtold.3.html) converts a
  * string to a long double.
@@ -444,40 +552,11 @@ double strtod(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr);
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-long double strtold(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr) __INTRODUCED_IN_API_L__;
-#else
-long double strtold(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr) __RENAME(strtod);
-#endif /* __BIONIC_AVAILABILITY_GUARD(21) */
+long double strtold(const char* __s, char* * __end_ptr) __THROW __attribute__((nonnull(1)));
 
-#if __BIONIC_AVAILABILITY_GUARD(21)
 /** Equivalent to strtold() on Android. */
-long double strtold_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-#else
-__static_inline__ long double strtold_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, locale_t _Nonnull __l) {
-	(void) __l;
-	return strtold(__s, __end_ptr);
-}
-#endif /* __BIONIC_AVAILABILITY_GUARD(21) */
-
-#if __BIONIC_AVAILABILITY_GUARD(26)
-/** Equivalent to strtod() on Android. */
-double strtod_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, locale_t _Nonnull __l) __INTRODUCED_IN_API_O__;
-/** Equivalent to strtof() on Android. */
-float strtof_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, locale_t _Nonnull __l) __INTRODUCED_IN_API_O__;
-#else
-__static_inline__ double strtod_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, locale_t _Nonnull __l) {
-	(void) __l;
-	return strtod(__s, __end_ptr);
-}
-
-__static_inline__ float strtof_l(const char* _Nonnull __s, char* _Nullable * _Nullable __end_ptr, locale_t _Nonnull __l) {
-	(void) __l;
-	return strtof(__s, __end_ptr);
-}
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+long double strtold_l(const char* __s, char* * __end_ptr, locale_t __l) __REDIRECT_NTH(strtold) __attribute__((nonnull(1,3)));
 
 __END_DECLS
-
-#include <android/legacy_stdlib_inlines.h>
 
 #endif /* _STDLIB_H */

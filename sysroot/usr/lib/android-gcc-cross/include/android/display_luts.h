@@ -90,16 +90,16 @@ typedef struct ADisplayLuts ADisplayLuts;
  * @param key The sampling key used by the lut. see \a ADisplayLuts_SamplingKey
  * @return a new \a ADisplayLutsEntry instance.
  */
-ADisplayLutsEntry* _Nonnull ADisplayLutsEntry_createEntry(float* _Nonnull buffer,
+ADisplayLutsEntry* ADisplayLutsEntry_createEntry(float* buffer,
     int32_t length, ADisplayLuts_Dimension dimension, ADisplayLuts_SamplingKey key)
-    __INTRODUCED_IN_API_W__;
+    __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Destroys the \a ADisplayLutsEntry instance.
  *
  * @param entry The entry to be destroyed
  */
-void ADisplayLutsEntry_destroy(ADisplayLutsEntry* _Nullable entry) __INTRODUCED_IN_API_W__;
+void ADisplayLutsEntry_destroy(ADisplayLutsEntry* entry) __INTRODUCED_IN_API_W__;
 
 /**
  * Gets the dimension of the entry.
@@ -109,8 +109,8 @@ void ADisplayLutsEntry_destroy(ADisplayLutsEntry* _Nullable entry) __INTRODUCED_
  * @param entry The entry to query
  * @return the dimension of the lut
  */
-ADisplayLuts_Dimension ADisplayLutsEntry_getDimension(const ADisplayLutsEntry* _Nonnull entry)
-        __INTRODUCED_IN_API_W__;
+ADisplayLuts_Dimension ADisplayLutsEntry_getDimension(const ADisplayLutsEntry* entry)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Gets the size for each dimension of the entry.
@@ -120,8 +120,8 @@ ADisplayLuts_Dimension ADisplayLutsEntry_getDimension(const ADisplayLutsEntry* _
  * @param entry The entry to query
  * @return the size of each dimension of the lut
  */
-int32_t ADisplayLutsEntry_getSize(const ADisplayLutsEntry* _Nonnull entry)
-        __INTRODUCED_IN_API_W__;
+int32_t ADisplayLutsEntry_getSize(const ADisplayLutsEntry* entry)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Gets the sampling key used by the entry.
@@ -131,8 +131,8 @@ int32_t ADisplayLutsEntry_getSize(const ADisplayLutsEntry* _Nonnull entry)
  * @param entry The entry to query
  * @return the sampling key used by the lut
  */
-ADisplayLuts_SamplingKey ADisplayLutsEntry_getSamplingKey(const ADisplayLutsEntry* _Nonnull entry)
-        __INTRODUCED_IN_API_W__;
+ADisplayLuts_SamplingKey ADisplayLutsEntry_getSamplingKey(const ADisplayLutsEntry* entry)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Gets the lut buffer of the entry.
@@ -142,8 +142,8 @@ ADisplayLuts_SamplingKey ADisplayLutsEntry_getSamplingKey(const ADisplayLutsEntr
  * @param entry The entry to query
  * @return a pointer to the raw lut buffer
  */
-const float* _Nonnull ADisplayLutsEntry_getBuffer(const ADisplayLutsEntry* _Nonnull entry)
-        __INTRODUCED_IN_API_W__;
+const float* ADisplayLutsEntry_getBuffer(const ADisplayLutsEntry* entry)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Creates a \a ADisplayLuts instance.
@@ -154,7 +154,7 @@ const float* _Nonnull ADisplayLutsEntry_getBuffer(const ADisplayLutsEntry* _Nonn
  *
  * @return a new \a ADisplayLuts instance
  */
-ADisplayLuts* _Nonnull ADisplayLuts_create() __INTRODUCED_IN_API_W__;
+ADisplayLuts* ADisplayLuts_create() __INTRODUCED_IN_API_W__;
 
 /**
  * Sets Luts in order to be applied.
@@ -168,15 +168,15 @@ ADisplayLuts* _Nonnull ADisplayLuts_create() __INTRODUCED_IN_API_W__;
  * @param entries the pointer of the array of lut entries to be applied
  * @param numEntries the number of lut entries. The value should be either 1 or 2.
  */
-void ADisplayLuts_setEntries(ADisplayLuts* _Nonnull luts,
-        ADisplayLutsEntry* _Nullable *_Nullable entries, int32_t numEntries) __INTRODUCED_IN_API_W__;
+void ADisplayLuts_setEntries(ADisplayLuts* luts,
+        ADisplayLutsEntry** entries, int32_t numEntries) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Deletes the \a ADisplayLuts instance.
  *
  * @param luts The luts to be destroyed
  */
-void ADisplayLuts_destroy(ADisplayLuts* _Nullable luts) __INTRODUCED_IN_API_W__;
+void ADisplayLuts_destroy(ADisplayLuts* luts) __INTRODUCED_IN_API_W__;
 
 __END_DECLS
 

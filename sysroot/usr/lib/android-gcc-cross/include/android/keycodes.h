@@ -881,6 +881,12 @@ enum {
     AKEYCODE_F23 = 336,
     /** F24 key */
     AKEYCODE_F24 = 337,
+    /** To toggle the system bound accessibility UI/command */
+    AKEYCODE_ACCESSIBILITY = 338,
+    /** Contextual Assist key. */
+    AKEYCODE_CONTEXTUAL_SEARCH = 339,
+    /** Contextual Insert key. */
+    AKEYCODE_CONTEXTUAL_INSERT = 340,
 
     // NOTE: If you add a new keycode here you must also add it to several other files.
     //       Refer to frameworks/base/core/java/android/view/KeyEvent.java for the full list.

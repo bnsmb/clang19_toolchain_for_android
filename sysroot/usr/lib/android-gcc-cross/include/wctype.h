@@ -37,34 +37,34 @@
 __BEGIN_DECLS
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int iswalnum_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-int iswalpha_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-int iswblank_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-int iswcntrl_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-int iswdigit_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-int iswgraph_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-int iswlower_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-int iswprint_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-int iswpunct_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-int iswspace_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-int iswupper_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-int iswxdigit_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
+int iswalnum_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int iswalpha_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int iswblank_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int iswcntrl_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int iswdigit_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int iswgraph_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int iswlower_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int iswprint_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int iswpunct_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int iswspace_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int iswupper_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int iswxdigit_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 
-wint_t towlower_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-wint_t towupper_l(wint_t __wc, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
+wint_t towlower_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+wint_t towupper_l(wint_t __wc, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-wint_t towctrans_l(wint_t __wc, wctrans_t _Nonnull __transform, locale_t _Nonnull __l) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+wint_t towctrans_l(wint_t __wc, wctrans_t __transform, locale_t __l) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(2,3)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-wctrans_t _Nonnull wctrans_l(const char* _Nonnull __name, locale_t _Nonnull __l) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+wctrans_t wctrans_l(const char* __name, locale_t __l) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-wctype_t wctype_l(const char* _Nonnull __name, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
-int iswctype_l(wint_t __wc, wctype_t __transform, locale_t _Nonnull __l) __INTRODUCED_IN_API_L__;
+wctype_t wctype_l(const char* __name, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
+int iswctype_l(wint_t __wc, wctype_t __transform, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(3)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 __END_DECLS

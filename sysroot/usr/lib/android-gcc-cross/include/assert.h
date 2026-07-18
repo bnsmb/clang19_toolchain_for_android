@@ -43,25 +43,23 @@
 #include <sys/cdefs.h>
 
 #undef assert
-#undef __assert_no_op
-
-/** Internal implementation detail. Do not use. */
-#define __assert_no_op __BIONIC_CAST(static_cast, void, 0)
 
 #ifdef NDEBUG
-# define assert(e) __assert_no_op
+/**
+ * assert() does nothing when NDEBUG is defined.
+ */
+# define assert(...) ((void) 0)
 #else
-# if defined(__cplusplus) || __STDC_VERSION__ >= 199901L
-#  define assert(e) ((e) ? __assert_no_op : __assert2(__FILE__, __LINE__, __PRETTY_FUNCTION__, #e))
-# else
 /**
  * assert() aborts the program after logging an error message, if the
  * expression evaluates to false.
  *
  * On Android, the error goes to both stderr and logcat.
  */
-#  define assert(e) ((e) ? __assert_no_op : __assert(__FILE__, __LINE__, #e))
-# endif
+# define assert(...) \
+    ((__VA_ARGS__) \
+        ? (void) 0 \
+        : __assert2(__FILE__, __LINE__, __PRETTY_FUNCTION__, #__VA_ARGS__))
 #endif
 
 /* `static_assert` is a keyword in C++11 and C23; C11 had `_Static_assert` instead. */
@@ -73,15 +71,15 @@
 __BEGIN_DECLS
 
 /**
- * __assert() is called by assert() on failure. Most users want assert()
- * instead, but this can be useful for reporting other failures.
+ * __assert() was called by assert() on failure when compiled for C89.
+ * Most users want assert() instead, but this can be useful for reporting other failures.
  */
-void __assert(const char* _Nonnull __file, int __line, const char* _Nonnull __msg) __noreturn;
+void __assert(const char* __file, int __line, const char* __msg) __THROW __noreturn __attribute__((nonnull(1,3)));
 
 /**
  * __assert2() is called by assert() on failure. Most users want assert()
  * instead, but this can be useful for reporting other failures.
  */
-void __assert2(const char* _Nonnull __file, int __line, const char* _Nonnull __function, const char* _Nonnull __msg) __noreturn;
+void __assert2(const char* __file, int __line, const char* __function, const char* __msg) __noreturn __attribute__((nonnull(1,3,4)));
 
 __END_DECLS

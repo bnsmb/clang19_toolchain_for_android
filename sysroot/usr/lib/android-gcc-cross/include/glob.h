@@ -50,21 +50,21 @@ typedef struct {
   int gl_flags;		/* Copy of flags parameter to glob. */
 
   /** List of paths matching pattern. */
-  char* _Nullable * _Nullable gl_pathv;
+  char* * gl_pathv;
 
   /** Copy of `__error_callback` parameter to glob. */
-  int (* _Nullable gl_errfunc)(const char* _Nonnull __failure_path, int __failure_errno);
+  int (* gl_errfunc)(const char* __failure_path, int __failure_errno) __attribute__((nonnull(1)));
 
   /** Called instead of closedir() when GLOB_ALTDIRFUNC flag is specified. */
-  void (* _Nullable gl_closedir)(void* _Nonnull);
+  void (* gl_closedir)(void* ) __attribute__((nonnull(1)));
   /** Called instead of readdir() when GLOB_ALTDIRFUNC flag is specified. */
-  struct dirent* _Nullable (* _Nonnull gl_readdir)(void* _Nonnull);
+  struct dirent* (* gl_readdir)(void* ) __attribute__((nonnull(1)));
   /** Called instead of opendir() when GLOB_ALTDIRFUNC flag is specified. */
-  void* _Nullable (* _Nonnull gl_opendir)(const char* _Nonnull);
+  void* (* gl_opendir)(const char* ) __attribute__((nonnull(1)));
   /** Called instead of lstat() when GLOB_ALTDIRFUNC flag is specified. */
-  int (* _Nullable gl_lstat)(const char* _Nonnull, struct stat* _Nonnull);
+  int (* gl_lstat)(const char*, struct stat* ) __attribute__((nonnull(1)));
   /** Called instead of stat() when GLOB_ALTDIRFUNC flag is specified. */
-  int (* _Nullable gl_stat)(const char* _Nonnull, struct stat* _Nonnull);
+  int (* gl_stat)(const char*, struct stat* ) __attribute__((nonnull(1)));
 } glob_t;
 
 /* Believed to have been introduced in 1003.2-1992 */
@@ -81,47 +81,47 @@ typedef struct {
 #define GLOB_ABORTED	(-2)	/* Unignored error. */
 #define GLOB_NOMATCH	(-3)	/* No match and GLOB_NOCHECK was not set. */
 
-/** Use alternately specified directory funcs. */
 #if __USE_BSD
+/** Use alternately specified directory funcs. */
 #define GLOB_ALTDIRFUNC	0x0040
 #endif
 
-/** Expand braces like csh. */
 #if __USE_BSD
+/** Expand braces like csh. */
 #define GLOB_BRACE	0x0080
 #endif
 
-/** Set in `gl_flags` if the pattern had globbing characters. */
 #if __USE_BSD
+/** Set in `gl_flags` if the pattern had globbing characters. */
 #define GLOB_MAGCHAR	0x0100
 #endif
 
-/** GLOB_NOCHECK without magic chars (csh). */
 #if __USE_BSD
+/** GLOB_NOCHECK without magic chars (csh). */
 #define GLOB_NOMAGIC	0x0200
 #endif
 
-/** Quote special chars with \. */
 #if __USE_BSD
+/** Quote special chars with \. */
 #define GLOB_QUOTE	0x0400
 #endif
 
-/** Expand tilde names from the passwd file. */
 #if __USE_BSD
+/** Expand tilde names from the passwd file. */
 #define GLOB_TILDE	0x0800
 #endif
 
-/** Limit number of returned paths. */
 #if __USE_BSD
+/** Limit number of returned paths. */
 #define GLOB_LIMIT	0x1000
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int glob(const char* _Nonnull __pattern, int __flags, int (* _Nullable __error_callback)(const char* _Nonnull __failure_path, int __failure_errno), glob_t* _Nonnull __result_ptr) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+int glob(const char* __pattern, int __flags, int (* __error_callback)(const char* __failure_path, int __failure_errno), glob_t* __result_ptr) __THROWNL __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,4)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-void globfree(glob_t* _Nonnull __result_ptr) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+void globfree(glob_t* __result_ptr) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+#endif
 
 __END_DECLS

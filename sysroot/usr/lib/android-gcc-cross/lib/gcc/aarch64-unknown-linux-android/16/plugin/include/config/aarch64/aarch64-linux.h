@@ -27,7 +27,7 @@
 #define MUSL_DYNAMIC_LINKER "/lib/ld-musl-aarch64%{mbig-endian:_be}%{mabi=ilp32:_ilp32}.so.1"
 
 #undef BIONIC_DYNAMIC_LINKER
-#define BIONIC_DYNAMIC_LINKER "/system/bin/linker64"
+#define BIONIC_DYNAMIC_LINKER BIONIC_DYNAMIC_LINKER64
 
 #undef BIONIC_PAGE_SIZE
 #define BIONIC_PAGE_SIZE BIONIC_PAGE_SIZE_16K

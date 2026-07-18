@@ -337,8 +337,34 @@ typedef enum __ns_type {
 	ns_t_dhcid = 49,	/* Dynamic host configuratin identifier */
 	ns_t_nsec3 = 50,	/* Negative security type 3 */
 	ns_t_nsec3param = 51,	/* Negative security type 3 parameters */
+	ns_t_tlsa = 52,		/* TLSA */
+	ns_t_smimea = 53,	/* S/MIME cert association */
 	ns_t_hip = 55,		/* Host Identity Protocol */
+	ns_t_ninfo = 56,	/* NINFO */
+	ns_t_rkey = 57,		/* RKEY */
+	ns_t_talink = 58,	/* Trust Anchor LINK */
+	ns_t_cds = 59,		/* Child DS */
+	ns_t_cdnskey = 60,	/* DNSKEY(s) the Child wants reflected in DS */
+	ns_t_openpgpkey = 61,	/* OpenPGP Key */
+	ns_t_csync = 62,	/* Child-To-Parent Synchronization */
+	ns_t_zonemd = 63,	/* Message Digest Over Zone Data */
+	ns_t_svcb = 64,		/* General-purpose service binding */
+	ns_t_https = 65,	/* SVCB-compatible type for use with HTTP */
+	ns_t_dsync = 66,	/* Endpoint discovery for delegation synchronization */
+	ns_t_hhit = 67,		/* Hierarchical Host Identity Tag */
+	ns_t_brid = 68,		/* UAS Broadcast Remote Identification */
 	ns_t_spf = 99,		/* Sender Policy Framework */
+	ns_t_uinfo = 100,	/* IANA-Reserved */
+	ns_t_uid = 101,		/* IANA-Reserved */
+	ns_t_gid = 102,		/* IANA-Reserved */
+	ns_t_unspec = 103,	/* IANA-Reserved */
+	ns_t_nid = 104,		/* ILNP NID */
+	ns_t_l32 = 105,		/* ILNP L32 */
+	ns_t_l64 = 106,		/* ILNP L64 */
+	ns_t_lp = 107,		/* ILNP LP */
+	ns_t_eui48 = 108,	/* an EUI-48 address */
+	ns_t_eui64 = 109,	/* an EUI-64 address */
+	ns_t_nxname = 128,	/* NXDOMAIN indicator for Compact Denial of Existence */
 	ns_t_tkey = 249,	/* Transaction key */
 	ns_t_tsig = 250,	/* Transaction signature. */
 	ns_t_ixfr = 251,	/* Incremental zone transfer. */
@@ -346,7 +372,17 @@ typedef enum __ns_type {
 	ns_t_mailb = 253,	/* Transfer mailbox records. */
 	ns_t_maila = 254,	/* Transfer mail agent records. */
 	ns_t_any = 255,		/* Wildcard match. */
-	ns_t_zxfr = 256,	/* BIND-specific, nonstandard. */
+	ns_t_zxfr = 256,	/* BIND-specific, nonstandard. WARNING: conflicts with ns_t_uri */
+	ns_t_uri = 256,		/* URI */
+	ns_t_caa = 257,		/* Certification Authority Restriction */
+	ns_t_avc = 258,		/* Application Visibility and Control */
+	ns_t_doa = 259,		/* Digital Object Architecture */
+	ns_t_amtrelay = 260,	/* Automatic Multicast Tunneling Relay */
+	ns_t_resinfo = 261,	/* Resolver Information as Key/Value Pairs */
+	ns_t_wallet = 262,	/* Public wallet address */
+	ns_t_cla = 263,		/* BP Convergence Layer Adapter */
+	ns_t_ipn = 264,		/* BP Node Number */
+	ns_t_ta = 32768,	/* DNSSEC Trust Authorities */
 	ns_t_dlv = 32769,	/* DNSSEC look-aside validatation. */
 	ns_t_max = 65536
 } ns_type;
@@ -547,29 +583,29 @@ typedef enum __ns_cert_types {
 
 
 #if __BIONIC_AVAILABILITY_GUARD(22)
-int ns_msg_getflag(ns_msg __handle, int __flag) __INTRODUCED_IN_API_L_MR1__;
-uint16_t ns_get16(const u_char* _Nonnull __src) __INTRODUCED_IN_API_L_MR1__;
-uint32_t ns_get32(const u_char* _Nonnull __src) __INTRODUCED_IN_API_L_MR1__;
-void ns_put16(uint16_t __src, u_char* _Nonnull __dst) __INTRODUCED_IN_API_L_MR1__;
-void ns_put32(uint32_t __src, u_char* _Nonnull __dst) __INTRODUCED_IN_API_L_MR1__;
-int ns_initparse(const u_char* _Nonnull __msg, int __msg_size, ns_msg* _Nonnull __handle) __INTRODUCED_IN_API_L_MR1__;
-int ns_skiprr(const u_char* _Nonnull __ptr, const u_char* _Nonnull __eom, ns_sect __section, int __count) __INTRODUCED_IN_API_L_MR1__;
-int ns_parserr(ns_msg* _Nonnull __handle, ns_sect __section, int __rr_number, ns_rr* _Nonnull __rr) __INTRODUCED_IN_API_L_MR1__;
-int ns_sprintrr(const ns_msg* _Nonnull  __handle, const ns_rr* _Nonnull __rr, const char* _Nullable __name_ctx, const char* _Nullable __origin, char* _Nonnull __buf, size_t __buf_size) __INTRODUCED_IN_API_L_MR1__;
-int ns_sprintrrf(const u_char* _Nonnull __msg, size_t __msg_size, const char* _Nonnull __name, ns_class __class, ns_type __type, u_long __ttl, const u_char* _Nonnull __rdata, size_t __rdata_size, const char* _Nullable __name_ctx, const char* _Nullable __origin, char* _Nonnull __buf, size_t __buf_size) __INTRODUCED_IN_API_L_MR1__;
-int ns_format_ttl(u_long __ttl, char* _Nonnull __dst, size_t __dst_size) __INTRODUCED_IN_API_L_MR1__;
-int ns_name_ntol(const u_char* _Nonnull __src, u_char* _Nonnull __dst, size_t __dst_size) __INTRODUCED_IN_API_L_MR1__;
-int ns_name_ntop(const u_char* _Nonnull __src, char* _Nonnull __dst, size_t __dst_size) __INTRODUCED_IN_API_L_MR1__;
-int ns_name_pton(const char* _Nonnull __src, u_char* _Nonnull __dst, size_t __dst_size) __INTRODUCED_IN_API_L_MR1__;
-int ns_name_unpack(const u_char* _Nonnull __msg, const u_char* _Nonnull __eom, const u_char* _Nonnull __src, u_char* _Nonnull __dst, size_t __dst_size) __INTRODUCED_IN_API_L_MR1__;
-int ns_name_pack(const u_char* _Nonnull __src, u_char* _Nonnull __dst, int __dst_size, const u_char* _Nullable * _Nullable __dn_ptrs, const u_char* _Nullable * _Nullable __last_dn_ptr) __INTRODUCED_IN_API_L_MR1__;
-int ns_name_uncompress(const u_char* _Nonnull __msg, const u_char* _Nonnull __eom, const u_char* _Nonnull __src, char* _Nonnull __dst, size_t __dst_size) __INTRODUCED_IN_API_L_MR1__;
-int ns_name_compress(const char* _Nonnull __src, u_char* _Nonnull __dst, size_t __dst_size, const u_char* _Nullable * _Nullable __dn_ptrs, const u_char* _Nullable * _Nullable __last_dn_ptr) __INTRODUCED_IN_API_L_MR1__;
-int ns_name_skip(const u_char* _Nullable * _Nonnull __ptr_ptr, const u_char* _Nonnull __eom) __INTRODUCED_IN_API_L_MR1__;
-void ns_name_rollback(const u_char* _Nonnull __src, const u_char* _Nullable * _Nonnull __dn_ptrs, const u_char* _Nullable * _Nonnull __last_dn_ptr) __INTRODUCED_IN_API_L_MR1__;
+int ns_msg_getflag(ns_msg __handle, int __flag) __THROW __INTRODUCED_IN_API_L_MR1__;
+uint16_t ns_get16(const u_char* __src) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1)));
+uint32_t ns_get32(const u_char* __src) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1)));
+void ns_put16(uint16_t __src, u_char* __dst) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(2)));
+void ns_put32(uint32_t __src, u_char* __dst) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(2)));
+int ns_initparse(const u_char* __msg, int __msg_size, ns_msg* __handle) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,3)));
+int ns_skiprr(const u_char* __ptr, const u_char* __eom, ns_sect __section, int __count) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_parserr(ns_msg* __handle, ns_sect __section, int __rr_number, ns_rr* __rr) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,4)));
+int ns_sprintrr(const ns_msg*  __handle, const ns_rr* __rr, const char* __name_ctx, const char* __origin, char* __buf, size_t __buf_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2,5)));
+int ns_sprintrrf(const u_char* __msg, size_t __msg_size, const char* __name, ns_class __class, ns_type __type, u_long __ttl, const u_char* __rdata, size_t __rdata_size, const char* __name_ctx, const char* __origin, char* __buf, size_t __buf_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,3,7,11)));
+int ns_format_ttl(u_long __ttl, char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(2)));
+int ns_name_ntol(const u_char* __src, u_char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_name_ntop(const u_char* __src, char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_name_pton(const char* __src, u_char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_name_unpack(const u_char* __msg, const u_char* __eom, const u_char* __src, u_char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2,3,4)));
+int ns_name_pack(const u_char* __src, u_char* __dst, int __dst_size, const u_char* * __dn_ptrs, const u_char* * __last_dn_ptr) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_name_uncompress(const u_char* __msg, const u_char* __eom, const u_char* __src, char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2,3,4)));
+int ns_name_compress(const char* __src, u_char* __dst, size_t __dst_size, const u_char* * __dn_ptrs, const u_char* * __last_dn_ptr) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_name_skip(const u_char* * __ptr_ptr, const u_char* __eom) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+void ns_name_rollback(const u_char* __src, const u_char* * __dn_ptrs, const u_char* * __last_dn_ptr) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2,3)));
 
-int ns_makecanon(const char* _Nonnull __src, char* _Nonnull __dst, size_t __dst_size) __INTRODUCED_IN_API_L_MR1__;
-int ns_samename(const char* _Nonnull __lhs, const char* _Nonnull __rhs) __INTRODUCED_IN_API_L_MR1__;
+int ns_makecanon(const char* __src, char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_samename(const char* __lhs, const char* __rhs) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(22) */
 
 

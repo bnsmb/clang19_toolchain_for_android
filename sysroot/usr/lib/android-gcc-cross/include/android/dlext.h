@@ -157,7 +157,7 @@ typedef struct {
   uint64_t flags;
 
   /** Used by `ANDROID_DLEXT_RESERVED_ADDRESS` and `ANDROID_DLEXT_RESERVED_ADDRESS_HINT`. */
-  void*   _Nullable reserved_addr;
+  void*   reserved_addr;
   /** Used by `ANDROID_DLEXT_RESERVED_ADDRESS` and `ANDROID_DLEXT_RESERVED_ADDRESS_HINT`. */
   size_t  reserved_size;
 
@@ -170,7 +170,7 @@ typedef struct {
   off64_t library_fd_offset;
 
   /** Used by `ANDROID_DLEXT_USE_NAMESPACE`. */
-  struct android_namespace_t* _Nullable library_namespace;
+  struct android_namespace_t* library_namespace;
 } android_dlextinfo;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
@@ -179,7 +179,7 @@ typedef struct {
  * the same as for [dlopen(3)](https://man7.org/linux/man-pages/man3/dlopen.3.html),
  * with the Android-specific flags supplied via the `flags` member of `__info`.
  */
-void* _Nullable android_dlopen_ext(const char* _Nullable __filename, int __flags, const android_dlextinfo* _Nullable __info) __INTRODUCED_IN_API_L__;
+void* android_dlopen_ext(const char* __filename, int __flags, const android_dlextinfo* __info) __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 __END_DECLS

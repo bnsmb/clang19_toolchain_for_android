@@ -107,11 +107,11 @@ __BEGIN_DECLS
  * Returns a new file descriptor on success and returns -1 and sets `errno` on
  * failure.
  */
-int creat(const char* _Nonnull __path, mode_t __mode);
+int creat(const char* __path, mode_t __mode) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** See creat(). */
-int creat64(const char* _Nonnull __path, mode_t __mode) __INTRODUCED_IN_API_L__;
+int creat64(const char* __path, mode_t __mode) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -121,11 +121,11 @@ int creat64(const char* _Nonnull __path, mode_t __mode) __INTRODUCED_IN_API_L__;
  * Returns a new file descriptor on success and returns -1 and sets `errno` on
  * failure.
  */
-int openat(int __dir_fd, const char* _Nonnull __path, int __flags, ...);
+int openat(int __dir_fd, const char* __path, int __flags, ...) __attribute__((nonnull(2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** See openat(). */
-int openat64(int __dir_fd, const char* _Nonnull __path, int __flags, ...) __INTRODUCED_IN_API_L__;
+int openat64(int __dir_fd, const char* __path, int __flags, ...) __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -135,11 +135,11 @@ int openat64(int __dir_fd, const char* _Nonnull __path, int __flags, ...) __INTR
  * Returns a new file descriptor on success and returns -1 and sets `errno` on
  * failure.
  */
-int open(const char* _Nonnull __path, int __flags, ...);
+int open(const char* __path, int __flags, ...) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** See open(). */
-int open64(const char* _Nonnull __path, int __flags, ...) __INTRODUCED_IN_API_L__;
+int open64(const char* __path, int __flags, ...) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 
 /**
  * [splice(2)](https://man7.org/linux/man-pages/man2/splice.2.html)
@@ -151,7 +151,7 @@ int open64(const char* _Nonnull __path, int __flags, ...) __INTRODUCED_IN_API_L_
  * Returns the number of bytes spliced on success and returns -1 and sets
  * `errno` on failure.
  */
-ssize_t splice(int __in_fd, off64_t* __BIONIC_COMPLICATED_NULLNESS __in_offset, int __out_fd, off64_t* __BIONIC_COMPLICATED_NULLNESS __out_offset, size_t __length, unsigned int __flags) __INTRODUCED_IN_API_L__;
+ssize_t splice(int __in_fd, off64_t* __in_offset, int __out_fd, off64_t* __out_offset, size_t __length, unsigned int __flags) __INTRODUCED_IN_API_L__;
 
 /**
  * [tee(2)](https://man7.org/linux/man-pages/man2/tee.2.html)
@@ -175,7 +175,7 @@ ssize_t tee(int __in_fd, int __out_fd, size_t __length, unsigned int __flags) __
  * Returns the number of bytes spliced on success and returns -1 and sets
  * `errno` on failure.
  */
-ssize_t vmsplice(int __fd, const struct iovec* _Nonnull __iov, size_t __count, unsigned int __flags) __INTRODUCED_IN_API_L__;
+ssize_t vmsplice(int __fd, const struct iovec* __iov, size_t __count, unsigned int __flags) __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 
 /**
  * [fallocate(2)](https://man7.org/linux/man-pages/man2/fallocate.2.html)
@@ -203,9 +203,9 @@ int fallocate64(int __fd, int __mode, off64_t __offset, off64_t __length) __INTR
  *
  * Returns 0 on success and returns an error number on failure.
  */
-int posix_fadvise(int __fd, off_t __offset, off_t __length, int __advice) __RENAME_IF_FILE_OFFSET64(posix_fadvise64) __INTRODUCED_IN_API_L__;
+int posix_fadvise(int __fd, off_t __offset, off_t __length, int __advice) __REDIRECT_IF_FILE_OFFSET64_NTH(posix_fadvise64) __INTRODUCED_IN_API_L__;
 /** See posix_fadvise(). */
-int posix_fadvise64(int __fd, off64_t __offset, off64_t __length, int __advice);
+int posix_fadvise64(int __fd, off64_t __offset, off64_t __length, int __advice)__THROW ;
 
 /**
  * [posix_fallocate(2)](https://man7.org/linux/man-pages/man2/posix_fallocate.2.html)
@@ -217,6 +217,8 @@ int posix_fallocate(int __fd, off_t __offset, off_t __length) __RENAME_IF_FILE_O
 /** See posix_fallocate(). */
 int posix_fallocate64(int __fd, off64_t __offset, off64_t __length);
 
+#if defined(__USE_GNU)
+#if __BIONIC_AVAILABILITY_GUARD(16)
 /**
  * [readahead(2)](https://man7.org/linux/man-pages/man2/readahead.2.html)
  * initiates readahead for the given file.
@@ -225,12 +227,11 @@ int posix_fallocate64(int __fd, off64_t __offset, off64_t __length);
  *
  * Available when compiling with `_GNU_SOURCE`.
  */
-#if defined(__USE_GNU)
-#if __BIONIC_AVAILABILITY_GUARD(16)
-ssize_t readahead(int __fd, off64_t __offset, size_t __length);
-#endif /* __BIONIC_AVAILABILITY_GUARD(16) */
+ssize_t readahead(int __fd, off64_t __offset, size_t __length)__THROW ;
+#endif /* __BIONIC_AVAILABILITY_GUARD(16) */   
 #endif
 
+#if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(26)
 /**
  * [sync_file_range(2)](https://man7.org/linux/man-pages/man2/sync_file_range.2.html)
  * syncs part of a file with disk.
@@ -242,7 +243,6 @@ ssize_t readahead(int __fd, off64_t __offset, size_t __length);
  *
  * Available since API level 26 when compiling with `_GNU_SOURCE`.
  */
-#if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(26)
 int sync_file_range(int __fd, off64_t __offset, off64_t __length, unsigned int __flags) __INTRODUCED_IN_API_O__;
 #endif
 

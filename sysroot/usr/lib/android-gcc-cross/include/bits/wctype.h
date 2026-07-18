@@ -37,39 +37,39 @@ typedef __WINT_TYPE__ wint_t;
 
 #define WEOF __BIONIC_CAST(static_cast, wint_t, -1)
 
-int iswalnum(wint_t __wc);
-int iswalpha(wint_t __wc);
+int iswalnum(wint_t __wc)__THROW ;
+int iswalpha(wint_t __wc)__THROW ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int iswblank(wint_t __wc) __INTRODUCED_IN_API_L__;
+int iswblank(wint_t __wc) __THROW __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-int iswcntrl(wint_t __wc);
-int iswdigit(wint_t __wc);
-int iswgraph(wint_t __wc);
-int iswlower(wint_t __wc);
-int iswprint(wint_t __wc);
-int iswpunct(wint_t __wc);
-int iswspace(wint_t __wc);
-int iswupper(wint_t __wc);
-int iswxdigit(wint_t __wc);
+int iswcntrl(wint_t __wc)__THROW ;
+int iswdigit(wint_t __wc)__THROW ;
+int iswgraph(wint_t __wc)__THROW ;
+int iswlower(wint_t __wc)__THROW ;
+int iswprint(wint_t __wc)__THROW ;
+int iswpunct(wint_t __wc)__THROW ;
+int iswspace(wint_t __wc)__THROW ;
+int iswupper(wint_t __wc)__THROW ;
+int iswxdigit(wint_t __wc)__THROW ;
 
-wint_t towlower(wint_t __wc);
-wint_t towupper(wint_t __wc);
+wint_t towlower(wint_t __wc)__THROW ;
+wint_t towupper(wint_t __wc)__THROW ;
 
 typedef long wctype_t;
-wctype_t wctype(const char* _Nonnull __name);
-int iswctype(wint_t __wc, wctype_t __type);
+wctype_t wctype(const char* __name)__THROW ;
+int iswctype(wint_t __wc, wctype_t __type)__THROW ;
 
 typedef const void* wctrans_t;
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-wint_t towctrans(wint_t __wc, wctrans_t _Nonnull __transform) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+wint_t towctrans(wint_t __wc, wctrans_t __transform) __THROW __INTRODUCED_IN_API_O__;
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-wctrans_t _Nullable wctrans(const char* _Nonnull __name) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+wctrans_t wctrans(const char* __name) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
+#endif
 
 __END_DECLS
 

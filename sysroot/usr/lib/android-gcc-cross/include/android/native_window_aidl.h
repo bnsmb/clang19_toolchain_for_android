@@ -56,8 +56,8 @@ __BEGIN_DECLS
  *                         an ANativeWindow type
  *         STATUS_NO_MEMORY if an allocation fails
  */
-binder_status_t ANativeWindow_readFromParcel(const AParcel* _Nonnull parcel,
-        ANativeWindow* _Nullable* _Nonnull outWindow) __INTRODUCED_IN_API_U__;
+binder_status_t ANativeWindow_readFromParcel(const AParcel* parcel,
+        ANativeWindow** outWindow) __INTRODUCED_IN_API_U__ __attribute__((nonnull(1,2)));
 
 /**
  * Write an ANativeWindow to an AParcel.
@@ -71,8 +71,8 @@ binder_status_t ANativeWindow_readFromParcel(const AParcel* _Nonnull parcel,
  *                          unable to allocate more
  *         STATUS_FDS_NOT_ALLOWED if the parcel does not allow storing FDs
  */
-binder_status_t ANativeWindow_writeToParcel(ANativeWindow* _Nonnull window,
-        AParcel* _Nonnull parcel) __INTRODUCED_IN_API_U__;
+binder_status_t ANativeWindow_writeToParcel(ANativeWindow* window,
+        AParcel* parcel) __INTRODUCED_IN_API_U__ __attribute__((nonnull(1,2)));
 
 __END_DECLS
 
@@ -89,7 +89,7 @@ namespace aidl::android::hardware {
 class NativeWindow final {
 public:
     NativeWindow() noexcept {}
-    explicit NativeWindow(ANativeWindow* _Nullable window) {
+    explicit NativeWindow(ANativeWindow* window) {
         reset(window);
     }
 
@@ -101,7 +101,7 @@ public:
         reset();
     }
 
-    binder_status_t readFromParcel(const AParcel* _Nonnull parcel) {
+    binder_status_t __attribute__((nonnull(1))) readFromParcel(const AParcel* parcel) {
         reset();
         if (__builtin_available(android __ANDROID_API_U__, *)) {
             return ANativeWindow_readFromParcel(parcel, &mWindow);
@@ -110,7 +110,7 @@ public:
         }
     }
 
-    binder_status_t writeToParcel(AParcel* _Nonnull parcel) const {
+    binder_status_t writeToParcel(AParcel* parcel) const {
         if (!mWindow) {
             return STATUS_BAD_VALUE;
         }
@@ -127,7 +127,7 @@ public:
      *
      * @param buffer The buffer to take ownership of
      */
-    void reset(ANativeWindow* _Nullable window = nullptr) noexcept {
+    void reset(ANativeWindow* window = nullptr) noexcept {
         if (mWindow) {
             ANativeWindow_release(mWindow);
             mWindow = nullptr;
@@ -138,14 +138,14 @@ public:
         mWindow = window;
     }
 
-    inline ANativeWindow* _Nullable get() const { return mWindow; }
+    inline ANativeWindow* get() const { return mWindow; }
 
     NativeWindow& operator=(NativeWindow&& other) noexcept {
         mWindow = other.release(); // steal ownership from r-value
         return *this;
     }
 
-    inline ANativeWindow* _Nullable operator->() const { return mWindow; }
+    inline ANativeWindow* operator->() const { return mWindow; }
     inline explicit operator bool() const { return mWindow != nullptr; }
     inline bool operator==(const NativeWindow& rhs) const { return mWindow == rhs.mWindow; }
     inline bool operator!=(const NativeWindow& rhs) const { return !(*this == rhs); }
@@ -165,13 +165,13 @@ public:
      * is released.
      * @return ANativeWindow* or null if this was empty
      */
-    [[nodiscard]] ANativeWindow* _Nullable release() noexcept {
-        ANativeWindow* _Nullable ret = mWindow;
+    [[nodiscard]] ANativeWindow* release() noexcept {
+        ANativeWindow* ret = mWindow;
         mWindow = nullptr;
         return ret;
     }
 private:
-    ANativeWindow* _Nullable mWindow = nullptr;
+    ANativeWindow* mWindow = nullptr;
     NativeWindow(const NativeWindow &other) = delete;
     NativeWindow& operator=(const NativeWindow &other) = delete;
 };

@@ -424,6 +424,151 @@ enum AIMAGE_FORMATS {
     AIMAGE_FORMAT_RAW12             = 0x26,
 
     /**
+     * Android 14-bit raw format
+     * </p>
+     * <p>
+     * This is a single-plane, 14-bit per pixel, densely packed (in each row),
+     * unprocessed format, usually representing raw Bayer-pattern images coming
+     * from an image sensor.
+     * </p>
+     * <p>
+     * In an image buffer with this format, starting from the first pixel of each
+     * row, each four consecutive pixels are packed into 7 bytes (56 bits). The first
+     * four bytes contain the most significant 8 bits of the first 4 pixels. The last three bytes
+     * contain the 6 least significant bits of the four pixels, packed one after the other, the
+     *  exact layout data for each four consecutive pixels is illustrated below (Pi[j] stands for
+     * the jth bit of the ith pixel):
+     * </p>
+     * <table>
+     * <thead>
+     * <tr>
+     * <th align="center"></th>
+     * <th align="center">bit 7</th>
+     * <th align="center">bit 6</th>
+     * <th align="center">bit 5</th>
+     * <th align="center">bit 4</th>
+     * <th align="center">bit 3</th>
+     * <th align="center">bit 2</th>
+     * <th align="center">bit 1</th>
+     * <th align="center">bit 0</th>
+     * </tr>
+     * </thead> <tbody>
+     * <tr>
+     * <td align="center">Byte 0:</td>
+     * <td align="center">P0[13]</td>
+     * <td align="center">P0[12]</td>
+     * <td align="center">P0[11]</td>
+     * <td align="center">P0[10]</td>
+     * <td align="center">P0[ 9]</td>
+     * <td align="center">P0[ 8]</td>
+     * <td align="center">P0[ 7]</td>
+     * <td align="center">P0[ 6]</td>
+     * </tr>
+     * <tr>
+     * <td align="center">Byte 1:</td>
+     * <td align="center">P1[13]</td>
+     * <td align="center">P1[12]</td>
+     * <td align="center">P1[11]</td>
+     * <td align="center">P1[10]</td>
+     * <td align="center">P1[ 9]</td>
+     * <td align="center">P1[ 8]</td>
+     * <td align="center">P1[ 7]</td>
+     * <td align="center">P1[ 6]</td>
+     * </tr>
+     * <tr>
+     * <td align="center">Byte 2:</td>
+     * <td align="center">P2[13]</td>
+     * <td align="center">P2[12]</td>
+     * <td align="center">P2[11]</td>
+     * <td align="center">P2[10]</td>
+     * <td align="center">P2[ 9]</td>
+     * <td align="center">P2[ 8]</td>
+     * <td align="center">P2[ 7]</td>
+     * <td align="center">P2[ 6]</td>
+     * </tr>
+     * <tr>
+     * <td align="center">Byte 3:</td>
+     * <td align="center">P3[13]</td>
+     * <td align="center">P3[12]</td>
+     * <td align="center">P3[11]</td>
+     * <td align="center">P3[10]</td>
+     * <td align="center">P3[ 9]</td>
+     * <td align="center">P3[ 8]</td>
+     * <td align="center">P3[ 7]</td>
+     * <td align="center">P3[ 6]</td>
+     * </tr>
+     * <tr>
+     * <td align="center">Byte 4:</td>
+     * <td align="center">P1[ 1]</td>
+     * <td align="center">P1[ 0]</td>
+     * <td align="center">P0[ 5]</td>
+     * <td align="center">P0[ 4]</td>
+     * <td align="center">P0[ 3]</td>
+     * <td align="center">P0[ 2]</td>
+     * <td align="center">P0[ 1]</td>
+     * <td align="center">P0[ 0]</td>
+     * </tr>
+     * <tr>
+     * <td align="center">Byte 5:</td>
+     * <td align="center">P2[ 3]</td>
+     * <td align="center">P2[ 2]</td>
+     * <td align="center">P2[ 1]</td>
+     * <td align="center">P2[ 0]</td>
+     * <td align="center">P1[ 5]</td>
+     * <td align="center">P1[ 4]</td>
+     * <td align="center">P1[ 3]</td>
+     * <td align="center">P1[ 2]</td>
+     * </tr>
+     * <tr>
+     * <td align="center">Byte 6:</td>
+     * <td align="center">P3[ 5]</td>
+     * <td align="center">P3[ 4]</td>
+     * <td align="center">P3[ 3]</td>
+     * <td align="center">P3[ 2]</td>
+     * <td align="center">P3[ 1]</td>
+     * <td align="center">P3[ 0]</td>
+     * <td align="center">P2[ 5]</td>
+     * <td align="center">P2[ 4]</td>
+     * </tr>
+     * </tbody>
+     * </table>
+     * <p>
+     * This format assumes
+     * <ul>
+     * <li>a width multiple of 4 pixels</li>
+     * <li>an even height</li>
+     * </ul>
+     * </p>
+     *
+     * <pre>size = row stride * height</pre> where the row stride is in <em>bytes</em>,
+     * not pixels.
+     *
+     * <p>
+     * Since this is a densely packed format, the pixel stride is always 0. The
+     * application must use the pixel data layout defined in above table to
+     * access each row data. When row stride is equal to {@code width * (14 / 8)}, there
+     * will be no padding bytes at the end of each row, the entire image data is
+     * densely packed. When stride is larger than {@code width * (14 / 8)}, padding
+     * bytes will be present at the end of each row.
+     * </p>
+     * <p>
+     * For example, the {@link android.media.Image} object can provide data in
+     * this format from a {@link android.hardware.camera2.CameraDevice} (if
+     * supported) through a {@link android.media.ImageReader} object. The
+     * {@link android.media.Image#getPlanes() Image#getPlanes()} will return a
+     * single plane containing the pixel data. The pixel stride is always 0 in
+     * {@link android.media.Image.Plane#getPixelStride()}, and the
+     * {@link android.media.Image.Plane#getRowStride()} describes the vertical
+     * neighboring pixel distance (in bytes) between adjacent rows.
+     * </p>
+     *
+     * @see android.media.Image
+     * @see android.media.ImageReader
+     * @see android.hardware.camera2.CameraDevice
+     */
+    AIMAGE_FORMAT_RAW14             = 0x2C,
+
+    /**
      * Android dense depth image format.
      *
      * <p>Each pixel is 16 bits, representing a depth ranging measurement from a depth camera or
@@ -575,7 +720,7 @@ typedef struct AImageCropRect {
  *
  * @param image The {@link AImage} to be deleted.
  */
-void AImage_delete(AImage* _Nullable image) __INTRODUCED_IN_API_N__;
+void AImage_delete(AImage* image) __INTRODUCED_IN_API_N__;
 
 /**
  * Query the width of the input {@link AImage}.
@@ -591,8 +736,8 @@ void AImage_delete(AImage* _Nullable image) __INTRODUCED_IN_API_N__;
  *         <li>{@link AMEDIA_ERROR_INVALID_OBJECT} if the {@link AImageReader} generated this
  *                 image has been deleted.</li></ul>
  */
-media_status_t AImage_getWidth(const AImage* _Nonnull image, /*out*/int32_t* _Nonnull width)
-                               __INTRODUCED_IN_API_N__;
+media_status_t AImage_getWidth(const AImage* image, /*out*/int32_t* width)
+                               __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,2)));
 
 /**
  * Query the height of the input {@link AImage}.
@@ -608,8 +753,8 @@ media_status_t AImage_getWidth(const AImage* _Nonnull image, /*out*/int32_t* _No
  *         <li>{@link AMEDIA_ERROR_INVALID_OBJECT} if the {@link AImageReader} generated this
  *                 image has been deleted.</li></ul>
  */
-media_status_t AImage_getHeight(const AImage* _Nonnull image, /*out*/int32_t* _Nonnull height)
-                                __INTRODUCED_IN_API_N__;
+media_status_t AImage_getHeight(const AImage* image, /*out*/int32_t* height)
+                                __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,2)));
 
 /**
  * Query the format of the input {@link AImage}.
@@ -627,8 +772,8 @@ media_status_t AImage_getHeight(const AImage* _Nonnull image, /*out*/int32_t* _N
  *         <li>{@link AMEDIA_ERROR_INVALID_OBJECT} if the {@link AImageReader} generated this
  *                 image has been deleted.</li></ul>
  */
-media_status_t AImage_getFormat(const AImage* _Nonnull image, /*out*/int32_t* _Nonnull format)
-                                __INTRODUCED_IN_API_N__;
+media_status_t AImage_getFormat(const AImage* image, /*out*/int32_t* format)
+                                __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,2)));
 
 /**
  * Query the cropped rectangle of the input {@link AImage}.
@@ -647,8 +792,8 @@ media_status_t AImage_getFormat(const AImage* _Nonnull image, /*out*/int32_t* _N
  *         <li>{@link AMEDIA_ERROR_INVALID_OBJECT} if the {@link AImageReader} generated this
  *                 image has been deleted.</li></ul>
  */
-media_status_t AImage_getCropRect(const AImage* _Nonnull image,
-                                  /*out*/AImageCropRect* _Nonnull rect) __INTRODUCED_IN_API_N__;
+media_status_t AImage_getCropRect(const AImage* image,
+                                  /*out*/AImageCropRect* rect) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,2)));
 
 /**
  * Query the timestamp of the input {@link AImage}.
@@ -674,8 +819,8 @@ media_status_t AImage_getCropRect(const AImage* _Nonnull image,
  *         <li>{@link AMEDIA_ERROR_INVALID_OBJECT} if the {@link AImageReader} generated this
  *                 image has been deleted.</li></ul>
  */
-media_status_t AImage_getTimestamp(const AImage* _Nonnull image,
-                                   /*out*/int64_t* _Nonnull timestampNs) __INTRODUCED_IN_API_N__;
+media_status_t AImage_getTimestamp(const AImage* image,
+                                   /*out*/int64_t* timestampNs) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,2)));
 
 /**
  * Query the number of planes of the input {@link AImage}.
@@ -695,8 +840,8 @@ media_status_t AImage_getTimestamp(const AImage* _Nonnull image,
  *         <li>{@link AMEDIA_ERROR_INVALID_OBJECT} if the {@link AImageReader} generated this
  *                 image has been deleted.</li></ul>
  */
-media_status_t AImage_getNumberOfPlanes(const AImage* _Nonnull image,
-                                        /*out*/int32_t* _Nonnull numPlanes) __INTRODUCED_IN_API_N__;
+media_status_t AImage_getNumberOfPlanes(const AImage* image,
+                                        /*out*/int32_t* numPlanes) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,2)));
 
 /**
  * Query the pixel stride of the input {@link AImage}.
@@ -725,8 +870,8 @@ media_status_t AImage_getNumberOfPlanes(const AImage* _Nonnull image,
  *         <li>{@link AMEDIA_IMGREADER_CANNOT_LOCK_IMAGE} if the {@link AImage} cannot be locked
  *                 for CPU access.</li></ul>
  */
-media_status_t AImage_getPlanePixelStride(const AImage* _Nonnull image, int planeIdx,
-                                          /*out*/int32_t* _Nonnull pixelStride) __INTRODUCED_IN_API_N__;
+media_status_t AImage_getPlanePixelStride(const AImage* image, int planeIdx,
+                                          /*out*/int32_t* pixelStride) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,3)));
 
 /**
  * Query the row stride of the input {@link AImage}.
@@ -755,8 +900,8 @@ media_status_t AImage_getPlanePixelStride(const AImage* _Nonnull image, int plan
  *                 for CPU access.</li></ul>
  */
 media_status_t AImage_getPlaneRowStride(
-        const AImage* _Nonnull image, int planeIdx, /*out*/int32_t* _Nonnull rowStride)
-        __INTRODUCED_IN_API_N__;
+        const AImage* image, int planeIdx, /*out*/int32_t* rowStride)
+        __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,3)));
 
 /**
  * Get the data pointer of the input image for direct application access.
@@ -782,8 +927,8 @@ media_status_t AImage_getPlaneRowStride(
  *                 for CPU access.</li></ul>
  */
 media_status_t AImage_getPlaneData(
-        const AImage* _Nonnull image, int planeIdx, /*out*/uint8_t* _Nullable * _Nonnull data,
-        /*out*/int* _Nonnull dataLength) __INTRODUCED_IN_API_N__;
+        const AImage* image, int planeIdx, /*out*/uint8_t* * data,
+        /*out*/int* dataLength) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1,3,4)));
 
 /**
  * Return the image back the the system and delete the AImage object from memory asynchronously.
@@ -801,7 +946,7 @@ media_status_t AImage_getPlaneData(
  *
  * @see sync.h
  */
-void AImage_deleteAsync(AImage* _Nullable image, int releaseFenceFd) __INTRODUCED_IN_API_O__;
+void AImage_deleteAsync(AImage* image, int releaseFenceFd) __INTRODUCED_IN_API_O__;
 
 /**
  * Get the hardware buffer handle of the input image intended for GPU and/or hardware access.
@@ -832,8 +977,8 @@ void AImage_deleteAsync(AImage* _Nullable image, int releaseFenceFd) __INTRODUCE
  * @see AImageReader_ImageCallback
  */
 media_status_t AImage_getHardwareBuffer(
-        const AImage* _Nonnull image, /*out*/AHardwareBuffer* _Nullable * _Nonnull buffer)
-        __INTRODUCED_IN_API_O__;
+        const AImage* image, /*out*/AHardwareBuffer* * buffer)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2)));
 
 /**
  * Query the dataspace of the input {@link AImage}.
@@ -851,8 +996,8 @@ media_status_t AImage_getHardwareBuffer(
  *         <li>{@link AMEDIA_ERROR_INVALID_OBJECT} if the {@link AImageReader} generated this
  *                 image has been deleted.</li></ul>
  */
-media_status_t AImage_getDataSpace(const AImage* _Nonnull image,
-                                   /*out*/int32_t* _Nonnull dataSpace) __INTRODUCED_IN_API_U__;
+media_status_t AImage_getDataSpace(const AImage* image,
+                                   /*out*/int32_t* dataSpace) __INTRODUCED_IN_API_U__ __attribute__((nonnull(1,2)));
 
 /**
  * Query the transform of the input {@link AImage}.
@@ -879,8 +1024,8 @@ media_status_t AImage_getDataSpace(const AImage* _Nonnull image,
  *         <li>{@link AMEDIA_ERROR_INVALID_OBJECT} if the {@link AImageReader}
  * generated this image has been deleted.</li></ul>
  */
-media_status_t AImage_getTransform(AImage* _Nonnull image,
-                                  /*out*/int32_t* _Nonnull transform) __INTRODUCED_IN(37);
+media_status_t AImage_getTransform(AImage* image,
+                                  /*out*/int32_t* transform) __INTRODUCED_IN(37) __attribute__((nonnull(1,2)));
 
 __END_DECLS
 

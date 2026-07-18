@@ -43,8 +43,8 @@ typedef struct AInputTransferToken AInputTransferToken;
  *
  * Available since API level 35.
  */
-AInputTransferToken* _Nonnull AInputTransferToken_fromJava(JNIEnv* _Nonnull env,
-        jobject _Nonnull inputTransferTokenObj) __INTRODUCED_IN_API_V__;
+AInputTransferToken* AInputTransferToken_fromJava(JNIEnv* env,
+        jobject inputTransferTokenObj) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 /**
  * Return the Java InputTransferToken object that wraps AInputTransferToken
  *
@@ -53,15 +53,15 @@ AInputTransferToken* _Nonnull AInputTransferToken_fromJava(JNIEnv* _Nonnull env,
  *
  * Available since API level 35.
  */
-jobject _Nonnull AInputTransferToken_toJava(JNIEnv* _Nonnull env,
-        const AInputTransferToken* _Nonnull aInputTransferToken) __INTRODUCED_IN_API_V__;
+jobject AInputTransferToken_toJava(JNIEnv* env,
+        const AInputTransferToken* aInputTransferToken) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Removes a reference that was previously acquired in native.
  *
  * Available since API level 35.
  */
-void AInputTransferToken_release(AInputTransferToken* _Nullable aInputTransferToken)
+void AInputTransferToken_release(AInputTransferToken* aInputTransferToken)
         __INTRODUCED_IN_API_V__;
 
 __END_DECLS

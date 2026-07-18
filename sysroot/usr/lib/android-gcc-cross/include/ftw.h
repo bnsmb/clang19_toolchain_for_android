@@ -57,13 +57,13 @@ struct FTW {
 };
 
 #if __BIONIC_AVAILABILITY_GUARD(17)
-int ftw(const char* _Nonnull __dir_path, int (* _Nonnull __callback)(const char* _Nonnull, const struct stat* _Nonnull, int), int __max_fd_count) __INTRODUCED_IN_API_J_MR1__;
-int nftw(const char* _Nonnull __dir_path, int (* _Nonnull __callback)(const char* _Nonnull, const struct stat* _Nonnull, int, struct FTW* _Nonnull), int __max_fd_count, int __flags) __INTRODUCED_IN_API_J_MR1__;
+int ftw(const char* __dir_path, int (* __callback)(const char*, const struct stat*, int), int __max_fd_count) __INTRODUCED_IN_API_J_MR1__ __attribute__((nonnull(1,2)));
+int nftw(const char* __dir_path, int (* __callback)(const char*, const struct stat*, int, struct FTW* ), int __max_fd_count, int __flags) __INTRODUCED_IN_API_J_MR1__ __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int ftw64(const char* _Nonnull __dir_path, int (* _Nonnull __callback)(const char* _Nonnull, const struct stat64* _Nonnull, int), int __max_fd_count) __INTRODUCED_IN_API_L__;
-int nftw64(const char* _Nonnull __dir_path, int (* _Nonnull __callback)(const char* _Nonnull, const struct stat64* _Nonnull, int, struct FTW* _Nonnull), int __max_fd_count, int __flags) __INTRODUCED_IN_API_L__;
+int ftw64(const char* __dir_path, int (* __callback)(const char*, const struct stat64*, int), int __max_fd_count) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
+int nftw64(const char* __dir_path, int (* __callback)(const char*, const struct stat64*, int, struct FTW* ), int __max_fd_count, int __flags) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 __END_DECLS

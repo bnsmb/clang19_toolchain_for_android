@@ -78,22 +78,22 @@ void setutxent(void) __RENAME(setutent);
 /**
  * Does nothing and returns null.
  */
-struct utmpx* _Nullable getutxent(void) __RENAME(getutent);
+struct utmpx* getutxent(void) __RENAME(getutent);
 
 /**
  * Does nothing and returns null.
  */
-struct utmpx* _Nullable getutxid(const struct utmpx* _Nonnull __entry) __RENAME(getutent);
+struct utmpx* getutxid(const struct utmpx* __entry) __RENAME(getutent) __attribute__((nonnull(1)));
 
 /**
  * Does nothing and returns null.
  */
-struct utmpx* _Nullable getutxline(const struct utmpx* _Nonnull __entry) __RENAME(getutent);
+struct utmpx* getutxline(const struct utmpx* __entry) __RENAME(getutent) __attribute__((nonnull(1)));
 
 /**
  * Does nothing and returns null.
  */
-struct utmpx* _Nullable pututxline(const struct utmpx* _Nonnull __entry) __RENAME(pututline);
+struct utmpx* pututxline(const struct utmpx* __entry) __RENAME(pututline) __attribute__((nonnull(1)));
 
 /**
  * Does nothing.

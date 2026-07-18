@@ -35,7 +35,7 @@
 
 __BEGIN_DECLS
 
-__static_inline__ void swab(const void* _Nonnull __void_src, void* _Nonnull __void_dst, ssize_t __byte_count) {
+__static_inline__ void __attribute__((nonnull(1,2))) swab(const void* __void_src, void* __void_dst, ssize_t __byte_count) {
   const uint8_t* __src = __BIONIC_CAST(static_cast, const uint8_t*, __void_src);
   uint8_t* __dst = __BIONIC_CAST(static_cast, uint8_t*, __void_dst);
   while (__byte_count > 1) {

@@ -38,11 +38,11 @@
 
 __BEGIN_DECLS
 
-__static_inline__ int tcgetwinsize(int __fd, struct winsize* _Nonnull __size) {
+__static_inline__ int __attribute__((nonnull(2))) tcgetwinsize(int __fd, struct winsize* __size) {
   return ioctl(__fd, TIOCGWINSZ, __size);
 }
 
-__static_inline__ int tcsetwinsize(int __fd, const struct winsize* _Nonnull __size) {
+__static_inline__ int __attribute__((nonnull(2))) tcsetwinsize(int __fd, const struct winsize* __size) {
   return ioctl(__fd, TIOCSWINSZ, __size);
 }
 

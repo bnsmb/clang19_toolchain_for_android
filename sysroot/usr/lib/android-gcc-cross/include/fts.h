@@ -41,13 +41,13 @@
 __BEGIN_DECLS
 
 typedef struct _ftsent {
-	struct _ftsent * _Nullable fts_cycle;	/* cycle node */
-	struct _ftsent * _Nullable fts_parent;	/* parent directory */
-	struct _ftsent * _Nullable fts_link;	/* next file in directory */
+	struct _ftsent * fts_cycle;	/* cycle node */
+	struct _ftsent * fts_parent;	/* parent directory */
+	struct _ftsent * fts_link;	/* next file in directory */
 	long fts_number;	        /* local numeric value */
-	void * _Nullable fts_pointer;	        /* local address value */
-	char * _Nullable fts_accpath;		/* access path */
-	char * _Nullable fts_path;			/* root path */
+	void * fts_pointer;	        /* local address value */
+	char * fts_accpath;		/* access path */
+	char * fts_path;			/* root path */
 	int fts_errno;			/* errno for this node */
 	int fts_symfd;			/* fd for symlink */
 	size_t fts_pathlen;		/* strlen(fts_path) */
@@ -87,20 +87,20 @@ typedef struct _ftsent {
 #define	FTS_SKIP	 4		/* discard node */
 	unsigned short fts_instr;	/* fts_set() instructions */
 
-	struct stat * _Nullable fts_statp;		/* stat(2) information */
+	struct stat * fts_statp;		/* stat(2) information */
 	char fts_name[1];		/* file name */
 } FTSENT;
 
 typedef struct {
-	struct _ftsent * _Nullable fts_cur;	/* current node */
-	struct _ftsent * _Nullable fts_child;	/* linked list of children */
-	struct _ftsent * _Nullable * _Nullable fts_array;	/* sort array */
+	struct _ftsent * fts_cur;	/* current node */
+	struct _ftsent * fts_child;	/* linked list of children */
+	struct _ftsent * * fts_array;	/* sort array */
 	dev_t fts_dev;			/* starting device # */
-	char * _Nullable fts_path;			/* path for this descent */
+	char * fts_path;			/* path for this descent */
 	int fts_rfd;			/* fd for root */
 	size_t fts_pathlen;		/* sizeof(path) */
 	int fts_nitems;			/* elements in the sort array */
-	int (* _Nullable fts_compar)(const FTSENT* _Nonnull * _Nonnull, const FTSENT* _Nonnull * _Nonnull);		/* compare function */
+	int (* fts_compar)(const FTSENT* *, const FTSENT* * );		/* compare function */
 
 #define	FTS_COMFOLLOW	0x0001		/* follow command line symlinks */
 #define	FTS_LOGICAL	0x0002		/* logical walk */
@@ -118,11 +118,11 @@ typedef struct {
 } FTS;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-FTSENT* _Nullable fts_children(FTS* _Nonnull __fts, int __options) __INTRODUCED_IN_API_L__;
-int fts_close(FTS* _Nonnull __fts) __INTRODUCED_IN_API_L__;
-FTS* _Nullable fts_open(char* _Nullable const* _Nonnull __path, int __options, int (* _Nullable __comparator)(const FTSENT* _Nonnull * _Nonnull  __lhs, const FTSENT* _Nonnull * _Nonnull __rhs)) __INTRODUCED_IN_API_L__;
-FTSENT* _Nullable fts_read(FTS* _Nonnull __fts) __INTRODUCED_IN_API_L__;
-int fts_set(FTS* _Nonnull __fts, FTSENT* _Nonnull __entry, int __options) __INTRODUCED_IN_API_L__;
+FTSENT* fts_children(FTS* __fts, int __options) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+int fts_close(FTS* __fts) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+FTS* fts_open(char* const* __path, int __options, int (* __comparator)(const FTSENT* *  __lhs, const FTSENT* * __rhs)) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+FTSENT* fts_read(FTS* __fts) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+int fts_set(FTS* __fts, FTSENT* __entry, int __options) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 __END_DECLS

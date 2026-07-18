@@ -42,19 +42,19 @@ __BEGIN_DECLS
 
 struct if_nameindex {
   unsigned if_index;
-  char* _Nullable if_name;
+  char* if_name;
 };
 
-char* _Nullable if_indextoname(unsigned __index, char* _Nonnull __buf);
-unsigned if_nametoindex(const char* _Nonnull __name);
+char* if_indextoname(unsigned __index, char* __buf) __THROW __attribute__((nonnull(2)));
+unsigned if_nametoindex(const char* __name) __THROW __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-struct if_nameindex* _Nullable if_nameindex(void) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+struct if_nameindex* if_nameindex(void) __INTRODUCED_IN_API_N__;
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-void if_freenameindex(struct if_nameindex* _Nullable __ptr) __INTRODUCED_IN_API_N__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(24) */
+void if_freenameindex(struct if_nameindex* __ptr) __THROW __INTRODUCED_IN_API_N__;
+#endif
 
 __END_DECLS
 

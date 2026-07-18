@@ -63,18 +63,18 @@ typedef struct ASurfaceControl ASurfaceControl;
  *
  * Available since API level 29.
  */
-ASurfaceControl* _Nullable ASurfaceControl_createFromWindow(ANativeWindow* _Nonnull parent,
-                                                            const char* _Nonnull debug_name)
-        __INTRODUCED_IN_API_Q__;
+ASurfaceControl* ASurfaceControl_createFromWindow(ANativeWindow* parent,
+                                                            const char* debug_name)
+        __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * See ASurfaceControl_createFromWindow.
  *
  * Available since API level 29.
  */
-ASurfaceControl* _Nullable ASurfaceControl_create(ASurfaceControl* _Nonnull parent,
-                                                  const char* _Nonnull debug_name)
-        __INTRODUCED_IN_API_Q__;
+ASurfaceControl* ASurfaceControl_create(ASurfaceControl* parent,
+                                                  const char* debug_name)
+        __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * Acquires a reference on the given ASurfaceControl object.  This prevents the object
@@ -84,7 +84,7 @@ ASurfaceControl* _Nullable ASurfaceControl_create(ASurfaceControl* _Nonnull pare
  *
  * Available since API level 31.
  */
-void ASurfaceControl_acquire(ASurfaceControl* _Nonnull surface_control) __INTRODUCED_IN_API_S__;
+void ASurfaceControl_acquire(ASurfaceControl* surface_control) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1)));
 
 /**
  * Removes a reference that was previously acquired with one of the following functions:
@@ -95,7 +95,7 @@ void ASurfaceControl_acquire(ASurfaceControl* _Nonnull surface_control) __INTROD
  *
  * Available since API level 29.
  */
-void ASurfaceControl_release(ASurfaceControl* _Nonnull surface_control) __INTRODUCED_IN_API_Q__;
+void ASurfaceControl_release(ASurfaceControl* surface_control) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 struct ASurfaceTransaction;
 
@@ -111,14 +111,14 @@ typedef struct ASurfaceTransaction ASurfaceTransaction;
  *
  * Available since API level 29.
  */
-ASurfaceTransaction* _Nonnull ASurfaceTransaction_create() __INTRODUCED_IN_API_Q__;
+ASurfaceTransaction* ASurfaceTransaction_create() __INTRODUCED_IN_API_Q__;
 
 /**
  * Destroys the \a transaction object.
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_delete(ASurfaceTransaction* _Nullable transaction) __INTRODUCED_IN_API_Q__;
+void ASurfaceTransaction_delete(ASurfaceTransaction* transaction) __INTRODUCED_IN_API_Q__;
 
 /**
  * Applies the updates accumulated in \a transaction.
@@ -129,7 +129,7 @@ void ASurfaceTransaction_delete(ASurfaceTransaction* _Nullable transaction) __IN
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_apply(ASurfaceTransaction* _Nonnull transaction) __INTRODUCED_IN_API_Q__;
+void ASurfaceTransaction_apply(ASurfaceTransaction* transaction) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * An opaque handle returned during a callback that can be used to query general stats and stats for
@@ -158,8 +158,8 @@ typedef struct ASurfaceTransactionStats ASurfaceTransactionStats;
  * THREADING
  * The transaction completed callback can be invoked on any thread.
  */
-typedef void (*ASurfaceTransaction_OnComplete)(void* _Null_unspecified context,
-                                               ASurfaceTransactionStats* _Nonnull stats);
+typedef void (*ASurfaceTransaction_OnComplete)(void* context,
+                                               ASurfaceTransactionStats* stats);
 
 /**
  * The ASurfaceTransaction_OnCommit callback is invoked when transaction is applied and the updates
@@ -184,8 +184,8 @@ typedef void (*ASurfaceTransaction_OnComplete)(void* _Null_unspecified context,
  * THREADING
  * The transaction committed callback can be invoked on any thread.
  */
-typedef void (*ASurfaceTransaction_OnCommit)(void* _Null_unspecified context,
-                                             ASurfaceTransactionStats* _Nonnull stats);
+typedef void (*ASurfaceTransaction_OnCommit)(void* context,
+                                             ASurfaceTransactionStats* stats);
 
 /**
  * The ASurfaceTransaction_OnBufferRelease callback is invoked when a buffer that was passed in
@@ -211,7 +211,7 @@ typedef void (*ASurfaceTransaction_OnCommit)(void* _Null_unspecified context,
  * THREADING
  * The callback can be invoked on any thread.
  */
-typedef void (*ASurfaceTransaction_OnBufferRelease)(void* _Null_unspecified context,
+typedef void (*ASurfaceTransaction_OnBufferRelease)(void* context,
                                                     int release_fence_fd);
 
 /**
@@ -221,7 +221,7 @@ typedef void (*ASurfaceTransaction_OnBufferRelease)(void* _Null_unspecified cont
  * Available since API level 29.
  */
 int64_t ASurfaceTransactionStats_getLatchTime(
-        ASurfaceTransactionStats* _Nonnull surface_transaction_stats) __INTRODUCED_IN_API_Q__;
+        ASurfaceTransactionStats* surface_transaction_stats) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Returns a sync fence that signals when the transaction has been presented.
@@ -233,7 +233,7 @@ int64_t ASurfaceTransactionStats_getLatchTime(
  * Available since API level 29.
  */
 int ASurfaceTransactionStats_getPresentFenceFd(
-        ASurfaceTransactionStats* _Nonnull surface_transaction_stats) __INTRODUCED_IN_API_Q__;
+        ASurfaceTransactionStats* surface_transaction_stats) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * \a outASurfaceControls returns an array of ASurfaceControl pointers that were updated during the
@@ -246,9 +246,9 @@ int ASurfaceTransactionStats_getPresentFenceFd(
  * \a outASurfaceControlsSize returns the size of the ASurfaceControls array.
  */
 void ASurfaceTransactionStats_getASurfaceControls(
-        ASurfaceTransactionStats* _Nonnull surface_transaction_stats,
-        ASurfaceControl* _Nullable* _Nullable* _Nonnull outASurfaceControls,
-        size_t* _Nonnull outASurfaceControlsSize) __INTRODUCED_IN_API_Q__;
+        ASurfaceTransactionStats* surface_transaction_stats,
+        ASurfaceControl*** outASurfaceControls,
+        size_t* outASurfaceControlsSize) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2,3)));
 /**
  * Releases the array of ASurfaceControls that were returned by
  * ASurfaceTransactionStats_getASurfaceControls().
@@ -256,7 +256,7 @@ void ASurfaceTransactionStats_getASurfaceControls(
  * Available since API level 29.
  */
 void ASurfaceTransactionStats_releaseASurfaceControls(
-        ASurfaceControl* _Nonnull* _Nonnull surface_controls) __INTRODUCED_IN_API_Q__;
+        ASurfaceControl** surface_controls) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Returns the timestamp of when the CURRENT buffer was acquired. A buffer is considered
@@ -270,8 +270,8 @@ void ASurfaceTransactionStats_releaseASurfaceControls(
  * use the acquire fence passed in to setBuffer and query the signal time.
  */
 int64_t ASurfaceTransactionStats_getAcquireTime(
-        ASurfaceTransactionStats* _Nonnull surface_transaction_stats,
-        ASurfaceControl* _Nonnull surface_control) __INTRODUCED_IN_API_Q__;
+        ASurfaceTransactionStats* surface_transaction_stats,
+        ASurfaceControl* surface_control) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * The returns the fence used to signal the release of the PREVIOUS buffer set on
@@ -296,8 +296,8 @@ int64_t ASurfaceTransactionStats_getAcquireTime(
  * Available since API level 29.
  */
 int ASurfaceTransactionStats_getPreviousReleaseFenceFd(
-        ASurfaceTransactionStats* _Nonnull surface_transaction_stats,
-        ASurfaceControl* _Nonnull surface_control) __INTRODUCED_IN_API_Q__;
+        ASurfaceTransactionStats* surface_transaction_stats,
+        ASurfaceControl* surface_control) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * Sets the callback that will be invoked when the updates from this transaction
@@ -306,10 +306,10 @@ int ASurfaceTransactionStats_getPreviousReleaseFenceFd(
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_setOnComplete(ASurfaceTransaction* _Nonnull transaction,
-                                       void* _Null_unspecified context,
-                                       ASurfaceTransaction_OnComplete _Nonnull func)
-        __INTRODUCED_IN_API_Q__;
+void ASurfaceTransaction_setOnComplete(ASurfaceTransaction* transaction,
+                                       void* context,
+                                       ASurfaceTransaction_OnComplete func)
+        __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,3)));
 
 /**
  * Sets the callback that will be invoked when the updates from this transaction are applied and are
@@ -318,10 +318,10 @@ void ASurfaceTransaction_setOnComplete(ASurfaceTransaction* _Nonnull transaction
  *
  * Available since API level 31.
  */
-void ASurfaceTransaction_setOnCommit(ASurfaceTransaction* _Nonnull transaction,
-                                     void* _Null_unspecified context,
-                                     ASurfaceTransaction_OnCommit _Nonnull func)
-        __INTRODUCED_IN_API_S__;
+void ASurfaceTransaction_setOnCommit(ASurfaceTransaction* transaction,
+                                     void* context,
+                                     ASurfaceTransaction_OnCommit func)
+        __INTRODUCED_IN_API_S__ __attribute__((nonnull(1,3)));
 
 /**
  * Reparents the \a surface_control from its old parent to the \a new_parent surface control.
@@ -331,9 +331,9 @@ void ASurfaceTransaction_setOnCommit(ASurfaceTransaction* _Nonnull transaction,
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_reparent(ASurfaceTransaction* _Nonnull transaction,
-                                  ASurfaceControl* _Nonnull surface_control,
-                                  ASurfaceControl* _Nullable new_parent) __INTRODUCED_IN_API_Q__;
+void ASurfaceTransaction_reparent(ASurfaceTransaction* transaction,
+                                  ASurfaceControl* surface_control,
+                                  ASurfaceControl* new_parent) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * Parameter for ASurfaceTransaction_setVisibility().
@@ -349,10 +349,10 @@ enum ASurfaceTransactionVisibility : int8_t {
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_setVisibility(ASurfaceTransaction* _Nonnull transaction,
-                                       ASurfaceControl* _Nonnull surface_control,
+void ASurfaceTransaction_setVisibility(ASurfaceTransaction* transaction,
+                                       ASurfaceControl* surface_control,
                                        enum ASurfaceTransactionVisibility visibility)
-        __INTRODUCED_IN_API_Q__;
+        __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * Updates the z order index for \a surface_control. Note that the z order for a surface
@@ -363,9 +363,9 @@ void ASurfaceTransaction_setVisibility(ASurfaceTransaction* _Nonnull transaction
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_setZOrder(ASurfaceTransaction* _Nonnull transaction,
-                                   ASurfaceControl* _Nonnull surface_control, int32_t z_order)
-        __INTRODUCED_IN_API_Q__;
+void ASurfaceTransaction_setZOrder(ASurfaceTransaction* transaction,
+                                   ASurfaceControl* surface_control, int32_t z_order)
+        __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * Updates the AHardwareBuffer displayed for \a surface_control. If not -1, the
@@ -383,10 +383,10 @@ void ASurfaceTransaction_setZOrder(ASurfaceTransaction* _Nonnull transaction,
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_setBuffer(ASurfaceTransaction* _Nonnull transaction,
-                                   ASurfaceControl* _Nonnull surface_control,
-                                   AHardwareBuffer* _Nonnull buffer, int acquire_fence_fd)
-        __INTRODUCED_IN_API_Q__;
+void ASurfaceTransaction_setBuffer(ASurfaceTransaction* transaction,
+                                   ASurfaceControl* surface_control,
+                                   AHardwareBuffer* buffer, int acquire_fence_fd)
+        __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Updates the AHardwareBuffer displayed for \a surface_control. If not -1, the
@@ -404,12 +404,12 @@ void ASurfaceTransaction_setBuffer(ASurfaceTransaction* _Nonnull transaction,
  *
  * Available since API level 36.
  */
-void ASurfaceTransaction_setBufferWithRelease(ASurfaceTransaction* _Nonnull transaction,
-                                              ASurfaceControl* _Nonnull surface_control,
-                                              AHardwareBuffer* _Nonnull buffer,
-                                              int acquire_fence_fd, void* _Null_unspecified context,
-                                              ASurfaceTransaction_OnBufferRelease _Nonnull func)
-        __INTRODUCED_IN_API_W__;
+void ASurfaceTransaction_setBufferWithRelease(ASurfaceTransaction* transaction,
+                                              ASurfaceControl* surface_control,
+                                              AHardwareBuffer* buffer,
+                                              int acquire_fence_fd, void* context,
+                                              ASurfaceTransaction_OnBufferRelease func)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2,3,6)));
 
 /**
  * Updates the color for \a surface_control.  This will make the background color for the
@@ -419,10 +419,10 @@ void ASurfaceTransaction_setBufferWithRelease(ASurfaceTransaction* _Nonnull tran
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_setColor(ASurfaceTransaction* _Nonnull transaction,
-                                  ASurfaceControl* _Nonnull surface_control, float r, float g,
+void ASurfaceTransaction_setColor(ASurfaceTransaction* transaction,
+                                  ASurfaceControl* surface_control, float r, float g,
                                   float b, float alpha, enum ADataSpace dataspace)
-        __INTRODUCED_IN_API_Q__;
+        __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 // These APIs (setGeometry and setCrop) were originally written in a
 // C-incompatible form using references instead of pointers, and the OS shipped
@@ -466,15 +466,15 @@ void ASurfaceTransaction_setColor(ASurfaceTransaction* _Nonnull transaction,
  * to set different properties at different times, instead of having to specify all the desired
  * properties at once.
  */
-void ASurfaceTransaction_setGeometry(ASurfaceTransaction* _Nonnull transaction,
-                                     ASurfaceControl* _Nonnull surface_control,
+void ASurfaceTransaction_setGeometry(ASurfaceTransaction* transaction,
+                                     ASurfaceControl* surface_control,
 #if defined(__cplusplus)
                                      const ARect& source, const ARect& destination,
 #else
-                                     const ARect* _Nonnull source,
-                                     const ARect* _Nonnull destination,
+                                     const ARect* source,
+                                     const ARect* destination,
 #endif
-                                     int32_t transform) __INTRODUCED_IN_API_Q__;
+                                     int32_t transform) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2,5,6)));
 
 /**
  * Bounds the surface and its children to the bounds specified. The crop and buffer size will be
@@ -485,12 +485,12 @@ void ASurfaceTransaction_setGeometry(ASurfaceTransaction* _Nonnull transaction,
  *
  * Available since API level 31.
  */
-void ASurfaceTransaction_setCrop(ASurfaceTransaction* _Nonnull transaction,
-                                 ASurfaceControl* _Nonnull surface_control,
+void ASurfaceTransaction_setCrop(ASurfaceTransaction* transaction,
+                                 ASurfaceControl* surface_control,
 #if defined(__cplusplus)
                                  const ARect& crop)
 #else
-                                 const ARect* _Nonnull crop)
+                                 const ARect* crop)
 #endif
         __INTRODUCED_IN_API_S__;
 
@@ -502,9 +502,9 @@ void ASurfaceTransaction_setCrop(ASurfaceTransaction* _Nonnull transaction,
  *
  * Available since API level 31.
  */
-void ASurfaceTransaction_setPosition(ASurfaceTransaction* _Nonnull transaction,
-                                     ASurfaceControl* _Nonnull surface_control, int32_t x,
-                                     int32_t y) __INTRODUCED_IN_API_S__;
+void ASurfaceTransaction_setPosition(ASurfaceTransaction* transaction,
+                                     ASurfaceControl* surface_control, int32_t x,
+                                     int32_t y) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1,2)));
 
 /**
  * \param transform The transform applied after the source rect is applied to the buffer. This
@@ -513,9 +513,9 @@ void ASurfaceTransaction_setPosition(ASurfaceTransaction* _Nonnull transaction,
  *
  * Available since API level 31.
  */
-void ASurfaceTransaction_setBufferTransform(ASurfaceTransaction* _Nonnull transaction,
-                                            ASurfaceControl* _Nonnull surface_control,
-                                            int32_t transform) __INTRODUCED_IN_API_S__;
+void ASurfaceTransaction_setBufferTransform(ASurfaceTransaction* transaction,
+                                            ASurfaceControl* surface_control,
+                                            int32_t transform) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1,2)));
 
 /**
  * Sets an x and y scale of a surface with (0, 0) as the centerpoint of the scale.
@@ -525,9 +525,9 @@ void ASurfaceTransaction_setBufferTransform(ASurfaceTransaction* _Nonnull transa
  *
  * Available since API level 31.
  */
-void ASurfaceTransaction_setScale(ASurfaceTransaction* _Nonnull transaction,
-                                  ASurfaceControl* _Nonnull surface_control, float xScale,
-                                  float yScale) __INTRODUCED_IN_API_S__;
+void ASurfaceTransaction_setScale(ASurfaceTransaction* transaction,
+                                  ASurfaceControl* surface_control, float xScale,
+                                  float yScale) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1,2)));
 /**
  * Parameter for ASurfaceTransaction_setBufferTransparency().
  */
@@ -543,10 +543,10 @@ enum ASurfaceTransactionTransparency : int8_t {
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_setBufferTransparency(ASurfaceTransaction* _Nonnull transaction,
-                                               ASurfaceControl* _Nonnull surface_control,
+void ASurfaceTransaction_setBufferTransparency(ASurfaceTransaction* transaction,
+                                               ASurfaceControl* surface_control,
                                                enum ASurfaceTransactionTransparency transparency)
-                                               __INTRODUCED_IN_API_Q__;
+                                               __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * Updates the region for the content on this surface updated in this
@@ -554,10 +554,10 @@ void ASurfaceTransaction_setBufferTransparency(ASurfaceTransaction* _Nonnull tra
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_setDamageRegion(ASurfaceTransaction* _Nonnull transaction,
-                                         ASurfaceControl* _Nonnull surface_control,
-                                         const ARect* _Nullable rects, uint32_t count)
-                                         __INTRODUCED_IN_API_Q__;
+void ASurfaceTransaction_setDamageRegion(ASurfaceTransaction* transaction,
+                                         ASurfaceControl* surface_control,
+                                         const ARect* rects, uint32_t count)
+                                         __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * Specifies a desiredPresentTime for the transaction. The framework will try to present
@@ -571,8 +571,8 @@ void ASurfaceTransaction_setDamageRegion(ASurfaceTransaction* _Nonnull transacti
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_setDesiredPresentTime(ASurfaceTransaction* _Nonnull transaction,
-                                               int64_t desiredPresentTime) __INTRODUCED_IN_API_Q__;
+void ASurfaceTransaction_setDesiredPresentTime(ASurfaceTransaction* transaction,
+                                               int64_t desiredPresentTime) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Sets the alpha for the buffer. It uses a premultiplied blending.
@@ -581,9 +581,9 @@ void ASurfaceTransaction_setDesiredPresentTime(ASurfaceTransaction* _Nonnull tra
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_setBufferAlpha(ASurfaceTransaction* _Nonnull transaction,
-                                        ASurfaceControl* _Nonnull surface_control, float alpha)
-                                        __INTRODUCED_IN_API_Q__;
+void ASurfaceTransaction_setBufferAlpha(ASurfaceTransaction* transaction,
+                                        ASurfaceControl* surface_control, float alpha)
+                                        __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * Sets the data space of the surface_control's buffers.
@@ -592,9 +592,9 @@ void ASurfaceTransaction_setBufferAlpha(ASurfaceTransaction* _Nonnull transactio
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_setBufferDataSpace(ASurfaceTransaction* _Nonnull transaction,
-                                            ASurfaceControl* _Nonnull surface_control,
-                                            enum ADataSpace data_space) __INTRODUCED_IN_API_Q__;
+void ASurfaceTransaction_setBufferDataSpace(ASurfaceTransaction* transaction,
+                                            ASurfaceControl* surface_control,
+                                            enum ADataSpace data_space) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * SMPTE ST 2086 "Mastering Display Color Volume" static metadata
@@ -604,10 +604,10 @@ void ASurfaceTransaction_setBufferDataSpace(ASurfaceTransaction* _Nonnull transa
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_setHdrMetadata_smpte2086(ASurfaceTransaction* _Nonnull transaction,
-                                                  ASurfaceControl* _Nonnull surface_control,
-                                                  struct AHdrMetadata_smpte2086* _Nullable metadata)
-                                                  __INTRODUCED_IN_API_Q__;
+void ASurfaceTransaction_setHdrMetadata_smpte2086(ASurfaceTransaction* transaction,
+                                                  ASurfaceControl* surface_control,
+                                                  struct AHdrMetadata_smpte2086* metadata)
+                                                  __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * Sets the CTA 861.3 "HDR Static Metadata Extension" static metadata on a surface.
@@ -617,10 +617,10 @@ void ASurfaceTransaction_setHdrMetadata_smpte2086(ASurfaceTransaction* _Nonnull 
  *
  * Available since API level 29.
  */
-void ASurfaceTransaction_setHdrMetadata_cta861_3(ASurfaceTransaction* _Nonnull transaction,
-                                                 ASurfaceControl* _Nonnull surface_control,
-                                                 struct AHdrMetadata_cta861_3* _Nullable metadata)
-                                                 __INTRODUCED_IN_API_Q__;
+void ASurfaceTransaction_setHdrMetadata_cta861_3(ASurfaceTransaction* transaction,
+                                                 ASurfaceControl* surface_control,
+                                                 struct AHdrMetadata_cta861_3* metadata)
+                                                 __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,2)));
 
 /**
  * Sets the desired extended range brightness for the layer. This only applies for layers whose
@@ -669,10 +669,10 @@ void ASurfaceTransaction_setHdrMetadata_cta861_3(ASurfaceTransaction* _Nonnull t
  *
  * Available since API level 34.
  */
-void ASurfaceTransaction_setExtendedRangeBrightness(ASurfaceTransaction* _Nonnull transaction,
-                                                    ASurfaceControl* _Nonnull surface_control,
+void ASurfaceTransaction_setExtendedRangeBrightness(ASurfaceTransaction* transaction,
+                                                    ASurfaceControl* surface_control,
                                                     float currentBufferRatio, float desiredRatio)
-                                                    __INTRODUCED_IN_API_U__;
+                                                    __INTRODUCED_IN_API_U__ __attribute__((nonnull(1,2)));
 
 /**
  * Sets the desired HDR headroom for the layer. See: ASurfaceTransaction_setExtendedRangeBrightness,
@@ -708,10 +708,10 @@ void ASurfaceTransaction_setExtendedRangeBrightness(ASurfaceTransaction* _Nonnul
  *
  * Available since API level 35.
  */
-void ASurfaceTransaction_setDesiredHdrHeadroom(ASurfaceTransaction* _Nonnull transaction,
-                                               ASurfaceControl* _Nonnull surface_control,
+void ASurfaceTransaction_setDesiredHdrHeadroom(ASurfaceTransaction* transaction,
+                                               ASurfaceControl* surface_control,
                                                float desiredHeadroom)
-        __INTRODUCED_IN_API_V__;
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Sets the Lut(s) to be applied for the layer.
@@ -725,10 +725,10 @@ void ASurfaceTransaction_setDesiredHdrHeadroom(ASurfaceTransaction* _Nonnull tra
  *
  * Available since API level 36.
  */
-void ASurfaceTransaction_setLuts(ASurfaceTransaction* _Nonnull transaction,
-                                 ASurfaceControl* _Nonnull surface_control,
-                                 const struct ADisplayLuts* _Nullable luts)
-        __INTRODUCED_IN_API_W__;
+void ASurfaceTransaction_setLuts(ASurfaceTransaction* transaction,
+                                 ASurfaceControl* surface_control,
+                                 const struct ADisplayLuts* luts)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Same as ASurfaceTransaction_setFrameRateWithChangeStrategy(transaction, surface_control,
@@ -738,9 +738,9 @@ void ASurfaceTransaction_setLuts(ASurfaceTransaction* _Nonnull transaction,
  *
  * Available since API level 30.
  */
-void ASurfaceTransaction_setFrameRate(ASurfaceTransaction* _Nonnull transaction,
-                                      ASurfaceControl* _Nonnull surface_control, float frameRate,
-                                      int8_t compatibility) __INTRODUCED_IN_API_R__;
+void ASurfaceTransaction_setFrameRate(ASurfaceTransaction* transaction,
+                                      ASurfaceControl* surface_control, float frameRate,
+                                      int8_t compatibility) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1,2)));
 
 /**
  * Sets the intended frame rate for \a surface_control.
@@ -774,11 +774,11 @@ void ASurfaceTransaction_setFrameRate(ASurfaceTransaction* _Nonnull transaction,
  *
  * Available since API level 31.
  */
-void ASurfaceTransaction_setFrameRateWithChangeStrategy(ASurfaceTransaction* _Nonnull transaction,
-                                                        ASurfaceControl* _Nonnull surface_control,
+void ASurfaceTransaction_setFrameRateWithChangeStrategy(ASurfaceTransaction* transaction,
+                                                        ASurfaceControl* surface_control,
                                                         float frameRate, int8_t compatibility,
                                                         int8_t changeFrameRateStrategy)
-                                                        __INTRODUCED_IN_API_S__;
+                                                        __INTRODUCED_IN_API_S__ __attribute__((nonnull(1,2)));
 
 /**
  * Clears the frame rate which is set for \a surface_control.
@@ -801,9 +801,9 @@ void ASurfaceTransaction_setFrameRateWithChangeStrategy(ASurfaceTransaction* _No
  *
  * Available since API level 34.
  */
-void ASurfaceTransaction_clearFrameRate(ASurfaceTransaction* _Nonnull transaction,
-                                        ASurfaceControl* _Nonnull surface_control)
-                                        __INTRODUCED_IN_API_U__;
+void ASurfaceTransaction_clearFrameRate(ASurfaceTransaction* transaction,
+                                        ASurfaceControl* surface_control)
+                                        __INTRODUCED_IN_API_U__ __attribute__((nonnull(1,2)));
 
 /**
  * Indicate whether to enable backpressure for buffer submission to a given SurfaceControl.
@@ -831,9 +831,9 @@ void ASurfaceTransaction_clearFrameRate(ASurfaceTransaction* _Nonnull transactio
  * \param surface_control The ASurfaceControl on which to control buffer backpressure behavior.
  * \param enableBackPressure Whether to enable back pressure.
  */
-void ASurfaceTransaction_setEnableBackPressure(ASurfaceTransaction* _Nonnull transaction,
-                                               ASurfaceControl* _Nonnull surface_control,
-                                               bool enableBackPressure) __INTRODUCED_IN_API_S__;
+void ASurfaceTransaction_setEnableBackPressure(ASurfaceTransaction* transaction,
+                                               ASurfaceControl* surface_control,
+                                               bool enableBackPressure) __INTRODUCED_IN_API_S__ __attribute__((nonnull(1,2)));
 
 /**
  * Sets the frame timeline to use in SurfaceFlinger.
@@ -853,8 +853,8 @@ void ASurfaceTransaction_setEnableBackPressure(ASurfaceTransaction* _Nonnull tra
  * to the corresponding expected presentation time and deadline from the frame to be rendered. A
  * stale or invalid value will be ignored.
  */
-void ASurfaceTransaction_setFrameTimeline(ASurfaceTransaction* _Nonnull transaction,
-                                          AVsyncId vsyncId) __INTRODUCED_IN_API_T__;
+void ASurfaceTransaction_setFrameTimeline(ASurfaceTransaction* transaction,
+                                          AVsyncId vsyncId) __INTRODUCED_IN_API_T__ __attribute__((nonnull(1)));
 
 __END_DECLS
 

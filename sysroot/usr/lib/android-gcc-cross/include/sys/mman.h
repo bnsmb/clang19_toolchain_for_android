@@ -42,6 +42,7 @@ __BEGIN_DECLS
 /** Return value for mmap(). */
 #define MAP_FAILED __BIONIC_CAST(reinterpret_cast, void*, -1)
 
+#if defined(__USE_FILE_OFFSET64)
 /**
  * [mmap(2)](https://man7.org/linux/man-pages/man2/mmap.2.html)
  * creates a memory mapping for the given range.
@@ -49,20 +50,17 @@ __BEGIN_DECLS
  * Returns the address of the mapping on success,
  * and returns `MAP_FAILED` and sets `errno` on failure.
  */
-void* _Nonnull mmap(void* _Nullable __addr, size_t __size, int __prot, int __flags, int __fd, off_t __offset)
-#if defined(__USE_FILE_OFFSET64)
-	__RENAME(mmap64)
+void* mmap(void* __addr, size_t __size, int __prot, int __flags, int __fd, off_t __offset) __REDIRECT_NTH(mmap64);
+#else
+void* mmap(void* __addr, size_t __size, int __prot, int __flags, int __fd, off_t __offset)__THROW ;
 #endif
-;
 
-#if __BIONIC_AVAILABILITY_GUARD(21)
 /**
  * mmap64() is a variant of mmap() that takes a 64-bit offset even on LP32.
  *
  * See https://android.googlesource.com/platform/bionic/+/main/docs/32-bit-abi.md
  */
-void* _Nonnull mmap64(void* _Nullable __addr, size_t __size, int __prot, int __flags, int __fd, off64_t __offset) __INTRODUCED_IN_API_L__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(21) */
+void* mmap64(void* __addr, size_t __size, int __prot, int __flags, int __fd, off64_t __offset)__THROW ;
 
 /**
  * [munmap(2)](https://man7.org/linux/man-pages/man2/munmap.2.html)
@@ -70,7 +68,7 @@ void* _Nonnull mmap64(void* _Nullable __addr, size_t __size, int __prot, int __f
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int munmap(void* _Nonnull __addr, size_t __size);
+int munmap(void* __addr, size_t __size) __THROW __attribute__((nonnull(1)));
 
 /**
  * [msync(2)](https://man7.org/linux/man-pages/man2/msync.2.html)
@@ -78,7 +76,7 @@ int munmap(void* _Nonnull __addr, size_t __size);
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int msync(void* _Nonnull __addr, size_t __size, int __flags);
+int msync(void* __addr, size_t __size, int __flags) __attribute__((nonnull(1)));
 
 /**
  * [mprotect(2)](https://man7.org/linux/man-pages/man2/mprotect.2.html)
@@ -86,7 +84,7 @@ int msync(void* _Nonnull __addr, size_t __size, int __flags);
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int mprotect(void* _Nonnull __addr, size_t __size, int __prot);
+int mprotect(void* __addr, size_t __size, int __prot) __THROW __attribute__((nonnull(1)));
 
 /**
  * [mremap(2)](https://man7.org/linux/man-pages/man2/mremap.2.html)
@@ -95,7 +93,7 @@ int mprotect(void* _Nonnull __addr, size_t __size, int __prot);
  * Returns the address of the mapping on success,
  * and returns `MAP_FAILED` and sets `errno` on failure.
  */
-void* _Nonnull mremap(void* _Nonnull __old_addr, size_t __old_size, size_t __new_size, int __flags, ...);
+void* mremap(void* __old_addr, size_t __old_size, size_t __new_size, int __flags, ...) __THROW __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(17)
 /**
@@ -104,7 +102,7 @@ void* _Nonnull mremap(void* _Nonnull __old_addr, size_t __old_size, size_t __new
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int mlockall(int __flags) __INTRODUCED_IN_API_J_MR1__;
+int mlockall(int __flags) __THROW __INTRODUCED_IN_API_J_MR1__;
 
 /**
  * [munlockall(2)](https://man7.org/linux/man-pages/man2/munlockall.2.html)
@@ -112,7 +110,7 @@ int mlockall(int __flags) __INTRODUCED_IN_API_J_MR1__;
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int munlockall(void) __INTRODUCED_IN_API_J_MR1__;
+int munlockall(void) __THROW __INTRODUCED_IN_API_J_MR1__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 
 /**
@@ -121,8 +119,9 @@ int munlockall(void) __INTRODUCED_IN_API_J_MR1__;
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int mlock(const void* _Nonnull __addr, size_t __size);
+int mlock(const void* __addr, size_t __size) __THROW __attribute__((nonnull(1)));
 
+#if __BIONIC_AVAILABILITY_GUARD(30)
 /**
  * [mlock2(2)](https://man7.org/linux/man-pages/man2/mlock2.2.html)
  * locks pages (preventing swapping), with optional flags.
@@ -131,9 +130,8 @@ int mlock(const void* _Nonnull __addr, size_t __size);
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-#if __BIONIC_AVAILABILITY_GUARD(30)
-int mlock2(const void* _Nonnull __addr, size_t __size, int __flags) __INTRODUCED_IN_API_R__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(30) */
+int mlock2(const void* __addr, size_t __size, int __flags) __THROW __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+#endif
 
 /**
  * [munlock(2)](https://man7.org/linux/man-pages/man2/munlock.2.html)
@@ -141,7 +139,7 @@ int mlock2(const void* _Nonnull __addr, size_t __size, int __flags) __INTRODUCED
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int munlock(const void* _Nonnull __addr, size_t __size);
+int munlock(const void* __addr, size_t __size) __THROW __attribute__((nonnull(1)));
 
 /**
  * [mincore(2)](https://man7.org/linux/man-pages/man2/mincore.2.html)
@@ -149,7 +147,7 @@ int munlock(const void* _Nonnull __addr, size_t __size);
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int mincore(void* _Nonnull __addr, size_t __size, unsigned char* _Nonnull __vector);
+int mincore(void* __addr, size_t __size, unsigned char* __vector) __THROW __attribute__((nonnull(1,3)));
 
 /**
  * [madvise(2)](https://man7.org/linux/man-pages/man2/madvise.2.html)
@@ -157,8 +155,9 @@ int mincore(void* _Nonnull __addr, size_t __size, unsigned char* _Nonnull __vect
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int madvise(void* _Nonnull __addr, size_t __size, int __advice);
+int madvise(void* __addr, size_t __size, int __advice) __THROW __attribute__((nonnull(1)));
 
+#if __BIONIC_AVAILABILITY_GUARD(31)
 /**
  * [process_madvise(2)](https://man7.org/linux/man-pages/man2/process_madvise.2.html)
  * works just like madvise(2) but applies to the process specified by the given
@@ -171,10 +170,10 @@ int madvise(void* _Nonnull __addr, size_t __size, int __advice);
  *
  * Returns the number of bytes advised on success, and returns -1 and sets `errno` on failure.
  */
-#if __BIONIC_AVAILABILITY_GUARD(31)
-ssize_t process_madvise(int __pid_fd, const struct iovec* _Nonnull __iov, size_t __count, int __advice, unsigned __flags) __INTRODUCED_IN_API_S__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(31) */
+ssize_t process_madvise(int __pid_fd, const struct iovec* __iov, size_t __count, int __advice, unsigned __flags) __THROW __INTRODUCED_IN_API_S__ __attribute__((nonnull(2)));
+#endif
 
+#if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(30)
 /**
  * [memfd_create(2)](https://man7.org/linux/man-pages/man2/memfd_create.2.html)
  * creates an anonymous file.
@@ -183,8 +182,7 @@ ssize_t process_madvise(int __pid_fd, const struct iovec* _Nonnull __iov, size_t
  *
  * Available since API level 30 when compiling with `_GNU_SOURCE`.
  */
-#if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(30)
-int memfd_create(const char* _Nonnull __name, unsigned __flags) __INTRODUCED_IN_API_R__;
+int memfd_create(const char* __name, unsigned __flags) __THROW __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 #endif
 
 #if __ANDROID_API__ >= 23
@@ -211,6 +209,7 @@ int memfd_create(const char* _Nonnull __name, unsigned __flags) __INTRODUCED_IN_
 
 #endif
 
+#if __BIONIC_AVAILABILITY_GUARD(23)
 /**
  * [posix_madvise(3)](https://man7.org/linux/man-pages/man3/posix_madvise.3.html)
  * gives the kernel advice about future usage patterns.
@@ -220,10 +219,10 @@ int memfd_create(const char* _Nonnull __name, unsigned __flags) __INTRODUCED_IN_
  *
  * Returns 0 on success, and returns a positive error number on failure.
  */
-#if __BIONIC_AVAILABILITY_GUARD(23)
-int posix_madvise(void* _Nonnull __addr, size_t __size, int __advice) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+int posix_madvise(void* __addr, size_t __size, int __advice) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+#endif
 
+#if __BIONIC_AVAILABILITY_GUARD(36)
 /**
  * [mseal(2)](https://man7.org/linux/man-pages/man2/mseal.2.html)
  * seals the given range to prevent modifications such as mprotect() calls.
@@ -234,8 +233,7 @@ int posix_madvise(void* _Nonnull __addr, size_t __size, int __advice) __INTRODUC
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-#if __BIONIC_AVAILABILITY_GUARD(36)
-int mseal(void* _Nonnull __addr, size_t __size, unsigned long __flags) __INTRODUCED_IN_API_W__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(36) */
+int mseal(void* __addr, size_t __size, unsigned long __flags) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
+#endif
 
 __END_DECLS

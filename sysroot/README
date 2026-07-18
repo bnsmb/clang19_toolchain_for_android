@@ -130,7 +130,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # The tools included in the tar file with the clang19 toolchain are:
 # 
 # clang 19.0.0
-# gcc 16.1.1
+# gcc 16.1.1 20260716
 # cmake 3.30.4, 4.0.1, and 4.3.0
 # ninja 1.13.1
 # make 4.4.1
@@ -576,4 +576,5 @@ History
     added xcp 0.24.8 (https://github.com/tarka/xcp, a companion for the cp command)
     added dua 2.38.0 (https://github.com/Byron/dua-cli, a replacement for du)
     updated btop to version 1.4.7; btop now runs as non-root user (but with limited network statistics)
+    updated the gcc to version  16.1.1 20260716 
 

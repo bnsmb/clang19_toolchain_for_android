@@ -134,9 +134,9 @@ typedef enum AGpuHeadroomCalculationType : int32_t {
  *                     {@link #ACpuHeadroomParams_getCalculationWindowMillis} if not set. The device
  *                     will try to use the closest feasible window size to this param.
  */
-void ACpuHeadroomParams_setCalculationWindowMillis(ACpuHeadroomParams *_Nonnull params,
+void ACpuHeadroomParams_setCalculationWindowMillis(ACpuHeadroomParams* params,
                                                    int windowMillis)
-__INTRODUCED_IN_API_W__;
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Gets the CPU headroom calculation window size in milliseconds.
@@ -148,8 +148,8 @@ __INTRODUCED_IN_API_W__;
  * @param params The params to read from.
  * @return This will return the default value chosen by the device if the params is not set.
  */
-int ACpuHeadroomParams_getCalculationWindowMillis(ACpuHeadroomParams* _Nonnull params)
-__INTRODUCED_IN_API_W__;
+int ACpuHeadroomParams_getCalculationWindowMillis(ACpuHeadroomParams* params)
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Sets the GPU headroom calculation window size in milliseconds.
@@ -164,9 +164,9 @@ __INTRODUCED_IN_API_W__;
  *                     {@link #AGpuHeadroomParams_getCalculationWindowMillis} if not set. The device
  *                     will try to use the closest feasible window size to this param.
  */
-void AGpuHeadroomParams_setCalculationWindowMillis(AGpuHeadroomParams* _Nonnull params,
+void AGpuHeadroomParams_setCalculationWindowMillis(AGpuHeadroomParams* params,
                                                    int windowMillis)
-__INTRODUCED_IN_API_W__;
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Gets the GPU headroom calculation window size in milliseconds.
@@ -178,8 +178,8 @@ __INTRODUCED_IN_API_W__;
  * @param params The params to read from.
  * @return This will return the default value chosen by the device if the params is not set.
  */
-int AGpuHeadroomParams_getCalculationWindowMillis(AGpuHeadroomParams* _Nonnull params)
-__INTRODUCED_IN_API_W__;
+int AGpuHeadroomParams_getCalculationWindowMillis(AGpuHeadroomParams* params)
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Sets the CPU headroom calculation type in {@link ACpuHeadroomParams}.
@@ -189,9 +189,9 @@ __INTRODUCED_IN_API_W__;
  * @param params The params to be set.
  * @param calculationType The headroom calculation type.
  */
-void ACpuHeadroomParams_setCalculationType(ACpuHeadroomParams* _Nonnull params,
+void ACpuHeadroomParams_setCalculationType(ACpuHeadroomParams* params,
                                            ACpuHeadroomCalculationType calculationType)
-__INTRODUCED_IN_API_W__;
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Gets the CPU headroom calculation type in {@link ACpuHeadroomParams}.
@@ -204,8 +204,8 @@ __INTRODUCED_IN_API_W__;
  * @return The headroom calculation type.
  */
 ACpuHeadroomCalculationType
-ACpuHeadroomParams_getCalculationType(ACpuHeadroomParams* _Nonnull params)
-__INTRODUCED_IN_API_W__;
+ACpuHeadroomParams_getCalculationType(ACpuHeadroomParams* params)
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Sets the GPU headroom calculation type in {@link AGpuHeadroomParams}.
@@ -215,9 +215,9 @@ __INTRODUCED_IN_API_W__;
  * @param params The params to be set.
  * @param calculationType The headroom calculation type.
  */
-void AGpuHeadroomParams_setCalculationType(AGpuHeadroomParams* _Nonnull params,
+void AGpuHeadroomParams_setCalculationType(AGpuHeadroomParams* params,
                                            AGpuHeadroomCalculationType calculationType)
-__INTRODUCED_IN_API_W__;
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Gets the GPU headroom calculation type in {@link AGpuHeadroomParams}.
@@ -230,8 +230,8 @@ __INTRODUCED_IN_API_W__;
  * @return The headroom calculation type.
  */
 AGpuHeadroomCalculationType
-AGpuHeadroomParams_getCalculationType(AGpuHeadroomParams* _Nonnull params)
-__INTRODUCED_IN_API_W__;
+AGpuHeadroomParams_getCalculationType(AGpuHeadroomParams* params)
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Sets the thread TIDs to track in {@link ACpuHeadroomParams}.
@@ -248,9 +248,9 @@ __INTRODUCED_IN_API_W__;
  *             {@link ASystemHealth_getMaxCpuHeadroomTidsSize}.
  * @param tidsSize The size of the tids array.
  */
-void ACpuHeadroomParams_setTids(ACpuHeadroomParams* _Nonnull params, const int* _Nonnull tids,
+void ACpuHeadroomParams_setTids(ACpuHeadroomParams* params, const int* tids,
                                 size_t tidsSize)
-__INTRODUCED_IN_API_W__;
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Creates a new instance of {@link ACpuHeadroomParams}.
@@ -263,7 +263,7 @@ __INTRODUCED_IN_API_W__;
  *
  * @return A new instance of {@link ACpuHeadroomParams}.
  */
-ACpuHeadroomParams* _Nonnull ACpuHeadroomParams_create(void)
+ACpuHeadroomParams* ACpuHeadroomParams_create(void)
 __INTRODUCED_IN_API_W__;
 
 /**
@@ -277,7 +277,7 @@ __INTRODUCED_IN_API_W__;
  *
  * @return A new instance of {@link AGpuHeadroomParams}.
  */
-AGpuHeadroomParams* _Nonnull AGpuHeadroomParams_create(void)
+AGpuHeadroomParams* AGpuHeadroomParams_create(void)
 __INTRODUCED_IN_API_W__;
 
 /**
@@ -287,7 +287,7 @@ __INTRODUCED_IN_API_W__;
  *
  * @param params The params to be deleted.
  */
-void ACpuHeadroomParams_destroy(ACpuHeadroomParams* _Nullable params)
+void ACpuHeadroomParams_destroy(ACpuHeadroomParams* params)
 __INTRODUCED_IN_API_W__;
 
 /**
@@ -297,7 +297,7 @@ __INTRODUCED_IN_API_W__;
  *
  * @param params The params to be deleted.
  */
-void AGpuHeadroomParams_destroy(AGpuHeadroomParams* _Nullable params)
+void AGpuHeadroomParams_destroy(AGpuHeadroomParams* params)
 __INTRODUCED_IN_API_W__;
 
 /**
@@ -311,7 +311,7 @@ __INTRODUCED_IN_API_W__;
  * @return 0 on success.
  *         ENOTSUP if the CPU headroom API is unsupported.
  */
-int ASystemHealth_getMaxCpuHeadroomTidsSize(size_t* _Nonnull outSize);
+int ASystemHealth_getMaxCpuHeadroomTidsSize(size_t* outSize) __attribute__((nonnull(1)));
 
 /**
  * Gets the range of the calculation window size for CPU headroom.
@@ -323,9 +323,9 @@ int ASystemHealth_getMaxCpuHeadroomTidsSize(size_t* _Nonnull outSize);
  * @return 0 on success.
  *         ENOTSUP if API is unsupported.
  */
-int ASystemHealth_getCpuHeadroomCalculationWindowRange(int32_t* _Nonnull outMinMillis,
-                                                       int32_t* _Nonnull outMaxMillis)
-__INTRODUCED_IN_API_W__;
+int ASystemHealth_getCpuHeadroomCalculationWindowRange(int32_t* outMinMillis,
+                                                       int32_t* outMaxMillis)
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Gets the range of the calculation window size for GPU headroom.
@@ -337,9 +337,9 @@ __INTRODUCED_IN_API_W__;
  * @return 0 on success.
  *         ENOTSUP if API is unsupported.
  */
-int ASystemHealth_getGpuHeadroomCalculationWindowRange(int32_t* _Nonnull outMinMillis,
-                                                       int32_t* _Nonnull outMaxMillis)
-__INTRODUCED_IN_API_W__;
+int ASystemHealth_getGpuHeadroomCalculationWindowRange(int32_t* outMinMillis,
+                                                       int32_t* outMaxMillis)
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Provides an estimate of available CPU capacity headroom of the device.
@@ -368,9 +368,9 @@ __INTRODUCED_IN_API_W__;
  *         EPERM if the TIDs do not belong to the same process.
  *         ENOTSUP if API or requested params is unsupported.
  */
-int ASystemHealth_getCpuHeadroom(const ACpuHeadroomParams* _Nullable params,
-                                 float* _Nonnull outHeadroom)
-__INTRODUCED_IN_API_W__;
+int ASystemHealth_getCpuHeadroom(const ACpuHeadroomParams* params,
+                                 float* outHeadroom)
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(2)));
 
 /**
  * Provides an estimate of available GPU capacity headroom of the device.
@@ -398,9 +398,9 @@ __INTRODUCED_IN_API_W__;
  *         EPIPE if failed to get the GPU headroom.
  *         ENOTSUP if API or requested params is unsupported.
  */
-int ASystemHealth_getGpuHeadroom(const AGpuHeadroomParams* _Nullable params,
-                                 float* _Nonnull outHeadroom)
-__INTRODUCED_IN_API_W__;
+int ASystemHealth_getGpuHeadroom(const AGpuHeadroomParams* params,
+                                 float* outHeadroom)
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(2)));
 
 /**
  * Gets minimum polling interval for calling {@link ASystemHealth_getCpuHeadroom} in milliseconds.
@@ -415,8 +415,8 @@ __INTRODUCED_IN_API_W__;
  * @return 0 on success.
  *         ENOTSUP if API is unsupported.
  */
-int ASystemHealth_getCpuHeadroomMinIntervalMillis(int64_t* _Nonnull outMinIntervalMillis)
-__INTRODUCED_IN_API_W__;
+int ASystemHealth_getCpuHeadroomMinIntervalMillis(int64_t* outMinIntervalMillis)
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Gets minimum polling interval for calling {@link ASystemHealth_getGpuHeadroom} in milliseconds.
@@ -431,8 +431,8 @@ __INTRODUCED_IN_API_W__;
  * @return 0 on success.
  *         ENOTSUP if API is unsupported.
  */
-int ASystemHealth_getGpuHeadroomMinIntervalMillis(int64_t* _Nonnull outMinIntervalMillis)
-__INTRODUCED_IN_API_W__;
+int ASystemHealth_getGpuHeadroomMinIntervalMillis(int64_t* outMinIntervalMillis)
+__INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 #ifdef __cplusplus
 }

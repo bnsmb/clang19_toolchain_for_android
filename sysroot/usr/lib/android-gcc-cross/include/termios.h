@@ -49,19 +49,19 @@ __BEGIN_DECLS
  * [cfgetispeed(3)](https://man7.org/linux/man-pages/man3/cfgetispeed.3.html)
  * returns the terminal input baud rate.
  */
-speed_t cfgetispeed(const struct termios* _Nonnull __t);
+speed_t cfgetispeed(const struct termios* __t) __THROW __attribute__((nonnull(1)));
 
 /**
  * [cfgetospeed(3)](https://man7.org/linux/man-pages/man3/cfgetospeed.3.html)
  * returns the terminal output baud rate.
  */
-speed_t cfgetospeed(const struct termios* _Nonnull __t);
+speed_t cfgetospeed(const struct termios* __t) __THROW __attribute__((nonnull(1)));
 
 /**
  * [cfmakeraw(3)](https://man7.org/linux/man-pages/man3/cfmakeraw.3.html)
  * configures the terminal for "raw" mode.
  */
-void cfmakeraw(struct termios* _Nonnull __t);
+void cfmakeraw(struct termios* __t) __THROW __attribute__((nonnull(1)));
 
 /**
  * [cfsetspeed(3)](https://man7.org/linux/man-pages/man3/cfsetspeed.3.html)
@@ -69,7 +69,7 @@ void cfmakeraw(struct termios* _Nonnull __t);
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int cfsetspeed(struct termios* _Nonnull __t, speed_t __speed);
+int cfsetspeed(struct termios* __t, speed_t __speed) __THROW __attribute__((nonnull(1)));
 
 /**
  * [cfsetispeed(3)](https://man7.org/linux/man-pages/man3/cfsetispeed.3.html)
@@ -77,7 +77,7 @@ int cfsetspeed(struct termios* _Nonnull __t, speed_t __speed);
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int cfsetispeed(struct termios* _Nonnull _t, speed_t __speed);
+int cfsetispeed(struct termios* _t, speed_t __speed) __THROW __attribute__((nonnull(1)));
 
 /**
  * [cfsetospeed(3)](https://man7.org/linux/man-pages/man3/cfsetospeed.3.html)
@@ -85,7 +85,7 @@ int cfsetispeed(struct termios* _Nonnull _t, speed_t __speed);
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int cfsetospeed(struct termios* _Nonnull __t, speed_t __speed);
+int cfsetospeed(struct termios* __t, speed_t __speed) __THROW __attribute__((nonnull(1)));
 
 /**
  * [tcdrain(3)](https://man7.org/linux/man-pages/man3/tcdrain.3.html)
@@ -102,7 +102,7 @@ int tcdrain(int __fd);
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int tcflow(int __fd, int __action);
+int tcflow(int __fd, int __action)__THROW ;
 
 /**
  * [tcflush(3)](https://man7.org/linux/man-pages/man3/tcflush.3.html)
@@ -112,7 +112,7 @@ int tcflow(int __fd, int __action);
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int tcflush(int __fd, int __queue);
+int tcflush(int __fd, int __queue)__THROW ;
 
 /**
  * [tcgetattr(3)](https://man7.org/linux/man-pages/man3/tcgetattr.3.html)
@@ -120,7 +120,7 @@ int tcflush(int __fd, int __queue);
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int tcgetattr(int __fd, struct termios* _Nonnull __t);
+int tcgetattr(int __fd, struct termios* __t) __THROW __attribute__((nonnull(2)));
 
 /**
  * [tcgetsid(3)](https://man7.org/linux/man-pages/man3/tcgetsid.3.html)
@@ -129,7 +129,7 @@ int tcgetattr(int __fd, struct termios* _Nonnull __t);
  * Returns a non-negative session id on success and
  * returns -1 and sets `errno` on failure.
  */
-pid_t tcgetsid(int __fd);
+pid_t tcgetsid(int __fd)__THROW ;
 
 /**
  * [tcsendbreak(3)](https://man7.org/linux/man-pages/man3/tcsendbreak.3.html)
@@ -137,7 +137,7 @@ pid_t tcgetsid(int __fd);
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int tcsendbreak(int __fd, int __duration);
+int tcsendbreak(int __fd, int __duration)__THROW ;
 
 /**
  * [tcsetattr(3)](https://man7.org/linux/man-pages/man3/tcsetattr.3.html)
@@ -145,7 +145,7 @@ int tcsendbreak(int __fd, int __duration);
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int tcsetattr(int __fd, int __optional_actions, const struct termios* _Nonnull __t);
+int tcsetattr(int __fd, int __optional_actions, const struct termios* __t) __THROW __attribute__((nonnull(3)));
 
 #endif
 
@@ -158,14 +158,14 @@ int tcsetattr(int __fd, int __optional_actions, const struct termios* _Nonnull _
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int tcgetwinsize(int __fd, struct winsize* _Nonnull __size);
+int tcgetwinsize(int __fd, struct winsize* __size) __attribute__((nonnull(2)));
 
 /**
  * tcsetwinsize(3) sets the window size of the given terminal.
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int tcsetwinsize(int __fd, const struct winsize* _Nonnull __size);
+int tcsetwinsize(int __fd, const struct winsize* __size) __attribute__((nonnull(2)));
 #endif
 
 __END_DECLS

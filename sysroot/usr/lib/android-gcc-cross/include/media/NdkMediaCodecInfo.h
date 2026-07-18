@@ -78,8 +78,8 @@ typedef struct ADoubleRange {
  *
  * @return NULL if @param info is invalid.
  */
-const char* _Nullable AMediaCodecInfo_getCanonicalName(const AMediaCodecInfo* _Nonnull info)
-        __INTRODUCED_IN_API_W__;
+const char* AMediaCodecInfo_getCanonicalName(const AMediaCodecInfo* info)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 typedef enum AMediaCodecKind : int32_t {
     /** invalid media codec info */
@@ -95,7 +95,7 @@ typedef enum AMediaCodecKind : int32_t {
 /**
  * Query the kind of the codec.
  */
-AMediaCodecKind AMediaCodecInfo_getKind(const AMediaCodecInfo* _Nonnull info) __INTRODUCED_IN_API_W__;
+AMediaCodecKind AMediaCodecInfo_getKind(const AMediaCodecInfo* info) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Query if the codec is provided by the Android platform or the device manufacturer.
@@ -104,7 +104,7 @@ AMediaCodecKind AMediaCodecInfo_getKind(const AMediaCodecInfo* _Nonnull info) __
  * @return 0 if the codec is provided by the Android platform
  * @return -1 if @param info is invalid.
  */
-int32_t AMediaCodecInfo_isVendor(const AMediaCodecInfo* _Nonnull info) __INTRODUCED_IN_API_W__;
+int32_t AMediaCodecInfo_isVendor(const AMediaCodecInfo* info) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * The type of codecs.
@@ -145,7 +145,7 @@ typedef enum AMediaCodecType : int32_t {
  * @return INVALID_CODEC_INFO if @param info is invalid.
  */
 AMediaCodecType AMediaCodecInfo_getMediaCodecInfoType(
-        const AMediaCodecInfo* _Nonnull info) __INTRODUCED_IN_API_W__;
+        const AMediaCodecInfo* info) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Get the supported media type of the codec.
@@ -155,8 +155,8 @@ AMediaCodecType AMediaCodecInfo_getMediaCodecInfoType(
  *
  * @return NULL if @param info is invalid.
  */
-const char* _Nullable AMediaCodecInfo_getMediaType(const AMediaCodecInfo* _Nonnull info)
-        __INTRODUCED_IN_API_W__;
+const char* AMediaCodecInfo_getMediaType(const AMediaCodecInfo* info)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Get the max number of the supported concurrent codec instances.
@@ -168,8 +168,8 @@ const char* _Nullable AMediaCodecInfo_getMediaType(const AMediaCodecInfo* _Nonnu
  *
  * @return -1 if @param info is invalid.
  */
-int32_t AMediaCodecInfo_getMaxSupportedInstances(const AMediaCodecInfo* _Nonnull info)
-        __INTRODUCED_IN_API_W__;
+int32_t AMediaCodecInfo_getMaxSupportedInstances(const AMediaCodecInfo* info)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Query codec feature capabilities.
@@ -185,8 +185,8 @@ int32_t AMediaCodecInfo_getMaxSupportedInstances(const AMediaCodecInfo* _Nonnull
  * @return 0 if the feature is unsupported;
  * @return -1 if @param info or @param featureName is invalid.
  */
-int32_t AMediaCodecInfo_isFeatureSupported(const AMediaCodecInfo* _Nonnull info,
-        const char* _Nonnull featureName) __INTRODUCED_IN_API_W__;
+int32_t AMediaCodecInfo_isFeatureSupported(const AMediaCodecInfo* info,
+        const char* featureName) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Query codec feature requirements.
@@ -201,8 +201,8 @@ int32_t AMediaCodecInfo_isFeatureSupported(const AMediaCodecInfo* _Nonnull info,
  * @return 0 if the feature is not required;
  * @return -1 if @param info or @param featureName is invalid.
  */
-int32_t AMediaCodecInfo_isFeatureRequired(const AMediaCodecInfo* _Nonnull info,
-        const char* _Nonnull featureName) __INTRODUCED_IN_API_W__;
+int32_t AMediaCodecInfo_isFeatureRequired(const AMediaCodecInfo* info,
+        const char* featureName) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Query whether codec supports a given @param format.
@@ -211,8 +211,8 @@ int32_t AMediaCodecInfo_isFeatureRequired(const AMediaCodecInfo* _Nonnull info,
  * @return 0 if the format is unsupported;
  * @return -1 if @param info or @param format is invalid.
  */
-int32_t AMediaCodecInfo_isFormatSupported(const AMediaCodecInfo* _Nonnull info,
-        const AMediaFormat* _Nonnull format) __INTRODUCED_IN_API_W__;
+int32_t AMediaCodecInfo_isFormatSupported(const AMediaCodecInfo* info,
+        const AMediaFormat* format) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the ACodecAudioCapabilities from the given AMediaCodecInfo.
@@ -224,8 +224,8 @@ int32_t AMediaCodecInfo_isFormatSupported(const AMediaCodecInfo* _Nonnull info,
  * @return AMEDIA_ERROR_UNSUPPORTED if the codec is not an audio codec.
  * @return AMEDIA_ERROR_INVALID_PARAMETER if @param info or @param outAudioCaps is invalid.
  */
-media_status_t AMediaCodecInfo_getAudioCapabilities(const AMediaCodecInfo* _Nonnull info,
-        const ACodecAudioCapabilities* _Nullable * _Nonnull outAudioCaps) __INTRODUCED_IN_API_W__;
+media_status_t AMediaCodecInfo_getAudioCapabilities(const AMediaCodecInfo* info,
+        const ACodecAudioCapabilities* * outAudioCaps) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the ACodecVideoCapabilities from the given AMediaCodecInfo.
@@ -237,8 +237,8 @@ media_status_t AMediaCodecInfo_getAudioCapabilities(const AMediaCodecInfo* _Nonn
  * @return AMEDIA_ERROR_UNSUPPORTED if the codec is not a video codec.
  * @return AMEDIA_ERROR_INVALID_PARAMETER if @param info or @param outVideoCaps is invalid.
  */
-media_status_t AMediaCodecInfo_getVideoCapabilities(const AMediaCodecInfo* _Nonnull info,
-        const ACodecVideoCapabilities* _Nullable * _Nonnull outVideoCaps) __INTRODUCED_IN_API_W__;
+media_status_t AMediaCodecInfo_getVideoCapabilities(const AMediaCodecInfo* info,
+        const ACodecVideoCapabilities* * outVideoCaps) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the ACodecEncoderCapabilities from the given AMediaCodecInfo.
@@ -250,8 +250,8 @@ media_status_t AMediaCodecInfo_getVideoCapabilities(const AMediaCodecInfo* _Nonn
  * @return AMEDIA_ERROR_UNSUPPORTED if the codec is not an encoder.
  * @return AMEDIA_ERROR_INVALID_PARAMETER if @param info or @param outEncoderCaps is invalid.
  */
-media_status_t AMediaCodecInfo_getEncoderCapabilities(const AMediaCodecInfo* _Nonnull info,
-        const ACodecEncoderCapabilities* _Nullable * _Nonnull outEncoderCaps) __INTRODUCED_IN_API_W__;
+media_status_t AMediaCodecInfo_getEncoderCapabilities(const AMediaCodecInfo* info,
+        const ACodecEncoderCapabilities* * outEncoderCaps) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 // ACodecAudioCapabilities
 
@@ -266,8 +266,8 @@ media_status_t AMediaCodecInfo_getEncoderCapabilities(const AMediaCodecInfo* _No
  * @return AMEDIA_ERROR_INVALID_PARAMETER if any of @param audioCaps and @param outRange is invalid.
  */
 media_status_t ACodecAudioCapabilities_getBitrateRange(
-        const ACodecAudioCapabilities* _Nonnull audioCaps,
-        AIntRange* _Nonnull outRange) __INTRODUCED_IN_API_W__;
+        const ACodecAudioCapabilities* audioCaps,
+        AIntRange* outRange) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the array of supported sample rates
@@ -284,9 +284,9 @@ media_status_t ACodecAudioCapabilities_getBitrateRange(
  * and @param outCount is invalid.
  */
 media_status_t ACodecAudioCapabilities_getSupportedSampleRates(
-        const ACodecAudioCapabilities* _Nonnull audioCaps,
-        const int* _Nullable * _Nonnull outArrayPtr,
-        size_t* _Nonnull outCount) __INTRODUCED_IN_API_W__;
+        const ACodecAudioCapabilities* audioCaps,
+        const int* * outArrayPtr,
+        size_t* outCount) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Get the array of supported sample rate ranges.
@@ -302,9 +302,9 @@ media_status_t ACodecAudioCapabilities_getSupportedSampleRates(
  * and @param outCount is invalid.
  */
 media_status_t ACodecAudioCapabilities_getSupportedSampleRateRanges(
-        const ACodecAudioCapabilities* _Nonnull audioCaps,
-        const AIntRange* _Nullable * _Nonnull outArrayPtr, size_t* _Nonnull outCount)
-        __INTRODUCED_IN_API_W__;
+        const ACodecAudioCapabilities* audioCaps,
+        const AIntRange* * outArrayPtr, size_t* outCount)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Return the maximum number of input channels supported.
@@ -312,7 +312,7 @@ media_status_t ACodecAudioCapabilities_getSupportedSampleRateRanges(
  * @return -1 if @param audioCaps is invalid.
  */
 int32_t ACodecAudioCapabilities_getMaxInputChannelCount(
-        const ACodecAudioCapabilities* _Nonnull audioCaps) __INTRODUCED_IN_API_W__;
+        const ACodecAudioCapabilities* audioCaps) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Returns the minimum number of input channels supported.
@@ -321,7 +321,7 @@ int32_t ACodecAudioCapabilities_getMaxInputChannelCount(
  * @return -1 if @param audioCaps is invalid.
  */
 int32_t ACodecAudioCapabilities_getMinInputChannelCount(
-        const ACodecAudioCapabilities* _Nonnull audioCaps) __INTRODUCED_IN_API_W__;
+        const ACodecAudioCapabilities* audioCaps) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Get an array of ranges representing the number of input channels supported.
@@ -339,9 +339,9 @@ int32_t ACodecAudioCapabilities_getMinInputChannelCount(
  * and @param outCount is invalid.
  */
 media_status_t ACodecAudioCapabilities_getInputChannelCountRanges(
-        const ACodecAudioCapabilities* _Nonnull audioCaps,
-        const AIntRange* _Nullable * _Nonnull outArrayPtr, size_t* _Nonnull outCount)
-        __INTRODUCED_IN_API_W__;
+        const ACodecAudioCapabilities* audioCaps,
+        const AIntRange* * outArrayPtr, size_t* outCount)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Query whether the sample rate is supported by the codec.
@@ -351,8 +351,8 @@ media_status_t ACodecAudioCapabilities_getInputChannelCountRanges(
  * @return -1 if @param audioCaps is invalid.
  */
 int32_t ACodecAudioCapabilities_isSampleRateSupported(
-        const ACodecAudioCapabilities* _Nonnull audioCaps,
-        int32_t sampleRate) __INTRODUCED_IN_API_W__;
+        const ACodecAudioCapabilities* audioCaps,
+        int32_t sampleRate) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 // ACodecPerformancePoint
 
@@ -371,14 +371,14 @@ int32_t ACodecAudioCapabilities_isSampleRateSupported(
  * @param height height of the frame in pixels
  * @param frameRate frame rate in frames per second
  */
-ACodecPerformancePoint* _Nonnull ACodecPerformancePoint_create(int32_t width, int32_t height,
+ACodecPerformancePoint* ACodecPerformancePoint_create(int32_t width, int32_t height,
         int32_t frameRate) __INTRODUCED_IN_API_W__;
 
 /**
  * Delete a created performance point.
  */
 void ACodecPerformancePoint_destroy(
-        ACodecPerformancePoint* _Nullable performancePoint) __INTRODUCED_IN_API_W__;
+        ACodecPerformancePoint* performancePoint) __INTRODUCED_IN_API_W__;
 
 /**
  * Checks whether the performance point covers a media format.
@@ -389,8 +389,8 @@ void ACodecPerformancePoint_destroy(
  * @return 0 if the performance point does not cover the format.
  * @return -1 if @param performancePoint or @param format is invalid.
  */
-int32_t ACodecPerformancePoint_coversFormat(const ACodecPerformancePoint* _Nonnull performancePoint,
-        const AMediaFormat* _Nonnull format) __INTRODUCED_IN_API_W__;
+int32_t ACodecPerformancePoint_coversFormat(const ACodecPerformancePoint* performancePoint,
+        const AMediaFormat* format) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Checks whether a performance point covers another performance point.
@@ -406,8 +406,8 @@ int32_t ACodecPerformancePoint_coversFormat(const ACodecPerformancePoint* _Nonnu
  * @return 0 if @param one does not cover @param another.
  * @return -1 if @param one or @param another is invalid.
  */
-int32_t ACodecPerformancePoint_covers(const ACodecPerformancePoint* _Nonnull one,
-        const ACodecPerformancePoint* _Nonnull another) __INTRODUCED_IN_API_W__;
+int32_t ACodecPerformancePoint_covers(const ACodecPerformancePoint* one,
+        const ACodecPerformancePoint* another) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Checks whether two performance points are equal.
@@ -416,8 +416,8 @@ int32_t ACodecPerformancePoint_covers(const ACodecPerformancePoint* _Nonnull one
  * @return 0 if @param one and @param another are not equal.
  * @return -1 if @param one or @param another is invalid.
  */
-int32_t ACodecPerformancePoint_equals(const ACodecPerformancePoint* _Nonnull one,
-        const ACodecPerformancePoint* _Nonnull another) __INTRODUCED_IN_API_W__;
+int32_t ACodecPerformancePoint_equals(const ACodecPerformancePoint* one,
+        const ACodecPerformancePoint* another) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 // ACodecVideoCapabilities
 
@@ -432,8 +432,8 @@ int32_t ACodecPerformancePoint_equals(const ACodecPerformancePoint* _Nonnull one
  * @return AMEDIA_ERROR_INVALID_PARAMETER if any of @param videoCaps and @param outRange is invalid.
  */
 media_status_t ACodecVideoCapabilities_getBitrateRange(
-        const ACodecVideoCapabilities* _Nonnull videoCaps,
-        AIntRange* _Nonnull outRange) __INTRODUCED_IN_API_W__;
+        const ACodecVideoCapabilities* videoCaps,
+        AIntRange* outRange) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the range of supported video widths.
@@ -446,8 +446,8 @@ media_status_t ACodecVideoCapabilities_getBitrateRange(
  * @return AMEDIA_ERROR_INVALID_PARAMETER if any of @param videoCaps and @param outRange is invalid.
  */
 media_status_t ACodecVideoCapabilities_getSupportedWidths(
-        const ACodecVideoCapabilities* _Nonnull videoCaps,
-        AIntRange* _Nonnull outRange) __INTRODUCED_IN_API_W__;
+        const ACodecVideoCapabilities* videoCaps,
+        AIntRange* outRange) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the range of supported video heights.
@@ -460,8 +460,8 @@ media_status_t ACodecVideoCapabilities_getSupportedWidths(
  * @return AMEDIA_ERROR_INVALID_PARAMETER if any of @param videoCaps and @param outRange is invalid.
  */
 media_status_t ACodecVideoCapabilities_getSupportedHeights(
-        const ACodecVideoCapabilities* _Nonnull videoCaps,
-        AIntRange* _Nonnull outRange) __INTRODUCED_IN_API_W__;
+        const ACodecVideoCapabilities* videoCaps,
+        AIntRange* outRange) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the alignment requirement for video width (in pixels).
@@ -471,7 +471,7 @@ media_status_t ACodecVideoCapabilities_getSupportedHeights(
  * @return -1 if @param videoCaps is invalid.
  */
 int32_t ACodecVideoCapabilities_getWidthAlignment(
-        const ACodecVideoCapabilities* _Nonnull videoCaps) __INTRODUCED_IN_API_W__;
+        const ACodecVideoCapabilities* videoCaps) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Return the alignment requirement for video height (in pixels).
@@ -481,7 +481,7 @@ int32_t ACodecVideoCapabilities_getWidthAlignment(
  * @return -1 if @param videoCaps is invalid.
  */
 int32_t ACodecVideoCapabilities_getHeightAlignment(
-        const ACodecVideoCapabilities* _Nonnull videoCaps) __INTRODUCED_IN_API_W__;
+        const ACodecVideoCapabilities* videoCaps) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Get the range of supported frame rates.
@@ -498,8 +498,8 @@ int32_t ACodecVideoCapabilities_getHeightAlignment(
  * @return AMEDIA_ERROR_INVALID_PARAMETER if any of @param videoCaps and @param outRange is invalid.
  */
 media_status_t ACodecVideoCapabilities_getSupportedFrameRates(
-        const ACodecVideoCapabilities* _Nonnull videoCaps,
-        AIntRange* _Nonnull outRange) __INTRODUCED_IN_API_W__;
+        const ACodecVideoCapabilities* videoCaps,
+        AIntRange* outRange) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the range of supported video widths for a video height.
@@ -513,8 +513,8 @@ media_status_t ACodecVideoCapabilities_getSupportedFrameRates(
  * @return AMEDIA_ERROR_INVALID_PARAMETER if any of @param videoCaps and @param outRange is invalid.
  */
 media_status_t ACodecVideoCapabilities_getSupportedWidthsFor(
-        const ACodecVideoCapabilities* _Nonnull videoCaps, int32_t height,
-        AIntRange* _Nonnull outRange) __INTRODUCED_IN_API_W__;
+        const ACodecVideoCapabilities* videoCaps, int32_t height,
+        AIntRange* outRange) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,3)));
 
 /**
  * Get the range of supported video heights for a video width.
@@ -528,8 +528,8 @@ media_status_t ACodecVideoCapabilities_getSupportedWidthsFor(
  * @return AMEDIA_ERROR_INVALID_PARAMETER if any of @param videoCaps and @param outRange is invalid.
  */
 media_status_t ACodecVideoCapabilities_getSupportedHeightsFor(
-        const ACodecVideoCapabilities* _Nonnull videoCaps, int32_t width,
-        AIntRange* _Nonnull outRange) __INTRODUCED_IN_API_W__;
+        const ACodecVideoCapabilities* videoCaps, int32_t width,
+        AIntRange* outRange) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,3)));
 
 /**
  * Get the range of supported video frame rates for a video size.
@@ -547,8 +547,8 @@ media_status_t ACodecVideoCapabilities_getSupportedHeightsFor(
  * @return AMEDIA_ERROR_INVALID_PARAMETER if any of @param videoCaps and @param outRange is invalid.
  */
 media_status_t ACodecVideoCapabilities_getSupportedFrameRatesFor(
-        const ACodecVideoCapabilities* _Nonnull videoCaps, int32_t width, int32_t height,
-        ADoubleRange* _Nonnull outRange) __INTRODUCED_IN_API_W__;
+        const ACodecVideoCapabilities* videoCaps, int32_t width, int32_t height,
+        ADoubleRange* outRange) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,4)));
 
 /**
  * Get the range of achievable video frame rates for a video size.
@@ -565,8 +565,8 @@ media_status_t ACodecVideoCapabilities_getSupportedFrameRatesFor(
  * @return AMEDIA_ERROR_INVALID_PARAMETER if any of @param videoCaps and @param outRange is invalid.
  */
 media_status_t ACodecVideoCapabilities_getAchievableFrameRatesFor(
-        const ACodecVideoCapabilities* _Nonnull videoCaps, int32_t width, int32_t height,
-        ADoubleRange* _Nonnull outRange) __INTRODUCED_IN_API_W__;
+        const ACodecVideoCapabilities* videoCaps, int32_t width, int32_t height,
+        ADoubleRange* outRange) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,4)));
 
 /**
  * Get the supported performance points.
@@ -588,8 +588,8 @@ media_status_t ACodecVideoCapabilities_getAchievableFrameRatesFor(
  * *outPerformancePoint will also be set to NULL in this case.
  */
 media_status_t ACodecVideoCapabilities_getNextSupportedPerformancePoint(
-        const ACodecVideoCapabilities* _Nonnull videoCaps,
-        const ACodecPerformancePoint* _Nullable * _Nonnull outPerformancePoint) __INTRODUCED_IN_API_W__;
+        const ACodecVideoCapabilities* videoCaps,
+        const ACodecPerformancePoint* * outPerformancePoint) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get whether a given video size and frameRate combination is supported.
@@ -599,8 +599,8 @@ media_status_t ACodecVideoCapabilities_getNextSupportedPerformancePoint(
  * @return -1 if @param videoCaps is invalid.
  */
 int32_t ACodecVideoCapabilities_areSizeAndRateSupported(
-        const ACodecVideoCapabilities* _Nonnull videoCaps,
-        int32_t width, int32_t height, double frameRate) __INTRODUCED_IN_API_W__;
+        const ACodecVideoCapabilities* videoCaps,
+        int32_t width, int32_t height, double frameRate) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 /**
  * Get whether a given video size is supported.
@@ -609,8 +609,8 @@ int32_t ACodecVideoCapabilities_areSizeAndRateSupported(
  * @return 0 if the size is not supported.
  * @return -1 if @param videoCaps is invalid.
  */
-int32_t ACodecVideoCapabilities_isSizeSupported(const ACodecVideoCapabilities* _Nonnull videoCaps,
-        int32_t width, int32_t height) __INTRODUCED_IN_API_W__;
+int32_t ACodecVideoCapabilities_isSizeSupported(const ACodecVideoCapabilities* videoCaps,
+        int32_t width, int32_t height) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 
 // ACodecEncoderCapabilities
 
@@ -628,8 +628,8 @@ int32_t ACodecVideoCapabilities_isSizeSupported(const ACodecVideoCapabilities* _
  * @return AMEDIA_ERROR_INVALID_PARAMETER if any of @param videoCaps and @param outRange is invalid.
  */
 media_status_t ACodecEncoderCapabilities_getQualityRange(
-        const ACodecEncoderCapabilities* _Nonnull encoderCaps,
-        AIntRange* _Nonnull outRange) __INTRODUCED_IN_API_W__;
+        const ACodecEncoderCapabilities* encoderCaps,
+        AIntRange* outRange) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the supported range of encoder complexity values.
@@ -646,8 +646,8 @@ media_status_t ACodecEncoderCapabilities_getQualityRange(
  * @return AMEDIA_ERROR_INVALID_PARAMETER if any of @param videoCaps and @param outRange is invalid.
  */
 media_status_t ACodecEncoderCapabilities_getComplexityRange(
-        const ACodecEncoderCapabilities* _Nonnull encoderCaps,
-        AIntRange* _Nonnull outRange) __INTRODUCED_IN_API_W__;
+        const ACodecEncoderCapabilities* encoderCaps,
+        AIntRange* outRange) __INTRODUCED_IN_API_W__ __attribute__((nonnull(1,2)));
 
 /**
  * Encoder bitrate modes.
@@ -667,8 +667,32 @@ typedef enum ABitrateMode : int32_t {
  * @return -1 if @param encoderCaps is invalid.
  */
 int32_t ACodecEncoderCapabilities_isBitrateModeSupported(
-        const ACodecEncoderCapabilities* _Nonnull encoderCaps, ABitrateMode mode)
-        __INTRODUCED_IN_API_W__;
+        const ACodecEncoderCapabilities* encoderCaps, ABitrateMode mode)
+        __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
+
+/**
+ * Get the array of layering schemas supported by the encoder.
+ *
+ * This API returns a pointer of the array of a const char pointers, where each pointer in the array
+ * points to a null-terminated sequence of ASCII characters. The meanings of each schemas are
+ * defined in {@link MediaFormat#KEY_TEMPORAL_LAYERING}.
+ * If the supported temporal schemas are unknown or there are no supported temporal schemas, the
+ * returned array pointer is null and this function returns AMEDIA_OK.
+ *
+ * @param encoderCaps  The ACodecEncoderCapabilities instance.
+ * @param outSupportedLayeringSchemaArrayPtr  A pointer of the array of layering schemas.
+ *                                            The array and elements are owned by the framework and
+ *                                            are valid for the lifetime of the process.
+ * @param outCount  The number of elements in @param outSupportedLayeringSchemaArrayPtr.
+ *
+ * @return AMEDIA_OK if successfully filled the supported temporal layer schemas.
+ * @return AMEDIA_ERROR_INVALID_PARAMETER if any of @param encoderCaps,
+ *         @param outSupportedLayeringSchemaArrayPtr and @param outCount is invalid.
+ */
+media_status_t ACodecEncoderCapabilities_getSupportedLayeringSchemas(
+        const ACodecEncoderCapabilities* encoderCaps,
+        const char* const** outSupportedLayeringSchemaArrayPtr,
+        size_t* outCount) __INTRODUCED_IN(37) __attribute__((nonnull(1,2,3)));
 
 // Feature Names
 
@@ -677,21 +701,21 @@ int32_t ACodecEncoderCapabilities_isBitrateModeSupported(
  *
  * video decoder only: codec supports seamless resolution changes.
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_AdaptivePlayback __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_AdaptivePlayback __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
  *
  * video decoder only: codec supports secure decryption.
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_SecurePlayback __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_SecurePlayback __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
  *
  * video or audio decoder only: codec supports tunneled playback.
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_TunneledPlayback __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_TunneledPlayback __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
@@ -700,7 +724,7 @@ extern const char* _Nonnull AMediaCodecInfo_FEATURE_TunneledPlayback __INTRODUCE
  * buffer that produced the output. If false, the timestamp of each output buffer is
  * derived from the timestamp of the first input buffer.
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_DynamicTimestamp __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_DynamicTimestamp __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
@@ -708,7 +732,7 @@ extern const char* _Nonnull AMediaCodecInfo_FEATURE_DynamicTimestamp __INTRODUCE
  * decoder only: codec supports partial (including multiple) access units
  * per input buffer.
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_FrameParsing __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_FrameParsing __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
@@ -717,21 +741,21 @@ extern const char* _Nonnull AMediaCodecInfo_FEATURE_FrameParsing __INTRODUCED_IN
  * encoders). If false, the codec only supports single access units. Producing multiple
  * access units for output is an optional feature.
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_MultipleFrames __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_MultipleFrames __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
  *
  * video decoder only: codec supports queuing partial frames.
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_PartialFrame __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_PartialFrame __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
  *
  * video encoder only: codec supports intra refresh.
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_IntraRefresh __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_IntraRefresh __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
@@ -741,7 +765,7 @@ extern const char* _Nonnull AMediaCodecInfo_FEATURE_IntraRefresh __INTRODUCED_IN
  * When the mode is enabled, the decoder doesn't hold input and output data more than
  * required by the codec standards.
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_LowLatency __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_LowLatency __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
@@ -750,7 +774,7 @@ extern const char* _Nonnull AMediaCodecInfo_FEATURE_LowLatency __INTRODUCED_IN_A
  * @see MediaFormat#KEY_VIDEO_QP_MAX
  * @see MediaFormat#KEY_VIDEO_QP_MIN
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_QpBounds __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_QpBounds __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
@@ -763,7 +787,7 @@ extern const char* _Nonnull AMediaCodecInfo_FEATURE_QpBounds __INTRODUCED_IN_API
  *
  * @see MediaFormat#KEY_VIDEO_ENCODING_STATISTICS_LEVEL
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_EncodingStatistics __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_EncodingStatistics __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
@@ -782,7 +806,7 @@ extern const char* _Nonnull AMediaCodecInfo_FEATURE_EncodingStatistics __INTRODU
  * that the encoder can generate HDR metadata for all supported
  * HDR input formats.
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_HdrEditing __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_HdrEditing __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
@@ -803,7 +827,7 @@ extern const char* _Nonnull AMediaCodecInfo_FEATURE_HdrEditing __INTRODUCED_IN_A
  * generation of HDR metadata and does not use an explicit HDR
  * profile.
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_HlgEditing __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_HlgEditing __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
@@ -828,7 +852,7 @@ extern const char* _Nonnull AMediaCodecInfo_FEATURE_HlgEditing __INTRODUCED_IN_A
  * HDR sessions are supported in Surface mode, as SDR is
  * typically encoded at 8-bit and HDR at 10-bit.
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_DynamicColorAspects __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_DynamicColorAspects __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
@@ -864,7 +888,7 @@ extern const char* _Nonnull AMediaCodecInfo_FEATURE_DynamicColorAspects __INTROD
  * @see MediaCodec#PARAMETER_KEY_QP_OFFSET_MAP
  * @see MediaCodec#PARAMETER_KEY_QP_OFFSET_RECTS
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_Roi __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_Roi __INTRODUCED_IN_API_W__;
 
 /**
  * A feature constant for use with AMediaCodecInfo_isFeature* methods
@@ -875,7 +899,7 @@ extern const char* _Nonnull AMediaCodecInfo_FEATURE_Roi __INTRODUCED_IN_API_W__;
  * without an actual surface (in detached surface mode).
  * @see MediaCodec#CONFIGURE_FLAG_DETACHED_SURFACE
  */
-extern const char* _Nonnull AMediaCodecInfo_FEATURE_DetachedSurface __INTRODUCED_IN_API_W__;
+extern const char* AMediaCodecInfo_FEATURE_DetachedSurface __INTRODUCED_IN_API_W__;
 
 
 __END_DECLS

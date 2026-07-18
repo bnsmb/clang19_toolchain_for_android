@@ -47,6 +47,6 @@ __BEGIN_DECLS
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int utime(const char* _Nonnull __path, const struct utimbuf* _Nullable __times);
+int utime(const char* __path, const struct utimbuf* __times) __THROW __attribute__((nonnull(1)));
 
 __END_DECLS

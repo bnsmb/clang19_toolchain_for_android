@@ -55,7 +55,7 @@ __BEGIN_DECLS
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int __riscv_flush_icache(void* _Nullable __start, void* _Nullable __end, unsigned long __flags);
+int __riscv_flush_icache(void* __start, void* __end, unsigned long __flags);
 
 #endif
 

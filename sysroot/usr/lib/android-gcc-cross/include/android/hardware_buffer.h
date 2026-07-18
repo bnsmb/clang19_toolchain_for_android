@@ -442,7 +442,7 @@ typedef struct AHardwareBuffer_Desc {
  * Holds data for a single image plane.
  */
 typedef struct AHardwareBuffer_Plane {
-    void*    _Nullable data; ///< Points to first byte in plane
+    void*    data; ///< Points to first byte in plane
     uint32_t pixelStride;    ///< Distance in bytes from the color channel of one pixel to the next
     uint32_t rowStride;      ///< Distance in bytes from the first value of one row of the image to
                              ///  the first value of the next row.
@@ -476,8 +476,8 @@ typedef struct AHardwareBuffer AHardwareBuffer;
  * \return 0 on success, or an error number of the allocation fails for
  * any reason. The returned buffer has a reference count of 1.
  */
-int AHardwareBuffer_allocate(const AHardwareBuffer_Desc* _Nonnull desc,
-                             AHardwareBuffer* _Nullable* _Nonnull outBuffer) __INTRODUCED_IN_API_O__;
+int AHardwareBuffer_allocate(const AHardwareBuffer_Desc* desc,
+                             AHardwareBuffer** outBuffer) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2)));
 /**
  * Acquire a reference on the given AHardwareBuffer object.
  *
@@ -486,7 +486,7 @@ int AHardwareBuffer_allocate(const AHardwareBuffer_Desc* _Nonnull desc,
  *
  * Available since API level 26.
  */
-void AHardwareBuffer_acquire(AHardwareBuffer* _Nonnull buffer) __INTRODUCED_IN_API_O__;
+void AHardwareBuffer_acquire(AHardwareBuffer* buffer) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Remove a reference that was previously acquired with
@@ -494,7 +494,7 @@ void AHardwareBuffer_acquire(AHardwareBuffer* _Nonnull buffer) __INTRODUCED_IN_A
  *
  * Available since API level 26.
  */
-void AHardwareBuffer_release(AHardwareBuffer* _Nonnull buffer) __INTRODUCED_IN_API_O__;
+void AHardwareBuffer_release(AHardwareBuffer* buffer) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Return a description of the AHardwareBuffer in the passed
@@ -502,8 +502,8 @@ void AHardwareBuffer_release(AHardwareBuffer* _Nonnull buffer) __INTRODUCED_IN_A
  *
  * Available since API level 26.
  */
-void AHardwareBuffer_describe(const AHardwareBuffer* _Nonnull buffer,
-                              AHardwareBuffer_Desc* _Nonnull outDesc) __INTRODUCED_IN_API_O__;
+void AHardwareBuffer_describe(const AHardwareBuffer* buffer,
+                              AHardwareBuffer_Desc* outDesc) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2)));
 
 /**
  * Lock the AHardwareBuffer for direct CPU access.
@@ -557,9 +557,9 @@ void AHardwareBuffer_describe(const AHardwareBuffer* _Nonnull buffer,
  * has more than one layer. Error number if the lock fails for any other
  * reason.
  */
-int AHardwareBuffer_lock(AHardwareBuffer* _Nonnull buffer, uint64_t usage, int32_t fence,
-                         const ARect* _Nullable rect, void* _Nullable* _Nonnull outVirtualAddress)
-        __INTRODUCED_IN_API_O__;
+int AHardwareBuffer_lock(AHardwareBuffer* buffer, uint64_t usage, int32_t fence,
+                         const ARect* rect, void** outVirtualAddress)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,5)));
 
 /**
  * Unlock the AHardwareBuffer from direct CPU access.
@@ -579,8 +579,8 @@ int AHardwareBuffer_lock(AHardwareBuffer* _Nonnull buffer, uint64_t usage, int32
  * \return 0 on success. -EINVAL if \a buffer is NULL. Error number if
  * the unlock fails for any reason.
  */
-int AHardwareBuffer_unlock(AHardwareBuffer* _Nonnull buffer, int32_t* _Nullable fence)
-        __INTRODUCED_IN_API_O__;
+int AHardwareBuffer_unlock(AHardwareBuffer* buffer, int32_t* fence)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Send the AHardwareBuffer to an AF_UNIX socket.
@@ -590,8 +590,8 @@ int AHardwareBuffer_unlock(AHardwareBuffer* _Nonnull buffer, int32_t* _Nullable 
  * \return 0 on success, -EINVAL if \a buffer is NULL, or an error
  * number if the operation fails for any reason.
  */
-int AHardwareBuffer_sendHandleToUnixSocket(const AHardwareBuffer* _Nonnull buffer, int socketFd)
-        __INTRODUCED_IN_API_O__;
+int AHardwareBuffer_sendHandleToUnixSocket(const AHardwareBuffer* buffer, int socketFd)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 
 /**
  * Receive an AHardwareBuffer from an AF_UNIX socket.
@@ -602,8 +602,8 @@ int AHardwareBuffer_sendHandleToUnixSocket(const AHardwareBuffer* _Nonnull buffe
  * number if the operation fails for any reason.
  */
 int AHardwareBuffer_recvHandleFromUnixSocket(int socketFd,
-                                             AHardwareBuffer* _Nullable* _Nonnull outBuffer)
-        __INTRODUCED_IN_API_O__;
+                                             AHardwareBuffer** outBuffer)
+        __INTRODUCED_IN_API_O__ __attribute__((nonnull(2)));
 
 /**
  * Lock a potentially multi-planar AHardwareBuffer for direct CPU access.
@@ -632,9 +632,9 @@ int AHardwareBuffer_recvHandleFromUnixSocket(int socketFd,
  * has more than one layer. Error number if the lock fails for any other
  * reason.
  */
-int AHardwareBuffer_lockPlanes(AHardwareBuffer* _Nonnull buffer, uint64_t usage, int32_t fence,
-                               const ARect* _Nullable rect,
-                               AHardwareBuffer_Planes* _Nonnull outPlanes) __INTRODUCED_IN_API_Q__;
+int AHardwareBuffer_lockPlanes(AHardwareBuffer* buffer, uint64_t usage, int32_t fence,
+                               const ARect* rect,
+                               AHardwareBuffer_Planes* outPlanes) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,5)));
 
 /**
  * Test whether the given format and usage flag combination is
@@ -655,7 +655,7 @@ int AHardwareBuffer_lockPlanes(AHardwareBuffer* _Nonnull buffer, uint64_t usage,
  * \return 1 if the format and usage flag combination is allocatable,
  *     0 otherwise.
  */
-int AHardwareBuffer_isSupported(const AHardwareBuffer_Desc* _Nonnull desc) __INTRODUCED_IN_API_Q__;
+int AHardwareBuffer_isSupported(const AHardwareBuffer_Desc* desc) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 
 /**
  * Lock an AHardwareBuffer for direct CPU access.
@@ -668,11 +668,11 @@ int AHardwareBuffer_isSupported(const AHardwareBuffer_Desc* _Nonnull desc) __INT
  *
  * Available since API level 29.
  */
-int AHardwareBuffer_lockAndGetInfo(AHardwareBuffer* _Nonnull buffer, uint64_t usage, int32_t fence,
-                                   const ARect* _Nullable rect,
-                                   void* _Nullable* _Nonnull outVirtualAddress,
-                                   int32_t* _Nonnull outBytesPerPixel,
-                                   int32_t* _Nonnull outBytesPerStride) __INTRODUCED_IN_API_Q__;
+int AHardwareBuffer_lockAndGetInfo(AHardwareBuffer* buffer, uint64_t usage, int32_t fence,
+                                   const ARect* rect,
+                                   void** outVirtualAddress,
+                                   int32_t* outBytesPerPixel,
+                                   int32_t* outBytesPerStride) __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1,5,6,7)));
 
 
 /**
@@ -683,8 +683,8 @@ int AHardwareBuffer_lockAndGetInfo(AHardwareBuffer* _Nonnull buffer, uint64_t us
  * \return 0 on success, -EINVAL if \a buffer or \a outId is NULL, or an error number if the
  * operation fails for any reason.
  */
-int AHardwareBuffer_getId(const AHardwareBuffer* _Nonnull buffer, uint64_t* _Nonnull outId)
-        __INTRODUCED_IN_API_S__;
+int AHardwareBuffer_getId(const AHardwareBuffer* buffer, uint64_t* outId)
+        __INTRODUCED_IN_API_S__ __attribute__((nonnull(1,2)));
 
 __END_DECLS
 

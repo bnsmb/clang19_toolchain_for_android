@@ -54,7 +54,7 @@ __BEGIN_DECLS
  *
  * Returns 0 on success and returns an error number on failure.
  */
-int __riscv_hwprobe(struct riscv_hwprobe* _Nonnull __pairs, size_t __pair_count, size_t __cpu_set_size, cpu_set_t* _Nullable __cpu_set, unsigned __flags);
+int __riscv_hwprobe(struct riscv_hwprobe* __pairs, size_t __pair_count, size_t __cpu_set_size, cpu_set_t* __cpu_set, unsigned __flags) __attribute__((nonnull(1)));
 
 /**
  * The type of the second argument passed to riscv64 ifunc resolvers.
@@ -62,7 +62,7 @@ int __riscv_hwprobe(struct riscv_hwprobe* _Nonnull __pairs, size_t __pair_count,
  * without worrying about whether that relocation is resolved before
  * the ifunc resolver is called.
  */
-typedef int (*__riscv_hwprobe_t)(struct riscv_hwprobe* _Nonnull __pairs, size_t __pair_count, size_t __cpu_set_size, cpu_set_t* _Nullable __cpu_set, unsigned __flags);
+typedef int (*__riscv_hwprobe_t)(struct riscv_hwprobe* __pairs, size_t __pair_count, size_t __cpu_set_size, cpu_set_t* __cpu_set, unsigned __flags);
 
 __END_DECLS
 

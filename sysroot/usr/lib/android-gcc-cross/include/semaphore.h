@@ -46,34 +46,38 @@ typedef struct {
 #define SEM_FAILED __BIONIC_CAST(reinterpret_cast, sem_t*, 0)
 
 #if __BIONIC_AVAILABILITY_GUARD(30)
-int sem_clockwait(sem_t* _Nonnull __sem, clockid_t __clock, const struct timespec* _Nonnull __ts) __INTRODUCED_IN_API_R__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(30) */
+int sem_clockwait(sem_t* __sem, clockid_t __clock, const struct timespec* __ts) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1,3)));
+#endif
 
-int sem_destroy(sem_t* _Nonnull __sem);
-int sem_getvalue(sem_t* _Nonnull __sem, int* _Nonnull __value);
-int sem_init(sem_t* _Nonnull __sem, int __shared, unsigned int __value);
-int sem_post(sem_t* _Nonnull __sem);
-int sem_timedwait(sem_t* _Nonnull __sem, const struct timespec* _Nonnull __ts);
-/*
+int sem_destroy(sem_t* __sem) __THROW __attribute__((nonnull(1)));
+int sem_getvalue(sem_t* __sem, int* __value) __THROW __attribute__((nonnull(1,2)));
+int sem_init(sem_t* __sem, int __shared, unsigned int __value) __THROW __attribute__((nonnull(1)));
+int sem_post(sem_t* __sem) __THROWNL __attribute__((nonnull(1)));
+int sem_timedwait(sem_t* __sem, const struct timespec* __ts) __attribute__((nonnull(1,2)));
+
+#if __BIONIC_AVAILABILITY_GUARD(28)
+/**
+ * Equivalent to sem_clockwait() with CLOCK_MONOTONIC.
+ *
  * POSIX historically only supported using sem_timedwait() with CLOCK_REALTIME, however that is
  * typically inappropriate, since that clock can change dramatically, causing the timeout to either
  * expire earlier or much later than intended.  This function is added to use a timespec based
  * on CLOCK_MONOTONIC that does not suffer from this issue.
  * Note that sem_clockwait() allows specifying an arbitrary clock and has superseded this
  * function.
+ *
+ * Available since API level 28.
  */
+int sem_timedwait_monotonic_np(sem_t* __sem, const struct timespec* __ts) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
+#endif
 
-#if __BIONIC_AVAILABILITY_GUARD(28)
-int sem_timedwait_monotonic_np(sem_t* _Nonnull __sem, const struct timespec* _Nonnull __ts) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
-
-int sem_trywait(sem_t* _Nonnull __sem);
-int sem_wait(sem_t* _Nonnull __sem);
+int sem_trywait(sem_t* __sem) __THROWNL __attribute__((nonnull(1)));
+int sem_wait(sem_t* __sem) __attribute__((nonnull(1)));
 
 /* These aren't actually implemented. */
-sem_t* _Nullable sem_open(const char* _Nonnull __name, int _flags, ...);
-int sem_close(sem_t* _Nonnull __sem);
-int sem_unlink(const char* _Nonnull __name);
+sem_t* sem_open(const char* __name, int _flags, ...) __THROW __attribute__((nonnull(1)));
+int sem_close(sem_t* __sem) __THROW __attribute__((nonnull(1)));
+int sem_unlink(const char* __name) __THROW __attribute__((nonnull(1)));
 
 __END_DECLS
 

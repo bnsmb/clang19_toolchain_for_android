@@ -58,7 +58,7 @@ __BEGIN_DECLS
  *
  * Returns 0 on success, and returns non-zero on failure.
  */
-int feclearexcept(int __exceptions) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int feclearexcept(int __exceptions) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
 
 /**
  * [fegetexceptflag(3)](https://man7.org/linux/man-pages/man3/fegetexceptflag.3.html)
@@ -67,7 +67,7 @@ int feclearexcept(int __exceptions) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS
  *
  * Returns 0 on success, and returns non-zero on failure.
  */
-int fegetexceptflag(fexcept_t* _Nonnull __flag_ptr, int __exceptions) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int fegetexceptflag(fexcept_t* __flag_ptr, int __exceptions) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9) __attribute__((nonnull(1)));
 
 /**
  * [feraiseexcept(3)](https://man7.org/linux/man-pages/man3/feraiseexcept.3.html)
@@ -75,7 +75,7 @@ int fegetexceptflag(fexcept_t* _Nonnull __flag_ptr, int __exceptions) __INTRODUC
  *
  * Returns 0 on success, and returns non-zero on failure.
  */
-int feraiseexcept(int __exceptions) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int feraiseexcept(int __exceptions) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
 
 /**
  * [fesetexceptflag(3)](https://man7.org/linux/man-pages/man3/fesetexceptflag.3.html)
@@ -84,7 +84,7 @@ int feraiseexcept(int __exceptions) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS
  *
  * Returns 0 on success, and returns non-zero on failure.
  */
-int fesetexceptflag(const fexcept_t* _Nonnull __flag_ptr, int __exceptions) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int fesetexceptflag(const fexcept_t* __flag_ptr, int __exceptions) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9) __attribute__((nonnull(1)));
 
 /**
  * [fetestexcept(3)](https://man7.org/linux/man-pages/man3/fetestexcept.3.html)
@@ -92,7 +92,7 @@ int fesetexceptflag(const fexcept_t* _Nonnull __flag_ptr, int __exceptions) __IN
  *
  * Returns the currently-set subset of `exceptions`.
  */
-int fetestexcept(int __exceptions) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int fetestexcept(int __exceptions) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
 
 /**
  * [fegetround(3)](https://man7.org/linux/man-pages/man3/fegetround.3.html)
@@ -100,7 +100,7 @@ int fetestexcept(int __exceptions) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(
  *
  * Returns the rounding mode on success, and returns a negative value on failure.
  */
-int fegetround(void) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int fegetround(void) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
 
 /**
  * [fesetround(3)](https://man7.org/linux/man-pages/man3/fesetround.3.html)
@@ -108,7 +108,7 @@ int fegetround(void) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUC
  *
  * Returns 0 on success, and returns non-zero on failure.
  */
-int fesetround(int __rounding_mode) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int fesetround(int __rounding_mode) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
 
 /**
  * [fegetenv(3)](https://man7.org/linux/man-pages/man3/fegetenv.3.html)
@@ -116,7 +116,7 @@ int fesetround(int __rounding_mode) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS
  *
  * Returns 0 on success, and returns non-zero on failure.
  */
-int fegetenv(fenv_t* _Nonnull __env) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int fegetenv(fenv_t* __env) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9) __attribute__((nonnull(1)));
 
 /**
  * [feholdexcept(3)](https://man7.org/linux/man-pages/man3/feholdexcept.3.html)
@@ -125,7 +125,7 @@ int fegetenv(fenv_t* _Nonnull __env) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIP
  *
  * Returns 0 on success, and returns non-zero on failure.
  */
-int feholdexcept(fenv_t* _Nonnull __env) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int feholdexcept(fenv_t* __env) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9) __attribute__((nonnull(1)));
 
 /**
  * [fesetenv(3)](https://man7.org/linux/man-pages/man3/fesetenv.3.html)
@@ -133,7 +133,7 @@ int feholdexcept(fenv_t* _Nonnull __env) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN
  *
  * Returns 0 on success, and returns non-zero on failure.
  */
-int fesetenv(const fenv_t* _Nonnull __env) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int fesetenv(const fenv_t* __env) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9) __attribute__((nonnull(1)));
 
 /**
  * [feupdateenv(3)](https://man7.org/linux/man-pages/man3/feupdateenv.3.html)
@@ -142,7 +142,7 @@ int fesetenv(const fenv_t* _Nonnull __env) __INTRODUCED_IN_ARM(21) __INTRODUCED_
  *
  * Returns 0 on success, and returns non-zero on failure.
  */
-int feupdateenv(const fenv_t* _Nonnull __env) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int feupdateenv(const fenv_t* __env) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9) __attribute__((nonnull(1)));
 
 /**
  * [feenableexcept(3)](https://man7.org/linux/man-pages/man3/feenableexcept.3.html)
@@ -151,7 +151,7 @@ int feupdateenv(const fenv_t* _Nonnull __env) __INTRODUCED_IN_ARM(21) __INTRODUC
  *
  * Returns the previous set of enabled exceptions on success, and returns -1 on failure.
  */
-int feenableexcept(int __exceptions) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int feenableexcept(int __exceptions) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
 
 /**
  * [fedisableexcept(3)](https://man7.org/linux/man-pages/man3/fedisableexcept.3.html)
@@ -160,7 +160,7 @@ int feenableexcept(int __exceptions) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIP
  *
  * Returns the previous set of enabled exceptions on success, and returns -1 on failure.
  */
-int fedisableexcept(int __exceptions) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int fedisableexcept(int __exceptions) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
 
 /**
  * [fegetexcept(3)](https://man7.org/linux/man-pages/man3/fegetexcept.3.html)
@@ -169,7 +169,7 @@ int fedisableexcept(int __exceptions) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MI
  *
  * Returns the exceptions that currently trap.
  */
-int fegetexcept(void) __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
+int fegetexcept(void) __THROW __INTRODUCED_IN_ARM(21) __INTRODUCED_IN_MIPS(21) __INTRODUCED_IN_X86(9);
 
 /** See FE_DFL_ENV. */
 extern const fenv_t __fe_dfl_env;

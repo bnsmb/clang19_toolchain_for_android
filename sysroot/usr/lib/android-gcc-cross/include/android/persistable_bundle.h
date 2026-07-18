@@ -66,8 +66,8 @@ enum {
  *
  * \return allocated buffer of sizeBytes for a UTF-8 string. Null if allocation failed.
  */
-typedef char* _Nullable (*_Nonnull APersistableBundle_stringAllocator)(int32_t sizeBytes,
-                                                                       void* _Nullable context);
+typedef char* (*APersistableBundle_stringAllocator)(int32_t sizeBytes,
+                                                                       void* context);
 
 /**
  * Create a new APersistableBundle.
@@ -76,7 +76,7 @@ typedef char* _Nullable (*_Nonnull APersistableBundle_stringAllocator)(int32_t s
  *
  * \return Pointer to a new APersistableBundle
  */
-APersistableBundle* _Nullable APersistableBundle_new() __INTRODUCED_IN_API_V__;
+APersistableBundle* APersistableBundle_new() __INTRODUCED_IN_API_V__;
 
 /**
  * Create a new APersistableBundle based off an existing APersistableBundle.
@@ -89,8 +89,8 @@ APersistableBundle* _Nullable APersistableBundle_new() __INTRODUCED_IN_API_V__;
  *
  * \return Pointer to a new APersistableBundle
  */
-APersistableBundle* _Nullable APersistableBundle_dup(const APersistableBundle* _Nonnull pBundle)
-        __INTRODUCED_IN_API_V__;
+APersistableBundle* APersistableBundle_dup(const APersistableBundle* pBundle)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Delete an APersistableBundle. This must always be called when finished using
@@ -100,7 +100,7 @@ APersistableBundle* _Nullable APersistableBundle_dup(const APersistableBundle* _
  *
  * Available since API level 202404.
  */
-void APersistableBundle_delete(APersistableBundle* _Nullable pBundle)
+void APersistableBundle_delete(APersistableBundle* pBundle)
         __INTRODUCED_IN_API_V__;
 
 /**
@@ -113,9 +113,9 @@ void APersistableBundle_delete(APersistableBundle* _Nullable pBundle)
  *
  * \return true when equal, false when not
  */
-bool APersistableBundle_isEqual(const APersistableBundle* _Nonnull lhs,
-                                const APersistableBundle* _Nonnull rhs)
-        __INTRODUCED_IN_API_V__;
+bool APersistableBundle_isEqual(const APersistableBundle* lhs,
+                                const APersistableBundle* rhs)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Read an APersistableBundle from an AParcel.
@@ -133,8 +133,8 @@ bool APersistableBundle_isEqual(const APersistableBundle* _Nonnull lhs,
  *         STATUS_NO_MEMORY if an allocation fails
  */
 binder_status_t APersistableBundle_readFromParcel(
-        const AParcel* _Nonnull parcel, APersistableBundle* _Nullable* _Nonnull outPBundle)
-        __INTRODUCED_IN_API_V__;
+        const AParcel* parcel, APersistableBundle** outPBundle)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Write an APersistableBundle to an AParcel.
@@ -152,9 +152,9 @@ binder_status_t APersistableBundle_readFromParcel(
  *                          unable to allocate more
  *         STATUS_FDS_NOT_ALLOWED if the parcel does not allow storing FDs
  */
-binder_status_t APersistableBundle_writeToParcel(const APersistableBundle* _Nonnull pBundle,
-                                                 AParcel* _Nonnull parcel)
-        __INTRODUCED_IN_API_V__;
+binder_status_t APersistableBundle_writeToParcel(const APersistableBundle* pBundle,
+                                                 AParcel* parcel)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Get the size of an APersistableBundle. This is the number of mappings in the
@@ -166,8 +166,8 @@ binder_status_t APersistableBundle_writeToParcel(const APersistableBundle* _Nonn
  *
  * \return number of mappings in the object
  */
-int32_t APersistableBundle_size(const APersistableBundle* _Nonnull pBundle)
-        __INTRODUCED_IN_API_V__;
+int32_t APersistableBundle_size(const APersistableBundle* pBundle)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Erase any entries added with the provided key.
@@ -179,8 +179,8 @@ int32_t APersistableBundle_size(const APersistableBundle* _Nonnull pBundle)
  *
  * \return number of entries erased. Either 0 or 1.
  */
-int32_t APersistableBundle_erase(APersistableBundle* _Nonnull pBundle, const char* _Nonnull key)
-        __INTRODUCED_IN_API_V__;
+int32_t APersistableBundle_erase(APersistableBundle* pBundle, const char* key)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Put a boolean associated with the provided key.
@@ -192,8 +192,8 @@ int32_t APersistableBundle_erase(APersistableBundle* _Nonnull pBundle, const cha
  *
  * Available since API level 202404.
  */
-void APersistableBundle_putBoolean(APersistableBundle* _Nonnull pBundle, const char* _Nonnull key,
-                                   bool val) __INTRODUCED_IN_API_V__;
+void APersistableBundle_putBoolean(APersistableBundle* pBundle, const char* key,
+                                   bool val) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Put an int32_t associated with the provided key.
@@ -205,8 +205,8 @@ void APersistableBundle_putBoolean(APersistableBundle* _Nonnull pBundle, const c
  *
  * Available since API level 202404.
  */
-void APersistableBundle_putInt(APersistableBundle* _Nonnull pBundle, const char* _Nonnull key,
-                               int32_t val) __INTRODUCED_IN_API_V__;
+void APersistableBundle_putInt(APersistableBundle* pBundle, const char* key,
+                               int32_t val) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Put an int64_t associated with the provided key.
@@ -218,8 +218,8 @@ void APersistableBundle_putInt(APersistableBundle* _Nonnull pBundle, const char*
  *
  * Available since API level 202404.
  */
-void APersistableBundle_putLong(APersistableBundle* _Nonnull pBundle, const char* _Nonnull key,
-                                int64_t val) __INTRODUCED_IN_API_V__;
+void APersistableBundle_putLong(APersistableBundle* pBundle, const char* key,
+                                int64_t val) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Put a double associated with the provided key.
@@ -231,8 +231,8 @@ void APersistableBundle_putLong(APersistableBundle* _Nonnull pBundle, const char
  *
  * Available since API level 202404.
  */
-void APersistableBundle_putDouble(APersistableBundle* _Nonnull pBundle, const char* _Nonnull key,
-                                  double val) __INTRODUCED_IN_API_V__;
+void APersistableBundle_putDouble(APersistableBundle* pBundle, const char* key,
+                                  double val) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Put a string associated with the provided key.
@@ -245,8 +245,8 @@ void APersistableBundle_putDouble(APersistableBundle* _Nonnull pBundle, const ch
  *
  * Available since API level 202404.
  */
-void APersistableBundle_putString(APersistableBundle* _Nonnull pBundle, const char* _Nonnull key,
-                                  const char* _Nonnull val) __INTRODUCED_IN_API_V__;
+void APersistableBundle_putString(APersistableBundle* pBundle, const char* key,
+                                  const char* val) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Put a boolean vector associated with the provided key.
@@ -260,9 +260,26 @@ void APersistableBundle_putString(APersistableBundle* _Nonnull pBundle, const ch
  *
  * Available since API level 202404.
  */
-void APersistableBundle_putBooleanVector(APersistableBundle* _Nonnull pBundle,
-                                         const char* _Nonnull key, const bool* _Nonnull vec,
-                                         int32_t num) __INTRODUCED_IN_API_V__;
+void APersistableBundle_putBooleanVector(APersistableBundle* pBundle,
+                                         const char* key, const bool* vec,
+                                         int32_t num) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
+
+/**
+ * Put a byte vector associated with the provided key.
+ * New values with the same key will overwrite existing values.
+ * The values are copied.
+ *
+ * \param pBundle to operate on
+ * \param key for the mapping in UTF-8
+ * \param vec vector to put for the mapping
+ * \param num number of elements in the vector
+ *
+ * Available since API level 202604.
+ */
+void APersistableBundle_putByteVector(APersistableBundle* pBundle,
+                                      const char* key,
+                                      const uint8_t* vec, int32_t num)
+        __INTRODUCED_IN(37) __attribute__((nonnull(1,2,3)));
 
 /**
  * Put an int32_t vector associated with the provided key.
@@ -276,9 +293,9 @@ void APersistableBundle_putBooleanVector(APersistableBundle* _Nonnull pBundle,
  *
  * Available since API level 202404.
  */
-void APersistableBundle_putIntVector(APersistableBundle* _Nonnull pBundle, const char* _Nonnull key,
-                                     const int32_t* _Nonnull vec, int32_t num)
-        __INTRODUCED_IN_API_V__;
+void APersistableBundle_putIntVector(APersistableBundle* pBundle, const char* key,
+                                     const int32_t* vec, int32_t num)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Put an int64_t vector associated with the provided key.
@@ -292,9 +309,9 @@ void APersistableBundle_putIntVector(APersistableBundle* _Nonnull pBundle, const
  *
  * Available since API level 202404.
  */
-void APersistableBundle_putLongVector(APersistableBundle* _Nonnull pBundle,
-                                      const char* _Nonnull key, const int64_t* _Nonnull vec,
-                                      int32_t num) __INTRODUCED_IN_API_V__;
+void APersistableBundle_putLongVector(APersistableBundle* pBundle,
+                                      const char* key, const int64_t* vec,
+                                      int32_t num) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Put a double vector associated with the provided key.
@@ -308,9 +325,9 @@ void APersistableBundle_putLongVector(APersistableBundle* _Nonnull pBundle,
  *
  * Available since API level 202404.
  */
-void APersistableBundle_putDoubleVector(APersistableBundle* _Nonnull pBundle,
-                                        const char* _Nonnull key, const double* _Nonnull vec,
-                                        int32_t num) __INTRODUCED_IN_API_V__;
+void APersistableBundle_putDoubleVector(APersistableBundle* pBundle,
+                                        const char* key, const double* vec,
+                                        int32_t num) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Put a string vector associated with the provided key.
@@ -324,10 +341,10 @@ void APersistableBundle_putDoubleVector(APersistableBundle* _Nonnull pBundle,
  *
  * Available since API level 202404.
  */
-void APersistableBundle_putStringVector(APersistableBundle* _Nonnull pBundle,
-                                        const char* _Nonnull key,
-                                        const char* _Nullable const* _Nullable vec, int32_t num)
-        __INTRODUCED_IN_API_V__;
+void APersistableBundle_putStringVector(APersistableBundle* pBundle,
+                                        const char* key,
+                                        const char* const* vec, int32_t num)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Put an APersistableBundle associated with the provided key.
@@ -340,10 +357,10 @@ void APersistableBundle_putStringVector(APersistableBundle* _Nonnull pBundle,
  *
  * Available since API level 202404.
  */
-void APersistableBundle_putPersistableBundle(APersistableBundle* _Nonnull pBundle,
-                                             const char* _Nonnull key,
-                                             const APersistableBundle* _Nonnull val)
-        __INTRODUCED_IN_API_V__;
+void APersistableBundle_putPersistableBundle(APersistableBundle* pBundle,
+                                             const char* key,
+                                             const APersistableBundle* val)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Get a boolean associated with the provided key.
@@ -356,9 +373,9 @@ void APersistableBundle_putPersistableBundle(APersistableBundle* _Nonnull pBundl
  *
  * \return true if a value exists for the provided key
  */
-bool APersistableBundle_getBoolean(const APersistableBundle* _Nonnull pBundle,
-                                   const char* _Nonnull key, bool* _Nonnull val)
-        __INTRODUCED_IN_API_V__;
+bool APersistableBundle_getBoolean(const APersistableBundle* pBundle,
+                                   const char* key, bool* val)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Get an int32_t associated with the provided key.
@@ -371,8 +388,8 @@ bool APersistableBundle_getBoolean(const APersistableBundle* _Nonnull pBundle,
  *
  * \return true if a value exists for the provided key
  */
-bool APersistableBundle_getInt(const APersistableBundle* _Nonnull pBundle, const char* _Nonnull key,
-                               int32_t* _Nonnull val) __INTRODUCED_IN_API_V__;
+bool APersistableBundle_getInt(const APersistableBundle* pBundle, const char* key,
+                               int32_t* val) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Get an int64_t associated with the provided key.
@@ -385,9 +402,9 @@ bool APersistableBundle_getInt(const APersistableBundle* _Nonnull pBundle, const
  *
  * \return true if a value exists for the provided key
  */
-bool APersistableBundle_getLong(const APersistableBundle* _Nonnull pBundle,
-                                const char* _Nonnull key, int64_t* _Nonnull val)
-        __INTRODUCED_IN_API_V__;
+bool APersistableBundle_getLong(const APersistableBundle* pBundle,
+                                const char* key, int64_t* val)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Get a double associated with the provided key.
@@ -400,9 +417,9 @@ bool APersistableBundle_getLong(const APersistableBundle* _Nonnull pBundle,
  *
  * \return true if a value exists for the provided key
  */
-bool APersistableBundle_getDouble(const APersistableBundle* _Nonnull pBundle,
-                                  const char* _Nonnull key, double* _Nonnull val)
-        __INTRODUCED_IN_API_V__;
+bool APersistableBundle_getDouble(const APersistableBundle* pBundle,
+                                  const char* key, double* val)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Get a string associated with the provided key.
@@ -420,10 +437,10 @@ bool APersistableBundle_getDouble(const APersistableBundle* _Nonnull pBundle,
  *         APERSISTABLEBUNDLE_KEY_NOT_FOUND if the key was not found
  *         APERSISTABLEBUNDLE_ALLOCATOR_FAILED if the provided allocator fails
  */
-int32_t APersistableBundle_getString(const APersistableBundle* _Nonnull pBundle,
-                                     const char* _Nonnull key, char* _Nullable* _Nonnull val,
+int32_t APersistableBundle_getString(const APersistableBundle* pBundle,
+                                     const char* key, char** val,
                                      APersistableBundle_stringAllocator stringAllocator,
-                                     void* _Nullable context) __INTRODUCED_IN_API_V__;
+                                     void* context) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Get a boolean vector associated with the provided key and place it in the
@@ -447,10 +464,39 @@ int32_t APersistableBundle_getString(const APersistableBundle* _Nonnull pBundle,
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         APERSISTABLEBUNDLE_KEY_NOT_FOUND if the key was not found
  */
-int32_t APersistableBundle_getBooleanVector(const APersistableBundle* _Nonnull pBundle,
-                                            const char* _Nonnull key, bool* _Nullable buffer,
+int32_t APersistableBundle_getBooleanVector(const APersistableBundle* pBundle,
+                                            const char* key, bool* buffer,
                                             int32_t bufferSizeBytes)
-        __INTRODUCED_IN_API_V__;
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
+
+
+/**
+ * Get a byte vector associated with the provided key and place it in the
+ * provided pre-allocated buffer from the user.
+ *
+ * This function returns the size in bytes of stored vector.
+ * The supplied buffer will be filled in based on the smaller of the supplied
+ * bufferSizeBytes or the actual size of the stored data.
+ * If the buffer is null or if the supplied bufferSizeBytes is smaller than the
+ * actual stored data, then not all of the stored data will be returned.
+ *
+ * Users can call this function with null buffer and 0 bufferSizeBytes to get
+ * the required size of the buffer to use on a subsequent call.
+ *
+ * \param pBundle to operate on
+ * \param key for the mapping in UTF-8
+ * \param buffer pointer to a pre-allocated buffer to write the values to
+ * \param bufferSizeBytes size of the pre-allocated buffer
+ *
+ * \return size of the stored vector in bytes. This is the required size of the
+ * pre-allocated user supplied buffer if all of the stored contents are desired.
+ *         APERSISTABLEBUNDLE_KEY_NOT_FOUND if the key was not found
+ */
+ int32_t APersistableBundle_getByteVector(const APersistableBundle* pBundle,
+                                           const char* key,
+                                           uint8_t* buffer,
+                                           int32_t bufferSizeBytes)
+        __INTRODUCED_IN(37) __attribute__((nonnull(1,2)));
 
 /**
  * Get an int32_t vector associated with the provided key and place it in the
@@ -474,9 +520,9 @@ int32_t APersistableBundle_getBooleanVector(const APersistableBundle* _Nonnull p
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         APERSISTABLEBUNDLE_KEY_NOT_FOUND if the key was not found
  */
-int32_t APersistableBundle_getIntVector(const APersistableBundle* _Nonnull pBundle,
-                                        const char* _Nonnull key, int32_t* _Nullable buffer,
-                                        int32_t bufferSizeBytes) __INTRODUCED_IN_API_V__;
+int32_t APersistableBundle_getIntVector(const APersistableBundle* pBundle,
+                                        const char* key, int32_t* buffer,
+                                        int32_t bufferSizeBytes) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Get an int64_t vector associated with the provided key and place it in the
@@ -500,10 +546,10 @@ int32_t APersistableBundle_getIntVector(const APersistableBundle* _Nonnull pBund
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         APERSISTABLEBUNDLE_KEY_NOT_FOUND if the key was not found
  */
-int32_t APersistableBundle_getLongVector(const APersistableBundle* _Nonnull pBundle,
-                                         const char* _Nonnull key, int64_t* _Nullable buffer,
+int32_t APersistableBundle_getLongVector(const APersistableBundle* pBundle,
+                                         const char* key, int64_t* buffer,
                                          int32_t bufferSizeBytes)
-        __INTRODUCED_IN_API_V__;
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Get a double vector associated with the provided key and place it in the
@@ -527,10 +573,10 @@ int32_t APersistableBundle_getLongVector(const APersistableBundle* _Nonnull pBun
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         APERSISTABLEBUNDLE_KEY_NOT_FOUND if the key was not found
  */
-int32_t APersistableBundle_getDoubleVector(const APersistableBundle* _Nonnull pBundle,
-                                           const char* _Nonnull key, double* _Nullable buffer,
+int32_t APersistableBundle_getDoubleVector(const APersistableBundle* pBundle,
+                                           const char* key, double* buffer,
                                            int32_t bufferSizeBytes)
-        __INTRODUCED_IN_API_V__;
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Get a string vector associated with the provided key and place it in the
@@ -561,13 +607,13 @@ int32_t APersistableBundle_getDoubleVector(const APersistableBundle* _Nonnull pB
  *         APERSISTABLEBUNDLE_KEY_NOT_FOUND if the key was not found
  *         APERSISTABLEBUNDLE_ALLOCATOR_FAILED if the provided allocator fails
  */
-int32_t APersistableBundle_getStringVector(const APersistableBundle* _Nonnull pBundle,
-                                           const char* _Nonnull key,
-                                           char* _Nullable* _Nullable buffer,
+int32_t APersistableBundle_getStringVector(const APersistableBundle* pBundle,
+                                           const char* key,
+                                           char** buffer,
                                            int32_t bufferSizeBytes,
                                            APersistableBundle_stringAllocator stringAllocator,
-                                           void* _Nullable context)
-        __INTRODUCED_IN_API_V__;
+                                           void* context)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Get an APersistableBundle* associated with the provided key.
@@ -583,10 +629,10 @@ int32_t APersistableBundle_getStringVector(const APersistableBundle* _Nonnull pB
  *
  * \return true if a value exists for the provided key
  */
-bool APersistableBundle_getPersistableBundle(const APersistableBundle* _Nonnull pBundle,
-                                             const char* _Nonnull key,
-                                             APersistableBundle* _Nullable* _Nonnull outBundle)
-        __INTRODUCED_IN_API_V__;
+bool APersistableBundle_getPersistableBundle(const APersistableBundle* pBundle,
+                                             const char* key,
+                                             APersistableBundle** outBundle)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3)));
 
 /**
  * Get all of the keys associated with this specific type and place it in the
@@ -614,12 +660,12 @@ bool APersistableBundle_getPersistableBundle(const APersistableBundle* _Nonnull 
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         APERSISTABLEBUNDLE_ALLOCATOR_FAILED if the provided allocator fails
  */
-int32_t APersistableBundle_getBooleanKeys(const APersistableBundle* _Nonnull pBundle,
-                                          char* _Nullable* _Nullable outKeys,
+int32_t APersistableBundle_getBooleanKeys(const APersistableBundle* pBundle,
+                                          char** outKeys,
                                           int32_t bufferSizeBytes,
                                           APersistableBundle_stringAllocator stringAllocator,
-                                          void* _Nullable context)
-        __INTRODUCED_IN_API_V__;
+                                          void* context)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Get all of the keys associated with this specific type and place it in the
@@ -647,10 +693,10 @@ int32_t APersistableBundle_getBooleanKeys(const APersistableBundle* _Nonnull pBu
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         APERSISTABLEBUNDLE_ALLOCATOR_FAILED if the provided allocator fails
  */
-int32_t APersistableBundle_getIntKeys(const APersistableBundle* _Nonnull pBundle,
-                                      char* _Nullable* _Nullable outKeys, int32_t bufferSizeBytes,
+int32_t APersistableBundle_getIntKeys(const APersistableBundle* pBundle,
+                                      char** outKeys, int32_t bufferSizeBytes,
                                       APersistableBundle_stringAllocator stringAllocator,
-                                      void* _Nullable context) __INTRODUCED_IN_API_V__;
+                                      void* context) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Get all of the keys associated with this specific type and place it in the
@@ -678,10 +724,10 @@ int32_t APersistableBundle_getIntKeys(const APersistableBundle* _Nonnull pBundle
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         APERSISTABLEBUNDLE_ALLOCATOR_FAILED if the provided allocator fails
  */
-int32_t APersistableBundle_getLongKeys(const APersistableBundle* _Nonnull pBundle,
-                                       char* _Nullable* _Nullable outKeys, int32_t bufferSizeBytes,
+int32_t APersistableBundle_getLongKeys(const APersistableBundle* pBundle,
+                                       char** outKeys, int32_t bufferSizeBytes,
                                        APersistableBundle_stringAllocator stringAllocator,
-                                       void* _Nullable context) __INTRODUCED_IN_API_V__;
+                                       void* context) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Get all of the keys associated with this specific type and place it in the
@@ -709,12 +755,12 @@ int32_t APersistableBundle_getLongKeys(const APersistableBundle* _Nonnull pBundl
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         APERSISTABLEBUNDLE_ALLOCATOR_FAILED if the provided allocator fails
  */
-int32_t APersistableBundle_getDoubleKeys(const APersistableBundle* _Nonnull pBundle,
-                                         char* _Nullable* _Nullable outKeys,
+int32_t APersistableBundle_getDoubleKeys(const APersistableBundle* pBundle,
+                                         char** outKeys,
                                          int32_t bufferSizeBytes,
                                          APersistableBundle_stringAllocator stringAllocator,
-                                         void* _Nullable context)
-        __INTRODUCED_IN_API_V__;
+                                         void* context)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Get all of the keys associated with this specific type and place it in the
@@ -742,12 +788,12 @@ int32_t APersistableBundle_getDoubleKeys(const APersistableBundle* _Nonnull pBun
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         APERSISTABLEBUNDLE_ALLOCATOR_FAILED if the provided allocator fails
  */
-int32_t APersistableBundle_getStringKeys(const APersistableBundle* _Nonnull pBundle,
-                                         char* _Nullable* _Nullable outKeys,
+int32_t APersistableBundle_getStringKeys(const APersistableBundle* pBundle,
+                                         char** outKeys,
                                          int32_t bufferSizeBytes,
                                          APersistableBundle_stringAllocator stringAllocator,
-                                         void* _Nullable context)
-        __INTRODUCED_IN_API_V__;
+                                         void* context)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Get all of the keys associated with this specific type and place it in the
@@ -775,12 +821,13 @@ int32_t APersistableBundle_getStringKeys(const APersistableBundle* _Nonnull pBun
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         APERSISTABLEBUNDLE_ALLOCATOR_FAILED if the provided allocator fails
  */
-int32_t APersistableBundle_getBooleanVectorKeys(const APersistableBundle* _Nonnull pBundle,
-                                                char* _Nullable* _Nullable outKeys,
+int32_t APersistableBundle_getBooleanVectorKeys(const APersistableBundle* pBundle,
+                                                char** outKeys,
                                                 int32_t bufferSizeBytes,
                                                 APersistableBundle_stringAllocator stringAllocator,
-                                                void* _Nullable context)
-        __INTRODUCED_IN_API_V__;
+                                                void* context)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
+
 
 /**
  * Get all of the keys associated with this specific type and place it in the
@@ -808,12 +855,12 @@ int32_t APersistableBundle_getBooleanVectorKeys(const APersistableBundle* _Nonnu
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         APERSISTABLEBUNDLE_ALLOCATOR_FAILED if the provided allocator fails
  */
-int32_t APersistableBundle_getIntVectorKeys(const APersistableBundle* _Nonnull pBundle,
-                                            char* _Nullable* _Nullable outKeys,
+int32_t APersistableBundle_getByteVectorKeys(const APersistableBundle* pBundle,
+                                            char** outKeys,
                                             int32_t bufferSizeBytes,
                                             APersistableBundle_stringAllocator stringAllocator,
-                                            void* _Nullable context)
-        __INTRODUCED_IN_API_V__;
+                                            void* context)
+        __INTRODUCED_IN(37) __attribute__((nonnull(1)));
 
 /**
  * Get all of the keys associated with this specific type and place it in the
@@ -841,12 +888,45 @@ int32_t APersistableBundle_getIntVectorKeys(const APersistableBundle* _Nonnull p
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         APERSISTABLEBUNDLE_ALLOCATOR_FAILED if the provided allocator fails
  */
-int32_t APersistableBundle_getLongVectorKeys(const APersistableBundle* _Nonnull pBundle,
-                                             char* _Nullable* _Nullable outKeys,
+int32_t APersistableBundle_getIntVectorKeys(const APersistableBundle* pBundle,
+                                            char** outKeys,
+                                            int32_t bufferSizeBytes,
+                                            APersistableBundle_stringAllocator stringAllocator,
+                                            void* context)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
+
+/**
+ * Get all of the keys associated with this specific type and place it in the
+ * provided pre-allocated buffer from the user. The user must provide an
+ * APersistableBundle_stringAllocator for the individual strings to be
+ * allocated.
+ * The caller is responsible for freeing the returned data.
+ *
+ * This function returns the size in bytes required to fit the fill list of keys.
+ * The supplied buffer will be filled in based on the smaller of the supplied
+ * bufferSizeBytes or the actual size of the stored data.
+ * If the buffer is null or if the supplied bufferSizeBytes is smaller than the
+ * actual stored data, then not all of the stored data will be returned.
+ *
+ * Users can call this function with null buffer and 0 bufferSizeBytes to get
+ * the required size of the buffer to use on a subsequent call.
+ *
+ * \param pBundle to operate on
+ * \param outKeys pointer to a pre-allocated buffer to write the UTF-8 keys to
+ * \param bufferSizeBytes size of the pre-allocated buffer
+ * \param stringAllocator function pointer to the string allocator
+ * \param context pointer that will be passed to the stringAllocator
+ *
+ * \return size of the buffer of keys in bytes. This is the required size of the
+ * pre-allocated user supplied buffer if all of the stored contents are desired.
+ *         APERSISTABLEBUNDLE_ALLOCATOR_FAILED if the provided allocator fails
+ */
+int32_t APersistableBundle_getLongVectorKeys(const APersistableBundle* pBundle,
+                                             char** outKeys,
                                              int32_t bufferSizeBytes,
                                              APersistableBundle_stringAllocator stringAllocator,
-                                             void* _Nullable context)
-        __INTRODUCED_IN_API_V__;
+                                             void* context)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Get all of the keys associated with this specific type and place it in the
@@ -873,12 +953,12 @@ int32_t APersistableBundle_getLongVectorKeys(const APersistableBundle* _Nonnull 
  * \return size of the buffer of keys in bytes. This is the required size of the
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  */
-int32_t APersistableBundle_getDoubleVectorKeys(const APersistableBundle* _Nonnull pBundle,
-                                               char* _Nullable* _Nullable outKeys,
+int32_t APersistableBundle_getDoubleVectorKeys(const APersistableBundle* pBundle,
+                                               char** outKeys,
                                                int32_t bufferSizeBytes,
                                                APersistableBundle_stringAllocator stringAllocator,
-                                               void* _Nullable context)
-        __INTRODUCED_IN_API_V__;
+                                               void* context)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Get all of the keys associated with this specific type and place it in the
@@ -906,12 +986,12 @@ int32_t APersistableBundle_getDoubleVectorKeys(const APersistableBundle* _Nonnul
  * pre-allocated user supplied buffer if all of the stored contents are desired.
  *         false
  */
-int32_t APersistableBundle_getStringVectorKeys(const APersistableBundle* _Nonnull pBundle,
-                                               char* _Nullable* _Nullable outKeys,
+int32_t APersistableBundle_getStringVectorKeys(const APersistableBundle* pBundle,
+                                               char** outKeys,
                                                int32_t bufferSizeBytes,
                                                APersistableBundle_stringAllocator stringAllocator,
-                                               void* _Nullable context)
-        __INTRODUCED_IN_API_V__;
+                                               void* context)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Get all of the keys associated with this specific type and place it in the
@@ -940,8 +1020,8 @@ int32_t APersistableBundle_getStringVectorKeys(const APersistableBundle* _Nonnul
  *         APERSISTABLEBUNDLE_ALLOCATOR_FAILED if the provided allocator fails
  */
 int32_t APersistableBundle_getPersistableBundleKeys(
-        const APersistableBundle* _Nonnull pBundle, char* _Nullable* _Nullable outKeys,
+        const APersistableBundle* pBundle, char** outKeys,
         int32_t bufferSizeBytes, APersistableBundle_stringAllocator stringAllocator,
-        void* _Nullable context) __INTRODUCED_IN_API_V__;
+        void* context) __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 __END_DECLS

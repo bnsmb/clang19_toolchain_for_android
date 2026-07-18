@@ -49,7 +49,7 @@ typedef unsigned int nfds_t;
  * Returns the number of ready file descriptors on success, 0 for timeout,
  * and returns -1 and sets `errno` on failure.
  */
-int poll(struct pollfd* _Nullable __fds, nfds_t __count, int __timeout_ms);
+int poll(struct pollfd* __fds, nfds_t __count, int __timeout_ms);
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /**
@@ -60,16 +60,15 @@ int poll(struct pollfd* _Nullable __fds, nfds_t __count, int __timeout_ms);
  * Returns the number of ready file descriptors on success, 0 for timeout,
  * and returns -1 and sets `errno` on failure.
  */
-int ppoll(struct pollfd* _Nullable __fds, nfds_t __count, const struct timespec* _Nullable __timeout, const sigset_t* _Nullable __mask) __INTRODUCED_IN_API_L__;
+int ppoll(struct pollfd* __fds, nfds_t __count, const struct timespec* __timeout, const sigset_t* __mask) __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
+#if __BIONIC_AVAILABILITY_GUARD(28)
 /**
  * Like ppoll() but allows setting a signal mask with RT signals even from a 32-bit process.
  */
-
-#if __BIONIC_AVAILABILITY_GUARD(28)
-int ppoll64(struct pollfd* _Nullable  __fds, nfds_t __count, const struct timespec* _Nullable __timeout, const sigset64_t* _Nullable __mask) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+int ppoll64(struct pollfd*  __fds, nfds_t __count, const struct timespec* __timeout, const sigset64_t* __mask) __INTRODUCED_IN_API_P__;
+#endif
 
 #if defined(__BIONIC_INCLUDE_FORTIFY_HEADERS)
 #define _POLL_H_

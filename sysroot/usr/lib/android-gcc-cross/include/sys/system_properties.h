@@ -54,7 +54,7 @@ typedef struct prop_info prop_info;
  *
  * Returns 0 on success, or -1 on failure.
  */
-int __system_property_set(const char* _Nonnull __name, const char* _Nonnull __value);
+int __system_property_set(const char* __name, const char* __value) __attribute__((nonnull(1,2)));
 
 /**
  * Returns a `prop_info` corresponding system property `name`, or nullptr if it doesn't exist.
@@ -63,19 +63,19 @@ int __system_property_set(const char* _Nonnull __name, const char* _Nonnull __va
  * Property lookup is expensive, so it can be useful to cache the result of this
  * function rather than using __system_property_get().
  */
-const prop_info* _Nullable __system_property_find(const char* _Nonnull __name);
+const prop_info* __system_property_find(const char* __name) __attribute__((nonnull(1)));
 
+#if __BIONIC_AVAILABILITY_GUARD(26)
 /**
  * Calls `callback` with a consistent trio of name, value, and serial number
  * for property `pi`.
  *
  * Available since API level 26.
  */
-#if __BIONIC_AVAILABILITY_GUARD(26)
-void __system_property_read_callback(const prop_info* _Nonnull __pi,
-    void (* _Nonnull __callback)(void* _Nullable __cookie, const char* _Nonnull __name, const char* _Nonnull __value, uint32_t __serial),
-    void* _Nullable __cookie) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+void __system_property_read_callback(const prop_info* __pi,
+    void (* __callback)(void* __cookie, const char* __name, const char* __value, uint32_t __serial),
+    void* __cookie) __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(19)
 /**
@@ -87,7 +87,7 @@ void __system_property_read_callback(const prop_info* _Nonnull __pi,
  *
  * Returns 0 on success, or -1 on failure.
  */
-int __system_property_foreach(void (* _Nonnull __callback)(const prop_info* _Nonnull __pi, void* _Nullable __cookie), void* _Nullable __cookie) __INTRODUCED_IN_API_K__;
+int __system_property_foreach(void (* __callback)(const prop_info* __pi, void* __cookie), void* __cookie) __INTRODUCED_IN_API_K__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(19) */
 
 /**
@@ -107,9 +107,9 @@ int __system_property_foreach(void (* _Nonnull __callback)(const prop_info* _Non
 struct timespec;
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-bool __system_property_wait(const prop_info* _Nullable __pi, uint32_t __old_serial, uint32_t* _Nonnull __new_serial_ptr, const struct timespec* _Nullable __relative_timeout)
-    __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+bool __system_property_wait(const prop_info* __pi, uint32_t __old_serial, uint32_t* __new_serial_ptr, const struct timespec* __relative_timeout)
+    __INTRODUCED_IN_API_O__ __attribute__((nonnull(3)));
+#endif
 
 /**
  * Deprecated: there's no limit on the length of a property name since
@@ -118,11 +118,11 @@ bool __system_property_wait(const prop_info* _Nullable __pi, uint32_t __old_seri
 #define PROP_NAME_MAX   32
 
 /** Deprecated. Use __system_property_foreach() instead. */
-const prop_info* _Nullable __system_property_find_nth(unsigned __n);
+const prop_info* __system_property_find_nth(unsigned __n);
 /** Deprecated. Use __system_property_read_callback() instead. */
-int __system_property_read(const prop_info* _Nonnull __pi, char* _Nullable __name, char* _Nonnull __value);
+int __system_property_read(const prop_info* __pi, char* __name, char* __value) __attribute__((nonnull(1,3)));
 /** Deprecated. Use __system_property_read_callback() instead. */
-int __system_property_get(const char* _Nonnull __name, char* _Nonnull __value);
+int __system_property_get(const char* __name, char* __value) __attribute__((nonnull(1,2)));
 /** Deprecated: use __system_property_wait() instead. */
 uint32_t __system_property_wait_any(uint32_t __old_serial);
 
@@ -158,7 +158,7 @@ uint32_t __system_property_area_serial(void);
  *
  * Returns the serial number on success, -1 on error.
  */
-uint32_t __system_property_serial(const prop_info* _Nonnull __pi);
+uint32_t __system_property_serial(const prop_info* __pi) __attribute__((nonnull(1)));
 
 //
 // libc implementation detail.
@@ -216,7 +216,7 @@ int __system_property_area_init(void);
  *
  * Returns 0 on success, -1 if the property area is full.
  */
-int __system_property_add(const char* _Nonnull __name, unsigned int __name_length, const char* _Nonnull __value, unsigned int __value_length);
+int __system_property_add(const char* __name, unsigned int __name_length, const char* __value, unsigned int __value_length) __attribute__((nonnull(1,3)));
 
 /**
  * Updates the value of a system property returned by __system_property_find().
@@ -226,8 +226,9 @@ int __system_property_add(const char* _Nonnull __name, unsigned int __name_lengt
  *
  * Returns 0 on success, -1 if the parameters are incorrect.
  */
-int __system_property_update(prop_info* _Nonnull __pi, const char* _Nonnull __value, unsigned int __value_length);
+int __system_property_update(prop_info* __pi, const char* __value, unsigned int __value_length) __attribute__((nonnull(1,2)));
 
+#if __BIONIC_AVAILABILITY_GUARD(35)
 /**
  * Reloads the system properties from disk.
  * Not intended for use by any apps except the Zygote.
@@ -240,15 +241,14 @@ int __system_property_update(prop_info* _Nonnull __pi, const char* _Nonnull __va
  *
  * Available since API level 35.
  */
-#if __BIONIC_AVAILABILITY_GUARD(35)
 int __system_properties_zygote_reload(void) __INTRODUCED_IN_API_V__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(35) */
+#endif
 
 /**
  * Deprecated: previously for testing, but now that SystemProperties is its own
  * testable class, there is never a reason to call this function and its
  * implementation simply returns -1.
  */
-int __system_property_set_filename(const char* _Nullable __unused __filename);
+int __system_property_set_filename(const char* __unused __filename);
 
 __END_DECLS

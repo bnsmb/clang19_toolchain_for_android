@@ -99,28 +99,29 @@ struct utmp {
 /**
  * Returns -1 and sets errno to ENOTSUP.
  */
-int utmpname(const char* _Nonnull __path);
+int utmpname(const char* __path) __THROW __attribute__((nonnull(1)));
 
 /**
  * Does nothing.
  */
-void setutent(void);
+void setutent(void)__THROW ;
 
 /**
  * Does nothing and returns null.
  */
-struct utmp* _Nullable getutent(void);
+struct utmp* getutent(void);
 
 /**
  * Does nothing and returns null.
  */
-struct utmp* _Nullable pututline(const struct utmp* _Nonnull __entry);
+struct utmp* pututline(const struct utmp* __entry) __attribute__((nonnull(1)));
 
 /**
  * Does nothing.
  */
-void endutent(void);
+void endutent(void)__THROW ;
 
+#if __BIONIC_AVAILABILITY_GUARD(23)
 /**
  * [login_tty(3)](https://www.man7.org/linux/man-pages/man3/login_tty.3.html)
  * prepares for login on the given file descriptor.
@@ -131,8 +132,7 @@ void endutent(void);
  *
  * Available since API level 23.
  */
-#if __BIONIC_AVAILABILITY_GUARD(23)
-int login_tty(int __fd) __INTRODUCED_IN_API_M__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(23) */
+int login_tty(int __fd) __THROW __INTRODUCED_IN_API_M__;
+#endif
 
 __END_DECLS

@@ -31,15 +31,15 @@
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-ssize_t __sendto_chk(int, const void* _Nonnull, size_t, size_t, int, const struct sockaddr* _Nullable, socklen_t) __INTRODUCED_IN_API_O__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
+ssize_t __sendto_chk(int, const void*, size_t, size_t, int, const struct sockaddr*, socklen_t) __INTRODUCED_IN_API_O__ __attribute__((nonnull(2)));
+#endif
 
-ssize_t __recvfrom_chk(int, void* _Nullable, size_t, size_t, int, struct sockaddr* _Nullable, socklen_t* _Nullable);
+ssize_t __recvfrom_chk(int, void*, size_t, size_t, int, struct sockaddr*, socklen_t* );
 
 #if defined(__BIONIC_FORTIFY)
 
 __BIONIC_FORTIFY_INLINE
-ssize_t recvfrom(int fd, void* _Nullable const buf __pass_object_size0, size_t len, int flags, struct sockaddr* _Nullable src_addr, socklen_t* _Nullable addr_len)
+ssize_t recvfrom(int fd, void* const buf __pass_object_size0, size_t len, int flags, struct sockaddr* src_addr, socklen_t* addr_len)
     __overloadable
     __clang_error_if(__bos_unevaluated_lt(__bos0(buf), len),
                      "'recvfrom' called with size bigger than buffer") {
@@ -54,7 +54,7 @@ ssize_t recvfrom(int fd, void* _Nullable const buf __pass_object_size0, size_t l
 }
 
 __BIONIC_FORTIFY_INLINE
-ssize_t sendto(int fd, const void* _Nonnull const buf __pass_object_size0, size_t len, int flags, const struct sockaddr* _Nullable dest_addr, socklen_t addr_len)
+ssize_t sendto(int fd, const void* const buf __pass_object_size0, size_t len, int flags, const struct sockaddr* dest_addr, socklen_t addr_len)
     __overloadable
     __clang_error_if(__bos_unevaluated_lt(__bos0(buf), len),
                      "'sendto' called with size bigger than buffer") {
@@ -69,7 +69,7 @@ ssize_t sendto(int fd, const void* _Nonnull const buf __pass_object_size0, size_
 }
 
 __BIONIC_FORTIFY_INLINE
-ssize_t recv(int socket, void* _Nullable const buf __pass_object_size0, size_t len, int flags)
+ssize_t recv(int socket, void* const buf __pass_object_size0, size_t len, int flags)
     __overloadable
     __clang_error_if(__bos_unevaluated_lt(__bos0(buf), len),
                      "'recv' called with size bigger than buffer") {
@@ -77,7 +77,7 @@ ssize_t recv(int socket, void* _Nullable const buf __pass_object_size0, size_t l
 }
 
 __BIONIC_FORTIFY_INLINE
-ssize_t send(int socket, const void* _Nonnull const buf __pass_object_size0, size_t len, int flags)
+ssize_t send(int socket, const void* const buf __pass_object_size0, size_t len, int flags)
     __overloadable
     __clang_error_if(__bos_unevaluated_lt(__bos0(buf), len),
                      "'send' called with size bigger than buffer") {

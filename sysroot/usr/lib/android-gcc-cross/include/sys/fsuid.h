@@ -45,7 +45,7 @@ __BEGIN_DECLS
  *
  * Returns the previous UID.
  */
-int setfsuid(uid_t __uid) __INTRODUCED_IN_API_L__;
+int setfsuid(uid_t __uid) __THROW __INTRODUCED_IN_API_L__;
 
 /**
  * [setfsgid(2)](https://man7.org/linux/man-pages/man2/setfsgid.2.html) sets the GID used for
@@ -53,7 +53,7 @@ int setfsuid(uid_t __uid) __INTRODUCED_IN_API_L__;
  *
  * Returns the previous GID.
  */
-int setfsgid(gid_t __gid) __INTRODUCED_IN_API_L__;
+int setfsgid(gid_t __gid) __THROW __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 __END_DECLS

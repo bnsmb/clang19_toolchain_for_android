@@ -27,9 +27,9 @@ typedef enum {
 /** See hsearch()/hsearch_r(). */
 typedef struct entry {
   /** The string key. */
-  char* _Nullable key;
+  char* key;
   /** The associated data. */
-  void* _Nullable data;
+  void* data;
 } ENTRY;
 
 /**
@@ -56,10 +56,10 @@ typedef enum {
   leaf
 } VISIT;
 
-/** The hash table type for hcreate_r()/hdestroy_r()/hsearch_r(). */
 #if defined(__USE_BSD) || defined(__USE_GNU)
+/** The hash table type for hcreate_r()/hdestroy_r()/hsearch_r(). */
 struct hsearch_data {
-  void* _Nullable __opaque;
+  void* __opaque;
 };
 #endif
 
@@ -68,15 +68,16 @@ struct hsearch_data {
  * [insque(3)](https://man7.org/linux/man-pages/man3/insque.3.html) inserts
  * an item in a queue (an intrusive doubly-linked list).
  */
-void insque(void* _Nonnull __element, void* _Nullable __previous) __INTRODUCED_IN_API_L__;
+void insque(void* __element, void* __previous) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 
 /**
  * [remque(3)](https://man7.org/linux/man-pages/man3/remque.3.html) removes
  * an item from a queue (an intrusive doubly-linked list).
  */
-void remque(void* _Nonnull __element) __INTRODUCED_IN_API_L__;
+void remque(void* __element) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
+#if __BIONIC_AVAILABILITY_GUARD(28)
 /**
  * [hcreate(3)](https://man7.org/linux/man-pages/man3/hcreate.3.html)
  * initializes the global hash table, with space for at least `__n` elements.
@@ -87,10 +88,10 @@ void remque(void* _Nonnull __element) __INTRODUCED_IN_API_L__;
  *
  * Available since API level 28.
  */
-#if __BIONIC_AVAILABILITY_GUARD(28)
-int hcreate(size_t __n) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+int hcreate(size_t __n) __THROW __INTRODUCED_IN_API_P__;
+#endif
 
+#if __BIONIC_AVAILABILITY_GUARD(28)
 /**
  * [hdestroy(3)](https://man7.org/linux/man-pages/man3/hdestroy.3.html) destroys
  * the global hash table.
@@ -99,10 +100,10 @@ int hcreate(size_t __n) __INTRODUCED_IN_API_P__;
  *
  * Available since API level 28.
  */
-#if __BIONIC_AVAILABILITY_GUARD(28)
-void hdestroy(void) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+void hdestroy(void) __THROW __INTRODUCED_IN_API_P__;
+#endif
 
+#if __BIONIC_AVAILABILITY_GUARD(28)
 /**
  * [hsearch(3)](https://man7.org/linux/man-pages/man3/hsearch.3.html) finds or
  * inserts `__entry` in the global hash table, based on `__action`.
@@ -114,10 +115,10 @@ void hdestroy(void) __INTRODUCED_IN_API_P__;
  *
  * Available since API level 28.
  */
-#if __BIONIC_AVAILABILITY_GUARD(28)
-ENTRY* _Nullable hsearch(ENTRY __entry, ACTION __action) __INTRODUCED_IN_API_P__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(28) */
+ENTRY* hsearch(ENTRY __entry, ACTION __action) __THROW __INTRODUCED_IN_API_P__;
+#endif
 
+#if (defined(__USE_BSD) || defined(__USE_GNU)) && __BIONIC_AVAILABILITY_GUARD(28)
 /**
  * [hcreate_r(3)](https://man7.org/linux/man-pages/man3/hcreate_r.3.html)
  * initializes a hash table `__table` with space for at least `__n` elements.
@@ -126,20 +127,20 @@ ENTRY* _Nullable hsearch(ENTRY __entry, ACTION __action) __INTRODUCED_IN_API_P__
  *
  * Available since API level 28 when compiling with `_BSD_SOURCE` or `_GNU_SOURCE`.
  */
-#if (defined(__USE_BSD) || defined(__USE_GNU)) && __BIONIC_AVAILABILITY_GUARD(28)
-int hcreate_r(size_t __n, struct hsearch_data* _Nonnull __table) __INTRODUCED_IN_API_P__;
+int hcreate_r(size_t __n, struct hsearch_data* __table) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(2)));
 #endif
 
+#if (defined(__USE_BSD) || defined(__USE_GNU)) && __BIONIC_AVAILABILITY_GUARD(28)
 /**
  * [hdestroy_r(3)](https://man7.org/linux/man-pages/man3/hdestroy_r.3.html) destroys
  * the hash table `__table`.
  *
  * Available since API level 28 when compiling with `_BSD_SOURCE` or `_GNU_SOURCE`.
  */
-#if (defined(__USE_BSD) || defined(__USE_GNU)) && __BIONIC_AVAILABILITY_GUARD(28)
-void hdestroy_r(struct hsearch_data* _Nonnull __table) __INTRODUCED_IN_API_P__;
+void hdestroy_r(struct hsearch_data* __table) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
+#if (defined(__USE_BSD) || defined(__USE_GNU)) && __BIONIC_AVAILABILITY_GUARD(28)
 /**
  * [hsearch_r(3)](https://man7.org/linux/man-pages/man3/hsearch_r.3.html) finds or
  * inserts `__entry` in the hash table `__table`, based on `__action`.
@@ -149,8 +150,7 @@ void hdestroy_r(struct hsearch_data* _Nonnull __table) __INTRODUCED_IN_API_P__;
  *
  * Available since API level 28 when compiling with `_BSD_SOURCE` or `_GNU_SOURCE`.
  */
-#if (defined(__USE_BSD) || defined(__USE_GNU)) && __BIONIC_AVAILABILITY_GUARD(28)
-int hsearch_r(ENTRY __entry, ACTION __action, ENTRY* _Nullable * _Nonnull __result, struct hsearch_data* _Nonnull __table) __INTRODUCED_IN_API_P__;
+int hsearch_r(ENTRY __entry, ACTION __action, ENTRY* * __result, struct hsearch_data* __table) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(3,4)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
@@ -163,7 +163,7 @@ int hsearch_r(ENTRY __entry, ACTION __action, ENTRY* _Nullable * _Nonnull __resu
  *
  * Returns a pointer to the matching element on success, or NULL on failure.
  */
-void* _Nullable lfind(const void* _Nonnull __key, const void* _Nonnull __array, size_t* _Nonnull __count, size_t __size, int (* _Nonnull __comparator)(const void* _Nonnull, const void* _Nonnull)) __INTRODUCED_IN_API_L__;
+void* lfind(const void* __key, const void* __array, size_t* __count, size_t __size, int (* __comparator)(const void*, const void* )) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2,3,5)));
 
 /**
  * [lsearch(3)](https://man7.org/linux/man-pages/man3/lsearch.3.html) brute-force
@@ -176,7 +176,7 @@ void* _Nullable lfind(const void* _Nonnull __key, const void* _Nonnull __array, 
  * Returns a pointer to the matching element on success, or to the newly-added
  * element on failure.
  */
-void* _Nonnull lsearch(const void* _Nonnull __key, void* _Nonnull __array, size_t* _Nonnull __count, size_t __size, int (* _Nonnull __comparator)(const void* _Nonnull, const void* _Nonnull)) __INTRODUCED_IN_API_L__;
+void* lsearch(const void* __key, void* __array, size_t* __count, size_t __size, int (* __comparator)(const void*, const void* )) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2,3,5)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(16)
@@ -187,13 +187,13 @@ void* _Nonnull lsearch(const void* _Nonnull __key, void* _Nonnull __array, size_
  *
  * Returns a pointer to the parent of the deleted node, or NULL on failure.
  */
-void* _Nullable tdelete(const void* _Nonnull __key, void* _Nullable * _Nullable __root_ptr, int (* _Nonnull __comparator)(const void* _Nonnull, const void* _Nonnull)) __INTRODUCED_IN_API_J__;
+void* tdelete(const void* __key, void* * __root_ptr, int (* __comparator)(const void*, const void* )) __INTRODUCED_IN_API_J__ __attribute__((nonnull(1,3)));
 
 /**
  * [tdestroy(3)](https://man7.org/linux/man-pages/man3/tdestroy.3.html) destroys
  * the hash table `__root` using `__free_fn` on each node.
  */
-void tdestroy(void* _Nullable __root, void (* _Nullable __free_fn)(void* _Nullable)) __INTRODUCED_IN_API_J__;
+void tdestroy(void* __root, void (* __free_fn)(void* )) __INTRODUCED_IN_API_J__;
 
 /**
  * [tfind(3)](https://man7.org/linux/man-pages/man3/tfind.3.html) searches
@@ -202,7 +202,7 @@ void tdestroy(void* _Nullable __root, void (* _Nullable __free_fn)(void* _Nullab
  *
  * Returns a pointer to the matching node, or NULL on failure.
  */
-void* _Nullable tfind(const void* _Nonnull __key, void* _Nullable const* _Nullable __root_ptr, int (* _Nonnull __comparator)(const void* _Nonnull, const void* _Nonnull)) __INTRODUCED_IN_API_J__;
+void* tfind(const void* __key, void* const* __root_ptr, int (* __comparator)(const void*, const void* )) __INTRODUCED_IN_API_J__ __attribute__((nonnull(1,3)));
 
 /**
  * [tsearch(3)](https://man7.org/linux/man-pages/man3/tsearch.3.html) searches
@@ -213,7 +213,7 @@ void* _Nullable tfind(const void* _Nonnull __key, void* _Nullable const* _Nullab
  *
  * Returns a pointer to the matching node, or to the newly-added node.
  */
-void* _Nullable tsearch(const void* _Nonnull __key, void* _Nullable * _Nullable __root_ptr, int (* _Nonnull __comparator)(const void* _Nonnull, const void* _Nonnull)) __INTRODUCED_IN_API_J__;
+void* tsearch(const void* __key, void* * __root_ptr, int (* __comparator)(const void*, const void* )) __INTRODUCED_IN_API_J__ __attribute__((nonnull(1,3)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(16) */
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
@@ -221,7 +221,7 @@ void* _Nullable tsearch(const void* _Nonnull __key, void* _Nullable * _Nullable 
  * [twalk(3)](https://man7.org/linux/man-pages/man3/twalk.3.html) calls
  * `__visitor` on every node in the tree.
  */
-void twalk(const void* _Nullable __root, void (* _Nullable __visitor)(const void* _Nullable, VISIT, int)) __INTRODUCED_IN_API_L__;
+void twalk(const void* __root, void (* __visitor)(const void*, VISIT, int)) __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 __END_DECLS

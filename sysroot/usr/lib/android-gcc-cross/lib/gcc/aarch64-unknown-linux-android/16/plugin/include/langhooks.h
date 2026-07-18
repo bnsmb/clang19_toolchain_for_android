@@ -614,6 +614,18 @@ struct lang_hooks
      to a pragma) rather than providing them in the source language itself.  */
   tree (*simulate_builtin_function_decl) (tree decl);
 
+  /* Build a FUNCTION_DECL for an external runtime library function with
+     C (not C++) linkage called NAME whose type is TYPE.  This is used by
+     the shared c-family `__builtin_available' implementation to declare
+     the runtime helpers __isOSVersionAtLeast (Android/Bionic/Linux) and
+     __isPlatformVersionAtLeast (Darwin) which both the C and C++ front
+     ends must call without language-level name mangling.  The front end
+     is responsible for fitting the resulting decl into its namespace and
+     any front-end-specific bookkeeping (e.g. allocating DECL_LANG_SPECIFIC
+     in C++); the caller takes care of the rest of the runtime-function
+     flags (DECL_EXTERNAL, TREE_PUBLIC, etc.).  */
+  tree (*make_runtime_function_decl) (const char *name, tree type);
+
   /* Used to set up the tree_contains_structure array for a frontend. */
   void (*init_ts) (void);
 

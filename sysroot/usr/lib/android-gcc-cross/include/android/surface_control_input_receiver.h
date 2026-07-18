@@ -42,8 +42,8 @@ __BEGIN_DECLS
  * \return true if the event is handled by the client, false otherwise.
  * Available since API level 35.
  */
-typedef bool (*AInputReceiver_onMotionEvent)(void *_Null_unspecified context,
-                                             AInputEvent *_Nonnull motionEvent);
+typedef bool (*AInputReceiver_onMotionEvent)(void* context,
+                                             AInputEvent* motionEvent);
 /**
  * The AInputReceiver_onKeyEvent callback is invoked when the registered input channel receives
  * a key event.
@@ -57,8 +57,8 @@ typedef bool (*AInputReceiver_onMotionEvent)(void *_Null_unspecified context,
  * a fallback key event if the event is not handled.
  * Available since API level 35.
  */
-typedef bool (*AInputReceiver_onKeyEvent)(void *_Null_unspecified context,
-                                          AInputEvent *_Nonnull keyEvent);
+typedef bool (*AInputReceiver_onKeyEvent)(void* context,
+                                          AInputEvent* keyEvent);
 
 typedef struct AInputReceiverCallbacks AInputReceiverCallbacks;
 
@@ -91,12 +91,12 @@ typedef struct AInputReceiver AInputReceiver;
  *
  * Available since API level 35.
  */
-AInputReceiver* _Nonnull
-AInputReceiver_createBatchedInputReceiver(AChoreographer* _Nonnull aChoreographer,
-                                        const AInputTransferToken* _Nonnull hostInputTransferToken,
-                                        const ASurfaceControl* _Nonnull aSurfaceControl,
-                                        AInputReceiverCallbacks* _Nonnull aInputReceiverCallbacks)
-                                        __INTRODUCED_IN_API_V__;
+AInputReceiver*
+AInputReceiver_createBatchedInputReceiver(AChoreographer* aChoreographer,
+                                        const AInputTransferToken* hostInputTransferToken,
+                                        const ASurfaceControl* aSurfaceControl,
+                                        AInputReceiverCallbacks* aInputReceiverCallbacks)
+                                        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3,4)));
 
 /**
  * Registers an input receiver for an ASurfaceControl that will receive every input event.
@@ -117,12 +117,12 @@ AInputReceiver_createBatchedInputReceiver(AChoreographer* _Nonnull aChoreographe
  *
  * Available since API level 35.
  */
-AInputReceiver* _Nonnull
-AInputReceiver_createUnbatchedInputReceiver(ALooper* _Nonnull aLooper,
-                                         const AInputTransferToken* _Nonnull hostInputTransferToken,
-                                         const ASurfaceControl* _Nonnull aSurfaceControl,
-                                         AInputReceiverCallbacks* _Nonnull aInputReceiverCallbacks)
-                                         __INTRODUCED_IN_API_V__;
+AInputReceiver*
+AInputReceiver_createUnbatchedInputReceiver(ALooper* aLooper,
+                                         const AInputTransferToken* hostInputTransferToken,
+                                         const ASurfaceControl* aSurfaceControl,
+                                         AInputReceiverCallbacks* aInputReceiverCallbacks)
+                                         __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2,3,4)));
 
 /**
  * Returns the AInputTransferToken that can be used to transfer touch gesture to or from other
@@ -136,9 +136,9 @@ AInputReceiver_createUnbatchedInputReceiver(ALooper* _Nonnull aLooper,
  *
  * Available since API level 35.
  */
-const AInputTransferToken *_Nonnull
-AInputReceiver_getInputTransferToken(AInputReceiver *_Nonnull aInputReceiver)
-        __INTRODUCED_IN_API_V__;
+const AInputTransferToken*
+AInputReceiver_getInputTransferToken(AInputReceiver* aInputReceiver)
+        __INTRODUCED_IN_API_V__ __attribute__((nonnull(1)));
 
 /**
  * Unregisters the input channel and deletes the AInputReceiver. This must be called on the same
@@ -149,7 +149,7 @@ AInputReceiver_getInputTransferToken(AInputReceiver *_Nonnull aInputReceiver)
  * Available since API level 35.
  */
 void
-AInputReceiver_release(AInputReceiver *_Nullable aInputReceiver) __INTRODUCED_IN_API_V__;
+AInputReceiver_release(AInputReceiver* aInputReceiver) __INTRODUCED_IN_API_V__;
 
 /**
  * Creates a AInputReceiverCallbacks object that is used when registering for an AInputReceiver.
@@ -159,7 +159,7 @@ AInputReceiver_release(AInputReceiver *_Nullable aInputReceiver) __INTRODUCED_IN
  *
  * Available since API level 35.
  */
-AInputReceiverCallbacks* _Nonnull AInputReceiverCallbacks_create(void* _Nullable context)
+AInputReceiverCallbacks* AInputReceiverCallbacks_create(void* context)
                                                         __INTRODUCED_IN_API_V__;
 
 /**
@@ -169,7 +169,7 @@ AInputReceiverCallbacks* _Nonnull AInputReceiverCallbacks_create(void* _Nullable
  *
  * Available since API level 35
  */
-void AInputReceiverCallbacks_release(AInputReceiverCallbacks* _Nullable callbacks)
+void AInputReceiverCallbacks_release(AInputReceiverCallbacks* callbacks)
                                      __INTRODUCED_IN_API_V__;
 
 /**
@@ -180,9 +180,9 @@ void AInputReceiverCallbacks_release(AInputReceiverCallbacks* _Nullable callback
  *
  * Available since API level 35.
  */
-void AInputReceiverCallbacks_setMotionEventCallback(AInputReceiverCallbacks* _Nonnull callbacks,
-                                                AInputReceiver_onMotionEvent _Nonnull onMotionEvent)
-                                                __INTRODUCED_IN_API_V__;
+void AInputReceiverCallbacks_setMotionEventCallback(AInputReceiverCallbacks* callbacks,
+                                                AInputReceiver_onMotionEvent onMotionEvent)
+                                                __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 /**
  * Sets a AInputReceiver_onKeyEvent callback for an AInputReceiverCallbacks
@@ -192,8 +192,8 @@ void AInputReceiverCallbacks_setMotionEventCallback(AInputReceiverCallbacks* _No
  *
  * Available since API level 35.
  */
-void AInputReceiverCallbacks_setKeyEventCallback(AInputReceiverCallbacks* _Nonnull callbacks,
-                                                 AInputReceiver_onKeyEvent _Nonnull onKeyEvent)
-                                                 __INTRODUCED_IN_API_V__;
+void AInputReceiverCallbacks_setKeyEventCallback(AInputReceiverCallbacks* callbacks,
+                                                 AInputReceiver_onKeyEvent onKeyEvent)
+                                                 __INTRODUCED_IN_API_V__ __attribute__((nonnull(1,2)));
 
 __END_DECLS
