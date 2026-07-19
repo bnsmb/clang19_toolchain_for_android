@@ -227,7 +227,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 #
 # various compression tools:
 # 
-# 7zz 26.00
+# 7zz 26.02
 # bzip2 1.0.8
 # zip 3.0
 # unzip 5.52
@@ -577,4 +577,7 @@ History
     added dua 2.38.0 (https://github.com/Byron/dua-cli, a replacement for du)
     updated btop to version 1.4.7; btop now runs as non-root user (but with limited network statistics)
     updated the gcc to version  16.1.1 20260716 
+    added 7zz version 26.02 
+    removed 7zz version 26.00
+    removed 7zz version 26.01
 
