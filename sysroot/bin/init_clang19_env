@@ -113,6 +113,12 @@
 # 15.07.2026 v1.5.17 /bs
 #    added the alias cat="bat --paging=never"
 #
+# 20.07.2026 v1.5.18 /bs
+#    added the alias readelf=/data/local/tmp/sysroot/usr/bin/readelf
+#    added the alias alias fix_paste="printf '\e[?2004l'"
+#    the script now defines the environment variable PERL5LIB
+#
+
 __TRUE=0
 __FALSE=1
 
@@ -237,6 +243,15 @@ function define_aliase {
     if ${TEST} -x "${CLANG_SYSROOT}/usr/bin/$i"  ; then
        alias $i="${CLANG_SYSROOT}/usr/bin/$i"
       NEW_ALIAS="${NEW_ALIAS} $i"
+    fi
+  done
+
+# create aliase for crippled toybox tools ..
+# 
+  for f in readelf ; do
+    if [ -x /system/bin/$i ] ; then
+      alias $f="/data/local/tmp/sysroot/usr/bin/$f"
+      NEW_ALIAS="${NEW_ALIAS} $f"
     fi
   done
 
@@ -789,6 +804,19 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   export CC=${CLANG}
   export LD=${LLD}
 
+# define the PERL5LIB for perl
+#
+export PERL5LIB="$( ls -d1 ${CLANG_SYSROOT}/usr/lib/perl5/5* ${CLANG_SYSROOT}/usr/lib/perl5/5*/aarch64-linux-android  ${CLANG_SYSROOT}/usr/lib/perl5/site_perl/5*/aarch64-linux-android/ | tr "\n" ":" )"
+#
+# delete the trailing colon ":"
+#
+[[ ${PERL5LIB} == *: ]] && PERL5LIB="${PERL5LIB%:*}"
+
+echo 
+echo "PERL5LIB is now: "
+echo "   ${PERL5LIB}"
+echo 
+		
 # define aliase
 #
   echo "Define some aliase ..."
@@ -809,6 +837,10 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   [ -x ${CLANG_SYSROOT}/usr/bin/eza ] && alias ll="${CLANG_SYSROOT}/usr/bin/eza"
   [ -x ${CLANG_SYSROOT}/usr/bin/bat ] && alias cat="${CLANG_SYSROOT}/usr/bin/bat --paging=never"
+
+# define an alias for the printf command to clear cut&paste errors
+# 
+  alias fix_paste="printf '\e[?2004l'"
 
   define_aliase
 
