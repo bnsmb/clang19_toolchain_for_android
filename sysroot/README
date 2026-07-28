@@ -162,7 +162,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # wget 2.2.0
 # curl 8.19.0
 # 
-# perl 5.40
+# perl 5.44
 # python 3.14
 # pip 25.0.1
 # tcl 9.0
@@ -577,7 +577,11 @@ History
     added dua 2.38.0 (https://github.com/Byron/dua-cli, a replacement for du)
     updated btop to version 1.4.7; btop now runs as non-root user (but with limited network statistics)
     updated the gcc to version  16.1.1 20260716 
-    added 7zz version 26.02 
+    updated 7zz to version 26.02 
     removed 7zz version 26.00
     removed 7zz version 26.01
+    updated Perl to version 5.44
+    added the perl scripts list_installed_perl_modules, list_perl_module_pathes, test_installed_perl_modules
+    added the perl script perl-deps.pl
+    updated the script create_overlay_mount.sh to the version 1.4.0
 
