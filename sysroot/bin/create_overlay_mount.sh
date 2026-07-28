@@ -3,7 +3,7 @@
 #h#
 #h# create_overlay_mount.sh <VERSION> - create one or more overlay mounts on a device running a rooted Android OS
 #h#
-#h# Usage:  create_overlay_mount.sh [-h|--help] [--version] [--verbose|-v] [--noselinux] [--selinux] [--initdisk|--format] [--details] [--short] [--active] [--nomagisk] [var=value] 
+#h# Usage:  create_overlay_mount.sh [-h|--help] [--version] [--verbose|-v] [--noselinux] [--selinux] [--no_relabel|--relabel] [--initdisk|--format] [--details] [--short] [--active] [--nomagisk] [var=value] 
 #h#                                 [help] [vars] [list] [test] [get] [undo] [diff] [get] [restore] [clean] [mount_only] [mount] [umount] [remount] [directory0] [... directory#] [default]
 #h#
 #H# The parameter that neither start with a "-" or "/" nor contain a "=" are the action parameter that determine what is to be done. 
@@ -33,6 +33,8 @@
 #H# --verbose    print more messages
 #H# --noselinux  disable SELinux at start of the script (SELinux is NOT enabled again by the script)
 #H# --selinux    enable SELinux at start of the script (SELinux is NOT disabled again by the script)
+#H# --no_relabel do not modify the SELinux context for files with unlabeled SELinux context in the overlay filesystem
+#H# --relabel    modify the SELinux context for files with unlabeled SELinux context in the overlay filesystem (this is the default)
 #H# --initdisk   format the virtual disk before creating the overlay mounts; this will undo all previous changes in the filesystems
 #H#              Without this option the script never formats an existing virtual disk.
 #H# --details    print more details
@@ -88,6 +90,15 @@
 #H#
 #H# Notes
 #H#  
+#H# To manually correct the SELinux context of the files in the overlay filesystem execute the command
+#H#
+#H# find /dev/ov/upper -context 'u:object_r:unlabeled:s0' -print0 |
+#H#    xargs -0 chcon u:object_r:system_file:s0
+#H#
+#H# after mounting the virtual disk.
+#H#
+#H# This might be necessary for virtual disk images created on a non-Android OS (such as Linux)
+#H#
 #H# Set the variable TRACE to any value before starting the script to execute it with "set -x"
 #H#
 #H# The detailed documentation for the script can be found here:
@@ -125,6 +136,12 @@
 #
 #   31.10.2025 /bs v1.3.1
 #     added magiskpolicy to the list of Magisk binaries
+#
+#   28.07.2026 /bs v1.4.0
+#     the default mount options are now "-o seclabel"
+#     the script now relabels all files with the SELinux context "u:object_r:unlabeled:s0" in the overlay filesystems
+#     added the parameter "--no_label" to disable the relabling of unlabeled files
+#     added the parameter "--label" to enable the relabling of unlabeled files (this is the default behaviour of the script)
 #
 
 # ----------------------------------------------------------------------
@@ -193,6 +210,9 @@ DEFAULT_SELINUX_CONTEXT="u:object_r:system_file:s0"
 #
 UNLABELED_SELINUX_CONTEXT="${UNLABELED_SELINUX_CONTEXT:=u:object_r:unlabeled:s0}"
 
+# relabel all files in the overlay filesystem with the SELinux context "u:object_r:unlabeled:s0"
+#
+RELABEL_UNLABELED_FILES=${__TRUE}
 
 # list of environment variables supported by the script
 #
@@ -843,6 +863,52 @@ function set_selinux_context {
   return ${THISRC}
 }
 
+
+# ---------------------------------------------------------------------
+# set_selinux_context_for_files - copy the SELinux context from the directory /dev/ov/upper to all
+# files in /dev/ov/upper with the SELinux context "u:object_r:unlabeled:s0"
+#
+# usage: 
+#   set_selinux_context_for_files 
+# 
+#
+# returns:
+#   ${__TRUE} - ok
+#   ${__FALSE} - error
+#
+function set_selinux_context_for_files {
+  typeset __FUNCTION="set_selinux_context_for_files"
+  
+  typeset UPPER_DIR="${BASEDIR}/upper"
+  
+  typeset NEW_SELINUX_CONTEXT=""
+  
+  typeset THISRC=${__FALSE}
+ 
+  if [ -d "${UPPER_DIR}" ] ; then
+    NEW_SELINUX_CONTEXT="$( stat -c %C "${UPPER_DIR}" )"
+
+    LogMsg "Now correcting the SELinux context for all files and directories in the overlay filesystem with the SELinux context \"${UNLABELED_SELINUX_CONTEXT}\" to \"${NEW_SELINUX_CONTEXT}\" ..."
+    find "${UPPER_DIR}" -context "${UNLABELED_SELINUX_CONTEXT}" -print0 | xargs -0 -r chcon "${NEW_SELINUX_CONTEXT}"
+    if [ $? -eq 0 ] ; then
+      LogMsg "... SELinux context for the files successfully modified"
+      THISRC=${__TRUE}
+    else
+      if [ "$( getenforce )"x = "Enforcing"x ] ;then
+        die 95 "Error correcting the SELinux contexts"
+      else
+        LogError "Error correcting the SELinux contexts. SELinux is currently disabled. Please check the SELinux context for the files in the overlay filesystem"
+       fi
+    fi    
+  fi
+
+  LogInfoVar UPPER_DIR 
+  LogInfoVar UNLABELED_SELINUX_CONTEXT 
+  LogInfoVar NEW_SELINUX_CONTEXT 
+
+  return ${THISRC}
+}
+
 # ---------------------------------------------------------------------
 # create_directory - create one or more directories
 #
@@ -1116,9 +1182,10 @@ function mount_virtual_disk {
 
     LOOP_DEVICE="$( get_mount_device "${BASEDIR}" )"
 
-# correct the SELinux context 
+# correct the SELinux context for the base directory
 #
     set_selinux_context "/system" "${BASEDIR}"
+
 
     LogInfo "Successfully mounted the image file \"${IMAGE_FILE}\" to \"${BASEDIR}\" " && \
       LogMsg "$( df -h "${BASEDIR}" 2>&1 )"
@@ -2388,6 +2455,14 @@ if [ $# -ne 0 ] ; then
         SHORT_INFOS=${__TRUE}        
         ;;
 
+      --no_relabel | --norelabel )
+        RELABEL_UNLABELED_FILES=${__FALSE}
+        ;;
+
+      --relabel )
+        RELABEL_UNLABELED_FILES=${__TRUE}
+        ;;
+
       *=* )
         LogInfo "Executing now \"${CUR_PARAMETER}\" ..."
         CUR_VAR="${CUR_PARAMETER%%=*}"
@@ -2820,6 +2895,15 @@ case ${ACTION} in
     if [ "${ACTION}"x != "mount_only"x ] ; then
       create_overlay_directory_tree
       create_overlay_mounts
+
+# correct the SELinux context for the files and directories in the ./upper dir with unlabeled SELinux context
+#
+      if [ ${RELABEL_UNLABELED_FILES} = ${__TRUE} ] ; then
+        set_selinux_context_for_files
+      else
+        LogInfo "Relabeling of unlabeled files in the overlay filesystem is disabled"
+      fi
+      
       print_summary
     else
       LogMsg ""
