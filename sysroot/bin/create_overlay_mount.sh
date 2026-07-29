@@ -70,6 +70,9 @@
 #H#
 #H# clean        umount all overlay mounts and umount the virtual disk
 #H#
+#H# The script does NOT relabel files if the parameter "mount_only" is used. 
+#H# To force relabeling the files when "mount_only" is used, add the option "--relabel"
+#H#
 #H# Other supported parameter:
 #H#
 #H# var=value sets the variable "var" to the value "value"
@@ -90,15 +93,6 @@
 #H#
 #H# Notes
 #H#  
-#H# To manually correct the SELinux context of the files in the overlay filesystem execute the command
-#H#
-#H# find /dev/ov/upper -context 'u:object_r:unlabeled:s0' -print0 |
-#H#    xargs -0 chcon u:object_r:system_file:s0
-#H#
-#H# after mounting the virtual disk.
-#H#
-#H# This might be necessary for virtual disk images created on a non-Android OS (such as Linux)
-#H#
 #H# Set the variable TRACE to any value before starting the script to execute it with "set -x"
 #H#
 #H# The detailed documentation for the script can be found here:
@@ -143,11 +137,17 @@
 #     added the parameter "--no_label" to disable the relabling of unlabeled files
 #     added the parameter "--label" to enable the relabling of unlabeled files (this is the default behaviour of the script)
 #
-
+#   29.07.2026 /bs v1.4.1
+#     the script now fails if there is a filename in the parameter
+#     the script now prints a warning if an unknown environment variable is used in the parameter
+#     corrected the code to relabel unlabeled files and directories (the previous code failed for symbolic links)
+#
 # ----------------------------------------------------------------------
 
 __TRUE=0
 __FALSE=1
+
+# ----------------------------------------------------------------------
 
 # ----------------------------------------------------------------------
 # enable tracing if requested
@@ -165,11 +165,17 @@ fi
 # define default values
 #
 
+
 # script version 
 #
 SCRIPT_VERSION="$( grep  "^#" $0 | grep "/bs v"  | tail -1 | sed "s#.*v#v#g" )"
 
-# file used as virtual disk 
+
+# The variables starting with the string "DEFAULT_" contain the default values for the various variables that can be
+# overwritten by environment variables or parameter
+
+
+#  file used as virtual disk 
 #
 DEFAULT_IMAGE_FILE="/data/local/tmp/image001"
 
@@ -217,6 +223,8 @@ RELABEL_UNLABELED_FILES=${__TRUE}
 # list of environment variables supported by the script
 #
 ENVIRONMENT_VARIABLES="$( grep ^DEFAULT_ $0 | sed -e "s/DEFAULT_//g" -e "s/=.*//g" )"
+
+ENVIRONMENT_VARIABLES_LIST="$( echo "${ENVIRONMENT_VARIABLES}" | tr "\n" " " )"
 
 
 # in some Android versions it's necessary to wait some time between umounting the bind mount and
@@ -865,11 +873,11 @@ function set_selinux_context {
 
 
 # ---------------------------------------------------------------------
-# set_selinux_context_for_files - copy the SELinux context from the directory /dev/ov/upper to all
-# files in /dev/ov/upper with the SELinux context "u:object_r:unlabeled:s0"
+# set_selinux_context_for_files - copy the SELinux context from a directory to all
+# files in the directory with the SELinux context "u:object_r:unlabeled:s0"
 #
 # usage: 
-#   set_selinux_context_for_files 
+#   set_selinux_context_for_files [directory]
 # 
 #
 # returns:
@@ -879,18 +887,57 @@ function set_selinux_context {
 function set_selinux_context_for_files {
   typeset __FUNCTION="set_selinux_context_for_files"
   
-  typeset UPPER_DIR="${BASEDIR}/upper"
-  
+  typeset TARGET_DIR="$1"
+
   typeset NEW_SELINUX_CONTEXT=""
   
-  typeset THISRC=${__FALSE}
+  typeset THISRC=${__TRUE}
  
-  if [ -d "${UPPER_DIR}" ] ; then
-    NEW_SELINUX_CONTEXT="$( stat -c %C "${UPPER_DIR}" )"
+  typeset DIR_LIST="$( ls -d "${TARGET_DIR}/"* )"
+  
+  typeset SUB_DIR_LIST="$( ls -d "${TARGET_DIR}/"*/* )"
+  
+  typeset CUR_DIR=""
 
-    LogMsg "Now correcting the SELinux context for all files and directories in the overlay filesystem with the SELinux context \"${UNLABELED_SELINUX_CONTEXT}\" to \"${NEW_SELINUX_CONTEXT}\" ..."
-    find "${UPPER_DIR}" -context "${UNLABELED_SELINUX_CONTEXT}" -print0 | xargs -0 -r chcon "${NEW_SELINUX_CONTEXT}"
-    if [ $? -eq 0 ] ; then
+  if [ -d "${TARGET_DIR}" ] ; then
+    NEW_SELINUX_CONTEXT="$( stat -c %C "${TARGET_DIR}" )"
+
+    if [ "${UNLABELED_SELINUX_CONTEXT}"x = "${NEW_SELINUX_CONTEXT}"x ] ; then
+      LogWarning "Something might be wrong here: The new SELinux Context is \"${NEW_SELINUX_CONTEXT}\" "
+    fi 
+    
+    LogMsg "Now correcting the SELinux context for all files and directories in the directory \"${TARGET_DIR}\" with the SELinux context \"${UNLABELED_SELINUX_CONTEXT}\" to \"${NEW_SELINUX_CONTEXT}\" ..."
+    LogMsg  "This may take some minutes - please be patient "
+
+    chcon -h "${NEW_SELINUX_CONTEXT}" ${DIR_LIST}
+    
+    for CUR_DIR in ${SUB_DIR_LIST} ; do
+      LogInfo "Correcting the SELinux context for the files in the directory \"${CUR_DIR}\" ..."
+
+#
+# IMPORTANT : First process symbolic links because "find -context ..." only reads the SELinux context of the target for a symbolic link!!!
+#
+#      find "${CUR_DIR}" -context  "${UNLABELED_SELINUX_CONTEXT}"  -type l -exec chcon -h "${NEW_SELINUX_CONTEXT}" {} \; || THISRC=${__FALSE}
+
+# correct symbolic links
+#
+
+      find "${CUR_DIR}"  -type l -context "${UNLABELED_SELINUX_CONTEXT}" -print0 2>/dev/null | xargs -0 -r chcon -h "${NEW_SELINUX_CONTEXT}"
+
+      find "${CUR_DIR}"          -context "${UNLABELED_SELINUX_CONTEXT}" -print0 | xargs -0 -r chcon -h "${NEW_SELINUX_CONTEXT}"
+
+# works without xargs but takes about 5 minutes for the virtual disk with the clang19 toolchain
+#
+#      find "${CUR_DIR}"  -type l -exec chcon -h "${NEW_SELINUX_CONTEXT}" {} + 2>/dev/null  || \
+#        find "${CUR_DIR}"  -type l -exec chcon -h "${NEW_SELINUX_CONTEXT}" {}  \; || THISRC=${__FALSE}
+#
+#      find "${CUR_DIR}" -context  "${UNLABELED_SELINUX_CONTEXT}"  -exec chcon "${NEW_SELINUX_CONTEXT}" {} +  2>/dev/null || \
+#        find "${CUR_DIR}" -context  "${UNLABELED_SELINUX_CONTEXT}"  -exec chcon "${NEW_SELINUX_CONTEXT}" {} \; || THISRC=${__FALSE}
+#
+
+    done
+
+    if [ ${THISRC} -eq ${__TRUE} ] ; then
       LogMsg "... SELinux context for the files successfully modified"
       THISRC=${__TRUE}
     else
@@ -902,7 +949,7 @@ function set_selinux_context_for_files {
     fi    
   fi
 
-  LogInfoVar UPPER_DIR 
+  LogInfoVar TARGET_DIR 
   LogInfoVar UNLABELED_SELINUX_CONTEXT 
   LogInfoVar NEW_SELINUX_CONTEXT 
 
@@ -1142,7 +1189,7 @@ function mount_virtual_disk {
     format_virtual_disk "${IMAGE_FILE}" || \
       die 25 "Error creating a filesystem on the image file \"${IMAGE_FILE}\" "
   else
-    LogMsg "The image file \"${IMAGE_FILE}\" already exists - there should already be a filesystem"
+    LogMsg "The image file \"${IMAGE_FILE}\" already exists - there should already be a filesystem on the disk"
   fi
 
 # create the mount point for mounting the loop device
@@ -2412,6 +2459,8 @@ PROCESS_ONLY_MOUNTED_OVERLAY_FILESYSTEMS=${__FALSE}
 
 IGNORE_MAGISK=${__FALSE}
 
+LABEL_PARAMETER_FOUND=${__FALSE}
+
 if [ $# -ne 0 ] ; then
 
   LogInfo "Processing the parameter ..."
@@ -2461,6 +2510,7 @@ if [ $# -ne 0 ] ; then
 
       --relabel )
         RELABEL_UNLABELED_FILES=${__TRUE}
+        LABEL_PARAMETER_FOUND=${__TRUE}
         ;;
 
       *=* )
@@ -2470,6 +2520,10 @@ if [ $# -ne 0 ] ; then
         eval ${CUR_VAR}=\"${CUR_VAL}\"
         if [ $? -ne 0 ] ; then
           die 70 "Error executing \"${CUR_PARAMETER}\" "
+        fi
+
+        if [[ " ${ENVIRONMENT_VARIABLES_LIST} "  != *\ ${CUR_VAR}\ * ]] ; then
+          LogWarning " \"${CUR_VAR}\" is not a known variable"
         fi
         ;;
 
@@ -2571,7 +2625,11 @@ if [ $# -ne 0 ] ; then
 
           /* )
            if [[ ${CUR_PARAMETER} == *'#'* ]] ; then
-             die 81 "Directory names with a hash \"#\" are not supported (${CUR_PARAMETER})"
+             die 81 "Directory names with a hash \"#\" are not supported (${CUR_PARAMETER})  -- use \"IMAGE_FILE=${CUR_PARAMETER}\" to define the image file to use "
+           fi
+           
+           if [ ! -d "${CUR_PARAMETER}" ] ; then
+             die 82 "The parameter \"${CUR_PARAMETER}\" is not a directory"
            fi
            DIRS_TO_OVERLAY="${DIRS_TO_OVERLAY} ${CUR_PARAMETER}"
            ;;
@@ -2892,18 +2950,30 @@ case ${ACTION} in
 # create the image file
 #
     mount_virtual_disk
-    if [ "${ACTION}"x != "mount_only"x ] ; then
-      create_overlay_directory_tree
-      create_overlay_mounts
 
+#
+# default value for RELABEL_UNLABELED_FILES is ${__TRUE}
+#
+    if [ "${ACTION}"x = "mount_only"x ] ; then
+#
+# relabel the files for mount_only only if the parameter --label is used
+#    
+      [ ${LABEL_PARAMETER_FOUND} != ${__TRUE} ] && RELABEL_UNLABELED_FILES=${__FALSE}
+    fi
+#       
 # correct the SELinux context for the files and directories in the ./upper dir with unlabeled SELinux context
 #
-      if [ ${RELABEL_UNLABELED_FILES} = ${__TRUE} ] ; then
-        set_selinux_context_for_files
-      else
-        LogInfo "Relabeling of unlabeled files in the overlay filesystem is disabled"
-      fi
-      
+    if [ ${RELABEL_UNLABELED_FILES} = ${__TRUE} ] ; then
+      create_overlay_directory_tree
+
+      set_selinux_context_for_files "${BASEDIR}/upper"
+    else
+      LogInfo "Relabeling of unlabeled files in the overlay filesystem is disabled"
+    fi
+
+    if [ "${ACTION}"x != "mount_only"x ] ; then
+      create_overlay_mounts
+
       print_summary
     else
       LogMsg ""
