@@ -142,7 +142,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # m4 1.4.21
 # libtool 2.5.3
 # patch 2.8 (gnupatch)
-# patchelf 0.18
+# patchelf 0.19.1
 # GNU help2man 1.49.3
 # pkg-config 0.29
 # pkgconf 2.30
@@ -584,4 +584,5 @@ History
     added the perl scripts list_installed_perl_modules, list_perl_module_pathes, test_installed_perl_modules
     added the perl script perl-deps.pl
     updated the script create_overlay_mount.sh to the version 1.4.0
+    updated patchelf to version 0.19.1
 
