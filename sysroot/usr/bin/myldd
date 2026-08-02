@@ -9,6 +9,8 @@
 #  24.01.2025 2.0.0 /bs
 #    script rewritten
 #
+#  02.08.2025 2.1.0 /bs
+#    added the directory /system/usr/lib to he LD_LIBRARY_PATH if it exists
 #
 if [ $# -eq 0 -o  "$1"x = "-h"x  -o "$1"x = "--help"x ] ; then
   echo "Usage $0 [binary] [...]"
@@ -29,7 +31,7 @@ while [ $# -ne 0 ] ;  do
     fi
   fi
   
-  for CUR_DIR in /data/local/tmp/sysroot/usr/lib /data/local/tmp/develop/sysroot/usr/lib ; do
+  for CUR_DIR in /data/local/tmp/sysroot/usr/lib /data/local/tmp/develop/sysroot/usr/lib /system/usr/lib ; do
     if [ -d "${CUR_DIR}" ] ; then
       if [[ ":${LD_LIBRARY_PATH}:" != *:${CUR_DIR}:* ]] ; then
         LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${CUR_DIR}
