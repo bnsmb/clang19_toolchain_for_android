@@ -1,0 +1,13 @@
+
+set -x
+
+mkdir test$$
+cd test$$
+
+/data/local/tmp/sysroot/usr/bin/ar x /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/aarch64-linux-android/CORE/libperl.a
+
+
+for obj in *.o; do
+    echo "=== $obj ==="
+    /data/local/tmp/sysroot/usr/bin/readelf -r "$obj" | grep -E 'GOT|PLT|JUMP_SLOT' >/dev/null || echo "Keine GOT/PLT-Relocs"
+done

@@ -22,8 +22,8 @@ if [ ! -d "${CLANG_SYSROOT}" ] ; then
 fi
 
 
-if [ ! -r  ${CLANG_SYSROOT}/maintenance/gcc_tool_wrapper ] ; then
-        echo "ERROR: The script  ${CLANG_SYSROOT}/maintenance/gcc_tool_wrapper is missing"
+if [ ! -r  ${CLANG_SYSROOT}/maintenance/gcc/gcc_tool_wrapper ] ; then
+        echo "ERROR: The script  ${CLANG_SYSROOT}/gcc/maintenance/gcc/gcc_tool_wrapper is missing"
         exit 20
 fi
 
@@ -66,8 +66,8 @@ ${CMD_PREFIX} rm -f ${CLANG_SYSROOT}/usr/lib/android-gcc-cross/usr/local/share/a
 ${CMD_PREFIX} rm -f ${CLANG_SYSROOT}/usr/lib/android-gcc-cross/usr/local/share/android-gcc-cross/cmake/x86_64*
 
 
-${CMD_PREFIX} chmod 755 ${CLANG_SYSROOT}/maintenance/gcc_tool_wrapper
-${CMD_PREFIX} cp ${CLANG_SYSROOT}/maintenance/gcc_tool_wrapper ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/gcc_tool_wrapper
+${CMD_PREFIX} chmod 755 ${CLANG_SYSROOT}/maintenance/gcc/gcc_tool_wrapper
+${CMD_PREFIX} cp ${CLANG_SYSROOT}/maintenance/gcc/gcc_tool_wrapper ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/gcc_tool_wrapper
 
 cd ${CLANG_SYSROOT}/usr/gcc/bin/gcc-toolchain/
 if [ $? -eq 0 ] ; then

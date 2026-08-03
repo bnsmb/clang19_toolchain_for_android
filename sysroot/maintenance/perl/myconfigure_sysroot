@@ -1,0 +1,87 @@
+
+if [ ! -d /data/local/tmp/develop/perl_sysroot/ ] ; then
+  echo 
+  echo "WARNING: The directory tree \"/data/local/tmp/develop/perl_sysroot\" does NOT exist"
+  echo
+  echo "*** Press return to continue anyway ..."
+  read USER_INPUT
+fi
+
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH::/data/local/tmp/develop/perl_sysroot/lib"
+
+export PATH=/system/usr/bin:$PATH
+
+LOCALE_CONFIG="-DNO_LOCALE -DNO_LOCALE_CTYPE -DNO_LOCALE_NUMERIC -DNO_LOCALE_COLLATE -DNO_LOCALE_TIME -DNO_LOCALE_MESSAGES -DNO_LOCALE_MONETARY -DNO_LOCALE_ADDRESS -DNO_LOCALE_IDENTIFICATION  -DNO_LOCALE_MEASUREMENT -DNO_LOCALE_PAPER  -DNO_LOCALE_TELEPHONE -DNO_LOCALE_NAME -DNO_LOCALE_SYNTAX -DNO_LOCALE_TOD"
+
+CFLAGS="-fPIC ${CFLAGS} -I/data/local/tmp/develop/perl_sysroot/include"
+CPPFLAGS="-fPIC ${CPPFLAGS} -I/data/local/tmp/develop/perl_sysroot/include"
+LDFLAGS="-fPIC ${LDFLAGS} -L/data/local/tmp/develop/perl_sysroot/lib"
+
+echo " ${CFLAGS} " | grep -- " -I/data/local/tmp/develop/sysroot/usr/include "  >/dev/null
+if [ $? -eq 0 ] ; then
+  echo 
+  echo "Removing \"-I/data/local/tmp/develop/sysroot/usr/include\" from the CFLAGS ..."
+  CFLAGS="$( echo $CFLAGS | sed "s#-I/data/local/tmp/develop/sysroot/usr/include##g" )"
+fi
+
+echo " ${CPPLAGS} " | grep -- " -I/data/local/tmp/develop/sysroot/usr/include "  >/dev/null
+if [ $? -eq 0 ] ; then
+  echo 
+  echo "Removing \"-I/data/local/tmp/develop/sysroot/usr/include\" from the CPPFLAGS ..."
+  CPPFLAGS="$( echo $CPPFLAGS | sed "s#-I/data/local/tmp/develop/sysroot/usr/include##g" )"
+fi
+
+echo " ${LDFLAGS} " | grep -- " -L/data/local/tmp/develop/sysroot/usr/lib "  >/dev/null
+if [ $? -eq 0 ] ; then
+  echo 
+  echo "Removing \"-L/data/local/tmp/develop/sysroot/usr/include\" from the LDCFLAGS ..."
+  LDCFLAGS="$( echo $LDCFLAGS | sed "s#-I/data/local/tmp/develop/sysroot/usr/lib##g" )"
+fi
+
+  echo
+  echo "The CFLAGS are now "
+  echo "  \"${CFLAGS}\" "
+  echo
+  echo "The CFLAGS are now"
+  echo "  \"${CFLAGS}\" "
+  echo
+  echo "The LDFLAGS are now:"
+  echo "  \"${LDFLAGS}\" "
+  echo
+
+  echo "LD_LIBRARY_PATH is now :"
+  echo "  \"${LD_LIBRARY_PATH}\" "
+  echo
+
+  if [ $# -eq 0 ] ; then
+    echo "** Press return to continue ..."
+    read USER_INPUT
+  fi
+
+./Configure \
+  -Dprefix="/data/local/tmp/sysroot/usr" \
+  -Dsysroot="${SYSROOT}" \
+  -Dccflags="-fPIC --std=gnu99 --sysroot=${SYSROOT} ${CFLAGS} \
+-Wno-implicit-function-declaration \
+-Wno-int-conversion \
+-DHAS_SHMAT_PROTOTYPE \
+${LOCALE_CONFIG}" \
+  -Uuselocale \
+  -Dldflags="${LDFLAGS}" \
+  -Duserelocatableinc \
+  -Dnoextensions=Locale \
+  -Dpager='/system/bin/more' \
+  -Dcf_email='bnsmb01@gmail.com' \
+  -Dmydomain='.bnsmb.de' \
+  -Dperladmin='bnsmb01@gmail.com' \
+  -Dlibs='-lgdbm -ldl -lm -lcrypt -lc ' \
+  -Dinitialinstalllocation='/data/local/tmp/sysroot/usr/bin' \
+  -Dinstallbin='/data/local/tmp/sysroot/usr/bin' \
+  -Dperlpath='/data/local/tmp/sysroot/usr/bin/perl' \
+  -Dpager='/data/local/tmp/sysroot/usr/bin/less' \
+
+
+
+
+
+
