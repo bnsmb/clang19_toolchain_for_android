@@ -1,0 +1,8 @@
+# wrapper script for cpan:
+#   cpan and the other perl scripts do not work with the crippled unix binaries from android
+#
+if [ "${CLANG_SYSROOT}"x != ""x ] ; then
+  export PATH="${CLANG_SYSROOT}/usr/bin:$PATH"
+fi
+exec ${0%/*}/../usr/bin/${0##*/} ${1+"$@"}
+

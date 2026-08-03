@@ -1,0 +1,3 @@
+echo "### Installed Perl modules are:"
+perl -MExtUtils::Installed -e '$i=ExtUtils::Installed->new(); for $m (grep {$_ ne "Perl"} sort $i->modules()) { print "$m\n"}'
+

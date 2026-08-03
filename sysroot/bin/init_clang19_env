@@ -118,6 +118,9 @@
 #    added the alias alias fix_paste="printf '\e[?2004l'"
 #    the script now defines the environment variable PERL5LIB
 #
+# 23.07.2026 v1.5.19 /bs
+#    /data/local/tmp/sysroot/bin is now in the PATH variable before /data/local/tmp/sysroot/usr/bin
+#
 
 __TRUE=0
 __FALSE=1
@@ -459,7 +462,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
   TERMINFO="${CLANG_SYSROOT}/usr/share/terminfo"
 
-  add_path "${CLANG_SYSROOT}/usr/bin" "${CLANG_SYSROOT}/bin"
+  add_path "${CLANG_SYSROOT}/bin" "${CLANG_SYSROOT}/usr/bin"
 
   add_library_path "${CLANG_SYSROOT}/usr/lib"
 
@@ -806,7 +809,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
 # define the PERL5LIB for perl
 #
-export PERL5LIB="$( ls -d1 ${CLANG_SYSROOT}/usr/lib/perl5/5* ${CLANG_SYSROOT}/usr/lib/perl5/5*/aarch64-linux-android  ${CLANG_SYSROOT}/usr/lib/perl5/site_perl/5*/aarch64-linux-android/ | tr "\n" ":" )"
+export PERL5LIB="$( ls -d1r ${CLANG_SYSROOT}/usr/lib/perl5/5* ${CLANG_SYSROOT}/usr/lib/perl5/5*/aarch64-linux-android  ${CLANG_SYSROOT}/usr/lib/perl5/site_perl/5*/aarch64-linux-android/ | tr "\n" ":" )"
 #
 # delete the trailing colon ":"
 #

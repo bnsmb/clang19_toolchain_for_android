@@ -1,0 +1,3 @@
+echo "### Testing the installed Perl modules ..."
+perl -MExtUtils::Installed -e '$i=ExtUtils::Installed->new(); for $m (grep {$_ ne "Perl"} sort $i->modules()) { eval "require $m"; print $m, " => ", ($@ ? "ERROR: $@" : "OK"), "\n" }'
+
