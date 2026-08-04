@@ -237,11 +237,11 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # uncompress 5.0
 # zstd 1.5.6
 # pigz 2.8
-# xz 5.8.1
+# xz 5.8.3
 # gunzip 1.13
-# gzip 1.13
-# unrar 7.20 beta 2 
-# lzip 1.25
+# gzip 1.14
+# unrar 7.23
+# lzip 1.26
 #
 # and some tools written Rust as replacement for existing Unix tools:
 #
@@ -585,4 +585,8 @@ History
     added the perl script perl-deps.pl
     updated the script create_overlay_mount.sh to the version 1.4.0
     updated patchelf to version 0.19.1
-
+    updated gzip to version 1.14  
+    updated lzip to version 1.26  
+    updated unrar to version 7.23  
+    updated xz 5.8.3 
+ 
