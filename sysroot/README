@@ -180,9 +180,9 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # 
 # dig 9.11.37
 # mtr 0.96
-# ngrep 1.48.3
+# ngrep 1.49.0
 # 
-# nano 9.1, 9.0, 8.7.1, and nano 6.4 
+# nano 9.2
 # vim 9.2
 # ed 1.21
 # bvi /bmore 1.5.0 (a hex editor)
@@ -190,7 +190,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # 
 # man 2.13
 # 
-# tmux 3.5a
+# tmux 3.7b
 # 
 # tar 1.35
 # dd 9.5.58
@@ -205,7 +205,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # xtargs 4.9
 # bc 1.08.2
 # less 704 
-# htop 3.4.1
+# htop 3.5.2
 # btop 1.4.4 (btop needs root access)
 # strace 6.18
 # ltrace 0.8.1
@@ -235,10 +235,10 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # lzop 1.04
 # compress 5.0
 # uncompress 5.0
-# zstd 1.5.6
+# zstd 1.5.7
 # pigz 2.8
 # xz 5.8.3
-# gunzip 1.13
+# gunzip 1.14
 # gzip 1.14
 # unrar 7.23
 # lzip 1.26
@@ -246,12 +246,12 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # and some tools written Rust as replacement for existing Unix tools:
 #
 # bat 0.26.1 (https://github.com/sharkdp/bat; a better replacement for cat)
-# ripgrep 15.1.0 (https://github.com/BurntSushi/ripgrep/, a replacement for recursive grep)
+# ripgrep 15.2.0 (https://github.com/BurntSushi/ripgrep/, a replacement for recursive grep)
 # fd 10.4.2 (https://github.com/sharkdp/fd, a replacement for find)
 # procs 0.14.12 (https://github.com/dalance/procs, a replacement for ps)
 # dust 1.2.4 (https://github.com/bootandy/dust, a replacement for du)
 # eza 0.23.5 (https://github.com/eza-community/eza, a replacement for ls) 
-# cp 0.24.8 (https://github.com/tarka/xcp, a companion for the cp command)
+# xcp 0.24.8 (https://github.com/tarka/xcp, a companion for the cp command)
 
 Notes
 
@@ -561,7 +561,6 @@ History
     added bpftool 5.16.0
     updated htop to version 3.5,1
     updated curl to version 8.2.1
-    added nano 9.1
     the files etc/ssh/ssh_config and etc/ssh/sshd_config are now deleted by the script clean_env.sh for 'release' and 'dev' tar files and created again by the script create_clang_env.sh using the *.new files
     updated OpenSSL to version 4.0.1
     added ltrace 0.8.1
@@ -583,10 +582,18 @@ History
     updated Perl to version 5.44
     added the perl scripts list_installed_perl_modules, list_perl_module_pathes, test_installed_perl_modules
     added the perl script perl-deps.pl
-    updated the script create_overlay_mount.sh to the version 1.4.0
+    updated the script create_overlay_mount.sh to the version 1.5.0
     updated patchelf to version 0.19.1
     updated gzip to version 1.14  
     updated lzip to version 1.26  
     updated unrar to version 7.23  
-    updated xz 5.8.3 
- 
+    updated xz to version 5.8.3 
+    added bgrep 0.3
+    updated htop to version 3.5.2
+    updated ngrep to version V1.49.0
+    updated ripgrep to version 15.2.0
+    updated tmux to version 3.7b
+    updated zstd to version 1.5.7
+    updated nano to version 9.2
+    deleted  nano-6.4 nano-8.7.1  nano-9.0  nano-9.1
+
