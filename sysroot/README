@@ -205,7 +205,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # xtargs 4.9
 # bc 1.08.2
 # less 704 
-# htop 3.5.2
+# htop 3.5.3
 # btop 1.4.4 (btop needs root access)
 # strace 6.18
 # ltrace 0.8.1
@@ -589,11 +589,12 @@ History
     updated unrar to version 7.23  
     updated xz to version 5.8.3 
     added bgrep 0.3
-    updated htop to version 3.5.2
+    updated htop to version 3.5.3
     updated ngrep to version V1.49.0
     updated ripgrep to version 15.2.0
     updated tmux to version 3.7b
     updated zstd to version 1.5.7
     updated nano to version 9.2
     deleted  nano-6.4 nano-8.7.1  nano-9.0  nano-9.1
-
+    added the binaries pwdx pmap pkill pgrep top ps from the procps utils version 3.3.17"
+    
