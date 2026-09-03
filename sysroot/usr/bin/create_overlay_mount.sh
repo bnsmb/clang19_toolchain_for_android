@@ -192,7 +192,7 @@
 #     the script now prints a warning if an unknown environment variable is used in the parameter
 #     corrected the code to relabel unlabeled files and directories (the previous code failed for symbolic links)
 #
-#   01.08.2026 /bs v1.5.0 beta
+#   03.09.2026 /bs v1.5.0
 #     added the parameter "--run" to execute post installation scripts or executables
 #     added the parameter "mount_existing" to only mount the overlay filesystems that already exist on the virtual disk
 #     the code to relabel the files and directories was rewritten from scratch
