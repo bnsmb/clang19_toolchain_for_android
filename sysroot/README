@@ -209,6 +209,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # btop 1.4.4 (btop needs root access)
 # strace 6.18
 # ltrace 0.8.1
+# coreutils 9.5.58
 # 
 # Android SDK build tools 35.0.2:
 #   aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs 
@@ -596,5 +597,6 @@ History
     updated zstd to version 1.5.7
     updated nano to version 9.2
     deleted  nano-6.4 nano-8.7.1  nano-9.0  nano-9.1
-    added the binaries pwdx pmap pkill pgrep top ps from the procps utils version 3.3.17"
-    
+    added the binaries pwdx pmap pkill pgrep top ps from the procps utils version 3.3.17
+    added the binaries from the coreutils 9.5.58 
+ 
