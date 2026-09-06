@@ -598,5 +598,5 @@ History
     updated nano to version 9.2
     deleted  nano-6.4 nano-8.7.1  nano-9.0  nano-9.1
     added the binaries pwdx pmap pkill pgrep top ps from the procps utils version 3.3.17
-    added the binaries from the coreutils 9.5.58 
+    added the binaries from the coreutils 9.11 
  
