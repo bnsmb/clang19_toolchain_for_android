@@ -577,7 +577,7 @@ History
     added dua 2.38.0 (https://github.com/Byron/dua-cli, a replacement for du)
     updated btop to version 1.4.7; btop now runs as non-root user (but with limited network statistics)
     updated the gcc to version  16.1.1 20260716 
-    updated 7zz to version 26.02 
+    updated 7zz to version 26.03 
     removed 7zz version 26.00
     removed 7zz version 26.01
     updated Perl to version 5.44
