@@ -228,7 +228,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 #
 # various compression tools:
 # 
-# 7zz 26.02
+# 7zz 26.03
 # bzip2 1.0.8
 # zip 3.0
 # unzip 5.52
@@ -560,7 +560,6 @@ History
     relinked OpenVPN 2.7.4 with OpenSSL 3.5.7
     updated OpenSSH to version 10.3p1 with OpenSSL 3.5.7 (the binaries ssh, scp, and sftp now use only the HOME variable to detect the home directory)
     added bpftool 5.16.0
-    updated htop to version 3.5,1
     updated curl to version 8.2.1
     the files etc/ssh/ssh_config and etc/ssh/sshd_config are now deleted by the script clean_env.sh for 'release' and 'dev' tar files and created again by the script create_clang_env.sh using the *.new files
     updated OpenSSL to version 4.0.1
