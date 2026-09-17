@@ -253,6 +253,9 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # dust 1.2.4 (https://github.com/bootandy/dust, a replacement for du)
 # eza 0.23.5 (https://github.com/eza-community/eza, a replacement for ls) 
 # xcp 0.24.8 (https://github.com/tarka/xcp, a companion for the cp command)
+# eva 0.3.1 (https://github.com/oppiliappan/eva, a command line calculator)
+# rustcan 2.3.0 (https://github.com/RustScan/RustScan, a port scanner )
+
 
 Notes
 
@@ -599,4 +602,6 @@ History
     added the binaries pwdx pmap pkill pgrep top ps from the procps utils version 3.3.17
     added the binaries from the coreutils 9.11  (in /data/local/tmp/sysroot/usr/coreutils/)
     the sample programs are now in the directory ./examples and the output file created by the sample scripts are in the directory ./out
- 
+    added eva 0.3.1 (https://github.com/oppiliappan/eva, a command line calculator)
+    added rustcan 2.3.0 (https://github.com/RustScan/RustScan, a port scanner )
+
