@@ -254,7 +254,12 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # eza 0.23.5 (https://github.com/eza-community/eza, a replacement for ls) 
 # xcp 0.24.8 (https://github.com/tarka/xcp, a companion for the cp command)
 # eva 0.3.1 (https://github.com/oppiliappan/eva, a command line calculator)
+#
+# and some additional tools written in Rust:
+#
 # rustcan 2.3.0 (https://github.com/RustScan/RustScan, a port scanner )
+# miniserv 0.35.0 (https://github.com/svenstaro/miniserve, a minimal http server)
+#
 
 
 Notes
@@ -604,4 +609,6 @@ History
     the sample programs are now in the directory ./examples and the output file created by the sample scripts are in the directory ./out
     added eva 0.3.1 (https://github.com/oppiliappan/eva, a command line calculator)
     added rustcan 2.3.0 (https://github.com/RustScan/RustScan, a port scanner )
+    added miniserv 0.35.0 (https://github.com/svenstaro/miniserve, a minimal http server)
+
 
