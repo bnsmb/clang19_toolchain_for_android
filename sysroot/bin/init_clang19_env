@@ -121,6 +121,9 @@
 # 23.07.2026 v1.5.19 /bs
 #    /data/local/tmp/sysroot/bin is now in the PATH variable before /data/local/tmp/sysroot/usr/bin
 #
+# 19.09.2026 v1.5.20 /bs
+#   the example source files are now in the directory "./examples" and the binaries are created in the directory "./out"
+#
 
 __TRUE=0
 __FALSE=1
@@ -920,56 +923,56 @@ fi
 
 if [ ${PRINT_EXAMPLES} = ${__TRUE} ] ; then
 
-  cat <<EOT
+  "cat" <<EOT
 
 # ---------------------------------------------------------------------
 #
 # To test the C compiler "clang" use
 
 cd ${CLANG_SYSROOT}
-clang \${CFLAGS} \${LDFLAGS} -o helloworld_in_c helloworld_in_c.c  && ./helloworld_in_c
+clang \${CFLAGS} \${LDFLAGS} -o out/helloworld_in_c examples/helloworld_in_c.c  && ./out/helloworld_in_c
 
 # ---------------------------------------------------------------------
 #
 # To test the C++ compiler "clang++" use
 
 cd ${CLANG_SYSROOT}
-clang++ \${CPPFLAGS} \${LDFLAGS}  -o helloworld_in_c++ ./helloworld_in_c++.cpp && ./helloworld_in_c++
+clang++ \${CPPFLAGS} \${LDFLAGS}  -o out/helloworld_in_c++ examples/helloworld_in_c++.cpp && ./out/helloworld_in_c++
 
 # ---------------------------------------------------------------------
 #
 # To test the assembler from "clang" use
 
 cd ${CLANG_SYSROOT}
-clang -nostdlib -static -Wl,--entry=_start -o helloworld_in_assembler helloworld_in_assembler.s && ./helloworld_in_assembler
+clang -nostdlib -static -Wl,--entry=_start -o out/helloworld_in_assembler examples/helloworld_in_assembler.s && ./out/helloworld_in_assembler
 
 # ---------------------------------------------------------------------
 #
 # To test the assembler from the binutils "as" use
 
 cd ${CLANG_SYSROOT}
-${CLANG_SYSROOT}/usr/bin/as -o helloworld_in_assembler_for_as.o helloworld_in_assembler_for_as.s && \
-  ${CLANG_SYSROOT}//usr/bin/ld -o helloworld_in_assembler_for_as helloworld_in_assembler_for_as.o && \
-  ./helloworld_in_assembler_for_as
+${CLANG_SYSROOT}/usr/bin/as -o out/helloworld_in_assembler_for_as.o examples/helloworld_in_assembler_for_as.s && \
+  ${CLANG_SYSROOT}//usr/bin/ld -o out/helloworld_in_assembler_for_as out/helloworld_in_assembler_for_as.o && \
+  ./out/helloworld_in_assembler_for_as
 
 EOT
 
   if [ "${GCC}"x != ""x ] ; then
-  cat <<EOT
+  "cat" <<EOT
 
 # ---------------------------------------------------------------------
 #
 # To test the C compiler "gcc" use
 
 cd ${CLANG_SYSROOT}
-gcc -o helloworld_in_c helloworld_in_c.c  && ./helloworld_in_c
+gcc -o out/helloworld_in_c examples/helloworld_in_c.c  && ./out/helloworld_in_c
 
 # ---------------------------------------------------------------------
 #
 # To test the C++ compiler "g++" use
 
 cd ${CLANG_SYSROOT}
-g++  -o helloworld_in_c++ ./helloworld_in_c++.cpp && ./helloworld_in_c++
+g++  -o out/helloworld_in_c++ examples/helloworld_in_c++.cpp && ./out/helloworld_in_c++
 
 EOT
   fi
