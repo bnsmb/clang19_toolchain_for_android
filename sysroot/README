@@ -561,7 +561,7 @@ History
     added the parameter "norootcheck" to the script bin/init_clang19_env to disable the check for root access
     added code to check the gcc compiler to the script bin/init_clang19_env
 
-  21.09.2026 v2.1.0 beta /bs
+  21.09.2026 v2.1.0 /bs
     updated lmm to version 4.0.0
     updated rsync to version 3.4.4 with OpenSSL 3.5.7
     updated OpenSSL 3.5.x to version 3.5.7
@@ -606,9 +606,12 @@ History
     removed nano-6.4, nano-8.7.1, nano-9.0, and nano-9.1
     added the binaries pwdx pmap pkill pgrep top ps from the procps utils version 3.3.17
     added the binaries from the coreutils 9.11  (in /data/local/tmp/sysroot/usr/coreutils/)
-    the sample programs are now in the directory ./examples and the output file created by the sample scripts are in the directory ./out
+    the sample programs are now in the directory ./examples and the output files created by the sample scripts are located in the directory ./out
     added eva 0.3.1 (https://github.com/oppiliappan/eva, a command line calculator)
     added rustcan 2.3.0 (https://github.com/RustScan/RustScan, a port scanner )
     added miniserv 0.35.0 (https://github.com/svenstaro/miniserve, a minimal http server)
+    added the script android_explorer.sh 0.3.0
 
+  21.11.2026 v2.2.0 beta /bs 
+    added the missing include file for gcc ./usr/lib/android-gcc-cross/include/tgmath.h
 
