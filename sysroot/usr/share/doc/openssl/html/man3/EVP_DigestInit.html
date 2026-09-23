@@ -4,7 +4,7 @@
 <head>
 <title>EVP_DigestInit</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -124,7 +124,7 @@ void EVP_MD_do_all_provided(OSSL_LIB_CTX *libctx,
 #define EVP_MD_CTX_pkey_ctx EVP_MD_CTX_get_pkey_ctx
 #define EVP_MD_CTX_md_data EVP_MD_CTX_get0_md_data</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>const EVP_MD *EVP_MD_CTX_md(const EVP_MD_CTX *ctx);
 
@@ -148,7 +148,7 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 <dt id="EVP_MD_fetch">EVP_MD_fetch()</dt>
 <dd>
 
-<p>Fetches the digest implementation for the given <i>algorithm</i> from any provider offering it, within the criteria given by the <i>properties</i>. See <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further information.</p>
+<p>Fetches the digest implementation for the given <i>algorithm</i> from any provider offering it, within the criteria given by the <i>properties</i>. See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further information.</p>
 
 <p>The returned value must eventually be freed with EVP_MD_free().</p>
 
@@ -192,7 +192,7 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 
 <p>Performs digest-specific control actions on context <i>ctx</i>. The control command is indicated in <i>cmd</i> and any additional arguments in <i>p1</i> and <i>p2</i>. EVP_MD_CTX_ctrl() must be called after EVP_DigestInit_ex2(). Other restrictions may apply depending on the control type and digest implementation.</p>
 
-<p>If this function happens to be used with a fetched <b>EVP_MD</b>, it will translate the controls that are known to OpenSSL into <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> parameters with keys defined by OpenSSL and call EVP_MD_CTX_get_params() or EVP_MD_CTX_set_params() as is appropriate for each control command.</p>
+<p>If this function happens to be used with a fetched <b>EVP_MD</b>, it will translate the controls that are known to OpenSSL into <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> parameters with keys defined by OpenSSL and call EVP_MD_CTX_get_params() or EVP_MD_CTX_set_params() as is appropriate for each control command.</p>
 
 <p>See <a href="#CONTROLS">&quot;CONTROLS&quot;</a> below for more information, including what translations are being done.</p>
 
@@ -218,19 +218,19 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 <dt id="EVP_MD_gettable_params">EVP_MD_gettable_params()</dt>
 <dd>
 
-<p>Get a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that describes the retrievable parameters that can be used with EVP_MD_get_params().</p>
+<p>Get a constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array that describes the retrievable parameters that can be used with EVP_MD_get_params().</p>
 
 </dd>
 <dt id="EVP_MD_gettable_ctx_params-EVP_MD_CTX_gettable_params">EVP_MD_gettable_ctx_params(), EVP_MD_CTX_gettable_params()</dt>
 <dd>
 
-<p>Get a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that describes the retrievable parameters that can be used with EVP_MD_CTX_get_params(). EVP_MD_gettable_ctx_params() returns the parameters that can be retrieved from the algorithm, whereas EVP_MD_CTX_gettable_params() returns the parameters that can be retrieved in the context&#39;s current state.</p>
+<p>Get a constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array that describes the retrievable parameters that can be used with EVP_MD_CTX_get_params(). EVP_MD_gettable_ctx_params() returns the parameters that can be retrieved from the algorithm, whereas EVP_MD_CTX_gettable_params() returns the parameters that can be retrieved in the context&#39;s current state.</p>
 
 </dd>
 <dt id="EVP_MD_settable_ctx_params-EVP_MD_CTX_settable_params">EVP_MD_settable_ctx_params(), EVP_MD_CTX_settable_params()</dt>
 <dd>
 
-<p>Get a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that describes the settable parameters that can be used with EVP_MD_CTX_set_params(). EVP_MD_settable_ctx_params() returns the parameters that can be set from the algorithm, whereas EVP_MD_CTX_settable_params() returns the parameters that can be set in the context&#39;s current state.</p>
+<p>Get a constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array that describes the settable parameters that can be used with EVP_MD_CTX_set_params(). EVP_MD_settable_ctx_params() returns the parameters that can be set from the algorithm, whereas EVP_MD_CTX_settable_params() returns the parameters that can be set in the context&#39;s current state.</p>
 
 </dd>
 <dt id="EVP_MD_CTX_set_flags-EVP_MD_CTX_clear_flags-EVP_MD_CTX_test_flags">EVP_MD_CTX_set_flags(), EVP_MD_CTX_clear_flags(), EVP_MD_CTX_test_flags()</dt>
@@ -330,7 +330,7 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 
 <p>Returns 1 if <i>md</i> is an implementation of an algorithm that&#39;s identifiable with <i>name</i>, otherwise 0.</p>
 
-<p>If <i>md</i> is a legacy digest (it&#39;s the return value from the likes of EVP_sha256() rather than the result of an EVP_MD_fetch()), only cipher names registered with the default library context (see <a href="../man3/OSSL_LIB_CTX.html">OSSL_LIB_CTX(3)</a>) will be considered.</p>
+<p>If <i>md</i> is a legacy digest (it&#39;s the return value from the likes of EVP_sha256() rather than the result of an EVP_MD_fetch()), only cipher names registered with the default library context (see <a href="https://man7.org/linux/man-pages/man3/OSSL_LIB_CTX.3.html">OSSL_LIB_CTX(3)</a>) will be considered.</p>
 
 </dd>
 <dt id="EVP_MD_xof">EVP_MD_xof()</dt>
@@ -396,7 +396,7 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 <dt id="EVP_MD_CTX_get0_md-EVP_MD_CTX_get1_md">EVP_MD_CTX_get0_md(), EVP_MD_CTX_get1_md()</dt>
 <dd>
 
-<p>EVP_MD_CTX_get0_md() returns the <b>EVP_MD</b> structure corresponding to the passed <b>EVP_MD_CTX</b>. This will be the same <b>EVP_MD</b> object originally passed to EVP_DigestInit_ex2() (or other similar function) when the EVP_MD_CTX was first initialised. Note that where explicit fetch is in use (see <a href="../man3/EVP_MD_fetch.html">EVP_MD_fetch(3)</a>) the value returned from this function will not have its reference count incremented and therefore it should not be used after the EVP_MD_CTX is freed. EVP_MD_CTX_get1_md() is the same except the ownership is passed to the caller and is from the passed <b>EVP_MD_CTX</b>.</p>
+<p>EVP_MD_CTX_get0_md() returns the <b>EVP_MD</b> structure corresponding to the passed <b>EVP_MD_CTX</b>. This will be the same <b>EVP_MD</b> object originally passed to EVP_DigestInit_ex2() (or other similar function) when the EVP_MD_CTX was first initialised. Note that where explicit fetch is in use (see <a href="https://man7.org/linux/man-pages/man3/EVP_MD_fetch.3.html">EVP_MD_fetch(3)</a>) the value returned from this function will not have its reference count incremented and therefore it should not be used after the EVP_MD_CTX is freed. EVP_MD_CTX_get1_md() is the same except the ownership is passed to the caller and is from the passed <b>EVP_MD_CTX</b>.</p>
 
 </dd>
 <dt id="EVP_MD_CTX_set_update_fn">EVP_MD_CTX_set_update_fn()</dt>
@@ -414,7 +414,7 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 <dt id="EVP_MD_get_flags">EVP_MD_get_flags()</dt>
 <dd>
 
-<p>Returns the <i>md</i> flags. Note that these are different from the <b>EVP_MD_CTX</b> ones. See <a href="../man3/EVP_MD_meth_set_flags.html">EVP_MD_meth_set_flags(3)</a> for more information.</p>
+<p>Returns the <i>md</i> flags. Note that these are different from the <b>EVP_MD_CTX</b> ones. See <a href="https://man7.org/linux/man-pages/man3/EVP_MD_meth_set_flags.3.html">EVP_MD_meth_set_flags(3)</a> for more information.</p>
 
 </dd>
 <dt id="EVP_MD_get_pkey_type">EVP_MD_get_pkey_type()</dt>
@@ -438,7 +438,7 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 
 <p>When the digest objects returned by these functions are used (such as in a call to EVP_DigestInit_ex()) an implementation of the digest will be implicitly fetched from the loaded providers. This fetch could fail if no suitable implementation is available. Use EVP_MD_fetch() instead to explicitly fetch the algorithm and an associated implementation from a provider.</p>
 
-<p>See <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for more information about fetching.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for more information about fetching.</p>
 
 <p>The digest objects returned from these functions do not need to be freed with EVP_MD_free().</p>
 
@@ -452,7 +452,7 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 <dt id="EVP_MD_CTX_set_pkey_ctx">EVP_MD_CTX_set_pkey_ctx()</dt>
 <dd>
 
-<p>Assigns an <b>EVP_PKEY_CTX</b> to <b>EVP_MD_CTX</b>. This is usually used to provide a customized <b>EVP_PKEY_CTX</b> to <a href="../man3/EVP_DigestSignInit.html">EVP_DigestSignInit(3)</a> or <a href="../man3/EVP_DigestVerifyInit.html">EVP_DigestVerifyInit(3)</a>. The <i>pctx</i> passed to this function should be freed by the caller. A NULL <i>pctx</i> pointer is also allowed to clear the <b>EVP_PKEY_CTX</b> assigned to <i>ctx</i>. In such case, freeing the cleared <b>EVP_PKEY_CTX</b> or not depends on how the <b>EVP_PKEY_CTX</b> is created.</p>
+<p>Assigns an <b>EVP_PKEY_CTX</b> to <b>EVP_MD_CTX</b>. This is usually used to provide a customized <b>EVP_PKEY_CTX</b> to <a href="https://man7.org/linux/man-pages/man3/EVP_DigestSignInit.3.html">EVP_DigestSignInit(3)</a> or <a href="https://man7.org/linux/man-pages/man3/EVP_DigestVerifyInit.3.html">EVP_DigestVerifyInit(3)</a>. The <i>pctx</i> passed to this function should be freed by the caller. A NULL <i>pctx</i> pointer is also allowed to clear the <b>EVP_PKEY_CTX</b> assigned to <i>ctx</i>. In such case, freeing the cleared <b>EVP_PKEY_CTX</b> or not depends on how the <b>EVP_PKEY_CTX</b> is created.</p>
 
 </dd>
 <dt id="EVP_MD_do_all_provided">EVP_MD_do_all_provided()</dt>
@@ -465,7 +465,7 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 
 <h1 id="PARAMETERS">PARAMETERS</h1>
 
-<p>See <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> for information about passing parameters.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> for information about passing parameters.</p>
 
 <p>EVP_MD_CTX_set_params() and EVP_MD_CTX_get_params() can be used with the following OSSL_PARAM keys:</p>
 
@@ -520,7 +520,7 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 
 <p>Gets the digest Message Integrity Check algorithm string. This is used when creating S/MIME multipart/signed messages, as specified in RFC 3851. The string value is written to <i>p2</i>.</p>
 
-<p>When used with a fetched <b>EVP_MD</b>, EVP_MD_CTX_get_params() gets called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;micalg&quot; (<b>OSSL_DIGEST_PARAM_MICALG</b>).</p>
+<p>When used with a fetched <b>EVP_MD</b>, EVP_MD_CTX_get_params() gets called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;micalg&quot; (<b>OSSL_DIGEST_PARAM_MICALG</b>).</p>
 
 </dd>
 <dt id="EVP_MD_CTRL_XOF_LEN">EVP_MD_CTRL_XOF_LEN</dt>
@@ -528,7 +528,7 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 
 <p>This control sets the digest length for extendable output functions to <i>p1</i>. Sending this control directly should not be necessary, the use of EVP_DigestFinalXOF() is preferred. Currently used by SHAKE algorithms.</p>
 
-<p>When used with a fetched <b>EVP_MD</b>, EVP_MD_CTX_get_params() gets called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;xoflen&quot; (<b>OSSL_DIGEST_PARAM_XOFLEN</b>).</p>
+<p>When used with a fetched <b>EVP_MD</b>, EVP_MD_CTX_get_params() gets called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;xoflen&quot; (<b>OSSL_DIGEST_PARAM_XOFLEN</b>).</p>
 
 </dd>
 </dl>
@@ -608,7 +608,7 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 <dt id="EVP_MD_CTX_settable_params-EVP_MD_CTX_gettable_params">EVP_MD_CTX_settable_params(), EVP_MD_CTX_gettable_params()</dt>
 <dd>
 
-<p>Return an array of constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a>s, or NULL if there is none to get.</p>
+<p>Return an array of constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a>s, or NULL if there is none to get.</p>
 
 </dd>
 <dt id="EVP_MD_CTX_dup1">EVP_MD_CTX_dup()</dt>
@@ -665,7 +665,7 @@ void EVP_MD_CTX_set_update_fn(EVP_MD_CTX *ctx,
 
 <p>The <b>EVP</b> interface to message digests should almost always be used in preference to the low-level interfaces. This is because the code then becomes transparent to the digest used and much more flexible.</p>
 
-<p>New applications should use the SHA-2 (such as <a href="../man3/EVP_sha256.html">EVP_sha256(3)</a>) or the SHA-3 digest algorithms (such as <a href="../man3/EVP_sha3_512.html">EVP_sha3_512(3)</a>). The other digest algorithms are still in common use.</p>
+<p>New applications should use the SHA-2 (such as <a href="https://man7.org/linux/man-pages/man3/EVP_sha256.3.html">EVP_sha256(3)</a>) or the SHA-3 digest algorithms (such as <a href="https://man7.org/linux/man-pages/man3/EVP_sha3_512.3.html">EVP_sha3_512(3)</a>). The other digest algorithms are still in common use.</p>
 
 <p>For most applications the <i>impl</i> parameter to EVP_DigestInit_ex() will be set to NULL to use the default digest implementation.</p>
 
@@ -744,11 +744,11 @@ int main(int argc, char *argv[])
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_MD_meth_new.html">EVP_MD_meth_new(3)</a>, <a href="../man1/openssl-dgst.html">openssl-dgst(1)</a>, <a href="../man7/evp.html">evp(7)</a>, <a href="../man3/OSSL_PROVIDER.html">OSSL_PROVIDER(3)</a>, <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a>, <a href="../man7/property.html">property(7)</a>, <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a>, <a href="../man7/provider-digest.html">provider-digest(7)</a>, <a href="../man7/life_cycle-digest.html">life_cycle-digest(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_MD_meth_new.3.html">EVP_MD_meth_new(3)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-dgst.1.html">openssl-dgst(1)</a>, <a href="https://man7.org/linux/man-pages/man7/evp.7.html">evp(7)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_PROVIDER.3.html">OSSL_PROVIDER(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a>, <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>, <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-digest.7.html">provider-digest(7)</a>, <a href="https://man7.org/linux/man-pages/man7/life_cycle-digest.7.html">life_cycle-digest(7)</a></p>
 
 <p>The full list of digest algorithms are provided below.</p>
 
-<p><a href="../man3/EVP_blake2b512.html">EVP_blake2b512(3)</a>, <a href="../man3/EVP_md2.html">EVP_md2(3)</a>, <a href="../man3/EVP_md4.html">EVP_md4(3)</a>, <a href="../man3/EVP_md5.html">EVP_md5(3)</a>, <a href="../man3/EVP_mdc2.html">EVP_mdc2(3)</a>, <a href="../man3/EVP_ripemd160.html">EVP_ripemd160(3)</a>, <a href="../man3/EVP_sha1.html">EVP_sha1(3)</a>, <a href="../man3/EVP_sha224.html">EVP_sha224(3)</a>, <a href="../man3/EVP_sha3_224.html">EVP_sha3_224(3)</a>, <a href="../man3/EVP_sm3.html">EVP_sm3(3)</a>, <a href="../man3/EVP_whirlpool.html">EVP_whirlpool(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_blake2b512.3.html">EVP_blake2b512(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_md2.3.html">EVP_md2(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_md4.3.html">EVP_md4(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_md5.3.html">EVP_md5(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_mdc2.3.html">EVP_mdc2(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_ripemd160.3.html">EVP_ripemd160(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_sha1.3.html">EVP_sha1(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_sha224.3.html">EVP_sha224(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_sha3_224.3.html">EVP_sha3_224(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_sm3.3.html">EVP_sm3(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_whirlpool.3.html">EVP_whirlpool(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

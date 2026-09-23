@@ -4,7 +4,7 @@
 <head>
 <title>SSL_set_blocking_mode</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -34,17 +34,17 @@ int SSL_get_blocking_mode(SSL *s);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>SSL_set_blocking_mode() can be used to enable or disable blocking mode on a QUIC connection SSL object. By default, blocking is enabled, unless the SSL object is configured to use an underlying read or write BIO which cannot provide a poll descriptor (see <a href="../man3/BIO_get_rpoll_descriptor.html">BIO_get_rpoll_descriptor(3)</a>), as blocking mode cannot be supported in this case.</p>
+<p>SSL_set_blocking_mode() can be used to enable or disable blocking mode on a QUIC connection SSL object. By default, blocking is enabled, unless the SSL object is configured to use an underlying read or write BIO which cannot provide a poll descriptor (see <a href="https://man7.org/linux/man-pages/man3/BIO_get_rpoll_descriptor.3.html">BIO_get_rpoll_descriptor(3)</a>), as blocking mode cannot be supported in this case.</p>
 
 <p>To enable blocking mode, call SSL_set_blocking_mode() with <i>blocking</i> set to 1; to disable it, call SSL_set_blocking_mode() with <i>blocking</i> set to 0.</p>
 
 <p>To retrieve the current blocking mode, call SSL_get_blocking_mode().</p>
 
-<p>Blocking mode means that calls such as SSL_read() and SSL_write() will block until the requested operation can be performed. In nonblocking mode, these calls will fail if the requested operation cannot be performed immediately; see <a href="../man3/SSL_get_error.html">SSL_get_error(3)</a>.</p>
+<p>Blocking mode means that calls such as SSL_read() and SSL_write() will block until the requested operation can be performed. In nonblocking mode, these calls will fail if the requested operation cannot be performed immediately; see <a href="https://man7.org/linux/man-pages/man3/SSL_get_error.3.html">SSL_get_error(3)</a>.</p>
 
 <p>These functions are only applicable to QUIC connection SSL objects. Other kinds of SSL object, such as those for TLS, automatically function in blocking or nonblocking mode based on whether the underlying network read and write BIOs provided to the SSL object are themselves configured in nonblocking mode.</p>
 
-<p>Where a QUIC connection SSL object is used in nonblocking mode, an application is responsible for ensuring that the SSL object is ticked regularly; see <a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a>.</p>
+<p>Where a QUIC connection SSL object is used in nonblocking mode, an application is responsible for ensuring that the SSL object is ticked regularly; see <a href="https://man7.org/linux/man-pages/man3/SSL_handle_events.3.html">SSL_handle_events(3)</a>.</p>
 
 <p>Blocking mode is disabled automatically if the application provides a QUIC connection SSL object with a network BIO which cannot support blocking mode. To re-enable blocking mode in this case, an application must set a network BIO which can support blocking mode and explicitly call SSL_set_blocking_mode().</p>
 
@@ -56,7 +56,7 @@ int SSL_get_blocking_mode(SSL *s);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a>, <a href="../man3/SSL_poll.html">SSL_poll(3)</a>, <a href="../man7/openssl-quic.html">openssl-quic(7)</a>, <a href="../man7/openssl-quic-concurrency.html">openssl-quic-concurrency(7)</a>, <a href="../man7/ssl.html">ssl(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/SSL_handle_events.3.html">SSL_handle_events(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_poll.3.html">SSL_poll(3)</a>, <a href="https://man7.org/linux/man-pages/man7/openssl-quic.7.html">openssl-quic(7)</a>, <a href="https://man7.org/linux/man-pages/man7/openssl-quic-concurrency.7.html">openssl-quic-concurrency(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

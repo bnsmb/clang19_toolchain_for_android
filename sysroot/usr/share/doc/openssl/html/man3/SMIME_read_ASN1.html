@@ -4,7 +4,7 @@
 <head>
 <title>SMIME_read_ASN1</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -40,7 +40,7 @@ ASN1_VALUE *SMIME_read_ASN1(BIO *in, BIO **bcont, const ASN1_ITEM *it);</code></
 
 <p>SMIME_read_ASN1_ex() parses a message in S/MIME format.</p>
 
-<p><i>in</i> is a BIO to read the message from. If the <i>flags</i> argument contains <b>CMS_BINARY</b> then the input is assumed to be in binary format and is not translated to canonical form. If in addition <b>SMIME_ASCIICRLF</b> is set then the binary input is assumed to be followed by <b>CR</b> and <b>LF</b> characters, else only by an <b>LF</b> character. <i>x</i> can be used to optionally supply a previously created <i>it</i> ASN1_VALUE object (such as CMS_ContentInfo or PKCS7), it can be set to NULL. Valid values that can be used by ASN.1 structure <i>it</i> are ASN1_ITEM_rptr(PKCS7) or ASN1_ITEM_rptr(CMS_ContentInfo). Any algorithm fetches that occur during the operation will use the <b>OSSL_LIB_CTX</b> supplied in the <i>libctx</i> parameter, and use the property query string <i>propq</i> See <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further details about algorithm fetching.</p>
+<p><i>in</i> is a BIO to read the message from. If the <i>flags</i> argument contains <b>CMS_BINARY</b> then the input is assumed to be in binary format and is not translated to canonical form. If in addition <b>SMIME_ASCIICRLF</b> is set then the binary input is assumed to be followed by <b>CR</b> and <b>LF</b> characters, else only by an <b>LF</b> character. <i>x</i> can be used to optionally supply a previously created <i>it</i> ASN1_VALUE object (such as CMS_ContentInfo or PKCS7), it can be set to NULL. Valid values that can be used by ASN.1 structure <i>it</i> are ASN1_ITEM_rptr(PKCS7) or ASN1_ITEM_rptr(CMS_ContentInfo). Any algorithm fetches that occur during the operation will use the <b>OSSL_LIB_CTX</b> supplied in the <i>libctx</i> parameter, and use the property query string <i>propq</i> See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further details about algorithm fetching.</p>
 
 <p>If cleartext signing is used then the content is saved in a memory bio which is written to <i>*bcont</i>, otherwise <i>*bcont</i> is set to NULL.</p>
 
@@ -50,7 +50,7 @@ ASN1_VALUE *SMIME_read_ASN1(BIO *in, BIO **bcont, const ASN1_ITEM *it);</code></
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>The higher level functions <a href="../man3/SMIME_read_CMS_ex.html">SMIME_read_CMS_ex(3)</a> and <a href="../man3/SMIME_read_PKCS7_ex.html">SMIME_read_PKCS7_ex(3)</a> should be used instead of SMIME_read_ASN1_ex().</p>
+<p>The higher level functions <a href="https://man7.org/linux/man-pages/man3/SMIME_read_CMS_ex.3.html">SMIME_read_CMS_ex(3)</a> and <a href="https://man7.org/linux/man-pages/man3/SMIME_read_PKCS7_ex.3.html">SMIME_read_PKCS7_ex(3)</a> should be used instead of SMIME_read_ASN1_ex().</p>
 
 <p>To support future functionality if <i>bcont</i> is not NULL <i>*bcont</i> should be initialized to NULL.</p>
 
@@ -66,7 +66,7 @@ ASN1_VALUE *SMIME_read_ASN1(BIO *in, BIO **bcont, const ASN1_ITEM *it);</code></
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/SMIME_read_CMS_ex.html">SMIME_read_CMS_ex(3)</a>, <a href="../man3/SMIME_read_PKCS7_ex.html">SMIME_read_PKCS7_ex(3)</a>, <a href="../man3/SMIME_write_ASN1.html">SMIME_write_ASN1(3)</a>, <a href="../man3/SMIME_write_ASN1_ex.html">SMIME_write_ASN1_ex(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SMIME_read_CMS_ex.3.html">SMIME_read_CMS_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SMIME_read_PKCS7_ex.3.html">SMIME_read_PKCS7_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SMIME_write_ASN1.3.html">SMIME_write_ASN1(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SMIME_write_ASN1_ex.3.html">SMIME_write_ASN1_ex(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

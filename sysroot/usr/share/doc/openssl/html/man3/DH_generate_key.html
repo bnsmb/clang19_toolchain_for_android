@@ -4,7 +4,7 @@
 <head>
 <title>DH_generate_key</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -29,7 +29,7 @@
 
 <pre><code>#include &lt;openssl/dh.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int DH_generate_key(DH *dh);
 
@@ -39,7 +39,7 @@ int DH_compute_key_padded(unsigned char *key, const BIGNUM *pub_key, DH *dh);</c
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>All of the functions described on this page are deprecated. Applications should instead use <a href="../man3/EVP_PKEY_derive_init.html">EVP_PKEY_derive_init(3)</a> and <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a>.</p>
+<p>All of the functions described on this page are deprecated. Applications should instead use <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive_init.3.html">EVP_PKEY_derive_init(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a>.</p>
 
 <p>DH_generate_key() performs the first step of a Diffie-Hellman key exchange by generating private and public DH values. By calling DH_compute_key() or DH_compute_key_padded(), these are combined with the other party&#39;s public value to compute the shared key.</p>
 
@@ -57,11 +57,11 @@ int DH_compute_key_padded(unsigned char *key, const BIGNUM *pub_key, DH *dh);</c
 
 <p>DH_compute_key_padded() returns <b>DH_size(dh)</b> on success, -1 on error.</p>
 
-<p>The error codes can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>The error codes can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a>, <a href="../man3/DH_new.html">DH_new(3)</a>, <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a>, <a href="../man3/DH_size.html">DH_size(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DH_new.3.html">DH_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DH_size.3.html">DH_size(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

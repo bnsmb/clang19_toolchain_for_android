@@ -4,7 +4,7 @@
 <head>
 <title>DSA_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -29,7 +29,7 @@
 
 <pre><code>#include &lt;openssl/dsa.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>DSA* DSA_new(void);
 
@@ -37,7 +37,7 @@ void DSA_free(DSA *dsa);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>All of the functions described on this page are deprecated. Applications should instead use <a href="../man3/EVP_PKEY_new.html">EVP_PKEY_new(3)</a> and <a href="../man3/EVP_PKEY_free.html">EVP_PKEY_free(3)</a>.</p>
+<p>All of the functions described on this page are deprecated. Applications should instead use <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_new.3.html">EVP_PKEY_new(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_free.3.html">EVP_PKEY_free(3)</a>.</p>
 
 <p>DSA_new() allocates and initializes a <b>DSA</b> structure. It is equivalent to calling DSA_new_method(NULL).</p>
 
@@ -45,13 +45,13 @@ void DSA_free(DSA *dsa);</code></pre>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
-<p>If the allocation fails, DSA_new() returns <b>NULL</b> and sets an error code that can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>. Otherwise it returns a pointer to the newly allocated structure.</p>
+<p>If the allocation fails, DSA_new() returns <b>NULL</b> and sets an error code that can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>. Otherwise it returns a pointer to the newly allocated structure.</p>
 
 <p>DSA_free() returns no value.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_new.html">EVP_PKEY_new(3)</a>, <a href="../man3/EVP_PKEY_free.html">EVP_PKEY_free(3)</a>, <a href="../man3/DSA_new.html">DSA_new(3)</a>, <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/DSA_generate_parameters.html">DSA_generate_parameters(3)</a>, <a href="../man3/DSA_generate_key.html">DSA_generate_key(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_new.3.html">EVP_PKEY_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_free.3.html">EVP_PKEY_free(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DSA_new.3.html">DSA_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DSA_generate_parameters.3.html">DSA_generate_parameters(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DSA_generate_key.3.html">DSA_generate_key(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

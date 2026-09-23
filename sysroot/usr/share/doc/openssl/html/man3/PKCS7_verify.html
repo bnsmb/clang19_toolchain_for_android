@@ -4,7 +4,7 @@
 <head>
 <title>PKCS7_verify</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -38,7 +38,7 @@ STACK_OF(X509) *PKCS7_get0_signers(PKCS7 *p7, STACK_OF(X509) *certs, int flags);
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>PKCS7_verify() is very similar to <a href="../man3/CMS_verify.html">CMS_verify(3)</a>. It verifies a PKCS#7 signedData structure given in <i>p7</i>. The optional <i>certs</i> parameter refers to a set of certificates in which to search for signer&#39;s certificates. It is also used as a source of untrusted intermediate CA certificates for chain building. <i>p7</i> may contain extra untrusted CA certificates that may be used for chain building as well as CRLs that may be used for certificate validation. <i>store</i> may be NULL or point to the trusted certificate store to use for chain verification. <i>indata</i> refers to the signed data if the content is detached from <i>p7</i>. Otherwise <i>indata</i> should be NULL, and then the signed data must be in <i>p7</i>. The content is written to the BIO <i>out</i> unless it is NULL. <i>flags</i> is an optional set of flags, which can be used to modify the operation.</p>
+<p>PKCS7_verify() is very similar to <a href="https://man7.org/linux/man-pages/man3/CMS_verify.3.html">CMS_verify(3)</a>. It verifies a PKCS#7 signedData structure given in <i>p7</i>. The optional <i>certs</i> parameter refers to a set of certificates in which to search for signer&#39;s certificates. It is also used as a source of untrusted intermediate CA certificates for chain building. <i>p7</i> may contain extra untrusted CA certificates that may be used for chain building as well as CRLs that may be used for certificate validation. <i>store</i> may be NULL or point to the trusted certificate store to use for chain verification. <i>indata</i> refers to the signed data if the content is detached from <i>p7</i>. Otherwise <i>indata</i> should be NULL, and then the signed data must be in <i>p7</i>. The content is written to the BIO <i>out</i> unless it is NULL. <i>flags</i> is an optional set of flags, which can be used to modify the operation.</p>
 
 <p>PKCS7_get0_signers() retrieves the signer&#39;s certificates from <i>p7</i>, it does <b>not</b> check their validity or whether any signatures are valid. The <i>certs</i> and <i>flags</i> parameters have the same meanings as in PKCS7_verify().</p>
 
@@ -50,7 +50,7 @@ STACK_OF(X509) *PKCS7_get0_signers(PKCS7 *p7, STACK_OF(X509) *certs, int flags);
 
 <p>An attempt is made to locate all the signer&#39;s certificates, first looking in the <i>certs</i> parameter (if it is not NULL). Then they are looked up in any certificates contained in the <i>p7</i> structure unless <b>PKCS7_NOINTERN</b> is set. If any signer&#39;s certificates cannot be located the operation fails.</p>
 
-<p>Each signer&#39;s certificate is chain verified using the <b>smimesign</b> purpose and using the trusted certificate store <i>store</i> if supplied. Any internal certificates in the message, which may have been added using <a href="../man3/PKCS7_add_certificate.html">PKCS7_add_certificate(3)</a>, are used as untrusted CAs unless <b>PKCS7_NOCHAIN</b> is set. If CRL checking is enabled in <i>store</i> and <b>PKCS7_NOCRL</b> is not set, any internal CRLs, which may have been added using <a href="../man3/PKCS7_add_crl.html">PKCS7_add_crl(3)</a>, are used in addition to attempting to look them up in <i>store</i>. If <i>store</i> is not NULL and any chain verify fails an error code is returned.</p>
+<p>Each signer&#39;s certificate is chain verified using the <b>smimesign</b> purpose and using the trusted certificate store <i>store</i> if supplied. Any internal certificates in the message, which may have been added using <a href="https://man7.org/linux/man-pages/man3/PKCS7_add_certificate.3.html">PKCS7_add_certificate(3)</a>, are used as untrusted CAs unless <b>PKCS7_NOCHAIN</b> is set. If CRL checking is enabled in <i>store</i> and <b>PKCS7_NOCRL</b> is not set, any internal CRLs, which may have been added using <a href="https://man7.org/linux/man-pages/man3/PKCS7_add_crl.3.html">PKCS7_add_crl(3)</a>, are used in addition to attempting to look them up in <i>store</i>. If <i>store</i> is not NULL and any chain verify fails an error code is returned.</p>
 
 <p>Finally the signed content is read (and written to <i>out</i> unless it is NULL) and the signature is checked.</p>
 
@@ -84,7 +84,7 @@ STACK_OF(X509) *PKCS7_get0_signers(PKCS7 *p7, STACK_OF(X509) *certs, int flags);
 
 <p>PKCS7_get0_signers() returns all signers or NULL if an error occurred.</p>
 
-<p>The error can be obtained from <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>The error can be obtained from <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="BUGS">BUGS</h1>
 
@@ -94,7 +94,7 @@ STACK_OF(X509) *PKCS7_get0_signers(PKCS7 *p7, STACK_OF(X509) *certs, int flags);
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/CMS_verify.html">CMS_verify(3)</a>, <a href="../man3/PKCS7_add_certificate.html">PKCS7_add_certificate(3)</a>, <a href="../man3/PKCS7_add_crl.html">PKCS7_add_crl(3)</a>, <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/PKCS7_sign.html">PKCS7_sign(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/CMS_verify.3.html">CMS_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man3/PKCS7_add_certificate.3.html">PKCS7_add_certificate(3)</a>, <a href="https://man7.org/linux/man-pages/man3/PKCS7_add_crl.3.html">PKCS7_add_crl(3)</a>, <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/PKCS7_sign.3.html">PKCS7_sign(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

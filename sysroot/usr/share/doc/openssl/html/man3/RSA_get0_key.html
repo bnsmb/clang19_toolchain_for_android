@@ -4,7 +4,7 @@
 <head>
 <title>RSA_get0_key</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 
 <pre><code>#include &lt;openssl/rsa.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int RSA_set0_key(RSA *r, BIGNUM *n, BIGNUM *e, BIGNUM *d);
 int RSA_set0_factors(RSA *r, BIGNUM *p, BIGNUM *q);
@@ -64,7 +64,7 @@ int RSA_get_version(RSA *r);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>All of the functions described on this page are deprecated. Applications should instead use <a href="../man3/EVP_PKEY_get_bn_param.html">EVP_PKEY_get_bn_param(3)</a> for any methods that return a <b>BIGNUM</b>. Refer to <a href="../man7/EVP_PKEY-DH.html">EVP_PKEY-DH(7)</a> for more information.</p>
+<p>All of the functions described on this page are deprecated. Applications should instead use <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_get_bn_param.3.html">EVP_PKEY_get_bn_param(3)</a> for any methods that return a <b>BIGNUM</b>. Refer to <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DH.7.html">EVP_PKEY-DH(7)</a> for more information.</p>
 
 <p>An RSA object contains the components for the public and private key, <b>n</b>, <b>e</b>, <b>d</b>, <b>p</b>, <b>q</b>, <b>dmp1</b>, <b>dmq1</b> and <b>iqmp</b>. <b>n</b> is the modulus common to both public and private key, <b>e</b> is the public exponent and <b>d</b> is the private exponent. <b>p</b>, <b>q</b>, <b>dmp1</b>, <b>dmq1</b> and <b>iqmp</b> are the factors for the second representation of a private key (see PKCS#1 section 3 Key Types), where <b>p</b> and <b>q</b> are the first and second factor of <b>n</b> and <b>dmp1</b>, <b>dmq1</b> and <b>iqmp</b> are the exponents and coefficient for CRT calculations.</p>
 
@@ -118,7 +118,7 @@ int RSA_get_version(RSA *r);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/RSA_new.html">RSA_new(3)</a>, <a href="../man3/RSA_size.html">RSA_size(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/RSA_new.3.html">RSA_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RSA_size.3.html">RSA_size(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>openssl-pkeyutl</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -112,13 +112,13 @@
 <dt id="keyform-DER-PEM-P12-ENGINE"><b>-keyform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>|<b>ENGINE</b></dt>
 <dd>
 
-<p>The key format; unspecified by default. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The key format; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="passin-arg"><b>-passin</b> <i>arg</i></dt>
 <dd>
 
-<p>The input key password source. For more information about the format of <i>arg</i> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>The input key password source. For more information about the format of <i>arg</i> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="pubin"><b>-pubin</b></dt>
@@ -188,13 +188,13 @@
 <dt id="peerform-DER-PEM-P12-ENGINE"><b>-peerform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>|<b>ENGINE</b></dt>
 <dd>
 
-<p>The peer key format; unspecified by default. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The peer key format; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="encap"><b>-encap</b></dt>
 <dd>
 
-<p>Use a Key Encapsulation Mechanism (<b>KEM</b>) to <b>encapsulate</b> a shared-secret to a peer&#39;s <b>public</b> key. The encapsulated result (or ciphertext, non-text binary data) is written to standard output by default, or else to the file specified with <i>-out</i>. The <i>-secret</i> option must also be provided to specify the output file for the derived shared-secret value generated in the encapsulation process. Encapsulation is supported with a number of public key algorithms, currently: <a href="../man7/EVP_PKEY-ML-KEM.html">ML-KEM</a>, <a href="../man7/EVP_KEM-X25519.html">X25519</a>, <a href="../man7/EVP_KEM-X448.html">X449</a>, and <a href="../man7/EVP_KEM-EC.html">EC</a>. The ECX and EC algorithms use the <a href="https://www.rfc-editor.org/rfc/rfc9180">RFC9180</a> DHKEM construction. Encapsulation is also supported with <a href="../man7/EVP_KEM-RSA.html">RSA</a> keys via the <b>RSASVE</b> construction.</p>
+<p>Use a Key Encapsulation Mechanism (<b>KEM</b>) to <b>encapsulate</b> a shared-secret to a peer&#39;s <b>public</b> key. The encapsulated result (or ciphertext, non-text binary data) is written to standard output by default, or else to the file specified with <i>-out</i>. The <i>-secret</i> option must also be provided to specify the output file for the derived shared-secret value generated in the encapsulation process. Encapsulation is supported with a number of public key algorithms, currently: <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-ML-KEM.7.html">ML-KEM</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-X25519.7.html">X25519</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-X448.7.html">X448</a>, and <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-EC.7.html">EC</a>. The ECX and EC algorithms use the <a href="https://www.rfc-editor.org/rfc/rfc9180">RFC9180</a> DHKEM construction. Encapsulation is also supported with <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-RSA.7.html">RSA</a> keys via the <b>RSASVE</b> construction.</p>
 
 <p>At the API level, encapsulation and decapsulation are also supported for a few hybrid ECDHE (no DHKEM) plus <b>ML-KEM</b> algorithms, but these are intended primarily for use with TLS and should not be used standalone. There are in any case no standard public and private key formats for the hybrid algorithms, so it is not possible to provide the required key material.</p>
 
@@ -202,7 +202,7 @@
 <dt id="decap"><b>-decap</b></dt>
 <dd>
 
-<p>Decode an encapsulated secret, with the use of a <b>-private</b> key, to derive the same shared-secret as that obtained when the secret was encapsulated to the corresponding public key. The encapsulated secret is by default read from the standard input, or else from the file specified with <b>-in</b>. The derived shared-secret is written to the file specified with the <b>-secret</b> option, which <i>must</i> also be provided. Decapsulation is supported with a number of public key algorithms, currently: <a href="../man7/EVP_PKEY-ML-KEM.html">ML-KEM</a>, <a href="../man7/EVP_KEM-X25519.html">X25519</a>, <a href="../man7/EVP_KEM-X448.html">X448</a>, and <a href="../man7/EVP_KEM-EC.html">EC</a>. The ECX and EC algorithms use the <a href="https://www.rfc-editor.org/rfc/rfc9180">RFC9180</a> DHKEM construction. Decapsulation is also supported with <a href="../man7/EVP_KEM-RSA.html">RSA</a> keys via the <b>RSASVE</b> construction.</p>
+<p>Decode an encapsulated secret, with the use of a <b>-private</b> key, to derive the same shared-secret as that obtained when the secret was encapsulated to the corresponding public key. The encapsulated secret is by default read from the standard input, or else from the file specified with <b>-in</b>. The derived shared-secret is written to the file specified with the <b>-secret</b> option, which <i>must</i> also be provided. Decapsulation is supported with a number of public key algorithms, currently: <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-ML-KEM.7.html">ML-KEM</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-X25519.7.html">X25519</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-X448.7.html">X448</a>, and <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-EC.7.html">EC</a>. The ECX and EC algorithms use the <a href="https://www.rfc-editor.org/rfc/rfc9180">RFC9180</a> DHKEM construction. Decapsulation is also supported with <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-RSA.7.html">RSA</a> keys via the <b>RSASVE</b> construction.</p>
 
 </dd>
 <dt id="kemop-mode"><b>-kemop</b> <i>mode</i></dt>
@@ -214,7 +214,7 @@
 <dt id="kdf-algorithm"><b>-kdf</b> <i>algorithm</i></dt>
 <dd>
 
-<p>Use key derivation function <i>algorithm</i>. The supported algorithms are at present <b>TLS1-PRF</b> and <b>HKDF</b>. Note: additional parameters and the KDF output length will normally have to be set for this to work. See <a href="../man3/EVP_PKEY_CTX_set_hkdf_md.html">EVP_PKEY_CTX_set_hkdf_md(3)</a> and <a href="../man3/EVP_PKEY_CTX_set_tls1_prf_md.html">EVP_PKEY_CTX_set_tls1_prf_md(3)</a> for the supported string parameters of each algorithm.</p>
+<p>Use key derivation function <i>algorithm</i>. The supported algorithms are at present <b>TLS1-PRF</b> and <b>HKDF</b>. Note: additional parameters and the KDF output length will normally have to be set for this to work. See <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set_hkdf_md.3.html">EVP_PKEY_CTX_set_hkdf_md(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set_tls1_prf_md.3.html">EVP_PKEY_CTX_set_tls1_prf_md(3)</a> for the supported string parameters of each algorithm.</p>
 
 </dd>
 <dt id="kdflen-length"><b>-kdflen</b> <i>length</i></dt>
@@ -232,7 +232,7 @@
 <dt id="pkeyopt_passin-opt-:passarg"><b>-pkeyopt_passin</b> <i>opt</i>[:<i>passarg</i>]</dt>
 <dd>
 
-<p>Allows reading a public key option <i>opt</i> from stdin or a password source. If only <i>opt</i> is specified, the user will be prompted to enter a password on stdin. Alternatively, <i>passarg</i> can be specified which can be any value supported by <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>Allows reading a public key option <i>opt</i> from stdin or a password source. If only <i>opt</i> is specified, the user will be prompted to enter a password on stdin. Alternatively, <i>passarg</i> can be specified which can be any value supported by <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="hexdump"><b>-hexdump</b></dt>
@@ -250,7 +250,7 @@
 <dt id="engine-id"><b>-engine</b> <i>id</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Engine_Options">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
 
 </dd>
 <dt id="engine_impl"><b>-engine_impl</b></dt>
@@ -262,7 +262,7 @@
 <dt id="rand-files--writerand-file"><b>-rand</b> <i>files</i>, <b>-writerand</b> <i>file</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Random_State_Options">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
 
 </dd>
 <dt id="provider-name"><b>-provider</b> <i>name</i></dt>
@@ -280,13 +280,13 @@
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Provider Options&quot; in openssl(1)</a>, <a href="../man7/provider.html">provider(7)</a>, and <a href="../man7/property.html">property(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Provider_Options">&quot;Provider Options&quot; in openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, and <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>.</p>
 
 </dd>
 <dt id="config-configfile"><b>-config</b> <i>configfile</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Configuration Option&quot; in openssl(1)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Configuration_Option">&quot;Configuration Option&quot; in openssl(1)</a>.</p>
 
 </dd>
 </dl>
@@ -338,7 +338,7 @@
 <dt id="rsa_oaep_md:digest"><b>rsa_oaep_md:</b><i>digest</i></dt>
 <dd>
 
-<p>Sets the digest used for the OAEP hash function. If not explicitly set then SHA256 is used.</p>
+<p>Sets the digest used for the OAEP hash function. If not explicitly set then SHA1 is used.</p>
 
 </dd>
 <dt id="rsa_pkcs1_implicit_rejection:flag"><b>rsa_pkcs1_implicit_rejection:</b><i>flag</i></dt>
@@ -405,7 +405,7 @@
 </dd>
 </dl>
 
-<p>See <a href="../man7/EVP_PKEY-SLH-DSA.html">EVP_PKEY-SLH-DSA(7)</a> and <a href="../man7/EVP_SIGNATURE-SLH-DSA.html">EVP_SIGNATURE-SLH-DSA(7)</a> for additional details about the SLH-DSA algorithm and its implementation.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-SLH-DSA.7.html">EVP_PKEY-SLH-DSA(7)</a> and <a href="https://man7.org/linux/man-pages/man7/EVP_SIGNATURE-SLH-DSA.7.html">EVP_SIGNATURE-SLH-DSA(7)</a> for additional details about the SLH-DSA algorithm and its implementation.</p>
 
 <h1 id="ML-DSA-44-ML-DSA-65-AND-ML-DSA-87-ALGORITHMS">ML-DSA-44, ML-DSA-65 AND ML-DSA-87 ALGORITHMS</h1>
 
@@ -439,7 +439,7 @@
 <dt id="message-encoding:value"><b>message-encoding</b>:<i>value</i></dt>
 <dd>
 
-<p>Specifies the message encoding mode used for signing. This controls how the input message is processed before signing. Valid values are described in <a href="../man7/EVP_SIGNATURE-ML-DSA.html">EVP_SIGNATURE-ML-DSA(7)</a>. For example:</p>
+<p>Specifies the message encoding mode used for signing. This controls how the input message is processed before signing. Valid values are described in <a href="https://man7.org/linux/man-pages/man7/EVP_SIGNATURE-ML-DSA.7.html">EVP_SIGNATURE-ML-DSA(7)</a>. For example:</p>
 
 <pre><code>$ openssl pkeyutl -sign -in file.txt -inkey mldsa65.pem -out sig -pkeyopt message-encoding:1</code></pre>
 
@@ -501,13 +501,13 @@ $ openssl pkeyutl -verify -in file.txt -inkey mldsa65.pem -sigfile sig -pkeyopt 
 
 <p>The signing operation supports a <b>deterministic</b>:<i>bool</i> option, with <i>bool</i> set to <code>1</code> if a deterministic signature is to be generated with a fixed all zero random input. By default, or if the <i>bool</i> is <code>0</code> a random entropy value is used. A deterministic result can also be obtained by specifying an explicit entropy value via the <b>hextest-entropy</b>:<i>value</i> parameter. Deterministic <b>ML-DSA</b> signing should only be used in tests.</p>
 
-<p>See <a href="../man7/EVP_SIGNATURE-ML-DSA.html">EVP_SIGNATURE-ML-DSA(7)</a> for additional details about the ML-DSA algorithms and their implementation.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_SIGNATURE-ML-DSA.7.html">EVP_SIGNATURE-ML-DSA(7)</a> for additional details about the ML-DSA algorithms and their implementation.</p>
 
 <h1 id="ML-KEM-512-ML-KEM-768-AND-ML-KEM-1024-ALGORITHMS">ML-KEM-512, ML-KEM-768 AND ML-KEM-1024 ALGORITHMS</h1>
 
 <p>The ML-KEM algorithms support encapsulation and decapsulation only. The encapsulation operation supports a <b>hexikme</b>:<i>entropy</i> option, with <i>entropy</i> the 64 hexadecimal digit encoding of a 32-byte value. This should only be used in tests, known or leaked values of the option may compromise the generated shared secret.</p>
 
-<p>See <a href="../man7/EVP_KEM-ML-KEM.html">EVP_KEM-ML-KEM(7)</a> for additional detail.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-ML-KEM.7.html">EVP_KEM-ML-KEM(7)</a> for additional detail.</p>
 
 <h1 id="ED25519-AND-ED448-ALGORITHMS">ED25519 AND ED448 ALGORITHMS</h1>
 
@@ -570,12 +570,12 @@ $ openssl pkeyutl -verify -in file.txt -inkey mldsa65.pem -sigfile sig -pkeyopt 
 <pre><code>openssl pkeyutl -kdf scrypt -kdflen 16 -pkeyopt_passin pass:env:MYPASS \
    -pkeyopt hexsalt:aabbcc -pkeyopt N:16384 -pkeyopt r:8 -pkeyopt p:1</code></pre>
 
-<p>Sign some data using an <a href="../man7/SM2.html">SM2(7)</a> private key and a specific ID:</p>
+<p>Sign some data using an <a href="https://man7.org/linux/man-pages/man7/SM2.7.html">SM2(7)</a> private key and a specific ID:</p>
 
 <pre><code>openssl pkeyutl -sign -in file -inkey sm2.key -out sig -rawin -digest sm3 \
    -pkeyopt distid:someid</code></pre>
 
-<p>Verify some data using an <a href="../man7/SM2.html">SM2(7)</a> certificate and a specific ID:</p>
+<p>Verify some data using an <a href="https://man7.org/linux/man-pages/man7/SM2.7.html">SM2(7)</a> certificate and a specific ID:</p>
 
 <pre><code>openssl pkeyutl -verify -certin -in file -inkey sm2.cert -sigfile sig \
    -rawin -digest sm3 -pkeyopt distid:someid</code></pre>
@@ -615,11 +615,11 @@ $ openssl pkeyutl -sign -in file.txt -inkey slh-dsa.pem -out sig</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl.html">openssl(1)</a>, <a href="../man1/openssl-genpkey.html">openssl-genpkey(1)</a>, <a href="../man1/openssl-pkey.html">openssl-pkey(1)</a>, <a href="../man1/openssl-rsautl.html">openssl-rsautl(1)</a> <a href="../man1/openssl-dgst.html">openssl-dgst(1)</a>, <a href="../man1/openssl-rsa.html">openssl-rsa(1)</a>, <a href="../man1/openssl-genrsa.html">openssl-genrsa(1)</a>, <a href="../man1/openssl-kdf.html">openssl-kdf(1)</a> <a href="../man3/EVP_PKEY_CTX_set_hkdf_md.html">EVP_PKEY_CTX_set_hkdf_md(3)</a>, <a href="../man3/EVP_PKEY_CTX_set_tls1_prf_md.html">EVP_PKEY_CTX_set_tls1_prf_md(3)</a>,</p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl.1.html">openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-genpkey.1.html">openssl-genpkey(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-pkey.1.html">openssl-pkey(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-rsautl.1.html">openssl-rsautl(1)</a> <a href="https://man7.org/linux/man-pages/man1/openssl-dgst.1.html">openssl-dgst(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-rsa.1.html">openssl-rsa(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-genrsa.1.html">openssl-genrsa(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-kdf.1.html">openssl-kdf(1)</a> <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set_hkdf_md.3.html">EVP_PKEY_CTX_set_hkdf_md(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set_tls1_prf_md.3.html">EVP_PKEY_CTX_set_tls1_prf_md(3)</a>,</p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
-<p>Since OpenSSL 3.5, the <b>-digest</b> option implies <b>-rawin</b>, and these two options are no longer required when signing or verifying with an Ed25519 or Ed448 key.</p>
+<p>Since OpenSSL 3.5, the <b>-digest</b> option implies <b>-rawin</b>. The <b>-rawin</b> option is no longer required when signing or verifying with a key type that does not support a prehash digest, such as Ed25519, Ed448, ML-DSA, or SLH-DSA. For these key types, <b>-digest</b> is not supported.</p>
 
 <p>Also since OpenSSL 3.5, the <b>-kemop</b> option is no longer required for any of the supported algorithms, the only supported <b>mode</b> is now the default.</p>
 
@@ -627,7 +627,7 @@ $ openssl pkeyutl -sign -in file.txt -inkey slh-dsa.pem -out sig</code></pre>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2006-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2006-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

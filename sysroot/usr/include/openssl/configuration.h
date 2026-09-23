@@ -101,6 +101,9 @@ extern "C" {
 # ifndef OPENSSL_NO_MSAN
 #  define OPENSSL_NO_MSAN
 # endif
+# ifndef OPENSSL_NO_PADLOCKENG
+#  define OPENSSL_NO_PADLOCKENG
+# endif
 # ifndef OPENSSL_NO_PIE
 #  define OPENSSL_NO_PIE
 # endif
@@ -109,6 +112,9 @@ extern "C" {
 # endif
 # ifndef OPENSSL_NO_SCTP
 #  define OPENSSL_NO_SCTP
+# endif
+# ifndef OPENSSL_NO_SRP
+#  define OPENSSL_NO_SRP
 # endif
 # ifndef OPENSSL_NO_SSL3
 #  define OPENSSL_NO_SSL3

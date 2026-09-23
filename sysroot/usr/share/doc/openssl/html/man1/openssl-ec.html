@@ -4,7 +4,7 @@
 <head>
 <title>openssl-ec</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -32,7 +32,7 @@
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>The <a href="../man1/openssl-ec.html">openssl-ec(1)</a> command processes EC keys. They can be converted between various forms and their components printed out. <b>Note</b> OpenSSL uses the private key format specified in &#39;SEC 1: Elliptic Curve Cryptography&#39; (http://www.secg.org/). To convert an OpenSSL EC private key into the PKCS#8 private key format use the <a href="../man1/openssl-pkcs8.html">openssl-pkcs8(1)</a> command.</p>
+<p>The <a href="https://man7.org/linux/man-pages/man1/openssl-ec.1.html">openssl-ec(1)</a> command processes EC keys. They can be converted between various forms and their components printed out. <b>Note</b> OpenSSL uses the private key format specified in &#39;SEC 1: Elliptic Curve Cryptography&#39; (http://www.secg.org/). To convert an OpenSSL EC private key into the PKCS#8 private key format use the <a href="https://man7.org/linux/man-pages/man1/openssl-pkcs8.1.html">openssl-pkcs8(1)</a> command.</p>
 
 <h1 id="OPTIONS">OPTIONS</h1>
 
@@ -47,13 +47,13 @@
 <dt id="inform-DER-PEM-P12-ENGINE"><b>-inform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>|<b>ENGINE</b></dt>
 <dd>
 
-<p>The key input format; unspecified by default. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The key input format; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="outform-DER-PEM"><b>-outform</b> <b>DER</b>|<b>PEM</b></dt>
 <dd>
 
-<p>The key output format; the default is <b>PEM</b>. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The key output format; the default is <b>PEM</b>. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 <p>Private keys are an SEC1 private key or PKCS#8 format. Public keys are a <b>SubjectPublicKeyInfo</b> as specified in IETF RFC 3280.</p>
 
@@ -73,7 +73,7 @@
 <dt id="passin-arg--passout-arg"><b>-passin</b> <i>arg</i>, <b>-passout</b> <i>arg</i></dt>
 <dd>
 
-<p>The password source for the input and output file. For more information about the format of <b>arg</b> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>The password source for the input and output file. For more information about the format of <b>arg</b> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="des--des3--idea"><b>-des</b>|<b>-des3</b>|<b>-idea</b></dt>
@@ -139,7 +139,7 @@
 <dt id="engine-id"><b>-engine</b> <i>id</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Engine_Options">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
 
 </dd>
 <dt id="provider-name"><b>-provider</b> <i>name</i></dt>
@@ -157,16 +157,16 @@
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Provider Options&quot; in openssl(1)</a>, <a href="../man7/provider.html">provider(7)</a>, and <a href="../man7/property.html">property(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Provider_Options">&quot;Provider Options&quot; in openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, and <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>.</p>
 
 </dd>
 </dl>
 
-<p>The <a href="../man1/openssl-pkey.html">openssl-pkey(1)</a> command is capable of performing all the operations this command can, as well as supporting other public key types.</p>
+<p>The <a href="https://man7.org/linux/man-pages/man1/openssl-pkey.1.html">openssl-pkey(1)</a> command is capable of performing all the operations this command can, as well as supporting other public key types.</p>
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
-<p>The documentation for the <a href="../man1/openssl-pkey.html">openssl-pkey(1)</a> command contains examples equivalent to the ones listed here.</p>
+<p>The documentation for the <a href="https://man7.org/linux/man-pages/man1/openssl-pkey.1.html">openssl-pkey(1)</a> command contains examples equivalent to the ones listed here.</p>
 
 <p>To encrypt a private key using triple DES:</p>
 
@@ -194,7 +194,7 @@
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl.html">openssl(1)</a>, <a href="../man1/openssl-pkey.html">openssl-pkey(1)</a>, <a href="../man1/openssl-ecparam.html">openssl-ecparam(1)</a>, <a href="../man1/openssl-dsa.html">openssl-dsa(1)</a>, <a href="../man1/openssl-rsa.html">openssl-rsa(1)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl.1.html">openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-pkey.1.html">openssl-pkey(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ecparam.1.html">openssl-ecparam(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-dsa.1.html">openssl-dsa(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-rsa.1.html">openssl-rsa(1)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

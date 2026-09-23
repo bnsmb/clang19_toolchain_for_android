@@ -4,7 +4,7 @@
 <head>
 <title>PEM_read_CMS</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -37,7 +37,7 @@ TYPE *PEM_read_bio_TYPE(BIO *bp, TYPE **a, pem_password_cb *cb, void *u);
 int PEM_write_TYPE(FILE *fp, const TYPE *a);
 int PEM_write_bio_TYPE(BIO *bp, const TYPE *a);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>#include &lt;openssl/pem.h&gt;
 
@@ -68,9 +68,9 @@ int PEM_write_bio_ECPrivateKey(BIO *out, const EC_KEY *x, const EVP_CIPHER *enc,
 
 <p>In the description below, <b><i>TYPE</i></b> is used as a placeholder for any of the OpenSSL datatypes, such as <b>X509</b>. The macro <b>DECLARE_PEM_rw</b> expands to the set of declarations shown in the next four lines of the synopsis.</p>
 
-<p>These routines convert between local instances of ASN1 datatypes and the PEM encoding. For more information on the templates, see <a href="../man3/ASN1_ITEM.html">ASN1_ITEM(3)</a>. For more information on the lower-level routines used by the functions here, see <a href="../man3/PEM_read.html">PEM_read(3)</a>.</p>
+<p>These routines convert between local instances of ASN1 datatypes and the PEM encoding. For more information on the templates, see <a href="https://man7.org/linux/man-pages/man3/ASN1_ITEM.3.html">ASN1_ITEM(3)</a>. For more information on the lower-level routines used by the functions here, see <a href="https://man7.org/linux/man-pages/man3/PEM_read.3.html">PEM_read(3)</a>.</p>
 
-<p><b>PEM_read_<i>TYPE</i></b>() reads a PEM-encoded object of <b><i>TYPE</i></b> from the file <i>fp</i> and returns it. The <i>cb</i> and <i>u</i> parameters are as described in <a href="../man3/pem_password_cb.html">pem_password_cb(3)</a>.</p>
+<p><b>PEM_read_<i>TYPE</i></b>() reads a PEM-encoded object of <b><i>TYPE</i></b> from the file <i>fp</i> and returns it. The <i>cb</i> and <i>u</i> parameters are as described in <a href="https://man7.org/linux/man-pages/man3/pem_password_cb.3.html">pem_password_cb(3)</a>.</p>
 
 <p><b>PEM_read_bio_<i>TYPE</i></b>() is similar to <b>PEM_read_<i>TYPE</i></b>() but reads from the BIO <i>bp</i>.</p>
 
@@ -90,7 +90,7 @@ int PEM_write_bio_ECPrivateKey(BIO *out, const EC_KEY *x, const EVP_CIPHER *enc,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/PEM_read.html">PEM_read(3)</a>, <a href="../man7/passphrase-encoding.html">passphrase-encoding(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/PEM_read.3.html">PEM_read(3)</a>, <a href="https://man7.org/linux/man-pages/man7/passphrase-encoding.7.html">passphrase-encoding(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

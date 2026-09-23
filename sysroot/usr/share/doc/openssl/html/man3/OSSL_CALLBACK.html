@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_CALLBACK</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -45,7 +45,7 @@ typedef int (OSSL_PASSPHRASE_CALLBACK)(char *pass, size_t pass_size,
 <dt id="OSSL_CALLBACK"><b>OSSL_CALLBACK</b></dt>
 <dd>
 
-<p>This is a generic callback function. When calling this callback function, the caller is expected to build an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array of data it wants or is expected to pass back, and pass that as <i>params</i>, as well as the opaque data pointer it received, as <i>arg</i>.</p>
+<p>This is a generic callback function. When calling this callback function, the caller is expected to build an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array of data it wants or is expected to pass back, and pass that as <i>params</i>, as well as the opaque data pointer it received, as <i>arg</i>.</p>
 
 </dd>
 <dt id="OSSL_PASSPHRASE_CALLBACK"><b>OSSL_PASSPHRASE_CALLBACK</b></dt>
@@ -53,7 +53,7 @@ typedef int (OSSL_PASSPHRASE_CALLBACK)(char *pass, size_t pass_size,
 
 <p>This is a specialised callback function, used specifically to prompt the user for a passphrase. When calling this callback function, a buffer to store the pass phrase needs to be given with <i>pass</i>, and its size with <i>pass_size</i>. The length of the prompted pass phrase will be given back in <i>*pass_len</i>.</p>
 
-<p>Additional parameters can be passed with the <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array <i>params</i>,</p>
+<p>Additional parameters can be passed with the <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array <i>params</i>,</p>
 
 </dd>
 </dl>
@@ -64,7 +64,7 @@ typedef int (OSSL_PASSPHRASE_CALLBACK)(char *pass, size_t pass_size,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/openssl-core.h.html">openssl-core.h(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/openssl-core.h.7.html">openssl-core.h(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

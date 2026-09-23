@@ -4,7 +4,7 @@
 <head>
 <title>OPENSSL_init_ssl</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -37,11 +37,11 @@ int OPENSSL_init_ssl(uint64_t opts, const OPENSSL_INIT_SETTINGS *settings);</cod
 
 <p>As of version 1.1.0 OpenSSL will automatically allocate all resources that it needs so no explicit initialisation is required. Similarly it will also automatically deinitialise as required.</p>
 
-<p>However, there may be situations when explicit initialisation is desirable or needed, for example when some nondefault initialisation is required. The function OPENSSL_init_ssl() can be used for this purpose. Calling this function will explicitly initialise BOTH libcrypto and libssl. To explicitly initialise ONLY libcrypto see the <a href="../man3/OPENSSL_init_crypto.html">OPENSSL_init_crypto(3)</a> function.</p>
+<p>However, there may be situations when explicit initialisation is desirable or needed, for example when some nondefault initialisation is required. The function OPENSSL_init_ssl() can be used for this purpose. Calling this function will explicitly initialise BOTH libcrypto and libssl. To explicitly initialise ONLY libcrypto see the <a href="https://man7.org/linux/man-pages/man3/OPENSSL_init_crypto.3.html">OPENSSL_init_crypto(3)</a> function.</p>
 
 <p>Numerous internal OpenSSL functions call OPENSSL_init_ssl(). Therefore, in order to perform nondefault initialisation, OPENSSL_init_ssl() MUST be called by application code prior to any other OpenSSL function calls.</p>
 
-<p>The <b>opts</b> parameter specifies which aspects of libssl and libcrypto should be initialised. Valid options for libcrypto are described on the <a href="../man3/OPENSSL_init_crypto.html">OPENSSL_init_crypto(3)</a> page. In addition to any libcrypto specific option the following libssl options can also be used:</p>
+<p>The <b>opts</b> parameter specifies which aspects of libssl and libcrypto should be initialised. Valid options for libcrypto are described on the <a href="https://man7.org/linux/man-pages/man3/OPENSSL_init_crypto.3.html">OPENSSL_init_crypto(3)</a> page. In addition to any libcrypto specific option the following libssl options can also be used:</p>
 
 <dl>
 
@@ -59,7 +59,7 @@ int OPENSSL_init_ssl(uint64_t opts, const OPENSSL_INIT_SETTINGS *settings);</cod
 </dd>
 </dl>
 
-<p>OPENSSL_init_ssl() takes a <b>settings</b> parameter which can be used to set parameter values. See <a href="../man3/OPENSSL_init_crypto.html">OPENSSL_init_crypto(3)</a> for details.</p>
+<p>OPENSSL_init_ssl() takes a <b>settings</b> parameter which can be used to set parameter values. See <a href="https://man7.org/linux/man-pages/man3/OPENSSL_init_crypto.3.html">OPENSSL_init_crypto(3)</a> for details.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -67,7 +67,7 @@ int OPENSSL_init_ssl(uint64_t opts, const OPENSSL_INIT_SETTINGS *settings);</cod
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/OPENSSL_init_crypto.html">OPENSSL_init_crypto(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/OPENSSL_init_crypto.3.html">OPENSSL_init_crypto(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

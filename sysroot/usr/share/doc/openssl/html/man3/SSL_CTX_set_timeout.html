@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set_timeout</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -44,11 +44,11 @@ long SSL_CTX_get_timeout(SSL_CTX *ctx);</code></pre>
 
 <p>Due to this realization, all sessions behave according to the timeout value valid at the time of the session negotiation. Changes of the timeout value do not affect already established sessions.</p>
 
-<p>The expiration time of a single session can be modified using the <a href="../man3/SSL_SESSION_get_time.html">SSL_SESSION_get_time(3)</a> family of functions.</p>
+<p>The expiration time of a single session can be modified using the <a href="https://man7.org/linux/man-pages/man3/SSL_SESSION_get_time.3.html">SSL_SESSION_get_time(3)</a> family of functions.</p>
 
-<p>Expired sessions are removed from the internal session cache, whenever <a href="../man3/SSL_CTX_flush_sessions.html">SSL_CTX_flush_sessions(3)</a> is called, either directly by the application or automatically (see <a href="../man3/SSL_CTX_set_session_cache_mode.html">SSL_CTX_set_session_cache_mode(3)</a>)</p>
+<p>Expired sessions are removed from the internal session cache, whenever <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_flush_sessions.3.html">SSL_CTX_flush_sessions(3)</a> is called, either directly by the application or automatically (see <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_session_cache_mode.3.html">SSL_CTX_set_session_cache_mode(3)</a>)</p>
 
-<p>The default value for session timeout is decided on a per protocol basis, see <a href="../man3/SSL_get_default_timeout.html">SSL_get_default_timeout(3)</a>. All currently supported protocols have the same default timeout value of 300 seconds.</p>
+<p>The default value for session timeout is decided on a per protocol basis, see <a href="https://man7.org/linux/man-pages/man3/SSL_get_default_timeout.3.html">SSL_get_default_timeout(3)</a>. All currently supported protocols have the same default timeout value of 300 seconds.</p>
 
 <p>This timeout value is used as the ticket lifetime hint for stateless session tickets. It is also used as the timeout value within the ticket itself.</p>
 
@@ -64,7 +64,7 @@ long SSL_CTX_get_timeout(SSL_CTX *ctx);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_CTX_set_session_cache_mode.html">SSL_CTX_set_session_cache_mode(3)</a>, <a href="../man3/SSL_SESSION_get_time.html">SSL_SESSION_get_time(3)</a>, <a href="../man3/SSL_CTX_flush_sessions.html">SSL_CTX_flush_sessions(3)</a>, <a href="../man3/SSL_get_default_timeout.html">SSL_get_default_timeout(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_session_cache_mode.3.html">SSL_CTX_set_session_cache_mode(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_SESSION_get_time.3.html">SSL_SESSION_get_time(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_flush_sessions.3.html">SSL_CTX_flush_sessions(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_default_timeout.3.html">SSL_get_default_timeout(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

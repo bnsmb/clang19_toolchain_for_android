@@ -4,7 +4,7 @@
 <head>
 <title>BF_encrypt</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 
 <pre><code>#include &lt;openssl/blowfish.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>void BF_set_key(BF_KEY *key, int len, const unsigned char *data);
 
@@ -52,11 +52,11 @@ void BF_decrypt(BF_LONG *data, const BF_KEY *key);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>All of the functions described on this page are deprecated. Applications should instead use <a href="../man3/EVP_EncryptInit_ex.html">EVP_EncryptInit_ex(3)</a>, <a href="../man3/EVP_EncryptUpdate.html">EVP_EncryptUpdate(3)</a> and <a href="../man3/EVP_EncryptFinal_ex.html">EVP_EncryptFinal_ex(3)</a> or the equivalently named decrypt functions.</p>
+<p>All of the functions described on this page are deprecated. Applications should instead use <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit_ex.3.html">EVP_EncryptInit_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptUpdate.3.html">EVP_EncryptUpdate(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptFinal_ex.3.html">EVP_EncryptFinal_ex(3)</a> or the equivalently named decrypt functions.</p>
 
 <p>This library implements the Blowfish cipher, which was invented and described by Counterpane (see http://www.counterpane.com/blowfish.html ).</p>
 
-<p>Blowfish is a block cipher that operates on 64 bit (8 byte) blocks of data. It uses a variable size key, but typically, 128 bit (16 byte) keys are considered good for strong encryption. Blowfish can be used in the same modes as DES (see <a href="../man7/des_modes.html">des_modes(7)</a>). Blowfish is currently one of the faster block ciphers. It is quite a bit faster than DES, and much faster than IDEA or RC2.</p>
+<p>Blowfish is a block cipher that operates on 64 bit (8 byte) blocks of data. It uses a variable size key, but typically, 128 bit (16 byte) keys are considered good for strong encryption. Blowfish can be used in the same modes as DES (see <a href="https://man7.org/linux/man-pages/man7/des_modes.7.html">des_modes(7)</a>). Blowfish is currently one of the faster block ciphers. It is quite a bit faster than DES, and much faster than IDEA or RC2.</p>
 
 <p>Blowfish consists of a key setup phase and the actual encryption or decryption phase.</p>
 
@@ -80,11 +80,11 @@ void BF_decrypt(BF_LONG *data, const BF_KEY *key);</code></pre>
 
 <h1 id="NOTE">NOTE</h1>
 
-<p>Applications should use the higher level functions <a href="../man3/EVP_EncryptInit.html">EVP_EncryptInit(3)</a> etc. instead of calling these functions directly.</p>
+<p>Applications should use the higher level functions <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html">EVP_EncryptInit(3)</a> etc. instead of calling these functions directly.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_EncryptInit.html">EVP_EncryptInit(3)</a>, <a href="../man7/des_modes.html">des_modes(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html">EVP_EncryptInit(3)</a>, <a href="https://man7.org/linux/man-pages/man7/des_modes.7.html">des_modes(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

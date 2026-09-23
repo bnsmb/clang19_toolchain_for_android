@@ -4,7 +4,7 @@
 <head>
 <title>PKCS12_create</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -79,7 +79,7 @@
 
 <p><i>mac_iter</i> can be set to -1 and the MAC will then be omitted entirely. This can be useful when running with the FIPS provider as the PKCS12KDF is not a FIPS approvable algorithm.</p>
 
-<p>PKCS12_create() makes assumptions regarding the encoding of the given pass phrase. See <a href="../man7/passphrase-encoding.html">passphrase-encoding(7)</a> for more information.</p>
+<p>PKCS12_create() makes assumptions regarding the encoding of the given pass phrase. See <a href="https://man7.org/linux/man-pages/man7/passphrase-encoding.7.html">passphrase-encoding(7)</a> for more information.</p>
 
 <p>If <i>cb</i> is specified, then it should return 1 for success and -1 for a fatal error. A return of 0 is intended to mean to not add the bag after all.</p>
 
@@ -93,7 +93,7 @@
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/EVP_KDF-PKCS12KDF.html">EVP_KDF-PKCS12KDF(7)</a>, <a href="../man3/d2i_PKCS12.html">d2i_PKCS12(3)</a>, <a href="../man7/OSSL_PROVIDER-FIPS.html">OSSL_PROVIDER-FIPS(7)</a>, <a href="../man7/passphrase-encoding.html">passphrase-encoding(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/EVP_KDF-PKCS12KDF.7.html">EVP_KDF-PKCS12KDF(7)</a>, <a href="https://man7.org/linux/man-pages/man3/d2i_PKCS12.3.html">d2i_PKCS12(3)</a>, <a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-FIPS.7.html">OSSL_PROVIDER-FIPS(7)</a>, <a href="https://man7.org/linux/man-pages/man7/passphrase-encoding.7.html">passphrase-encoding(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

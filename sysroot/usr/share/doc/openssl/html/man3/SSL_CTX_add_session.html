@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_add_session</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -35,9 +35,9 @@ int SSL_CTX_remove_session(SSL_CTX *ctx, SSL_SESSION *c);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>SSL_CTX_add_session() adds the session <b>c</b> to the context <b>ctx</b>. The reference count for session <b>c</b> is incremented by 1. If a session with the same session id already exists, the old session is removed by calling <a href="../man3/SSL_SESSION_free.html">SSL_SESSION_free(3)</a>.</p>
+<p>SSL_CTX_add_session() adds the session <b>c</b> to the context <b>ctx</b>. The reference count for session <b>c</b> is incremented by 1. If a session with the same session id already exists, the old session is removed by calling <a href="https://man7.org/linux/man-pages/man3/SSL_SESSION_free.3.html">SSL_SESSION_free(3)</a>.</p>
 
-<p>SSL_CTX_remove_session() removes the session <b>c</b> from the context <b>ctx</b> and marks it as non-resumable. <a href="../man3/SSL_SESSION_free.html">SSL_SESSION_free(3)</a> is called once for <b>c</b>.</p>
+<p>SSL_CTX_remove_session() removes the session <b>c</b> from the context <b>ctx</b> and marks it as non-resumable. <a href="https://man7.org/linux/man-pages/man3/SSL_SESSION_free.3.html">SSL_SESSION_free(3)</a> is called once for <b>c</b>.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -67,7 +67,7 @@ int SSL_CTX_remove_session(SSL_CTX *ctx, SSL_SESSION *c);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_CTX_set_session_cache_mode.html">SSL_CTX_set_session_cache_mode(3)</a>, <a href="../man3/SSL_SESSION_free.html">SSL_SESSION_free(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_session_cache_mode.3.html">SSL_CTX_set_session_cache_mode(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_SESSION_free.3.html">SSL_SESSION_free(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

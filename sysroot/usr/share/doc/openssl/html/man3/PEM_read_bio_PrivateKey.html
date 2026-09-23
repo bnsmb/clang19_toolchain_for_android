@@ -4,7 +4,7 @@
 <head>
 <title>PEM_read_bio_PrivateKey</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -138,7 +138,7 @@ PKCS7 *PEM_read_PKCS7(FILE *fp, PKCS7 **x, pem_password_cb *cb, void *u);
 int PEM_write_bio_PKCS7(BIO *bp, PKCS7 *x);
 int PEM_write_PKCS7(FILE *fp, PKCS7 *x);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>RSA *PEM_read_bio_RSAPrivateKey(BIO *bp, RSA **x,
                                 pem_password_cb *cb, void *u);
@@ -194,7 +194,7 @@ int PEM_write_DHparams(FILE *fp, DH *x);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>All of the functions described on this page that have a <i>TYPE</i> of <b>DH</b>, <b>DSA</b> and <b>RSA</b> are deprecated. Applications should use <a href="../man3/OSSL_ENCODER_to_bio.html">OSSL_ENCODER_to_bio(3)</a> and <a href="../man3/OSSL_DECODER_from_bio.html">OSSL_DECODER_from_bio(3)</a> instead.</p>
+<p>All of the functions described on this page that have a <i>TYPE</i> of <b>DH</b>, <b>DSA</b> and <b>RSA</b> are deprecated. Applications should use <a href="https://man7.org/linux/man-pages/man3/OSSL_ENCODER_to_bio.3.html">OSSL_ENCODER_to_bio(3)</a> and <a href="https://man7.org/linux/man-pages/man3/OSSL_DECODER_from_bio.3.html">OSSL_DECODER_from_bio(3)</a> instead.</p>
 
 <p>The PEM functions read or write structures in PEM format. In this sense PEM format is simply base64 encoded data surrounded by header lines.</p>
 
@@ -202,7 +202,7 @@ int PEM_write_DHparams(FILE *fp, DH *x);</code></pre>
 
 <p>Each operation has four functions associated with it. For brevity the term &quot;<b><i>TYPE</i></b> functions&quot; will be used below to collectively refer to the <b>PEM_read_bio_<i>TYPE</i></b>(), <b>PEM_read_<i>TYPE</i></b>(), <b>PEM_write_bio_<i>TYPE</i></b>(), and <b>PEM_write_<i>TYPE</i></b>() functions.</p>
 
-<p>Some operations have additional variants that take a library context <i>libctx</i> and a property query string <i>propq</i>. The <b>X509</b>, <b>X509_REQ</b> and <b>X509_CRL</b> objects may have an associated library context or property query string but there are no variants of these functions that take a library context or property query string parameter. In this case it is possible to set the appropriate library context or property query string by creating an empty <b>X509</b>, <b>X509_REQ</b> or <b>X509_CRL</b> object using <a href="../man3/X509_new_ex.html">X509_new_ex(3)</a>, <a href="../man3/X509_REQ_new_ex.html">X509_REQ_new_ex(3)</a> or <a href="../man3/X509_CRL_new_ex.html">X509_CRL_new_ex(3)</a> respectively. Then pass the empty object as a parameter to the relevant PEM function. See the <a href="#EXAMPLES">&quot;EXAMPLES&quot;</a> section below.</p>
+<p>Some operations have additional variants that take a library context <i>libctx</i> and a property query string <i>propq</i>. The <b>X509</b>, <b>X509_REQ</b> and <b>X509_CRL</b> objects may have an associated library context or property query string but there are no variants of these functions that take a library context or property query string parameter. In this case it is possible to set the appropriate library context or property query string by creating an empty <b>X509</b>, <b>X509_REQ</b> or <b>X509_CRL</b> object using <a href="https://man7.org/linux/man-pages/man3/X509_new_ex.3.html">X509_new_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/X509_REQ_new_ex.3.html">X509_REQ_new_ex(3)</a> or <a href="https://man7.org/linux/man-pages/man3/X509_CRL_new_ex.3.html">X509_CRL_new_ex(3)</a> respectively. Then pass the empty object as a parameter to the relevant PEM function. See the <a href="#EXAMPLES">&quot;EXAMPLES&quot;</a> section below.</p>
 
 <p>The <b>PrivateKey</b> functions read or write a private key in PEM format using an EVP_PKEY structure. The write routines use PKCS#8 private key format and are equivalent to PEM_write_bio_PKCS8PrivateKey(). The read functions transparently handle traditional and PKCS#8 format encrypted and unencrypted keys.</p>
 
@@ -333,7 +333,7 @@ if (rc != nkey)
 <pre><code>X509_free(x);
 x = PEM_read_bio_X509(bp, NULL, 0, NULL);</code></pre>
 
-<p>is guaranteed to work. It is always acceptable for <i>x</i> to contain a newly allocated, empty <b>X509</b> object (for example allocated via <a href="../man3/X509_new_ex.html">X509_new_ex(3)</a>).</p>
+<p>is guaranteed to work. It is always acceptable for <i>x</i> to contain a newly allocated, empty <b>X509</b> object (for example allocated via <a href="https://man7.org/linux/man-pages/man3/X509_new_ex.3.html">X509_new_ex(3)</a>).</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -415,7 +415,7 @@ if (key == NULL)
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_EncryptInit.html">EVP_EncryptInit(3)</a>, <a href="../man3/EVP_BytesToKey.html">EVP_BytesToKey(3)</a>, <a href="../man7/passphrase-encoding.html">passphrase-encoding(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html">EVP_EncryptInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_BytesToKey.3.html">EVP_BytesToKey(3)</a>, <a href="https://man7.org/linux/man-pages/man7/passphrase-encoding.7.html">passphrase-encoding(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set_tlsext_servername_callback</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -43,7 +43,7 @@ int SSL_set_tlsext_host_name(const SSL *s, const char *name);</code></pre>
 
 <p>The functionality provided by the servername callback is mostly superseded by the ClientHello callback, which can be set using SSL_CTX_set_client_hello_cb(). However, even where the ClientHello callback is used, the servername callback is still necessary in order to acknowledge the servername requested by the client.</p>
 
-<p>SSL_CTX_set_tlsext_servername_callback() sets the application callback <b>cb</b> used by a server to perform any actions or configuration required based on the servername extension received in the incoming connection. When <b>cb</b> is NULL, SNI is not used.</p>
+<p>SSL_CTX_set_tlsext_servername_callback() sets the application callback <b>cb</b> used by a server to perform any actions or configuration required based on the servername extension received in the incoming connection. When <b>cb</b> is NULL, SNI is not used. Note that this callback occurs late in the processing of the ClientHello message. In particular it happens after session resumption has occurred, and so typically this callback should not call functions such as <a href="https://man7.org/linux/man-pages/man3/SSL_set_session_id_context.3.html">SSL_set_session_id_context(3)</a> since it is too late to affect the session resumption for the current handshake.</p>
 
 <p>The servername callback should return one of the following values:</p>
 
@@ -143,7 +143,7 @@ int SSL_set_tlsext_host_name(const SSL *s, const char *name);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_CTX_set_alpn_select_cb.html">SSL_CTX_set_alpn_select_cb(3)</a>, <a href="../man3/SSL_get0_alpn_selected.html">SSL_get0_alpn_selected(3)</a>, <a href="../man3/SSL_CTX_set_client_hello_cb.html">SSL_CTX_set_client_hello_cb(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_alpn_select_cb.3.html">SSL_CTX_set_alpn_select_cb(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get0_alpn_selected.3.html">SSL_get0_alpn_selected(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_client_hello_cb.3.html">SSL_CTX_set_client_hello_cb(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -155,7 +155,7 @@ int SSL_set_tlsext_host_name(const SSL *s, const char *name);</code></pre>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2017-2020 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2017-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

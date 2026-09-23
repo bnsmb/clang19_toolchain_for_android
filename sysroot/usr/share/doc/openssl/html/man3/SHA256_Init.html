@@ -4,7 +4,7 @@
 <head>
 <title>SHA256_Init</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -36,7 +36,7 @@ unsigned char *SHA256(const unsigned char *data, size_t count, unsigned char *md
 unsigned char *SHA384(const unsigned char *data, size_t count, unsigned char *md_buf);
 unsigned char *SHA512(const unsigned char *data, size_t count, unsigned char *md_buf);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int SHA1_Init(SHA_CTX *c);
 int SHA1_Update(SHA_CTX *c, const void *data, size_t len);
@@ -60,7 +60,7 @@ int SHA512_Final(unsigned char *md, SHA512_CTX *c);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>All of the functions described on this page except for SHA1(), SHA224(), SHA256(), SHA384() and SHA512() are deprecated. Applications should instead use <a href="../man3/EVP_DigestInit_ex.html">EVP_DigestInit_ex(3)</a>, <a href="../man3/EVP_DigestUpdate.html">EVP_DigestUpdate(3)</a> and <a href="../man3/EVP_DigestFinal_ex.html">EVP_DigestFinal_ex(3)</a>, or the quick one-shot function <a href="../man3/EVP_Q_digest.html">EVP_Q_digest(3)</a>. SHA1(), SHA224(), SHA256(), SHA384(), and SHA256() can continue to be used. They can also be replaced by, e.g.,</p>
+<p>All of the functions described on this page except for SHA1(), SHA224(), SHA256(), SHA384() and SHA512() are deprecated. Applications should instead use <a href="https://man7.org/linux/man-pages/man3/EVP_DigestInit_ex.3.html">EVP_DigestInit_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_DigestUpdate.3.html">EVP_DigestUpdate(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_DigestFinal_ex.3.html">EVP_DigestFinal_ex(3)</a>, or the quick one-shot function <a href="https://man7.org/linux/man-pages/man3/EVP_Q_digest.3.html">EVP_Q_digest(3)</a>. SHA1(), SHA224(), SHA256(), SHA384(), and SHA256() can continue to be used. They can also be replaced by, e.g.,</p>
 
 <pre><code>(EVP_Q_digest(d, n, md, NULL, NULL, &quot;SHA256&quot;, NULL) ? md : NULL)</code></pre>
 
@@ -90,7 +90,7 @@ int SHA512_Final(unsigned char *md, SHA512_CTX *c);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_Q_digest.html">EVP_Q_digest(3)</a>, <a href="../man3/EVP_DigestInit.html">EVP_DigestInit(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_Q_digest.3.html">EVP_Q_digest(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_DigestInit.3.html">EVP_DigestInit(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY-ML-DSA</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -59,11 +59,11 @@
 </dd>
 </dl>
 
-<p>Use <a href="../man3/EVP_PKEY_CTX_set_params.html">EVP_PKEY_CTX_set_params(3)</a> after calling <a href="../man3/EVP_PKEY_keygen_init.html">EVP_PKEY_keygen_init(3)</a>.</p>
+<p>Use <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set_params.3.html">EVP_PKEY_CTX_set_params(3)</a> after calling <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_keygen_init.3.html">EVP_PKEY_keygen_init(3)</a>.</p>
 
 <h2 id="Common-ML-DSA-parameters">Common ML-DSA parameters</h2>
 
-<p>In addition to the common parameters that all keytypes should support (see <a href="../man7/provider-keymgmt.html">&quot;Common Information Parameters&quot; in provider-keymgmt(7)</a>, the implementation of these key types support the parameters listed below. These are gettable using <a href="../man3/EVP_PKEY_get_octet_string_param.html">EVP_PKEY_get_octet_string_param(3)</a> or <a href="../man3/EVP_PKEY_get_params.html">EVP_PKEY_get_params(3)</a>. They can be initialised via <a href="../man3/EVP_PKEY_fromdata.html">EVP_PKEY_fromdata(3)</a>, and are returned by <a href="../man3/EVP_PKEY_todata.html">EVP_PKEY_todata(3)</a> given a suitable <i>selection</i>. Once a public or private key is configured, it can no longer be modified, nor can another key component be added.</p>
+<p>In addition to the common parameters that all keytypes should support (see <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html#Common_Information_Parameters">&quot;Common Information Parameters&quot; in provider-keymgmt(7)</a>, the implementation of these key types support the parameters listed below. These are gettable using <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_get_octet_string_param.3.html">EVP_PKEY_get_octet_string_param(3)</a> or <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_get_params.3.html">EVP_PKEY_get_params(3)</a>. They can be initialised via <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_fromdata.3.html">EVP_PKEY_fromdata(3)</a>, and are returned by <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_todata.3.html">EVP_PKEY_todata(3)</a> given a suitable <i>selection</i>. Once a public or private key is configured, it can no longer be modified, nor can another key component be added.</p>
 
 <dl>
 
@@ -83,26 +83,26 @@
 
 <h2 id="Provider-configuration-parameters">Provider configuration parameters</h2>
 
-<p>See the description of the <b>-provparam</b> option in <a href="../man1/openssl.html">openssl(1)</a> to learn how to set provider configuration parameters in the command line tools. See <a href="../man3/OSSL_PROVIDER_add_conf_parameter.html">OSSL_PROVIDER_add_conf_parameter(3)</a> to learn how to set provider configuration options programmatically.</p>
+<p>See the description of the <b>-provparam</b> option in <a href="https://man7.org/linux/man-pages/man1/openssl.1.html">openssl(1)</a> to learn how to set provider configuration parameters in the command line tools. See <a href="https://man7.org/linux/man-pages/man3/OSSL_PROVIDER_add_conf_parameter.3.html">OSSL_PROVIDER_add_conf_parameter(3)</a> to learn how to set provider configuration options programmatically.</p>
 
 <dl>
 
 <dt id="ml-dsa.retain_seed-OSSL_PKEY_PARAM_ML_DSA_RETAIN_SEED-UTF8-string"><code>ml-dsa.retain_seed</code> (<b>OSSL_PKEY_PARAM_ML_DSA_RETAIN_SEED</b>) &lt;UTF8 string&gt;</dt>
 <dd>
 
-<p>When set to a string representing a false boolean value (see <a href="../man3/OSSL_PROVIDER_conf_get_bool.html">OSSL_PROVIDER_conf_get_bool(3)</a>), the seed will not be retained after key generation or key import from a seed value. If the resulting key is then written to a PKCS#8 object, it will contain only the FIPS 204 <code>sk</code> key.</p>
+<p>When set to a string representing a false boolean value (see <a href="https://man7.org/linux/man-pages/man3/OSSL_PROVIDER_conf_get_bool.3.html">OSSL_PROVIDER_conf_get_bool(3)</a>), the seed will not be retained after key generation or key import from a seed value. If the resulting key is then written to a PKCS#8 object, it will contain only the FIPS 204 <code>sk</code> key.</p>
 
 </dd>
 <dt id="ml-dsa.prefer_seed-OSSL_PKEY_PARAM_ML_DSA_PREFER_SEED-UTF8-string"><code>ml-dsa.prefer_seed</code> (<b>OSSL_PKEY_PARAM_ML_DSA_PREFER_SEED</b>) &lt;UTF8 string&gt;</dt>
 <dd>
 
-<p>When decoding PKCS#8 objects that contain both a seed and the FIPS 204 <code>sk</code> private key, the seed is by default used to regenerate the key, and the companion private key is ignored. When this configuration parameter is set to a string representing a false boolean value (see <a href="../man3/OSSL_PROVIDER_conf_get_bool.html">OSSL_PROVIDER_conf_get_bool(3)</a>), the seed is ignored (neither used to regenerate the key, nor retained), and the companion key is used instead.</p>
+<p>When decoding PKCS#8 objects that contain both a seed and the FIPS 204 <code>sk</code> private key, the seed is by default used to regenerate the key, and the companion private key is ignored. When this configuration parameter is set to a string representing a false boolean value (see <a href="https://man7.org/linux/man-pages/man3/OSSL_PROVIDER_conf_get_bool.3.html">OSSL_PROVIDER_conf_get_bool(3)</a>), the seed is ignored (neither used to regenerate the key, nor retained), and the companion key is used instead.</p>
 
 </dd>
 <dt id="ml-dsa.input_formats-OSSL_PKEY_PARAM_ML_DSA_INPUT_FORMATS-UTF8-string"><code>ml-dsa.input_formats</code> (<b>OSSL_PKEY_PARAM_ML_DSA_INPUT_FORMATS</b>) &lt;UTF8 string&gt;</dt>
 <dd>
 
-<p>List of enabled private key input formats when parsing PKCS#8 objects. List elements are separated by commas, spaces or tabs. The list of enabled formats can be specified in the configuration file, as seen in the <a href="#EXAMPLES">&quot;EXAMPLES&quot;</a> section below, or the via the <b>-provparam</b> command-line option (see also <a href="../man3/OSSL_PROVIDER_add_conf_parameter.html">OSSL_PROVIDER_add_conf_parameter(3)</a>).</p>
+<p>List of enabled private key input formats when parsing PKCS#8 objects. List elements are separated by commas, spaces or tabs. The list of enabled formats can be specified in the configuration file, as seen in the <a href="#EXAMPLES">&quot;EXAMPLES&quot;</a> section below, or the via the <b>-provparam</b> command-line option (see also <a href="https://man7.org/linux/man-pages/man3/OSSL_PROVIDER_add_conf_parameter.3.html">OSSL_PROVIDER_add_conf_parameter(3)</a>).</p>
 
 <p>Values specified on the command-line override any configuration file settings. By default all the supported formats are enabled. The supported formats are:</p>
 
@@ -111,7 +111,7 @@
 <dt id="seed-priv"><code>seed-priv</code>:</dt>
 <dd>
 
-<p>This format represents <b>PKCS#8</b> objects in which both the FIPS 204 32-byte <b>ξ</b> seed and the secret key <b>sk</b> are present in the private key as part of the DER encoding of the ASN.1 sequence:</p>
+<p>This format represents <b>PKCS#8</b> objects in which both the FIPS 204 32-byte <b>&#x3BE;</b> seed and the secret key <b>sk</b> are present in the private key as part of the DER encoding of the ASN.1 sequence:</p>
 
 <pre><code>ML-DSA-PrivateKey ::= CHOICE {
   seed [0] IMPLICIT OCTET STRING (SIZE (32)),
@@ -126,7 +126,7 @@
 <dt id="seed-only"><code>seed-only</code>:</dt>
 <dd>
 
-<p>This format represents <b>PKCS#8</b> objects in which only the 32-byte FIPS 204 <b>ξ</b> seed is present in the above sequence. If the <code>seed-only</code> format is not included in the list, this format will not be recognised on input.</p>
+<p>This format represents <b>PKCS#8</b> objects in which only the 32-byte FIPS 204 <b>&#x3BE;</b> seed is present in the above sequence. If the <code>seed-only</code> format is not included in the list, this format will not be recognised on input.</p>
 
 </dd>
 <dt id="priv-only"><code>priv-only</code>:</dt>
@@ -144,7 +144,7 @@
 <dt id="bare-seed"><code>bare-seed</code>:</dt>
 <dd>
 
-<p>This format represents <b>PKCS#8</b> objects in which the private key contains the 32-byte FIPS 204 seed <b>ξ</b> without any ASN.1 encapsulation. If the <code>bare-seed</code> format is not included in the list, this format will not be recognised on input.</p>
+<p>This format represents <b>PKCS#8</b> objects in which the private key contains the 32-byte FIPS 204 seed <b>&#x3BE;</b> without any ASN.1 encapsulation. If the <code>bare-seed</code> format is not included in the list, this format will not be recognised on input.</p>
 
 </dd>
 <dt id="bare-priv"><code>bare-priv</code>:</dt>
@@ -244,7 +244,7 @@ ml-dsa = ml_dsa_sect</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a>, <a href="../man3/EVP_PKEY.html">EVP_PKEY(3)</a>, <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>, <a href="../man3/EVP_PKEY_get_raw_private_key.html">EVP_PKEY_get_raw_private_key(3)</a>, <a href="../man3/EVP_PKEY_get_raw_public_key.html">EVP_PKEY_get_raw_public_key(3)</a>, <a href="../man3/EVP_PKEY_get1_encoded_public_key.html">EVP_PKEY_get1_encoded_public_key(3)</a>, <a href="../man3/OSSL_PROVIDER_add_conf_parameter.html">OSSL_PROVIDER_add_conf_parameter(3)</a>, <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>, <a href="../man7/EVP_SIGNATURE-ML-DSA.html">EVP_SIGNATURE-ML-DSA(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_KEYMGMT.3.html">EVP_KEYMGMT(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY.3.html">EVP_PKEY(3)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_get_raw_private_key.3.html">EVP_PKEY_get_raw_private_key(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_get_raw_public_key.3.html">EVP_PKEY_get_raw_public_key(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_get1_encoded_public_key.3.html">EVP_PKEY_get1_encoded_public_key(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_PROVIDER_add_conf_parameter.3.html">OSSL_PROVIDER_add_conf_parameter(3)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_SIGNATURE-ML-DSA.7.html">EVP_SIGNATURE-ML-DSA(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

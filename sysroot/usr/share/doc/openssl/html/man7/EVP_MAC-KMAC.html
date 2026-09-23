@@ -4,7 +4,7 @@
 <head>
 <title>EVP_MAC-KMAC</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -50,7 +50,7 @@
 
 <h2 id="Supported-parameters">Supported parameters</h2>
 
-<p>The general description of these parameters can be found in <a href="../man3/EVP_MAC.html">&quot;PARAMETERS&quot; in EVP_MAC(3)</a>.</p>
+<p>The general description of these parameters can be found in <a href="https://man7.org/linux/man-pages/man3/EVP_MAC.3.html#PARAMETERS">&quot;PARAMETERS&quot; in EVP_MAC(3)</a>.</p>
 
 <p>All these parameters (except for &quot;block-size&quot;) can be set with EVP_MAC_CTX_set_params(). Furthermore, the &quot;size&quot; parameter can be retrieved with EVP_MAC_CTX_get_params(), or with EVP_MAC_CTX_get_mac_size(). The length of the &quot;size&quot; parameter should not exceed that of a <b>size_t</b>. Likewise, the &quot;block-size&quot; parameter can be retrieved with EVP_MAC_CTX_get_params(), or with EVP_MAC_CTX_get_block_size().</p>
 
@@ -59,7 +59,7 @@
 <dt id="key-OSSL_MAC_PARAM_KEY-octet-string">&quot;key&quot; (<b>OSSL_MAC_PARAM_KEY</b>) &lt;octet string&gt;</dt>
 <dd>
 
-<p>Sets the MAC key. Setting this parameter is identical to passing a <i>key</i> to <a href="../man3/EVP_MAC_init.html">EVP_MAC_init(3)</a>. The length of the key (in bytes) must be in the range 4...512.</p>
+<p>Sets the MAC key. Setting this parameter is identical to passing a <i>key</i> to <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_init.3.html">EVP_MAC_init(3)</a>. The length of the key (in bytes) must be in the range 4...512.</p>
 
 </dd>
 <dt id="custom-OSSL_MAC_PARAM_CUSTOM-octet-string">&quot;custom&quot; (<b>OSSL_MAC_PARAM_CUSTOM</b>) &lt;octet string&gt;</dt>
@@ -89,19 +89,19 @@
 <dt id="fips-indicator-OSSL_MAC_PARAM_FIPS_APPROVED_INDICATOR-int">&quot;fips-indicator&quot; (<b>OSSL_MAC_PARAM_FIPS_APPROVED_INDICATOR</b>) &lt;int&gt;</dt>
 <dd>
 
-<p>This settable parameter is described in <a href="../man7/provider-mac.html">provider-mac(7)</a>.</p>
+<p>This settable parameter is described in <a href="https://man7.org/linux/man-pages/man7/provider-mac.7.html">provider-mac(7)</a>.</p>
 
 </dd>
 <dt id="no-short-mac-OSSL_MAC_PARAM_FIPS_NO_SHORT_MAC-integer">&quot;no-short-mac&quot; (<b>OSSL_MAC_PARAM_FIPS_NO_SHORT_MAC</b>) &lt;integer&gt;</dt>
 <dd>
 
-<p>This settable parameter is described in <a href="../man7/provider-mac.html">provider-mac(7)</a>. It is used by the OpenSSL FIPS provider and the minimum length output for KMAC is defined by NIST&#39;s SP 800-185 8.4.2.</p>
+<p>This settable parameter is described in <a href="https://man7.org/linux/man-pages/man7/provider-mac.7.html">provider-mac(7)</a>. It is used by the OpenSSL FIPS provider and the minimum length output for KMAC is defined by NIST&#39;s SP 800-185 8.4.2.</p>
 
 </dd>
 <dt id="key-check-OSSL_MAC_PARAM_FIPS_KEY_CHECK-integer">&quot;key-check&quot; (<b>OSSL_MAC_PARAM_FIPS_KEY_CHECK</b>) &lt;integer&gt;</dt>
 <dd>
 
-<p>This settable parameter is described in <a href="../man7/provider-mac.html">provider-mac(7)</a>.</p>
+<p>This settable parameter is described in <a href="https://man7.org/linux/man-pages/man7/provider-mac.7.html">provider-mac(7)</a>.</p>
 
 </dd>
 </dl>
@@ -175,7 +175,7 @@ err:
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_MAC_CTX_get_params.html">EVP_MAC_CTX_get_params(3)</a>, <a href="../man3/EVP_MAC_CTX_set_params.html">EVP_MAC_CTX_set_params(3)</a>, <a href="../man3/EVP_MAC.html">&quot;PARAMETERS&quot; in EVP_MAC(3)</a>, <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a>, <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-185.pdf">SP 800-185 8.4.2</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_get_params.3.html">EVP_MAC_CTX_get_params(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_set_params.3.html">EVP_MAC_CTX_set_params(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_MAC.3.html#PARAMETERS">&quot;PARAMETERS&quot; in EVP_MAC(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a>, <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-185.pdf">SP 800-185 8.4.2</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

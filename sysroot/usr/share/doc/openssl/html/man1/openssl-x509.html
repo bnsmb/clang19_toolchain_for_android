@@ -4,7 +4,7 @@
 <head>
 <title>openssl-x509</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -47,7 +47,7 @@
 
 <p>This command is a multi-purposes certificate handling command. It can be used to print certificate information, convert certificates to various forms, edit certificate trust settings, generate certificates from scratch or from certification requests and then self-signing them or signing them like a &quot;micro CA&quot;.</p>
 
-<p>Generated certificates bear X.509 version 3. Unless specified otherwise, key identifier extensions are included as described in <a href="../man5/x509v3_config.html">x509v3_config(5)</a>.</p>
+<p>Generated certificates bear X.509 version 3. Unless specified otherwise, key identifier extensions are included as described in <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a>.</p>
 
 <p>Since there are a large number of options they will split up into various sections.</p>
 
@@ -74,7 +74,7 @@
 <dt id="passin-arg"><b>-passin</b> <i>arg</i></dt>
 <dd>
 
-<p>The key and certificate file password source. For more information about the format of <i>arg</i> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>The key and certificate file password source. For more information about the format of <i>arg</i> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="new"><b>-new</b></dt>
@@ -110,7 +110,7 @@
 <dt id="inform-DER-PEM"><b>-inform</b> <b>DER</b>|<b>PEM</b></dt>
 <dd>
 
-<p>The input file format to use; by default PEM is tried first. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The input file format to use; by default PEM is tried first. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="vfyopt-nm:v"><b>-vfyopt</b> <i>nm</i>:<i>v</i></dt>
@@ -138,7 +138,7 @@
 <dt id="keyform-DER-PEM-P12-ENGINE"><b>-keyform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>|<b>ENGINE</b></dt>
 <dd>
 
-<p>The key input format; unspecified by default. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The key input format; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="out-filename"><b>-out</b> <i>filename</i></dt>
@@ -150,7 +150,7 @@
 <dt id="outform-DER-PEM"><b>-outform</b> <b>DER</b>|<b>PEM</b></dt>
 <dd>
 
-<p>The output format; the default is <b>PEM</b>. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The output format; the default is <b>PEM</b>. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="nocert"><b>-nocert</b></dt>
@@ -242,7 +242,7 @@
 <dt id="nameopt-option"><b>-nameopt</b> <i>option</i></dt>
 <dd>
 
-<p>This specifies how the subject or issuer names are displayed. See <a href="../man1/openssl-namedisplay-options.html">openssl-namedisplay-options(1)</a> for details.</p>
+<p>This specifies how the subject or issuer names are displayed. See <a href="https://man7.org/linux/man-pages/man1/openssl-namedisplay-options.1.html">openssl-namedisplay-options(1)</a> for details.</p>
 
 </dd>
 <dt id="email"><b>-email</b></dt>
@@ -284,7 +284,7 @@
 <dt id="ext-extensions"><b>-ext</b> <i>extensions</i></dt>
 <dd>
 
-<p>Prints out the certificate extensions in text form. Can also be used to restrict which extensions to copy. Extensions are specified with a comma separated string, e.g., &quot;subjectAltName, subjectKeyIdentifier&quot;. See the <a href="../man5/x509v3_config.html">x509v3_config(5)</a> manual page for the extension names.</p>
+<p>Prints out the certificate extensions in text form. Can also be used to restrict which extensions to copy. Extensions are specified with a comma separated string, e.g., &quot;subjectAltName, subjectKeyIdentifier&quot;. See the <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a> manual page for the extension names.</p>
 
 </dd>
 <dt id="ocspid"><b>-ocspid</b></dt>
@@ -302,7 +302,7 @@
 <dt id="purpose"><b>-purpose</b></dt>
 <dd>
 
-<p>This option performs tests on the certificate extensions and outputs the results. For a more complete description see <a href="../man1/openssl-verification-options.html">&quot;Certificate Extensions&quot; in openssl-verification-options(1)</a>.</p>
+<p>This option performs tests on the certificate extensions and outputs the results. For a more complete description see <a href="https://man7.org/linux/man-pages/man1/openssl-verification-options.1.html#Certificate_Extensions">&quot;Certificate Extensions&quot; in openssl-verification-options(1)</a>.</p>
 
 </dd>
 <dt id="pubkey"><b>-pubkey</b></dt>
@@ -452,9 +452,9 @@
 
 <p>The section in the extfile to add X.509 extensions from. If this option is not specified then the extensions should either be contained in the unnamed (default) section or the default section should contain a variable called &quot;extensions&quot; which contains the section to use.</p>
 
-<p>See the <a href="../man5/x509v3_config.html">x509v3_config(5)</a> manual page for details of the extension section format.</p>
+<p>See the <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a> manual page for details of the extension section format.</p>
 
-<p>Unless specified otherwise, key identifier extensions are included as described in <a href="../man5/x509v3_config.html">x509v3_config(5)</a>.</p>
+<p>Unless specified otherwise, key identifier extensions are included as described in <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a>.</p>
 
 </dd>
 <dt id="sigopt-nm:v"><b>-sigopt</b> <i>nm</i>:<i>v</i></dt>
@@ -472,7 +472,7 @@
 <dt id="digest"><b>-<i>digest</i></b></dt>
 <dd>
 
-<p>The digest to use. This affects any signing or printing option that uses a message digest, such as the <b>-fingerprint</b>, <b>-key</b>, and <b>-CA</b> options. Any digest supported by the <a href="../man1/openssl-dgst.html">openssl-dgst(1)</a> command can be used. If not specified then SHA1 is used with <b>-fingerprint</b> or the default digest for the signing algorithm is used, typically SHA256.</p>
+<p>The digest to use. This affects any signing or printing option that uses a message digest, such as the <b>-fingerprint</b>, <b>-key</b>, and <b>-CA</b> options. Any digest supported by the <a href="https://man7.org/linux/man-pages/man1/openssl-dgst.1.html">openssl-dgst(1)</a> command can be used. If not specified then SHA1 is used with <b>-fingerprint</b> or the default digest for the signing algorithm is used, typically SHA256.</p>
 
 </dd>
 </dl>
@@ -492,7 +492,7 @@
 <dt id="CAform-DER-PEM-P12"><b>-CAform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>,</dt>
 <dd>
 
-<p>The format for the CA certificate; unspecified by default. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The format for the CA certificate; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="CAkey-filename-uri"><b>-CAkey</b> <i>filename</i>|<i>uri</i></dt>
@@ -504,7 +504,7 @@
 <dt id="CAkeyform-DER-PEM-P12-ENGINE"><b>-CAkeyform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>|<b>ENGINE</b></dt>
 <dd>
 
-<p>The format for the CA key; unspecified by default. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The format for the CA key; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="CAserial-filename"><b>-CAserial</b> <i>filename</i></dt>
@@ -535,7 +535,7 @@
 
 <p>Trust settings currently are only used with a root CA. They allow a finer control over the purposes the root CA can be used for. For example, a CA may be trusted for SSL client but not SSL server use.</p>
 
-<p>See <a href="../man1/openssl-verification-options.html">openssl-verification-options(1)</a> for more information on the meaning of trust settings.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl-verification-options.1.html">openssl-verification-options(1)</a> for more information on the meaning of trust settings.</p>
 
 <p>Future versions of OpenSSL will recognize trust settings on any certificate: not just root CAs.</p>
 
@@ -586,13 +586,13 @@
 <dt id="rand-files--writerand-file"><b>-rand</b> <i>files</i>, <b>-writerand</b> <i>file</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Random_State_Options">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
 
 </dd>
 <dt id="engine-id"><b>-engine</b> <i>id</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Engine_Options">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
 
 </dd>
 <dt id="provider-name"><b>-provider</b> <i>name</i></dt>
@@ -610,7 +610,7 @@
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Provider Options&quot; in openssl(1)</a>, <a href="../man7/provider.html">provider(7)</a>, and <a href="../man7/property.html">property(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Provider_Options">&quot;Provider Options&quot; in openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, and <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>.</p>
 
 </dd>
 </dl>
@@ -720,7 +720,7 @@
 <dt id="ca_default"><b>ca_default</b></dt>
 <dd>
 
-<p>The value used by <a href="../man1/openssl-ca.html">openssl-ca(1)</a>, equivalent to <b>no_issuer</b>, <b>no_pubkey</b>, <b>no_header</b>, and <b>no_version</b>.</p>
+<p>The value used by <a href="https://man7.org/linux/man-pages/man1/openssl-ca.1.html">openssl-ca(1)</a>, equivalent to <b>no_issuer</b>, <b>no_pubkey</b>, <b>no_header</b>, and <b>no_version</b>.</p>
 
 </dd>
 </dl>
@@ -798,11 +798,11 @@
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl.html">openssl(1)</a>, <a href="../man1/openssl-req.html">openssl-req(1)</a>, <a href="../man1/openssl-ca.html">openssl-ca(1)</a>, <a href="../man1/openssl-genrsa.html">openssl-genrsa(1)</a>, <a href="../man1/openssl-gendsa.html">openssl-gendsa(1)</a>, <a href="../man1/openssl-verify.html">openssl-verify(1)</a>, <a href="../man5/x509v3_config.html">x509v3_config(5)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl.1.html">openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-req.1.html">openssl-req(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ca.1.html">openssl-ca(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-genrsa.1.html">openssl-genrsa(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-gendsa.1.html">openssl-gendsa(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-verify.1.html">openssl-verify(1)</a>, <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
-<p>The hash algorithm used in the <b>-subject_hash</b> and <b>-issuer_hash</b> options before OpenSSL 1.0.0 was based on the deprecated MD5 algorithm and the encoding of the distinguished name. In OpenSSL 1.0.0 and later it is based on a canonical version of the DN using SHA1. This means that any directories using the old form must have their links rebuilt using <a href="../man1/openssl-rehash.html">openssl-rehash(1)</a> or similar.</p>
+<p>The hash algorithm used in the <b>-subject_hash</b> and <b>-issuer_hash</b> options before OpenSSL 1.0.0 was based on the deprecated MD5 algorithm and the encoding of the distinguished name. In OpenSSL 1.0.0 and later it is based on a canonical version of the DN using SHA1. This means that any directories using the old form must have their links rebuilt using <a href="https://man7.org/linux/man-pages/man1/openssl-rehash.1.html">openssl-rehash(1)</a> or similar.</p>
 
 <p>The <b>-signkey</b> option has been renamed to <b>-key</b> in OpenSSL 3.0, keeping the old name as an alias.</p>
 

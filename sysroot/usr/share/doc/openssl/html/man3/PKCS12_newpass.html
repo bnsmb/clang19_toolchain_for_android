@@ -4,7 +4,7 @@
 <head>
 <title>PKCS12_newpass</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -40,7 +40,7 @@ int PKCS12_newpass(PKCS12 *p12, const char *oldpass, const char *newpass);</code
 
 <p>Each of <b>oldpass</b> and <b>newpass</b> is independently interpreted as a string in the UTF-8 encoding. If it is not valid UTF-8, it is assumed to be ISO8859-1 instead.</p>
 
-<p>In particular, this means that passwords in the locale character set (or code page on Windows) must potentially be converted to UTF-8 before use. This may include passwords from local text files, or input from the terminal or command line. Refer to the documentation of <a href="../man3/UI_OpenSSL.html">UI_OpenSSL(3)</a>, for example.</p>
+<p>In particular, this means that passwords in the locale character set (or code page on Windows) must potentially be converted to UTF-8 before use. This may include passwords from local text files, or input from the terminal or command line. Refer to the documentation of <a href="https://man7.org/linux/man-pages/man3/UI_OpenSSL.3.html">UI_OpenSSL(3)</a>, for example.</p>
 
 <p>If the PKCS#12 structure does not have a password, then you must use the empty string &quot;&quot; for <b>oldpass</b>. Using NULL for <b>oldpass</b> will result in a PKCS12_newpass() failure.</p>
 
@@ -103,7 +103,7 @@ int main(int argc, char **argv)
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/PKCS12_create.html">PKCS12_create(3)</a>, <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man7/passphrase-encoding.html">passphrase-encoding(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/PKCS12_create.3.html">PKCS12_create(3)</a>, <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man7/passphrase-encoding.7.html">passphrase-encoding(7)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

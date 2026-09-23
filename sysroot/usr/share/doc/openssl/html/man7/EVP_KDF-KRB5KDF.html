@@ -4,7 +4,7 @@
 <head>
 <title>EVP_KDF-KRB5KDF</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -58,7 +58,7 @@
 <dt id="key-OSSL_KDF_PARAM_KEY-octet-string">&quot;key&quot; (<b>OSSL_KDF_PARAM_KEY</b>) &lt;octet string&gt;</dt>
 <dd>
 
-<p>These parameters work as described in <a href="../man3/EVP_KDF.html">&quot;PARAMETERS&quot; in EVP_KDF(3)</a>.</p>
+<p>These parameters work as described in <a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html#PARAMETERS">&quot;PARAMETERS&quot; in EVP_KDF(3)</a>.</p>
 
 </dd>
 <dt id="constant-OSSL_KDF_PARAM_CONSTANT-octet-string">&quot;constant&quot; (<b>OSSL_KDF_PARAM_CONSTANT</b>) &lt;octet string&gt;</dt>
@@ -76,7 +76,7 @@
 <pre><code>EVP_KDF *kdf = EVP_KDF_fetch(NULL, &quot;KRB5KDF&quot;, NULL);
 EVP_KDF_CTX *kctx = EVP_KDF_CTX_new(kdf);</code></pre>
 
-<p>The output length of the KRB5KDF derivation is specified via the <i>keylen</i> parameter to the <a href="../man3/EVP_KDF_derive.html">EVP_KDF_derive(3)</a> function, and MUST match the key length for the chosen cipher or an error is returned. Moreover, the constant&#39;s length must not exceed the block size of the cipher. Since the KRB5KDF output length depends on the chosen cipher, calling <a href="../man3/EVP_KDF_CTX_get_kdf_size.html">EVP_KDF_CTX_get_kdf_size(3)</a> to obtain the requisite length returns the correct length only after the cipher is set. Prior to that <b>EVP_MAX_KEY_LENGTH</b> is returned. The caller must allocate a buffer of the correct length for the chosen cipher, and pass that buffer to the <a href="../man3/EVP_KDF_derive.html">EVP_KDF_derive(3)</a> function along with that length.</p>
+<p>The output length of the KRB5KDF derivation is specified via the <i>keylen</i> parameter to the <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_derive.3.html">EVP_KDF_derive(3)</a> function, and MUST match the key length for the chosen cipher or an error is returned. Moreover, the constant&#39;s length must not exceed the block size of the cipher. Since the KRB5KDF output length depends on the chosen cipher, calling <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_CTX_get_kdf_size.3.html">EVP_KDF_CTX_get_kdf_size(3)</a> to obtain the requisite length returns the correct length only after the cipher is set. Prior to that <b>EVP_MAX_KEY_LENGTH</b> is returned. The caller must allocate a buffer of the correct length for the chosen cipher, and pass that buffer to the <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_derive.3.html">EVP_KDF_derive(3)</a> function along with that length.</p>
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
@@ -113,7 +113,7 @@ EVP_KDF_CTX_free(kctx);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_KDF.html">EVP_KDF(3)</a>, <a href="../man3/EVP_KDF_CTX_free.html">EVP_KDF_CTX_free(3)</a>, <a href="../man3/EVP_KDF_CTX_get_kdf_size.html">EVP_KDF_CTX_get_kdf_size(3)</a>, <a href="../man3/EVP_KDF_derive.html">EVP_KDF_derive(3)</a>, <a href="../man3/EVP_KDF.html">&quot;PARAMETERS&quot; in EVP_KDF(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html">EVP_KDF(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_CTX_free.3.html">EVP_KDF_CTX_free(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_CTX_get_kdf_size.3.html">EVP_KDF_CTX_get_kdf_size(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_derive.3.html">EVP_KDF_derive(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html#PARAMETERS">&quot;PARAMETERS&quot; in EVP_KDF(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

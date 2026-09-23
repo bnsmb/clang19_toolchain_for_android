@@ -4,7 +4,7 @@
 <head>
 <title>EVP_EncryptInit</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -200,11 +200,11 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 #define EVP_CIPHER_CTX_type EVP_CIPHER_CTX_get_type
 #define EVP_CIPHER_CTX_mode EVP_CIPHER_CTX_get_mode</code></pre>
 
-<p>The following function has been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following function has been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>const EVP_CIPHER *EVP_CIPHER_CTX_cipher(const EVP_CIPHER_CTX *ctx);</code></pre>
 
-<p>The following function has been deprecated since OpenSSL 1.1.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following function has been deprecated since OpenSSL 1.1.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int EVP_CIPHER_CTX_flags(const EVP_CIPHER_CTX *ctx);</code></pre>
 
@@ -219,7 +219,7 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 <dt id="EVP_CIPHER_fetch">EVP_CIPHER_fetch()</dt>
 <dd>
 
-<p>Fetches the cipher implementation for the given <i>algorithm</i> from any provider offering it, within the criteria given by the <i>properties</i>. See <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further information.</p>
+<p>Fetches the cipher implementation for the given <i>algorithm</i> from any provider offering it, within the criteria given by the <i>properties</i>. See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further information.</p>
 
 <p>The returned value must eventually be freed with EVP_CIPHER_free().</p>
 
@@ -269,7 +269,7 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 
 <p>Performs cipher-specific control actions on context <i>ctx</i>. The control command is indicated in <i>cmd</i> and any additional arguments in <i>p1</i> and <i>p2</i>. EVP_CIPHER_CTX_ctrl() must be called after EVP_CipherInit_ex2(). Other restrictions may apply depending on the control type and cipher implementation.</p>
 
-<p>If this function happens to be used with a fetched <b>EVP_CIPHER</b>, it will translate the controls that are known to OpenSSL into <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> parameters with keys defined by OpenSSL and call EVP_CIPHER_CTX_get_params() or EVP_CIPHER_CTX_set_params() as is appropriate for each control command.</p>
+<p>If this function happens to be used with a fetched <b>EVP_CIPHER</b>, it will translate the controls that are known to OpenSSL into <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> parameters with keys defined by OpenSSL and call EVP_CIPHER_CTX_get_params() or EVP_CIPHER_CTX_set_params() as is appropriate for each control command.</p>
 
 <p>See <a href="#CONTROLS">&quot;CONTROLS&quot;</a> below for more information, including what translations are being done.</p>
 
@@ -295,19 +295,19 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 <dt id="EVP_CIPHER_gettable_params">EVP_CIPHER_gettable_params()</dt>
 <dd>
 
-<p>Get a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that describes the retrievable parameters that can be used with EVP_CIPHER_get_params().</p>
+<p>Get a constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array that describes the retrievable parameters that can be used with EVP_CIPHER_get_params().</p>
 
 </dd>
 <dt id="EVP_CIPHER_gettable_ctx_params-and-EVP_CIPHER_CTX_gettable_params">EVP_CIPHER_gettable_ctx_params() and EVP_CIPHER_CTX_gettable_params()</dt>
 <dd>
 
-<p>Get a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that describes the retrievable parameters that can be used with EVP_CIPHER_CTX_get_params(). EVP_CIPHER_gettable_ctx_params() returns the parameters that can be retrieved from the algorithm, whereas EVP_CIPHER_CTX_gettable_params() returns the parameters that can be retrieved in the context&#39;s current state.</p>
+<p>Get a constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array that describes the retrievable parameters that can be used with EVP_CIPHER_CTX_get_params(). EVP_CIPHER_gettable_ctx_params() returns the parameters that can be retrieved from the algorithm, whereas EVP_CIPHER_CTX_gettable_params() returns the parameters that can be retrieved in the context&#39;s current state.</p>
 
 </dd>
 <dt id="EVP_CIPHER_settable_ctx_params-and-EVP_CIPHER_CTX_settable_params">EVP_CIPHER_settable_ctx_params() and EVP_CIPHER_CTX_settable_params()</dt>
 <dd>
 
-<p>Get a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that describes the settable parameters that can be used with EVP_CIPHER_CTX_set_params(). EVP_CIPHER_settable_ctx_params() returns the parameters that can be set from the algorithm, whereas EVP_CIPHER_CTX_settable_params() returns the parameters that can be set in the context&#39;s current state.</p>
+<p>Get a constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array that describes the settable parameters that can be used with EVP_CIPHER_CTX_set_params(). EVP_CIPHER_settable_ctx_params() returns the parameters that can be set from the algorithm, whereas EVP_CIPHER_CTX_settable_params() returns the parameters that can be set in the context&#39;s current state.</p>
 
 </dd>
 <dt id="EVP_EncryptInit_ex2">EVP_EncryptInit_ex2()</dt>
@@ -329,7 +329,7 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 
 <p>If <i>out</i> and <i>in</i> point to different locations, the two buffers must be disjoint, otherwise the operation might fail or the outcome might be undefined.</p>
 
-<p>This function can be called multiple times to encrypt successive blocks of data. The amount of data written depends on the block alignment of the encrypted data. For most ciphers and modes, the amount of data written can be anything from zero bytes to (inl + cipher_block_size - 1) bytes. For wrap cipher modes, the amount of data written can be anything from zero bytes to (inl + cipher_block_size) bytes. For stream ciphers, the amount of data written can be anything from zero bytes to inl bytes. Thus, the buffer pointed to by <i>out</i> must contain sufficient room for the operation being performed. The actual number of bytes written is placed in <i>outl</i>.</p>
+<p>This function can be called multiple times to encrypt successive blocks of data. The amount of data written depends on the block alignment of the encrypted data. For most ciphers and modes, the amount of data written can be anything from zero bytes to (inl + cipher_block_size - 1) bytes. For wrap cipher modes, the amount of data written can be anything from zero bytes to (inl rounded up to cipher_block_size + cipher_block_size) bytes. For stream ciphers, the amount of data written can be anything from zero bytes to inl bytes. Thus, the buffer pointed to by <i>out</i> must contain sufficient room for the operation being performed. The actual number of bytes written is placed in <i>outl</i>.</p>
 
 <p>If padding is enabled (the default) then EVP_EncryptFinal_ex() encrypts the &quot;final&quot; data, that is any data that remains in a partial block. It uses standard block padding (aka PKCS padding) as described in the NOTES section, below. The encrypted final data is written to <i>out</i> which should have sufficient space for one cipher block. The number of bytes written is placed in <i>outl</i>. After this function is called the encryption operation is finished and no further calls to EVP_EncryptUpdate() should be made.</p>
 
@@ -413,7 +413,7 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 
 <p>When the cipher objects returned by these functions are used (such as in a call to EVP_EncryptInit_ex()) an implementation of the cipher will be implicitly fetched from the loaded providers. This fetch could fail if no suitable implementation is available. Use EVP_CIPHER_fetch() instead to explicitly fetch the algorithm and an associated implementation from a provider.</p>
 
-<p>See <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for more information about fetching.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for more information about fetching.</p>
 
 <p>The cipher objects returned from these functions do not need to be freed with EVP_CIPHER_free().</p>
 
@@ -477,7 +477,7 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 <dt id="EVP_CIPHER_is_a">EVP_CIPHER_is_a()</dt>
 <dd>
 
-<p>Returns 1 if <i>cipher</i> is an implementation of an algorithm that&#39;s identifiable with <i>name</i>, otherwise 0. If <i>cipher</i> is a legacy cipher (it&#39;s the return value from the likes of EVP_aes128() rather than the result of an EVP_CIPHER_fetch()), only cipher names registered with the default library context (see <a href="../man3/OSSL_LIB_CTX.html">OSSL_LIB_CTX(3)</a>) will be considered.</p>
+<p>Returns 1 if <i>cipher</i> is an implementation of an algorithm that&#39;s identifiable with <i>name</i>, otherwise 0. If <i>cipher</i> is a legacy cipher (it&#39;s the return value from the likes of EVP_aes128() rather than the result of an EVP_CIPHER_fetch()), only cipher names registered with the default library context (see <a href="https://man7.org/linux/man-pages/man3/OSSL_LIB_CTX.3.html">OSSL_LIB_CTX(3)</a>) will be considered.</p>
 
 </dd>
 <dt id="EVP_CIPHER_get0_name-and-EVP_CIPHER_CTX_get0_name">EVP_CIPHER_get0_name() and EVP_CIPHER_CTX_get0_name()</dt>
@@ -568,13 +568,13 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 
 <h1 id="PARAMETERS">PARAMETERS</h1>
 
-<p>See <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> for information about passing parameters.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> for information about passing parameters.</p>
 
 <h2 id="Gettable-EVP_CIPHER-parameters">Gettable EVP_CIPHER parameters</h2>
 
 <p>When EVP_CIPHER_fetch() is called it internally calls EVP_CIPHER_get_params() and caches the results.</p>
 
-<p>EVP_CIPHER_get_params() can be used with the following <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> keys:</p>
+<p>EVP_CIPHER_get_params() can be used with the following <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> keys:</p>
 
 <dl>
 
@@ -642,7 +642,7 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 
 <h2 id="Gettable-and-Settable-EVP_CIPHER_CTX-parameters">Gettable and Settable EVP_CIPHER_CTX parameters</h2>
 
-<p>The following <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> keys can be used with both EVP_CIPHER_CTX_get_params() and EVP_CIPHER_CTX_set_params().</p>
+<p>The following <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> keys can be used with both EVP_CIPHER_CTX_get_params() and EVP_CIPHER_CTX_set_params().</p>
 
 <dl>
 
@@ -667,7 +667,7 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 <dt id="tag-OSSL_CIPHER_PARAM_AEAD_TAG-octet-string">&quot;tag&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TAG</b>) &lt;octet string&gt;</dt>
 <dd>
 
-<p>Gets or sets the AEAD tag for the associated cipher context <i>ctx</i>. See <a href="../man3/EVP_EncryptInit.html">&quot;AEAD INTERFACE&quot; in EVP_EncryptInit(3)</a>.</p>
+<p>Gets or sets the AEAD tag for the associated cipher context <i>ctx</i>. See <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html#AEAD_INTERFACE">&quot;AEAD INTERFACE&quot; in EVP_EncryptInit(3)</a>.</p>
 
 </dd>
 <dt id="pipeline-tag-OSSL_CIPHER_PARAM_PIPELINE_AEAD_TAG-octet-ptr">&quot;pipeline-tag&quot; (<b>OSSL_CIPHER_PARAM_PIPELINE_AEAD_TAG</b>) &lt;octet ptr&gt;</dt>
@@ -691,19 +691,19 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 <dt id="algorithm-id-OSSL_CIPHER_PARAM_ALGORITHM_ID-octet-string">&quot;algorithm-id&quot; (<b>OSSL_CIPHER_PARAM_ALGORITHM_ID</b>) &lt;octet string&gt;</dt>
 <dd>
 
-<p>Used to get the DER encoded AlgorithmIdentifier from the cipher implementation. Functions like <a href="../man3/EVP_PKEY_CTX_get_algor.html">EVP_PKEY_CTX_get_algor(3)</a> use this parameter.</p>
+<p>Used to get the DER encoded AlgorithmIdentifier from the cipher implementation. Functions like <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_get_algor.3.html">EVP_PKEY_CTX_get_algor(3)</a> use this parameter.</p>
 
 </dd>
 <dt id="algorithm-id-params-OSSL_CIPHER_PARAM_ALGORITHM_ID_PARAMS-octet-string">&quot;algorithm-id-params&quot; (<b>OSSL_CIPHER_PARAM_ALGORITHM_ID_PARAMS</b>) &lt;octet string&gt;</dt>
 <dd>
 
-<p>Used to pass the DER encoded AlgorithmIdentifier parameter to or from the cipher implementation. Functions like <a href="../man3/EVP_CIPHER_CTX_set_algor_params.html">EVP_CIPHER_CTX_set_algor_params(3)</a> and <a href="../man3/EVP_CIPHER_CTX_get_algor_params.html">EVP_CIPHER_CTX_get_algor_params(3)</a> use this parameter.</p>
+<p>Used to pass the DER encoded AlgorithmIdentifier parameter to or from the cipher implementation. Functions like <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_CTX_set_algor_params.3.html">EVP_CIPHER_CTX_set_algor_params(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_CTX_get_algor_params.3.html">EVP_CIPHER_CTX_get_algor_params(3)</a> use this parameter.</p>
 
 </dd>
 <dt id="alg_id_params-OSSL_CIPHER_PARAM_ALGORITHM_ID_PARAMS_OLD-octet-string">&quot;alg_id_params&quot; (<b>OSSL_CIPHER_PARAM_ALGORITHM_ID_PARAMS_OLD</b>) &lt;octet string&gt;</dt>
 <dd>
 
-<p>An deprecated alias for &quot;algorithm-id-params&quot;, only used by <a href="../man3/EVP_CIPHER_param_to_asn1.html">EVP_CIPHER_param_to_asn1(3)</a> and <a href="../man3/EVP_CIPHER_asn1_to_param.html">EVP_CIPHER_asn1_to_param(3)</a>.</p>
+<p>An deprecated alias for &quot;algorithm-id-params&quot;, only used by <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_param_to_asn1.3.html">EVP_CIPHER_param_to_asn1(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_asn1_to_param.3.html">EVP_CIPHER_asn1_to_param(3)</a>.</p>
 
 </dd>
 <dt id="cts_mode-OSSL_CIPHER_PARAM_CTS_MODE-UTF8-string">&quot;cts_mode&quot; (<b>OSSL_CIPHER_PARAM_CTS_MODE</b>) &lt;UTF8 string&gt;</dt>
@@ -748,7 +748,7 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 
 <h2 id="Gettable-EVP_CIPHER_CTX-parameters">Gettable EVP_CIPHER_CTX parameters</h2>
 
-<p>The following <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> keys can be used with EVP_CIPHER_CTX_get_params():</p>
+<p>The following <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> keys can be used with EVP_CIPHER_CTX_get_params():</p>
 
 <dl>
 
@@ -836,7 +836,7 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 
 <h2 id="Settable-EVP_CIPHER_CTX-parameters">Settable EVP_CIPHER_CTX parameters</h2>
 
-<p>The following <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> keys can be used with EVP_CIPHER_CTX_set_params():</p>
+<p>The following <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> keys can be used with EVP_CIPHER_CTX_set_params():</p>
 
 <dl>
 
@@ -925,7 +925,7 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 
 <p>Sets the XTS standard to use with SM4-XTS algorithm. XTS mode has two implementations, one is standardized in IEEE Std. 1619-2007 and has been widely used (e.g., XTS AES), the other is proposed recently (GB/T 17964-2021 implemented in May 2022) and is currently only used in SM4.</p>
 
-<p>The main difference between them is the multiplication by the primitive element α to calculate the tweak values. The IEEE Std 1619-2007 noted that the multiplication &quot;is a left shift of each byte by one bit with carry propagating from one byte to the next one&quot;, which means that in each byte, the leftmost bit is the most significant bit. But in GB/T 17964-2021, the rightmost bit is the most significant bit, thus the multiplication becomes a right shift of each byte by one bit with carry propagating from one byte to the next one.</p>
+<p>The main difference between them is the multiplication by the primitive element &#x3B1; to calculate the tweak values. The IEEE Std 1619-2007 noted that the multiplication &quot;is a left shift of each byte by one bit with carry propagating from one byte to the next one&quot;, which means that in each byte, the leftmost bit is the most significant bit. But in GB/T 17964-2021, the rightmost bit is the most significant bit, thus the multiplication becomes a right shift of each byte by one bit with carry propagating from one byte to the next one.</p>
 
 <p>Valid values for the mode are:</p>
 
@@ -969,31 +969,31 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 <dt id="EVP_CTRL_AEAD_SET_IVLEN-and-EVP_CTRL_GET_IVLEN">EVP_CTRL_AEAD_SET_IVLEN and EVP_CTRL_GET_IVLEN</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() and EVP_CIPHER_CTX_get_params() get called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;ivlen&quot; (<b>OSSL_CIPHER_PARAM_IVLEN</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() and EVP_CIPHER_CTX_get_params() get called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;ivlen&quot; (<b>OSSL_CIPHER_PARAM_IVLEN</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_AEAD_SET_IV_FIXED">EVP_CTRL_AEAD_SET_IV_FIXED</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;tlsivfixed&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TLS1_IV_FIXED</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;tlsivfixed&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TLS1_IV_FIXED</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_AEAD_SET_MAC_KEY">EVP_CTRL_AEAD_SET_MAC_KEY</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;mackey&quot; (<b>OSSL_CIPHER_PARAM_AEAD_MAC_KEY</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;mackey&quot; (<b>OSSL_CIPHER_PARAM_AEAD_MAC_KEY</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_AEAD_SET_TAG-and-EVP_CTRL_AEAD_GET_TAG">EVP_CTRL_AEAD_SET_TAG and EVP_CTRL_AEAD_GET_TAG</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() and EVP_CIPHER_CTX_get_params() get called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;tag&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TAG</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() and EVP_CIPHER_CTX_get_params() get called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;tag&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TAG</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_CCM_SET_L">EVP_CTRL_CCM_SET_L</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;ivlen&quot; (<b>OSSL_CIPHER_PARAM_IVLEN</b>) with a value of (15 - L)</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;ivlen&quot; (<b>OSSL_CIPHER_PARAM_IVLEN</b>) with a value of (15 - L)</p>
 
 </dd>
 <dt id="EVP_CTRL_COPY">EVP_CTRL_COPY</dt>
@@ -1005,67 +1005,67 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 <dt id="EVP_CTRL_GCM_SET_IV_INV">EVP_CTRL_GCM_SET_IV_INV</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;tlsivinv&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TLS1_SET_IV_INV</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;tlsivinv&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TLS1_SET_IV_INV</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_RAND_KEY">EVP_CTRL_RAND_KEY</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;randkey&quot; (<b>OSSL_CIPHER_PARAM_RANDOM_KEY</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;randkey&quot; (<b>OSSL_CIPHER_PARAM_RANDOM_KEY</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_SET_KEY_LENGTH">EVP_CTRL_SET_KEY_LENGTH</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;keylen&quot; (<b>OSSL_CIPHER_PARAM_KEYLEN</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;keylen&quot; (<b>OSSL_CIPHER_PARAM_KEYLEN</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_SET_RC2_KEY_BITS-and-EVP_CTRL_GET_RC2_KEY_BITS">EVP_CTRL_SET_RC2_KEY_BITS and EVP_CTRL_GET_RC2_KEY_BITS</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() and EVP_CIPHER_CTX_get_params() get called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;keybits&quot; (<b>OSSL_CIPHER_PARAM_RC2_KEYBITS</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() and EVP_CIPHER_CTX_get_params() get called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;keybits&quot; (<b>OSSL_CIPHER_PARAM_RC2_KEYBITS</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_SET_RC5_ROUNDS-and-EVP_CTRL_GET_RC5_ROUNDS">EVP_CTRL_SET_RC5_ROUNDS and EVP_CTRL_GET_RC5_ROUNDS</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() and EVP_CIPHER_CTX_get_params() get called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;rounds&quot; (<b>OSSL_CIPHER_PARAM_ROUNDS</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() and EVP_CIPHER_CTX_get_params() get called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;rounds&quot; (<b>OSSL_CIPHER_PARAM_ROUNDS</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_SET_SPEED">EVP_CTRL_SET_SPEED</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;speed&quot; (<b>OSSL_CIPHER_PARAM_SPEED</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;speed&quot; (<b>OSSL_CIPHER_PARAM_SPEED</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_GCM_IV_GEN">EVP_CTRL_GCM_IV_GEN</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_get_params() gets called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;tlsivgen&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TLS1_GET_IV_GEN</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_get_params() gets called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;tlsivgen&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TLS1_GET_IV_GEN</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_AEAD_TLS1_AAD">EVP_CTRL_AEAD_TLS1_AAD</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() get called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key &quot;tlsaad&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TLS1_AAD</b>) followed by EVP_CIPHER_CTX_get_params() with a key of &quot;tlsaadpad&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TLS1_AAD_PAD</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() get called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key &quot;tlsaad&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TLS1_AAD</b>) followed by EVP_CIPHER_CTX_get_params() with a key of &quot;tlsaadpad&quot; (<b>OSSL_CIPHER_PARAM_AEAD_TLS1_AAD_PAD</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_TLS1_1_MULTIBLOCK_MAX_BUFSIZE">EVP_CTRL_TLS1_1_MULTIBLOCK_MAX_BUFSIZE</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> item with the key OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_MAX_SEND_FRAGMENT followed by EVP_CIPHER_CTX_get_params() with a key of &quot;tls1multi_maxbufsz&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_MAX_BUFSIZE</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> item with the key OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_MAX_SEND_FRAGMENT followed by EVP_CIPHER_CTX_get_params() with a key of &quot;tls1multi_maxbufsz&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_MAX_BUFSIZE</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_TLS1_1_MULTIBLOCK_AAD">EVP_CTRL_TLS1_1_MULTIBLOCK_AAD</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> items with the keys &quot;tls1multi_aad&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_AAD</b>) and &quot;tls1multi_interleave&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_INTERLEAVE</b>) followed by EVP_CIPHER_CTX_get_params() with keys of &quot;tls1multi_aadpacklen&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_AAD_PACKLEN</b>) and &quot;tls1multi_interleave&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_INTERLEAVE</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> items with the keys &quot;tls1multi_aad&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_AAD</b>) and &quot;tls1multi_interleave&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_INTERLEAVE</b>) followed by EVP_CIPHER_CTX_get_params() with keys of &quot;tls1multi_aadpacklen&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_AAD_PACKLEN</b>) and &quot;tls1multi_interleave&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_INTERLEAVE</b>).</p>
 
 </dd>
 <dt id="EVP_CTRL_TLS1_1_MULTIBLOCK_ENCRYPT">EVP_CTRL_TLS1_1_MULTIBLOCK_ENCRYPT</dt>
 <dd>
 
-<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> items with the keys &quot;tls1multi_enc&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_ENC</b>), &quot;tls1multi_encin&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_ENC_IN</b>) and &quot;tls1multi_interleave&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_INTERLEAVE</b>), followed by EVP_CIPHER_CTX_get_params() with a key of &quot;tls1multi_enclen&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_ENC_LEN</b>).</p>
+<p>When used with a fetched <b>EVP_CIPHER</b>, EVP_CIPHER_CTX_set_params() gets called with <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> items with the keys &quot;tls1multi_enc&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_ENC</b>), &quot;tls1multi_encin&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_ENC_IN</b>) and &quot;tls1multi_interleave&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_INTERLEAVE</b>), followed by EVP_CIPHER_CTX_get_params() with a key of &quot;tls1multi_enclen&quot; (<b>OSSL_CIPHER_PARAM_TLS1_MULTIBLOCK_ENC_LEN</b>).</p>
 
 </dd>
 </dl>
@@ -1165,7 +1165,7 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 <dt id="EVP_CIPH_FLAG_DEFAULT_ASN1">EVP_CIPH_FLAG_DEFAULT_ASN1</dt>
 <dd>
 
-<p>See <a href="../man3/EVP_CIPHER_meth_set_flags.html">EVP_CIPHER_meth_set_flags(3)</a> for further information related to the above flags.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_meth_set_flags.3.html">EVP_CIPHER_meth_set_flags(3)</a> for further information related to the above flags.</p>
 
 </dd>
 </dl>
@@ -1228,6 +1228,8 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 
 <p>EVP_CIPHER_names_do_all() returns 1 if the callback was called for all names. A return value of 0 means that the callback was not called for any names.</p>
 
+<p>EVP_CIPHER_get_params(), EVP_CIPHER_CTX_get_params() and EVP_CIPHER_CTX_set_params() return 1 for success and 0 for failure.</p>
+
 <h1 id="CIPHER-LISTING">CIPHER LISTING</h1>
 
 <p>All algorithms have a fixed key length unless otherwise stated.</p>
@@ -1248,7 +1250,9 @@ void EVP_CIPHER_do_all_provided(OSSL_LIB_CTX *libctx,
 
 <p>The EVP interface for Authenticated Encryption with Associated Data (AEAD) modes are subtly altered and several additional <i>ctrl</i> operations are supported depending on the mode specified.</p>
 
-<p>To specify additional authenticated data (AAD), a call to EVP_CipherUpdate(), EVP_EncryptUpdate() or EVP_DecryptUpdate() should be made with the output parameter <i>out</i> set to NULL. In this case, on success, the parameter <i>outl</i> is set to the number of bytes authenticated.</p>
+<p>To specify additional authenticated data (AAD), a call to EVP_CipherUpdate(), EVP_EncryptUpdate() or EVP_DecryptUpdate() should be made with the output parameter <i>out</i> set to NULL. In this case, on success, the parameter <i>outl</i> is set to the number of AAD bytes processed in that call (that is, the value of <i>inl</i>), and does not include any plaintext or ciphertext bytes processed by other calls.</p>
+
+<p>If no AAD is used, this call can be omitted. See the mode-specific notes below for any exceptions.</p>
 
 <p>When decrypting, the return value of EVP_DecryptFinal() or EVP_CipherFinal() indicates whether the operation was successful. If it does not indicate success, the authentication operation has failed and any output data <b>MUST NOT</b> be used as it is corrupted.</p>
 
@@ -1577,11 +1581,11 @@ err:
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/evp.html">evp(7)</a>, <a href="../man7/property.html">property(7)</a>, <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a>, <a href="../man7/provider-cipher.html">provider-cipher(7)</a>, <a href="../man7/life_cycle-cipher.html">life_cycle-cipher(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/evp.7.html">evp(7)</a>, <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>, <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-cipher.7.html">provider-cipher(7)</a>, <a href="https://man7.org/linux/man-pages/man7/life_cycle-cipher.7.html">life_cycle-cipher(7)</a></p>
 
 <p>Supported ciphers are listed in:</p>
 
-<p><a href="../man3/EVP_aes_128_gcm.html">EVP_aes_128_gcm(3)</a>, <a href="../man3/EVP_aria_128_gcm.html">EVP_aria_128_gcm(3)</a>, <a href="../man3/EVP_bf_cbc.html">EVP_bf_cbc(3)</a>, <a href="../man3/EVP_camellia_128_ecb.html">EVP_camellia_128_ecb(3)</a>, <a href="../man3/EVP_cast5_cbc.html">EVP_cast5_cbc(3)</a>, <a href="../man3/EVP_chacha20.html">EVP_chacha20(3)</a>, <a href="../man3/EVP_des_cbc.html">EVP_des_cbc(3)</a>, <a href="../man3/EVP_desx_cbc.html">EVP_desx_cbc(3)</a>, <a href="../man3/EVP_idea_cbc.html">EVP_idea_cbc(3)</a>, <a href="../man3/EVP_rc2_cbc.html">EVP_rc2_cbc(3)</a>, <a href="../man3/EVP_rc4.html">EVP_rc4(3)</a>, <a href="../man3/EVP_rc5_32_12_16_cbc.html">EVP_rc5_32_12_16_cbc(3)</a>, <a href="../man3/EVP_seed_cbc.html">EVP_seed_cbc(3)</a>, <a href="../man3/EVP_sm4_cbc.html">EVP_sm4_cbc(3)</a>,</p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_aes_128_gcm.3.html">EVP_aes_128_gcm(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_aria_128_gcm.3.html">EVP_aria_128_gcm(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_bf_cbc.3.html">EVP_bf_cbc(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_camellia_128_ecb.3.html">EVP_camellia_128_ecb(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_cast5_cbc.3.html">EVP_cast5_cbc(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_chacha20.3.html">EVP_chacha20(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_des_cbc.3.html">EVP_des_cbc(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_desx_cbc.3.html">EVP_desx_cbc(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_idea_cbc.3.html">EVP_idea_cbc(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_rc2_cbc.3.html">EVP_rc2_cbc(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_rc4.3.html">EVP_rc4(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_rc5_32_12_16_cbc.3.html">EVP_rc5_32_12_16_cbc(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_seed_cbc.3.html">EVP_seed_cbc(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_sm4_cbc.3.html">EVP_sm4_cbc(3)</a>,</p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

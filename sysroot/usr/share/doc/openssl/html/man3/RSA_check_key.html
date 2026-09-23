@@ -4,7 +4,7 @@
 <head>
 <title>RSA_check_key</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -31,7 +31,7 @@
 
 <pre><code>#include &lt;openssl/rsa.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int RSA_check_key_ex(const RSA *rsa, BN_GENCB *cb);
 
@@ -39,13 +39,13 @@ int RSA_check_key(const RSA *rsa);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>Both of the functions described on this page are deprecated. Applications should instead use <a href="../man3/EVP_PKEY_public_check.html">EVP_PKEY_public_check(3)</a>, <a href="../man3/EVP_PKEY_private_check.html">EVP_PKEY_private_check(3)</a> and <a href="../man3/EVP_PKEY_pairwise_check.html">EVP_PKEY_pairwise_check(3)</a>.</p>
+<p>Both of the functions described on this page are deprecated. Applications should instead use <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_public_check.3.html">EVP_PKEY_public_check(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_private_check.3.html">EVP_PKEY_private_check(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_pairwise_check.3.html">EVP_PKEY_pairwise_check(3)</a>.</p>
 
 <p>RSA_check_key_ex() function validates RSA keys. It checks that <b>p</b> and <b>q</b> are in fact prime, and that <b>n = p*q</b>.</p>
 
 <p>It does not work on RSA public keys that have only the modulus and public exponent elements populated. It also checks that <b>d*e = 1 mod (p-1*q-1)</b>, and that <b>dmp1</b>, <b>dmq1</b> and <b>iqmp</b> are set correctly or are <b>NULL</b>. It performs integrity checks on all the RSA key material, so the RSA key structure must contain all the private key data too. Therefore, it cannot be used with any arbitrary RSA key object, even if it is otherwise fit for regular RSA operation.</p>
 
-<p>The <b>cb</b> parameter is a callback that will be invoked in the same manner as <a href="../man3/BN_is_prime_ex.html">BN_is_prime_ex(3)</a>.</p>
+<p>The <b>cb</b> parameter is a callback that will be invoked in the same manner as <a href="https://man7.org/linux/man-pages/man3/BN_is_prime_ex.3.html">BN_is_prime_ex(3)</a>.</p>
 
 <p>RSA_check_key() is equivalent to RSA_check_key_ex() with a NULL <b>cb</b>.</p>
 
@@ -53,7 +53,7 @@ int RSA_check_key(const RSA *rsa);</code></pre>
 
 <p>RSA_check_key_ex() and RSA_check_key() return 1 if <b>rsa</b> is a valid RSA key, and 0 otherwise. They return -1 if an error occurs while checking the key.</p>
 
-<p>If the key is invalid or an error occurred, the reason code can be obtained using <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>If the key is invalid or an error occurred, the reason code can be obtained using <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -65,7 +65,7 @@ int RSA_check_key(const RSA *rsa);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/BN_is_prime_ex.html">BN_is_prime_ex(3)</a>, <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/BN_is_prime_ex.3.html">BN_is_prime_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

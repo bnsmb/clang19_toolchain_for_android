@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set_verify</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -49,9 +49,9 @@ void SSL_set_post_handshake_auth(SSL *ssl, int val);</code></pre>
 
 <p>SSL_CTX_set_verify() sets the verification flags for <b>ctx</b> to be <b>mode</b> and specifies the <b>verify_callback</b> function to be used. If no callback function shall be specified, the NULL pointer can be used for <b>verify_callback</b>. <b>ctx</b> <b>MUST NOT</b> be NULL.</p>
 
-<p>SSL_set_verify() sets the verification flags for <b>ssl</b> to be <b>mode</b> and specifies the <b>verify_callback</b> function to be used. If no callback function shall be specified, the NULL pointer can be used for <b>verify_callback</b>. In this case last <b>verify_callback</b> set specifically for this <b>ssl</b> remains. If no special <b>callback</b> was set before, the default callback for the underlying <b>ctx</b> is used, that was valid at the time <b>ssl</b> was created with <a href="../man3/SSL_new.html">SSL_new(3)</a>. Within the callback function, <b>SSL_get_ex_data_X509_STORE_CTX_idx</b> can be called to get the data index of the current SSL object that is doing the verification.</p>
+<p>SSL_set_verify() sets the verification flags for <b>ssl</b> to be <b>mode</b> and specifies the <b>verify_callback</b> function to be used. If no callback function shall be specified, the NULL pointer can be used for <b>verify_callback</b>. In this case last <b>verify_callback</b> set specifically for this <b>ssl</b> remains. If no special <b>callback</b> was set before, the default callback for the underlying <b>ctx</b> is used, that was valid at the time <b>ssl</b> was created with <a href="https://man7.org/linux/man-pages/man3/SSL_new.3.html">SSL_new(3)</a>. Within the callback function, <b>SSL_get_ex_data_X509_STORE_CTX_idx</b> can be called to get the data index of the current SSL object that is doing the verification.</p>
 
-<p>In client mode <b>verify_callback</b> may also call the <a href="../man3/SSL_set_retry_verify.html">SSL_set_retry_verify(3)</a> function on the <b>SSL</b> object set in the <i>x509_store_ctx</i> ex data (see <a href="../man3/SSL_get_ex_data_X509_STORE_CTX_idx.html">SSL_get_ex_data_X509_STORE_CTX_idx(3)</a>) and return 1. This would be typically done in case the certificate verification was not yet able to succeed. This makes the handshake suspend and return control to the calling application with <b>SSL_ERROR_WANT_RETRY_VERIFY</b>. The application can for instance fetch further certificates or cert status information needed for the verification. Calling <a href="../man3/SSL_connect.html">SSL_connect(3)</a> again resumes the connection attempt by retrying the server certificate verification step. This process may even be repeated if need be. Note that the handshake may still be aborted if a subsequent invocation of the callback (e.g., at a lower depth, or for a separate error condition) returns 0.</p>
+<p>In client mode <b>verify_callback</b> may also call the <a href="https://man7.org/linux/man-pages/man3/SSL_set_retry_verify.3.html">SSL_set_retry_verify(3)</a> function on the <b>SSL</b> object set in the <i>x509_store_ctx</i> ex data (see <a href="https://man7.org/linux/man-pages/man3/SSL_get_ex_data_X509_STORE_CTX_idx.3.html">SSL_get_ex_data_X509_STORE_CTX_idx(3)</a>) and return 1. This would be typically done in case the certificate verification was not yet able to succeed. This makes the handshake suspend and return control to the calling application with <b>SSL_ERROR_WANT_RETRY_VERIFY</b>. The application can for instance fetch further certificates or cert status information needed for the verification. Calling <a href="https://man7.org/linux/man-pages/man3/SSL_connect.3.html">SSL_connect(3)</a> again resumes the connection attempt by retrying the server certificate verification step. This process may even be repeated if need be. Note that the handshake may still be aborted if a subsequent invocation of the callback (e.g., at a lower depth, or for a separate error condition) returns 0.</p>
 
 <p>SSL_CTX_set_verify_depth() sets the maximum <b>depth</b> for the certificate chain verification that shall be allowed for <b>ctx</b>.</p>
 
@@ -59,7 +59,7 @@ void SSL_set_post_handshake_auth(SSL *ssl, int val);</code></pre>
 
 <p>SSL_CTX_set_post_handshake_auth() and SSL_set_post_handshake_auth() enable the Post-Handshake Authentication extension to be added to the ClientHello such that post-handshake authentication can be requested by the server. If <b>val</b> is 0 then the extension is not sent, otherwise it is. By default the extension is not sent. A certificate callback will need to be set via SSL_CTX_set_client_cert_cb() if no certificate is provided at initialization.</p>
 
-<p>SSL_verify_client_post_handshake() causes a CertificateRequest message to be sent by a server on the given <b>ssl</b> connection. The SSL_VERIFY_PEER flag must be set; the SSL_VERIFY_POST_HANDSHAKE flag is optional.</p>
+<p>SSL_verify_client_post_handshake() causes a CertificateRequest message to be sent by a server on the given <b>ssl</b> connection. The SSL_VERIFY_PEER flag must be set; the SSL_VERIFY_POST_HANDSHAKE flag is optional. The SSL_VERIFY_FAIL_IF_NO_PEER_CERT flag is also applicable and has the same effect as with the client authentication during the handshake.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -72,7 +72,7 @@ void SSL_set_post_handshake_auth(SSL *ssl, int val);</code></pre>
 
 <p><b>Server mode:</b> the server will not send a client certificate request to the client, so the client will not send a certificate.</p>
 
-<p><b>Client mode:</b> if not using an anonymous cipher (by default disabled), the server will send a certificate which will be checked. The result of the certificate verification process can be checked after the TLS/SSL handshake using the <a href="../man3/SSL_get_verify_result.html">SSL_get_verify_result(3)</a> function. The handshake will be continued regardless of the verification result.</p>
+<p><b>Client mode:</b> if not using an anonymous cipher (by default disabled), the server will send a certificate which will be checked. The result of the certificate verification process can be checked after the TLS/SSL handshake using the <a href="https://man7.org/linux/man-pages/man3/SSL_get_verify_result.3.html">SSL_get_verify_result(3)</a> function. The handshake will be continued regardless of the verification result.</p>
 
 </dd>
 <dt id="SSL_VERIFY_PEER">SSL_VERIFY_PEER</dt>
@@ -113,7 +113,7 @@ void SSL_set_post_handshake_auth(SSL *ssl, int val);</code></pre>
 
 <p>If verification flags are not modified explicitly by <code>SSL_CTX_set_verify()</code> or <code>SSL_set_verify()</code>, the default value will be SSL_VERIFY_NONE.</p>
 
-<p>The actual verification procedure is performed either using the built-in verification procedure or using another application provided verification function set with <a href="../man3/SSL_CTX_set_cert_verify_callback.html">SSL_CTX_set_cert_verify_callback(3)</a>. The following descriptions apply in the case of the built-in procedure. An application provided procedure also has access to the verify depth information and the verify_callback() function, but the way this information is used may be different.</p>
+<p>The actual verification procedure is performed either using the built-in verification procedure or using another application provided verification function set with <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_cert_verify_callback.3.html">SSL_CTX_set_cert_verify_callback(3)</a>. The following descriptions apply in the case of the built-in procedure. An application provided procedure also has access to the verify depth information and the verify_callback() function, but the way this information is used may be different.</p>
 
 <p>SSL_CTX_set_verify_depth() and SSL_set_verify_depth() set a limit on the number of certificates between the end-entity and trust-anchor certificates. Neither the end-entity nor the trust-anchor certificates count against <b>depth</b>. If the certificate chain needed to reach a trusted issuer is longer than <b>depth+2</b>, X509_V_ERR_CERT_CHAIN_TOO_LONG will be issued. The depth count is &quot;level 0:peer certificate&quot;, &quot;level 1: CA certificate&quot;, &quot;level 2: higher level CA certificate&quot;, and so on. Setting the maximum depth to 2 allows the levels 0, 1, 2 and 3 (0 being the end-entity and 3 the trust-anchor). The default depth limit is 100, allowing for the peer certificate, at most 100 intermediate CA certificates and a final trust anchor certificate.</p>
 
@@ -121,7 +121,7 @@ void SSL_set_post_handshake_auth(SSL *ssl, int val);</code></pre>
 
 <p>The certificate chain is checked starting with the deepest nesting level (the root CA certificate) and worked upward to the peer&#39;s certificate. At each level signatures and issuer attributes are checked. Whenever a verification error is found, the error number is stored in <b>x509_ctx</b> and <b>verify_callback</b> is called with <b>preverify_ok</b>=0. By applying X509_CTX_store_* functions <b>verify_callback</b> can locate the certificate in question and perform additional steps (see EXAMPLES). If no error is found for a certificate, <b>verify_callback</b> is called with <b>preverify_ok</b>=1 before advancing to the next level.</p>
 
-<p>The return value of <b>verify_callback</b> controls the strategy of the further verification process. If <b>verify_callback</b> returns 0, the verification process is immediately stopped with &quot;verification failed&quot; state. If SSL_VERIFY_PEER is set, a verification failure alert is sent to the peer and the TLS/SSL handshake is terminated. If <b>verify_callback</b> returns 1, the verification process is continued. If <b>verify_callback</b> always returns 1, the TLS/SSL handshake will not be terminated with respect to verification failures and the connection will be established. The calling process can however retrieve the error code of the last verification error using <a href="../man3/SSL_get_verify_result.html">SSL_get_verify_result(3)</a> or by maintaining its own error storage managed by <b>verify_callback</b>.</p>
+<p>The return value of <b>verify_callback</b> controls the strategy of the further verification process. If <b>verify_callback</b> returns 0, the verification process is immediately stopped with &quot;verification failed&quot; state. If SSL_VERIFY_PEER is set, a verification failure alert is sent to the peer and the TLS/SSL handshake is terminated. If <b>verify_callback</b> returns 1, the verification process is continued. If <b>verify_callback</b> always returns 1, the TLS/SSL handshake will not be terminated with respect to verification failures and the connection will be established. The calling process can however retrieve the error code of the last verification error using <a href="https://man7.org/linux/man-pages/man3/SSL_get_verify_result.3.html">SSL_get_verify_result(3)</a> or by maintaining its own error storage managed by <b>verify_callback</b>.</p>
 
 <p>If no <b>verify_callback</b> is specified, the default callback will be used. Its return value is identical to <b>preverify_ok</b>, so that any verification failure will lead to a termination of the TLS/SSL handshake with an alert message, if SSL_VERIFY_PEER is set.</p>
 
@@ -149,7 +149,7 @@ void SSL_set_post_handshake_auth(SSL *ssl, int val);</code></pre>
 
 <p>All verification errors are printed; information about the certificate chain is printed on request. The example is realized for a server that does allow but not require client certificates.</p>
 
-<p>The example makes use of the ex_data technique to store application data into/retrieve application data from the SSL structure (see <a href="../man3/CRYPTO_get_ex_new_index.html">CRYPTO_get_ex_new_index(3)</a>, <a href="../man3/SSL_get_ex_data_X509_STORE_CTX_idx.html">SSL_get_ex_data_X509_STORE_CTX_idx(3)</a>).</p>
+<p>The example makes use of the ex_data technique to store application data into/retrieve application data from the SSL structure (see <a href="https://man7.org/linux/man-pages/man3/CRYPTO_get_ex_new_index.3.html">CRYPTO_get_ex_new_index(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_ex_data_X509_STORE_CTX_idx.3.html">SSL_get_ex_data_X509_STORE_CTX_idx(3)</a>).</p>
 
 <pre><code>...
 typedef struct {
@@ -250,7 +250,7 @@ if (peer = SSL_get_peer_certificate(ssl)) {
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_new.html">SSL_new(3)</a>, <a href="../man3/SSL_CTX_get_verify_mode.html">SSL_CTX_get_verify_mode(3)</a>, <a href="../man3/SSL_get_verify_result.html">SSL_get_verify_result(3)</a>, <a href="../man3/SSL_CTX_load_verify_locations.html">SSL_CTX_load_verify_locations(3)</a>, <a href="../man3/SSL_get_peer_certificate.html">SSL_get_peer_certificate(3)</a>, <a href="../man3/SSL_CTX_set_cert_verify_callback.html">SSL_CTX_set_cert_verify_callback(3)</a>, <a href="../man3/SSL_get_ex_data_X509_STORE_CTX_idx.html">SSL_get_ex_data_X509_STORE_CTX_idx(3)</a>, <a href="../man3/SSL_CTX_set_client_cert_cb.html">SSL_CTX_set_client_cert_cb(3)</a>, <a href="../man3/CRYPTO_get_ex_new_index.html">CRYPTO_get_ex_new_index(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_new.3.html">SSL_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_get_verify_mode.3.html">SSL_CTX_get_verify_mode(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_verify_result.3.html">SSL_get_verify_result(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_load_verify_locations.3.html">SSL_CTX_load_verify_locations(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_peer_certificate.3.html">SSL_get_peer_certificate(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_cert_verify_callback.3.html">SSL_CTX_set_cert_verify_callback(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_ex_data_X509_STORE_CTX_idx.3.html">SSL_get_ex_data_X509_STORE_CTX_idx(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_client_cert_cb.3.html">SSL_CTX_set_client_cert_cb(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CRYPTO_get_ex_new_index.3.html">CRYPTO_get_ex_new_index(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -258,7 +258,7 @@ if (peer = SSL_get_peer_certificate(ssl)) {
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2024 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

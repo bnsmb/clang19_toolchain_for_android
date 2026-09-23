@@ -4,7 +4,7 @@
 <head>
 <title>openssl-threads</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -14,6 +14,7 @@
 <ul id="index">
   <li><a href="#NAME">NAME</a></li>
   <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#THREAD-CANCELLATION">THREAD CANCELLATION</a></li>
   <li><a href="#SEE-ALSO">SEE ALSO</a></li>
   <li><a href="#BUGS">BUGS</a></li>
   <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
@@ -27,7 +28,7 @@
 
 <p>In this man page, we use the term <b>thread-safe</b> to indicate that an object or function can be used by multiple threads at the same time.</p>
 
-<p>OpenSSL can be built with or without threads support. The most important use of this support is so that OpenSSL itself can use a single consistent API, as shown in <a href="../man3/CRYPTO_THREAD_run_once.html">&quot;EXAMPLES&quot; in CRYPTO_THREAD_run_once(3)</a>. Multi-platform applications can also use this API.</p>
+<p>OpenSSL can be built with or without threads support. The most important use of this support is so that OpenSSL itself can use a single consistent API, as shown in <a href="https://man7.org/linux/man-pages/man3/CRYPTO_THREAD_run_once.3.html#EXAMPLES">&quot;EXAMPLES&quot; in CRYPTO_THREAD_run_once(3)</a>. Multi-platform applications can also use this API.</p>
 
 <p>In particular, being configured for threads support does not imply that all OpenSSL objects are thread-safe. To emphasize: <i>most objects are not safe for simultaneous use</i>. Exceptions to this should be documented on the specific manual pages, and some general high-level guidance is given here.</p>
 
@@ -35,7 +36,7 @@
 
 <p>Many objects have set and get API&#39;s to set attributes in the object. A <code>set0</code> passes ownership from the caller to the object and a <code>get0</code> returns a pointer but the attribute ownership remains with the object and a reference to it is returned. A <code>set1</code> or <code>get1</code> function does not change the ownership, but instead updates the attribute&#39;s reference count so that the object is shared between the caller and the object; the caller must free the returned attribute when finished. Functions that involve attributes that have reference counts themselves, but are named with just <code>set</code> or <code>get</code> are historical; and the documentation must state how the references are handled. Get methods are often thread-safe as long as the ownership requirements are met and shared objects are not modified. Set methods, or modifying shared objects, are generally not thread-safe as discussed below.</p>
 
-<p>Objects are thread-safe as long as the API&#39;s being invoked don&#39;t modify the object; in this case the parameter is usually marked in the API as <code>const</code>. Not all parameters are marked this way. Note that a <code>const</code> declaration does not mean immutable; for example <a href="../man3/X509_cmp.html">X509_cmp(3)</a> takes pointers to <code>const</code> objects, but the implementation uses a C cast to remove that so it can lock objects, generate and cache a DER encoding, and so on.</p>
+<p>Objects are thread-safe as long as the API&#39;s being invoked don&#39;t modify the object; in this case the parameter is usually marked in the API as <code>const</code>. Not all parameters are marked this way. Note that a <code>const</code> declaration does not mean immutable; for example <a href="https://man7.org/linux/man-pages/man3/X509_cmp.3.html">X509_cmp(3)</a> takes pointers to <code>const</code> objects, but the implementation uses a C cast to remove that so it can lock objects, generate and cache a DER encoding, and so on.</p>
 
 <p>Another instance of thread-safety is when updates to an object&#39;s internal state, such as cached values, are done with locks. One example of this is the reference counting API&#39;s described above.</p>
 
@@ -43,13 +44,23 @@
 
 <p>The same API&#39;s can usually be used simultaneously on different objects without interference. For example, two threads can calculate a signature using two different <b>EVP_PKEY_CTX</b> objects.</p>
 
-<p>For implicit global state or singletons, thread-safety depends on the facility. The <a href="../man3/CRYPTO_secure_malloc.html">CRYPTO_secure_malloc(3)</a> and related API&#39;s have their own lock, while <a href="../man3/CRYPTO_malloc.html">CRYPTO_malloc(3)</a> assumes the underlying platform allocation will do any necessary locking. Some API&#39;s, such as <a href="../man3/NCONF_load.html">NCONF_load(3)</a> and related do no locking at all; this can be considered a bug.</p>
+<p>For implicit global state or singletons, thread-safety depends on the facility. The <a href="https://man7.org/linux/man-pages/man3/CRYPTO_secure_malloc.3.html">CRYPTO_secure_malloc(3)</a> and related API&#39;s have their own lock, while <a href="https://man7.org/linux/man-pages/man3/CRYPTO_malloc.3.html">CRYPTO_malloc(3)</a> assumes the underlying platform allocation will do any necessary locking. Some API&#39;s, such as <a href="https://man7.org/linux/man-pages/man3/NCONF_load.3.html">NCONF_load(3)</a> and related do no locking at all; this can be considered a bug.</p>
 
-<p>A separate, although related, issue is modifying &quot;factory&quot; objects when other objects have been created from that. For example, an <b>SSL_CTX</b> object created by <a href="../man3/SSL_CTX_new.html">SSL_CTX_new(3)</a> is used to create per-connection <b>SSL</b> objects by calling <a href="../man3/SSL_new.html">SSL_new(3)</a>. In this specific case, and probably for factory methods in general, it is not safe to modify the factory object after it has been used to create other objects.</p>
+<p>A separate, although related, issue is modifying &quot;factory&quot; objects when other objects have been created from that. For example, an <b>SSL_CTX</b> object created by <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_new.3.html">SSL_CTX_new(3)</a> is used to create per-connection <b>SSL</b> objects by calling <a href="https://man7.org/linux/man-pages/man3/SSL_new.3.html">SSL_new(3)</a>. In this specific case, and probably for factory methods in general, it is not safe to modify the factory object after it has been used to create other objects.</p>
+
+<h1 id="THREAD-CANCELLATION">THREAD CANCELLATION</h1>
+
+<p>Thread safety does not imply cancellation safety. Unless a specific function documents otherwise, OpenSSL does not guarantee that an in-progress call can be abandoned safely by thread cancellation or forced termination. An interruption can leave locks held, resources unreleased, or shared state inconsistent, making later use or cleanup unsafe.</p>
+
+<p>Deferred cancellation can take effect at a cancellation point reached directly or through a callback, BIO, provider, or other pluggable implementation. Automatic thread-local cleanup and <a href="https://man7.org/linux/man-pages/man3/OPENSSL_thread_stop.3.html">OPENSSL_thread_stop(3)</a>, when they run, do not unwind the interrupted call.</p>
+
+<p>Applications should act on cancellation only between OpenSSL calls. On POSIX systems, applications using pthread cancellation should disable cancellation with <b>pthread_setcancelstate</b>() before entering OpenSSL and restore it only after OpenSSL returns at a point safe for cancellation. Callbacks invoked by OpenSSL must not re-enable it. Disabling cancellation does not make a blocking call return on a cancellation request; applications requiring prompt cancellation should use nonblocking operation where available.</p>
+
+<p>The same restriction applies to other non-local exits which abandon an OpenSSL call in progress, including direct thread exit, long jumps, and language exceptions.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p>CRYPTO_THREAD_run_once(3), local system threads documentation.</p>
+<p><a href="https://man7.org/linux/man-pages/man3/CRYPTO_THREAD_run_once.3.html">CRYPTO_THREAD_run_once(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OPENSSL_thread_stop.3.html">OPENSSL_thread_stop(3)</a>, <a href="https://man7.org/linux/man-pages/man7/openssl-quic-concurrency.7.html">openssl-quic-concurrency(7)</a>, local system threads documentation.</p>
 
 <h1 id="BUGS">BUGS</h1>
 
@@ -57,7 +68,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2021-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

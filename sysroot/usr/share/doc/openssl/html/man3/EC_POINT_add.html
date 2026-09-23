@@ -4,7 +4,7 @@
 <head>
 <title>EC_POINT_add</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -39,7 +39,7 @@ int EC_POINT_cmp(const EC_GROUP *group, const EC_POINT *a, const EC_POINT *b, BN
 int EC_POINT_mul(const EC_GROUP *group, EC_POINT *r, const BIGNUM *n,
                  const EC_POINT *q, const BIGNUM *m, BN_CTX *ctx);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int EC_POINT_make_affine(const EC_GROUP *group, EC_POINT *point, BN_CTX *ctx);
 int EC_POINTs_make_affine(const EC_GROUP *group, size_t num,
@@ -67,7 +67,7 @@ int EC_GROUP_have_precompute_mult(const EC_GROUP *group);</code></pre>
 
 <p>Although deprecated in OpenSSL 3.0 and should no longer be used, EC_POINTs_mul calculates the value generator * <b>n</b> + <b>q[0]</b> * <b>m[0]</b> + ... + <b>q[num-1]</b> * <b>m[num-1]</b>. As for EC_POINT_mul the value <b>n</b> may be NULL or <b>num</b> may be zero. When performing a fixed point multiplication (<b>n</b> is non-NULL and <b>num</b> is 0) or a variable point multiplication (<b>n</b> is NULL and <b>num</b> is 1), the underlying implementation uses a constant time algorithm, when the input scalar (either <b>n</b> or <b>m[0]</b>) is in the range [0, ec_group_order). Modern versions should instead use EC_POINT_mul(), combined (if needed) with EC_POINT_add() in such rare circumstances.</p>
 
-<p>The function EC_GROUP_precompute_mult stores multiples of the generator for faster point multiplication, whilst EC_GROUP_have_precompute_mult tests whether precomputation has already been done. See <a href="../man3/EC_GROUP_copy.html">EC_GROUP_copy(3)</a> for information about the generator. Precomputation functionality was deprecated in OpenSSL 3.0. Users of EC_GROUP_precompute_mult() and EC_GROUP_have_precompute_mult() should switch to named curves which OpenSSL has hardcoded lookup tables for.</p>
+<p>The function EC_GROUP_precompute_mult stores multiples of the generator for faster point multiplication, whilst EC_GROUP_have_precompute_mult tests whether precomputation has already been done. See <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_copy.3.html">EC_GROUP_copy(3)</a> for information about the generator. Precomputation functionality was deprecated in OpenSSL 3.0. Users of EC_GROUP_precompute_mult() and EC_GROUP_have_precompute_mult() should switch to named curves which OpenSSL has hardcoded lookup tables for.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -83,7 +83,7 @@ int EC_GROUP_have_precompute_mult(const EC_GROUP *group);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/crypto.html">crypto(7)</a>, <a href="../man3/EC_GROUP_new.html">EC_GROUP_new(3)</a>, <a href="../man3/EC_GROUP_copy.html">EC_GROUP_copy(3)</a>, <a href="../man3/EC_POINT_new.html">EC_POINT_new(3)</a>, <a href="../man3/EC_KEY_new.html">EC_KEY_new(3)</a>, <a href="../man3/EC_GFp_simple_method.html">EC_GFp_simple_method(3)</a>, <a href="../man3/d2i_ECPKParameters.html">d2i_ECPKParameters(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_new.3.html">EC_GROUP_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_copy.3.html">EC_GROUP_copy(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_POINT_new.3.html">EC_POINT_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_KEY_new.3.html">EC_KEY_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_GFp_simple_method.3.html">EC_GFp_simple_method(3)</a>, <a href="https://man7.org/linux/man-pages/man3/d2i_ECPKParameters.3.html">d2i_ECPKParameters(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

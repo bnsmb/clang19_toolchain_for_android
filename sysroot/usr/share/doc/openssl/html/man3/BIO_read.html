@@ -4,7 +4,7 @@
 <head>
 <title>BIO_read</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -53,7 +53,7 @@ int BIO_puts(BIO *b, const char *buf);</code></pre>
 
 <p>BIO_write() attempts to write <i>len</i> bytes from <i>buf</i> to BIO <i>b</i>.</p>
 
-<p>BIO_puts() attempts to write a NUL-terminated string <i>buf</i> to BIO <i>b</i>.</p>
+<p>BIO_puts() attempts to write a NUL-terminated string <i>buf</i> to BIO <i>b</i>, without the terminating NUL byte and without appending &#39;\n&#39; (so, similar to fputs(3), and not puts(3)).</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -73,13 +73,13 @@ int BIO_puts(BIO *b, const char *buf);</code></pre>
 
 <p>One technique sometimes used with blocking sockets is to use a system call (such as select(), poll() or equivalent) to determine when data is available and then call read() to read the data. The equivalent with BIOs (that is call select() on the underlying I/O structure and then call BIO_read() to read the data) should <b>not</b> be used because a single call to BIO_read() can cause several reads (and writes in the case of SSL BIOs) on the underlying I/O structure and may block as a result. Instead select() (or equivalent) should be combined with non blocking I/O so successive reads will request a retry instead of blocking.</p>
 
-<p>See <a href="../man3/BIO_should_retry.html">BIO_should_retry(3)</a> for details of how to determine the cause of a retry and other I/O issues.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/BIO_should_retry.3.html">BIO_should_retry(3)</a> for details of how to determine the cause of a retry and other I/O issues.</p>
 
-<p>If the &quot;gets&quot; method is not supported by a BIO then BIO_get_line() can be used. It is also possible to make BIO_gets() usable even if the &quot;gets&quot; method is not supported by adding a buffering BIO <a href="../man3/BIO_f_buffer.html">BIO_f_buffer(3)</a> to the chain.</p>
+<p>If the &quot;gets&quot; method is not supported by a BIO then BIO_get_line() can be used. It is also possible to make BIO_gets() usable even if the &quot;gets&quot; method is not supported by adding a buffering BIO <a href="https://man7.org/linux/man-pages/man3/BIO_f_buffer.3.html">BIO_f_buffer(3)</a> to the chain.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/BIO_should_retry.html">BIO_should_retry(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/BIO_should_retry.3.html">BIO_should_retry(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -91,7 +91,7 @@ int BIO_puts(BIO *b, const char *buf);</code></pre>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

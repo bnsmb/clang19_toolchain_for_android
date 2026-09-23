@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY_keygen</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -56,15 +56,15 @@ void *EVP_PKEY_CTX_get_app_data(EVP_PKEY_CTX *ctx);</code></pre>
 
 <p>To flexibly allow all that&#39;s just been described, key parameter and key generation is divided into an initialization of a key algorithm context, functions to set user provided parameters, and finally the key parameter or key generation function itself.</p>
 
-<p>The key algorithm context must be created using <a href="../man3/EVP_PKEY_CTX_new.html">EVP_PKEY_CTX_new(3)</a> or variants thereof, see that manual for details.</p>
+<p>The key algorithm context must be created using <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_new.3.html">EVP_PKEY_CTX_new(3)</a> or variants thereof, see that manual for details.</p>
 
 <p>EVP_PKEY_keygen_init() initializes a public key algorithm context <i>ctx</i> for a key generation operation.</p>
 
 <p>EVP_PKEY_paramgen_init() is similar to EVP_PKEY_keygen_init() except key parameters are generated.</p>
 
-<p>After initialization, generation parameters may be provided with <a href="../man3/EVP_PKEY_CTX_ctrl.html">EVP_PKEY_CTX_ctrl(3)</a> or <a href="../man3/EVP_PKEY_CTX_set_params.html">EVP_PKEY_CTX_set_params(3)</a>, or any other function described in those manuals.</p>
+<p>After initialization, generation parameters may be provided with <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_ctrl.3.html">EVP_PKEY_CTX_ctrl(3)</a> or <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set_params.3.html">EVP_PKEY_CTX_set_params(3)</a>, or any other function described in those manuals.</p>
 
-<p>EVP_PKEY_generate() performs the generation operation, the resulting key parameters or key are written to <i>*ppkey</i>. If <i>*ppkey</i> is NULL when this function is called, it will be allocated, and should be freed by the caller when no longer useful, using <a href="../man3/EVP_PKEY_free.html">EVP_PKEY_free(3)</a>.</p>
+<p>EVP_PKEY_generate() performs the generation operation, the resulting key parameters or key are written to <i>*ppkey</i>. If <i>*ppkey</i> is NULL when this function is called, it will be allocated, and should be freed by the caller when no longer useful, using <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_free.3.html">EVP_PKEY_free(3)</a>.</p>
 
 <p>EVP_PKEY_paramgen() and EVP_PKEY_keygen() do exactly the same thing as EVP_PKEY_generate(), after checking that the corresponding EVP_PKEY_paramgen_init() or EVP_PKEY_keygen_init() was used to initialize <i>ctx</i>. These are older functions that are kept for backward compatibility. It is safe to use EVP_PKEY_generate() instead.</p>
 
@@ -167,7 +167,7 @@ static int genpkey_cb(EVP_PKEY_CTX *ctx)
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_RSA_gen.html">EVP_RSA_gen(3)</a>, <a href="../man3/EVP_EC_gen.html">EVP_EC_gen(3)</a>, <a href="../man3/EVP_PKEY_CTX_new.html">EVP_PKEY_CTX_new(3)</a>, <a href="../man3/EVP_PKEY_encrypt.html">EVP_PKEY_encrypt(3)</a>, <a href="../man3/EVP_PKEY_decrypt.html">EVP_PKEY_decrypt(3)</a>, <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a>, <a href="../man3/EVP_PKEY_verify.html">EVP_PKEY_verify(3)</a>, <a href="../man3/EVP_PKEY_verify_recover.html">EVP_PKEY_verify_recover(3)</a>, <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_RSA_gen.3.html">EVP_RSA_gen(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_EC_gen.3.html">EVP_EC_gen(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_new.3.html">EVP_PKEY_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_encrypt.3.html">EVP_PKEY_encrypt(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_decrypt.3.html">EVP_PKEY_decrypt(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify.3.html">EVP_PKEY_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_recover.3.html">EVP_PKEY_verify_recover(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

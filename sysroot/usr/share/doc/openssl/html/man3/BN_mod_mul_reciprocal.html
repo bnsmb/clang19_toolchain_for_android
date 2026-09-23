@@ -4,7 +4,7 @@
 <head>
 <title>BN_mod_mul_reciprocal</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -42,7 +42,7 @@ int BN_mod_mul_reciprocal(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>BN_mod_mul_reciprocal() can be used to perform an efficient <a href="../man3/BN_mod_mul.html">BN_mod_mul(3)</a> operation when the operation will be performed repeatedly with the same modulus. It computes <b>r</b>=(<b>a</b>*<b>b</b>)%<b>m</b> using <b>recp</b>=1/<b>m</b>, which is set as described below. <b>ctx</b> is a previously allocated <b>BN_CTX</b> used for temporary variables.</p>
+<p>BN_mod_mul_reciprocal() can be used to perform an efficient <a href="https://man7.org/linux/man-pages/man3/BN_mod_mul.3.html">BN_mod_mul(3)</a> operation when the operation will be performed repeatedly with the same modulus. It computes <b>r</b>=(<b>a</b>*<b>b</b>)%<b>m</b> using <b>recp</b>=1/<b>m</b>, which is set as described below. <b>ctx</b> is a previously allocated <b>BN_CTX</b> used for temporary variables.</p>
 
 <p>BN_RECP_CTX_new() allocates and initializes a <b>BN_RECP</b> structure.</p>
 
@@ -60,11 +60,11 @@ int BN_mod_mul_reciprocal(BIGNUM *r, const BIGNUM *a, const BIGNUM *b,
 
 <p>BN_RECP_CTX_free() has no return value.</p>
 
-<p>For the other functions, 1 is returned for success, 0 on error. The error codes can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>For the other functions, 1 is returned for success, 0 on error. The error codes can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/BN_add.html">BN_add(3)</a>, <a href="../man3/BN_CTX_new.html">BN_CTX_new(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BN_add.3.html">BN_add(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BN_CTX_new.3.html">BN_CTX_new(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

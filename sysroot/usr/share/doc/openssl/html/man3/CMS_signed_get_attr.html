@@ -4,7 +4,7 @@
 <head>
 <title>CMS_signed_get_attr</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -92,7 +92,7 @@ void *CMS_unsigned_get0_data_by_OBJ(CMS_SignerInfo *si, ASN1_OBJECT *oid,
 
 <p>CMS_signed_get0_data_by_OBJ() finds the first attribute in a <i>si</i> signed attributes list that matches the <i>obj</i> starting at index <i>lastpos</i> and returns the data retrieved from the found attributes first <b>ASN1_TYPE</b> object. An error will occur if the attribute type <i>type</i> does not match the type of the <b>ASN1_TYPE</b> object OR if <i>type</i> is either <b>V_ASN1_BOOLEAN</b> or <b>V_ASN1_NULL</b> OR the attribute is not found. If <i>lastpos</i> is less than -1 then an error will occur if there are multiple objects in the signed attribute list that match <i>obj</i>. If <i>lastpos</i> is less than -2 then an error will occur if there is more than one <b>ASN1_TYPE</b> object in the found signed attribute.</p>
 
-<p>Refer to <a href="../man3/X509_ATTRIBUTE.html">X509_ATTRIBUTE(3)</a> for information related to attributes.</p>
+<p>Refer to <a href="https://man7.org/linux/man-pages/man3/X509_ATTRIBUTE.3.html">X509_ATTRIBUTE(3)</a> for information related to attributes.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -122,7 +122,7 @@ void *CMS_unsigned_get0_data_by_OBJ(CMS_SignerInfo *si, ASN1_OBJECT *oid,
 
 <p>The NID_pkcs9_contentType signed attribute is always added if the NID_pkcs9_signingTime attribute is added.</p>
 
-<p>Calling CMS_sign_ex(), CMS_sign_receipt() or CMS_add1_signer() may add attributes depending on the flags parameter. See <a href="../man3/CMS_add1_signer.html">CMS_add1_signer(3)</a> for more information.</p>
+<p>Calling CMS_sign_ex(), CMS_sign_receipt() or CMS_add1_signer() may add attributes depending on the flags parameter. See <a href="https://man7.org/linux/man-pages/man3/CMS_add1_signer.3.html">CMS_add1_signer(3)</a> for more information.</p>
 
 <p>OpenSSL applies special rules for the following attribute NIDs:</p>
 
@@ -154,7 +154,7 @@ void *CMS_unsigned_get0_data_by_OBJ(CMS_SignerInfo *si, ASN1_OBJECT *oid,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/X509_ATTRIBUTE.html">X509_ATTRIBUTE(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/X509_ATTRIBUTE.3.html">X509_ATTRIBUTE(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

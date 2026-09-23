@@ -4,7 +4,7 @@
 <head>
 <title>openssl-kdf</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -84,7 +84,7 @@
 <dt id="kdfopt-nm:v"><b>-kdfopt</b> <i>nm</i>:<i>v</i></dt>
 <dd>
 
-<p>Passes options to the KDF algorithm. A comprehensive list of parameters can be found in <a href="../man3/EVP_KDF.html">&quot;PARAMETERS&quot; in EVP_KDF(3)</a>. Common parameter names used by EVP_KDF_CTX_set_params() are:</p>
+<p>Passes options to the KDF algorithm. A comprehensive list of parameters can be found in <a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html#PARAMETERS">&quot;PARAMETERS&quot; in EVP_KDF(3)</a>. Common parameter names used by EVP_KDF_CTX_set_params() are:</p>
 
 <dl>
 
@@ -115,7 +115,7 @@
 <dt id="salt:string"><b>salt:</b><i>string</i></dt>
 <dd>
 
-<p>Specifies a non-secret unique cryptographic salt as an alphanumeric string (use if it contains printable characters only). The length must conform to any restrictions of the KDF algorithm. A salt parameter is required for several KDF algorithms, such as <a href="../man7/EVP_KDF-PBKDF2.html">EVP_KDF-PBKDF2(7)</a>.</p>
+<p>Specifies a non-secret unique cryptographic salt as an alphanumeric string (use if it contains printable characters only). The length must conform to any restrictions of the KDF algorithm. A salt parameter is required for several KDF algorithms, such as <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-PBKDF2.7.html">EVP_KDF-PBKDF2(7)</a>.</p>
 
 </dd>
 <dt id="hexsalt:string"><b>hexsalt:</b><i>string</i></dt>
@@ -127,7 +127,7 @@
 <dt id="info:string"><b>info:</b><i>string</i></dt>
 <dd>
 
-<p>Some KDF implementations, such as <a href="../man7/EVP_KDF-HKDF.html">EVP_KDF-HKDF(7)</a>, take an &#39;info&#39; parameter for binding the derived key material to application- and context-specific information. Specifies the info, fixed info, other info or shared info argument as an alphanumeric string (use if it contains printable characters only). The length must conform to any restrictions of the KDF algorithm.</p>
+<p>Some KDF implementations, such as <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-HKDF.7.html">EVP_KDF-HKDF(7)</a>, take an &#39;info&#39; parameter for binding the derived key material to application- and context-specific information. Specifies the info, fixed info, other info or shared info argument as an alphanumeric string (use if it contains printable characters only). The length must conform to any restrictions of the KDF algorithm.</p>
 
 </dd>
 <dt id="hexinfo:string"><b>hexinfo:</b><i>string</i></dt>
@@ -172,7 +172,7 @@
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Provider Options&quot; in openssl(1)</a>, <a href="../man7/provider.html">provider(7)</a>, and <a href="../man7/property.html">property(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Provider_Options">&quot;Provider Options&quot; in openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, and <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>.</p>
 
 </dd>
 <dt id="kdf_name"><i>kdf_name</i></dt>
@@ -238,7 +238,7 @@
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl.html">openssl(1)</a>, <a href="../man1/openssl-pkeyutl.html">openssl-pkeyutl(1)</a>, <a href="../man3/EVP_KDF.html">EVP_KDF(3)</a>, <a href="../man7/EVP_KDF-SCRYPT.html">EVP_KDF-SCRYPT(7)</a>, <a href="../man7/EVP_KDF-TLS1_PRF.html">EVP_KDF-TLS1_PRF(7)</a>, <a href="../man7/EVP_KDF-PBKDF2.html">EVP_KDF-PBKDF2(7)</a>, <a href="../man7/EVP_KDF-HKDF.html">EVP_KDF-HKDF(7)</a>, <a href="../man7/EVP_KDF-SS.html">EVP_KDF-SS(7)</a>, <a href="../man7/EVP_KDF-SSHKDF.html">EVP_KDF-SSHKDF(7)</a>, <a href="../man7/EVP_KDF-X942-ASN1.html">EVP_KDF-X942-ASN1(7)</a>, <a href="../man7/EVP_KDF-X942-CONCAT.html">EVP_KDF-X942-CONCAT(7)</a>, <a href="../man7/EVP_KDF-X963.html">EVP_KDF-X963(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl.1.html">openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-pkeyutl.1.html">openssl-pkeyutl(1)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html">EVP_KDF(3)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-SCRYPT.7.html">EVP_KDF-SCRYPT(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-TLS1_PRF.7.html">EVP_KDF-TLS1_PRF(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-PBKDF2.7.html">EVP_KDF-PBKDF2(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-HKDF.7.html">EVP_KDF-HKDF(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-SS.7.html">EVP_KDF-SS(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-SSHKDF.7.html">EVP_KDF-SSHKDF(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-X942-ASN1.7.html">EVP_KDF-X942-ASN1(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-X942-CONCAT.7.html">EVP_KDF-X942-CONCAT(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-X963.7.html">EVP_KDF-X963(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

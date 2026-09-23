@@ -4,7 +4,7 @@
 <head>
 <title>ECDSA_sign</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -31,7 +31,7 @@
 
 <pre><code>#include &lt;openssl/ecdsa.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int ECDSA_size(const EC_KEY *eckey);
 
@@ -55,13 +55,13 @@ int ECDSA_sign_ex(int type, const unsigned char *dgst, int dgstlen,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>See <a href="../man3/ECDSA_SIG_new.html">ECDSA_SIG_new(3)</a> for a description of the <b>ECDSA_SIG</b> object.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/ECDSA_SIG_new.3.html">ECDSA_SIG_new(3)</a> for a description of the <b>ECDSA_SIG</b> object.</p>
 
-<p>See <a href="../man3/i2d_ECDSA_SIG.html">i2d_ECDSA_SIG(3)</a> and <a href="../man3/d2i_ECDSA_SIG.html">d2i_ECDSA_SIG(3)</a> for information about encoding and decoding ECDSA signatures to/from DER.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/i2d_ECDSA_SIG.3.html">i2d_ECDSA_SIG(3)</a> and <a href="https://man7.org/linux/man-pages/man3/d2i_ECDSA_SIG.3.html">d2i_ECDSA_SIG(3)</a> for information about encoding and decoding ECDSA signatures to/from DER.</p>
 
-<p>All of the functions described below are deprecated. Applications should use the higher level <b>EVP</b> interface such as <a href="../man3/EVP_DigestSignInit.html">EVP_DigestSignInit(3)</a> or <a href="../man3/EVP_DigestVerifyInit.html">EVP_DigestVerifyInit(3)</a> instead.</p>
+<p>All of the functions described below are deprecated. Applications should use the higher level <b>EVP</b> interface such as <a href="https://man7.org/linux/man-pages/man3/EVP_DigestSignInit.3.html">EVP_DigestSignInit(3)</a> or <a href="https://man7.org/linux/man-pages/man3/EVP_DigestVerifyInit.3.html">EVP_DigestVerifyInit(3)</a> instead.</p>
 
-<p>ECDSA_size() returns the maximum length of a DER encoded ECDSA signature created with the private EC key <i>eckey</i>. To obtain the actual signature size use <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a> with a NULL <i>sig</i> parameter.</p>
+<p>ECDSA_size() returns the maximum length of a DER encoded ECDSA signature created with the private EC key <i>eckey</i>. To obtain the actual signature size use <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a> with a NULL <i>sig</i> parameter.</p>
 
 <p>ECDSA_sign() computes a digital signature of the <i>dgstlen</i> bytes hash value <i>dgst</i> using the private EC key <i>eckey</i>. The DER encoded signatures is stored in <i>sig</i> and its length is returned in <i>siglen</i>. Note: <i>sig</i> must point to ECDSA_size(eckey) bytes of memory. The parameter <i>type</i> is currently ignored. ECDSA_sign() is wrapper function for ECDSA_sign_ex() with <i>kinv</i> and <i>rp</i> set to NULL.</p>
 
@@ -87,7 +87,7 @@ int ECDSA_sign_ex(int type, const unsigned char *dgst, int dgstlen,
 
 <p>ECDSA_do_sign() and ECDSA_do_sign_ex() return a pointer to an allocated <b>ECDSA_SIG</b> structure or NULL on error.</p>
 
-<p>ECDSA_verify() and ECDSA_do_verify() return 1 for a valid signature, 0 for an invalid signature and -1 on error. The error codes can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>ECDSA_verify() and ECDSA_do_verify() return 1 for a valid signature, 0 for an invalid signature and -1 on error. The error codes can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
@@ -145,7 +145,7 @@ else
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EC_KEY_new.html">EC_KEY_new(3)</a>, <a href="../man3/EVP_DigestSignInit.html">EVP_DigestSignInit(3)</a>, <a href="../man3/EVP_DigestVerifyInit.html">EVP_DigestVerifyInit(3)</a>, <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a> <a href="../man3/i2d_ECDSA_SIG.html">i2d_ECDSA_SIG(3)</a>, <a href="../man3/d2i_ECDSA_SIG.html">d2i_ECDSA_SIG(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EC_KEY_new.3.html">EC_KEY_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_DigestSignInit.3.html">EVP_DigestSignInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_DigestVerifyInit.3.html">EVP_DigestVerifyInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a> <a href="https://man7.org/linux/man-pages/man3/i2d_ECDSA_SIG.3.html">i2d_ECDSA_SIG(3)</a>, <a href="https://man7.org/linux/man-pages/man3/d2i_ECDSA_SIG.3.html">d2i_ECDSA_SIG(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

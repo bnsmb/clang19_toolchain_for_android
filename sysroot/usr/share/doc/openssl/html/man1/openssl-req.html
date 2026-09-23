@@ -4,7 +4,7 @@
 <head>
 <title>openssl-req</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -52,13 +52,13 @@
 <dt id="inform-DER-PEM"><b>-inform</b> <b>DER</b>|<b>PEM</b></dt>
 <dd>
 
-<p>The CSR input file format to use; by default PEM is tried first. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The CSR input file format to use; by default PEM is tried first. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="outform-DER-PEM"><b>-outform</b> <b>DER</b>|<b>PEM</b></dt>
 <dd>
 
-<p>The output format; unspecified by default. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The output format; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 <p>The data is a PKCS#10 object.</p>
 
@@ -90,13 +90,13 @@
 <dt id="passin-arg"><b>-passin</b> <i>arg</i></dt>
 <dd>
 
-<p>The password source for private key and certificate input. For more information about the format of <b>arg</b> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>The password source for private key and certificate input. For more information about the format of <b>arg</b> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="passout-arg"><b>-passout</b> <i>arg</i></dt>
 <dd>
 
-<p>The password source for the output file. For more information about the format of <b>arg</b> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>The password source for the output file. For more information about the format of <b>arg</b> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="out-filename"><b>-out</b> <i>filename</i></dt>
@@ -172,7 +172,7 @@
 <dt id="pkeyopt-opt:value"><b>-pkeyopt</b> <i>opt</i>:<i>value</i></dt>
 <dd>
 
-<p>Set the public key algorithm option <i>opt</i> to <i>value</i>. The precise set of options supported depends on the public key algorithm used and its implementation. See <a href="../man1/openssl-genpkey.html">&quot;KEY GENERATION OPTIONS&quot; in openssl-genpkey(1)</a> for more details.</p>
+<p>Set the public key algorithm option <i>opt</i> to <i>value</i>. The precise set of options supported depends on the public key algorithm used and its implementation. See <a href="https://man7.org/linux/man-pages/man1/openssl-genpkey.1.html#KEY_GENERATION_OPTIONS">&quot;KEY GENERATION OPTIONS&quot; in openssl-genpkey(1)</a> for more details.</p>
 
 </dd>
 <dt id="key-filename-uri"><b>-key</b> <i>filename</i>|<i>uri</i></dt>
@@ -188,7 +188,7 @@
 <dt id="keyform-DER-PEM-P12-ENGINE"><b>-keyform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>|<b>ENGINE</b></dt>
 <dd>
 
-<p>The format of the private key; unspecified by default. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The format of the private key; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="keyout-filename"><b>-keyout</b> <i>filename</i></dt>
@@ -220,7 +220,7 @@
 <dt id="config-filename"><b>-config</b> <i>filename</i></dt>
 <dd>
 
-<p>This allows an alternative configuration file to be specified. Optional; for a description of the default value, see <a href="../man1/openssl.html">&quot;COMMAND SUMMARY&quot; in openssl(1)</a>.</p>
+<p>This allows an alternative configuration file to be specified. Optional; for a description of the default value, see <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#COMMAND_SUMMARY">&quot;COMMAND SUMMARY&quot; in openssl(1)</a>.</p>
 
 </dd>
 <dt id="section-name"><b>-section</b> <i>name</i></dt>
@@ -260,7 +260,7 @@
 
 <p>X.509 extensions to be added can be specified in the configuration file, possibly using the <b>-config</b> and <b>-extensions</b> options, and/or using the <b>-addext</b> option.</p>
 
-<p>Unless <b>-x509v1</b> is given, generated certificates bear X.509 version 3. Unless specified otherwise, key identifier extensions are included as described in <a href="../man5/x509v3_config.html">x509v3_config(5)</a>.</p>
+<p>Unless <b>-x509v1</b> is given, generated certificates bear X.509 version 3. Unless specified otherwise, key identifier extensions are included as described in <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a>.</p>
 
 </dd>
 <dt id="x509v1"><b>-x509v1</b></dt>
@@ -352,7 +352,7 @@
 
 <p>Customise the printing format used with <b>-text</b>. The <i>option</i> argument can be a single option or multiple options separated by commas.</p>
 
-<p>See discussion of the <b>-certopt</b> parameter in the <a href="../man1/openssl-x509.html">openssl-x509(1)</a> command.</p>
+<p>See discussion of the <b>-certopt</b> parameter in the <a href="https://man7.org/linux/man-pages/man1/openssl-x509.1.html">openssl-x509(1)</a> command.</p>
 
 </dd>
 <dt id="newhdr"><b>-newhdr</b></dt>
@@ -388,19 +388,19 @@
 <dt id="nameopt-option"><b>-nameopt</b> <i>option</i></dt>
 <dd>
 
-<p>This specifies how the subject or issuer names are displayed. See <a href="../man1/openssl-namedisplay-options.html">openssl-namedisplay-options(1)</a> for details.</p>
+<p>This specifies how the subject or issuer names are displayed. See <a href="https://man7.org/linux/man-pages/man1/openssl-namedisplay-options.1.html">openssl-namedisplay-options(1)</a> for details.</p>
 
 </dd>
 <dt id="rand-files--writerand-file"><b>-rand</b> <i>files</i>, <b>-writerand</b> <i>file</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Random_State_Options">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
 
 </dd>
 <dt id="engine-id"><b>-engine</b> <i>id</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Engine_Options">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
 
 </dd>
 <dt id="provider-name"><b>-provider</b> <i>name</i></dt>
@@ -418,7 +418,7 @@
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Provider Options&quot; in openssl(1)</a>, <a href="../man7/provider.html">provider(7)</a>, and <a href="../man7/property.html">property(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Provider_Options">&quot;Provider Options&quot; in openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, and <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>.</p>
 
 </dd>
 </dl>
@@ -512,7 +512,7 @@
 <dt id="req_extensions"><b>req_extensions</b></dt>
 <dd>
 
-<p>This specifies the configuration file section containing a list of extensions to add to the certificate request. It can be overridden by the <b>-reqexts</b> (or <b>-extensions</b>) command line switch. See the <a href="../man5/x509v3_config.html">x509v3_config(5)</a> manual page for details of the extension section format.</p>
+<p>This specifies the configuration file section containing a list of extensions to add to the certificate request. It can be overridden by the <b>-reqexts</b> (or <b>-extensions</b>) command line switch. See the <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a> manual page for details of the extension section format.</p>
 
 </dd>
 <dt id="x509_extensions"><b>x509_extensions</b></dt>
@@ -722,7 +722,7 @@ problems making Certificate Request</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl.html">openssl(1)</a>, <a href="../man1/openssl-x509.html">openssl-x509(1)</a>, <a href="../man1/openssl-ca.html">openssl-ca(1)</a>, <a href="../man1/openssl-genrsa.html">openssl-genrsa(1)</a>, <a href="../man1/openssl-gendsa.html">openssl-gendsa(1)</a>, <a href="../man5/config.html">config(5)</a>, <a href="../man5/x509v3_config.html">x509v3_config(5)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl.1.html">openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-x509.1.html">openssl-x509(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ca.1.html">openssl-ca(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-genrsa.1.html">openssl-genrsa(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-gendsa.1.html">openssl-gendsa(1)</a>, <a href="https://man7.org/linux/man-pages/man5/config.5.html">config(5)</a>, <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

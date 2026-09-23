@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set_mode</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -71,7 +71,7 @@ long SSL_get_mode(SSL *ssl);</code></pre>
 <dt id="SSL_MODE_AUTO_RETRY">SSL_MODE_AUTO_RETRY</dt>
 <dd>
 
-<p>During normal operations, non-application data records might need to be sent or received that the application is not aware of. If a non-application data record was processed, <a href="../man3/SSL_read_ex.html">SSL_read_ex(3)</a> and <a href="../man3/SSL_read.html">SSL_read(3)</a> can return with a failure and indicate the need to retry with <b>SSL_ERROR_WANT_READ</b>. If such a non-application data record was processed, the flag <b>SSL_MODE_AUTO_RETRY</b> causes it to try to process the next record instead of returning.</p>
+<p>During normal operations, non-application data records might need to be sent or received that the application is not aware of. If a non-application data record was processed, <a href="https://man7.org/linux/man-pages/man3/SSL_read_ex.3.html">SSL_read_ex(3)</a> and <a href="https://man7.org/linux/man-pages/man3/SSL_read.3.html">SSL_read(3)</a> can return with a failure and indicate the need to retry with <b>SSL_ERROR_WANT_READ</b>. If such a non-application data record was processed, the flag <b>SSL_MODE_AUTO_RETRY</b> causes it to try to process the next record instead of returning.</p>
 
 <p>In a nonblocking environment applications must be prepared to handle incomplete read/write operations. Setting <b>SSL_MODE_AUTO_RETRY</b> for a nonblocking <b>BIO</b> will process non-application data records until either no more data is available or an application data record has been processed.</p>
 
@@ -97,7 +97,7 @@ long SSL_get_mode(SSL *ssl);</code></pre>
 <dt id="SSL_MODE_ASYNC">SSL_MODE_ASYNC</dt>
 <dd>
 
-<p>Enable asynchronous processing. TLS I/O operations may indicate a retry with SSL_ERROR_WANT_ASYNC with this mode set if an asynchronous capable engine is used to perform cryptographic operations. See <a href="../man3/SSL_get_error.html">SSL_get_error(3)</a>.</p>
+<p>Enable asynchronous processing. TLS I/O operations may indicate a retry with SSL_ERROR_WANT_ASYNC with this mode set if an asynchronous capable engine is used to perform cryptographic operations. See <a href="https://man7.org/linux/man-pages/man3/SSL_get_error.3.html">SSL_get_error(3)</a>.</p>
 
 </dd>
 <dt id="SSL_MODE_DTLS_SCTP_LABEL_LENGTH_BUG">SSL_MODE_DTLS_SCTP_LABEL_LENGTH_BUG</dt>
@@ -118,7 +118,7 @@ long SSL_get_mode(SSL *ssl);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_read_ex.html">SSL_read_ex(3)</a>, <a href="../man3/SSL_read.html">SSL_read(3)</a>, <a href="../man3/SSL_write_ex.html">SSL_write_ex(3)</a> or <a href="../man3/SSL_write.html">SSL_write(3)</a>, <a href="../man3/SSL_get_error.html">SSL_get_error(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_read_ex.3.html">SSL_read_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_read.3.html">SSL_read(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_write_ex.3.html">SSL_write_ex(3)</a> or <a href="https://man7.org/linux/man-pages/man3/SSL_write.3.html">SSL_write(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_error.3.html">SSL_get_error(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

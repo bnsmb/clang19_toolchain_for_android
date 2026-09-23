@@ -4,7 +4,7 @@
 <head>
 <title>SSL_set_bio</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -35,13 +35,13 @@ void SSL_set0_wbio(SSL *s, BIO *wbio);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>SSL_set0_rbio() connects the BIO <b>rbio</b> for the read operations of the <b>ssl</b> object. The SSL engine inherits the behaviour of <b>rbio</b>. If the BIO is nonblocking then the <b>ssl</b> object will also have nonblocking behaviour. This function transfers ownership of <b>rbio</b> to <b>ssl</b>. It will be automatically freed using <a href="../man3/BIO_free_all.html">BIO_free_all(3)</a> when the <b>ssl</b> is freed. On calling this function, any existing <b>rbio</b> that was previously set will also be freed via a call to <a href="../man3/BIO_free_all.html">BIO_free_all(3)</a> (this includes the case where the <b>rbio</b> is set to the same value as previously).</p>
+<p>SSL_set0_rbio() connects the BIO <b>rbio</b> for the read operations of the <b>ssl</b> object. The SSL engine inherits the behaviour of <b>rbio</b>. If the BIO is nonblocking then the <b>ssl</b> object will also have nonblocking behaviour. This function transfers ownership of <b>rbio</b> to <b>ssl</b>. It will be automatically freed using <a href="https://man7.org/linux/man-pages/man3/BIO_free_all.3.html">BIO_free_all(3)</a> when the <b>ssl</b> is freed. On calling this function, any existing <b>rbio</b> that was previously set will also be freed via a call to <a href="https://man7.org/linux/man-pages/man3/BIO_free_all.3.html">BIO_free_all(3)</a> (this includes the case where the <b>rbio</b> is set to the same value as previously).</p>
 
-<p>If using a custom BIO, <b>rbio</b> must implement either <a href="../man3/BIO_meth_set_read_ex.html">BIO_meth_set_read_ex(3)</a> or <a href="../man3/BIO_meth_set_read.html">BIO_meth_set_read(3)</a>.</p>
+<p>If using a custom BIO, <b>rbio</b> must implement either <a href="https://man7.org/linux/man-pages/man3/BIO_meth_set_read_ex.3.html">BIO_meth_set_read_ex(3)</a> or <a href="https://man7.org/linux/man-pages/man3/BIO_meth_set_read.3.html">BIO_meth_set_read(3)</a>.</p>
 
-<p>SSL_set0_wbio() works in the same as SSL_set0_rbio() except that it connects the BIO <b>wbio</b> for the write operations of the <b>ssl</b> object. Note that if the rbio and wbio are the same then SSL_set0_rbio() and SSL_set0_wbio() each take ownership of one reference. Therefore, it may be necessary to increment the number of references available using <a href="../man3/BIO_up_ref.html">BIO_up_ref(3)</a> before calling the set0 functions.</p>
+<p>SSL_set0_wbio() works in the same as SSL_set0_rbio() except that it connects the BIO <b>wbio</b> for the write operations of the <b>ssl</b> object. Note that if the rbio and wbio are the same then SSL_set0_rbio() and SSL_set0_wbio() each take ownership of one reference. Therefore, it may be necessary to increment the number of references available using <a href="https://man7.org/linux/man-pages/man3/BIO_up_ref.3.html">BIO_up_ref(3)</a> before calling the set0 functions.</p>
 
-<p>If using a custom BIO, <b>wbio</b> must implement <a href="../man3/BIO_meth_set_write_ex.html">BIO_meth_set_write_ex(3)</a> or <a href="../man3/BIO_meth_set_write.html">BIO_meth_set_write(3)</a>. It additionally must implement <a href="../man3/BIO_flush.html">BIO_flush(3)</a> using <b>BIO_CTRL_FLUSH</b> and <a href="../man3/BIO_meth_set_ctrl.html">BIO_meth_set_ctrl(3)</a>. If flushing is unnecessary with <b>wbio</b>, <a href="../man3/BIO_flush.html">BIO_flush(3)</a> should return one and do nothing.</p>
+<p>If using a custom BIO, <b>wbio</b> must implement <a href="https://man7.org/linux/man-pages/man3/BIO_meth_set_write_ex.3.html">BIO_meth_set_write_ex(3)</a> or <a href="https://man7.org/linux/man-pages/man3/BIO_meth_set_write.3.html">BIO_meth_set_write(3)</a>. It additionally must implement <a href="https://man7.org/linux/man-pages/man3/BIO_flush.3.html">BIO_flush(3)</a> using <b>BIO_CTRL_FLUSH</b> and <a href="https://man7.org/linux/man-pages/man3/BIO_meth_set_ctrl.3.html">BIO_meth_set_ctrl(3)</a>. If flushing is unnecessary with <b>wbio</b>, <a href="https://man7.org/linux/man-pages/man3/BIO_flush.3.html">BIO_flush(3)</a> should return one and do nothing.</p>
 
 <p>SSL_set_bio() is similar to SSL_set0_rbio() and SSL_set0_wbio() except that it connects both the <b>rbio</b> and the <b>wbio</b> at the same time, and transfers the ownership of <b>rbio</b> and <b>wbio</b> to <b>ssl</b> according to the following set of rules:</p>
 
@@ -72,7 +72,7 @@ void SSL_set0_wbio(SSL *s, BIO *wbio);</code></pre>
 
 <p>Because of this complexity, this function should be avoided; use SSL_set0_rbio() and SSL_set0_wbio() instead.</p>
 
-<p>Where a new BIO is set on a QUIC connection SSL object, blocking mode will be disabled on that SSL object if the BIO cannot support blocking mode. If another BIO is subsequently set on the SSL object which can support blocking mode, blocking mode will not be automatically re-enabled. For more information, see <a href="../man3/SSL_set_blocking_mode.html">SSL_set_blocking_mode(3)</a>.</p>
+<p>Where a new BIO is set on a QUIC connection SSL object, blocking mode will be disabled on that SSL object if the BIO cannot support blocking mode. If another BIO is subsequently set on the SSL object which can support blocking mode, blocking mode will not be automatically re-enabled. For more information, see <a href="https://man7.org/linux/man-pages/man3/SSL_set_blocking_mode.3.html">SSL_set_blocking_mode(3)</a>.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -80,7 +80,7 @@ void SSL_set0_wbio(SSL *s, BIO *wbio);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/SSL_get_rbio.html">SSL_get_rbio(3)</a>, <a href="../man3/SSL_connect.html">SSL_connect(3)</a>, <a href="../man3/SSL_accept.html">SSL_accept(3)</a>, <a href="../man3/SSL_shutdown.html">SSL_shutdown(3)</a>, <a href="../man7/ssl.html">ssl(7)</a>, <a href="../man7/bio.html">bio(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/SSL_get_rbio.3.html">SSL_get_rbio(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_connect.3.html">SSL_connect(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_accept.3.html">SSL_accept(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_shutdown.3.html">SSL_shutdown(3)</a>, <a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man7/bio.7.html">bio(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

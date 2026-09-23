@@ -4,7 +4,7 @@
 <head>
 <title>RSA_print</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -29,14 +29,14 @@
 
 <pre><code>#include &lt;openssl/rsa.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int RSA_print(BIO *bp, const RSA *x, int offset);
 int RSA_print_fp(FILE *fp, const RSA *x, int offset);
 
 #include &lt;openssl/dsa.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int DSAparams_print(BIO *bp, const DSA *x);
 int DSAparams_print_fp(FILE *fp, const DSA *x);
@@ -45,14 +45,14 @@ int DSA_print_fp(FILE *fp, const DSA *x, int offset);
 
 #include &lt;openssl/dh.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int DHparams_print(BIO *bp, DH *x);
 int DHparams_print_fp(FILE *fp, const DH *x);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>All of the functions described on this page are deprecated. Applications should instead use <a href="../man3/EVP_PKEY_print_params.html">EVP_PKEY_print_params(3)</a> and <a href="../man3/EVP_PKEY_print_private.html">EVP_PKEY_print_private(3)</a>.</p>
+<p>All of the functions described on this page are deprecated. Applications should instead use <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_print_params.3.html">EVP_PKEY_print_params(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_print_private.3.html">EVP_PKEY_print_private(3)</a>.</p>
 
 <p>A human-readable hexadecimal output of the components of the RSA key, DSA parameters or key or DH parameters is printed to <b>bp</b> or <b>fp</b>.</p>
 

@@ -4,7 +4,7 @@
 <head>
 <title>BN_generate_prime</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -53,7 +53,7 @@ void BN_GENCB_set(BN_GENCB *gencb,
 
 void *BN_GENCB_get_arg(BN_GENCB *cb);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 0.9.8, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 0.9.8, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>BIGNUM *BN_generate_prime(BIGNUM *ret, int num, int safe, BIGNUM *add,
                           BIGNUM *rem, void (*callback)(int, int, void *),
@@ -66,7 +66,7 @@ int BN_is_prime_fasttest(const BIGNUM *p, int nchecks,
                          void (*callback)(int, int, void *), BN_CTX *ctx,
                          void *cb_arg, int do_trial_division);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int BN_is_prime_ex(const BIGNUM *p, int nchecks, BN_CTX *ctx, BN_GENCB *cb);
 
@@ -107,7 +107,7 @@ int BN_is_prime_fasttest_ex(const BIGNUM *p, int nchecks, BN_CTX *ctx,
 
 <p>If <b>safe</b> is true, it will be a safe prime (i.e. a prime p so that (p-1)/2 is also prime). If <b>safe</b> is true, and <b>rem</b> == <b>NULL</b> the condition will be p % <b>add</b> == 3. It is recommended that <b>add</b> is a multiple of 4.</p>
 
-<p>The random generator must be seeded prior to calling BN_generate_prime_ex(). If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="../man7/RAND.html">RAND(7)</a>), the operation will fail. The random number generator configured for the OSSL_LIB_CTX associated with <b>ctx</b> will be used.</p>
+<p>The random generator must be seeded prior to calling BN_generate_prime_ex(). If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a>), the operation will fail. The random number generator configured for the OSSL_LIB_CTX associated with <b>ctx</b> will be used.</p>
 
 <p>BN_generate_prime_ex() is the same as BN_generate_prime_ex2() except that no <b>ctx</b> parameter is passed. In this case the random number generator associated with the default OSSL_LIB_CTX will be used.</p>
 
@@ -149,7 +149,7 @@ int BN_is_prime_fasttest_ex(const BIGNUM *p, int nchecks, BN_CTX *ctx,
 
 <p>BN_is_prime_ex(), BN_is_prime_fasttest_ex(), BN_is_prime(), BN_is_prime_fasttest() and BN_check_prime return 0 if the number is composite, 1 if it is prime with an error probability of less than 0.25^<b>nchecks</b>, and -1 on error.</p>
 
-<p>BN_generate_prime() returns the prime number on success, <b>NULL</b> otherwise.</p>
+<p>BN_generate_prime() returns the prime number on success, <b>NULL</b> otherwise. Please note that the <b>ret</b> BIGNUM is freed on failure and must not be used or freed by the caller in such case.</p>
 
 <p>BN_GENCB_new returns a pointer to a BN_GENCB structure on success, or <b>NULL</b> otherwise.</p>
 
@@ -157,7 +157,7 @@ int BN_is_prime_fasttest_ex(const BIGNUM *p, int nchecks, BN_CTX *ctx,
 
 <p>Callback functions should return 1 on success or 0 on error.</p>
 
-<p>The error codes can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>The error codes can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="REMOVED-FUNCTIONALITY">REMOVED FUNCTIONALITY</h1>
 
@@ -176,7 +176,7 @@ BN_GENCB_free(callback);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/DH_generate_parameters.html">DH_generate_parameters(3)</a>, <a href="../man3/DSA_generate_parameters.html">DSA_generate_parameters(3)</a>, <a href="../man3/RSA_generate_key.html">RSA_generate_key(3)</a>, <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a>, <a href="../man7/RAND.html">RAND(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/DH_generate_parameters.3.html">DH_generate_parameters(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DSA_generate_parameters.3.html">DSA_generate_parameters(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RSA_generate_key.3.html">RSA_generate_key(3)</a>, <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a>, <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -188,7 +188,7 @@ BN_GENCB_free(callback);</code></pre>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

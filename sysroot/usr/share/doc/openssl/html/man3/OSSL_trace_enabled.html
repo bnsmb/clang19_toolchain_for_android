@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_trace_enabled</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -78,11 +78,11 @@ if (OSSL_TRACE_ENABLED(category)) {
 
 <p>If the tracing facility is enabled (see <a href="#Configure-Tracing">&quot;Configure Tracing&quot;</a> below), these functions are used to generate free text tracing output.</p>
 
-<p>The tracing output is divided into types which are enabled individually by the application. The tracing types are described in detail in <a href="../man3/OSSL_trace_set_callback.html">&quot;Trace types&quot; in OSSL_trace_set_callback(3)</a>. The fallback type <b>OSSL_TRACE_CATEGORY_ALL</b> should <i>not</i> be used with the functions described here.</p>
+<p>The tracing output is divided into types which are enabled individually by the application. The tracing types are described in detail in <a href="https://man7.org/linux/man-pages/man3/OSSL_trace_set_callback.3.html#Trace_types">&quot;Trace types&quot; in OSSL_trace_set_callback(3)</a>. The fallback type <b>OSSL_TRACE_CATEGORY_ALL</b> should <i>not</i> be used with the functions described here.</p>
 
 <p>Tracing for a specific category is enabled at run-time if a so-called <i>trace channel</i> is attached to it. A trace channel is simply a BIO object to which the application can write its trace output.</p>
 
-<p>The application has two different ways of registering a trace channel, either by directly providing a BIO object using <a href="../man3/OSSL_trace_set_channel.html">OSSL_trace_set_channel(3)</a>, or by providing a callback routine using <a href="../man3/OSSL_trace_set_callback.html">OSSL_trace_set_callback(3)</a>. The latter is wrapped internally by a dedicated BIO object, so for the tracing code both channel types are effectively indistinguishable. We call them a <i>simple trace channel</i> and a <i>callback trace channel</i>, respectively.</p>
+<p>The application has two different ways of registering a trace channel, either by directly providing a BIO object using <a href="https://man7.org/linux/man-pages/man3/OSSL_trace_set_channel.3.html">OSSL_trace_set_channel(3)</a>, or by providing a callback routine using <a href="https://man7.org/linux/man-pages/man3/OSSL_trace_set_callback.3.html">OSSL_trace_set_callback(3)</a>. The latter is wrapped internally by a dedicated BIO object, so for the tracing code both channel types are effectively indistinguishable. We call them a <i>simple trace channel</i> and a <i>callback trace channel</i>, respectively.</p>
 
 <p>To produce trace output, it is necessary to obtain a pointer to the trace channel (i.e., the BIO object) using OSSL_trace_begin(), write to it using arbitrary BIO output routines, and finally releases the channel using OSSL_trace_end(). The OSSL_trace_begin()/OSSL_trace_end() calls surrounding the trace output create a group, which acts as a critical section (guarded by a mutex) to ensure that the trace output of different threads does not get mixed up.</p>
 
@@ -90,7 +90,7 @@ if (OSSL_TRACE_ENABLED(category)) {
 
 <h2 id="Functions">Functions</h2>
 
-<p>OSSL_trace_enabled() can be used to check if tracing for the given <i>category</i> is enabled, i.e., if the tracing facility has been statically enabled (see <a href="#Configure-Tracing">&quot;Configure Tracing&quot;</a> below) and a trace channel has been registered using <a href="../man3/OSSL_trace_set_channel.html">OSSL_trace_set_channel(3)</a> or <a href="../man3/OSSL_trace_set_callback.html">OSSL_trace_set_callback(3)</a>.</p>
+<p>OSSL_trace_enabled() can be used to check if tracing for the given <i>category</i> is enabled, i.e., if the tracing facility has been statically enabled (see <a href="#Configure-Tracing">&quot;Configure Tracing&quot;</a> below) and a trace channel has been registered using <a href="https://man7.org/linux/man-pages/man3/OSSL_trace_set_channel.3.html">OSSL_trace_set_channel(3)</a> or <a href="https://man7.org/linux/man-pages/man3/OSSL_trace_set_callback.3.html">OSSL_trace_set_callback(3)</a>.</p>
 
 <p>OSSL_trace_begin() is used to start a tracing section, and get the channel for the given <i>category</i> in form of a BIO. This BIO can only be used for output. The pointer returned is NULL if the category is invalid or not enabled.</p>
 
@@ -256,7 +256,7 @@ if (OSSL_TRACE_ENABLED(category)) {
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/OSSL_trace_set_channel.html">OSSL_trace_set_channel(3)</a>, <a href="../man3/OSSL_trace_set_callback.html">OSSL_trace_set_callback(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/OSSL_trace_set_channel.3.html">OSSL_trace_set_channel(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_trace_set_callback.3.html">OSSL_trace_set_callback(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

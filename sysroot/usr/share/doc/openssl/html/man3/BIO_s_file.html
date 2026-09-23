@@ -4,7 +4,7 @@
 <head>
 <title>BIO_s_file</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -35,8 +35,8 @@ const BIO_METHOD *BIO_s_file(void);
 BIO *BIO_new_file(const char *filename, const char *mode);
 BIO *BIO_new_fp(FILE *stream, int flags);
 
-BIO_set_fp(BIO *b, FILE *fp, int flags);
-BIO_get_fp(BIO *b, FILE **fpp);
+long BIO_set_fp(BIO *b, FILE *fp, int flags);
+long BIO_get_fp(BIO *b, FILE **fpp);
 
 int BIO_read_filename(BIO *b, char *name);
 int BIO_write_filename(BIO *b, char *name);
@@ -87,7 +87,7 @@ int BIO_rw_filename(BIO *b, char *name);</code></pre>
 
 <p>BIO_new_file() and BIO_new_fp() return a file BIO or NULL if an error occurred.</p>
 
-<p>BIO_set_fp() and BIO_get_fp() return 1 for success or &lt;=0 for failure (although the current implementation never return 0).</p>
+<p>BIO_set_fp() and BIO_get_fp() return 1 for success or &lt;=0 for failure.</p>
 
 <p>BIO_seek() returns 0 for success or negative values for failure.</p>
 
@@ -143,11 +143,11 @@ BIO_free(out);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/BIO_seek.html">BIO_seek(3)</a>, <a href="../man3/BIO_tell.html">BIO_tell(3)</a>, <a href="../man3/BIO_reset.html">BIO_reset(3)</a>, <a href="../man3/BIO_flush.html">BIO_flush(3)</a>, <a href="../man3/BIO_read_ex.html">BIO_read_ex(3)</a>, <a href="../man3/BIO_write_ex.html">BIO_write_ex(3)</a>, <a href="../man3/BIO_puts.html">BIO_puts(3)</a>, <a href="../man3/BIO_gets.html">BIO_gets(3)</a>, <a href="../man3/BIO_printf.html">BIO_printf(3)</a>, <a href="../man3/BIO_set_close.html">BIO_set_close(3)</a>, <a href="../man3/BIO_get_close.html">BIO_get_close(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/BIO_seek.3.html">BIO_seek(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_tell.3.html">BIO_tell(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_reset.3.html">BIO_reset(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_flush.3.html">BIO_flush(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_read_ex.3.html">BIO_read_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_write_ex.3.html">BIO_write_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_puts.3.html">BIO_puts(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_gets.3.html">BIO_gets(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_printf.3.html">BIO_printf(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_set_close.3.html">BIO_set_close(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_get_close.3.html">BIO_get_close(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2020 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

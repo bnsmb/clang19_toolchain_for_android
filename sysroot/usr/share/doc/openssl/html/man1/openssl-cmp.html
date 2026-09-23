@@ -4,7 +4,7 @@
 <head>
 <title>openssl-cmp</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -150,11 +150,11 @@
 
 <dl>
 
-<dt id="ir---Initialization-Request">ir   - Initialization Request</dt>
+<dt id="ir---Initialization-Request">ir &#xA0; - Initialization Request</dt>
 <dd>
 
 </dd>
-<dt id="cr---Certificate-Request">cr   - Certificate Request</dt>
+<dt id="cr---Certificate-Request">cr &#xA0; - Certificate Request</dt>
 <dd>
 
 </dd>
@@ -162,11 +162,11 @@
 <dd>
 
 </dd>
-<dt id="kur---Key-Update-Request">kur   - Key Update Request</dt>
+<dt id="kur---Key-Update-Request">kur &#xA0;&#xA0;- Key Update Request</dt>
 <dd>
 
 </dd>
-<dt id="rr---Revocation-Request">rr   - Revocation Request</dt>
+<dt id="rr---Revocation-Request">rr &#xA0; - Revocation Request</dt>
 <dd>
 
 </dd>
@@ -242,7 +242,7 @@
 
 <p>Pass phrase source for the key given with the <b>-newkey</b> option. If not given here, the password will be prompted for if needed.</p>
 
-<p>For more information about the format of <i>arg</i> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>For more information about the format of <i>arg</i> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="centralkeygen"><b>-centralkeygen</b></dt>
@@ -569,7 +569,9 @@
 <dt id="no_cache_extracerts"><b>-no_cache_extracerts</b></dt>
 <dd>
 
-<p>Do not cache certificates in the extraCerts field of CMP messages received. By default, they are kept as they may be helful for validating further messages. This option applies to both CMP clients and the mock server.</p>
+<p>Do not cache certificates in the extraCerts field of CMP messages received. By default, they are kept as they may be helpful for validating further messages. This option applies to both CMP clients and the mock server.</p>
+
+<p>In any case, after successfully validating an incoming message, its protection certificate (if any) is cached for reuse with validation of subsequent messages. This is done not only for efficiency but also to eliminate the need for the sender to include its certificate and related chain in the extraCerts field of subsequent messages of the same transaction.</p>
 
 </dd>
 <dt id="srvcertout-filename"><b>-srvcertout</b> <i>filename</i></dt>
@@ -653,7 +655,7 @@
 
 <p>Provides the source of a secret value to use with MAC-based message protection. This takes precedence over the <b>-cert</b> and <b>-key</b> options. The secret is used for creating MAC-based protection of outgoing messages and for validating incoming messages that have MAC-based protection. The algorithm used by default is Password-Based Message Authentication Code (PBM) as defined in RFC 9810 section 5.1.3.1.</p>
 
-<p>For more information about the format of <i>arg</i> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>For more information about the format of <i>arg</i> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="cert-filename-uri"><b>-cert</b> <i>filename</i>|<i>uri</i></dt>
@@ -697,7 +699,7 @@
 
 <p>Pass phrase source for the private key given with the <b>-key</b> option. Also used for <b>-cert</b> and <b>-oldcert</b> in case it is an encrypted PKCS#12 file. If not given here, the password will be prompted for if needed.</p>
 
-<p>For more information about the format of <i>arg</i> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>For more information about the format of <i>arg</i> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="digest-name"><b>-digest</b> <i>name</i></dt>
@@ -747,7 +749,7 @@
 <dt id="keyform-PEM-DER-P12-ENGINE"><b>-keyform</b> <i>PEM|DER|P12|ENGINE</i></dt>
 <dd>
 
-<p>The format of the key input; unspecified by default. See <a href="../man1/openssl.html">&quot;Format Options&quot; in openssl(1)</a> for details.</p>
+<p>The format of the key input; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Format_Options">&quot;Format Options&quot; in openssl(1)</a> for details.</p>
 
 </dd>
 <dt id="otherpass-arg"><b>-otherpass</b> <i>arg</i></dt>
@@ -755,13 +757,13 @@
 
 <p>Pass phrase source for certificate given with the <b>-trusted</b>, <b>-untrusted</b>, <b>-own_trusted</b>, <b>-srvcert</b>, <b>-crlcert</b>, <b>-out_trusted</b>, <b>-extracerts</b>, <b>-srv_trusted</b>, <b>-srv_untrusted</b>, <b>-ref_cert</b>, <b>-rsp_extracerts</b>, <b>-rsp_capubs</b>, <b>-rsp_newwithnew</b>, <b>-rsp_newwithold</b>, <b>-rsp_oldwithnew</b>, <b>-tls_extra</b>, and <b>-tls_trusted</b> options. If not given here, the password will be prompted for if needed.</p>
 
-<p>For more information about the format of <i>arg</i> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>For more information about the format of <i>arg</i> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="engine-id"><b>-engine</b> <i>id</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Engine_Options">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
 
 <p>As an alternative to using this combination:</p>
 
@@ -795,7 +797,7 @@
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Provider Options&quot; in openssl(1)</a>, <a href="../man7/provider.html">provider(7)</a>, and <a href="../man7/property.html">property(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Provider_Options">&quot;Provider Options&quot; in openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, and <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>.</p>
 
 </dd>
 </dl>
@@ -807,7 +809,7 @@
 <dt id="rand-files--writerand-file"><b>-rand</b> <i>files</i>, <b>-writerand</b> <i>file</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Random_State_Options">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
 
 </dd>
 </dl>
@@ -841,7 +843,7 @@
 
 <p>Pass phrase source for client&#39;s private TLS key <b>-tls_key</b>. Also used for <b>-tls_cert</b> in case it is an encrypted PKCS#12 file. If not given here, the password will be prompted for if needed.</p>
 
-<p>For more information about the format of <i>arg</i> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>For more information about the format of <i>arg</i> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="tls_extra-filenames-uris"><b>-tls_extra</b> <i>filenames</i>|<i>uris</i></dt>
@@ -1163,7 +1165,7 @@
 <dt id="allow_proxy_certs--attime--no_check_time--check_ss_sig--crl_check--crl_check_all--explicit_policy--extended_crl--ignore_critical--inhibit_any--inhibit_map--no_alt_chains--partial_chain--policy--policy_check--policy_print--purpose--suiteB_128--suiteB_128_only--suiteB_192--trusted_first--use_deltas--auth_level--verify_depth--verify_email--verify_hostname--verify_ip--verify_name--x509_strict--issuer_checks"><b>-allow_proxy_certs</b>, <b>-attime</b>, <b>-no_check_time</b>, <b>-check_ss_sig</b>, <b>-crl_check</b>, <b>-crl_check_all</b>, <b>-explicit_policy</b>, <b>-extended_crl</b>, <b>-ignore_critical</b>, <b>-inhibit_any</b>, <b>-inhibit_map</b>, <b>-no_alt_chains</b>, <b>-partial_chain</b>, <b>-policy</b>, <b>-policy_check</b>, <b>-policy_print</b>, <b>-purpose</b>, <b>-suiteB_128</b>, <b>-suiteB_128_only</b>, <b>-suiteB_192</b>, <b>-trusted_first</b>, <b>-use_deltas</b>, <b>-auth_level</b>, <b>-verify_depth</b>, <b>-verify_email</b>, <b>-verify_hostname</b>, <b>-verify_ip</b>, <b>-verify_name</b>, <b>-x509_strict</b> <b>-issuer_checks</b></dt>
 <dd>
 
-<p>Set various options of certificate chain verification. See <a href="../man1/openssl-verification-options.html">&quot;Verification Options&quot; in openssl-verification-options(1)</a> for details.</p>
+<p>Set various options of certificate chain verification. See <a href="https://man7.org/linux/man-pages/man1/openssl-verification-options.1.html#Verification_Options">&quot;Verification Options&quot; in openssl-verification-options(1)</a> for details.</p>
 
 <p>The certificate verification options <b>-verify_hostname</b>, <b>-verify_ip</b>, and <b>-verify_email</b> only affect the certificate verification enabled via the <b>-out_trusted</b> option.</p>
 
@@ -1301,7 +1303,7 @@ openssl cmp -cmd kur -newkey cl_key_new.pem</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl-genrsa.html">openssl-genrsa(1)</a>, <a href="../man1/openssl-ecparam.html">openssl-ecparam(1)</a>, <a href="../man1/openssl-list.html">openssl-list(1)</a>, <a href="../man1/openssl-req.html">openssl-req(1)</a>, <a href="../man1/openssl-x509.html">openssl-x509(1)</a>, <a href="../man5/x509v3_config.html">x509v3_config(5)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl-genrsa.1.html">openssl-genrsa(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ecparam.1.html">openssl-ecparam(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-list.1.html">openssl-list(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-req.1.html">openssl-req(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-x509.1.html">openssl-x509(1)</a>, <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -1319,7 +1321,7 @@ openssl cmp -cmd kur -newkey cl_key_new.pem</code></pre>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2007-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2007-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

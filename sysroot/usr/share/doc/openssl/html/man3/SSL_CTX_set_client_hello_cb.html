@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set_client_hello_cb</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -47,7 +47,7 @@ int SSL_client_hello_get0_ext(SSL *s, unsigned int type, const unsigned char **o
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>SSL_CTX_set_client_hello_cb() sets the callback function, which is automatically called during the early stages of ClientHello processing on the server. The argument supplied when setting the callback is passed back to the callback at run time. A callback that returns failure (0) will cause the connection to terminate, and callbacks returning failure should indicate what alert value is to be sent in the <b>al</b> parameter. A callback may also return a negative value to suspend the handshake, and the handshake function will return immediately. <a href="../man3/SSL_get_error.html">SSL_get_error(3)</a> will return SSL_ERROR_WANT_CLIENT_HELLO_CB to indicate that the handshake was suspended. It is the job of the ClientHello callback to store information about the state of the last call if needed to continue. On the next call into the handshake function, the ClientHello callback will be called again, and, if it returns success, normal handshake processing will continue from that point.</p>
+<p>SSL_CTX_set_client_hello_cb() sets the callback function, which is automatically called during the early stages of ClientHello processing on the server. The argument supplied when setting the callback is passed back to the callback at run time. A callback that returns failure (0) will cause the connection to terminate, and callbacks returning failure should indicate what alert value is to be sent in the <b>al</b> parameter. A callback may also return a negative value to suspend the handshake, and the handshake function will return immediately. <a href="https://man7.org/linux/man-pages/man3/SSL_get_error.3.html">SSL_get_error(3)</a> will return SSL_ERROR_WANT_CLIENT_HELLO_CB to indicate that the handshake was suspended. It is the job of the ClientHello callback to store information about the state of the last call if needed to continue. On the next call into the handshake function, the ClientHello callback will be called again, and, if it returns success, normal handshake processing will continue from that point.</p>
 
 <p>SSL_client_hello_isv2() indicates whether the ClientHello was carried in a SSLv2 record and is in the SSLv2 format. The SSLv2 format has substantial differences from the normal SSLv3 format, including using three bytes per cipher suite, and not allowing extensions. Additionally, the SSLv2 format &#39;challenge&#39; field is exposed via SSL_client_hello_get0_random(), padded to SSL3_RANDOM_SIZE bytes with zeros if needed. For SSLv2 format ClientHellos, SSL_client_hello_get0_compression_methods() returns a dummy list that only includes the null compression method, since the SSLv2 format does not include a mechanism by which to negotiate compression.</p>
 
@@ -85,7 +85,7 @@ int SSL_client_hello_get0_ext(SSL *s, unsigned int type, const unsigned char **o
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_CTX_set_tlsext_servername_callback.html">SSL_CTX_set_tlsext_servername_callback(3)</a>, <a href="../man3/SSL_bytes_to_cipher_list.html">SSL_bytes_to_cipher_list(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_tlsext_servername_callback.3.html">SSL_CTX_set_tlsext_servername_callback(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_bytes_to_cipher_list.3.html">SSL_bytes_to_cipher_list(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

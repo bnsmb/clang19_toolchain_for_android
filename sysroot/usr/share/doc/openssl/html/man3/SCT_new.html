@@ -4,7 +4,7 @@
 <head>
 <title>SCT_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -161,7 +161,7 @@ int SCT_set_source(SCT *sct, sct_source_t source);</code></pre>
 
 <p>Some of the setters return int, instead of void. These will all return 1 on success, 0 on failure. They will not make changes on failure.</p>
 
-<p>All of the setters will reset the validation status of the SCT to SCT_VALIDATION_STATUS_NOT_SET (see <a href="../man3/SCT_validate.html">SCT_validate(3)</a>).</p>
+<p>All of the setters will reset the validation status of the SCT to SCT_VALIDATION_STATUS_NOT_SET (see <a href="https://man7.org/linux/man-pages/man3/SCT_validate.3.html">SCT_validate(3)</a>).</p>
 
 <p>SCT_set_source() will call SCT_set_log_entry_type() if the type of certificate the SCT was issued for can be inferred from where the SCT was found. For example, an SCT found in an X.509 extension must have been issued for a pre- certificate.</p>
 
@@ -183,7 +183,7 @@ int SCT_set_source(SCT *sct, sct_source_t source);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ct.html">ct(7)</a>, <a href="../man3/SCT_validate.html">SCT_validate(3)</a>, <a href="../man3/OBJ_nid2obj.html">OBJ_nid2obj(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ct.7.html">ct(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SCT_validate.3.html">SCT_validate(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OBJ_nid2obj.3.html">OBJ_nid2obj(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

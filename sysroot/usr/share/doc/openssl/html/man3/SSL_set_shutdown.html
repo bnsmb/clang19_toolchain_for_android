@@ -4,7 +4,7 @@
 <head>
 <title>SSL_set_shutdown</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -67,9 +67,9 @@ int SSL_get_shutdown(const SSL *ssl);</code></pre>
 
 <p>SSL_SENT_SHUTDOWN and SSL_RECEIVED_SHUTDOWN can be set at the same time.</p>
 
-<p>The shutdown state of the connection is used to determine the state of the ssl session. If the session is still open, when <a href="../man3/SSL_clear.html">SSL_clear(3)</a> or <a href="../man3/SSL_free.html">SSL_free(3)</a> is called, it is considered bad and removed according to RFC2246. The actual condition for a correctly closed session is SSL_SENT_SHUTDOWN (according to the TLS RFC, it is acceptable to only send the close_notify alert but to not wait for the peer&#39;s answer, when the underlying connection is closed). SSL_set_shutdown() can be used to set this state without sending a close alert to the peer (see <a href="../man3/SSL_shutdown.html">SSL_shutdown(3)</a>).</p>
+<p>The shutdown state of the connection is used to determine the state of the ssl session. If the session is still open, when <a href="https://man7.org/linux/man-pages/man3/SSL_clear.3.html">SSL_clear(3)</a> or <a href="https://man7.org/linux/man-pages/man3/SSL_free.3.html">SSL_free(3)</a> is called, it is considered bad and removed according to RFC2246. The actual condition for a correctly closed session is SSL_SENT_SHUTDOWN (according to the TLS RFC, it is acceptable to only send the close_notify alert but to not wait for the peer&#39;s answer, when the underlying connection is closed). SSL_set_shutdown() can be used to set this state without sending a close alert to the peer (see <a href="https://man7.org/linux/man-pages/man3/SSL_shutdown.3.html">SSL_shutdown(3)</a>).</p>
 
-<p>If a close_notify was received, SSL_RECEIVED_SHUTDOWN will be set, for setting SSL_SENT_SHUTDOWN the application must however still call <a href="../man3/SSL_shutdown.html">SSL_shutdown(3)</a> or SSL_set_shutdown() itself.</p>
+<p>If a close_notify was received, SSL_RECEIVED_SHUTDOWN will be set, for setting SSL_SENT_SHUTDOWN the application must however still call <a href="https://man7.org/linux/man-pages/man3/SSL_shutdown.3.html">SSL_shutdown(3)</a> or SSL_set_shutdown() itself.</p>
 
 <p>SSL_set_shutdown() is not supported for QUIC SSL objects.</p>
 
@@ -83,7 +83,7 @@ int SSL_get_shutdown(const SSL *ssl);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_shutdown.html">SSL_shutdown(3)</a>, <a href="../man3/SSL_CTX_set_quiet_shutdown.html">SSL_CTX_set_quiet_shutdown(3)</a>, <a href="../man3/SSL_clear.html">SSL_clear(3)</a>, <a href="../man3/SSL_free.html">SSL_free(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_shutdown.3.html">SSL_shutdown(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_quiet_shutdown.3.html">SSL_CTX_set_quiet_shutdown(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_clear.3.html">SSL_clear(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_free.3.html">SSL_free(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

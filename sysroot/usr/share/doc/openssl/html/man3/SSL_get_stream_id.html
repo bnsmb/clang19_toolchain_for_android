@@ -4,7 +4,7 @@
 <head>
 <title>SSL_get_stream_id</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -80,7 +80,7 @@ int SSL_is_stream_local(SSL *ssl);</code></pre>
 
 <p>While QUICv1 assigns specific meaning to the low two bits of a QUIC stream ID, QUIC stream IDs in future versions of QUIC are not required to have the same semantics. Do not determine stream properties using these bits. Instead, use SSL_get_stream_type() to determine the stream type and SSL_get_stream_is_local() to determine the stream initiator.</p>
 
-<p>The SSL_get_stream_type() identifies the type of a QUIC stream based on its identity, and does not indicate whether an operation can currently be successfully performed on a stream. For example, you might locally initiate a unidirectional stream, write to it, and then conclude the stream using <a href="../man3/SSL_stream_conclude.html">SSL_stream_conclude(3)</a>, meaning that it can no longer be written to, but SSL_get_stream_type() would still return <b>SSL_STREAM_TYPE_WRITE</b>. The value returned by SSL_get_stream_type() does not vary over the lifespan of a stream.</p>
+<p>The SSL_get_stream_type() identifies the type of a QUIC stream based on its identity, and does not indicate whether an operation can currently be successfully performed on a stream. For example, you might locally initiate a unidirectional stream, write to it, and then conclude the stream using <a href="https://man7.org/linux/man-pages/man3/SSL_stream_conclude.3.html">SSL_stream_conclude(3)</a>, meaning that it can no longer be written to, but SSL_get_stream_type() would still return <b>SSL_STREAM_TYPE_WRITE</b>. The value returned by SSL_get_stream_type() does not vary over the lifespan of a stream.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -92,7 +92,7 @@ int SSL_is_stream_local(SSL *ssl);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/SSL_new_stream.html">SSL_new_stream(3)</a>, <a href="../man3/SSL_accept_stream.html">SSL_accept_stream(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/SSL_new_stream.3.html">SSL_new_stream(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_accept_stream.3.html">SSL_accept_stream(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

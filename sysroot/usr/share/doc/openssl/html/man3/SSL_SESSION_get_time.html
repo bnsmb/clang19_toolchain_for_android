@@ -4,7 +4,7 @@
 <head>
 <title>SSL_SESSION_get_time</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -40,7 +40,7 @@ long SSL_set_timeout(SSL_SESSION *s, long tm);
 time_t SSL_SESSION_get_time_ex(const SSL_SESSION *s);
 time_t SSL_SESSION_set_time_ex(SSL_SESSION *s, time_t tm);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.4, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.4, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>long SSL_SESSION_get_time(const SSL_SESSION *s);
 long SSL_SESSION_set_time(SSL_SESSION *s, long tm);
@@ -63,7 +63,7 @@ long SSL_set_time(SSL_SESSION *s, long tm);</code></pre>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>Sessions are expired by examining the creation time and the timeout value. Both are set at creation time of the session to the actual time and the default timeout value at creation, respectively, as set by <a href="../man3/SSL_CTX_set_timeout.html">SSL_CTX_set_timeout(3)</a>. Using these functions it is possible to extend or shorten the lifetime of the session.</p>
+<p>Sessions are expired by examining the creation time and the timeout value. Both are set at creation time of the session to the actual time and the default timeout value at creation, respectively, as set by <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_timeout.3.html">SSL_CTX_set_timeout(3)</a>. Using these functions it is possible to extend or shorten the lifetime of the session.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -81,7 +81,7 @@ long SSL_set_time(SSL_SESSION *s, long tm);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_CTX_set_timeout.html">SSL_CTX_set_timeout(3)</a>, <a href="../man3/SSL_get_default_timeout.html">SSL_get_default_timeout(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_timeout.3.html">SSL_CTX_set_timeout(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_default_timeout.3.html">SSL_get_default_timeout(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

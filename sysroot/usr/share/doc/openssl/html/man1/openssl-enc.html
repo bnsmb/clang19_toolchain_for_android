@@ -4,7 +4,7 @@
 <head>
 <title>openssl-enc</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -82,7 +82,7 @@
 <dt id="pass-arg"><b>-pass</b> <i>arg</i></dt>
 <dd>
 
-<p>The password source. For more information about the format of <i>arg</i> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>The password source. For more information about the format of <i>arg</i> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="e"><b>-e</b></dt>
@@ -248,7 +248,7 @@
 <dt id="rand-files--writerand-file"><b>-rand</b> <i>files</i>, <b>-writerand</b> <i>file</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Random_State_Options">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
 
 </dd>
 <dt id="provider-name"><b>-provider</b> <i>name</i></dt>
@@ -266,20 +266,20 @@
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Provider Options&quot; in openssl(1)</a>, <a href="../man7/provider.html">provider(7)</a>, and <a href="../man7/property.html">property(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Provider_Options">&quot;Provider Options&quot; in openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, and <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>.</p>
 
 </dd>
 <dt id="engine-id"><b>-engine</b> <i>id</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Engine_Options">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
 
 </dd>
 </dl>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>The program can be called either as <code>openssl <i>cipher</i></code> or <code>openssl enc -<i>cipher</i></code>. The first form doesn&#39;t work with engine-provided ciphers, because this form is processed before the configuration file is read and any ENGINEs loaded. Use the <a href="../man1/openssl-list.html">openssl-list(1)</a> command to get a list of supported ciphers.</p>
+<p>The program can be called either as <code>openssl <i>cipher</i></code> or <code>openssl enc -<i>cipher</i></code>. The first form doesn&#39;t work with engine-provided ciphers, because this form is processed before the configuration file is read and any ENGINEs loaded. Use the <a href="https://man7.org/linux/man-pages/man1/openssl-list.1.html">openssl-list(1)</a> command to get a list of supported ciphers.</p>
 
 <p>Engines which provide entirely new encryption algorithms (such as the ccgost engine which provides gost89 algorithm) should be configured in the configuration file. Engines specified on the command line using <b>-engine</b> option can only be used for hardware-assisted implementations of ciphers which are supported by the OpenSSL core or another engine specified in the configuration file.</p>
 
@@ -311,7 +311,7 @@
 
 <p>Note that some of these ciphers can be disabled at compile time and some are available only if an appropriate engine is configured in the configuration file. The output when invoking this command with the <b>-list</b> option (that is <code>openssl enc -list</code>) is a list of ciphers, supported by your version of OpenSSL, including ones provided by configured engines.</p>
 
-<p>This command does not support authenticated encryption modes like CCM and GCM, and will not support such modes in the future. This is due to having to begin streaming output (e.g., to standard output when <b>-out</b> is not used) before the authentication tag could be validated. When this command is used in a pipeline, the receiving end will not be able to roll back upon authentication failure. The AEAD modes currently in common use also suffer from catastrophic failure of confidentiality and/or integrity upon reuse of key/iv/nonce, and since <b>openssl enc</b> places the entire burden of key/iv/nonce management upon the user, the risk of exposing AEAD modes is too great to allow. These key/iv/nonce management issues also affect other modes currently exposed in this command, but the failure modes are less extreme in these cases, and the functionality cannot be removed with a stable release branch. For bulk encryption of data, whether using authenticated encryption modes or other modes, <a href="../man1/openssl-cms.html">openssl-cms(1)</a> is recommended, as it provides a standard data format and performs the needed key/iv/nonce management.</p>
+<p>This command does not support authenticated encryption modes like CCM and GCM, and will not support such modes in the future. This is due to having to begin streaming output (e.g., to standard output when <b>-out</b> is not used) before the authentication tag could be validated. When this command is used in a pipeline, the receiving end will not be able to roll back upon authentication failure. The AEAD modes currently in common use also suffer from catastrophic failure of confidentiality and/or integrity upon reuse of key/iv/nonce, and since <b>openssl enc</b> places the entire burden of key/iv/nonce management upon the user, the risk of exposing AEAD modes is too great to allow. These key/iv/nonce management issues also affect other modes currently exposed in this command, but the failure modes are less extreme in these cases, and the functionality cannot be removed with a stable release branch. For bulk encryption of data, whether using authenticated encryption modes or other modes, <a href="https://man7.org/linux/man-pages/man1/openssl-cms.1.html">openssl-cms(1)</a> is recommended, as it provides a standard data format and performs the needed key/iv/nonce management.</p>
 
 <p>When enc is used with key wrapping modes the input data cannot be streamed, meaning it must be processed in a single pass. Consequently, the input data size must be less than the buffer size (-bufsize arg, default to 8*1024 bytes). The &#39;*-wrap&#39; ciphers require the input to be a multiple of 8 bytes long, because no padding is involved. The &#39;*-wrap-pad&#39; ciphers allow any input length. In both cases, no IV is needed. See example below.</p>
 
@@ -464,7 +464,7 @@ or
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl-list.html">openssl-list(1)</a>, <a href="../man3/EVP_SKEY.html">EVP_SKEY(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl-list.1.html">openssl-list(1)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_SKEY.3.html">EVP_SKEY(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

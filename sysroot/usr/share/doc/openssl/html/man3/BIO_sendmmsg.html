@@ -4,7 +4,7 @@
 <head>
 <title>BIO_sendmmsg</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -96,7 +96,7 @@ int BIO_err_is_non_fatal(unsigned int errcode);</code></pre>
 
 <p>On failure, the functions BIO_sendmmsg() and BIO_recvmmsg() return 0 and write zero to <i>msgs_processed</i>. Thus <i>msgs_processed</i> is always written regardless of the outcome of the function call.</p>
 
-<p>If BIO_sendmmsg() and BIO_recvmmsg() fail, they always raise an <b>ERR_LIB_BIO</b> error using <a href="../man3/ERR_raise.html">ERR_raise(3)</a>. Any error may be raised, but the following in particular may be noted:</p>
+<p>If BIO_sendmmsg() and BIO_recvmmsg() fail, they always raise an <b>ERR_LIB_BIO</b> error using <a href="https://man7.org/linux/man-pages/man3/ERR_raise.3.html">ERR_raise(3)</a>. Any error may be raised, but the following in particular may be noted:</p>
 
 <dl>
 
@@ -129,7 +129,7 @@ int BIO_err_is_non_fatal(unsigned int errcode);</code></pre>
 <dt id="Socket-errors">Socket errors</dt>
 <dd>
 
-<p>OS-level socket errors are reported using an error with library code <b>ERR_LIB_SYS</b>; for a packed error code <b>errcode</b> where <code>ERR_SYSTEM_ERROR(errcode) == 1</code>, the OS-level socket error code can be retrieved using <code>ERR_GET_REASON(errcode)</code>. The packed error code can be retrieved by calling <a href="../man3/ERR_peek_last_error.html">ERR_peek_last_error(3)</a> after the call to BIO_sendmmsg() or BIO_recvmmsg() returns 0.</p>
+<p>OS-level socket errors are reported using an error with library code <b>ERR_LIB_SYS</b>; for a packed error code <b>errcode</b> where <code>ERR_SYSTEM_ERROR(errcode) == 1</code>, the OS-level socket error code can be retrieved using <code>ERR_GET_REASON(errcode)</code>. The packed error code can be retrieved by calling <a href="https://man7.org/linux/man-pages/man3/ERR_peek_last_error.3.html">ERR_peek_last_error(3)</a> after the call to BIO_sendmmsg() or BIO_recvmmsg() returns 0.</p>
 
 </dd>
 <dt id="Non-fatal-errors">Non-fatal errors</dt>

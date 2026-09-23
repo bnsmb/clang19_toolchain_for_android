@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_PARAM_allocate_from_text</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -42,13 +42,13 @@ int OSSL_PARAM_allocate_from_text(OSSL_PARAM *to,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>With OpenSSL before version 3.0, parameters were passed down to or retrieved from algorithm implementations via control functions. Some of these control functions existed in variants that took string parameters, for example <a href="../man3/EVP_PKEY_CTX_ctrl_str.html">EVP_PKEY_CTX_ctrl_str(3)</a>.</p>
+<p>With OpenSSL before version 3.0, parameters were passed down to or retrieved from algorithm implementations via control functions. Some of these control functions existed in variants that took string parameters, for example <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_ctrl_str.3.html">EVP_PKEY_CTX_ctrl_str(3)</a>.</p>
 
-<p>OpenSSL 3.0 introduces a new mechanism to do the same thing with an array of parameters that contain name, value, value type and value size (see <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> for more information).</p>
+<p>OpenSSL 3.0 introduces a new mechanism to do the same thing with an array of parameters that contain name, value, value type and value size (see <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> for more information).</p>
 
 <p>OSSL_PARAM_allocate_from_text() uses <i>key</i> to look up an item in <i>paramdefs</i>. If an item was found, it converts <i>value</i> to something suitable for that item&#39;s <i>data_type</i>, and stores the result in <i>to-&gt;data</i> as well as its size in <i>to-&gt;data_size</i>. <i>to-&gt;key</i> and <i>to-&gt;data_type</i> are assigned the corresponding values from the item that was found, and <i>to-&gt;return_size</i> is set to zero.</p>
 
-<p><i>to-&gt;data</i> is always allocated using <a href="../man3/OPENSSL_zalloc.html">OPENSSL_zalloc(3)</a> and needs to be freed by the caller when it&#39;s not useful any more, using <a href="../man3/OPENSSL_free.html">OPENSSL_free(3)</a>.</p>
+<p><i>to-&gt;data</i> is always allocated using <a href="https://man7.org/linux/man-pages/man3/OPENSSL_zalloc.3.html">OPENSSL_zalloc(3)</a> and needs to be freed by the caller when it&#39;s not useful any more, using <a href="https://man7.org/linux/man-pages/man3/OPENSSL_free.3.html">OPENSSL_free(3)</a>.</p>
 
 <p>If <i>found</i> is not NULL, <i>*found</i> is set to 1 if <i>key</i> could be located in <i>paramdefs</i>, and to 0 otherwise.</p>
 
@@ -96,7 +96,7 @@ int OSSL_PARAM_allocate_from_text(OSSL_PARAM *to,
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>The parameter descriptor array comes from functions dedicated to return them. The following <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> attributes are used:</p>
+<p>The parameter descriptor array comes from functions dedicated to return them. The following <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> attributes are used:</p>
 
 <dl>
 
@@ -191,7 +191,7 @@ err:
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a>, <a href="../man3/OSSL_PARAM_int.html">OSSL_PARAM_int(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM_int.3.html">OSSL_PARAM_int(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

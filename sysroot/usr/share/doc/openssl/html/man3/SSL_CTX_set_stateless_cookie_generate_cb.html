@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set_stateless_cookie_generate_cb</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -55,13 +55,13 @@ void SSL_CTX_set_cookie_verify_cb(SSL_CTX *ctx,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>SSL_CTX_set_stateless_cookie_generate_cb() sets the callback used by <a href="../man3/SSL_stateless.html">SSL_stateless(3)</a> to generate the application-controlled portion of the cookie provided to clients in the HelloRetryRequest transmitted as a response to a ClientHello with a missing or invalid cookie. gen_stateless_cookie_cb() must write at most SSL_COOKIE_LENGTH bytes into <b>cookie</b>, and must write the number of bytes written to <b>cookie_len</b>. If a cookie cannot be generated, a zero return value can be used to abort the handshake.</p>
+<p>SSL_CTX_set_stateless_cookie_generate_cb() sets the callback used by <a href="https://man7.org/linux/man-pages/man3/SSL_stateless.3.html">SSL_stateless(3)</a> to generate the application-controlled portion of the cookie provided to clients in the HelloRetryRequest transmitted as a response to a ClientHello with a missing or invalid cookie. gen_stateless_cookie_cb() must write at most SSL_COOKIE_LENGTH bytes into <b>cookie</b>, and must write the number of bytes written to <b>cookie_len</b>. If a cookie cannot be generated, a zero return value can be used to abort the handshake.</p>
 
-<p>SSL_CTX_set_stateless_cookie_verify_cb() sets the callback used by <a href="../man3/SSL_stateless.html">SSL_stateless(3)</a> to determine whether the application-controlled portion of a ClientHello cookie is valid. The cookie data is pointed to by <b>cookie</b> and is of length <b>cookie_len</b>. A nonzero return value from verify_stateless_cookie_cb() communicates that the cookie is valid. The integrity of the entire cookie, including the application-controlled portion, is automatically verified by HMAC before verify_stateless_cookie_cb() is called.</p>
+<p>SSL_CTX_set_stateless_cookie_verify_cb() sets the callback used by <a href="https://man7.org/linux/man-pages/man3/SSL_stateless.3.html">SSL_stateless(3)</a> to determine whether the application-controlled portion of a ClientHello cookie is valid. The cookie data is pointed to by <b>cookie</b> and is of length <b>cookie_len</b>. A nonzero return value from verify_stateless_cookie_cb() communicates that the cookie is valid. The integrity of the entire cookie, including the application-controlled portion, is automatically verified by HMAC before verify_stateless_cookie_cb() is called.</p>
 
-<p>SSL_CTX_set_cookie_generate_cb() sets the callback used by <a href="../man3/DTLSv1_listen.html">DTLSv1_listen(3)</a> to generate the cookie provided to clients in the HelloVerifyRequest transmitted as a response to a ClientHello with a missing or invalid cookie. app_gen_cookie_cb() must write at most DTLS1_COOKIE_LENGTH bytes into <b>cookie</b>, and must write the number of bytes written to <b>cookie_len</b>. If a cookie cannot be generated, a zero return value can be used to abort the handshake.</p>
+<p>SSL_CTX_set_cookie_generate_cb() sets the callback used by <a href="https://man7.org/linux/man-pages/man3/DTLSv1_listen.3.html">DTLSv1_listen(3)</a> to generate the cookie provided to clients in the HelloVerifyRequest transmitted as a response to a ClientHello with a missing or invalid cookie. app_gen_cookie_cb() must write at most DTLS1_COOKIE_LENGTH bytes into <b>cookie</b>, and must write the number of bytes written to <b>cookie_len</b>. If a cookie cannot be generated, a zero return value can be used to abort the handshake.</p>
 
-<p>SSL_CTX_set_cookie_verify_cb() sets the callback used by <a href="../man3/DTLSv1_listen.html">DTLSv1_listen(3)</a> to determine whether the cookie in a ClientHello is valid. The cookie data is pointed to by <b>cookie</b> and is of length <b>cookie_len</b>. A nonzero return value from app_verify_cookie_cb() communicates that the cookie is valid. The integrity of the cookie is not verified by OpenSSL. This is an application responsibility.</p>
+<p>SSL_CTX_set_cookie_verify_cb() sets the callback used by <a href="https://man7.org/linux/man-pages/man3/DTLSv1_listen.3.html">DTLSv1_listen(3)</a> to determine whether the cookie in a ClientHello is valid. The cookie data is pointed to by <b>cookie</b> and is of length <b>cookie_len</b>. A nonzero return value from app_verify_cookie_cb() communicates that the cookie is valid. The integrity of the cookie is not verified by OpenSSL. This is an application responsibility.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -69,7 +69,7 @@ void SSL_CTX_set_cookie_verify_cb(SSL_CTX *ctx,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_stateless.html">SSL_stateless(3)</a>, <a href="../man3/DTLSv1_listen.html">DTLSv1_listen(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_stateless.3.html">SSL_stateless(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DTLSv1_listen.3.html">DTLSv1_listen(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

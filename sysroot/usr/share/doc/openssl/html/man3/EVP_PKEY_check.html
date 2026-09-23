@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY_check</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -56,7 +56,7 @@ int EVP_PKEY_pairwise_check(EVP_PKEY_CTX *ctx);</code></pre>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>Key validation used by the OpenSSL FIPS provider complies with the rules within SP800-56A and SP800-56B. For backwards compatibility reasons the OpenSSL default provider may use checks that are not as restrictive for certain key types. For further information see <a href="../man7/EVP_PKEY-DSA.html">&quot;DSA key validation&quot; in EVP_PKEY-DSA(7)</a>, <a href="../man7/EVP_PKEY-DH.html">&quot;DH key validation&quot; in EVP_PKEY-DH(7)</a>, <a href="../man7/EVP_PKEY-EC.html">&quot;EC key validation&quot; in EVP_PKEY-EC(7)</a> and <a href="../man7/EVP_PKEY-RSA.html">&quot;RSA key validation&quot; in EVP_PKEY-RSA(7)</a>.</p>
+<p>Key validation used by the OpenSSL FIPS provider complies with the rules within SP800-56A and SP800-56B. For backwards compatibility reasons the OpenSSL default provider may use checks that are not as restrictive for certain key types. For further information see <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DSA.7.html#DSA_key_validation">&quot;DSA key validation&quot; in EVP_PKEY-DSA(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DH.7.html#DH_key_validation">&quot;DH key validation&quot; in EVP_PKEY-DH(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-EC.7.html#EC_key_validation">&quot;EC key validation&quot; in EVP_PKEY-EC(7)</a> and <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-RSA.7.html#RSA_key_validation">&quot;RSA key validation&quot; in EVP_PKEY-RSA(7)</a>.</p>
 
 <p>Refer to SP800-56A and SP800-56B for rules relating to when these functions should be called during key establishment. It is not necessary to call these functions after locally calling an approved key generation method, but may be required for assurance purposes when receiving keys from a third party.</p>
 
@@ -68,7 +68,7 @@ int EVP_PKEY_pairwise_check(EVP_PKEY_CTX *ctx);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_CTX_new.html">EVP_PKEY_CTX_new(3)</a>, <a href="../man3/EVP_PKEY_fromdata.html">EVP_PKEY_fromdata(3)</a>, <a href="../man7/EVP_PKEY-DH.html">EVP_PKEY-DH(7)</a>, <a href="../man7/EVP_PKEY-FFC.html">EVP_PKEY-FFC(7)</a>, <a href="../man7/EVP_PKEY-DSA.html">EVP_PKEY-DSA(7)</a>, <a href="../man7/EVP_PKEY-EC.html">EVP_PKEY-EC(7)</a>, <a href="../man7/EVP_PKEY-RSA.html">EVP_PKEY-RSA(7)</a>,</p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_new.3.html">EVP_PKEY_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_fromdata.3.html">EVP_PKEY_fromdata(3)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DH.7.html">EVP_PKEY-DH(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-FFC.7.html">EVP_PKEY-FFC(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DSA.7.html">EVP_PKEY-DSA(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-EC.7.html">EVP_PKEY-EC(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-RSA.7.html">EVP_PKEY-RSA(7)</a>,</p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

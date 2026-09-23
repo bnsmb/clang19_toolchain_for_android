@@ -4,7 +4,7 @@
 <head>
 <title>openssl-pkcs12</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -67,7 +67,7 @@
 <dt id="passin-arg"><b>-passin</b> <i>arg</i></dt>
 <dd>
 
-<p>The password source for the input, and for encrypting any private keys that are output. For more information about the format of <b>arg</b> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>The password source for the input, and for encrypting any private keys that are output. For more information about the format of <b>arg</b> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="passout-arg"><b>-passout</b> <i>arg</i></dt>
@@ -117,7 +117,7 @@
 <dt id="engine-id"><b>-engine</b> <i>id</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Engine_Options">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
 
 </dd>
 <dt id="provider-name"><b>-provider</b> <i>name</i></dt>
@@ -135,13 +135,13 @@
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Provider Options&quot; in openssl(1)</a>, <a href="../man7/provider.html">provider(7)</a>, and <a href="../man7/property.html">property(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Provider_Options">&quot;Provider Options&quot; in openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, and <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>.</p>
 
 </dd>
 <dt id="rand-files--writerand-file"><b>-rand</b> <i>files</i>, <b>-writerand</b> <i>file</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Random_State_Options">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
 
 </dd>
 </dl>
@@ -273,7 +273,7 @@
 <dt id="passcerts-arg"><b>-passcerts</b> <i>arg</i></dt>
 <dd>
 
-<p>The password source for certificate input such as <b>-certfile</b> and <b>-untrusted</b>. For more information about the format of <b>arg</b> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>The password source for certificate input such as <b>-certfile</b> and <b>-untrusted</b>. For more information about the format of <b>arg</b> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="chain"><b>-chain</b></dt>
@@ -291,7 +291,7 @@
 <dt id="CAfile-file--no-CAfile--CApath-dir--no-CApath--CAstore-uri--no-CAstore"><b>-CAfile</b> <i>file</i>, <b>-no-CAfile</b>, <b>-CApath</b> <i>dir</i>, <b>-no-CApath</b>, <b>-CAstore</b> <i>uri</i>, <b>-no-CAstore</b></dt>
 <dd>
 
-<p>See <a href="../man1/openssl-verification-options.html">&quot;Trusted Certificate Options&quot; in openssl-verification-options(1)</a> for details.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl-verification-options.1.html#Trusted_Certificate_Options">&quot;Trusted Certificate Options&quot; in openssl-verification-options(1)</a> for details.</p>
 
 </dd>
 <dt id="name-friendlyname"><b>-name</b> <i>friendlyname</i></dt>
@@ -309,7 +309,7 @@
 <dt id="CSP-name"><b>-CSP</b> <i>name</i></dt>
 <dd>
 
-<p>Write <i>name</i> as a Microsoft CSP name. The password source for the input, and for encrypting any private keys that are output. For more information about the format of <b>arg</b> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>Write <i>name</i> as a Microsoft CSP name. The password source for the input, and for encrypting any private keys that are output. For more information about the format of <b>arg</b> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="LMK"><b>-LMK</b></dt>
@@ -402,7 +402,7 @@
 
 <p>If none of the <b>-clcerts</b>, <b>-cacerts</b> or <b>-nocerts</b> options are present then all certificates will be output in the order they appear in the input PKCS#12 files. There is no guarantee that the first certificate present is the one corresponding to the private key. Certain software which tries to get a private key and the corresponding certificate might assume that the first certificate in the file is the one corresponding to the private key, but that may not always be the case. Using the <b>-clcerts</b> option will solve this problem by only outputting the certificate corresponding to the private key. If the CA certificates are required then they can be output to a separate file using the <b>-nokeys</b> <b>-cacerts</b> options to just output CA certificates.</p>
 
-<p>The <b>-keypbe</b> and <b>-certpbe</b> algorithms allow the precise encryption algorithms for private keys and certificates to be specified. Normally the defaults are fine but occasionally software can&#39;t handle triple DES encrypted private keys, then the option <b>-keypbe</b> <i>PBE-SHA1-RC2-40</i> can be used to reduce the private key encryption to 40 bit RC2. A complete description of all algorithms is contained in <a href="../man1/openssl-pkcs8.html">openssl-pkcs8(1)</a>.</p>
+<p>The <b>-keypbe</b> and <b>-certpbe</b> algorithms allow the precise encryption algorithms for private keys and certificates to be specified. Normally the defaults are fine but occasionally software can&#39;t handle triple DES encrypted private keys, then the option <b>-keypbe</b> <i>PBE-SHA1-RC2-40</i> can be used to reduce the private key encryption to 40 bit RC2. A complete description of all algorithms is contained in <a href="https://man7.org/linux/man-pages/man1/openssl-pkcs8.1.html">openssl-pkcs8(1)</a>.</p>
 
 <p>Prior 1.1 release passwords containing non-ASCII characters were encoded in non-compliant manner, which limited interoperability, in first hand with Windows. But switching to standard-compliant password encoding poses problem accessing old data protected with broken encoding. For this reason even legacy encodings is attempted when reading the data. If you use PKCS#12 files in production application you are advised to convert the data, because implemented heuristic approach is not MT-safe, its sole goal is to facilitate the data upgrade with this command.</p>
 
@@ -443,7 +443,7 @@
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl.html">openssl(1)</a>, <a href="../man1/openssl-pkcs8.html">openssl-pkcs8(1)</a>, <a href="../man7/ossl_store-file.html">ossl_store-file(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl.1.html">openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-pkcs8.1.html">openssl-pkcs8(1)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl_store-file.7.html">ossl_store-file(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

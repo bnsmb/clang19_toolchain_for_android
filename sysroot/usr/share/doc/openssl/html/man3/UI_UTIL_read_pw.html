@@ -4,7 +4,7 @@
 <head>
 <title>UI_UTIL_read_pw</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -45,7 +45,7 @@ UI_METHOD *UI_UTIL_wrap_read_pem_callback(pem_password_cb *cb, int rwflag);</cod
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>UI_UTIL_read_pw_string() and UI_UTIL_read_pw() use default <b>UI_METHOD</b>. See <a href="../man3/UI_get_default_method.html">UI_get_default_method(3)</a> and friends for more information.</p>
+<p>UI_UTIL_read_pw_string() and UI_UTIL_read_pw() use default <b>UI_METHOD</b>. See <a href="https://man7.org/linux/man-pages/man3/UI_get_default_method.3.html">UI_get_default_method(3)</a> and friends for more information.</p>
 
 <p>The result from the <b>UI_METHOD</b> created by UI_UTIL_wrap_read_pem_callback() will generate password strings in the encoding that the given password callback generates. The default password prompting functions (apart from UI_UTIL_read_pw_string() and UI_UTIL_read_pw(), there is PEM_def_callback(), EVP_read_pw_string() and EVP_read_pw_string_min()) all use the default <b>UI_METHOD</b>.</p>
 
@@ -57,7 +57,7 @@ UI_METHOD *UI_UTIL_wrap_read_pem_callback(pem_password_cb *cb, int rwflag);</cod
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/UI_get_default_method.html">UI_get_default_method(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/UI_get_default_method.3.html">UI_get_default_method(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CONF_cmd</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -68,7 +68,7 @@ int SSL_CONF_cmd_value_type(SSL_CONF_CTX *ctx, const char *option);</code></pre>
 <dt id="comp"><b>-comp</b></dt>
 <dd>
 
-<p>Enables support for SSL/TLS compression, same as clearing <b>SSL_OP_NO_COMPRESSION</b>. This command was introduced in OpenSSL 1.1.0. As of OpenSSL 1.1.0, compression is off by default. TLS compression can only be used in security level 1 or lower. From OpenSSL 3.2.0 and above the default security level is 2, so this option will have no effect without also changing the security level. See <a href="../man3/SSL_CTX_set_security_level.html">SSL_CTX_set_security_level(3)</a>.</p>
+<p>Enables support for SSL/TLS compression, same as clearing <b>SSL_OP_NO_COMPRESSION</b>. This command was introduced in OpenSSL 1.1.0. As of OpenSSL 1.1.0, compression is off by default. TLS compression can only be used in security level 1 or lower. From OpenSSL 3.2.0 and above the default security level is 2, so this option will have no effect without also changing the security level. See <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_security_level.3.html">SSL_CTX_set_security_level(3)</a>.</p>
 
 </dd>
 <dt id="no_ticket"><b>-no_ticket</b></dt>
@@ -142,7 +142,7 @@ int SSL_CONF_cmd_value_type(SSL_CONF_CTX *ctx, const char *option);</code></pre>
 
 <p>This sets the supported signature algorithms for TLSv1.2 and TLSv1.3. For clients this value is used directly for the supported signature algorithms extension. For servers it is used to determine which signature algorithms to support.</p>
 
-<p>The <b>algs</b> argument should be a colon separated list of signature algorithms in order of decreasing preference of the form <b>algorithm+hash</b> or <b>signature_scheme</b>. For the default providers shipped with OpenSSL, <b>algorithm</b> is one of <b>RSA</b>, <b>DSA</b> or <b>ECDSA</b> and <b>hash</b> is a supported algorithm OID short name such as <b>SHA1</b>, <b>SHA224</b>, <b>SHA256</b>, <b>SHA384</b> or <b>SHA512</b>. <b>signature_scheme</b> is one of the signature schemes defined in TLSv1.3, specified using the IETF name, e.g., <b>ecdsa_secp256r1_sha256</b>, <b>ed25519</b>, or <b>rsa_pss_pss_sha256</b>. Additional providers may make available further algorithms via the TLS-SIGALG capability. Signature scheme names and public key algorithm names (but not the hash names) in the <b>algorithm+hash</b> form are case-insensitive. See <a href="../man7/provider-base.html">provider-base(7)</a>.</p>
+<p>The <b>algs</b> argument should be a colon separated list of signature algorithms in order of decreasing preference of the form <b>algorithm+hash</b> or <b>signature_scheme</b>. For the default providers shipped with OpenSSL, <b>algorithm</b> is one of <b>RSA</b>, <b>DSA</b> or <b>ECDSA</b> and <b>hash</b> is a supported algorithm OID short name such as <b>SHA1</b>, <b>SHA224</b>, <b>SHA256</b>, <b>SHA384</b> or <b>SHA512</b>. <b>signature_scheme</b> is one of the signature schemes defined in TLSv1.3, specified using the IETF name, e.g., <b>ecdsa_secp256r1_sha256</b>, <b>ed25519</b>, or <b>rsa_pss_pss_sha256</b>. Additional providers may make available further algorithms via the TLS-SIGALG capability. Signature scheme names and public key algorithm names (but not the hash names) in the <b>algorithm+hash</b> form are case-insensitive. See <a href="https://man7.org/linux/man-pages/man7/provider-base.7.html">provider-base(7)</a>.</p>
 
 <p>If this option is not set then all signature algorithms supported by all activated providers are permissible.</p>
 
@@ -173,13 +173,11 @@ int SSL_CONF_cmd_value_type(SSL_CONF_CTX *ctx, const char *option);</code></pre>
 <pre><code>$ openssl list -tls1_2 -tls-groups
 $ openssl list -tls1_3 -tls-groups</code></pre>
 
-<p>The recommended groups (in order of decreasing performance) for TLS 1.3 are presently:</p>
+<p>The recommended groups for TLS 1.3 are presently documented in the default TLS group list in the OpenSSL code base. Starting with OpenSSL 3.5, the hybrid algorithm <b>X25519MLKEM768</b> is first in this default list. It mitigates against threats from future quantum computers while still providing state-of-the-art classical key exchange protection.</p>
 
-<p><b>x25519</b>, <b>secp256r1</b>, <b>x448</b>, and <b>secp384r1</b>.</p>
+<p>Further details regarding post-quantum algorithm considerations are documented in the HISTORY section below.</p>
 
-<p>The stronger security margins of the last two, come at a significant performance penalty.</p>
-
-<p>An enriched alternative syntax, that enables clients to send multiple keyshares and allows servers to prioritise some groups over others, is described in <a href="../man3/SSL_CTX_set1_groups_list.html">SSL_CTX_set1_groups_list(3)</a>. Since TLS 1.2 has neither keyshares nor a hello retry mechanism, with TLS 1.2 the enriched syntax is ultimately equivalent to just a simple ordered list of groups, as with the simple form above.</p>
+<p>An enriched alternative syntax, that enables clients to send multiple keyshares and allows servers to prioritise some groups over others, is described in <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set1_groups_list.3.html">SSL_CTX_set1_groups_list(3)</a>. Since TLS 1.2 has neither keyshares nor a hello retry mechanism, with TLS 1.2 the enriched syntax is ultimately equivalent to just a simple ordered list of groups, as with the simple form above.</p>
 
 </dd>
 <dt id="curves-groups"><b>-curves</b> <i>groups</i></dt>
@@ -233,7 +231,7 @@ $ openssl list -tls1_3 -tls-groups</code></pre>
 <dt id="ciphersuites-1.3ciphers"><b>-ciphersuites</b> <i>1.3ciphers</i></dt>
 <dd>
 
-<p>Sets the available ciphersuites for TLSv1.3 to value. This is a colon-separated list of TLSv1.3 ciphersuite names in order of preference. This list will be combined any configured TLSv1.2 and below ciphersuites. See <a href="../man1/openssl-ciphers.html">openssl-ciphers(1)</a> for more information.</p>
+<p>Sets the available ciphersuites for TLSv1.3 to value. This is a colon-separated list of TLSv1.3 ciphersuite names in order of preference. This list will be combined any configured TLSv1.2 and below ciphersuites. See <a href="https://man7.org/linux/man-pages/man1/openssl-ciphers.1.html">openssl-ciphers(1)</a> for more information.</p>
 
 </dd>
 <dt id="min_protocol-minprot--max_protocol-maxprot"><b>-min_protocol</b> <i>minprot</i>, <b>-max_protocol</b> <i>maxprot</i></dt>
@@ -319,7 +317,7 @@ $ openssl list -tls1_3 -tls-groups</code></pre>
 <dt id="Ciphersuites"><b>Ciphersuites</b></dt>
 <dd>
 
-<p>Sets the available ciphersuites for TLSv1.3 to <b>value</b>. This is a colon-separated list of TLSv1.3 ciphersuite names in order of preference. This list will be combined any configured TLSv1.2 and below ciphersuites. See <a href="../man1/openssl-ciphers.html">openssl-ciphers(1)</a> for more information.</p>
+<p>Sets the available ciphersuites for TLSv1.3 to <b>value</b>. This is a colon-separated list of TLSv1.3 ciphersuite names in order of preference. This list will be combined any configured TLSv1.2 and below ciphersuites. See <a href="https://man7.org/linux/man-pages/man1/openssl-ciphers.1.html">openssl-ciphers(1)</a> for more information.</p>
 
 </dd>
 <dt id="Certificate"><b>Certificate</b></dt>
@@ -373,7 +371,7 @@ $ openssl list -tls1_3 -tls-groups</code></pre>
 
 <p>This sets the supported signature algorithms for TLSv1.2 and TLSv1.3. For clients this value is used directly for the supported signature algorithms extension. For servers it is used to determine which signature algorithms to support.</p>
 
-<p>The <b>value</b> argument should be a colon separated list of signature algorithms in order of decreasing preference of the form <b>algorithm+hash</b> or <b>signature_scheme</b>. For the default providers shipped with OpenSSL, <b>algorithm</b> is one of <b>RSA</b>, <b>DSA</b> or <b>ECDSA</b> and <b>hash</b> is a supported algorithm OID short name such as <b>SHA1</b>, <b>SHA224</b>, <b>SHA256</b>, <b>SHA384</b> or <b>SHA512</b>. <b>signature_scheme</b> is one of the signature schemes defined in TLSv1.3, specified using the IANA name, e.g., <b>ecdsa_secp256r1_sha256</b>, <b>ed25519</b>, or <b>rsa_pss_pss_sha256</b>. Signature scheme names and public key algorithm names (but not the hash names) in the <b>algorithm+hash</b> form are case-insensitive. Additional providers may make available further signature schemes via the TLS_SIGALG capability. See <a href="../man7/provider-base.html">&quot;CAPABILITIES&quot; in provider-base(7)</a>.</p>
+<p>The <b>value</b> argument should be a colon separated list of signature algorithms in order of decreasing preference of the form <b>algorithm+hash</b> or <b>signature_scheme</b>. For the default providers shipped with OpenSSL, <b>algorithm</b> is one of <b>RSA</b>, <b>DSA</b> or <b>ECDSA</b> and <b>hash</b> is a supported algorithm OID short name such as <b>SHA1</b>, <b>SHA224</b>, <b>SHA256</b>, <b>SHA384</b> or <b>SHA512</b>. <b>signature_scheme</b> is one of the signature schemes defined in TLSv1.3, specified using the IANA name, e.g., <b>ecdsa_secp256r1_sha256</b>, <b>ed25519</b>, or <b>rsa_pss_pss_sha256</b>. Signature scheme names and public key algorithm names (but not the hash names) in the <b>algorithm+hash</b> form are case-insensitive. Additional providers may make available further signature schemes via the TLS_SIGALG capability. See <a href="https://man7.org/linux/man-pages/man7/provider-base.7.html#CAPABILITIES">&quot;CAPABILITIES&quot; in provider-base(7)</a>.</p>
 
 <p>If this option is not set then all signature algorithms supported by all activated providers are permissible.</p>
 
@@ -400,7 +398,7 @@ $ openssl list -tls1_3 -tls-groups</code></pre>
 <pre><code>$ openssl list -tls1_2 -tls-groups
 $ openssl list -tls1_3 -tls-groups</code></pre>
 
-<p>An enriched alternative syntax, that enables clients to send multiple keyshares and allows servers to prioritise some groups over others, is described in <a href="../man3/SSL_CTX_set1_groups_list.html">SSL_CTX_set1_groups_list(3)</a>. Since TLS 1.2 has neither keyshares nor a hello retry mechanism, with TLS 1.2 the enriched syntax is ultimately equivalent to just a simple ordered list of groups, as with the simple form above.</p>
+<p>An enriched alternative syntax, that enables clients to send multiple keyshares and allows servers to prioritise some groups over others, is described in <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set1_groups_list.3.html">SSL_CTX_set1_groups_list(3)</a>. Since TLS 1.2 has neither keyshares nor a hello retry mechanism, with TLS 1.2 the enriched syntax is ultimately equivalent to just a simple ordered list of groups, as with the simple form above.</p>
 
 </dd>
 <dt id="Curves"><b>Curves</b></dt>
@@ -444,7 +442,7 @@ $ openssl list -tls1_3 -tls-groups</code></pre>
 <dt id="Options"><b>Options</b></dt>
 <dd>
 
-<p>The <b>value</b> argument is a comma separated list of various flags to set. If a flag string is preceded <b>-</b> it is disabled. See the <a href="../man3/SSL_CTX_set_options.html">SSL_CTX_set_options(3)</a> function for more details of individual options.</p>
+<p>The <b>value</b> argument is a comma separated list of various flags to set. If a flag string is preceded <b>-</b> it is disabled. See the <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_options.3.html">SSL_CTX_set_options(3)</a> function for more details of individual options.</p>
 
 <p>Each option is listed below. Where an operation is enabled by default the <b>-flag</b> syntax is needed to disable it.</p>
 
@@ -640,7 +638,7 @@ SSL_CONF_cmd(ctx, &quot;MaxProtocol&quot;, &quot;TLSv1.2&quot;);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_CONF_CTX_new.html">SSL_CONF_CTX_new(3)</a>, <a href="../man3/SSL_CONF_CTX_set_flags.html">SSL_CONF_CTX_set_flags(3)</a>, <a href="../man3/SSL_CONF_CTX_set1_prefix.html">SSL_CONF_CTX_set1_prefix(3)</a>, <a href="../man3/SSL_CONF_CTX_set_ssl_ctx.html">SSL_CONF_CTX_set_ssl_ctx(3)</a>, <a href="../man3/SSL_CONF_cmd_argv.html">SSL_CONF_cmd_argv(3)</a>, <a href="../man3/SSL_CTX_set_options.html">SSL_CTX_set_options(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CONF_CTX_new.3.html">SSL_CONF_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CONF_CTX_set_flags.3.html">SSL_CONF_CTX_set_flags(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CONF_CTX_set1_prefix.3.html">SSL_CONF_CTX_set1_prefix(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CONF_CTX_set_ssl_ctx.3.html">SSL_CONF_CTX_set_ssl_ctx(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CONF_cmd_argv.3.html">SSL_CONF_cmd_argv(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_options.3.html">SSL_CTX_set_options(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -668,7 +666,7 @@ SSL_CONF_cmd(ctx, &quot;MaxProtocol&quot;, &quot;TLSv1.2&quot;);</code></pre>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2012-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2012-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

@@ -4,7 +4,7 @@
 <head>
 <title>COMP_CTX_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -107,9 +107,9 @@ const BIO_METHOD *BIO_f_zstd(void);</code></pre>
 
 <p>Zstandard may be found at <a href="https://github.com/facebook/zstd">https://github.com/facebook/zstd</a>.</p>
 
-<p>Compression of SSL/TLS records is not recommended, as it has been shown to lead to the CRIME attack <a href="https://en.wikipedia.org/wiki/CRIME">https://en.wikipedia.org/wiki/CRIME</a>. It is disabled by default, and may be enabled by clearing the SSL_OP_NO_COMPRESSION option and setting the security level as appropriate. See the documentation for the <a href="../man3/SSL_CTX_set_options.html">SSL_CTX_set_options(3)</a> and <a href="../man3/SSL_set_options.html">SSL_set_options(3)</a> functions.</p>
+<p>Compression of SSL/TLS records is not recommended, as it has been shown to lead to the CRIME attack <a href="https://en.wikipedia.org/wiki/CRIME">https://en.wikipedia.org/wiki/CRIME</a>. It is disabled by default, and may be enabled by clearing the SSL_OP_NO_COMPRESSION option and setting the security level as appropriate. See the documentation for the <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_options.3.html">SSL_CTX_set_options(3)</a> and <a href="https://man7.org/linux/man-pages/man3/SSL_set_options.3.html">SSL_set_options(3)</a> functions.</p>
 
-<p>Compression is also used to support certificate compression as described in RFC8879 <a href="https://datatracker.ietf.org/doc/html/rfc8879">https://datatracker.ietf.org/doc/html/rfc8879</a>. It may be disabled via the SSL_OP_NO_TX_CERTIFICATE_COMPRESSION and SSL_OP_NO_RX_CERTIFICATE_COMPRESSION options of the <a href="../man3/SSL_CTX_set_options.html">SSL_CTX_set_options(3)</a> or <a href="../man3/SSL_set_options.html">SSL_set_options(3)</a> functions.</p>
+<p>Compression is also used to support certificate compression as described in RFC8879 <a href="https://datatracker.ietf.org/doc/html/rfc8879">https://datatracker.ietf.org/doc/html/rfc8879</a>. It may be disabled via the SSL_OP_NO_TX_CERTIFICATE_COMPRESSION and SSL_OP_NO_RX_CERTIFICATE_COMPRESSION options of the <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_options.3.html">SSL_CTX_set_options(3)</a> or <a href="https://man7.org/linux/man-pages/man3/SSL_set_options.3.html">SSL_set_options(3)</a> functions.</p>
 
 <p>COMP_zlib(), COMP_brotli() and COMP_zstd() are stream-based compression methods. Internal state (including compression dictionary) is maintained between calls. If an error is returned, the stream is corrupted, and should be closed.</p>
 
@@ -131,7 +131,7 @@ const BIO_METHOD *BIO_f_zstd(void);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/BIO_new.html">BIO_new(3)</a>, <a href="../man3/SSL_CTX_set_options.html">SSL_CTX_set_options(3)</a>, <a href="../man3/SSL_set_options.html">SSL_set_options(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/BIO_new.3.html">BIO_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_options.3.html">SSL_CTX_set_options(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_set_options.3.html">SSL_set_options(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

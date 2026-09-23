@@ -4,7 +4,7 @@
 <head>
 <title>X509_get0_distinguishing_id</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -49,7 +49,7 @@ void X509_REQ_set0_distinguishing_id(X509_REQ *x, ASN1_OCTET_STRING *distid);</c
 
 <p>The SM2 signature algorithm requires a Distinguishing ID value when generating and verifying a signature, but the Ddistinguishing ID may also find other uses. In the context of SM2, the Distinguishing ID is often referred to as the &quot;SM2 ID&quot;.</p>
 
-<p>For the purpose off verifying a certificate or a certification request, a Distinguishing ID may be attached to it, so functions like <a href="../man3/X509_verify.html">X509_verify(3)</a> or <a href="../man3/X509_REQ_verify.html">X509_REQ_verify(3)</a> have easy access to that identity for signature verification.</p>
+<p>For the purpose off verifying a certificate or a certification request, a Distinguishing ID may be attached to it, so functions like <a href="https://man7.org/linux/man-pages/man3/X509_verify.3.html">X509_verify(3)</a> or <a href="https://man7.org/linux/man-pages/man3/X509_REQ_verify.3.html">X509_REQ_verify(3)</a> have easy access to that identity for signature verification.</p>
 
 <p>X509_get0_distinguishing_id() gets the Distinguishing ID value of a certificate <b>x</b> by returning an <b>ASN1_OCTET_STRING</b> object which should not be freed by the caller.</p>
 
@@ -63,7 +63,7 @@ void X509_REQ_set0_distinguishing_id(X509_REQ *x, ASN1_OCTET_STRING *distid);</c
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/X509_verify.html">X509_verify(3)</a>, <a href="../man7/SM2.html">SM2(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/X509_verify.3.html">X509_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man7/SM2.7.html">SM2(7)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

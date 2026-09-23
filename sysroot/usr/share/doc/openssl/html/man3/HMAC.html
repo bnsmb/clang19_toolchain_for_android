@@ -4,7 +4,7 @@
 <head>
 <title>HMAC</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -34,7 +34,7 @@ unsigned char *HMAC(const EVP_MD *evp_md, const void *key, int key_len,
                     const unsigned char *data, size_t data_len,
                     unsigned char *md, unsigned int *md_len);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>HMAC_CTX *HMAC_CTX_new(void);
 int HMAC_CTX_reset(HMAC_CTX *ctx);
@@ -52,7 +52,7 @@ const EVP_MD *HMAC_CTX_get_md(const HMAC_CTX *ctx);
 
 size_t HMAC_size(const HMAC_CTX *e);</code></pre>
 
-<p>The following function has been deprecated since OpenSSL 1.1.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following function has been deprecated since OpenSSL 1.1.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int HMAC_Init(HMAC_CTX *ctx, const void *key, int key_len,
               const EVP_MD *md);</code></pre>
@@ -67,9 +67,9 @@ size_t HMAC_size(const HMAC_CTX *e);</code></pre>
 
 <p><i>evp_md</i> is a message digest such as EVP_sha1(), EVP_ripemd160() etc. HMAC does not support variable output length digests such as EVP_shake128() and EVP_shake256().</p>
 
-<p>HMAC() uses the default <b>OSSL_LIB_CTX</b>. Use <a href="../man3/EVP_Q_mac.html">EVP_Q_mac(3)</a> instead if a library context is required.</p>
+<p>HMAC() uses the default <b>OSSL_LIB_CTX</b>. Use <a href="https://man7.org/linux/man-pages/man3/EVP_Q_mac.3.html">EVP_Q_mac(3)</a> instead if a library context is required.</p>
 
-<p>All of the functions described below are deprecated. Applications should instead use <a href="../man3/EVP_MAC_CTX_new.html">EVP_MAC_CTX_new(3)</a>, <a href="../man3/EVP_MAC_CTX_free.html">EVP_MAC_CTX_free(3)</a>, <a href="../man3/EVP_MAC_init.html">EVP_MAC_init(3)</a>, <a href="../man3/EVP_MAC_update.html">EVP_MAC_update(3)</a> and <a href="../man3/EVP_MAC_final.html">EVP_MAC_final(3)</a> or the &#39;quick&#39; single-shot MAC function <a href="../man3/EVP_Q_mac.html">EVP_Q_mac(3)</a>.</p>
+<p>All of the functions described below are deprecated. Applications should instead use <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_new.3.html">EVP_MAC_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_free.3.html">EVP_MAC_CTX_free(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_init.3.html">EVP_MAC_init(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_update.3.html">EVP_MAC_update(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_final.3.html">EVP_MAC_final(3)</a> or the &#39;quick&#39; single-shot MAC function <a href="https://man7.org/linux/man-pages/man3/EVP_Q_mac.3.html">EVP_Q_mac(3)</a>.</p>
 
 <p>HMAC_CTX_new() creates a new HMAC_CTX in heap memory.</p>
 
@@ -91,7 +91,7 @@ size_t HMAC_size(const HMAC_CTX *e);</code></pre>
 
 <p>HMAC_CTX_copy() copies all of the internal state from <i>sctx</i> into <i>dctx</i>.</p>
 
-<p>HMAC_CTX_set_flags() applies the specified flags to the internal EVP_MD_CTXs. These flags have the same meaning as for <a href="../man3/EVP_MD_CTX_set_flags.html">EVP_MD_CTX_set_flags(3)</a>.</p>
+<p>HMAC_CTX_set_flags() applies the specified flags to the internal EVP_MD_CTXs. These flags have the same meaning as for <a href="https://man7.org/linux/man-pages/man3/EVP_MD_CTX_set_flags.3.html">EVP_MD_CTX_set_flags(3)</a>.</p>
 
 <p>HMAC_CTX_get_md() returns the EVP_MD that has previously been set for the supplied HMAC_CTX.</p>
 
@@ -115,7 +115,7 @@ size_t HMAC_size(const HMAC_CTX *e);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/SHA1.html">SHA1(3)</a>, EVP_Q_mac(3), <a href="../man7/evp.html">evp(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/SHA1.3.html">SHA1(3)</a>, EVP_Q_mac(3), <a href="https://man7.org/linux/man-pages/man7/evp.7.html">evp(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

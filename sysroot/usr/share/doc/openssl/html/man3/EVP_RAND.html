@@ -4,7 +4,7 @@
 <head>
 <title>EVP_RAND</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -104,9 +104,9 @@ int EVP_RAND_get_state(EVP_RAND_CTX *ctx);
 
 <h2 id="Algorithm-implementation-fetching">Algorithm implementation fetching</h2>
 
-<p>EVP_RAND_fetch() fetches an implementation of a RAND <i>algorithm</i>, given a library context <i>libctx</i> and a set of <i>properties</i>. See <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further information.</p>
+<p>EVP_RAND_fetch() fetches an implementation of a RAND <i>algorithm</i>, given a library context <i>libctx</i> and a set of <i>properties</i>. See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further information.</p>
 
-<p>The returned value must eventually be freed with <a href="../man3/EVP_RAND_free.html">EVP_RAND_free(3)</a>.</p>
+<p>The returned value must eventually be freed with <a href="https://man7.org/linux/man-pages/man3/EVP_RAND_free.3.html">EVP_RAND_free(3)</a>.</p>
 
 <p>EVP_RAND_up_ref() increments the reference count of an already fetched RAND.</p>
 
@@ -140,11 +140,11 @@ int EVP_RAND_get_state(EVP_RAND_CTX *ctx);
 
 <p>EVP_RAND_CTX_set_params() passes chosen parameters to the underlying context, given a context <i>ctx</i>. The set of parameters given with <i>params</i> determine exactly what parameters are passed down. Note that a parameter that is unknown in the underlying context is simply ignored. Also, what happens when a needed parameter isn&#39;t passed down is defined by the implementation.</p>
 
-<p>EVP_RAND_gettable_params() returns an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that describes the retrievable and settable parameters. EVP_RAND_gettable_params() returns parameters that can be used with EVP_RAND_get_params().</p>
+<p>EVP_RAND_gettable_params() returns an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array that describes the retrievable and settable parameters. EVP_RAND_gettable_params() returns parameters that can be used with EVP_RAND_get_params().</p>
 
-<p>EVP_RAND_gettable_ctx_params() and EVP_RAND_CTX_gettable_params() return constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> arrays that describe the retrievable parameters that can be used with EVP_RAND_CTX_get_params(). EVP_RAND_gettable_ctx_params() returns the parameters that can be retrieved from the algorithm, whereas EVP_RAND_CTX_gettable_params() returns the parameters that can be retrieved in the context&#39;s current state.</p>
+<p>EVP_RAND_gettable_ctx_params() and EVP_RAND_CTX_gettable_params() return constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> arrays that describe the retrievable parameters that can be used with EVP_RAND_CTX_get_params(). EVP_RAND_gettable_ctx_params() returns the parameters that can be retrieved from the algorithm, whereas EVP_RAND_CTX_gettable_params() returns the parameters that can be retrieved in the context&#39;s current state.</p>
 
-<p>EVP_RAND_settable_ctx_params() and EVP_RAND_CTX_settable_params() return constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> arrays that describe the settable parameters that can be used with EVP_RAND_CTX_set_params(). EVP_RAND_settable_ctx_params() returns the parameters that can be retrieved from the algorithm, whereas EVP_RAND_CTX_settable_params() returns the parameters that can be retrieved in the context&#39;s current state.</p>
+<p>EVP_RAND_settable_ctx_params() and EVP_RAND_CTX_settable_params() return constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> arrays that describe the settable parameters that can be used with EVP_RAND_CTX_set_params(). EVP_RAND_settable_ctx_params() returns the parameters that can be retrieved from the algorithm, whereas EVP_RAND_CTX_settable_params() returns the parameters that can be retrieved in the context&#39;s current state.</p>
 
 <h2 id="Information-functions">Information functions</h2>
 
@@ -291,7 +291,7 @@ int EVP_RAND_get_state(EVP_RAND_CTX *ctx);
 
 <p>An <b>EVP_RAND_CTX</b> needs to have locking enabled if it acts as the parent of more than one child and the children can be accessed concurrently. This must be done by explicitly calling EVP_RAND_enable_locking().</p>
 
-<p>The RAND life-cycle is described in <a href="../man7/life_cycle-rand.html">life_cycle-rand(7)</a>. In the future, the transitions described there will be enforced. When this is done, it will not be considered a breaking change to the API.</p>
+<p>The RAND life-cycle is described in <a href="https://man7.org/linux/man-pages/man7/life_cycle-rand.7.html">life_cycle-rand(7)</a>. In the future, the transitions described there will be enforced. When this is done, it will not be considered a breaking change to the API.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -325,7 +325,7 @@ int EVP_RAND_get_state(EVP_RAND_CTX *ctx);
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/RAND_bytes.html">RAND_bytes(3)</a>, <a href="../man7/EVP_RAND-CTR-DRBG.html">EVP_RAND-CTR-DRBG(7)</a>, <a href="../man7/EVP_RAND-HASH-DRBG.html">EVP_RAND-HASH-DRBG(7)</a>, <a href="../man7/EVP_RAND-HMAC-DRBG.html">EVP_RAND-HMAC-DRBG(7)</a>, <a href="../man7/EVP_RAND-TEST-RAND.html">EVP_RAND-TEST-RAND(7)</a>, <a href="../man7/provider-rand.html">provider-rand(7)</a>, <a href="../man7/life_cycle-rand.html">life_cycle-rand(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_RAND-CTR-DRBG.7.html">EVP_RAND-CTR-DRBG(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_RAND-HASH-DRBG.7.html">EVP_RAND-HASH-DRBG(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_RAND-HMAC-DRBG.7.html">EVP_RAND-HMAC-DRBG(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_RAND-TEST-RAND.7.html">EVP_RAND-TEST-RAND(7)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-rand.7.html">provider-rand(7)</a>, <a href="https://man7.org/linux/man-pages/man7/life_cycle-rand.7.html">life_cycle-rand(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

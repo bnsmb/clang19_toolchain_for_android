@@ -4,7 +4,7 @@
 <head>
 <title>provider-signature</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -133,19 +133,19 @@ const OSSL_PARAM * OSSL_FUNC_signature_settable_ctx_md_params(void *ctx);</code>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>This documentation is primarily aimed at provider authors. See <a href="../man7/provider.html">provider(7)</a> for further information.</p>
+<p>This documentation is primarily aimed at provider authors. See <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a> for further information.</p>
 
-<p>The signature (OSSL_OP_SIGNATURE) operation enables providers to implement signature algorithms and make them available to applications via the API functions <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a>, <a href="../man3/EVP_PKEY_verify.html">EVP_PKEY_verify(3)</a>, and <a href="../man3/EVP_PKEY_verify_recover.html">EVP_PKEY_verify_recover(3)</a> (as well as other related functions).</p>
+<p>The signature (OSSL_OP_SIGNATURE) operation enables providers to implement signature algorithms and make them available to applications via the API functions <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify.3.html">EVP_PKEY_verify(3)</a>, and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_recover.3.html">EVP_PKEY_verify_recover(3)</a> (as well as other related functions).</p>
 
-<p>All &quot;functions&quot; mentioned here are passed as function pointers between <i>libcrypto</i> and the provider in <a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> arrays via <a href="../man3/OSSL_ALGORITHM.html">OSSL_ALGORITHM(3)</a> arrays that are returned by the provider&#39;s provider_query_operation() function (see <a href="../man7/provider-base.html">&quot;Provider Functions&quot; in provider-base(7)</a>).</p>
+<p>All &quot;functions&quot; mentioned here are passed as function pointers between <i>libcrypto</i> and the provider in <a href="https://man7.org/linux/man-pages/man3/OSSL_DISPATCH.3.html">OSSL_DISPATCH(3)</a> arrays via <a href="https://man7.org/linux/man-pages/man3/OSSL_ALGORITHM.3.html">OSSL_ALGORITHM(3)</a> arrays that are returned by the provider&#39;s provider_query_operation() function (see <a href="https://man7.org/linux/man-pages/man7/provider-base.7.html#Provider_Functions">&quot;Provider Functions&quot; in provider-base(7)</a>).</p>
 
-<p>All these &quot;functions&quot; have a corresponding function type definition named <b>OSSL_FUNC_{name}_fn</b>, and a helper function to retrieve the function pointer from an <a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> element named <b>OSSL_FUNC_{name}</b>. For example, the &quot;function&quot; OSSL_FUNC_signature_newctx() has these:</p>
+<p>All these &quot;functions&quot; have a corresponding function type definition named <b>OSSL_FUNC_{name}_fn</b>, and a helper function to retrieve the function pointer from an <a href="https://man7.org/linux/man-pages/man3/OSSL_DISPATCH.3.html">OSSL_DISPATCH(3)</a> element named <b>OSSL_FUNC_{name}</b>. For example, the &quot;function&quot; OSSL_FUNC_signature_newctx() has these:</p>
 
 <pre><code>typedef void *(OSSL_FUNC_signature_newctx_fn)(void *provctx, const char *propq);
 static ossl_inline OSSL_FUNC_signature_newctx_fn
     OSSL_FUNC_signature_newctx(const OSSL_DISPATCH *opf);</code></pre>
 
-<p><a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> arrays are indexed by numbers that are provided as macros in <a href="../man7/openssl-core_dispatch.h.html">openssl-core_dispatch.h(7)</a>, as follows:</p>
+<p><a href="https://man7.org/linux/man-pages/man3/OSSL_DISPATCH.3.html">OSSL_DISPATCH(3)</a> arrays are indexed by numbers that are provided as macros in <a href="https://man7.org/linux/man-pages/man7/openssl-core_dispatch.h.7.html">openssl-core_dispatch.h(7)</a>, as follows:</p>
 
 <pre><code>OSSL_FUNC_signature_newctx                 OSSL_FUNC_SIGNATURE_NEWCTX
 OSSL_FUNC_signature_freectx                OSSL_FUNC_SIGNATURE_FREECTX
@@ -195,67 +195,67 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 <dt id="OSSL_FUNC_signature_sign_init-and-OSSL_FUNC_signature_sign">OSSL_FUNC_signature_sign_init and OSSL_FUNC_signature_sign</dt>
 <dd>
 
-<p>Used via <a href="../man3/EVP_PKEY_sign_init.html">EVP_PKEY_sign_init(3)</a> and <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a>. These functions operate on pre-digested data (the &quot;to be signed&quot; or TBS value).</p>
+<p>Used via <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign_init.3.html">EVP_PKEY_sign_init(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a>. These functions operate on pre-digested data (the &quot;to be signed&quot; or TBS value).</p>
 
 </dd>
 <dt id="OSSL_FUNC_signature_sign_message_init-and-OSSL_FUNC_signature_sign">OSSL_FUNC_signature_sign_message_init and OSSL_FUNC_signature_sign</dt>
 <dd>
 
-<p>Used via <a href="../man3/EVP_PKEY_sign_message_init.html">EVP_PKEY_sign_message_init(3)</a> and <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a> when signing a complete message. The implementation internally handles message digesting.</p>
+<p>Used via <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign_message_init.3.html">EVP_PKEY_sign_message_init(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a> when signing a complete message. The implementation internally handles message digesting.</p>
 
 </dd>
 <dt id="OSSL_FUNC_signature_sign_message_init-OSSL_FUNC_signature_sign_message_update-and-OSSL_FUNC_signature_sign_message_final">OSSL_FUNC_signature_sign_message_init, OSSL_FUNC_signature_sign_message_update and OSSL_FUNC_signature_sign_message_final</dt>
 <dd>
 
-<p>Streaming variant of message signing, used via <a href="../man3/EVP_PKEY_sign_message_init.html">EVP_PKEY_sign_message_init(3)</a>, <a href="../man3/EVP_PKEY_sign_message_update.html">EVP_PKEY_sign_message_update(3)</a>, and <a href="../man3/EVP_PKEY_sign_message_final.html">EVP_PKEY_sign_message_final(3)</a>.</p>
+<p>Streaming variant of message signing, used via <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign_message_init.3.html">EVP_PKEY_sign_message_init(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign_message_update.3.html">EVP_PKEY_sign_message_update(3)</a>, and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign_message_final.3.html">EVP_PKEY_sign_message_final(3)</a>.</p>
 
 </dd>
 <dt id="OSSL_FUNC_signature_verify_init-and-OSSL_FUNC_signature_verify">OSSL_FUNC_signature_verify_init and OSSL_FUNC_signature_verify</dt>
 <dd>
 
-<p>Used via <a href="../man3/EVP_PKEY_verify_init.html">EVP_PKEY_verify_init(3)</a> and <a href="../man3/EVP_PKEY_verify.html">EVP_PKEY_verify(3)</a>. These functions operate on pre-digested data.</p>
+<p>Used via <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_init.3.html">EVP_PKEY_verify_init(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify.3.html">EVP_PKEY_verify(3)</a>. These functions operate on pre-digested data.</p>
 
 </dd>
 <dt id="OSSL_FUNC_signature_verify_message_init-and-OSSL_FUNC_signature_verify">OSSL_FUNC_signature_verify_message_init and OSSL_FUNC_signature_verify</dt>
 <dd>
 
-<p>Used via <a href="../man3/EVP_PKEY_verify_message_init.html">EVP_PKEY_verify_message_init(3)</a> and <a href="../man3/EVP_PKEY_verify.html">EVP_PKEY_verify(3)</a> when verifying a complete message. The implementation internally handles message digesting.</p>
+<p>Used via <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_message_init.3.html">EVP_PKEY_verify_message_init(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify.3.html">EVP_PKEY_verify(3)</a> when verifying a complete message. The implementation internally handles message digesting.</p>
 
 </dd>
 <dt id="OSSL_FUNC_signature_verify_message_init-OSSL_FUNC_signature_verify_message_update-and-OSSL_FUNC_signature_verify_message_final">OSSL_FUNC_signature_verify_message_init, OSSL_FUNC_signature_verify_message_update and OSSL_FUNC_signature_verify_message_final</dt>
 <dd>
 
-<p>Streaming variant of message verification, used via <a href="../man3/EVP_PKEY_verify_message_init.html">EVP_PKEY_verify_message_init(3)</a>, <a href="../man3/EVP_PKEY_verify_message_update.html">EVP_PKEY_verify_message_update(3)</a>, and <a href="../man3/EVP_PKEY_verify_message_final.html">EVP_PKEY_verify_message_final(3)</a>.</p>
+<p>Streaming variant of message verification, used via <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_message_init.3.html">EVP_PKEY_verify_message_init(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_message_update.3.html">EVP_PKEY_verify_message_update(3)</a>, and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_message_final.3.html">EVP_PKEY_verify_message_final(3)</a>.</p>
 
 </dd>
 <dt id="OSSL_FUNC_signature_verify_recover_init-and-OSSL_FUNC_signature_verify_recover">OSSL_FUNC_signature_verify_recover_init and OSSL_FUNC_signature_verify_recover</dt>
 <dd>
 
-<p>Used via <a href="../man3/EVP_PKEY_verify_recover_init.html">EVP_PKEY_verify_recover_init(3)</a> and <a href="../man3/EVP_PKEY_verify_recover.html">EVP_PKEY_verify_recover(3)</a>. Applicable only to signature schemes that support signature recovery (such as RSA).</p>
+<p>Used via <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_recover_init.3.html">EVP_PKEY_verify_recover_init(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_recover.3.html">EVP_PKEY_verify_recover(3)</a>. Applicable only to signature schemes that support signature recovery (such as RSA).</p>
 
 </dd>
 <dt id="OSSL_FUNC_signature_digest_sign_init-OSSL_FUNC_signature_digest_sign_update-and-OSSL_FUNC_signature_digest_sign_final">OSSL_FUNC_signature_digest_sign_init, OSSL_FUNC_signature_digest_sign_update and OSSL_FUNC_signature_digest_sign_final</dt>
 <dd>
 
-<p>Streaming digest-sign variant, used via <a href="../man3/EVP_DigestSignInit.html">EVP_DigestSignInit(3)</a>, <a href="../man3/EVP_DigestSignUpdate.html">EVP_DigestSignUpdate(3)</a>, and <a href="../man3/EVP_DigestSignFinal.html">EVP_DigestSignFinal(3)</a>.</p>
+<p>Streaming digest-sign variant, used via <a href="https://man7.org/linux/man-pages/man3/EVP_DigestSignInit.3.html">EVP_DigestSignInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_DigestSignUpdate.3.html">EVP_DigestSignUpdate(3)</a>, and <a href="https://man7.org/linux/man-pages/man3/EVP_DigestSignFinal.3.html">EVP_DigestSignFinal(3)</a>.</p>
 
 </dd>
 <dt id="OSSL_FUNC_signature_digest_verify_init-OSSL_FUNC_signature_digest_verify_update-and-OSSL_FUNC_signature_digest_verify_final">OSSL_FUNC_signature_digest_verify_init, OSSL_FUNC_signature_digest_verify_update and OSSL_FUNC_signature_digest_verify_final</dt>
 <dd>
 
-<p>Streaming digest-verify variant, used via <a href="../man3/EVP_DigestVerifyInit.html">EVP_DigestVerifyInit(3)</a>, <a href="../man3/EVP_DigestVerifyUpdate.html">EVP_DigestVerifyUpdate(3)</a>, and <a href="../man3/EVP_DigestVerifyFinal.html">EVP_DigestVerifyFinal(3)</a>.</p>
+<p>Streaming digest-verify variant, used via <a href="https://man7.org/linux/man-pages/man3/EVP_DigestVerifyInit.3.html">EVP_DigestVerifyInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_DigestVerifyUpdate.3.html">EVP_DigestVerifyUpdate(3)</a>, and <a href="https://man7.org/linux/man-pages/man3/EVP_DigestVerifyFinal.3.html">EVP_DigestVerifyFinal(3)</a>.</p>
 
 </dd>
 <dt id="OSSL_FUNC_signature_digest_sign_init-and-OSSL_FUNC_signature_digest_sign">OSSL_FUNC_signature_digest_sign_init and OSSL_FUNC_signature_digest_sign</dt>
 <dd>
 
-<p>One-shot digest-sign variant, used via <a href="../man3/EVP_DigestSign.html">EVP_DigestSign(3)</a>.</p>
+<p>One-shot digest-sign variant, used via <a href="https://man7.org/linux/man-pages/man3/EVP_DigestSign.3.html">EVP_DigestSign(3)</a>.</p>
 
 </dd>
 <dt id="OSSL_FUNC_signature_digest_verify_init-and-OSSL_FUNC_signature_digest_verify">OSSL_FUNC_signature_digest_verify_init and OSSL_FUNC_signature_digest_verify</dt>
 <dd>
 
-<p>One-shot digest-verify variant, used via <a href="../man3/EVP_DigestVerify.html">EVP_DigestVerify(3)</a>.</p>
+<p>One-shot digest-verify variant, used via <a href="https://man7.org/linux/man-pages/man3/EVP_DigestVerify.3.html">EVP_DigestVerify(3)</a>.</p>
 
 </dd>
 </dl>
@@ -279,15 +279,15 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 
 <p>The OSSL_FUNC_signature_set_ctx_params() and OSSL_FUNC_signature_settable_ctx_params() functions are optional, but if one of them is provided then the other one must also be provided. The same applies to the OSSL_FUNC_signature_get_ctx_params() and OSSL_FUNC_signature_gettable_ctx_params() functions, as well as the &quot;md_params&quot; functions.</p>
 
-<p>The OSSL_FUNC_signature_dupctx() function is optional. It is not yet used by OpenSSL.</p>
+<p>The OSSL_FUNC_signature_dupctx() function is optional.</p>
 
-<p>The OSSL_FUNC_signature_query_key_types() function is optional. When present, it should return a NULL-terminated array of strings indicating the key types supported by the provider for signature operations. Otherwise the signature algorithm name must match the given key or match the default signature algorithm name of the key, both checked using <a href="../man3/EVP_SIGNATURE_is_a.html">EVP_SIGNATURE_is_a(3)</a>.</p>
+<p>The OSSL_FUNC_signature_query_key_types() function is optional. When present, it should return a NULL-terminated array of strings indicating the key types supported by the provider for signature operations. Otherwise the signature algorithm name must match the given key or match the default signature algorithm name of the key, both checked using <a href="https://man7.org/linux/man-pages/man3/EVP_SIGNATURE_is_a.3.html">EVP_SIGNATURE_is_a(3)</a>.</p>
 
-<p>A signature algorithm must also implement some mechanism for generating, loading or importing keys via the key management (OSSL_OP_KEYMGMT) operation. See <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a> for further details.</p>
+<p>A signature algorithm must also implement some mechanism for generating, loading or importing keys via the key management (OSSL_OP_KEYMGMT) operation. See <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a> for further details.</p>
 
 <h2 id="Context-Management-Functions">Context Management Functions</h2>
 
-<p>OSSL_FUNC_signature_newctx() should create and return a pointer to a provider side structure for holding context information during a signature operation. A pointer to this context will be passed back in a number of the other signature operation function calls. The parameter <i>provctx</i> is the provider context generated during provider initialisation (see <a href="../man7/provider.html">provider(7)</a>). The <i>propq</i> parameter is a property query string that may be (optionally) used by the provider during any &quot;fetches&quot; that it may perform (if it performs any).</p>
+<p>OSSL_FUNC_signature_newctx() should create and return a pointer to a provider side structure for holding context information during a signature operation. A pointer to this context will be passed back in a number of the other signature operation function calls. The parameter <i>provctx</i> is the provider context generated during provider initialisation (see <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>). The <i>propq</i> parameter is a property query string that may be (optionally) used by the provider during any &quot;fetches&quot; that it may perform (if it performs any).</p>
 
 <p>OSSL_FUNC_signature_freectx() is passed a pointer to the provider side signature context in the <i>ctx</i> parameter. This function should free any resources associated with that context.</p>
 
@@ -295,7 +295,7 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 
 <h2 id="Signing-Functions">Signing Functions</h2>
 
-<p>OSSL_FUNC_signature_sign_init() initialises a context for signing given a provider side signature context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to using OSSL_FUNC_signature_set_ctx_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>).</p>
+<p>OSSL_FUNC_signature_sign_init() initialises a context for signing given a provider side signature context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to using OSSL_FUNC_signature_set_ctx_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>).</p>
 
 <p>OSSL_FUNC_signature_sign() performs the actual signing itself. A previously initialised signature context is passed in the <i>ctx</i> parameter. The data to be signed is pointed to be the <i>tbs</i> parameter which is <i>tbslen</i> bytes long. Unless <i>sig</i> is NULL, the signature should be written to the location pointed to by the <i>sig</i> parameter and it should not exceed <i>sigsize</i> bytes in length. The length of the signature should be written to <i>*siglen</i>. If <i>sig</i> is NULL then the maximum length of the signature should be written to <i>*siglen</i>.</p>
 
@@ -303,7 +303,7 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 
 <p>These functions are suitable for providers that implement algorithms that accumulate a full message and sign the result of that accumulation, such as RSA-SHA256.</p>
 
-<p>OSSL_FUNC_signature_sign_message_init() initialises a context for signing a message given a provider side signature context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to using OSSL_FUNC_signature_set_ctx_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>).</p>
+<p>OSSL_FUNC_signature_sign_message_init() initialises a context for signing a message given a provider side signature context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to using OSSL_FUNC_signature_set_ctx_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>).</p>
 
 <p>OSSL_FUNC_signature_sign_message_update() gathers the data pointed at by <i>in</i>, which is <i>inlen</i> bytes long.</p>
 
@@ -315,7 +315,7 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 
 <h2 id="Verify-Functions">Verify Functions</h2>
 
-<p>OSSL_FUNC_signature_verify_init() initialises a context for verifying a signature given a provider side signature context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to using OSSL_FUNC_signature_set_ctx_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>).</p>
+<p>OSSL_FUNC_signature_verify_init() initialises a context for verifying a signature given a provider side signature context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to using OSSL_FUNC_signature_set_ctx_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>).</p>
 
 <p>OSSL_FUNC_signature_verify() performs the actual verification itself. A previously initialised signature context is passed in the <i>ctx</i> parameter. The data that the signature covers is pointed to be the <i>tbs</i> parameter which is <i>tbslen</i> bytes long. The signature is pointed to by the <i>sig</i> parameter which is <i>siglen</i> bytes long.</p>
 
@@ -323,7 +323,7 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 
 <p>These functions are suitable for providers that implement algorithms that accumulate a full message and verify a signature on the result of that accumulation, such as RSA-SHA256.</p>
 
-<p>OSSL_FUNC_signature_verify_message_init() initialises a context for verifying a signature on a message given a provider side signature context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to using OSSL_FUNC_signature_set_ctx_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>).</p>
+<p>OSSL_FUNC_signature_verify_message_init() initialises a context for verifying a signature on a message given a provider side signature context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to using OSSL_FUNC_signature_set_ctx_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>).</p>
 
 <p>OSSL_FUNC_signature_verify_message_update() gathers the data pointed at by <i>in</i>, which is <i>inlen</i> bytes long.</p>
 
@@ -333,13 +333,13 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 
 <h2 id="Verify-Recover-Functions">Verify Recover Functions</h2>
 
-<p>OSSL_FUNC_signature_verify_recover_init() initialises a context for recovering the signed data given a provider side signature context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to using OSSL_FUNC_signature_set_ctx_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>).</p>
+<p>OSSL_FUNC_signature_verify_recover_init() initialises a context for recovering the signed data given a provider side signature context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to using OSSL_FUNC_signature_set_ctx_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>).</p>
 
 <p>OSSL_FUNC_signature_verify_recover() performs the actual verify recover itself. A previously initialised signature context is passed in the <i>ctx</i> parameter. The signature is pointed to by the <i>sig</i> parameter which is <i>siglen</i> bytes long. Unless <i>rout</i> is NULL, the recovered data should be written to the location pointed to by <i>rout</i> which should not exceed <i>routsize</i> bytes in length. The length of the recovered data should be written to <i>*routlen</i>. If <i>rout</i> is NULL then the maximum size of the output buffer is written to the <i>routlen</i> parameter.</p>
 
 <h2 id="Digest-Sign-Functions">Digest Sign Functions</h2>
 
-<p>OSSL_FUNC_signature_digest_sign_init() initialises a context for signing given a provider side signature context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to using OSSL_FUNC_signature_set_ctx_params() and OSSL_FUNC_signature_set_ctx_md_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>). The name of the digest to be used will be in the <i>mdname</i> parameter.</p>
+<p>OSSL_FUNC_signature_digest_sign_init() initialises a context for signing given a provider side signature context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to using OSSL_FUNC_signature_set_ctx_params() and OSSL_FUNC_signature_set_ctx_md_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>). The name of the digest to be used will be in the <i>mdname</i> parameter.</p>
 
 <p>OSSL_FUNC_signature_digest_sign_update() provides data to be signed in the <i>data</i> parameter which should be of length <i>datalen</i>. A previously initialised signature context is passed in the <i>ctx</i> parameter. This function may be called multiple times to cumulatively add data to be signed.</p>
 
@@ -349,7 +349,7 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 
 <h2 id="Digest-Verify-Functions">Digest Verify Functions</h2>
 
-<p>OSSL_FUNC_signature_digest_verify_init() initialises a context for verifying given a provider side verification context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to OSSL_FUNC_signature_set_ctx_params() and OSSL_FUNC_signature_set_ctx_md_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>). The name of the digest to be used will be in the <i>mdname</i> parameter.</p>
+<p>OSSL_FUNC_signature_digest_verify_init() initialises a context for verifying given a provider side verification context in the <i>ctx</i> parameter, and a pointer to a provider key object in the <i>provkey</i> parameter. The <i>params</i>, if not NULL, should be set on the context in a manner similar to OSSL_FUNC_signature_set_ctx_params() and OSSL_FUNC_signature_set_ctx_md_params(). The key object should have been previously generated, loaded or imported into the provider using the key management (OSSL_OP_KEYMGMT) operation (see <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>). The name of the digest to be used will be in the <i>mdname</i> parameter.</p>
 
 <p>OSSL_FUNC_signature_digest_verify_update() provides data to be verified in the <i>data</i> parameter which should be of length <i>datalen</i>. A previously initialised verification context is passed in the <i>ctx</i> parameter. This function may be called multiple times to cumulatively add data to be verified.</p>
 
@@ -359,7 +359,7 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 
 <h2 id="Signature-parameters">Signature parameters</h2>
 
-<p>See <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> for further details on the parameters structure used by the OSSL_FUNC_signature_get_ctx_params() and OSSL_FUNC_signature_set_ctx_params() functions.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> for further details on the parameters structure used by the OSSL_FUNC_signature_get_ctx_params() and OSSL_FUNC_signature_set_ctx_params() functions.</p>
 
 <p>OSSL_FUNC_signature_get_ctx_params() gets signature parameters associated with the given provider side signature context <i>ctx</i> and stored them in <i>params</i>. Passing NULL for <i>params</i> should return true.</p>
 
@@ -404,7 +404,7 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 
 <p>Gets the DER-encoded AlgorithmIdentifier for the signature operation. This typically corresponds to the combination of a digest algorithm with a purely asymmetric signature algorithm, such as SHA256WithECDSA.</p>
 
-<p>The <a href="../man3/ASN1_item_sign_ctx.html">ASN1_item_sign_ctx(3)</a> function relies on this operation and is used by many other functions that sign ASN.1 structures such as X.509 certificates, certificate requests, and CRLs, as well as OCSP, CMP, and CMS messages.</p>
+<p>The <a href="https://man7.org/linux/man-pages/man3/ASN1_item_sign_ctx.3.html">ASN1_item_sign_ctx(3)</a> function relies on this operation and is used by many other functions that sign ASN.1 structures such as X.509 certificates, certificate requests, and CRLs, as well as OCSP, CMP, and CMS messages.</p>
 
 </dd>
 <dt id="nonce-type-OSSL_SIGNATURE_PARAM_NONCE_TYPE-unsigned-integer">&quot;nonce-type&quot; (<b>OSSL_SIGNATURE_PARAM_NONCE_TYPE</b>) &lt;unsigned integer&gt;</dt>
@@ -433,7 +433,7 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 <p>A getter that returns 1 if the operation is FIPS approved, or 0 otherwise. This may be used after calling either the sign or verify final functions. It may return 0 if either the &quot;digest-check&quot;, &quot;key-check&quot;, or &quot;sign-check&quot; are set to 0.</p>
 
 </dd>
-<dt id="verify-message-OSSL_SIGNATURE_PARAM_FIPS_VERIFY_MESSAGE-integer">&quot;verify-message&quot; (<b>OSSL_SIGNATURE_PARAM_FIPS_VERIFY_MESSAGE</b> &lt;integer&gt;</dt>
+<dt id="verify-message-OSSL_SIGNATURE_PARAM_FIPS_VERIFY_MESSAGE-integer">&quot;verify-message&quot; (<b>OSSL_SIGNATURE_PARAM_FIPS_VERIFY_MESSAGE</b>) &lt;integer&gt;</dt>
 <dd>
 
 <p>A getter that returns 1 if a signature verification operation acted on a raw message, or 0 if it verified a predigested message. A value of 0 indicates likely non-approved usage of the FIPS provider. This flag is set when any signature verification initialisation function is called. It is also set to 1 when any signing operation is performed to signify compliance. See FIPS 140-3 IG 2.4.B for further information.</p>
@@ -465,25 +465,25 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 </dd>
 </dl>
 
-<p>OSSL_FUNC_signature_gettable_ctx_params() and OSSL_FUNC_signature_settable_ctx_params() get a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that describes the gettable and settable parameters, i.e. parameters that can be used with OSSL_FUNC_signature_get_ctx_params() and OSSL_FUNC_signature_set_ctx_params() respectively.</p>
+<p>OSSL_FUNC_signature_gettable_ctx_params() and OSSL_FUNC_signature_settable_ctx_params() get a constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array that describes the gettable and settable parameters, i.e. parameters that can be used with OSSL_FUNC_signature_get_ctx_params() and OSSL_FUNC_signature_set_ctx_params() respectively.</p>
 
 <h2 id="MD-parameters">MD parameters</h2>
 
-<p>See <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> for further details on the parameters structure used by the OSSL_FUNC_signature_get_md_ctx_params() and OSSL_FUNC_signature_set_md_ctx_params() functions.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> for further details on the parameters structure used by the OSSL_FUNC_signature_get_md_ctx_params() and OSSL_FUNC_signature_set_md_ctx_params() functions.</p>
 
 <p>OSSL_FUNC_signature_get_md_ctx_params() gets digest parameters associated with the given provider side digest signature context <i>ctx</i> and stores them in <i>params</i>. Passing NULL for <i>params</i> should return true.</p>
 
 <p>OSSL_FUNC_signature_set_ms_ctx_params() sets the digest parameters associated with the given provider side digest signature context <i>ctx</i> to <i>params</i>. Any parameter settings are additional to any that were previously set. Passing NULL for <i>params</i> should return true.</p>
 
-<p>Parameters currently recognised by built-in signature algorithms are the same as those for built-in digest algorithms. See <a href="../man7/provider-digest.html">&quot;Digest Parameters&quot; in provider-digest(7)</a> for further information.</p>
+<p>Parameters currently recognised by built-in signature algorithms are the same as those for built-in digest algorithms. See <a href="https://man7.org/linux/man-pages/man7/provider-digest.7.html#Digest_Parameters">&quot;Digest Parameters&quot; in provider-digest(7)</a> for further information.</p>
 
-<p>OSSL_FUNC_signature_gettable_md_ctx_params() and OSSL_FUNC_signature_settable_md_ctx_params() get a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that describes the gettable and settable digest parameters, i.e. parameters that can be used with OSSL_FUNC_signature_get_md_ctx_params() and OSSL_FUNC_signature_set_md_ctx_params() respectively.</p>
+<p>OSSL_FUNC_signature_gettable_md_ctx_params() and OSSL_FUNC_signature_settable_md_ctx_params() get a constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array that describes the gettable and settable digest parameters, i.e. parameters that can be used with OSSL_FUNC_signature_get_md_ctx_params() and OSSL_FUNC_signature_set_md_ctx_params() respectively.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
 <p>OSSL_FUNC_signature_newctx() and OSSL_FUNC_signature_dupctx() should return the newly created provider side signature context, or NULL on failure.</p>
 
-<p>OSSL_FUNC_signature_gettable_ctx_params(), OSSL_FUNC_signature_settable_ctx_params(), OSSL_FUNC_signature_gettable_md_ctx_params() and OSSL_FUNC_signature_settable_md_ctx_params(), return the gettable or settable parameters in a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array.</p>
+<p>OSSL_FUNC_signature_gettable_ctx_params(), OSSL_FUNC_signature_settable_ctx_params(), OSSL_FUNC_signature_gettable_md_ctx_params() and OSSL_FUNC_signature_settable_md_ctx_params(), return the gettable or settable parameters in a constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array.</p>
 
 <p>OSSL_FUNC_signature_query_key_types() should return a NULL-terminated array of strings.</p>
 
@@ -493,7 +493,7 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/provider.html">provider(7)</a>, <a href="../man7/provider-base.html">&quot;Provider Functions&quot; in provider-base(7)</a>, <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a>, <a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a>, <a href="../man3/OSSL_ALGORITHM.html">OSSL_ALGORITHM(3)</a>, <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a>, <a href="../man3/EVP_PKEY_verify.html">EVP_PKEY_verify(3)</a>, <a href="../man3/EVP_PKEY_verify_recover.html">EVP_PKEY_verify_recover(3)</a>, <a href="../man3/EVP_SIGNATURE_is_a.html">EVP_SIGNATURE_is_a(3)</a>, <a href="../man3/ASN1_item_sign_ctx.html">ASN1_item_sign_ctx(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-base.7.html#Provider_Functions">&quot;Provider Functions&quot; in provider-base(7)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_DISPATCH.3.html">OSSL_DISPATCH(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_ALGORITHM.3.html">OSSL_ALGORITHM(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify.3.html">EVP_PKEY_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_recover.3.html">EVP_PKEY_verify_recover(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_SIGNATURE_is_a.3.html">EVP_SIGNATURE_is_a(3)</a>, <a href="https://man7.org/linux/man-pages/man3/ASN1_item_sign_ctx.3.html">ASN1_item_sign_ctx(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -507,7 +507,7 @@ OSSL_FUNC_signature_settable_ctx_md_params OSSL_FUNC_SIGNATURE_SETTABLE_CTX_MD_P
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2019-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2019-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

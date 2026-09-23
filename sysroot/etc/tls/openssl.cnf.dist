@@ -23,22 +23,12 @@ config_diagnostics = 1
 # oid_file       = $ENV::HOME/.oid
 oid_section = new_oids
 
-# When present, The `extensions` setting of the default configuration file is
-# used by the `openssl-x509(1)` "mini-CA" as a list of extensions to add to
-# each newly signed certificate.  See the descriptions of the `-extfile` and
-# `-extensions` options for details in the documentation.
-#
-# The below setting arranges for `openssl-x509(1)` to add
-# subjectKeyIdentifier and authorityKeyIdentifier extensions by default.
-#
-extensions = default_skid_akid
-
-[ default_skid_akid ]
-# Always a subjectKeyIdentifier
-subjectKeyIdentifier = hash
-# Only if the certificate is not self-signed, with the issuer+serial only as a
-# fallback if no issuer keyid is available.
-authorityKeyIdentifier = keyid:nonss,issuer:nonss
+# To use this configuration file with the "-extfile" option of the
+# "openssl x509" utility, name here the section containing the
+# X.509v3 extensions to use:
+# extensions		=
+# (Alternatively, use a configuration file that has only
+# X.509v3 extensions in its main [= default] section.)
 
 [ new_oids ]
 # We can add new OIDs in here for use by 'ca', 'req' and 'ts'.
@@ -223,7 +213,7 @@ basicConstraints=CA:FALSE
 
 # PKIX recommendations harmless if included in all certificates.
 subjectKeyIdentifier=hash
-authorityKeyIdentifier=keyid:nonss,issuer:nonss
+authorityKeyIdentifier=keyid,issuer
 
 # This stuff is for subjectAltName and issuerAltname.
 # Import the email address.
@@ -246,11 +236,16 @@ basicConstraints = CA:FALSE
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 
 [ v3_ca ]
+
+
 # Extensions for a typical CA
 
+
 # PKIX recommendation.
+
 subjectKeyIdentifier=hash
-authorityKeyIdentifier=keyid:nonss,issuer:nonss
+
+authorityKeyIdentifier=keyid:always,issuer
 
 basicConstraints = critical,CA:true
 
@@ -291,8 +286,7 @@ basicConstraints=CA:FALSE
 
 # PKIX recommendations harmless if included in all certificates.
 subjectKeyIdentifier=hash
-# The issuer of a proxy certificate should have SKID.
-authorityKeyIdentifier=keyid:always
+authorityKeyIdentifier=keyid,issuer
 
 # This stuff is for subjectAltName and issuerAltname.
 # Import the email address.
@@ -317,6 +311,7 @@ default_tsa = tsa_config1	# the default TSA section
 # These are used by the TSA reply generation only.
 dir		= ./demoCA		# TSA root directory
 serial		= $dir/tsaserial	# The current serial number (mandatory)
+crypto_device	= builtin		# OpenSSL engine to use for signing
 signer_cert	= $dir/tsacert.pem 	# The TSA signing certificate
 					# (optional)
 certs		= $dir/cacert.pem	# Certificate chain to include in reply

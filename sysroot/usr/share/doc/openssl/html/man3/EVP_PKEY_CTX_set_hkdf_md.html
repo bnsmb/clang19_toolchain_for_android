@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY_CTX_set_hkdf_md</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -57,7 +57,7 @@ int EVP_PKEY_CTX_add1_hkdf_info(EVP_PKEY_CTX *pctx, unsigned char *info,
 <dt id="EVP_PKEY_HKDEF_MODE_EXTRACT_AND_EXPAND">EVP_PKEY_HKDEF_MODE_EXTRACT_AND_EXPAND</dt>
 <dd>
 
-<p>This is the default mode. Calling <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a> on an EVP_PKEY_CTX set up for HKDF will perform an extract followed by an expand operation in one go. The derived key returned will be the result after the expand operation. The intermediate fixed-length pseudorandom key K is not returned.</p>
+<p>This is the default mode. Calling <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a> on an EVP_PKEY_CTX set up for HKDF will perform an extract followed by an expand operation in one go. The derived key returned will be the result after the expand operation. The intermediate fixed-length pseudorandom key K is not returned.</p>
 
 <p>In this mode the digest, key, salt and info values must be set before a key is derived or an error occurs.</p>
 
@@ -65,7 +65,7 @@ int EVP_PKEY_CTX_add1_hkdf_info(EVP_PKEY_CTX *pctx, unsigned char *info,
 <dt id="EVP_PKEY_HKDEF_MODE_EXTRACT_ONLY">EVP_PKEY_HKDEF_MODE_EXTRACT_ONLY</dt>
 <dd>
 
-<p>In this mode calling <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a> will just perform the extract operation. The value returned will be the intermediate fixed-length pseudorandom key K.</p>
+<p>In this mode calling <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a> will just perform the extract operation. The value returned will be the intermediate fixed-length pseudorandom key K.</p>
 
 <p>The digest, key and salt values must be set before a key is derived or an error occurs.</p>
 
@@ -73,7 +73,7 @@ int EVP_PKEY_CTX_add1_hkdf_info(EVP_PKEY_CTX *pctx, unsigned char *info,
 <dt id="EVP_PKEY_HKDEF_MODE_EXPAND_ONLY">EVP_PKEY_HKDEF_MODE_EXPAND_ONLY</dt>
 <dd>
 
-<p>In this mode calling <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a> will just perform the expand operation. The input key should be set to the intermediate fixed-length pseudorandom key K returned from a previous extract operation.</p>
+<p>In this mode calling <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a> will just perform the expand operation. The input key should be set to the intermediate fixed-length pseudorandom key K returned from a previous extract operation.</p>
 
 <p>The digest, key and info values must be set before a key is derived or an error occurs.</p>
 
@@ -90,7 +90,7 @@ int EVP_PKEY_CTX_add1_hkdf_info(EVP_PKEY_CTX *pctx, unsigned char *info,
 
 <h1 id="STRING-CTRLS">STRING CTRLS</h1>
 
-<p>HKDF also supports string based control operations via <a href="../man3/EVP_PKEY_CTX_ctrl_str.html">EVP_PKEY_CTX_ctrl_str(3)</a>. The <b>type</b> parameter &quot;md&quot; uses the supplied <b>value</b> as the name of the digest algorithm to use. The <b>type</b> parameter &quot;mode&quot; uses the values &quot;EXTRACT_AND_EXPAND&quot;, &quot;EXTRACT_ONLY&quot; and &quot;EXPAND_ONLY&quot; to determine the mode to use. The <b>type</b> parameters &quot;salt&quot;, &quot;key&quot; and &quot;info&quot; use the supplied <b>value</b> parameter as a <b>seed</b>, <b>key</b> or <b>info</b> value. The names &quot;hexsalt&quot;, &quot;hexkey&quot; and &quot;hexinfo&quot; are similar except they take a hex string which is converted to binary.</p>
+<p>HKDF also supports string based control operations via <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_ctrl_str.3.html">EVP_PKEY_CTX_ctrl_str(3)</a>. The <b>type</b> parameter &quot;md&quot; uses the supplied <b>value</b> as the name of the digest algorithm to use. The <b>type</b> parameter &quot;mode&quot; uses the values &quot;EXTRACT_AND_EXPAND&quot;, &quot;EXTRACT_ONLY&quot; and &quot;EXPAND_ONLY&quot; to determine the mode to use. The <b>type</b> parameters &quot;salt&quot;, &quot;key&quot; and &quot;info&quot; use the supplied <b>value</b> parameter as a <b>seed</b>, <b>key</b> or <b>info</b> value. The names &quot;hexsalt&quot;, &quot;hexkey&quot; and &quot;hexinfo&quot; are similar except they take a hex string which is converted to binary.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -100,7 +100,7 @@ int EVP_PKEY_CTX_add1_hkdf_info(EVP_PKEY_CTX *pctx, unsigned char *info,
 
 <p>The total length of the info buffer cannot exceed 2048 bytes in length: this should be more than enough for any normal use of HKDF.</p>
 
-<p>The output length of an HKDF expand operation is specified via the length parameter to the <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a> function. Since the HKDF output length is variable, passing a <b>NULL</b> buffer as a means to obtain the requisite length is not meaningful with HKDF in any mode that performs an expand operation. Instead, the caller must allocate a buffer of the desired length, and pass that buffer to <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a> along with (a pointer initialized to) the desired length. Passing a <b>NULL</b> buffer to obtain the length is allowed when using EVP_PKEY_HKDEF_MODE_EXTRACT_ONLY.</p>
+<p>The output length of an HKDF expand operation is specified via the length parameter to the <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a> function. Since the HKDF output length is variable, passing a <b>NULL</b> buffer as a means to obtain the requisite length is not meaningful with HKDF in any mode that performs an expand operation. Instead, the caller must allocate a buffer of the desired length, and pass that buffer to <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a> along with (a pointer initialized to) the desired length. Passing a <b>NULL</b> buffer to obtain the length is allowed when using EVP_PKEY_HKDEF_MODE_EXTRACT_ONLY.</p>
 
 <p>Optimised versions of HKDF can be implemented in an ENGINE.</p>
 
@@ -136,7 +136,7 @@ if (EVP_PKEY_derive(pctx, out, &amp;outlen) &lt;= 0)
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_CTX_new.html">EVP_PKEY_CTX_new(3)</a>, <a href="../man3/EVP_PKEY_CTX_ctrl_str.html">EVP_PKEY_CTX_ctrl_str(3)</a>, <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_new.3.html">EVP_PKEY_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_ctrl_str.3.html">EVP_PKEY_CTX_ctrl_str(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

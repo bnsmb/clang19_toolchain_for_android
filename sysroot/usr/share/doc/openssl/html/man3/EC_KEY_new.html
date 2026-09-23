@@ -4,7 +4,7 @@
 <head>
 <title>EC_KEY_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -31,7 +31,7 @@
 
 EVP_PKEY *EVP_EC_gen(const char *curve);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>EC_KEY *EC_KEY_new_ex(OSSL_LIB_CTX *ctx, const char *propq);
 EC_KEY *EC_KEY_new(void);
@@ -76,13 +76,13 @@ int EC_KEY_precompute_mult(EC_KEY *key, BN_CTX *ctx);</code></pre>
 
 <p>EVP_EC_gen() generates a new EC key pair on the given <i>curve</i>.</p>
 
-<p>All of the functions described below are deprecated. Applications should instead use EVP_EC_gen(), <a href="../man3/EVP_PKEY_Q_keygen.html">EVP_PKEY_Q_keygen(3)</a>, or <a href="../man3/EVP_PKEY_keygen_init.html">EVP_PKEY_keygen_init(3)</a> and <a href="../man3/EVP_PKEY_keygen.html">EVP_PKEY_keygen(3)</a>.</p>
+<p>All of the functions described below are deprecated. Applications should instead use EVP_EC_gen(), <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_Q_keygen.3.html">EVP_PKEY_Q_keygen(3)</a>, or <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_keygen_init.3.html">EVP_PKEY_keygen_init(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_keygen.3.html">EVP_PKEY_keygen(3)</a>.</p>
 
-<p>An EC_KEY represents a public key and, optionally, the associated private key. A new EC_KEY with no associated curve can be constructed by calling EC_KEY_new_ex() and specifying the associated library context in <i>ctx</i> (see <a href="../man3/OSSL_LIB_CTX.html">OSSL_LIB_CTX(3)</a>) and property query string <i>propq</i>. The <i>ctx</i> parameter may be NULL in which case the default library context is used. The reference count for the newly created EC_KEY is initially set to 1. A curve can be associated with the EC_KEY by calling EC_KEY_set_group().</p>
+<p>An EC_KEY represents a public key and, optionally, the associated private key. A new EC_KEY with no associated curve can be constructed by calling EC_KEY_new_ex() and specifying the associated library context in <i>ctx</i> (see <a href="https://man7.org/linux/man-pages/man3/OSSL_LIB_CTX.3.html">OSSL_LIB_CTX(3)</a>) and property query string <i>propq</i>. The <i>ctx</i> parameter may be NULL in which case the default library context is used. The reference count for the newly created EC_KEY is initially set to 1. A curve can be associated with the EC_KEY by calling EC_KEY_set_group().</p>
 
 <p>EC_KEY_new() is the same as EC_KEY_new_ex() except that the default library context is always used.</p>
 
-<p>Alternatively a new EC_KEY can be constructed by calling EC_KEY_new_by_curve_name_ex() and supplying the nid of the associated curve, the library context to be used <i>ctx</i> (see <a href="../man3/OSSL_LIB_CTX.html">OSSL_LIB_CTX(3)</a>) and any property query string <i>propq</i>. The <i>ctx</i> parameter may be NULL in which case the default library context is used. The <i>propq</i> value may also be NULL. See <a href="../man3/EC_GROUP_new.html">EC_GROUP_new(3)</a> for a description of curve names. This function simply wraps calls to EC_KEY_new_ex() and EC_GROUP_new_by_curve_name_ex().</p>
+<p>Alternatively a new EC_KEY can be constructed by calling EC_KEY_new_by_curve_name_ex() and supplying the nid of the associated curve, the library context to be used <i>ctx</i> (see <a href="https://man7.org/linux/man-pages/man3/OSSL_LIB_CTX.3.html">OSSL_LIB_CTX(3)</a>) and any property query string <i>propq</i>. The <i>ctx</i> parameter may be NULL in which case the default library context is used. The <i>propq</i> value may also be NULL. See <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_new.3.html">EC_GROUP_new(3)</a> for a description of curve names. This function simply wraps calls to EC_KEY_new_ex() and EC_GROUP_new_by_curve_name_ex().</p>
 
 <p>EC_KEY_new_by_curve_name() is the same as EC_KEY_new_by_curve_name_ex() except that the default library context is always used and a NULL property query string.</p>
 
@@ -104,15 +104,15 @@ int EC_KEY_precompute_mult(EC_KEY *key, BN_CTX *ctx);</code></pre>
 
 <p>The functions EC_KEY_get0_group(), EC_KEY_set_group(), EC_KEY_get0_private_key(), EC_KEY_set_private_key(), EC_KEY_get0_public_key(), and EC_KEY_set_public_key() get and set the EC_GROUP object, the private key, and the EC_POINT public key for the <b>key</b> respectively. The function EC_KEY_set_private_key() accepts NULL as the priv_key argument to securely clear the private key component from the EC_KEY.</p>
 
-<p>The functions EC_KEY_get_conv_form() and EC_KEY_set_conv_form() get and set the point_conversion_form for the <i>key</i>. For a description of point_conversion_forms please see <a href="../man3/EC_POINT_new.html">EC_POINT_new(3)</a>.</p>
+<p>The functions EC_KEY_get_conv_form() and EC_KEY_set_conv_form() get and set the point_conversion_form for the <i>key</i>. For a description of point_conversion_forms please see <a href="https://man7.org/linux/man-pages/man3/EC_POINT_new.3.html">EC_POINT_new(3)</a>.</p>
 
 <p>EC_KEY_set_flags() sets the flags in the <i>flags</i> parameter on the EC_KEY object. Any flags that are already set are left set. The flags currently defined are EC_FLAG_NON_FIPS_ALLOW and EC_FLAG_FIPS_CHECKED. In addition there is the flag EC_FLAG_COFACTOR_ECDH which is specific to ECDH. EC_KEY_get_flags() returns the current flags that are set for this EC_KEY. EC_KEY_clear_flags() clears the flags indicated by the <i>flags</i> parameter; all other flags are left in their existing state.</p>
 
-<p>EC_KEY_set_asn1_flag() sets the asn1_flag on the underlying EC_GROUP object (if set). Refer to <a href="../man3/EC_GROUP_copy.html">EC_GROUP_copy(3)</a> for further information on the asn1_flag.</p>
+<p>EC_KEY_set_asn1_flag() sets the asn1_flag on the underlying EC_GROUP object (if set). Refer to <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_copy.3.html">EC_GROUP_copy(3)</a> for further information on the asn1_flag.</p>
 
 <p>EC_KEY_decoded_from_explicit_params() returns 1 if the group of the <i>key</i> was decoded from data with explicitly encoded group parameters, -1 if the <i>key</i> is NULL or the group parameters are missing, and 0 otherwise.</p>
 
-<p>EC_KEY_precompute_mult() stores multiples of the underlying EC_GROUP generator for faster point multiplication. See also <a href="../man3/EC_POINT_add.html">EC_POINT_add(3)</a>. Modern versions should instead switch to named curves which OpenSSL has hardcoded lookup tables for.</p>
+<p>EC_KEY_precompute_mult() stores multiples of the underlying EC_GROUP generator for faster point multiplication. See also <a href="https://man7.org/linux/man-pages/man3/EC_POINT_add.3.html">EC_POINT_add(3)</a>. Modern versions should instead switch to named curves which OpenSSL has hardcoded lookup tables for.</p>
 
 <p>EC_KEY_oct2key() and EC_KEY_key2buf() are identical to the functions EC_POINT_oct2point() and EC_POINT_point2buf() except they use the public key EC_POINT in <i>eckey</i>.</p>
 
@@ -148,11 +148,11 @@ int EC_KEY_precompute_mult(EC_KEY *key, BN_CTX *ctx);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_Q_keygen.html">EVP_PKEY_Q_keygen(3)</a> <a href="../man7/crypto.html">crypto(7)</a>, <a href="../man3/EC_GROUP_new.html">EC_GROUP_new(3)</a>, <a href="../man3/EC_GROUP_copy.html">EC_GROUP_copy(3)</a>, <a href="../man3/EC_POINT_new.html">EC_POINT_new(3)</a>, <a href="../man3/EC_POINT_add.html">EC_POINT_add(3)</a>, <a href="../man3/EC_GFp_simple_method.html">EC_GFp_simple_method(3)</a>, <a href="../man3/d2i_ECPKParameters.html">d2i_ECPKParameters(3)</a>, <a href="../man3/OSSL_LIB_CTX.html">OSSL_LIB_CTX(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_Q_keygen.3.html">EVP_PKEY_Q_keygen(3)</a> <a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_new.3.html">EC_GROUP_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_copy.3.html">EC_GROUP_copy(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_POINT_new.3.html">EC_POINT_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_POINT_add.3.html">EC_POINT_add(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_GFp_simple_method.3.html">EC_GFp_simple_method(3)</a>, <a href="https://man7.org/linux/man-pages/man3/d2i_ECPKParameters.3.html">d2i_ECPKParameters(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_LIB_CTX.3.html">OSSL_LIB_CTX(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
-<p>EVP_EC_gen() was added in OpenSSL 3.0. All other functions described here were deprecated in OpenSSL 3.0. For replacement see <a href="../man7/EVP_PKEY-EC.html">EVP_PKEY-EC(7)</a>.</p>
+<p>EVP_EC_gen() was added in OpenSSL 3.0. All other functions described here were deprecated in OpenSSL 3.0. For replacement see <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-EC.7.html">EVP_PKEY-EC(7)</a>.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

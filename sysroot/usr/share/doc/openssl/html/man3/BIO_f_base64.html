@@ -4,7 +4,7 @@
 <head>
 <title>BIO_f_base64</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -44,9 +44,9 @@ const BIO_METHOD *BIO_f_base64(void);</code></pre>
 
 <p>For reading, the first line of base64 content should be at most 1024 bytes long including newline unless the flag <b>BIO_FLAGS_BASE64_NO_NL</b> is set. Subsequent input lines can be of any length (i.e., newlines may appear anywhere in the input) and a newline at the end of input is not needed.</p>
 
-<p>Also when reading, unless the flag <b>BIO_FLAGS_BASE64_NO_NL</b> is set, initial lines that contain non-base64 content (whitespace is tolerated and ignored) are skipped, as are lines longer than 1024 bytes. Decoding starts with the first line that is shorter than 1024 bytes (including the newline) and consists of only (at least one) valid base64 characters plus optional whitespace. Decoding stops when base64 padding is encountered, a soft end-of-input character (<b>-</b>, see <a href="../man3/EVP_DecodeUpdate.html">EVP_DecodeUpdate(3)</a>) occurs as the first byte after a complete group of 4 valid base64 characters is decoded, or when an error occurs (e.g. due to input characters other than valid base64 or whitespace).</p>
+<p>Also when reading, unless the flag <b>BIO_FLAGS_BASE64_NO_NL</b> is set, initial lines that contain non-base64 content (whitespace is tolerated and ignored) are skipped, as are lines longer than 1024 bytes. Decoding starts with the first line that is shorter than 1024 bytes (including the newline) and consists of only (at least one) valid base64 characters plus optional whitespace. Decoding stops when base64 padding is encountered, a soft end-of-input character (<b>-</b>, see <a href="https://man7.org/linux/man-pages/man3/EVP_DecodeUpdate.3.html">EVP_DecodeUpdate(3)</a>) occurs as the first byte after a complete group of 4 valid base64 characters is decoded, or when an error occurs (e.g. due to input characters other than valid base64 or whitespace).</p>
 
-<p>If decoding stops as a result of an error, the first <a href="../man3/BIO_read.html">BIO_read(3)</a> that returns no decoded data will typically return a negative result, rather than 0 (which indicates normal end of input). However, a negative return value can also occur if the underlying BIO supports retries, see <a href="../man3/BIO_should_read.html">BIO_should_read(3)</a> and <a href="../man3/BIO_set_mem_eof_return.html">BIO_set_mem_eof_return(3)</a>.</p>
+<p>If decoding stops as a result of an error, the first <a href="https://man7.org/linux/man-pages/man3/BIO_read.3.html">BIO_read(3)</a> that returns no decoded data will typically return a negative result, rather than 0 (which indicates normal end of input). However, a negative return value can also occur if the underlying BIO supports retries, see <a href="https://man7.org/linux/man-pages/man3/BIO_should_read.3.html">BIO_should_read(3)</a> and <a href="https://man7.org/linux/man-pages/man3/BIO_set_mem_eof_return.3.html">BIO_set_mem_eof_return(3)</a>.</p>
 
 <p>BIO_flush() on a base64 BIO that is being written through is used to signal that no more data is to be encoded: this is used to flush the final block through the BIO.</p>
 
@@ -99,11 +99,11 @@ BIO_free_all(b64);</code></pre>
 
 <p>There should perhaps be some way of specifying a test that the BIO can perform to reliably determine EOF (for example a MIME boundary).</p>
 
-<p>It may be possible for <a href="../man3/BIO_read.html">BIO_read(3)</a> to return zero, rather than -1, even if an error has been detected, more tests are needed to cover all the potential error paths.</p>
+<p>It may be possible for <a href="https://man7.org/linux/man-pages/man3/BIO_read.3.html">BIO_read(3)</a> to return zero, rather than -1, even if an error has been detected, more tests are needed to cover all the potential error paths.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/BIO_read.html">BIO_read(3)</a>, <a href="../man3/BIO_should_read.html">BIO_should_read(3)</a>, <a href="../man3/BIO_set_mem_eof_return.html">BIO_set_mem_eof_return(3)</a>, <a href="../man3/EVP_DecodeUpdate.html">EVP_DecodeUpdate(3)</a>.</p>
+<p><a href="https://man7.org/linux/man-pages/man3/BIO_read.3.html">BIO_read(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_should_read.3.html">BIO_should_read(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_set_mem_eof_return.3.html">BIO_set_mem_eof_return(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_DecodeUpdate.3.html">EVP_DecodeUpdate(3)</a>.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

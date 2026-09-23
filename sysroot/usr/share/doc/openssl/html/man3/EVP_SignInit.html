@@ -4,7 +4,7 @@
 <head>
 <title>EVP_SignInit</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -58,15 +58,15 @@ void EVP_SignInit(EVP_MD_CTX *ctx, const EVP_MD *type);</code></pre>
 
 <p>EVP_SignInit_ex(), EVP_SignUpdate(), EVP_SignFinal_ex() and EVP_SignFinal() return 1 for success and 0 for failure.</p>
 
-<p>The error codes can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>The error codes can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
 <p>The <b>EVP</b> interface to digital signatures should almost always be used in preference to the low-level interfaces. This is because the code then becomes transparent to the algorithm used and much more flexible.</p>
 
-<p>When signing with some private key types the random number generator must be seeded. If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="../man7/RAND.html">RAND(7)</a>), the operation will fail.</p>
+<p>When signing with some private key types the random number generator must be seeded. If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a>), the operation will fail.</p>
 
-<p>The call to EVP_SignFinal() internally finalizes a copy of the digest context. This means that calls to EVP_SignUpdate() and EVP_SignFinal() can be called later to digest and sign additional data.cApplications may disable this behavior by setting the EVP_MD_CTX_FLAG_FINALISE context flag via <a href="../man3/EVP_MD_CTX_set_flags.html">EVP_MD_CTX_set_flags(3)</a>.</p>
+<p>The call to EVP_SignFinal() internally finalizes a copy of the digest context. This means that calls to EVP_SignUpdate() and EVP_SignFinal() can be called later to digest and sign additional data.cApplications may disable this behavior by setting the EVP_MD_CTX_FLAG_FINALISE context flag via <a href="https://man7.org/linux/man-pages/man3/EVP_MD_CTX_set_flags.3.html">EVP_MD_CTX_set_flags(3)</a>.</p>
 
 <p>Since only a copy of the digest context is ever finalized the context must be cleaned up after use by calling EVP_MD_CTX_free() or a memory leak will occur.</p>
 
@@ -84,7 +84,7 @@ void EVP_SignInit(EVP_MD_CTX *ctx, const EVP_MD *type);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_get_size.html">EVP_PKEY_get_size(3)</a>, <a href="../man3/EVP_PKEY_get_bits.html">EVP_PKEY_get_bits(3)</a>, <a href="../man3/EVP_PKEY_get_security_bits.html">EVP_PKEY_get_security_bits(3)</a>, <a href="../man3/EVP_VerifyInit.html">EVP_VerifyInit(3)</a>, <a href="../man3/EVP_DigestInit.html">EVP_DigestInit(3)</a>, <a href="../man7/evp.html">evp(7)</a>, <a href="../man3/HMAC.html">HMAC(3)</a>, <a href="../man3/MD2.html">MD2(3)</a>, <a href="../man3/MD5.html">MD5(3)</a>, <a href="../man3/MDC2.html">MDC2(3)</a>, <a href="../man3/RIPEMD160.html">RIPEMD160(3)</a>, <a href="../man3/SHA1.html">SHA1(3)</a>, <a href="../man1/openssl-dgst.html">openssl-dgst(1)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_get_size.3.html">EVP_PKEY_get_size(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_get_bits.3.html">EVP_PKEY_get_bits(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_get_security_bits.3.html">EVP_PKEY_get_security_bits(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_VerifyInit.3.html">EVP_VerifyInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_DigestInit.3.html">EVP_DigestInit(3)</a>, <a href="https://man7.org/linux/man-pages/man7/evp.7.html">evp(7)</a>, <a href="https://man7.org/linux/man-pages/man3/HMAC.3.html">HMAC(3)</a>, <a href="https://man7.org/linux/man-pages/man3/MD2.3.html">MD2(3)</a>, <a href="https://man7.org/linux/man-pages/man3/MD5.3.html">MD5(3)</a>, <a href="https://man7.org/linux/man-pages/man3/MDC2.3.html">MDC2(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RIPEMD160.3.html">RIPEMD160(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SHA1.3.html">SHA1(3)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-dgst.1.html">openssl-dgst(1)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

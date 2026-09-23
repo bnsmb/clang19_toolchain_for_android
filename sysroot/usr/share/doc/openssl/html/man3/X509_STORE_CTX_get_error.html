@@ -4,7 +4,7 @@
 <head>
 <title>X509_STORE_CTX_get_error</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -45,7 +45,7 @@ const char *X509_verify_cert_error_string(long n);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>These functions are typically called after certificate or chain verification using <a href="../man3/X509_verify_cert.html">X509_verify_cert(3)</a> or <a href="../man3/X509_STORE_CTX_verify.html">X509_STORE_CTX_verify(3)</a> has indicated an error or in a verification callback to determine the nature of an error.</p>
+<p>These functions are typically called after certificate or chain verification using <a href="https://man7.org/linux/man-pages/man3/X509_verify_cert.3.html">X509_verify_cert(3)</a> or <a href="https://man7.org/linux/man-pages/man3/X509_STORE_CTX_verify.3.html">X509_STORE_CTX_verify(3)</a> has indicated an error or in a verification callback to determine the nature of an error.</p>
 
 <p>X509_STORE_CTX_get_error() returns the error code of <i>ctx</i>. <i>ctx</i> <b>MUST NOT</b> be NULL. See the <a href="#ERROR-CODES">&quot;ERROR CODES&quot;</a> section for a full description of all error codes. It may return a code != X509_V_OK even if X509_verify_cert() did not indicate an error, likely because a verification callback function has waived the error.</p>
 
@@ -57,7 +57,7 @@ const char *X509_verify_cert_error_string(long n);</code></pre>
 
 <p>X509_STORE_CTX_get_current_cert() returns the current certificate in <i>ctx</i>. If an error occurred, the current certificate will be the one that is most closely related to the error, or possibly NULL if no such certificate is relevant.</p>
 
-<p>X509_STORE_CTX_set_current_cert() sets the certificate <i>x</i> in <i>ctx</i> which caused the error. This value is not intended to remain valid for very long, and remains owned by the caller. It may be examined by a verification callback invoked to handle each error encountered during chain verification and is no longer required after such a callback. If a callback wishes the save the certificate for use after it returns, it needs to increment its reference count via <a href="../man3/X509_up_ref.html">X509_up_ref(3)</a>. Once such a <i>saved</i> certificate is no longer needed it can be freed with <a href="../man3/X509_free.html">X509_free(3)</a>.</p>
+<p>X509_STORE_CTX_set_current_cert() sets the certificate <i>x</i> in <i>ctx</i> which caused the error. This value is not intended to remain valid for very long, and remains owned by the caller. It may be examined by a verification callback invoked to handle each error encountered during chain verification and is no longer required after such a callback. If a callback wishes the save the certificate for use after it returns, it needs to increment its reference count via <a href="https://man7.org/linux/man-pages/man3/X509_up_ref.3.html">X509_up_ref(3)</a>. Once such a <i>saved</i> certificate is no longer needed it can be freed with <a href="https://man7.org/linux/man-pages/man3/X509_free.3.html">X509_free(3)</a>.</p>
 
 <p>X509_STORE_CTX_get0_cert() retrieves an internal pointer to the certificate being verified by the <i>ctx</i>. It may be NULL if a raw public key is being verified.</p>
 
@@ -440,7 +440,7 @@ const char *X509_verify_cert_error_string(long n);</code></pre>
 <dt id="X509_V_ERR_DANE_NO_MATCH:-no-matching-DANE-TLSA-records"><b>X509_V_ERR_DANE_NO_MATCH: no matching DANE TLSA records</b></dt>
 <dd>
 
-<p>DANE TLSA authentication is enabled, but no TLSA records matched the certificate chain. This error is only possible in <a href="../man1/openssl-s_client.html">openssl-s_client(1)</a>.</p>
+<p>DANE TLSA authentication is enabled, but no TLSA records matched the certificate chain. This error is only possible in <a href="https://man7.org/linux/man-pages/man1/openssl-s_client.1.html">openssl-s_client(1)</a>.</p>
 
 </dd>
 <dt id="X509_V_ERR_EE_KEY_TOO_SMALL:-EE-certificate-key-too-weak"><b>X509_V_ERR_EE_KEY_TOO_SMALL: EE certificate key too weak</b></dt>
@@ -549,7 +549,7 @@ const char *X509_verify_cert_error_string(long n);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/X509_verify_cert.html">X509_verify_cert(3)</a>, <a href="../man3/X509_STORE_CTX_verify.html">X509_STORE_CTX_verify(3)</a>, <a href="../man3/X509_up_ref.html">X509_up_ref(3)</a>, <a href="../man3/X509_free.html">X509_free(3)</a>.</p>
+<p><a href="https://man7.org/linux/man-pages/man3/X509_verify_cert.3.html">X509_verify_cert(3)</a>, <a href="https://man7.org/linux/man-pages/man3/X509_STORE_CTX_verify.3.html">X509_STORE_CTX_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man3/X509_up_ref.3.html">X509_up_ref(3)</a>, <a href="https://man7.org/linux/man-pages/man3/X509_free.3.html">X509_free(3)</a>.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

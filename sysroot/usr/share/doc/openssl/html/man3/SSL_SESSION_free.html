@@ -4,7 +4,7 @@
 <head>
 <title>SSL_SESSION_free</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -47,9 +47,9 @@ void SSL_SESSION_free(SSL_SESSION *session);</code></pre>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>SSL_SESSION objects are allocated, when a TLS/SSL handshake operation is successfully completed. Depending on the settings, see <a href="../man3/SSL_CTX_set_session_cache_mode.html">SSL_CTX_set_session_cache_mode(3)</a>, the SSL_SESSION objects are internally referenced by the SSL_CTX and linked into its session cache. SSL objects may be using the SSL_SESSION object; as a session may be reused, several SSL objects may be using one SSL_SESSION object at the same time. It is therefore crucial to keep the reference count (usage information) correct and not delete an SSL_SESSION object that is still used, as this may lead to program failures due to dangling pointers. These failures may also appear delayed, e.g. when an SSL_SESSION object was completely freed as the reference count incorrectly became 0, but it is still referenced in the internal session cache and the cache list is processed during a <a href="../man3/SSL_CTX_flush_sessions.html">SSL_CTX_flush_sessions(3)</a> operation.</p>
+<p>SSL_SESSION objects are allocated, when a TLS/SSL handshake operation is successfully completed. Depending on the settings, see <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_session_cache_mode.3.html">SSL_CTX_set_session_cache_mode(3)</a>, the SSL_SESSION objects are internally referenced by the SSL_CTX and linked into its session cache. SSL objects may be using the SSL_SESSION object; as a session may be reused, several SSL objects may be using one SSL_SESSION object at the same time. It is therefore crucial to keep the reference count (usage information) correct and not delete an SSL_SESSION object that is still used, as this may lead to program failures due to dangling pointers. These failures may also appear delayed, e.g. when an SSL_SESSION object was completely freed as the reference count incorrectly became 0, but it is still referenced in the internal session cache and the cache list is processed during a <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_flush_sessions.3.html">SSL_CTX_flush_sessions(3)</a> operation.</p>
 
-<p>SSL_SESSION_free() must only be called for SSL_SESSION objects, for which the reference count was explicitly incremented (e.g. by calling SSL_get1_session(), see <a href="../man3/SSL_get_session.html">SSL_get_session(3)</a>) or when the SSL_SESSION object was generated outside a TLS handshake operation, e.g. by using <a href="../man3/d2i_SSL_SESSION.html">d2i_SSL_SESSION(3)</a>. It must not be called on other SSL_SESSION objects, as this would cause incorrect reference counts and therefore program failures.</p>
+<p>SSL_SESSION_free() must only be called for SSL_SESSION objects, for which the reference count was explicitly incremented (e.g. by calling SSL_get1_session(), see <a href="https://man7.org/linux/man-pages/man3/SSL_get_session.3.html">SSL_get_session(3)</a>) or when the SSL_SESSION object was generated outside a TLS handshake operation, e.g. by using <a href="https://man7.org/linux/man-pages/man3/d2i_SSL_SESSION.3.html">d2i_SSL_SESSION(3)</a>. It must not be called on other SSL_SESSION objects, as this would cause incorrect reference counts and therefore program failures.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -61,7 +61,7 @@ void SSL_SESSION_free(SSL_SESSION *session);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_get_session.html">SSL_get_session(3)</a>, <a href="../man3/SSL_CTX_set_session_cache_mode.html">SSL_CTX_set_session_cache_mode(3)</a>, <a href="../man3/SSL_CTX_flush_sessions.html">SSL_CTX_flush_sessions(3)</a>, <a href="../man3/d2i_SSL_SESSION.html">d2i_SSL_SESSION(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_session.3.html">SSL_get_session(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_session_cache_mode.3.html">SSL_CTX_set_session_cache_mode(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_flush_sessions.3.html">SSL_CTX_flush_sessions(3)</a>, <a href="https://man7.org/linux/man-pages/man3/d2i_SSL_SESSION.3.html">d2i_SSL_SESSION(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

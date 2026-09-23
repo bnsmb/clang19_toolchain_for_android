@@ -4,7 +4,7 @@
 <head>
 <title>X25519</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -42,9 +42,9 @@
 
 <pre><code>EVP_PKEY_CTX *pctx = EVP_PKEY_CTX_new_id(EVP_PKEY_X448, NULL);</code></pre>
 
-<p>X25519 or X448 private keys can be set directly using <a href="../man3/EVP_PKEY_new_raw_private_key.html">EVP_PKEY_new_raw_private_key(3)</a> or loaded from a PKCS#8 private key file using <a href="../man3/PEM_read_bio_PrivateKey.html">PEM_read_bio_PrivateKey(3)</a> (or similar function). Completely new keys can also be generated (see the example below). Setting a private key also sets the associated public key.</p>
+<p>X25519 or X448 private keys can be set directly using <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_new_raw_private_key.3.html">EVP_PKEY_new_raw_private_key(3)</a> or loaded from a PKCS#8 private key file using <a href="https://man7.org/linux/man-pages/man3/PEM_read_bio_PrivateKey.3.html">PEM_read_bio_PrivateKey(3)</a> (or similar function). Completely new keys can also be generated (see the example below). Setting a private key also sets the associated public key.</p>
 
-<p>X25519 or X448 public keys can be set directly using <a href="../man3/EVP_PKEY_new_raw_public_key.html">EVP_PKEY_new_raw_public_key(3)</a> or loaded from a SubjectPublicKeyInfo structure in a PEM file using <a href="../man3/PEM_read_bio_PUBKEY.html">PEM_read_bio_PUBKEY(3)</a> (or similar function).</p>
+<p>X25519 or X448 public keys can be set directly using <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_new_raw_public_key.3.html">EVP_PKEY_new_raw_public_key(3)</a> or loaded from a SubjectPublicKeyInfo structure in a PEM file using <a href="https://man7.org/linux/man-pages/man3/PEM_read_bio_PUBKEY.3.html">PEM_read_bio_PUBKEY(3)</a> (or similar function).</p>
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
@@ -60,11 +60,11 @@ EVP_PKEY_keygen(pctx, &amp;pkey);
 EVP_PKEY_CTX_free(pctx);
 PEM_write_PrivateKey(stdout, pkey, NULL, NULL, 0, NULL, NULL);</code></pre>
 
-<p>The key derivation example in <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a> can be used with <b>X25519</b> and <b>X448</b>.</p>
+<p>The key derivation example in <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a> can be used with <b>X25519</b> and <b>X448</b>.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_CTX_new.html">EVP_PKEY_CTX_new(3)</a>, <a href="../man3/EVP_PKEY_keygen.html">EVP_PKEY_keygen(3)</a>, <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a>, <a href="../man3/EVP_PKEY_derive_set_peer.html">EVP_PKEY_derive_set_peer(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_new.3.html">EVP_PKEY_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_keygen.3.html">EVP_PKEY_keygen(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive_set_peer.3.html">EVP_PKEY_derive_set_peer(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

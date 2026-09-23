@@ -4,7 +4,7 @@
 <head>
 <title>RAND_add</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -37,22 +37,22 @@ void RAND_seed(const void *buf, int num);
 
 void RAND_keep_random_devices_open(int keep);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 1.1.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 1.1.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int RAND_event(UINT iMsg, WPARAM wParam, LPARAM lParam);
 void RAND_screen(void);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>These functions can be used to seed the random generator and to check its seeded state. In general, manual (re-)seeding of the default OpenSSL random generator (<a href="../man3/RAND_OpenSSL.html">RAND_OpenSSL(3)</a>) is not necessary (but allowed), since it does (re-)seed itself automatically using trusted system entropy sources. This holds unless the default RAND_METHOD has been replaced or OpenSSL was built with automatic reseeding disabled, see <a href="../man7/RAND.html">RAND(7)</a> for more details.</p>
+<p>These functions can be used to seed the random generator and to check its seeded state. In general, manual (re-)seeding of the default OpenSSL random generator (<a href="https://man7.org/linux/man-pages/man3/RAND_OpenSSL.3.html">RAND_OpenSSL(3)</a>) is not necessary (but allowed), since it does (re-)seed itself automatically using trusted system entropy sources. This holds unless the default RAND_METHOD has been replaced or OpenSSL was built with automatic reseeding disabled, see <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a> for more details.</p>
 
-<p>RAND_status() indicates whether or not the random generator has been sufficiently seeded. If not, functions such as <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a> will fail.</p>
+<p>RAND_status() indicates whether or not the random generator has been sufficiently seeded. If not, functions such as <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a> will fail.</p>
 
-<p>RAND_poll() uses the system&#39;s capabilities to seed the random generator using random input obtained from polling various trusted entropy sources. The default choice of the entropy source can be modified at build time, see <a href="../man7/RAND.html">RAND(7)</a> for more details.</p>
+<p>RAND_poll() uses the system&#39;s capabilities to seed the random generator using random input obtained from polling various trusted entropy sources. The default choice of the entropy source can be modified at build time, see <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a> for more details.</p>
 
-<p>RAND_add() mixes the <b>num</b> bytes at <b>buf</b> into the internal state of the random generator. This function will not normally be needed, as mentioned above. The <b>randomness</b> argument is an estimate of how much randomness is contained in <b>buf</b>, in bytes, and should be a number between zero and <b>num</b>. Details about sources of randomness and how to estimate their randomness can be found in the literature; for example [NIST SP 800-90B]. The content of <b>buf</b> cannot be recovered from subsequent random generator output. Applications that intend to save and restore random state in an external file should consider using <a href="../man3/RAND_load_file.html">RAND_load_file(3)</a> instead.</p>
+<p>RAND_add() mixes the <b>num</b> bytes at <b>buf</b> into the internal state of the random generator. This function will not normally be needed, as mentioned above. The <b>randomness</b> argument is an estimate of how much randomness is contained in <b>buf</b>, in bytes, and should be a number between zero and <b>num</b>. Details about sources of randomness and how to estimate their randomness can be found in the literature; for example [NIST SP 800-90B]. The content of <b>buf</b> cannot be recovered from subsequent random generator output. Applications that intend to save and restore random state in an external file should consider using <a href="https://man7.org/linux/man-pages/man3/RAND_load_file.3.html">RAND_load_file(3)</a> instead.</p>
 
-<p>NOTE: In FIPS mode, random data provided by the application is not considered to be a trusted entropy source. It is mixed into the internal state of the RNG as additional data only and this does not count as a full reseed. For more details, see <a href="../man7/EVP_RAND.html">EVP_RAND(7)</a>.</p>
+<p>NOTE: In FIPS mode, random data provided by the application is not considered to be a trusted entropy source. It is mixed into the internal state of the RNG as additional data only and this does not count as a full reseed. For more details, see <a href="https://man7.org/linux/man-pages/man7/EVP_RAND.7.html">EVP_RAND(7)</a>.</p>
 
 <p>RAND_seed() is equivalent to RAND_add() with <b>randomness</b> set to <b>num</b>.</p>
 
@@ -72,7 +72,7 @@ void RAND_screen(void);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/RAND_bytes.html">RAND_bytes(3)</a>, <a href="../man3/RAND_egd.html">RAND_egd(3)</a>, <a href="../man3/RAND_load_file.html">RAND_load_file(3)</a>, <a href="../man7/RAND.html">RAND(7)</a> <a href="../man7/EVP_RAND.html">EVP_RAND(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RAND_egd.3.html">RAND_egd(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RAND_load_file.3.html">RAND_load_file(3)</a>, <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a> <a href="https://man7.org/linux/man-pages/man7/EVP_RAND.7.html">EVP_RAND(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

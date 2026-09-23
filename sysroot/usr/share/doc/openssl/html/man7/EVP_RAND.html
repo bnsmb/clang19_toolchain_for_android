@@ -4,7 +4,7 @@
 <head>
 <title>EVP_RAND</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -62,7 +62,7 @@
 
 <h2 id="Disclaimer">Disclaimer</h2>
 
-<p>Unless you have very specific requirements for your random generator, it is in general not necessary to utilize the EVP_RAND API directly. The usual way to obtain random bytes is to use <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a> or <a href="../man3/RAND_priv_bytes.html">RAND_priv_bytes(3)</a>, see also <a href="../man7/RAND.html">RAND(7)</a>.</p>
+<p>Unless you have very specific requirements for your random generator, it is in general not necessary to utilize the EVP_RAND API directly. The usual way to obtain random bytes is to use <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a> or <a href="https://man7.org/linux/man-pages/man3/RAND_priv_bytes.3.html">RAND_priv_bytes(3)</a>, see also <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a>.</p>
 
 <h2 id="Typical-Use-Cases">Typical Use Cases</h2>
 
@@ -73,7 +73,7 @@
 <li><p>You want to use your own private DRBG instances. Multiple DRBG instances which are accessed only by a single thread provide additional security (because their internal states are independent) and better scalability in multithreaded applications (because they don&#39;t need to be locked).</p>
 
 </li>
-<li><p>You need to integrate a previously unsupported entropy source. Refer to <a href="../man7/provider-rand.html">provider-rand(7)</a> for the implementation details to support adding randomness sources to EVP_RAND.</p>
+<li><p>You need to integrate a previously unsupported entropy source. Refer to <a href="https://man7.org/linux/man-pages/man7/provider-rand.7.html">provider-rand(7)</a> for the implementation details to support adding randomness sources to EVP_RAND.</p>
 
 </li>
 <li><p>You need to change the default settings of the standard OpenSSL RAND implementation to meet specific requirements.</p>
@@ -91,19 +91,19 @@
 
 <p>Currently, there are three shared DRBG instances, the &lt;primary&gt;, &lt;public&gt;, and &lt;private&gt; DRBG. While the &lt;primary&gt; DRBG is a single global instance, the &lt;public&gt; and &lt;private&gt; DRBG are created per thread and accessed through thread-local storage.</p>
 
-<p>By default, the functions <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a> and <a href="../man3/RAND_priv_bytes.html">RAND_priv_bytes(3)</a> use the thread-local &lt;public&gt; and &lt;private&gt; DRBG instance, respectively.</p>
+<p>By default, the functions <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a> and <a href="https://man7.org/linux/man-pages/man3/RAND_priv_bytes.3.html">RAND_priv_bytes(3)</a> use the thread-local &lt;public&gt; and &lt;private&gt; DRBG instance, respectively.</p>
 
 <h2 id="The-primary-DRBG-instance">The &lt;primary&gt; DRBG instance</h2>
 
-<p>The &lt;primary&gt; DRBG is not used directly by the application, only for reseeding the two other two DRBG instances. It reseeds itself by obtaining randomness either from os entropy sources or by consuming randomness which was added previously by <a href="../man3/RAND_add.html">RAND_add(3)</a>.</p>
+<p>The &lt;primary&gt; DRBG is not used directly by the application, only for reseeding the two other two DRBG instances. It reseeds itself by obtaining randomness either from os entropy sources or by consuming randomness which was added previously by <a href="https://man7.org/linux/man-pages/man3/RAND_add.3.html">RAND_add(3)</a>.</p>
 
 <h2 id="The-public-DRBG-instance">The &lt;public&gt; DRBG instance</h2>
 
-<p>This instance is used per default by <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a>.</p>
+<p>This instance is used per default by <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a>.</p>
 
 <h2 id="The-private-DRBG-instance">The &lt;private&gt; DRBG instance</h2>
 
-<p>This instance is used per default by <a href="../man3/RAND_priv_bytes.html">RAND_priv_bytes(3)</a></p>
+<p>This instance is used per default by <a href="https://man7.org/linux/man-pages/man3/RAND_priv_bytes.3.html">RAND_priv_bytes(3)</a></p>
 
 <h1 id="LOCKING">LOCKING</h1>
 
@@ -146,7 +146,7 @@
 
 <h2 id="Automatic-Reseeding">Automatic Reseeding</h2>
 
-<p>Before satisfying a generate request (<a href="../man3/EVP_RAND_generate.html">EVP_RAND_generate(3)</a>), the DRBG reseeds itself automatically, if one of the following conditions holds:</p>
+<p>Before satisfying a generate request (<a href="https://man7.org/linux/man-pages/man3/EVP_RAND_generate.3.html">EVP_RAND_generate(3)</a>), the DRBG reseeds itself automatically, if one of the following conditions holds:</p>
 
 <p>- the DRBG was not instantiated (=seeded) yet or has been uninstantiated.</p>
 
@@ -160,11 +160,11 @@
 
 <h2 id="Manual-Reseeding">Manual Reseeding</h2>
 
-<p>In addition to automatic reseeding, the caller can request an immediate reseeding of the DRBG with fresh entropy by setting the <i>prediction resistance</i> parameter to 1 when calling <a href="../man3/EVP_RAND_generate.html">EVP_RAND_generate(3)</a>.</p>
+<p>In addition to automatic reseeding, the caller can request an immediate reseeding of the DRBG with fresh entropy by setting the <i>prediction resistance</i> parameter to 1 when calling <a href="https://man7.org/linux/man-pages/man3/EVP_RAND_generate.3.html">EVP_RAND_generate(3)</a>.</p>
 
 <p>The document [NIST SP 800-90C] describes prediction resistance requests in detail and imposes strict conditions on the entropy sources that are approved for providing prediction resistance. A request for prediction resistance can only be satisfied by pulling fresh entropy from a live entropy source (section 5.5.2 of [NIST SP 800-90C]). It is up to the user to ensure that a live entropy source is configured and is being used.</p>
 
-<p>For the three shared DRBGs (and only for these) there is another way to reseed them manually: If <a href="../man3/RAND_add.html">RAND_add(3)</a> is called with a positive <i>randomness</i> argument (or <a href="../man3/RAND_seed.html">RAND_seed(3)</a>), then this will immediately reseed the &lt;primary&gt; DRBG. The &lt;public&gt; and &lt;private&gt; DRBG will detect this on their next generate call and reseed, pulling randomness from &lt;primary&gt;.</p>
+<p>For the three shared DRBGs (and only for these) there is another way to reseed them manually: If <a href="https://man7.org/linux/man-pages/man3/RAND_add.3.html">RAND_add(3)</a> is called with a positive <i>randomness</i> argument (or <a href="https://man7.org/linux/man-pages/man3/RAND_seed.3.html">RAND_seed(3)</a>), then this will immediately reseed the &lt;primary&gt; DRBG. The &lt;public&gt; and &lt;private&gt; DRBG will detect this on their next generate call and reseed, pulling randomness from &lt;primary&gt;.</p>
 
 <p>The last feature has been added to support the common practice used with previous OpenSSL versions to call RAND_add() before calling RAND_bytes().</p>
 
@@ -202,7 +202,7 @@
 </dd>
 </dl>
 
-<p>NOTE: Manual reseeding is *not allowed* in FIPS mode, because [NIST SP-800-90Ar1] mandates that entropy *shall not* be provided by the consuming application for instantiation (Section 9.1) or reseeding (Section 9.2). For that reason, the <i>randomness</i> argument is ignored and the random bytes provided by the <a href="../man3/RAND_add.html">RAND_add(3)</a> and <a href="../man3/RAND_seed.html">RAND_seed(3)</a> calls are treated as additional data.</p>
+<p>NOTE: Manual reseeding is *not allowed* in FIPS mode, because [NIST SP-800-90Ar1] mandates that entropy *shall not* be provided by the consuming application for instantiation (Section 9.1) or reseeding (Section 9.2). For that reason, the <i>randomness</i> argument is ignored and the random bytes provided by the <a href="https://man7.org/linux/man-pages/man3/RAND_add.3.html">RAND_add(3)</a> and <a href="https://man7.org/linux/man-pages/man3/RAND_seed.3.html">RAND_seed(3)</a> calls are treated as additional data.</p>
 
 <h2 id="Reseeding-the-primary-DRBG-with-automatic-seeding-disabled">Reseeding the primary DRBG with automatic seeding disabled</h2>
 
@@ -214,7 +214,7 @@
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/RAND.html">RAND(7)</a>, <a href="../man3/EVP_RAND.html">EVP_RAND(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_RAND.3.html">EVP_RAND(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

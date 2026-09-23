@@ -4,7 +4,7 @@
 <head>
 <title>ossl-guide-tls-client-block</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -49,11 +49,11 @@
 
 <p>The complete source code for this example blocking TLS client is available in the <b>demos/guide</b> directory of the OpenSSL source distribution in the file <b>tls-client-block.c</b>. It is also available online at <a href="https://github.com/openssl/openssl/blob/master/demos/guide/tls-client-block.c">https://github.com/openssl/openssl/blob/master/demos/guide/tls-client-block.c</a>.</p>
 
-<p>We assume that you already have OpenSSL installed on your system; that you already have some fundamental understanding of OpenSSL concepts and TLS (see <a href="../man7/ossl-guide-libraries-introduction.html">ossl-guide-libraries-introduction(7)</a> and <a href="../man7/ossl-guide-tls-introduction.html">ossl-guide-tls-introduction(7)</a>); and that you know how to write and build C code and link it against the libcrypto and libssl libraries that are provided by OpenSSL. It also assumes that you have a basic understanding of TCP/IP and sockets.</p>
+<p>We assume that you already have OpenSSL installed on your system; that you already have some fundamental understanding of OpenSSL concepts and TLS (see <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libraries-introduction.7.html">ossl-guide-libraries-introduction(7)</a> and <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-introduction.7.html">ossl-guide-tls-introduction(7)</a>); and that you know how to write and build C code and link it against the libcrypto and libssl libraries that are provided by OpenSSL. It also assumes that you have a basic understanding of TCP/IP and sockets.</p>
 
 <h2 id="Creating-the-SSL_CTX-and-SSL-objects">Creating the SSL_CTX and SSL objects</h2>
 
-<p>The first step is to create an <b>SSL_CTX</b> object for our client. We use the <a href="../man3/SSL_CTX_new.html">SSL_CTX_new(3)</a> function for this purpose. We could alternatively use <a href="../man3/SSL_CTX_new_ex.html">SSL_CTX_new_ex(3)</a> if we want to associate the <b>SSL_CTX</b> with a particular <b>OSSL_LIB_CTX</b> (see <a href="../man7/ossl-guide-libraries-introduction.html">ossl-guide-libraries-introduction(7)</a> to learn about <b>OSSL_LIB_CTX</b>). We pass as an argument the return value of the function <a href="../man3/TLS_client_method.html">TLS_client_method(3)</a>. You should use this method whenever you are writing a TLS client. This method will automatically use TLS version negotiation to select the highest version of the protocol that is mutually supported by both the client and the server.</p>
+<p>The first step is to create an <b>SSL_CTX</b> object for our client. We use the <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_new.3.html">SSL_CTX_new(3)</a> function for this purpose. We could alternatively use <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_new_ex.3.html">SSL_CTX_new_ex(3)</a> if we want to associate the <b>SSL_CTX</b> with a particular <b>OSSL_LIB_CTX</b> (see <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libraries-introduction.7.html">ossl-guide-libraries-introduction(7)</a> to learn about <b>OSSL_LIB_CTX</b>). We pass as an argument the return value of the function <a href="https://man7.org/linux/man-pages/man3/TLS_client_method.3.html">TLS_client_method(3)</a>. You should use this method whenever you are writing a TLS client. This method will automatically use TLS version negotiation to select the highest version of the protocol that is mutually supported by both the client and the server.</p>
 
 <pre><code>/*
  * Create an SSL_CTX which we can use to create SSL objects from. We
@@ -66,7 +66,7 @@ if (ctx == NULL) {
     goto end;
 }</code></pre>
 
-<p>Since we are writing a client we must ensure that we verify the server&#39;s certificate. We do this by calling the <a href="../man3/SSL_CTX_set_verify.html">SSL_CTX_set_verify(3)</a> function and pass the <b>SSL_VERIFY_PEER</b> value to it. The final argument to this function is a callback that you can optionally supply to override the default handling for certificate verification. Most applications do not need to do this so this can safely be set to NULL to get the default handling.</p>
+<p>Since we are writing a client we must ensure that we verify the server&#39;s certificate. We do this by calling the <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_verify.3.html">SSL_CTX_set_verify(3)</a> function and pass the <b>SSL_VERIFY_PEER</b> value to it. The final argument to this function is a callback that you can optionally supply to override the default handling for certificate verification. Most applications do not need to do this so this can safely be set to NULL to get the default handling.</p>
 
 <pre><code>/*
  * Configure the client to abort the handshake if certificate
@@ -75,7 +75,7 @@ if (ctx == NULL) {
  */
 SSL_CTX_set_verify(ctx, SSL_VERIFY_PEER, NULL);</code></pre>
 
-<p>In order for certificate verification to be successful you must have configured where the trusted certificate store to be used is located (see <a href="../man7/ossl-guide-tls-introduction.html">ossl-guide-tls-introduction(7)</a>). In most cases you just want to use the default store so we call <a href="../man3/SSL_CTX_set_default_verify_paths.html">SSL_CTX_set_default_verify_paths(3)</a>.</p>
+<p>In order for certificate verification to be successful you must have configured where the trusted certificate store to be used is located (see <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-introduction.7.html">ossl-guide-tls-introduction(7)</a>). In most cases you just want to use the default store so we call <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_default_verify_paths.3.html">SSL_CTX_set_default_verify_paths(3)</a>.</p>
 
 <pre><code>/* Use the default trusted certificate store */
 if (!SSL_CTX_set_default_verify_paths(ctx)) {
@@ -83,7 +83,7 @@ if (!SSL_CTX_set_default_verify_paths(ctx)) {
     goto end;
 }</code></pre>
 
-<p>We would also like to restrict the TLS versions that we are willing to accept to TLSv1.2 or above. TLS protocol versions earlier than that are generally to be avoided where possible. We can do that using <a href="../man3/SSL_CTX_set_min_proto_version.html">SSL_CTX_set_min_proto_version(3)</a>:</p>
+<p>We would also like to restrict the TLS versions that we are willing to accept to TLSv1.2 or above. TLS protocol versions earlier than that are generally to be avoided where possible. We can do that using <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_min_proto_version.3.html">SSL_CTX_set_min_proto_version(3)</a>:</p>
 
 <pre><code>/*
  * TLSv1.1 or earlier are deprecated by IETF and are generally to be
@@ -184,7 +184,7 @@ for (ai = res; ai != NULL; ai = BIO_ADDRINFO_next(ai)) {
 /* Free the address information resources we allocated earlier */
 BIO_ADDRINFO_free(res);</code></pre>
 
-<p>See <a href="../man3/BIO_lookup_ex.html">BIO_lookup_ex(3)</a>, <a href="../man3/BIO_socket.html">BIO_socket(3)</a>, <a href="../man3/BIO_connect.html">BIO_connect(3)</a>, <a href="../man3/BIO_closesocket.html">BIO_closesocket(3)</a>, <a href="../man3/BIO_ADDRINFO_next.html">BIO_ADDRINFO_next(3)</a>, <a href="../man3/BIO_ADDRINFO_address.html">BIO_ADDRINFO_address(3)</a> and <a href="../man3/BIO_ADDRINFO_free.html">BIO_ADDRINFO_free(3)</a> for further information on the functions used here. In the above example code the <b>hostname</b> and <b>port</b> variables are strings, e.g. &quot;www.example.com&quot; and &quot;443&quot;. Note also the use of the family variable, which can take the values of AF_INET or AF_INET6 based on the command line -6 option, to allow specific connections to an ipv4 or ipv6 enabled host.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/BIO_lookup_ex.3.html">BIO_lookup_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_socket.3.html">BIO_socket(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_connect.3.html">BIO_connect(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_closesocket.3.html">BIO_closesocket(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_ADDRINFO_next.3.html">BIO_ADDRINFO_next(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_ADDRINFO_address.3.html">BIO_ADDRINFO_address(3)</a> and <a href="https://man7.org/linux/man-pages/man3/BIO_ADDRINFO_free.3.html">BIO_ADDRINFO_free(3)</a> for further information on the functions used here. In the above example code the <b>hostname</b> and <b>port</b> variables are strings, e.g. &quot;www.example.com&quot; and &quot;443&quot;. Note also the use of the family variable, which can take the values of AF_INET or AF_INET6 based on the command line -6 option, to allow specific connections to an ipv4 or ipv6 enabled host.</p>
 
 <p>Sockets created using the methods described above will automatically be blocking sockets - which is exactly what we want for this example.</p>
 
@@ -208,9 +208,9 @@ if (bio == NULL) {
  */
 BIO_set_fd(bio, sock, BIO_CLOSE);</code></pre>
 
-<p>See <a href="../man3/BIO_new.html">BIO_new(3)</a>, <a href="../man3/BIO_s_socket.html">BIO_s_socket(3)</a> and <a href="../man3/BIO_set_fd.html">BIO_set_fd(3)</a> for further information on these functions.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/BIO_new.3.html">BIO_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_s_socket.3.html">BIO_s_socket(3)</a> and <a href="https://man7.org/linux/man-pages/man3/BIO_set_fd.3.html">BIO_set_fd(3)</a> for further information on these functions.</p>
 
-<p>Finally we associate the <b>SSL</b> object we created earlier with the <b>BIO</b> using the <a href="../man3/SSL_set_bio.html">SSL_set_bio(3)</a> function. Note that this passes ownership of the <b>BIO</b> object to the <b>SSL</b> object. Once ownership is passed the SSL object is responsible for its management and will free it automatically when the <b>SSL</b> is freed. So, once <a href="../man3/SSL_set_bio.html">SSL_set_bio(3)</a> has been been called, you should not call <a href="../man3/BIO_free.html">BIO_free(3)</a> on the <b>BIO</b>.</p>
+<p>Finally we associate the <b>SSL</b> object we created earlier with the <b>BIO</b> using the <a href="https://man7.org/linux/man-pages/man3/SSL_set_bio.3.html">SSL_set_bio(3)</a> function. Note that this passes ownership of the <b>BIO</b> object to the <b>SSL</b> object. Once ownership is passed the SSL object is responsible for its management and will free it automatically when the <b>SSL</b> is freed. So, once <a href="https://man7.org/linux/man-pages/man3/SSL_set_bio.3.html">SSL_set_bio(3)</a> has been been called, you should not call <a href="https://man7.org/linux/man-pages/man3/BIO_free.3.html">BIO_free(3)</a> on the <b>BIO</b>.</p>
 
 <pre><code>SSL_set_bio(ssl, bio, bio);</code></pre>
 
@@ -220,7 +220,7 @@ BIO_set_fd(bio, sock, BIO_CLOSE);</code></pre>
 
 <p>Firstly, the server&#39;s hostname is included in the initial ClientHello message sent by the client. This is known as the Server Name Indication (SNI). This is important because it is common for multiple hostnames to be fronted by a single server that handles requests for all of them. In other words a single server may have multiple hostnames associated with it and it is important to indicate which one we want to connect to. Without this information we may get a handshake failure, or we may get connected to the &quot;default&quot; server which may not be the one we were expecting.</p>
 
-<p>To set the SNI hostname data we call the <a href="../man3/SSL_set_tlsext_host_name.html">SSL_set_tlsext_host_name(3)</a> function like this:</p>
+<p>To set the SNI hostname data we call the <a href="https://man7.org/linux/man-pages/man3/SSL_set_tlsext_host_name.3.html">SSL_set_tlsext_host_name(3)</a> function like this:</p>
 
 <pre><code>/*
  * Tell the server during the handshake which hostname we are attempting
@@ -233,7 +233,7 @@ if (!SSL_set_tlsext_host_name(ssl, hostname)) {
 
 <p>Here the <code>hostname</code> argument is a string representing the hostname of the server, e.g. &quot;www.example.com&quot;.</p>
 
-<p>Secondly, we need to tell OpenSSL what hostname we expect to see in the certificate coming back from the server. This is almost always the same one that we asked for in the original request. This is important because, without this, we do not verify that the hostname in the certificate is what we expect it to be and any certificate is acceptable unless your application explicitly checks this itself. We do this via the <a href="../man3/SSL_set1_host.html">SSL_set1_host(3)</a> function:</p>
+<p>Secondly, we need to tell OpenSSL what hostname we expect to see in the certificate coming back from the server. This is almost always the same one that we asked for in the original request. This is important because, without this, we do not verify that the hostname in the certificate is what we expect it to be and any certificate is acceptable unless your application explicitly checks this itself. We do this via the <a href="https://man7.org/linux/man-pages/man3/SSL_set1_host.3.html">SSL_set1_host(3)</a> function:</p>
 
 <pre><code>/*
  * Ensure we check during certificate verification that the server has
@@ -250,7 +250,7 @@ if (!SSL_set1_host(ssl, hostname)) {
 
 <h2 id="Performing-the-handshake">Performing the handshake</h2>
 
-<p>Before we can start sending or receiving application data over a TLS connection the TLS handshake must be performed. We can do this explicitly via the <a href="../man3/SSL_connect.html">SSL_connect(3)</a> function.</p>
+<p>Before we can start sending or receiving application data over a TLS connection the TLS handshake must be performed. We can do this explicitly via the <a href="https://man7.org/linux/man-pages/man3/SSL_connect.3.html">SSL_connect(3)</a> function.</p>
 
 <pre><code>/* Do the handshake with the server */
 if (SSL_connect(ssl) &lt; 1) {
@@ -265,15 +265,15 @@ if (SSL_connect(ssl) &lt; 1) {
     goto end;
 }</code></pre>
 
-<p>The <a href="../man3/SSL_connect.html">SSL_connect(3)</a> function can return 1, 0 or less than 0. Only a return value of 1 is considered a success. For a simple blocking client we only need to concern ourselves with whether the call was successful or not. Anything else indicates that we have failed to connect to the server.</p>
+<p>The <a href="https://man7.org/linux/man-pages/man3/SSL_connect.3.html">SSL_connect(3)</a> function can return 1, 0 or less than 0. Only a return value of 1 is considered a success. For a simple blocking client we only need to concern ourselves with whether the call was successful or not. Anything else indicates that we have failed to connect to the server.</p>
 
-<p>A common cause of failures at this stage is due to a problem verifying the server&#39;s certificate. For example if the certificate has expired, or it is not signed by a CA in our trusted certificate store. We can use the <a href="../man3/SSL_get_verify_result.html">SSL_get_verify_result(3)</a> function to find out more information about the verification failure. A return value of <b>X509_V_OK</b> indicates that the verification was successful (so the connection error must be due to some other cause). Otherwise we use the <a href="../man3/X509_verify_cert_error_string.html">X509_verify_cert_error_string(3)</a> function to get a human readable error message.</p>
+<p>A common cause of failures at this stage is due to a problem verifying the server&#39;s certificate. For example if the certificate has expired, or it is not signed by a CA in our trusted certificate store. We can use the <a href="https://man7.org/linux/man-pages/man3/SSL_get_verify_result.3.html">SSL_get_verify_result(3)</a> function to find out more information about the verification failure. A return value of <b>X509_V_OK</b> indicates that the verification was successful (so the connection error must be due to some other cause). Otherwise we use the <a href="https://man7.org/linux/man-pages/man3/X509_verify_cert_error_string.3.html">X509_verify_cert_error_string(3)</a> function to get a human readable error message.</p>
 
 <h2 id="Sending-and-receiving-data">Sending and receiving data</h2>
 
 <p>Once the handshake is complete we are able to send and receive application data. Exactly what data is sent and in what order is usually controlled by some application level protocol. In this example we are using HTTP 1.0 which is a very simple request and response protocol. The client sends a request to the server. The server sends the response data and then immediately closes down the connection.</p>
 
-<p>To send data to the server we use the <a href="../man3/SSL_write_ex.html">SSL_write_ex(3)</a> function and to receive data from the server we use the <a href="../man3/SSL_read_ex.html">SSL_read_ex(3)</a> function. In HTTP 1.0 the client always writes data first. Our HTTP request will include the hostname that we are connecting to. For simplicity, we write the HTTP request in three chunks. First we write the start of the request. Secondly we write the hostname we are sending the request to. Finally we send the end of the request.</p>
+<p>To send data to the server we use the <a href="https://man7.org/linux/man-pages/man3/SSL_write_ex.3.html">SSL_write_ex(3)</a> function and to receive data from the server we use the <a href="https://man7.org/linux/man-pages/man3/SSL_read_ex.3.html">SSL_read_ex(3)</a> function. In HTTP 1.0 the client always writes data first. Our HTTP request will include the hostname that we are connecting to. For simplicity, we write the HTTP request in three chunks. First we write the start of the request. Secondly we write the hostname we are sending the request to. Finally we send the end of the request.</p>
 
 <pre><code>size_t written;
 const char *request_start = &quot;GET / HTTP/1.0\r\nConnection: close\r\nHost: &quot;;
@@ -293,7 +293,7 @@ if (!SSL_write_ex(ssl, request_end, strlen(request_end), &amp;written)) {
     goto end;
 }</code></pre>
 
-<p>The <a href="../man3/SSL_write_ex.html">SSL_write_ex(3)</a> function returns 0 if it fails and 1 if it is successful. If it is successful then we can proceed to waiting for a response from the server.</p>
+<p>The <a href="https://man7.org/linux/man-pages/man3/SSL_write_ex.3.html">SSL_write_ex(3)</a> function returns 0 if it fails and 1 if it is successful. If it is successful then we can proceed to waiting for a response from the server.</p>
 
 <pre><code>size_t readbytes;
 char buf[160];
@@ -315,9 +315,9 @@ while (SSL_read_ex(ssl, buf, sizeof(buf), &amp;readbytes)) {
 /* In case the response didn&#39;t finish with a newline we add one now */
 printf(&quot;\n&quot;);</code></pre>
 
-<p>We use the <a href="../man3/SSL_read_ex.html">SSL_read_ex(3)</a> function to read the response. We don&#39;t know exactly how much data we are going to receive back so we enter a loop reading blocks of data from the server and printing each block that we receive to the screen. The loop ends as soon as <a href="../man3/SSL_read_ex.html">SSL_read_ex(3)</a> returns 0 - meaning that it failed to read any data.</p>
+<p>We use the <a href="https://man7.org/linux/man-pages/man3/SSL_read_ex.3.html">SSL_read_ex(3)</a> function to read the response. We don&#39;t know exactly how much data we are going to receive back so we enter a loop reading blocks of data from the server and printing each block that we receive to the screen. The loop ends as soon as <a href="https://man7.org/linux/man-pages/man3/SSL_read_ex.3.html">SSL_read_ex(3)</a> returns 0 - meaning that it failed to read any data.</p>
 
-<p>A failure to read data could mean that there has been some error, or it could simply mean that server has sent all the data that it wants to send and has indicated that it has finished by sending a &quot;close_notify&quot; alert. This alert is a TLS protocol level message indicating that the endpoint has finished sending all of its data and it will not send any more. Both of these conditions result in a 0 return value from <a href="../man3/SSL_read_ex.html">SSL_read_ex(3)</a> and we need to use the function <a href="../man3/SSL_get_error.html">SSL_get_error(3)</a> to determine the cause of the 0 return value.</p>
+<p>A failure to read data could mean that there has been some error, or it could simply mean that server has sent all the data that it wants to send and has indicated that it has finished by sending a &quot;close_notify&quot; alert. This alert is a TLS protocol level message indicating that the endpoint has finished sending all of its data and it will not send any more. Both of these conditions result in a 0 return value from <a href="https://man7.org/linux/man-pages/man3/SSL_read_ex.3.html">SSL_read_ex(3)</a> and we need to use the function <a href="https://man7.org/linux/man-pages/man3/SSL_get_error.3.html">SSL_get_error(3)</a> to determine the cause of the 0 return value.</p>
 
 <pre><code>/*
  * Check whether we finished the while loop above normally or as the
@@ -334,11 +334,11 @@ if (SSL_get_error(ssl, 0) != SSL_ERROR_ZERO_RETURN) {
     goto end;
 }</code></pre>
 
-<p>If <a href="../man3/SSL_get_error.html">SSL_get_error(3)</a> returns <b>SSL_ERROR_ZERO_RETURN</b> then we know that the server has finished sending its data. Otherwise an error has occurred.</p>
+<p>If <a href="https://man7.org/linux/man-pages/man3/SSL_get_error.3.html">SSL_get_error(3)</a> returns <b>SSL_ERROR_ZERO_RETURN</b> then we know that the server has finished sending its data. Otherwise an error has occurred.</p>
 
 <h2 id="Shutting-down-the-connection">Shutting down the connection</h2>
 
-<p>Once we have finished reading data from the server then we are ready to close the connection down. We do this via the <a href="../man3/SSL_shutdown.html">SSL_shutdown(3)</a> function which has the effect of sending a TLS protocol level message (a &quot;close_notify&quot; alert) to the server saying that we have finished writing data:</p>
+<p>Once we have finished reading data from the server then we are ready to close the connection down. We do this via the <a href="https://man7.org/linux/man-pages/man3/SSL_shutdown.3.html">SSL_shutdown(3)</a> function which has the effect of sending a TLS protocol level message (a &quot;close_notify&quot; alert) to the server saying that we have finished writing data:</p>
 
 <pre><code>/*
  * The peer already shutdown gracefully (we know this because of the
@@ -356,7 +356,7 @@ if (ret &lt; 1) {
     goto end;
 }</code></pre>
 
-<p>The <a href="../man3/SSL_shutdown.html">SSL_shutdown(3)</a> function will either return 1, 0, or less than 0. A return value of 1 is a success, and a return value less than 0 is an error. More precisely a return value of 1 means that we have sent a &quot;close_notify&quot; alert to the server, and that we have also received one back. A return value of 0 means that we have sent a &quot;close_notify&quot; alert to the server, but we have not yet received one back. Usually in this scenario you would call <a href="../man3/SSL_shutdown.html">SSL_shutdown(3)</a> again which (with a blocking socket) would block until the &quot;close_notify&quot; is received. However in this case we already know that the server has sent us a &quot;close_notify&quot; because of the SSL_ERROR_ZERO_RETURN that we received from the call to <a href="../man3/SSL_read_ex.html">SSL_read_ex(3)</a>. So this scenario should never happen in practice. We just treat it as an error in this example.</p>
+<p>The <a href="https://man7.org/linux/man-pages/man3/SSL_shutdown.3.html">SSL_shutdown(3)</a> function will either return 1, 0, or less than 0. A return value of 1 is a success, and a return value less than 0 is an error. More precisely a return value of 1 means that we have sent a &quot;close_notify&quot; alert to the server, and that we have also received one back. A return value of 0 means that we have sent a &quot;close_notify&quot; alert to the server, but we have not yet received one back. Usually in this scenario you would call <a href="https://man7.org/linux/man-pages/man3/SSL_shutdown.3.html">SSL_shutdown(3)</a> again which (with a blocking socket) would block until the &quot;close_notify&quot; is received. However in this case we already know that the server has sent us a &quot;close_notify&quot; because of the SSL_ERROR_ZERO_RETURN that we received from the call to <a href="https://man7.org/linux/man-pages/man3/SSL_read_ex.3.html">SSL_read_ex(3)</a>. So this scenario should never happen in practice. We just treat it as an error in this example.</p>
 
 <h2 id="Final-clean-up">Final clean up</h2>
 
@@ -382,9 +382,9 @@ end:
    SSL_CTX_free(ctx);
    return res;</code></pre>
 
-<p>To display errors we make use of the <a href="../man3/ERR_print_errors_fp.html">ERR_print_errors_fp(3)</a> function which simply dumps out the contents of any errors on the OpenSSL error stack to the specified location (in this case <i>stderr</i>).</p>
+<p>To display errors we make use of the <a href="https://man7.org/linux/man-pages/man3/ERR_print_errors_fp.3.html">ERR_print_errors_fp(3)</a> function which simply dumps out the contents of any errors on the OpenSSL error stack to the specified location (in this case <i>stderr</i>).</p>
 
-<p>We need to free up the <b>SSL</b> object that we created for the connection via the <a href="../man3/SSL_free.html">SSL_free(3)</a> function. Also, since we are not going to be creating any more TLS connections we must also free up the <b>SSL_CTX</b> via a call to <a href="../man3/SSL_CTX_free.html">SSL_CTX_free(3)</a>.</p>
+<p>We need to free up the <b>SSL</b> object that we created for the connection via the <a href="https://man7.org/linux/man-pages/man3/SSL_free.3.html">SSL_free(3)</a> function. Also, since we are not going to be creating any more TLS connections we must also free up the <b>SSL_CTX</b> via a call to <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_free.3.html">SSL_CTX_free(3)</a>.</p>
 
 <h1 id="TROUBLESHOOTING">TROUBLESHOOTING</h1>
 
@@ -396,7 +396,7 @@ end:
 
 <h2 id="Verification-failure-of-the-server-certificate">Verification failure of the server certificate</h2>
 
-<p>A verification failure of the server certificate would result in a failure when running the <a href="../man3/SSL_connect.html">SSL_connect(3)</a> function. <a href="../man3/ERR_print_errors_fp.html">ERR_print_errors_fp(3)</a> would display an error which would look something like this:</p>
+<p>A verification failure of the server certificate would result in a failure when running the <a href="https://man7.org/linux/man-pages/man3/SSL_connect.3.html">SSL_connect(3)</a> function. <a href="https://man7.org/linux/man-pages/man3/ERR_print_errors_fp.3.html">ERR_print_errors_fp(3)</a> would display an error which would look something like this:</p>
 
 <pre><code>Verify error: unable to get local issuer certificate
 40E74AF1F47F0000:error:0A000086:SSL routines:tls_post_process_server_certificate:certificate verify failed:ssl/statem/statem_clnt.c:2069:</code></pre>
@@ -408,7 +408,7 @@ end:
 <dt id="Failure-to-correctly-setup-the-trusted-certificate-store">Failure to correctly setup the trusted certificate store</dt>
 <dd>
 
-<p>See the page <a href="../man7/ossl-guide-tls-introduction.html">ossl-guide-tls-introduction(7)</a> and check that your trusted certificate store is correctly configured</p>
+<p>See the page <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-introduction.7.html">ossl-guide-tls-introduction(7)</a> and check that your trusted certificate store is correctly configured</p>
 
 </dd>
 <dt id="Unrecognised-CA">Unrecognised CA</dt>
@@ -441,15 +441,15 @@ end:
 
 <h1 id="FURTHER-READING">FURTHER READING</h1>
 
-<p>See <a href="../man7/ossl-guide-tls-client-non-block.html">ossl-guide-tls-client-non-block(7)</a> to read a tutorial on how to modify the client developed on this page to support a nonblocking socket.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-client-non-block.7.html">ossl-guide-tls-client-non-block(7)</a> to read a tutorial on how to modify the client developed on this page to support a nonblocking socket.</p>
 
-<p>See <a href="../man7/ossl-guide-tls-server-block.html">ossl-guide-tls-server-block(7)</a> for a tutorial on how to implement a simple TLS server handling one client at a time over a blocking socket.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-server-block.7.html">ossl-guide-tls-server-block(7)</a> for a tutorial on how to implement a simple TLS server handling one client at a time over a blocking socket.</p>
 
-<p>See <a href="../man7/ossl-guide-quic-client-block.html">ossl-guide-quic-client-block(7)</a> to read a tutorial on how to modify the client developed on this page to support QUIC instead of TLS.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-client-block.7.html">ossl-guide-quic-client-block(7)</a> to read a tutorial on how to modify the client developed on this page to support QUIC instead of TLS.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ossl-guide-introduction.html">ossl-guide-introduction(7)</a>, <a href="../man7/ossl-guide-libraries-introduction.html">ossl-guide-libraries-introduction(7)</a>, <a href="../man7/ossl-guide-libssl-introduction.html">ossl-guide-libssl-introduction(7)</a>, <a href="../man7/ossl-guide-tls-introduction.html">ossl-guide-tls-introduction(7)</a>, <a href="../man7/ossl-guide-tls-client-non-block.html">ossl-guide-tls-client-non-block(7)</a>, <a href="../man7/ossl-guide-quic-client-block.html">ossl-guide-quic-client-block(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ossl-guide-introduction.7.html">ossl-guide-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libraries-introduction.7.html">ossl-guide-libraries-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libssl-introduction.7.html">ossl-guide-libssl-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-introduction.7.html">ossl-guide-tls-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-client-non-block.7.html">ossl-guide-tls-client-non-block(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-client-block.7.html">ossl-guide-quic-client-block(7)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

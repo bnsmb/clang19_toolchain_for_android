@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_ENCODER_CTX_new_for_pkey</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -57,19 +57,19 @@ int OSSL_ENCODER_CTX_set_passphrase_cb(OSSL_ENCODER_CTX *ctx,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>OSSL_ENCODER_CTX_new_for_pkey() is a utility function that creates a <b>OSSL_ENCODER_CTX</b>, finds all applicable encoder implementations and sets them up, so almost all the caller has to do next is call functions like <a href="../man3/OSSL_ENCODER_to_bio.html">OSSL_ENCODER_to_bio(3)</a>. <i>output_type</i> determines the final output encoding, and <i>selection</i> can be used to select what parts of the <i>pkey</i> should be included in the output. <i>output_type</i> is further discussed in <a href="#Output-types">&quot;Output types&quot;</a> below, and <i>selection</i> is further described in <a href="#Selections">&quot;Selections&quot;</a>.</p>
+<p>OSSL_ENCODER_CTX_new_for_pkey() is a utility function that creates a <b>OSSL_ENCODER_CTX</b>, finds all applicable encoder implementations and sets them up, so almost all the caller has to do next is call functions like <a href="https://man7.org/linux/man-pages/man3/OSSL_ENCODER_to_bio.3.html">OSSL_ENCODER_to_bio(3)</a>. <i>output_type</i> determines the final output encoding, and <i>selection</i> can be used to select what parts of the <i>pkey</i> should be included in the output. <i>output_type</i> is further discussed in <a href="#Output-types">&quot;Output types&quot;</a> below, and <i>selection</i> is further described in <a href="#Selections">&quot;Selections&quot;</a>.</p>
 
-<p>Internally, OSSL_ENCODER_CTX_new_for_pkey() uses the names from the <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a> implementation associated with <i>pkey</i> to build a list of applicable encoder implementations that are used to process the <i>pkey</i> into the encoding named by <i>output_type</i>, with the outermost structure named by <i>output_structure</i> if that&#39;s relevant. All these implementations are implicitly fetched, with <i>propquery</i> for finer selection.</p>
+<p>Internally, OSSL_ENCODER_CTX_new_for_pkey() uses the names from the <a href="https://man7.org/linux/man-pages/man3/EVP_KEYMGMT.3.html">EVP_KEYMGMT(3)</a> implementation associated with <i>pkey</i> to build a list of applicable encoder implementations that are used to process the <i>pkey</i> into the encoding named by <i>output_type</i>, with the outermost structure named by <i>output_structure</i> if that&#39;s relevant. All these implementations are implicitly fetched, with <i>propquery</i> for finer selection.</p>
 
-<p>If no suitable encoder implementation is found, OSSL_ENCODER_CTX_new_for_pkey() still creates a <b>OSSL_ENCODER_CTX</b>, but with no associated encoder (<a href="../man3/OSSL_ENCODER_CTX_get_num_encoders.html">OSSL_ENCODER_CTX_get_num_encoders(3)</a> returns zero). This helps the caller to distinguish between an error when creating the <b>OSSL_ENCODER_CTX</b> and missing encoder implementation, and allows it to act accordingly.</p>
+<p>If no suitable encoder implementation is found, OSSL_ENCODER_CTX_new_for_pkey() still creates a <b>OSSL_ENCODER_CTX</b>, but with no associated encoder (<a href="https://man7.org/linux/man-pages/man3/OSSL_ENCODER_CTX_get_num_encoders.3.html">OSSL_ENCODER_CTX_get_num_encoders(3)</a> returns zero). This helps the caller to distinguish between an error when creating the <b>OSSL_ENCODER_CTX</b> and missing encoder implementation, and allows it to act accordingly.</p>
 
-<p>Note that OSSL_ENCODER_CTX_new_for_pkey() finalises the OSSL_ENCODER_CTX; after that the OSSL_ENCODER_CTX_set_* and OSSL_ENCODER_CTX_add_* functions described in <a href="../man3/OSSL_ENCODER_CTX.html">OSSL_ENCODER_CTX(3)</a> shouldn&#39;t be called.</p>
+<p>Note that OSSL_ENCODER_CTX_new_for_pkey() finalises the OSSL_ENCODER_CTX; after that the OSSL_ENCODER_CTX_set_* and OSSL_ENCODER_CTX_add_* functions described in <a href="https://man7.org/linux/man-pages/man3/OSSL_ENCODER_CTX.3.html">OSSL_ENCODER_CTX(3)</a> shouldn&#39;t be called.</p>
 
 <p>OSSL_ENCODER_CTX_set_cipher() tells the implementation what cipher should be used to encrypt encoded keys. The cipher is given by name <i>cipher_name</i>. The interpretation of that <i>cipher_name</i> is implementation dependent. The implementation may implement the cipher directly itself or by other implementations, or it may choose to fetch it. If the implementation supports fetching the cipher, then it may use <i>propquery</i> as properties to be queried for when fetching. <i>cipher_name</i> may also be NULL, which will result in unencrypted encoding.</p>
 
 <p>OSSL_ENCODER_CTX_set_passphrase() gives the implementation a pass phrase to use when encrypting the encoded private key. Alternatively, a pass phrase callback may be specified with the following functions.</p>
 
-<p>OSSL_ENCODER_CTX_set_pem_password_cb(), OSSL_ENCODER_CTX_set_passphrase_ui() and OSSL_ENCODER_CTX_set_passphrase_cb() sets up a callback method that the implementation can use to prompt for a pass phrase, giving the caller the choice of preferred pass phrase callback form. These are called indirectly, through an internal <a href="../man3/OSSL_PASSPHRASE_CALLBACK.html">OSSL_PASSPHRASE_CALLBACK(3)</a> function.</p>
+<p>OSSL_ENCODER_CTX_set_pem_password_cb(), OSSL_ENCODER_CTX_set_passphrase_ui() and OSSL_ENCODER_CTX_set_passphrase_cb() sets up a callback method that the implementation can use to prompt for a pass phrase, giving the caller the choice of preferred pass phrase callback form. These are called indirectly, through an internal <a href="https://man7.org/linux/man-pages/man3/OSSL_PASSPHRASE_CALLBACK.3.html">OSSL_PASSPHRASE_CALLBACK(3)</a> function.</p>
 
 <h2 id="Output-types">Output types</h2>
 
@@ -82,7 +82,7 @@ int OSSL_ENCODER_CTX_set_passphrase_cb(OSSL_ENCODER_CTX *ctx,
 <dt id="TEXT"><code>TEXT</code></dt>
 <dd>
 
-<p>The output is a human readable description of the key. <a href="../man3/EVP_PKEY_print_private.html">EVP_PKEY_print_private(3)</a>, <a href="../man3/EVP_PKEY_print_public.html">EVP_PKEY_print_public(3)</a> and <a href="../man3/EVP_PKEY_print_params.html">EVP_PKEY_print_params(3)</a> use this for their output.</p>
+<p>The output is a human readable description of the key. <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_print_private.3.html">EVP_PKEY_print_private(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_print_public.3.html">EVP_PKEY_print_public(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_print_params.3.html">EVP_PKEY_print_params(3)</a> use this for their output.</p>
 
 </dd>
 <dt id="DER"><code>DER</code></dt>
@@ -101,7 +101,7 @@ int OSSL_ENCODER_CTX_set_passphrase_cb(OSSL_ENCODER_CTX *ctx,
 
 <h2 id="Selections">Selections</h2>
 
-<p><i>selection</i> can be any one of the values described in <a href="../man3/EVP_PKEY_fromdata.html">&quot;Selections&quot; in EVP_PKEY_fromdata(3)</a>.</p>
+<p><i>selection</i> can be any one of the values described in <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_fromdata.3.html#Selections">&quot;Selections&quot; in EVP_PKEY_fromdata(3)</a>.</p>
 
 <p>These are only &#39;hints&#39; since the encoder implementations are free to determine what makes sense to include in the output, and this may depend on the desired output. For example, an EC key in a PKCS#8 structure doesn&#39;t usually include the public key.</p>
 
@@ -113,7 +113,7 @@ int OSSL_ENCODER_CTX_set_passphrase_cb(OSSL_ENCODER_CTX *ctx,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/provider.html">provider(7)</a>, <a href="../man3/OSSL_ENCODER.html">OSSL_ENCODER(3)</a>, <a href="../man3/OSSL_ENCODER_CTX.html">OSSL_ENCODER_CTX(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_ENCODER.3.html">OSSL_ENCODER(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_ENCODER_CTX.3.html">OSSL_ENCODER_CTX(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

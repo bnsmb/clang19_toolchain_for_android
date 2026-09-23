@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -59,18 +59,18 @@ int EVP_PKEY_get_raw_private_key(const EVP_PKEY *pkey, unsigned char *priv,
 int EVP_PKEY_get_raw_public_key(const EVP_PKEY *pkey, unsigned char *pub,
                                 size_t *len);</code></pre>
 
-<p>The following function has been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following function has been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>EVP_PKEY *EVP_PKEY_new_CMAC_key(ENGINE *e, const unsigned char *priv,
                                 size_t len, const EVP_CIPHER *cipher);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p><b>EVP_PKEY</b> is a generic structure to hold diverse types of asymmetric keys (also known as &quot;key pairs&quot;), and can be used for diverse operations, like signing, verifying signatures, key derivation, etc. The asymmetric keys themselves are often referred to as the &quot;internal key&quot;, and are handled by backends, such as providers (through <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a>) or <b>ENGINE</b>s.</p>
+<p><b>EVP_PKEY</b> is a generic structure to hold diverse types of asymmetric keys (also known as &quot;key pairs&quot;), and can be used for diverse operations, like signing, verifying signatures, key derivation, etc. The asymmetric keys themselves are often referred to as the &quot;internal key&quot;, and are handled by backends, such as providers (through <a href="https://man7.org/linux/man-pages/man3/EVP_KEYMGMT.3.html">EVP_KEYMGMT(3)</a>) or <b>ENGINE</b>s.</p>
 
 <p>Conceptually, an <b>EVP_PKEY</b> internal key may hold a private key, a public key, or both (a keypair), and along with those, key parameters if the key type requires them. The presence of these components determine what operations can be made; for example, signing normally requires the presence of a private key, and verifying normally requires the presence of a public key.</p>
 
-<p><b>EVP_PKEY</b> has also been used for MAC algorithm that were conceived as producing signatures, although not being public key algorithms; &quot;POLY1305&quot;, &quot;SIPHASH&quot;, &quot;HMAC&quot;, &quot;CMAC&quot;. This usage is considered legacy and is discouraged in favor of the <a href="../man3/EVP_MAC.html">EVP_MAC(3)</a> API.</p>
+<p><b>EVP_PKEY</b> has also been used for MAC algorithm that were conceived as producing signatures, although not being public key algorithms; &quot;POLY1305&quot;, &quot;SIPHASH&quot;, &quot;HMAC&quot;, &quot;CMAC&quot;. This usage is considered legacy and is discouraged in favor of the <a href="https://man7.org/linux/man-pages/man3/EVP_MAC.3.html">EVP_MAC(3)</a> API.</p>
 
 <p>The EVP_PKEY_new() function allocates an empty <b>EVP_PKEY</b> structure which is used by OpenSSL to store public and private keys. The reference count is set to <b>1</b>.</p>
 
@@ -84,7 +84,7 @@ int EVP_PKEY_get_raw_public_key(const EVP_PKEY *pkey, unsigned char *pub,
 
 <p>EVP_PKEY_new_raw_private_key() does the same as EVP_PKEY_new_raw_private_key_ex() except that the default library context and default property query are used instead. If <i>e</i> is non-NULL then the new <b>EVP_PKEY</b> structure is associated with the engine <i>e</i>. The <i>type</i> argument indicates what kind of key this is. The value should be a NID for a public key algorithm that supports raw private keys, i.e. one of <b>EVP_PKEY_X25519</b>, <b>EVP_PKEY_ED25519</b>, <b>EVP_PKEY_X448</b> or <b>EVP_PKEY_ED448</b>.</p>
 
-<p>EVP_PKEY_new_raw_private_key_ex() and EVP_PKEY_new_raw_private_key() may also be used with most MACs implemented as public key algorithms, so key types such as &quot;HMAC&quot;, &quot;POLY1305&quot;, &quot;SIPHASH&quot;, or their NID form <b>EVP_PKEY_POLY1305</b>, <b>EVP_PKEY_SIPHASH</b>, <b>EVP_PKEY_HMAC</b> are also accepted. This usage is, as mentioned above, discouraged in favor of the <a href="../man3/EVP_MAC.html">EVP_MAC(3)</a> API.</p>
+<p>EVP_PKEY_new_raw_private_key_ex() and EVP_PKEY_new_raw_private_key() may also be used with most MACs implemented as public key algorithms, so key types such as &quot;HMAC&quot;, &quot;POLY1305&quot;, &quot;SIPHASH&quot;, or their NID form <b>EVP_PKEY_POLY1305</b>, <b>EVP_PKEY_SIPHASH</b>, <b>EVP_PKEY_HMAC</b> are also accepted. This usage is, as mentioned above, discouraged in favor of the <a href="https://man7.org/linux/man-pages/man3/EVP_MAC.3.html">EVP_MAC(3)</a> API.</p>
 
 <p>EVP_PKEY_new_raw_public_key_ex() works in the same way as EVP_PKEY_new_raw_private_key_ex() except that <i>key</i> points to the raw public key data. The <b>EVP_PKEY</b> structure will be initialised without any private key information. Algorithm types that support raw public keys are <b>ED25519</b>, <b>ED448</b>, <b>X25519</b>, <b>X448</b>, <code>ML-DSA-44</code>, <code>ML-DSA-65</code>, <code>ML-DSA-87</code>, <b>ML-KEM-512</b>, <b>ML-KEM-768</b>, and <b>ML-KEM-1024</b>.</p>
 
@@ -98,15 +98,15 @@ int EVP_PKEY_get_raw_public_key(const EVP_PKEY *pkey, unsigned char *pub,
 
 <p>EVP_PKEY_new_CMAC_key() works in the same way as EVP_PKEY_new_raw_private_key() except it is only for the <b>EVP_PKEY_CMAC</b> algorithm type. In addition to the raw private key data, it also takes a cipher algorithm to be used during creation of a CMAC in the <b>cipher</b> argument. The cipher should be a standard encryption-only cipher. For example AEAD and XTS ciphers should not be used.</p>
 
-<p>Applications should use the <a href="../man3/EVP_MAC.html">EVP_MAC(3)</a> API instead and set the <b>OSSL_MAC_PARAM_CIPHER</b> parameter on the <b>EVP_MAC_CTX</b> object with the name of the cipher being used.</p>
+<p>Applications should use the <a href="https://man7.org/linux/man-pages/man3/EVP_MAC.3.html">EVP_MAC(3)</a> API instead and set the <b>OSSL_MAC_PARAM_CIPHER</b> parameter on the <b>EVP_MAC_CTX</b> object with the name of the cipher being used.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
 <p>The <b>EVP_PKEY</b> structure is used by various OpenSSL functions which require a general private key without reference to any particular algorithm.</p>
 
-<p>The structure returned by EVP_PKEY_new() is empty. To add a private or public key to this empty structure use the appropriate functions described in <a href="../man3/EVP_PKEY_set1_RSA.html">EVP_PKEY_set1_RSA(3)</a>, <a href="../man3/EVP_PKEY_set1_DSA.html">EVP_PKEY_set1_DSA(3)</a>, <a href="../man3/EVP_PKEY_set1_DH.html">EVP_PKEY_set1_DH(3)</a> or <a href="../man3/EVP_PKEY_set1_EC_KEY.html">EVP_PKEY_set1_EC_KEY(3)</a> for legacy key types implemented in internal OpenSSL providers.</p>
+<p>The structure returned by EVP_PKEY_new() is empty. To add a private or public key to this empty structure use the appropriate functions described in <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_set1_RSA.3.html">EVP_PKEY_set1_RSA(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_set1_DSA.3.html">EVP_PKEY_set1_DSA(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_set1_DH.3.html">EVP_PKEY_set1_DH(3)</a> or <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_set1_EC_KEY.3.html">EVP_PKEY_set1_EC_KEY(3)</a> for legacy key types implemented in internal OpenSSL providers.</p>
 
-<p>For fully provider-managed key types (see <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>), possibly implemented in external providers, use functions such as <a href="../man3/EVP_PKEY_set1_encoded_public_key.html">EVP_PKEY_set1_encoded_public_key(3)</a> or <a href="../man3/EVP_PKEY_fromdata.html">EVP_PKEY_fromdata(3)</a> to populate key data.</p>
+<p>For fully provider-managed key types (see <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>), possibly implemented in external providers, use functions such as <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_set1_encoded_public_key.3.html">EVP_PKEY_set1_encoded_public_key(3)</a> or <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_fromdata.3.html">EVP_PKEY_fromdata(3)</a> to populate key data.</p>
 
 <p>Generally caution is advised for using an <b>EVP_PKEY</b> structure across different library contexts: In order for an <b>EVP_PKEY</b> to be shared by multiple library contexts the providers associated with the library contexts must have key managers that support the key type and implement the OSSL_FUNC_keymgmt_import() and OSSL_FUNC_keymgmt_export() functions.</p>
 
@@ -120,7 +120,7 @@ int EVP_PKEY_get_raw_public_key(const EVP_PKEY *pkey, unsigned char *pub,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_set1_RSA.html">EVP_PKEY_set1_RSA(3)</a>, <a href="../man3/EVP_PKEY_set1_DSA.html">EVP_PKEY_set1_DSA(3)</a>, <a href="../man3/EVP_PKEY_set1_DH.html">EVP_PKEY_set1_DH(3)</a>, <a href="../man3/EVP_PKEY_set1_EC_KEY.html">EVP_PKEY_set1_EC_KEY(3)</a>, <a href="../man7/EVP_PKEY-ED25519.html">EVP_PKEY-ED25519(7)</a>, <a href="../man7/EVP_PKEY-ED448.html">EVP_PKEY-ED448(7)</a>. <a href="../man7/EVP_PKEY-HMAC.html">EVP_PKEY-HMAC(7)</a>, <a href="../man7/EVP_PKEY-Poly1305.html">EVP_PKEY-Poly1305(7)</a>, <a href="../man7/EVP_PKEY-Siphash.html">EVP_PKEY-Siphash(7)</a>, <a href="../man7/EVP_PKEY-X25519.html">EVP_PKEY-X25519(7)</a>, <a href="../man7/EVP_PKEY-X448.html">EVP_PKEY-X448(7)</a>, <a href="../man7/EVP_PKEY-ML-DSA.html">EVP_PKEY-ML-DSA(7)</a>, <a href="../man7/EVP_PKEY-ML-KEM.html">EVP_PKEY-ML-KEM(7)</a>.</p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_set1_RSA.3.html">EVP_PKEY_set1_RSA(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_set1_DSA.3.html">EVP_PKEY_set1_DSA(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_set1_DH.3.html">EVP_PKEY_set1_DH(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_set1_EC_KEY.3.html">EVP_PKEY_set1_EC_KEY(3)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-ED25519.7.html">EVP_PKEY-ED25519(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-ED448.7.html">EVP_PKEY-ED448(7)</a>. <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-HMAC.7.html">EVP_PKEY-HMAC(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-Poly1305.7.html">EVP_PKEY-Poly1305(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-Siphash.7.html">EVP_PKEY-Siphash(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-X25519.7.html">EVP_PKEY-X25519(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-X448.7.html">EVP_PKEY-X448(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-ML-DSA.7.html">EVP_PKEY-ML-DSA(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-ML-KEM.7.html">EVP_PKEY-ML-KEM(7)</a>.</p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

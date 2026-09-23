@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY-EC</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -99,7 +99,7 @@
 
 <p>Enable Cofactor DH (ECC CDH) if this value is 1, otherwise it uses normal EC DH if the value is zero. The cofactor variant multiplies the shared secret by the EC curve&#39;s cofactor (note for some curves the cofactor is 1).</p>
 
-<p>See also <a href="../man7/EVP_KEYEXCH-ECDH.html">EVP_KEYEXCH-ECDH(7)</a> for the related <b>OSSL_EXCHANGE_PARAM_EC_ECDH_COFACTOR_MODE</b> parameter that can be set on a per-operation basis.</p>
+<p>See also <a href="https://man7.org/linux/man-pages/man7/EVP_KEYEXCH-ECDH.7.html">EVP_KEYEXCH-ECDH(7)</a> for the related <b>OSSL_EXCHANGE_PARAM_EC_ECDH_COFACTOR_MODE</b> parameter that can be set on a per-operation basis.</p>
 
 </dd>
 <dt id="encoding-OSSL_PKEY_PARAM_EC_ENCODING-UTF8-string">&quot;encoding&quot; (<b>OSSL_PKEY_PARAM_EC_ENCODING</b>) &lt;UTF8 string&gt;</dt>
@@ -111,7 +111,7 @@
 <dt id="point-format-OSSL_PKEY_PARAM_EC_POINT_CONVERSION_FORMAT-UTF8-string">&quot;point-format&quot; (<b>OSSL_PKEY_PARAM_EC_POINT_CONVERSION_FORMAT</b>) &lt;UTF8 string&gt;</dt>
 <dd>
 
-<p>Sets or gets the point_conversion_form for the <i>key</i>. For a description of point_conversion_forms please see <a href="../man3/EC_POINT_new.html">EC_POINT_new(3)</a>. Valid values are &quot;uncompressed&quot; or &quot;compressed&quot;. The default value is &quot;uncompressed&quot;.</p>
+<p>Sets or gets the point_conversion_form for the <i>key</i>. For a description of point_conversion_forms please see <a href="https://man7.org/linux/man-pages/man3/EC_POINT_new.3.html">EC_POINT_new(3)</a>. Valid values are &quot;uncompressed&quot; or &quot;compressed&quot;. The default value is &quot;uncompressed&quot;.</p>
 
 </dd>
 <dt id="group-check-OSSL_PKEY_PARAM_EC_GROUP_CHECK_TYPE-UTF8-string">&quot;group-check&quot; (<b>OSSL_PKEY_PARAM_EC_GROUP_CHECK_TYPE</b>) &lt;UTF8 string&gt;</dt>
@@ -217,7 +217,7 @@
 <dt id="key-check-OSSL_PKEY_PARAM_FIPS_KEY_CHECK-integer">&quot;key-check&quot; (<b>OSSL_PKEY_PARAM_FIPS_KEY_CHECK</b>) &lt;integer&gt;</dt>
 <dd>
 
-<p>See <a href="../man7/provider-keymgmt.html">&quot;Common Information Parameters&quot; in provider-keymgmt(7)</a> for further information.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html#Common_Information_Parameters">&quot;Common Information Parameters&quot; in provider-keymgmt(7)</a> for further information.</p>
 
 </dd>
 </dl>
@@ -229,20 +229,20 @@
 <dt id="fips-indicator-OSSL_PKEY_PARAM_FIPS_APPROVED_INDICATOR-integer">&quot;fips-indicator&quot; (<b>OSSL_PKEY_PARAM_FIPS_APPROVED_INDICATOR</b>) &lt;integer&gt;</dt>
 <dd>
 
-<p>See <a href="../man7/provider-keymgmt.html">&quot;Common Information Parameters&quot; in provider-keymgmt(7)</a> for further information.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html#Common_Information_Parameters">&quot;Common Information Parameters&quot; in provider-keymgmt(7)</a> for further information.</p>
 
 </dd>
 </dl>
 
 <h2 id="EC-key-validation">EC key validation</h2>
 
-<p>For EC keys, <a href="../man3/EVP_PKEY_param_check.html">EVP_PKEY_param_check(3)</a> behaves in the following way: For the OpenSSL default provider it uses either <a href="../man3/EC_GROUP_check.html">EC_GROUP_check(3)</a> or <a href="../man3/EC_GROUP_check_named_curve.html">EC_GROUP_check_named_curve(3)</a> depending on the flag EC_FLAG_CHECK_NAMED_GROUP. The OpenSSL FIPS provider uses <a href="../man3/EC_GROUP_check_named_curve.html">EC_GROUP_check_named_curve(3)</a> in order to conform to SP800-56Ar3 <i>Assurances of Domain-Parameter Validity</i>.</p>
+<p>For EC keys, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_param_check.3.html">EVP_PKEY_param_check(3)</a> behaves in the following way: For the OpenSSL default provider it uses either <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_check.3.html">EC_GROUP_check(3)</a> or <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_check_named_curve.3.html">EC_GROUP_check_named_curve(3)</a> depending on the flag EC_FLAG_CHECK_NAMED_GROUP. The OpenSSL FIPS provider uses <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_check_named_curve.3.html">EC_GROUP_check_named_curve(3)</a> in order to conform to SP800-56Ar3 <i>Assurances of Domain-Parameter Validity</i>.</p>
 
-<p>For EC keys, <a href="../man3/EVP_PKEY_param_check_quick.html">EVP_PKEY_param_check_quick(3)</a> is equivalent to <a href="../man3/EVP_PKEY_param_check.html">EVP_PKEY_param_check(3)</a>.</p>
+<p>For EC keys, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_param_check_quick.3.html">EVP_PKEY_param_check_quick(3)</a> is equivalent to <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_param_check.3.html">EVP_PKEY_param_check(3)</a>.</p>
 
-<p>For EC keys, <a href="../man3/EVP_PKEY_public_check.html">EVP_PKEY_public_check(3)</a> and <a href="../man3/EVP_PKEY_public_check_quick.html">EVP_PKEY_public_check_quick(3)</a> conform to SP800-56Ar3 <i>ECC Full Public-Key Validation</i> and <i>ECC Partial Public-Key Validation</i> respectively.</p>
+<p>For EC keys, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_public_check.3.html">EVP_PKEY_public_check(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_public_check_quick.3.html">EVP_PKEY_public_check_quick(3)</a> conform to SP800-56Ar3 <i>ECC Full Public-Key Validation</i> and <i>ECC Partial Public-Key Validation</i> respectively.</p>
 
-<p>For EC Keys, <a href="../man3/EVP_PKEY_private_check.html">EVP_PKEY_private_check(3)</a> and <a href="../man3/EVP_PKEY_pairwise_check.html">EVP_PKEY_pairwise_check(3)</a> conform to SP800-56Ar3 <i>Private key validity</i> and <i>Owner Assurance of Pair-wise Consistency</i> respectively.</p>
+<p>For EC Keys, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_private_check.3.html">EVP_PKEY_private_check(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_pairwise_check.3.html">EVP_PKEY_pairwise_check(3)</a> conform to SP800-56Ar3 <i>Private key validity</i> and <i>Owner Assurance of Pair-wise Consistency</i> respectively.</p>
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
@@ -306,7 +306,7 @@ EVP_PKEY_CTX_free(gctx);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_EC_gen.html">EVP_EC_gen(3)</a>, <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a>, <a href="../man3/EVP_PKEY.html">EVP_PKEY(3)</a>, <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>, <a href="../man7/EVP_SIGNATURE-ECDSA.html">EVP_SIGNATURE-ECDSA(7)</a>, <a href="../man7/EVP_KEYEXCH-ECDH.html">EVP_KEYEXCH-ECDH(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_EC_gen.3.html">EVP_EC_gen(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KEYMGMT.3.html">EVP_KEYMGMT(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY.3.html">EVP_PKEY(3)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_SIGNATURE-ECDSA.7.html">EVP_SIGNATURE-ECDSA(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KEYEXCH-ECDH.7.html">EVP_KEYEXCH-ECDH(7)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

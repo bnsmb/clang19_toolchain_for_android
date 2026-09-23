@@ -4,7 +4,7 @@
 <head>
 <title>SMIME_read_CMS</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -45,7 +45,7 @@ CMS_ContentInfo *SMIME_read_CMS(BIO *in, BIO **bcont);</code></pre>
 
 <p>The parsed CMS_ContentInfo structure is returned or NULL if an error occurred.</p>
 
-<p>SMIME_read_CMS_ex() is similar to SMIME_read_CMS() but optionally a previously created <i>cms</i> CMS_ContentInfo object can be supplied as well as some <i>flags</i>. To create a <i>cms</i> object use <a href="../man3/CMS_ContentInfo_new_ex.html">CMS_ContentInfo_new_ex(3)</a>. If the <i>flags</i> argument contains <b>CMS_BINARY</b> then the input is assumed to be in binary format and is not translated to canonical form. If in addition <b>SMIME_ASCIICRLF</b> is set then the binary input is assumed to be followed by <b>CR</b> and <b>LF</b> characters, else only by an <b>LF</b> character. If <i>flags</i> is 0 and <i>cms</i> is NULL then it is identical to SMIME_read_CMS().</p>
+<p>SMIME_read_CMS_ex() is similar to SMIME_read_CMS() but optionally a previously created <i>cms</i> CMS_ContentInfo object can be supplied as well as some <i>flags</i>. To create a <i>cms</i> object use <a href="https://man7.org/linux/man-pages/man3/CMS_ContentInfo_new_ex.3.html">CMS_ContentInfo_new_ex(3)</a>. If the <i>flags</i> argument contains <b>CMS_BINARY</b> then the input is assumed to be in binary format and is not translated to canonical form. If in addition <b>SMIME_ASCIICRLF</b> is set then the binary input is assumed to be followed by <b>CR</b> and <b>LF</b> characters, else only by an <b>LF</b> character. If <i>flags</i> is 0 and <i>cms</i> is NULL then it is identical to SMIME_read_CMS().</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -74,7 +74,7 @@ cms = SMIME_read_CMS(in, &amp;cont);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/CMS_sign.html">CMS_sign(3)</a>, <a href="../man3/CMS_verify.html">CMS_verify(3)</a>, <a href="../man3/CMS_encrypt.html">CMS_encrypt(3)</a>, <a href="../man3/CMS_decrypt.html">CMS_decrypt(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CMS_sign.3.html">CMS_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CMS_verify.3.html">CMS_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CMS_encrypt.3.html">CMS_encrypt(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CMS_decrypt.3.html">CMS_decrypt(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

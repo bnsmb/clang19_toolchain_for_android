@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY-FFC</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -42,7 +42,7 @@
 
 <h2 id="FFC-parameters">FFC parameters</h2>
 
-<p>In addition to the common parameters that all keytypes should support (see <a href="../man7/provider-keymgmt.html">&quot;Common parameters&quot; in provider-keymgmt(7)</a>), the <b>DSA</b>, <b>DH</b> and <b>DHX</b> keytype implementations support the following.</p>
+<p>In addition to the common parameters that all keytypes should support (see <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html#Common_parameters">&quot;Common parameters&quot; in provider-keymgmt(7)</a>), the <b>DSA</b>, <b>DH</b> and <b>DHX</b> keytype implementations support the following.</p>
 
 <dl>
 
@@ -125,13 +125,13 @@
 <dt id="validate-g-OSSL_PKEY_PARAM_FFC_VALIDATE_G-unsigned-integer">&quot;validate-g&quot; (<b>OSSL_PKEY_PARAM_FFC_VALIDATE_G</b>) &lt;unsigned integer&gt;</dt>
 <dd>
 
-<p>These boolean values are used during FIPS186-4 or FIPS186-2 key validation checks (See <a href="../man3/EVP_PKEY_param_check.html">EVP_PKEY_param_check(3)</a>) to select validation options. By default <i>validate-pq</i> and <i>validate-g</i> are both set to 1 to check that p,q and g are valid. Either of these may be set to 0 to skip a test, which is mainly useful for testing purposes.</p>
+<p>These boolean values are used during FIPS186-4 or FIPS186-2 key validation checks (See <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_param_check.3.html">EVP_PKEY_param_check(3)</a>) to select validation options. By default <i>validate-pq</i> and <i>validate-g</i> are both set to 1 to check that p,q and g are valid. Either of these may be set to 0 to skip a test, which is mainly useful for testing purposes.</p>
 
 </dd>
 <dt id="validate-legacy-OSSL_PKEY_PARAM_FFC_VALIDATE_LEGACY-unsigned-integer">&quot;validate-legacy&quot; (<b>OSSL_PKEY_PARAM_FFC_VALIDATE_LEGACY</b>) &lt;unsigned integer&gt;</dt>
 <dd>
 
-<p>This boolean value is used during key validation checks (See <a href="../man3/EVP_PKEY_param_check.html">EVP_PKEY_param_check(3)</a>) to select the validation type. The default value of 0 selects FIPS186-4 validation. Setting this value to 1 selects FIPS186-2 validation.</p>
+<p>This boolean value is used during key validation checks (See <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_param_check.3.html">EVP_PKEY_param_check(3)</a>) to select the validation type. The default value of 0 selects FIPS186-4 validation. Setting this value to 1 selects FIPS186-2 validation.</p>
 
 </dd>
 </dl>
@@ -250,7 +250,7 @@
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/EVP_PKEY-DSA.html">EVP_PKEY-DSA(7)</a>, <a href="../man7/EVP_PKEY-DH.html">EVP_PKEY-DH(7)</a>, <a href="../man7/EVP_SIGNATURE-DSA.html">EVP_SIGNATURE-DSA(7)</a>, <a href="../man7/EVP_KEYEXCH-DH.html">EVP_KEYEXCH-DH(7)</a>, <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a>, <a href="../man3/EVP_PKEY.html">EVP_PKEY(3)</a>, <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>, <a href="../man7/OSSL_PROVIDER-default.html">OSSL_PROVIDER-default(7)</a>, <a href="../man7/OSSL_PROVIDER-FIPS.html">OSSL_PROVIDER-FIPS(7)</a>,</p>
+<p><a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DSA.7.html">EVP_PKEY-DSA(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DH.7.html">EVP_PKEY-DH(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_SIGNATURE-DSA.7.html">EVP_SIGNATURE-DSA(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KEYEXCH-DH.7.html">EVP_KEYEXCH-DH(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KEYMGMT.3.html">EVP_KEYMGMT(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY.3.html">EVP_PKEY(3)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>, <a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-default.7.html">OSSL_PROVIDER-default(7)</a>, <a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-FIPS.7.html">OSSL_PROVIDER-FIPS(7)</a>,</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

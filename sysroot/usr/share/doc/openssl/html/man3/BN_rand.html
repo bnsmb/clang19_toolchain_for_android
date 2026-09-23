@@ -4,7 +4,7 @@
 <head>
 <title>BN_rand</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -46,7 +46,7 @@ int BN_priv_rand_range_ex(BIGNUM *rnd, const BIGNUM *range, unsigned int strengt
                           BN_CTX *ctx);
 int BN_priv_rand_range(BIGNUM *rnd, const BIGNUM *range);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int BN_pseudo_rand(BIGNUM *rnd, int bits, int top, int bottom);
 int BN_pseudo_rand_range(BIGNUM *rnd, const BIGNUM *range);</code></pre>
@@ -61,7 +61,7 @@ int BN_pseudo_rand_range(BIGNUM *rnd, const BIGNUM *range);</code></pre>
 
 <p>BN_rand_range() is the same as BN_rand_range_ex() except that the default library context is always used.</p>
 
-<p>BN_priv_rand_ex(), BN_priv_rand(), BN_priv_rand_rand_ex() and BN_priv_rand_range() have the same semantics as BN_rand_ex(), BN_rand(), BN_rand_range_ex() and BN_rand_range() respectively. They are intended to be used for generating values that should remain private, and mirror the same difference between <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a> and <a href="../man3/RAND_priv_bytes.html">RAND_priv_bytes(3)</a>.</p>
+<p>BN_priv_rand_ex(), BN_priv_rand(), BN_priv_rand_rand_ex() and BN_priv_rand_range() have the same semantics as BN_rand_ex(), BN_rand(), BN_rand_range_ex() and BN_rand_range() respectively. They are intended to be used for generating values that should remain private, and mirror the same difference between <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a> and <a href="https://man7.org/linux/man-pages/man3/RAND_priv_bytes.3.html">RAND_priv_bytes(3)</a>.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -69,11 +69,11 @@ int BN_pseudo_rand_range(BIGNUM *rnd, const BIGNUM *range);</code></pre>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
-<p>The functions return 1 on success, 0 on error. The error codes can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>The functions return 1 on success, 0 on error. The error codes can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/RAND_add.html">RAND_add(3)</a>, <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a>, <a href="../man3/RAND_priv_bytes.html">RAND_priv_bytes(3)</a>, <a href="../man7/RAND.html">RAND(7)</a>, <a href="../man7/EVP_RAND.html">EVP_RAND(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RAND_add.3.html">RAND_add(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RAND_priv_bytes.3.html">RAND_priv_bytes(3)</a>, <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_RAND.7.html">EVP_RAND(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>ossl-guide-quic-server-block</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -38,11 +38,11 @@
 
 <p>The complete source code for this example blocking QUIC server is available in the <b>demos/guide</b> directory of the OpenSSL source distribution in the file <b>quic-server-block.c</b>. It is also available online at <a href="https://github.com/openssl/openssl/blob/master/demos/guide/quic-server-block.c">https://github.com/openssl/openssl/blob/master/demos/guide/quic-server-block.c</a>.</p>
 
-<p>We assume that you already have OpenSSL installed on your system; that you already have some fundamental understanding of OpenSSL concepts and QUIC (see <a href="../man7/ossl-guide-libraries-introduction.html">ossl-guide-libraries-introduction(7)</a> and <a href="../man7/ossl-guide-quic-introduction.html">ossl-guide-quic-introduction(7)</a>); and that you know how to write and build C code and link it against the libcrypto and libssl libraries that are provided by OpenSSL. It also assumes that you have a basic understanding of UDP/IP and sockets.</p>
+<p>We assume that you already have OpenSSL installed on your system; that you already have some fundamental understanding of OpenSSL concepts and QUIC (see <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libraries-introduction.7.html">ossl-guide-libraries-introduction(7)</a> and <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-introduction.7.html">ossl-guide-quic-introduction(7)</a>); and that you know how to write and build C code and link it against the libcrypto and libssl libraries that are provided by OpenSSL. It also assumes that you have a basic understanding of UDP/IP and sockets.</p>
 
 <h2 id="Creating-the-SSL_CTX-and-SSL-objects">Creating the SSL_CTX and SSL objects</h2>
 
-<p>The first step is to create an <b>SSL_CTX</b> object for our server. We use the <a href="../man3/SSL_CTX_new.html">SSL_CTX_new(3)</a> function for this purpose. We pass as an argument the return value of the function <a href="../man3/OSSL_QUIC_server_method.html">OSSL_QUIC_server_method(3)</a>. You should use this method whenever you are writing a QUIC server.</p>
+<p>The first step is to create an <b>SSL_CTX</b> object for our server. We use the <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_new.3.html">SSL_CTX_new(3)</a> function for this purpose. We pass as an argument the return value of the function <a href="https://man7.org/linux/man-pages/man3/OSSL_QUIC_server_method.3.html">OSSL_QUIC_server_method(3)</a>. You should use this method whenever you are writing a QUIC server.</p>
 
 <pre><code>/*
  * An SSL_CTX holds shared configuration information for multiple
@@ -85,7 +85,7 @@ if (SSL_CTX_use_PrivateKey_file(ctx, key_path, SSL_FILETYPE_PEM) &lt;= 0) {
 
 <p>Most servers, including this one, do not solicit client certificates. We therefore do not need a &quot;trust store&quot; and allow the handshake to complete even when the client does not present a certificate. Note: Even if a client did present a trusted certificate, for it to be useful, the server application would still need custom code to use the verified identity to grant nondefault access to that particular client. Some servers grant access to all clients with certificates from a private CA, this then requires processing of certificate revocation lists to deauthorise a client. It is often simpler and more secure to instead keep a list of authorised public keys.</p>
 
-<p>Though this is the default setting, we explicitly call the <a href="../man3/SSL_CTX_set_verify.html">SSL_CTX_set_verify(3)</a> function and pass the <b>SSL_VERIFY_NONE</b> value to it. The final argument to this function is a callback that you can optionally supply to override the default handling for certificate verification. Most applications do not need to do this so this can safely be set to NULL to get the default handling.</p>
+<p>Though this is the default setting, we explicitly call the <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_verify.3.html">SSL_CTX_set_verify(3)</a> function and pass the <b>SSL_VERIFY_NONE</b> value to it. The final argument to this function is a callback that you can optionally supply to override the default handling for certificate verification. Most applications do not need to do this so this can safely be set to NULL to get the default handling.</p>
 
 <pre><code>/*
  * Clients rarely employ certificate-based authentication, and so we don&#39;t
@@ -100,7 +100,7 @@ if (SSL_CTX_use_PrivateKey_file(ctx, key_path, SSL_FILETYPE_PEM) &lt;= 0) {
  */
 SSL_CTX_set_verify(ctx, SSL_VERIFY_NONE, NULL);</code></pre>
 
-<p>QUIC also dictates using Application-Layer Protocol Negotiation (ALPN) to select an application protocol. We use <a href="../man3/SSL_CTX_set_alpn_select_cb.html">SSL_CTX_set_alpn_select_cb(3)</a> for this purpose. We can pass a callback which will be called for each connection to select an ALPN the server considers acceptable.</p>
+<p>QUIC also dictates using Application-Layer Protocol Negotiation (ALPN) to select an application protocol. We use <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_alpn_select_cb.3.html">SSL_CTX_set_alpn_select_cb(3)</a> for this purpose. We can pass a callback which will be called for each connection to select an ALPN the server considers acceptable.</p>
 
 <pre><code>/* Setup ALPN negotiation callback to decide which ALPN is accepted. */
 SSL_CTX_set_alpn_select_cb(ctx, select_alpn, NULL);</code></pre>
@@ -171,7 +171,7 @@ if (!SSL_listen(listener))
 <pre><code>/* Pristine error stack for each new connection */
 ERR_clear_error();</code></pre>
 
-<p>At this point, the server blocks to accept the next client. <a href="../man3/SSL_accept_connection.html">SSL_accept_connection(3)</a> will return an accepted connection within a fresh SSL, in which the handshake will have already occurred.</p>
+<p>At this point, the server blocks to accept the next client. <a href="https://man7.org/linux/man-pages/man3/SSL_accept_connection.3.html">SSL_accept_connection(3)</a> will return an accepted connection within a fresh SSL, in which the handshake will have already occurred.</p>
 
 <pre><code>/* Block while waiting for a client connection */
 conn = SSL_accept_connection(listener, 0);
@@ -191,7 +191,7 @@ if (conn == NULL) {
     break;
 }</code></pre>
 
-<p>Once the client closes its connection, we signal the end of the stream by using <a href="../man3/SSL_stream_conclude.html">SSL_stream_conclude(3)</a>. This will send a final Finished packet to the client.</p>
+<p>Once the client closes its connection, we signal the end of the stream by using <a href="https://man7.org/linux/man-pages/man3/SSL_stream_conclude.3.html">SSL_stream_conclude(3)</a>. This will send a final Finished packet to the client.</p>
 
 <pre><code>/* Signal the end of the stream. */
 if (SSL_stream_conclude(conn, 0) != 1) {
@@ -200,7 +200,7 @@ if (SSL_stream_conclude(conn, 0) != 1) {
     goto err;
 }</code></pre>
 
-<p>We then shut down the connection with <a href="../man3/SSL_shutdown_ex.html">SSL_shutdown_ex(3)</a>, which may need to be called multiple times to ensure the connection is shutdown completely.</p>
+<p>We then shut down the connection with <a href="https://man7.org/linux/man-pages/man3/SSL_shutdown_ex.3.html">SSL_shutdown_ex(3)</a>, which may need to be called multiple times to ensure the connection is shutdown completely.</p>
 
 <pre><code>while (SSL_shutdown_ex(conn, 0, &amp;shutdown_args,
                        sizeof(SSL_SHUTDOWN_EX_ARGS)) != 1) {
@@ -226,7 +226,7 @@ return res;</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ossl-guide-introduction.html">ossl-guide-introduction(7)</a>, <a href="../man7/ossl-guide-libraries-introduction.html">ossl-guide-libraries-introduction(7)</a>, <a href="../man7/ossl-guide-libssl-introduction.html">ossl-guide-libssl-introduction(7)</a>, <a href="../man7/ossl-guide-quic-introduction.html">ossl-guide-quic-introduction(7)</a>, <a href="../man7/ossl-guide-quic-client-non-block.html">ossl-guide-quic-client-non-block(7)</a>, <a href="../man7/ossl-guide-quic-client-block.html">ossl-guide-quic-client-block(7)</a>, <a href="../man7/ossl-guide-tls-server-block.html">ossl-guide-tls-server-block(7)</a>, <a href="../man7/ossl-guide-quic-server-non-block.html">ossl-guide-quic-server-non-block(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ossl-guide-introduction.7.html">ossl-guide-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libraries-introduction.7.html">ossl-guide-libraries-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libssl-introduction.7.html">ossl-guide-libssl-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-introduction.7.html">ossl-guide-quic-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-client-non-block.7.html">ossl-guide-quic-client-non-block(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-client-block.7.html">ossl-guide-quic-client-block(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-server-block.7.html">ossl-guide-tls-server-block(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-server-non-block.7.html">ossl-guide-quic-server-non-block(7)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

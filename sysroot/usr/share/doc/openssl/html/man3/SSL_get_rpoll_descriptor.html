@@ -4,7 +4,7 @@
 <head>
 <title>SSL_get_rpoll_descriptor</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -38,11 +38,11 @@ int SSL_net_write_desired(SSL *s);</code></pre>
 
 <p>The functions SSL_get_rpoll_descriptor() and SSL_get_wpoll_descriptor() can be used to determine when an SSL object which represents a QUIC connection can perform useful network I/O, so that an application using a QUIC connection SSL object in nonblocking mode can determine when it should call SSL_handle_events().</p>
 
-<p>On success, these functions output poll descriptors. For more information on poll descriptors, see <a href="../man3/BIO_get_rpoll_descriptor.html">BIO_get_rpoll_descriptor(3)</a>.</p>
+<p>On success, these functions output poll descriptors. For more information on poll descriptors, see <a href="https://man7.org/linux/man-pages/man3/BIO_get_rpoll_descriptor.3.html">BIO_get_rpoll_descriptor(3)</a>.</p>
 
 <p>The functions SSL_net_read_desired() and SSL_net_write_desired() return 1 or 0 depending on whether the SSL object is currently interested in receiving data from the network and/or writing data to the network respectively. If an SSL object is not interested in reading data from the network at the current time, SSL_net_read_desired() will return 0; likewise, if an SSL object is not interested in writing data to the network at the current time, SSL_net_write_desired() will return 0.</p>
 
-<p>The intention is that an application using QUIC in nonblocking mode can use these calls, in conjunction with <a href="../man3/SSL_get_event_timeout.html">SSL_get_event_timeout(3)</a> to wait for network I/O conditions which allow the SSL object to perform useful work. When such a condition arises, <a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a> should be called.</p>
+<p>The intention is that an application using QUIC in nonblocking mode can use these calls, in conjunction with <a href="https://man7.org/linux/man-pages/man3/SSL_get_event_timeout.3.html">SSL_get_event_timeout(3)</a> to wait for network I/O conditions which allow the SSL object to perform useful work. When such a condition arises, <a href="https://man7.org/linux/man-pages/man3/SSL_handle_events.3.html">SSL_handle_events(3)</a> should be called.</p>
 
 <p>In particular, the expected usage is as follows:</p>
 
@@ -71,7 +71,7 @@ int SSL_net_write_desired(SSL *s);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a>, <a href="../man3/SSL_get_event_timeout.html">SSL_get_event_timeout(3)</a>, <a href="../man7/ssl.html">ssl(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/SSL_handle_events.3.html">SSL_handle_events(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_event_timeout.3.html">SSL_get_event_timeout(3)</a>, <a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set_domain_flags</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -42,7 +42,7 @@ int SSL_get_domain_flags(SSL *ssl, uint64_t *flags);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>SSL_CTX_set_domain_flags() and SSL_CTX_get_domain_flags() set and get the QUIC domain flags on a <b>SSL_CTX</b> using a QUIC <b>SSL_METHOD</b>. These flags determine the concurrency model which is used for a QUIC domain. A detailed introduction to these concepts can be found in <a href="../man7/openssl-quic-concurrency.html">openssl-quic-concurrency(7)</a>.</p>
+<p>SSL_CTX_set_domain_flags() and SSL_CTX_get_domain_flags() set and get the QUIC domain flags on a <b>SSL_CTX</b> using a QUIC <b>SSL_METHOD</b>. These flags determine the concurrency model which is used for a QUIC domain. A detailed introduction to these concepts can be found in <a href="https://man7.org/linux/man-pages/man7/openssl-quic-concurrency.7.html">openssl-quic-concurrency(7)</a>.</p>
 
 <p>Applications may use either one the flags here:</p>
 
@@ -79,7 +79,7 @@ int SSL_get_domain_flags(SSL *ssl, uint64_t *flags);</code></pre>
 <dt id="SSL_DOMAIN_FLAG_LEGACY_BLOCKING"><b>SSL_DOMAIN_FLAG_LEGACY_BLOCKING</b></dt>
 <dd>
 
-<p>Enables legacy blocking compatibility mode. See <a href="../man7/openssl-quic-concurrency.html">&quot;Legacy Blocking Support Compatibility&quot; in openssl-quic-concurrency(7)</a>.</p>
+<p>Enables legacy blocking compatibility mode. See <a href="https://man7.org/linux/man-pages/man7/openssl-quic-concurrency.7.html#Legacy_Blocking_Support_Compatibility">&quot;Legacy Blocking Support Compatibility&quot; in openssl-quic-concurrency(7)</a>.</p>
 
 </dd>
 </dl>
@@ -90,7 +90,7 @@ int SSL_get_domain_flags(SSL *ssl, uint64_t *flags);</code></pre>
 
 <p>Changing these flags using SSL_CTX_set_domain_flags() has no effect on QUIC domains which have already been created.</p>
 
-<p>The default set of domain flags set on a newly created <b>SSL_CTX</b> may vary by OpenSSL version, chosen <b>SSL_METHOD</b>, and operating environment. See <a href="../man7/openssl-quic-concurrency.html">openssl-quic-concurrency(7)</a> for details. An application can retrieve the default domain flags by calling SSL_CTX_get_domain_flags() immediately after constructing a <b>SSL_CTX</b>.</p>
+<p>The default set of domain flags set on a newly created <b>SSL_CTX</b> may vary by OpenSSL version, chosen <b>SSL_METHOD</b>, and operating environment. See <a href="https://man7.org/linux/man-pages/man7/openssl-quic-concurrency.7.html">openssl-quic-concurrency(7)</a> for details. An application can retrieve the default domain flags by calling SSL_CTX_get_domain_flags() immediately after constructing a <b>SSL_CTX</b>.</p>
 
 <p>SSL_get_domain_flags() retrieves the domain flags which are effective for a QUIC domain when called on any QUIC SSL object under that domain.</p>
 
@@ -106,7 +106,7 @@ int SSL_get_domain_flags(SSL *ssl, uint64_t *flags);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/SSL_new_domain.html">SSL_new_domain(3)</a>, <a href="../man7/openssl-quic-concurrency.html">openssl-quic-concurrency(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/SSL_new_domain.3.html">SSL_new_domain(3)</a>, <a href="https://man7.org/linux/man-pages/man7/openssl-quic-concurrency.7.html">openssl-quic-concurrency(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

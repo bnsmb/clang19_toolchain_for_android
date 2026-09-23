@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set0_CA_list</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -90,9 +90,9 @@ const STACK_OF(X509_NAME) *SSL_get0_peer_CA_list(const SSL *s);</code></pre>
 
 <p>When a TLS/SSL server requests a client certificate (see <b>SSL_CTX_set_verify(3)</b>), it sends a list of CAs, for which it will accept certificates, to the client.</p>
 
-<p>This list must explicitly be set using SSL_CTX_set_client_CA_list() or SSL_CTX_set0_CA_list() for <b>ctx</b> and SSL_set_client_CA_list() or SSL_set0_CA_list() for the specific <b>ssl</b>. The list specified overrides the previous setting. The CAs listed do not become trusted (<b>list</b> only contains the names, not the complete certificates); use <a href="../man3/SSL_CTX_load_verify_locations.html">SSL_CTX_load_verify_locations(3)</a> to additionally load them for verification.</p>
+<p>This list must explicitly be set using SSL_CTX_set_client_CA_list() or SSL_CTX_set0_CA_list() for <b>ctx</b> and SSL_set_client_CA_list() or SSL_set0_CA_list() for the specific <b>ssl</b>. The list specified overrides the previous setting. The CAs listed do not become trusted (<b>list</b> only contains the names, not the complete certificates); use <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_load_verify_locations.3.html">SSL_CTX_load_verify_locations(3)</a> to additionally load them for verification.</p>
 
-<p>If the list of acceptable CAs is compiled in a file, the <a href="../man3/SSL_load_client_CA_file.html">SSL_load_client_CA_file(3)</a> function can be used to help to import the necessary data.</p>
+<p>If the list of acceptable CAs is compiled in a file, the <a href="https://man7.org/linux/man-pages/man3/SSL_load_client_CA_file.3.html">SSL_load_client_CA_file(3)</a> function can be used to help to import the necessary data.</p>
 
 <p>SSL_CTX_add_client_CA(), SSL_CTX_add1_to_CA_list(), SSL_add_client_CA() and SSL_add1_to_CA_list() can be used to add additional items the list of CAs. If no list was specified before using SSL_CTX_set_client_CA_list(), SSL_CTX_set0_CA_list(), SSL_set_client_CA_list() or SSL_set0_CA_list(), a new CA list for <b>ctx</b> or <b>ssl</b> (as appropriate) is opened.</p>
 
@@ -114,7 +114,7 @@ const STACK_OF(X509_NAME) *SSL_get0_peer_CA_list(const SSL *s);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_load_client_CA_file.html">SSL_load_client_CA_file(3)</a>, <a href="../man3/SSL_CTX_load_verify_locations.html">SSL_CTX_load_verify_locations(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_load_client_CA_file.3.html">SSL_load_client_CA_file(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_load_verify_locations.3.html">SSL_CTX_load_verify_locations(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

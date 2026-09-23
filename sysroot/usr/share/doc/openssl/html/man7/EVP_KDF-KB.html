@@ -4,7 +4,7 @@
 <head>
 <title>EVP_KDF-KB</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -133,7 +133,7 @@
 
 <p>The parameters key, salt, info, and seed correspond to KI, Label, Context, and IV (respectively) in SP800-108. As in that document, salt, info, and seed are optional and may be omitted.</p>
 
-<p>&quot;mac&quot;, &quot;digest&quot;, cipher&quot; and &quot;properties&quot; are described in <a href="../man3/EVP_KDF.html">&quot;PARAMETERS&quot; in EVP_KDF(3)</a>.</p>
+<p>&quot;mac&quot;, &quot;digest&quot;, cipher&quot; and &quot;properties&quot; are described in <a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html#PARAMETERS">&quot;PARAMETERS&quot; in EVP_KDF(3)</a>.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -142,7 +142,7 @@
 <pre><code>EVP_KDF *kdf = EVP_KDF_fetch(NULL, &quot;KBKDF&quot;, NULL);
 EVP_KDF_CTX *kctx = EVP_KDF_CTX_new(kdf);</code></pre>
 
-<p>The output length of an KBKDF is specified via the <code>keylen</code> parameter to the <a href="../man3/EVP_KDF_derive.html">EVP_KDF_derive(3)</a> function.</p>
+<p>The output length of an KBKDF is specified via the <code>keylen</code> parameter to the <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_derive.3.html">EVP_KDF_derive(3)</a> function.</p>
 
 <p>Note that currently OpenSSL only implements counter and feedback modes. Other variants may be supported in the future.</p>
 
@@ -210,7 +210,7 @@ EVP_KDF_CTX_free(kctx);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_KDF.html">EVP_KDF(3)</a>, <a href="../man3/EVP_KDF_CTX_free.html">EVP_KDF_CTX_free(3)</a>, <a href="../man3/EVP_KDF_CTX_get_kdf_size.html">EVP_KDF_CTX_get_kdf_size(3)</a>, <a href="../man3/EVP_KDF_derive.html">EVP_KDF_derive(3)</a>, <a href="../man3/EVP_KDF.html">&quot;PARAMETERS&quot; in EVP_KDF(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html">EVP_KDF(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_CTX_free.3.html">EVP_KDF_CTX_free(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_CTX_get_kdf_size.3.html">EVP_KDF_CTX_get_kdf_size(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_derive.3.html">EVP_KDF_derive(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html#PARAMETERS">&quot;PARAMETERS&quot; in EVP_KDF(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

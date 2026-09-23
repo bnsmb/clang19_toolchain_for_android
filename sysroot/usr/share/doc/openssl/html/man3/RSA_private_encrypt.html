@@ -4,7 +4,7 @@
 <head>
 <title>RSA_private_encrypt</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -29,7 +29,7 @@
 
 <pre><code>#include &lt;openssl/rsa.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int RSA_private_encrypt(int flen, unsigned char *from,
                         unsigned char *to, RSA *rsa, int padding);
@@ -39,7 +39,7 @@ int RSA_public_decrypt(int flen, unsigned char *from,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>Both of the functions described on this page are deprecated. Applications should instead use <a href="../man3/EVP_PKEY_sign_init_ex.html">EVP_PKEY_sign_init_ex(3)</a>, <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a>, <a href="../man3/EVP_PKEY_verify_recover_init.html">EVP_PKEY_verify_recover_init(3)</a>, and <a href="../man3/EVP_PKEY_verify_recover.html">EVP_PKEY_verify_recover(3)</a>.</p>
+<p>Both of the functions described on this page are deprecated. Applications should instead use <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign_init_ex.3.html">EVP_PKEY_sign_init_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_recover_init.3.html">EVP_PKEY_verify_recover_init(3)</a>, and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_recover.3.html">EVP_PKEY_verify_recover(3)</a>.</p>
 
 <p>These functions handle RSA signatures at a low-level.</p>
 
@@ -52,7 +52,7 @@ int RSA_public_decrypt(int flen, unsigned char *from,
 <dt id="RSA_PKCS1_PADDING">RSA_PKCS1_PADDING</dt>
 <dd>
 
-<p>PKCS #1 v1.5 padding. This function does not handle the <b>algorithmIdentifier</b> specified in PKCS #1. When generating or verifying PKCS #1 signatures, <a href="../man3/RSA_sign.html">RSA_sign(3)</a> and <a href="../man3/RSA_verify.html">RSA_verify(3)</a> should be used.</p>
+<p>PKCS #1 v1.5 padding. This function does not handle the <b>algorithmIdentifier</b> specified in PKCS #1. When generating or verifying PKCS #1 signatures, <a href="https://man7.org/linux/man-pages/man3/RSA_sign.3.html">RSA_sign(3)</a> and <a href="https://man7.org/linux/man-pages/man3/RSA_verify.3.html">RSA_verify(3)</a> should be used.</p>
 
 </dd>
 <dt id="RSA_NO_PADDING">RSA_NO_PADDING</dt>
@@ -69,11 +69,11 @@ int RSA_public_decrypt(int flen, unsigned char *from,
 
 <p>RSA_private_encrypt() returns the size of the signature (i.e., RSA_size(rsa)). RSA_public_decrypt() returns the size of the recovered message digest.</p>
 
-<p>On error, -1 is returned; the error codes can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>On error, -1 is returned; the error codes can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/RSA_sign.html">RSA_sign(3)</a>, <a href="../man3/RSA_verify.html">RSA_verify(3)</a>, <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a>, <a href="../man3/EVP_PKEY_verify_recover.html">EVP_PKEY_verify_recover(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RSA_sign.3.html">RSA_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RSA_verify.3.html">RSA_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_recover.3.html">EVP_PKEY_verify_recover(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

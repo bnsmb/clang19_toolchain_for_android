@@ -4,7 +4,7 @@
 <head>
 <title>EVP_chacha20</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -53,24 +53,24 @@ const EVP_CIPHER *EVP_chacha20_poly1305(void);</code></pre>
 <dt id="EVP_chacha20_poly1305">EVP_chacha20_poly1305()</dt>
 <dd>
 
-<p>Authenticated encryption with ChaCha20-Poly1305. Like EVP_chacha20(), the key is 256 bits and the IV is 96 bits. This supports additional authenticated data (AAD) and produces a 128-bit authentication tag. See the <a href="../man3/EVP_EncryptInit.html">&quot;AEAD INTERFACE&quot; in EVP_EncryptInit(3)</a> section for more information.</p>
+<p>Authenticated encryption with ChaCha20-Poly1305. Like EVP_chacha20(), the key is 256 bits and the IV is 96 bits. This supports additional authenticated data (AAD) and produces a 128-bit authentication tag. See the <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html#AEAD_INTERFACE">&quot;AEAD INTERFACE&quot; in EVP_EncryptInit(3)</a> section for more information.</p>
 
 </dd>
 </dl>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>Developers should be aware of the negative performance implications of calling these functions multiple times and should consider using <a href="../man3/EVP_CIPHER_fetch.html">EVP_CIPHER_fetch(3)</a> with <a href="../man7/EVP_CIPHER-CHACHA.html">EVP_CIPHER-CHACHA(7)</a> instead. See <a href="../man7/crypto.html">&quot;Performance&quot; in crypto(7)</a> for further information.</p>
+<p>Developers should be aware of the negative performance implications of calling these functions multiple times and should consider using <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_fetch.3.html">EVP_CIPHER_fetch(3)</a> with <a href="https://man7.org/linux/man-pages/man7/EVP_CIPHER-CHACHA.7.html">EVP_CIPHER-CHACHA(7)</a> instead. See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#Performance">&quot;Performance&quot; in crypto(7)</a> for further information.</p>
 
 <p><a href="https://www.rfc-editor.org/rfc/rfc7539.html#section-2.4">RFC 7539</a> uses a 32 bit counter and a 96 bit nonce for the IV.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
-<p>These functions return an <b>EVP_CIPHER</b> structure that contains the implementation of the symmetric cipher. See <a href="../man3/EVP_CIPHER_meth_new.html">EVP_CIPHER_meth_new(3)</a> for details of the <b>EVP_CIPHER</b> structure.</p>
+<p>These functions return an <b>EVP_CIPHER</b> structure that contains the implementation of the symmetric cipher. See <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_meth_new.3.html">EVP_CIPHER_meth_new(3)</a> for details of the <b>EVP_CIPHER</b> structure.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/evp.html">evp(7)</a>, <a href="../man3/EVP_EncryptInit.html">EVP_EncryptInit(3)</a>, <a href="../man3/EVP_CIPHER_meth_new.html">EVP_CIPHER_meth_new(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/evp.7.html">evp(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html">EVP_EncryptInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_meth_new.3.html">EVP_CIPHER_meth_new(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

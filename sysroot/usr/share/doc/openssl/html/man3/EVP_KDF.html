@@ -4,7 +4,7 @@
 <head>
 <title>EVP_KDF</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -88,11 +88,11 @@ const OSSL_PROVIDER *EVP_KDF_get0_provider(const EVP_KDF *kdf);</code></pre>
 
 <h2 id="Algorithm-implementation-fetching">Algorithm implementation fetching</h2>
 
-<p>EVP_KDF_fetch() fetches an implementation of a KDF <i>algorithm</i>, given a library context <i>libctx</i> and a set of <i>properties</i>. See <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further information.</p>
+<p>EVP_KDF_fetch() fetches an implementation of a KDF <i>algorithm</i>, given a library context <i>libctx</i> and a set of <i>properties</i>. See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further information.</p>
 
-<p>See <a href="../man7/OSSL_PROVIDER-default.html">&quot;Key Derivation Function (KDF)&quot; in OSSL_PROVIDER-default(7)</a> for the lists of algorithms supported by the default provider.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-default.7.html#Key_Derivation_Function_-KDF">&quot;Key Derivation Function (KDF)&quot; in OSSL_PROVIDER-default(7)</a> for the lists of algorithms supported by the default provider.</p>
 
-<p>The returned value must eventually be freed with <a href="../man3/EVP_KDF_free.html">EVP_KDF_free(3)</a>.</p>
+<p>The returned value must eventually be freed with <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_free.3.html">EVP_KDF_free(3)</a>.</p>
 
 <p>EVP_KDF_up_ref() increments the reference count of an already fetched KDF.</p>
 
@@ -118,11 +118,11 @@ const OSSL_PROVIDER *EVP_KDF_get0_provider(const EVP_KDF *kdf);</code></pre>
 
 <p>EVP_KDF_CTX_set_params() passes chosen parameters to the underlying context, given a context <i>ctx</i>. The set of parameters given with <i>params</i> determine exactly what parameters are passed down. Note that a parameter that is unknown in the underlying context is simply ignored. Also, what happens when a needed parameter isn&#39;t passed down is defined by the implementation.</p>
 
-<p>EVP_KDF_gettable_params() returns an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that describes the retrievable and settable parameters. EVP_KDF_gettable_params() returns parameters that can be used with EVP_KDF_get_params().</p>
+<p>EVP_KDF_gettable_params() returns an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array that describes the retrievable and settable parameters. EVP_KDF_gettable_params() returns parameters that can be used with EVP_KDF_get_params().</p>
 
-<p>EVP_KDF_gettable_ctx_params() and EVP_KDF_CTX_gettable_params() return constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> arrays that describe the retrievable parameters that can be used with EVP_KDF_CTX_get_params(). EVP_KDF_gettable_ctx_params() returns the parameters that can be retrieved from the algorithm, whereas EVP_KDF_CTX_gettable_params() returns the parameters that can be retrieved in the context&#39;s current state.</p>
+<p>EVP_KDF_gettable_ctx_params() and EVP_KDF_CTX_gettable_params() return constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> arrays that describe the retrievable parameters that can be used with EVP_KDF_CTX_get_params(). EVP_KDF_gettable_ctx_params() returns the parameters that can be retrieved from the algorithm, whereas EVP_KDF_CTX_gettable_params() returns the parameters that can be retrieved in the context&#39;s current state.</p>
 
-<p>EVP_KDF_settable_ctx_params() and EVP_KDF_CTX_settable_params() return constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> arrays that describe the settable parameters that can be used with EVP_KDF_CTX_set_params(). EVP_KDF_settable_ctx_params() returns the parameters that can be retrieved from the algorithm, whereas EVP_KDF_CTX_settable_params() returns the parameters that can be retrieved in the context&#39;s current state.</p>
+<p>EVP_KDF_settable_ctx_params() and EVP_KDF_CTX_settable_params() return constant <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> arrays that describe the settable parameters that can be used with EVP_KDF_CTX_set_params(). EVP_KDF_settable_ctx_params() returns the parameters that can be retrieved from the algorithm, whereas EVP_KDF_CTX_settable_params() returns the parameters that can be retrieved in the context&#39;s current state.</p>
 
 <h2 id="Information-functions">Information functions</h2>
 
@@ -199,7 +199,7 @@ const OSSL_PROVIDER *EVP_KDF_get0_provider(const EVP_KDF *kdf);</code></pre>
 <dt id="info-OSSL_KDF_PARAM_INFO-octet-string">&quot;info&quot; (<b>OSSL_KDF_PARAM_INFO</b>) &lt;octet string&gt;</dt>
 <dd>
 
-<p>Some KDF implementations, such as <a href="../man7/EVP_KDF-HKDF.html">EVP_KDF-HKDF(7)</a>, take an &#39;info&#39; parameter for binding the derived key material to application- and context-specific information. This parameter sets the info, fixed info, other info or shared info argument. You can specify this parameter multiple times, and each instance will be concatenated to form the final value.</p>
+<p>Some KDF implementations, such as <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-HKDF.7.html">EVP_KDF-HKDF(7)</a>, take an &#39;info&#39; parameter for binding the derived key material to application- and context-specific information. This parameter sets the info, fixed info, other info or shared info argument. You can specify this parameter multiple times, and each instance will be concatenated to form the final value.</p>
 
 </dd>
 <dt id="maclen-OSSL_KDF_PARAM_MAC_SIZE-unsigned-integer">&quot;maclen&quot; (<b>OSSL_KDF_PARAM_MAC_SIZE</b>) &lt;unsigned integer&gt;</dt>
@@ -242,11 +242,11 @@ const OSSL_PROVIDER *EVP_KDF_get0_provider(const EVP_KDF *kdf);</code></pre>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>The KDF life-cycle is described in <a href="../man7/life_cycle-kdf.html">life_cycle-kdf(7)</a>. In the future, the transitions described there will be enforced. When this is done, it will not be considered a breaking change to the API.</p>
+<p>The KDF life-cycle is described in <a href="https://man7.org/linux/man-pages/man7/life_cycle-kdf.7.html">life_cycle-kdf(7)</a>. In the future, the transitions described there will be enforced. When this is done, it will not be considered a breaking change to the API.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/OSSL_PROVIDER-default.html">&quot;Key Derivation Function (KDF)&quot; in OSSL_PROVIDER-default(7)</a>, <a href="../man7/life_cycle-kdf.html">life_cycle-kdf(7)</a>.</p>
+<p><a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-default.7.html#Key_Derivation_Function_-KDF">&quot;Key Derivation Function (KDF)&quot; in OSSL_PROVIDER-default(7)</a>, <a href="https://man7.org/linux/man-pages/man7/life_cycle-kdf.7.html">life_cycle-kdf(7)</a>.</p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

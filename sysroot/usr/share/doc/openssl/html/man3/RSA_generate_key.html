@@ -4,7 +4,7 @@
 <head>
 <title>RSA_generate_key</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -32,12 +32,12 @@
 
 EVP_PKEY *EVP_RSA_gen(unsigned int bits);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int RSA_generate_key_ex(RSA *rsa, int bits, BIGNUM *e, BN_GENCB *cb);
 int RSA_generate_multi_prime_key(RSA *rsa, int bits, int primes, BIGNUM *e, BN_GENCB *cb);</code></pre>
 
-<p>The following function has been deprecated since OpenSSL 0.9.8, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following function has been deprecated since OpenSSL 0.9.8, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>RSA *RSA_generate_key(int bits, unsigned long e,
                       void (*callback)(int, int, void *), void *cb_arg);</code></pre>
@@ -46,11 +46,11 @@ int RSA_generate_multi_prime_key(RSA *rsa, int bits, int primes, BIGNUM *e, BN_G
 
 <p>EVP_RSA_gen() generates a new RSA key pair with modulus size <i>bits</i>.</p>
 
-<p>All of the functions described below are deprecated. Applications should instead use EVP_RSA_gen(), <a href="../man3/EVP_PKEY_Q_keygen.html">EVP_PKEY_Q_keygen(3)</a>, or <a href="../man3/EVP_PKEY_keygen_init.html">EVP_PKEY_keygen_init(3)</a> and <a href="../man3/EVP_PKEY_keygen.html">EVP_PKEY_keygen(3)</a>.</p>
+<p>All of the functions described below are deprecated. Applications should instead use EVP_RSA_gen(), <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_Q_keygen.3.html">EVP_PKEY_Q_keygen(3)</a>, or <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_keygen_init.3.html">EVP_PKEY_keygen_init(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_keygen.3.html">EVP_PKEY_keygen(3)</a>.</p>
 
 <p>RSA_generate_key_ex() generates a 2-prime RSA key pair and stores it in the <b>RSA</b> structure provided in <i>rsa</i>.</p>
 
-<p>RSA_generate_multi_prime_key() generates a multi-prime RSA key pair and stores it in the <b>RSA</b> structure provided in <i>rsa</i>. The number of primes is given by the <i>primes</i> parameter. If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="../man7/RAND.html">RAND(7)</a>), the operation will fail.</p>
+<p>RSA_generate_multi_prime_key() generates a multi-prime RSA key pair and stores it in the <b>RSA</b> structure provided in <i>rsa</i>. The number of primes is given by the <i>primes</i> parameter. If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a>), the operation will fail.</p>
 
 <p>The modulus size will be of length <i>bits</i>, the number of primes to form the modulus will be <i>primes</i>, and the public exponent will be <i>e</i>. Key sizes with <i>num</i> &lt; 1024 should be considered insecure. The exponent is an odd number, typically 3, 17 or 65537.</p>
 
@@ -60,13 +60,13 @@ int RSA_generate_multi_prime_key(RSA *rsa, int bits, int primes, BIGNUM *e, BN_G
 ------+--------+--------+-------
   2   |   3    |   4    |   5</code></pre>
 
-<p>A callback function may be used to provide feedback about the progress of the key generation. If <i>cb</i> is not NULL, it will be called as follows using the BN_GENCB_call() function described on the <a href="../man3/BN_generate_prime.html">BN_generate_prime(3)</a> page.</p>
+<p>A callback function may be used to provide feedback about the progress of the key generation. If <i>cb</i> is not NULL, it will be called as follows using the BN_GENCB_call() function described on the <a href="https://man7.org/linux/man-pages/man3/BN_generate_prime.3.html">BN_generate_prime(3)</a> page.</p>
 
-<p>RSA_generate_key() is similar to RSA_generate_key_ex() but expects an old-style callback function; see <a href="../man3/BN_generate_prime.html">BN_generate_prime(3)</a> for information on the old-style callback.</p>
+<p>RSA_generate_key() is similar to RSA_generate_key_ex() but expects an old-style callback function; see <a href="https://man7.org/linux/man-pages/man3/BN_generate_prime.3.html">BN_generate_prime(3)</a> for information on the old-style callback.</p>
 
 <ul>
 
-<li><p>While a random prime number is generated, it is called as described in <a href="../man3/BN_generate_prime.html">BN_generate_prime(3)</a>.</p>
+<li><p>While a random prime number is generated, it is called as described in <a href="https://man7.org/linux/man-pages/man3/BN_generate_prime.3.html">BN_generate_prime(3)</a>.</p>
 
 </li>
 <li><p>When the n-th randomly generated prime is rejected as not suitable for the key, <i>BN_GENCB_call(cb, 2, n)</i> is called.</p>
@@ -83,7 +83,7 @@ int RSA_generate_multi_prime_key(RSA *rsa, int bits, int primes, BIGNUM *e, BN_G
 
 <p>EVP_RSA_gen() returns an <i>EVP_PKEY</i> or NULL on failure.</p>
 
-<p>RSA_generate_multi_prime_key() returns 1 on success or 0 on error. RSA_generate_key_ex() returns 1 on success or 0 on error. The error codes can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>RSA_generate_multi_prime_key() returns 1 on success or 0 on error. RSA_generate_key_ex() returns 1 on success or 0 on error. The error codes can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <p>RSA_generate_key() returns a pointer to the RSA structure or NULL if the key generation fails.</p>
 
@@ -93,11 +93,11 @@ int RSA_generate_multi_prime_key(RSA *rsa, int bits, int primes, BIGNUM *e, BN_G
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_Q_keygen.html">EVP_PKEY_Q_keygen(3)</a> <a href="../man3/BN_generate_prime.html">BN_generate_prime(3)</a>, <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a>, <a href="../man7/RAND.html">RAND(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_Q_keygen.3.html">EVP_PKEY_Q_keygen(3)</a> <a href="https://man7.org/linux/man-pages/man3/BN_generate_prime.3.html">BN_generate_prime(3)</a>, <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a>, <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
-<p>EVP_RSA_gen() was added in OpenSSL 3.0. All other functions described here were deprecated in OpenSSL 3.0. For replacement see <a href="../man7/EVP_PKEY-RSA.html">EVP_PKEY-RSA(7)</a>.</p>
+<p>EVP_RSA_gen() was added in OpenSSL 3.0. All other functions described here were deprecated in OpenSSL 3.0. For replacement see <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-RSA.7.html">EVP_PKEY-RSA(7)</a>.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

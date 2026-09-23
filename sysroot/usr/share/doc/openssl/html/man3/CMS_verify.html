@@ -4,7 +4,7 @@
 <head>
 <title>CMS_verify</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -44,7 +44,7 @@ STACK_OF(X509) *CMS_get0_signers(CMS_ContentInfo *cms);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>CMS_verify() is very similar to <a href="../man3/PKCS7_verify.html">PKCS7_verify(3)</a>. It verifies a <b>CMS SignedData</b> structure contained in a structure of type <b>CMS_ContentInfo</b>. <i>cms</i> points to the <b>CMS_ContentInfo</b> structure to verify. The optional <i>certs</i> parameter refers to a set of certificates in which to search for signing certificates. It is also used as a source of untrusted intermediate CA certificates for chain building. <i>cms</i> may contain extra untrusted CA certificates that may be used for chain building as well as CRLs that may be used for certificate validation. <i>store</i> may be NULL or point to the trusted certificate store to use for chain verification. <i>detached_data</i> refers to the signed data if the content is detached from <i>cms</i>. Otherwise <i>detached_data</i> should be NULL and the signed data must be in <i>cms</i>. The content is written to the BIO <i>out</i> unless it is NULL. <i>flags</i> is an optional set of flags, which can be used to modify the operation.</p>
+<p>CMS_verify() is very similar to <a href="https://man7.org/linux/man-pages/man3/PKCS7_verify.3.html">PKCS7_verify(3)</a>. It verifies a <b>CMS SignedData</b> structure contained in a structure of type <b>CMS_ContentInfo</b>. <i>cms</i> points to the <b>CMS_ContentInfo</b> structure to verify. The optional <i>certs</i> parameter refers to a set of certificates in which to search for signing certificates. It is also used as a source of untrusted intermediate CA certificates for chain building. <i>cms</i> may contain extra untrusted CA certificates that may be used for chain building as well as CRLs that may be used for certificate validation. <i>store</i> may be NULL or point to the trusted certificate store to use for chain verification. <i>detached_data</i> refers to the signed data if the content is detached from <i>cms</i>. Otherwise <i>detached_data</i> should be NULL and the signed data must be in <i>cms</i>. The content is written to the BIO <i>out</i> unless it is NULL. <i>flags</i> is an optional set of flags, which can be used to modify the operation.</p>
 
 <p>CMS_SignedData_verify() is like CMS_verify() except that it operates on <b>CMS SignedData</b> input in the <i>sd</i> argument, it has some additional parameters described next, and on success it returns the verified content as a memory BIO. The optional <i>extra</i> parameter may be used to provide untrusted CA certificates that may be helpful for chain building in certificate validation. This list of certificates must not contain duplicates. The optional <i>crls</i> parameter may be used to provide extra CRLs. Also the list of CRLs must not contain duplicates. The optional parameters library context <i>libctx</i> and property query <i>propq</i> are used when retrieving algorithms from providers.</p>
 
@@ -58,7 +58,7 @@ STACK_OF(X509) *CMS_get0_signers(CMS_ContentInfo *cms);</code></pre>
 
 <p>An attempt is made to locate all the signing certificate(s), first looking in the <i>certs</i> parameter (if it is not NULL) and then looking in any certificates contained in the <i>cms</i> structure unless <b>CMS_NOINTERN</b> is set. If any signing certificate cannot be located the operation fails.</p>
 
-<p>Each signing certificate is chain verified using the <i>smimesign</i> purpose and using the trusted certificate store <i>store</i> if supplied. Any internal certificates in the message, which may have been added using <a href="../man3/CMS_add1_cert.html">CMS_add1_cert(3)</a>, are used as untrusted CAs. If CRL checking is enabled in <i>store</i> and <b>CMS_NOCRL</b> is not set, any internal CRLs, which may have been added using <a href="../man3/CMS_add1_crl.html">CMS_add1_crl(3)</a>, are used in addition to attempting to look them up in <i>store</i>. If <i>store</i> is not NULL and any chain verify fails an error code is returned.</p>
+<p>Each signing certificate is chain verified using the <i>smimesign</i> purpose and using the trusted certificate store <i>store</i> if supplied. Any internal certificates in the message, which may have been added using <a href="https://man7.org/linux/man-pages/man3/CMS_add1_cert.3.html">CMS_add1_cert(3)</a>, are used as untrusted CAs. If CRL checking is enabled in <i>store</i> and <b>CMS_NOCRL</b> is not set, any internal CRLs, which may have been added using <a href="https://man7.org/linux/man-pages/man3/CMS_add1_crl.3.html">CMS_add1_crl(3)</a>, are used in addition to attempting to look them up in <i>store</i>. If <i>store</i> is not NULL and any chain verify fails an error code is returned.</p>
 
 <p>Finally the signed content is read (and written to <i>out</i> unless it is NULL) and the signature is checked.</p>
 
@@ -98,7 +98,7 @@ STACK_OF(X509) *CMS_get0_signers(CMS_ContentInfo *cms);</code></pre>
 
 <p>CMS_get0_signers() returns all signers or NULL if an error occurred.</p>
 
-<p>The error can be obtained from <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>The error can be obtained from <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="BUGS">BUGS</h1>
 
@@ -108,7 +108,7 @@ STACK_OF(X509) *CMS_get0_signers(CMS_ContentInfo *cms);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/PKCS7_verify.html">PKCS7_verify(3)</a>, <a href="../man3/CMS_add1_cert.html">CMS_add1_cert(3)</a>, <a href="../man3/CMS_add1_crl.html">CMS_add1_crl(3)</a>, <a href="../man3/OSSL_ESS_check_signing_certs.html">OSSL_ESS_check_signing_certs(3)</a>, <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/CMS_sign.html">CMS_sign(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/PKCS7_verify.3.html">PKCS7_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CMS_add1_cert.3.html">CMS_add1_cert(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CMS_add1_crl.3.html">CMS_add1_crl(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_ESS_check_signing_certs.3.html">OSSL_ESS_check_signing_certs(3)</a>, <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CMS_sign.3.html">CMS_sign(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

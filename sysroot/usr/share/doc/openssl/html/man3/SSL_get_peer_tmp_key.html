@@ -4,7 +4,7 @@
 <head>
 <title>SSL_get_peer_tmp_key</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -35,7 +35,7 @@ long SSL_get_tmp_key(SSL *ssl, EVP_PKEY **key);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>SSL_get_peer_tmp_key() returns the temporary key provided by the peer and used during key exchange. For example, if ECDHE is in use, then this represents the peer&#39;s public ECDHE key. On success a pointer to the key is stored in <b>*key</b>. It is the caller&#39;s responsibility to free this key after use using <a href="../man3/EVP_PKEY_free.html">EVP_PKEY_free(3)</a>.</p>
+<p>SSL_get_peer_tmp_key() returns the temporary key provided by the peer and used during key exchange. For example, if ECDHE is in use, then this represents the peer&#39;s public ECDHE key. On success a pointer to the key is stored in <b>*key</b>. It is the caller&#39;s responsibility to free this key after use using <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_free.3.html">EVP_PKEY_free(3)</a>.</p>
 
 <p>SSL_get_server_tmp_key() is a backwards compatibility alias for SSL_get_peer_tmp_key(). Under that name it worked just on the client side of the connection, its behaviour on the server end is release-dependent.</p>
 
@@ -51,7 +51,7 @@ long SSL_get_tmp_key(SSL *ssl, EVP_PKEY **key);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/EVP_PKEY_free.html">EVP_PKEY_free(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_free.3.html">EVP_PKEY_free(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

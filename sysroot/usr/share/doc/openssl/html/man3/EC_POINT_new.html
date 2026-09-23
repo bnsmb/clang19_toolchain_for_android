@@ -4,7 +4,7 @@
 <head>
 <title>EC_POINT_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -56,7 +56,7 @@ char *EC_POINT_point2hex(const EC_GROUP *group, const EC_POINT *p,
 EC_POINT *EC_POINT_hex2point(const EC_GROUP *group, const char *hex,
                              EC_POINT *p, BN_CTX *ctx);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>const EC_METHOD *EC_POINT_method_of(const EC_POINT *point);
 int EC_POINT_set_Jprojective_coordinates_GFp(const EC_GROUP *group,
@@ -157,7 +157,7 @@ EC_POINT *EC_POINT_bn2point(const EC_GROUP *group, const BIGNUM *bn,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/crypto.html">crypto(7)</a>, <a href="../man3/EC_GROUP_new.html">EC_GROUP_new(3)</a>, <a href="../man3/EC_GROUP_copy.html">EC_GROUP_copy(3)</a>, <a href="../man3/EC_POINT_add.html">EC_POINT_add(3)</a>, <a href="../man3/EC_KEY_new.html">EC_KEY_new(3)</a>, <a href="../man3/EC_GFp_simple_method.html">EC_GFp_simple_method(3)</a>, <a href="../man3/d2i_ECPKParameters.html">d2i_ECPKParameters(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_new.3.html">EC_GROUP_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_copy.3.html">EC_GROUP_copy(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_POINT_add.3.html">EC_POINT_add(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_KEY_new.3.html">EC_KEY_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_GFp_simple_method.3.html">EC_GFp_simple_method(3)</a>, <a href="https://man7.org/linux/man-pages/man3/d2i_ECPKParameters.3.html">d2i_ECPKParameters(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

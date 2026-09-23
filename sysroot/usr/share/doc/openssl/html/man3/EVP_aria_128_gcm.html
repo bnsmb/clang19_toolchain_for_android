@@ -4,7 +4,7 @@
 <head>
 <title>EVP_aria_128_gcm</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -48,22 +48,22 @@ const EVP_CIPHER *EVP_ciphername(void)</code></pre>
 <dt id="EVP_aria_128_ccm-EVP_aria_192_ccm-EVP_aria_256_ccm-EVP_aria_128_gcm-EVP_aria_192_gcm-EVP_aria_256_gcm">EVP_aria_128_ccm(), EVP_aria_192_ccm(), EVP_aria_256_ccm(), EVP_aria_128_gcm(), EVP_aria_192_gcm(), EVP_aria_256_gcm(),</dt>
 <dd>
 
-<p>ARIA for 128, 192 and 256 bit keys in CBC-MAC Mode (CCM) and Galois Counter Mode (GCM). These ciphers require additional control operations to function correctly, see the <a href="../man3/EVP_EncryptInit.html">&quot;AEAD INTERFACE&quot; in EVP_EncryptInit(3)</a> section for details.</p>
+<p>ARIA for 128, 192 and 256 bit keys in CBC-MAC Mode (CCM) and Galois Counter Mode (GCM). These ciphers require additional control operations to function correctly, see the <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html#AEAD_INTERFACE">&quot;AEAD INTERFACE&quot; in EVP_EncryptInit(3)</a> section for details.</p>
 
 </dd>
 </dl>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>Developers should be aware of the negative performance implications of calling these functions multiple times and should consider using <a href="../man3/EVP_CIPHER_fetch.html">EVP_CIPHER_fetch(3)</a> with <a href="../man7/EVP_CIPHER-ARIA.html">EVP_CIPHER-ARIA(7)</a> instead. See <a href="../man7/crypto.html">&quot;Performance&quot; in crypto(7)</a> for further information.</p>
+<p>Developers should be aware of the negative performance implications of calling these functions multiple times and should consider using <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_fetch.3.html">EVP_CIPHER_fetch(3)</a> with <a href="https://man7.org/linux/man-pages/man7/EVP_CIPHER-ARIA.7.html">EVP_CIPHER-ARIA(7)</a> instead. See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#Performance">&quot;Performance&quot; in crypto(7)</a> for further information.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
-<p>These functions return an <b>EVP_CIPHER</b> structure that contains the implementation of the symmetric cipher. See <a href="../man3/EVP_CIPHER_meth_new.html">EVP_CIPHER_meth_new(3)</a> for details of the <b>EVP_CIPHER</b> structure.</p>
+<p>These functions return an <b>EVP_CIPHER</b> structure that contains the implementation of the symmetric cipher. See <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_meth_new.3.html">EVP_CIPHER_meth_new(3)</a> for details of the <b>EVP_CIPHER</b> structure.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/evp.html">evp(7)</a>, <a href="../man3/EVP_EncryptInit.html">EVP_EncryptInit(3)</a>, <a href="../man3/EVP_CIPHER_meth_new.html">EVP_CIPHER_meth_new(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/evp.7.html">evp(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html">EVP_EncryptInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_meth_new.3.html">EVP_CIPHER_meth_new(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

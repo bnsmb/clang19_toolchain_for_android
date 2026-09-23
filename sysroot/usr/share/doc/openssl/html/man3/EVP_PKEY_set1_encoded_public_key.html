@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY_set1_encoded_public_key</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -40,7 +40,7 @@ int EVP_PKEY_set1_encoded_public_key(EVP_PKEY *pkey,
 
 size_t EVP_PKEY_get1_encoded_public_key(EVP_PKEY *pkey, unsigned char **ppub);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int EVP_PKEY_set1_tls_encodedpoint(EVP_PKEY *pkey,
                                    const unsigned char *pt, size_t ptlen);
@@ -49,7 +49,7 @@ size_t EVP_PKEY_get1_tls_encodedpoint(EVP_PKEY *pkey, unsigned char **ppt);</cod
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>EVP_PKEY_set1_encoded_public_key() can be used to set the public key value within an existing EVP_PKEY object, which does not yet have either a public or private key assigned. For the built-in OpenSSL algorithms this currently only works for those that support key exchange or key encapsulation. Parameters are not set as part of this operation, so typically an application will create an EVP_PKEY first, set the parameters on it, and then call this function. For example setting the parameters might be done using <a href="../man3/EVP_PKEY_copy_parameters.html">EVP_PKEY_copy_parameters(3)</a>.</p>
+<p>EVP_PKEY_set1_encoded_public_key() can be used to set the public key value within an existing EVP_PKEY object, which does not yet have either a public or private key assigned. For the built-in OpenSSL algorithms this currently only works for those that support key exchange or key encapsulation. Parameters are not set as part of this operation, so typically an application will create an EVP_PKEY first, set the parameters on it, and then call this function. For example setting the parameters might be done using <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_copy_parameters.3.html">EVP_PKEY_copy_parameters(3)</a>.</p>
 
 <p>The format for the encoded public key will depend on the algorithm in use. For DH it should be encoded as a positive integer in big-endian form. For EC is should be a point conforming to Sec. 2.3.4 of the SECG SEC 1 (&quot;Elliptic Curve Cryptography&quot;) standard. For <b>X25519</b> and <b>X448</b> it should be encoded in the format defined by RFC7748. For <b>ML-KEM-512</b>, <b>ML-KEM-768</b> and <b>ML-KEM-1024</b>, this is the public key format defined in <b>FIPS 203</b> (the 12-bit per-coefficient encoded public <i>t</i> vector and 32-byte matrix seed <i>rho</i>).</p>
 
@@ -69,7 +69,7 @@ size_t EVP_PKEY_get1_tls_encodedpoint(EVP_PKEY *pkey, unsigned char **ppt);</cod
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
-<p>See <a href="../man3/EVP_PKEY_derive_init.html">EVP_PKEY_derive_init(3)</a> and <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a> for information about performing a key exchange operation.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive_init.3.html">EVP_PKEY_derive_init(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a> for information about performing a key exchange operation.</p>
 
 <h2 id="Set-up-a-peers-EVP_PKEY-ready-for-a-key-exchange-operation">Set up a peer&#39;s EVP_PKEY ready for a key exchange operation</h2>
 
@@ -117,7 +117,7 @@ int get_encoded_pub_key(EVP_PKEY *ourkey)
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_new.html">EVP_PKEY_new(3)</a>, <a href="../man3/EVP_PKEY_copy_parameters.html">EVP_PKEY_copy_parameters(3)</a>, <a href="../man3/EVP_PKEY_derive_init.html">EVP_PKEY_derive_init(3)</a>, <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a>, <a href="../man7/EVP_PKEY-DH.html">EVP_PKEY-DH(7)</a>, <a href="../man7/EVP_PKEY-EC.html">EVP_PKEY-EC(7)</a>, <a href="../man7/EVP_PKEY-X25519.html">EVP_PKEY-X25519(7)</a>, <a href="../man7/EVP_PKEY-X448.html">EVP_PKEY-X448(7)</a>, <a href="../man7/EVP_PKEY-ML-KEM-512.html">EVP_PKEY-ML-KEM-512(7)</a>, <a href="../man7/EVP_PKEY-ML-KEM-768.html">EVP_PKEY-ML-KEM-768(7)</a>, <a href="../man7/EVP_PKEY-ML-KEM-1024.html">EVP_PKEY-ML-KEM-1024(7)</a>.</p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_new.3.html">EVP_PKEY_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_copy_parameters.3.html">EVP_PKEY_copy_parameters(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive_init.3.html">EVP_PKEY_derive_init(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DH.7.html">EVP_PKEY-DH(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-EC.7.html">EVP_PKEY-EC(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-X25519.7.html">EVP_PKEY-X25519(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-X448.7.html">EVP_PKEY-X448(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-ML-KEM-512.7.html">EVP_PKEY-ML-KEM-512(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-ML-KEM-768.7.html">EVP_PKEY-ML-KEM-768(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-ML-KEM-1024.7.html">EVP_PKEY-ML-KEM-1024(7)</a>.</p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

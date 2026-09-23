@@ -4,7 +4,7 @@
 <head>
 <title>DSA_set_method</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -29,7 +29,7 @@
 
 <pre><code>#include &lt;openssl/dsa.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>void DSA_set_default_method(const DSA_METHOD *meth);
 
@@ -53,7 +53,7 @@ const DSA_METHOD *DSA_OpenSSL(void);</code></pre>
 
 <p>DSA_get_default_method() returns a pointer to the current default DSA_METHOD. However, the meaningfulness of this result is dependent on whether the ENGINE API is being used, so this function is no longer recommended.</p>
 
-<p>DSA_set_method() selects <b>meth</b> to perform all operations using the key <b>rsa</b>. This will replace the DSA_METHOD used by the DSA key and if the previous method was supplied by an ENGINE, the handle to that ENGINE will be released during the change. It is possible to have DSA keys that only work with certain DSA_METHOD implementations (e.g. from an ENGINE module that supports embedded hardware-protected keys), and in such cases attempting to change the DSA_METHOD for the key can have unexpected results. See <a href="../man3/DSA_meth_new.html">DSA_meth_new(3)</a> for information on constructing custom DSA_METHOD objects;</p>
+<p>DSA_set_method() selects <b>meth</b> to perform all operations using the key <b>rsa</b>. This will replace the DSA_METHOD used by the DSA key and if the previous method was supplied by an ENGINE, the handle to that ENGINE will be released during the change. It is possible to have DSA keys that only work with certain DSA_METHOD implementations (e.g. from an ENGINE module that supports embedded hardware-protected keys), and in such cases attempting to change the DSA_METHOD for the key can have unexpected results. See <a href="https://man7.org/linux/man-pages/man3/DSA_meth_new.3.html">DSA_meth_new(3)</a> for information on constructing custom DSA_METHOD objects;</p>
 
 <p>DSA_new_method() allocates and initializes a DSA structure so that <b>engine</b> will be used for the DSA operations. If <b>engine</b> is NULL, the default engine for DSA operations is used, and if no default ENGINE is set, the DSA_METHOD controlled by DSA_set_default_method() is used.</p>
 
@@ -65,11 +65,11 @@ const DSA_METHOD *DSA_OpenSSL(void);</code></pre>
 
 <p>DSA_set_method() returns nonzero if the provided <b>meth</b> was successfully set as the method for <b>dsa</b> (including unloading the ENGINE handle if the previous method was supplied by an ENGINE).</p>
 
-<p>DSA_new_method() returns NULL and sets an error code that can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a> if the allocation fails. Otherwise it returns a pointer to the newly allocated structure.</p>
+<p>DSA_new_method() returns NULL and sets an error code that can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a> if the allocation fails. Otherwise it returns a pointer to the newly allocated structure.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/DSA_new.html">DSA_new(3)</a>, <a href="../man3/DSA_new.html">DSA_new(3)</a>, <a href="../man3/DSA_meth_new.html">DSA_meth_new(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/DSA_new.3.html">DSA_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DSA_new.3.html">DSA_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DSA_meth_new.3.html">DSA_meth_new(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

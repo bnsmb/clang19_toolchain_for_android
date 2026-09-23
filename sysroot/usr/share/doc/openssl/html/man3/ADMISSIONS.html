@@ -4,7 +4,7 @@
 <head>
 <title>ADMISSIONS</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -84,11 +84,11 @@ void PROFESSION_INFO_set0_registrationNumber(
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>The <b>PROFESSION_INFOS</b>, <b>ADMISSION_SYNTAX</b>, <b>ADMISSIONS</b>, and <b>PROFESSION_INFO</b> types are opaque structures representing the analogous types defined in the Common PKI Specification published by <a href="https://www.t7ev.org">https://www.t7ev.org</a>. Knowledge of those structures and their semantics is assumed.</p>
+<p>The <b>PROFESSION_INFOS</b>, <b>ADMISSION_SYNTAX</b>, <b>ADMISSIONS</b>, and <b>PROFESSION_INFO</b> types are opaque structures representing the analogous types defined in the Common PKI Specification published by <a href="https://www.bundesnetzagentur.de/EVD/DE/SharedDocuments/Downloads/Anbieter_Infothek/Common_PKI_v2.0_02.pdf?__blob=publicationFile&amp;v=1">T7 &amp; TELETRUST</a>. Knowledge of those structures and their semantics is assumed.</p>
 
-<p>The conventional routines to convert between DER and the local format are described in <a href="../man3/d2i_X509.html">d2i_X509(3)</a>. The conventional routines to allocate and free the types are defined in <a href="../man3/X509_dup.html">X509_dup(3)</a>.</p>
+<p>The conventional routines to convert between DER and the local format are described in <a href="https://man7.org/linux/man-pages/man3/d2i_X509.3.html">d2i_X509(3)</a>. The conventional routines to allocate and free the types are defined in <a href="https://man7.org/linux/man-pages/man3/X509_dup.3.html">X509_dup(3)</a>.</p>
 
-<p>The <b>PROFESSION_INFOS</b> type is a stack of <b>PROFESSION_INFO</b>; see <a href="../man3/DEFINE_STACK_OF.html">DEFINE_STACK_OF(3)</a> for details.</p>
+<p>The <b>PROFESSION_INFOS</b> type is a stack of <b>PROFESSION_INFO</b>; see <a href="https://man7.org/linux/man-pages/man3/DEFINE_STACK_OF.3.html">DEFINE_STACK_OF(3)</a> for details.</p>
 
 <p>The <b>NAMING_AUTHORITY</b> type has an authority ID and URL, and text fields. The NAMING_AUTHORITY_get0_authorityId(), NAMING_AUTHORITY_get0_get0_authorityURL(), and NAMING_AUTHORITY_get0_get0_authorityText(), functions return pointers to those values within the object. The NAMING_AUTHORITY_set0_authorityId(), NAMING_AUTHORITY_set0_get0_authorityURL(), and NAMING_AUTHORITY_set0_get0_authorityText(), functions free any existing value and set the pointer to the specified value.</p>
 
@@ -104,11 +104,11 @@ void PROFESSION_INFO_set0_registrationNumber(
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/X509_dup.html">X509_dup(3)</a>, <a href="../man3/d2i_X509.html">d2i_X509(3)</a>,</p>
+<p><a href="https://man7.org/linux/man-pages/man3/X509_dup.3.html">X509_dup(3)</a>, <a href="https://man7.org/linux/man-pages/man3/d2i_X509.3.html">d2i_X509(3)</a>,</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2017-2018 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2017-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

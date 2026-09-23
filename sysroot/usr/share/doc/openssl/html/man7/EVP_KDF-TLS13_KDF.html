@@ -4,7 +4,7 @@
 <head>
 <title>EVP_KDF-TLS13_KDF</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -63,7 +63,7 @@
 <dt id="salt-OSSL_KDF_PARAM_SALT-octet-string">&quot;salt&quot; (<b>OSSL_KDF_PARAM_SALT</b>) &lt;octet string&gt;</dt>
 <dd>
 
-<p>These parameters work as described in <a href="../man3/EVP_KDF.html">&quot;PARAMETERS&quot; in EVP_KDF(3)</a>.</p>
+<p>These parameters work as described in <a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html#PARAMETERS">&quot;PARAMETERS&quot; in EVP_KDF(3)</a>.</p>
 
 </dd>
 <dt id="prefix-OSSL_KDF_PARAM_PREFIX-octet-string">&quot;prefix&quot; (<b>OSSL_KDF_PARAM_PREFIX</b>) &lt;octet string&gt;</dt>
@@ -94,7 +94,7 @@
 <dt id="EXTRACT_ONLY-or-EVP_KDF_HKDF_MODE_EXTRACT_ONLY">&quot;EXTRACT_ONLY&quot; or <b>EVP_KDF_HKDF_MODE_EXTRACT_ONLY</b></dt>
 <dd>
 
-<p>In this mode calling <a href="../man3/EVP_KDF_derive.html">EVP_KDF_derive(3)</a> will just perform the extract operation. The value returned will be the intermediate fixed-length pseudorandom key K. The <i>keylen</i> parameter must match the size of K, which can be looked up by calling EVP_KDF_CTX_get_kdf_size() after setting the mode and digest.</p>
+<p>In this mode calling <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_derive.3.html">EVP_KDF_derive(3)</a> will just perform the extract operation. The value returned will be the intermediate fixed-length pseudorandom key K. The <i>keylen</i> parameter must match the size of K, which can be looked up by calling EVP_KDF_CTX_get_kdf_size() after setting the mode and digest.</p>
 
 <p>The digest, key and salt values must be set before a key is derived otherwise an error will occur.</p>
 
@@ -102,7 +102,7 @@
 <dt id="EXPAND_ONLY-or-EVP_KDF_HKDF_MODE_EXPAND_ONLY">&quot;EXPAND_ONLY&quot; or <b>EVP_KDF_HKDF_MODE_EXPAND_ONLY</b></dt>
 <dd>
 
-<p>In this mode calling <a href="../man3/EVP_KDF_derive.html">EVP_KDF_derive(3)</a> will just perform the expand operation. The input key should be set to the intermediate fixed-length pseudorandom key K returned from a previous extract operation.</p>
+<p>In this mode calling <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_derive.3.html">EVP_KDF_derive(3)</a> will just perform the expand operation. The input key should be set to the intermediate fixed-length pseudorandom key K returned from a previous extract operation.</p>
 
 <p>The digest, key and info values must be set before a key is derived otherwise an error will occur.</p>
 
@@ -142,14 +142,14 @@
 
 <p>This KDF is intended for use by the TLS 1.3 implementation in libssl. It does not support all the options and capabilities that HKDF does.</p>
 
-<p>The <i>OSSL_PARAM</i> array passed to <a href="../man3/EVP_KDF_derive.html">EVP_KDF_derive(3)</a> or <a href="../man3/EVP_KDF_CTX_set_params.html">EVP_KDF_CTX_set_params(3)</a> must specify all of the parameters required. This KDF does not support a piecemeal approach to providing these.</p>
+<p>The <i>OSSL_PARAM</i> array passed to <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_derive.3.html">EVP_KDF_derive(3)</a> or <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_CTX_set_params.3.html">EVP_KDF_CTX_set_params(3)</a> must specify all of the parameters required. This KDF does not support a piecemeal approach to providing these.</p>
 
 <p>A context for a TLS 1.3 KDF can be obtained by calling:</p>
 
 <pre><code>EVP_KDF *kdf = EVP_KDF_fetch(NULL, &quot;TLS13-KDF&quot;, NULL);
 EVP_KDF_CTX *kctx = EVP_KDF_CTX_new(kdf);</code></pre>
 
-<p>The output length of a TLS 1.3 KDF expand operation is specified via the <i>keylen</i> parameter to the <a href="../man3/EVP_KDF_derive.html">EVP_KDF_derive(3)</a> function. When using EVP_KDF_HKDF_MODE_EXTRACT_ONLY the <i>keylen</i> parameter must equal the size of the intermediate fixed-length pseudorandom key otherwise an error will occur. For that mode, the fixed output size can be looked up by calling EVP_KDF_CTX_get_kdf_size() after setting the mode and digest on the <b>EVP_KDF_CTX</b>.</p>
+<p>The output length of a TLS 1.3 KDF expand operation is specified via the <i>keylen</i> parameter to the <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_derive.3.html">EVP_KDF_derive(3)</a> function. When using EVP_KDF_HKDF_MODE_EXTRACT_ONLY the <i>keylen</i> parameter must equal the size of the intermediate fixed-length pseudorandom key otherwise an error will occur. For that mode, the fixed output size can be looked up by calling EVP_KDF_CTX_get_kdf_size() after setting the mode and digest on the <b>EVP_KDF_CTX</b>.</p>
 
 <h1 id="CONFORMING-TO">CONFORMING TO</h1>
 
@@ -157,7 +157,7 @@ EVP_KDF_CTX *kctx = EVP_KDF_CTX_new(kdf);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_KDF.html">EVP_KDF(3)</a>, <a href="../man3/EVP_KDF_CTX_new.html">EVP_KDF_CTX_new(3)</a>, <a href="../man3/EVP_KDF_CTX_free.html">EVP_KDF_CTX_free(3)</a>, <a href="../man3/EVP_KDF_CTX_get_kdf_size.html">EVP_KDF_CTX_get_kdf_size(3)</a>, <a href="../man3/EVP_KDF_CTX_set_params.html">EVP_KDF_CTX_set_params(3)</a>, <a href="../man3/EVP_KDF_derive.html">EVP_KDF_derive(3)</a>, <a href="../man3/EVP_KDF.html">&quot;PARAMETERS&quot; in EVP_KDF(3)</a>, <a href="../man7/EVP_KDF-HKDF.html">EVP_KDF-HKDF(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html">EVP_KDF(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_CTX_new.3.html">EVP_KDF_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_CTX_free.3.html">EVP_KDF_CTX_free(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_CTX_get_kdf_size.3.html">EVP_KDF_CTX_get_kdf_size(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_CTX_set_params.3.html">EVP_KDF_CTX_set_params(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF_derive.3.html">EVP_KDF_derive(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html#PARAMETERS">&quot;PARAMETERS&quot; in EVP_KDF(3)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-HKDF.7.html">EVP_KDF-HKDF(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

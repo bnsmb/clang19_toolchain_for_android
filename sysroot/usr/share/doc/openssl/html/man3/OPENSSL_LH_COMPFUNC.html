@@ -4,7 +4,7 @@
 <head>
 <title>OPENSSL_LH_COMPFUNC</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -196,7 +196,7 @@ lh_TYPE_doall_arg(hashtable, LHASH_DOALL_ARG_FN(TYPE_print), BIO,
 
 <h1 id="NOTE">NOTE</h1>
 
-<p>The LHASH code is not thread safe. All updating operations, as well as <b>lh_<i>TYPE</i>_error</b>() or OPENSSL_LH_error() calls must be performed under a write lock. All retrieve operations should be performed under a read lock, <i>unless</i> accurate usage statistics are desired. In which case, a write lock should be used for retrieve operations as well. For output of the usage statistics, using the functions from <a href="../man3/OPENSSL_LH_stats.html">OPENSSL_LH_stats(3)</a>, a read lock suffices.</p>
+<p>The LHASH code is not thread safe. All updating operations, as well as <b>lh_<i>TYPE</i>_error</b>() or OPENSSL_LH_error() calls must be performed under a write lock. All retrieve operations should be performed under a read lock, <i>unless</i> accurate usage statistics are desired. In which case, a write lock should be used for retrieve operations as well. For output of the usage statistics, using the functions from <a href="https://man7.org/linux/man-pages/man3/OPENSSL_LH_stats.3.html">OPENSSL_LH_stats(3)</a>, a read lock suffices.</p>
 
 <p>The LHASH code regards table entries as constant data. As such, it internally represents lh_insert()&#39;d items with a &quot;const void *&quot; pointer type. This is why callbacks such as those used by lh_doall() and lh_doall_arg() declare their prototypes with &quot;const&quot;, even for the parameters that pass back the table items&#39; data pointers - for consistency, user-provided data is &quot;const&quot; at all times as far as the LHASH code is concerned. However, as callers are themselves providing these pointers, they can choose whether they too should be treating all such parameters as constant.</p>
 
@@ -210,7 +210,7 @@ lh_TYPE_doall_arg(hashtable, LHASH_DOALL_ARG_FN(TYPE_print), BIO,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/OPENSSL_LH_stats.html">OPENSSL_LH_stats(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/OPENSSL_LH_stats.3.html">OPENSSL_LH_stats(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

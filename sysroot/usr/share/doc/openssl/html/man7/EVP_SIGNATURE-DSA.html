@@ -4,7 +4,7 @@
 <head>
 <title>EVP_SIGNATURE-DSA</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -26,26 +26,26 @@
 
 <h1 id="NAME">NAME</h1>
 
-<p>EVP_SIGNATURE-DSA - The <b>EVP_PKEY</b> DSA signature implementation</p>
+<p>EVP_SIGNATURE-DSA - The EVP_PKEY <b>DSA</b> signature implementation</p>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>Support for computing DSA signatures. The signature produced with <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a> is DER encoded ASN.1 in the form described in RFC 3279, section 2.2.2. See <a href="../man7/EVP_PKEY-DSA.html">EVP_PKEY-DSA(7)</a> for information related to DSA keys.</p>
+<p>Support for computing DSA signatures. The signature produced with <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a> is DER encoded ASN.1 in the form described in RFC 3279, section 2.2.2. See <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DSA.7.html">EVP_PKEY-DSA(7)</a> for information related to DSA keys.</p>
 
 <p>As part of FIPS 140-3 DSA is not longer FIPS approved for key generation and signature validation, but is still allowed for signature verification.</p>
 
 <h2 id="Algorithm-Names">Algorithm Names</h2>
 
-<p>In this list, names are grouped together to signify that they are the same algorithm having multiple names. This also includes the OID in canonical decimal form (which means that they are possible to fetch if the caller has a mere OID which came out in this form after a call to <a href="../man3/OBJ_obj2txt.html">OBJ_obj2txt(3)</a>).</p>
+<p>In this list, names are grouped together to signify that they are the same algorithm having multiple names. This also includes the OID in canonical decimal form (which means that they are possible to fetch if the caller has a mere OID which came out in this form after a call to <a href="https://man7.org/linux/man-pages/man3/OBJ_obj2txt.3.html">OBJ_obj2txt(3)</a>).</p>
 
 <dl>
 
 <dt id="DSA-dsaEncryption-1.2.840.10040.4.1">&quot;DSA&quot;, &quot;dsaEncryption&quot;, &quot;1.2.840.10040.4.1&quot;</dt>
 <dd>
 
-<p>The base signature algorithm, supported explicitly fetched with <a href="../man3/EVP_PKEY_sign_init_ex2.html">EVP_PKEY_sign_init_ex2(3)</a>, and implicitly fetched (through <a href="../man7/EVP_PKEY-EC.html">EC keys</a>) with <a href="../man3/EVP_DigestSignInit.html">EVP_DigestSignInit(3)</a> and <a href="../man3/EVP_DigestVerifyInit.html">EVP_DigestVerifyInit(3)</a>.</p>
+<p>The base signature algorithm, supported explicitly fetched with <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign_init_ex2.3.html">EVP_PKEY_sign_init_ex2(3)</a>, and implicitly fetched (through <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-EC.7.html">EC keys</a>) with <a href="https://man7.org/linux/man-pages/man3/EVP_DigestSignInit.3.html">EVP_DigestSignInit(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_DigestVerifyInit.3.html">EVP_DigestVerifyInit(3)</a>.</p>
 
-<p>It can&#39;t be used with <a href="../man3/EVP_PKEY_sign_message_init.html">EVP_PKEY_sign_message_init(3)</a></p>
+<p>It can&#39;t be used with <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign_message_init.3.html">EVP_PKEY_sign_message_init(3)</a></p>
 
 </dd>
 <dt id="DSA-SHA1-DSA-SHA-1-dsaWithSHA1-1.2.840.10040.4.3">&quot;DSA-SHA1&quot;, &quot;DSA-SHA-1&quot;, &quot;dsaWithSHA1&quot;, &quot;1.2.840.10040.4.3&quot;</dt>
@@ -83,7 +83,7 @@
 <dt id="DSA-SHA3-512-dsa_with_SHA3-512-id-dsa-with-sha3-512-2.16.840.1.101.3.4.3.8">&quot;DSA-SHA3-512&quot;, &quot;dsa_with_SHA3-512&quot;, &quot;id-dsa-with-sha3-512&quot;, &quot;2.16.840.1.101.3.4.3.8&quot;</dt>
 <dd>
 
-<p>DSA signature schemes with diverse message digest algorithms. They are all supported explicitly fetched with <a href="../man3/EVP_PKEY_sign_init_ex2.html">EVP_PKEY_sign_init_ex2(3)</a> and <a href="../man3/EVP_PKEY_sign_message_init.html">EVP_PKEY_sign_message_init(3)</a>.</p>
+<p>DSA signature schemes with diverse message digest algorithms. They are all supported explicitly fetched with <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign_init_ex2.3.html">EVP_PKEY_sign_init_ex2(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign_message_init.3.html">EVP_PKEY_sign_message_init(3)</a>.</p>
 
 </dd>
 </dl>
@@ -119,7 +119,7 @@
 <dt id="sign-check-OSSL_SIGNATURE_PARAM_FIPS_SIGN_CHECK-int">&quot;sign-check&quot; (<b>OSSL_SIGNATURE_PARAM_FIPS_SIGN_CHECK</b>) &lt;int&gt;</dt>
 <dd>
 
-<p>The settable parameters are described in <a href="../man7/provider-signature.html">provider-signature(7)</a>.</p>
+<p>The settable parameters are described in <a href="https://man7.org/linux/man-pages/man7/provider-signature.7.html">provider-signature(7)</a>.</p>
 
 </dd>
 </dl>
@@ -143,22 +143,22 @@
 <dt id="fips-indicator-OSSL_SIGNATURE_PARAM_FIPS_APPROVED_INDICATOR-integer">&quot;fips-indicator&quot; (<b>OSSL_SIGNATURE_PARAM_FIPS_APPROVED_INDICATOR</b>) &lt;integer&gt;</dt>
 <dd>
 
-<p>The gettable parameters are described in <a href="../man7/provider-signature.html">provider-signature(7)</a>.</p>
+<p>The gettable parameters are described in <a href="https://man7.org/linux/man-pages/man7/provider-signature.7.html">provider-signature(7)</a>.</p>
 
 </dd>
 </dl>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_CTX_set_params.html">EVP_PKEY_CTX_set_params(3)</a>, <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a>, <a href="../man3/EVP_PKEY_verify.html">EVP_PKEY_verify(3)</a>, <a href="../man7/provider-signature.html">provider-signature(7)</a>,</p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set_params.3.html">EVP_PKEY_CTX_set_params(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify.3.html">EVP_PKEY_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-signature.7.html">provider-signature(7)</a>,</p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
-<p>DSA Key generation and signature generation are no longer FIPS approved in OpenSSL 3.4. See <a href="../man7/fips_module.html">&quot;FIPS indicators&quot; in fips_module(7)</a> for more information.</p>
+<p>DSA Key generation and signature generation are no longer FIPS approved in OpenSSL 3.4. See <a href="https://man7.org/linux/man-pages/man7/fips_module.7.html#FIPS_indicators">&quot;FIPS indicators&quot; in fips_module(7)</a> for more information.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2020-2024 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2020-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

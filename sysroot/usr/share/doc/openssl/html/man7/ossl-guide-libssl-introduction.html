@@ -4,7 +4,7 @@
 <head>
 <title>ossl-guide-libssl-introduction</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -26,7 +26,7 @@
 
 <h1 id="INTRODUCTION">INTRODUCTION</h1>
 
-<p>The OpenSSL <code>libssl</code> library provides implementations of several secure network communications protocols. Specifically it provides SSL/TLS (SSLv3, TLSv1, TLSv1.1, TLSv1.2 and TLSv1.3), DTLS (DTLSv1 and DTLSv1.2) and QUIC (client side only). The library depends on <code>libcrypto</code> for its underlying cryptographic operations (see <a href="../man7/ossl-guide-libcrypto-introduction.html">ossl-guide-libcrypto-introduction(7)</a>).</p>
+<p>The OpenSSL <code>libssl</code> library provides implementations of several secure network communications protocols. Specifically it provides SSL/TLS (SSLv3, TLSv1, TLSv1.1, TLSv1.2 and TLSv1.3), DTLS (DTLSv1 and DTLSv1.2) and QUIC (client side only). The library depends on <code>libcrypto</code> for its underlying cryptographic operations (see <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libcrypto-introduction.7.html">ossl-guide-libcrypto-introduction(7)</a>).</p>
 
 <p>The set of APIs supplied by <code>libssl</code> is common across all of these different network protocols, so a developer familiar with writing applications using one of these protocols should be able to transition to using another with relative ease.</p>
 
@@ -38,9 +38,9 @@
 
 <p>Both TLS and QUIC support the concept of a &quot;stream&quot; of data. Data sent via a stream is guaranteed to be delivered in order without any data loss. A stream can be uni- or bi-directional.</p>
 
-<p>SSL/TLS only supports one stream of data per connection and it is always bi-directional. In this case the <b>SSL</b> object used for the connection also represents that stream. See <a href="../man7/ossl-guide-tls-introduction.html">ossl-guide-tls-introduction(7)</a> for more information.</p>
+<p>SSL/TLS only supports one stream of data per connection and it is always bi-directional. In this case the <b>SSL</b> object used for the connection also represents that stream. See <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-introduction.7.html">ossl-guide-tls-introduction(7)</a> for more information.</p>
 
-<p>The QUIC protocol can support multiple streams per connection and they can be uni- or bi-directional. In this case an <b>SSL</b> object can represent the underlying connection, or a stream, or both. Where multiple streams are in use a separate <b>SSL</b> object is used for each one. See <a href="../man7/ossl-guide-quic-introduction.html">ossl-guide-quic-introduction(7)</a> for more information.</p>
+<p>The QUIC protocol can support multiple streams per connection and they can be uni- or bi-directional. In this case an <b>SSL</b> object can represent the underlying connection, or a stream, or both. Where multiple streams are in use a separate <b>SSL</b> object is used for each one. See <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-introduction.7.html">ossl-guide-quic-introduction(7)</a> for more information.</p>
 
 <p>An <b>SSL_CTX</b> object is used to create the <b>SSL</b> object for the underlying connection. A single <b>SSL_CTX</b> object can be used to create many connections (each represented by a separate <b>SSL</b> object). Many API functions in libssl exist in two forms: one that takes an <b>SSL_CTX</b> and one that takes an <b>SSL</b>. Typically settings that you apply to the <b>SSL_CTX</b> will then be inherited by any <b>SSL</b> object that you create from it. Alternatively you can apply settings directly to the <b>SSL</b> object without affecting other <b>SSL</b> objects. Note that you should not normally make changes to an <b>SSL_CTX</b> after the first <b>SSL</b> object has been created from it.</p>
 
@@ -74,13 +74,13 @@
 
 <h1 id="FURTHER-READING">FURTHER READING</h1>
 
-<p>See <a href="../man7/ossl-guide-tls-introduction.html">ossl-guide-tls-introduction(7)</a> for an introduction to the SSL/TLS protocol and <a href="../man7/ossl-guide-quic-introduction.html">ossl-guide-quic-introduction(7)</a> for an introduction to QUIC.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-introduction.7.html">ossl-guide-tls-introduction(7)</a> for an introduction to the SSL/TLS protocol and <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-introduction.7.html">ossl-guide-quic-introduction(7)</a> for an introduction to QUIC.</p>
 
-<p>See <a href="../man7/ossl-guide-libcrypto-introduction.html">ossl-guide-libcrypto-introduction(7)</a> for an introduction to <code>libcrypto</code>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libcrypto-introduction.7.html">ossl-guide-libcrypto-introduction(7)</a> for an introduction to <code>libcrypto</code>.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ossl-guide-libcrypto-introduction.html">ossl-guide-libcrypto-introduction(7)</a>, <a href="../man7/ossl-guide-tls-introduction.html">ossl-guide-tls-introduction(7)</a>, <a href="../man7/ossl-guide-quic-introduction.html">ossl-guide-quic-introduction(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ossl-guide-libcrypto-introduction.7.html">ossl-guide-libcrypto-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-introduction.7.html">ossl-guide-tls-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-introduction.7.html">ossl-guide-quic-introduction(7)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

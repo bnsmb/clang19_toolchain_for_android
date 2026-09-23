@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_config</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -39,7 +39,7 @@ int SSL_config(SSL *s, const char *name);</code></pre>
 
 <p>By calling SSL_CTX_config() or SSL_config() an application can perform many complex tasks based on the contents of the configuration file: greatly simplifying application configuration code. A degree of future proofing can also be achieved: an application can support configuration features in newer versions of OpenSSL automatically.</p>
 
-<p>A configuration file must have been previously loaded, for example using CONF_modules_load_file(). See <a href="../man5/config.html">config(5)</a> for details of the configuration file syntax.</p>
+<p>A configuration file must have been previously loaded, for example using CONF_modules_load_file(). See <a href="https://man7.org/linux/man-pages/man5/config.5.html">config(5)</a> for details of the configuration file syntax.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -82,7 +82,7 @@ if (SSL_CTX_config(ctx, &quot;server&quot;) == 0) {
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man5/config.html">config(5)</a>, <a href="../man3/SSL_CONF_cmd.html">SSL_CONF_cmd(3)</a>, <a href="../man3/CONF_modules_load_file.html">CONF_modules_load_file(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man5/config.5.html">config(5)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CONF_cmd.3.html">SSL_CONF_cmd(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CONF_modules_load_file.3.html">CONF_modules_load_file(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY-SM2</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -36,7 +36,7 @@
 
 <h2 id="Common-SM2-parameters">Common SM2 parameters</h2>
 
-<p>SM2 uses the parameters defined in <a href="../man7/EVP_PKEY-EC.html">&quot;Common EC parameters&quot; in EVP_PKEY-EC(7)</a>. The following parameters are different:</p>
+<p>SM2 uses the parameters defined in <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-EC.7.html#Common_EC_parameters">&quot;Common EC parameters&quot; in EVP_PKEY-EC(7)</a>. The following parameters are different:</p>
 
 <dl>
 
@@ -68,7 +68,7 @@
 
 <p>There is normally no need to pass a <b>pctx</b> parameter to EVP_DigestSignInit() or EVP_DigestVerifyInit() in such a scenario.</p>
 
-<p>SM2 can be tested with the <a href="../man1/openssl-speed.html">openssl-speed(1)</a> application since version 3.0. Currently, the only valid algorithm name is <b>sm2</b>.</p>
+<p>SM2 can be tested with the <a href="https://man7.org/linux/man-pages/man1/openssl-speed.1.html">openssl-speed(1)</a> application since version 3.0. Currently, the only valid algorithm name is <b>sm2</b>.</p>
 
 <p>Since version 3.0, SM2 keys can be generated and loaded only when the domain parameters specify the SM2 elliptic curve.</p>
 
@@ -89,7 +89,7 @@ EVP_DigestVerifyFinal(mctx, sig, sig_len)</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_CTX_new.html">EVP_PKEY_CTX_new(3)</a>, <a href="../man3/EVP_DigestSignInit.html">EVP_DigestSignInit(3)</a>, <a href="../man3/EVP_DigestVerifyInit.html">EVP_DigestVerifyInit(3)</a>, <a href="../man3/EVP_PKEY_CTX_set1_id.html">EVP_PKEY_CTX_set1_id(3)</a>, <a href="../man3/EVP_MD_CTX_set_pkey_ctx.html">EVP_MD_CTX_set_pkey_ctx(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_new.3.html">EVP_PKEY_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_DigestSignInit.3.html">EVP_DigestSignInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_DigestVerifyInit.3.html">EVP_DigestVerifyInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set1_id.3.html">EVP_PKEY_CTX_set1_id(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_MD_CTX_set_pkey_ctx.3.html">EVP_MD_CTX_set_pkey_ctx(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

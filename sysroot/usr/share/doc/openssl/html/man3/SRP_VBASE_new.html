@@ -4,7 +4,7 @@
 <head>
 <title>SRP_VBASE_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -29,7 +29,7 @@
 
 <pre><code>#include &lt;openssl/srp.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>SRP_VBASE *SRP_VBASE_new(char *seed_key);
 void SRP_VBASE_free(SRP_VBASE *vb);
@@ -48,9 +48,9 @@ SRP_user_pwd *SRP_VBASE_get_by_user(SRP_VBASE *vb, char *username);</code></pre>
 
 <p>The SRP_VBASE_free() function frees up the <b>vb</b> structure. If <b>vb</b> is NULL, nothing is done.</p>
 
-<p>The SRP_VBASE_init() function parses the information in a verifier file and populates the <b>vb</b> structure. The verifier file is a text file containing multiple entries, whose format is: flag base64(verifier) base64(salt) username gNid userinfo(optional) where the flag can be &#39;V&#39; (valid) or &#39;R&#39; (revoked). Note that the base64 encoding used here is non-standard so it is recommended to use <a href="../man1/openssl-srp.html">openssl-srp(1)</a> to generate this file.</p>
+<p>The SRP_VBASE_init() function parses the information in a verifier file and populates the <b>vb</b> structure. The verifier file is a text file containing multiple entries, whose format is: flag base64(verifier) base64(salt) username gNid userinfo(optional) where the flag can be &#39;V&#39; (valid) or &#39;R&#39; (revoked). Note that the base64 encoding used here is non-standard so it is recommended to use <a href="https://man7.org/linux/man-pages/man1/openssl-srp.1.html">openssl-srp(1)</a> to generate this file.</p>
 
-<p>The SRP_VBASE_add0_user() function adds the <b>user_pwd</b> verifier information to the <b>vb</b> structure. See <a href="../man3/SRP_user_pwd_new.html">SRP_user_pwd_new(3)</a> to create and populate this record. The library takes ownership of <b>user_pwd</b>, it should not be freed by the caller.</p>
+<p>The SRP_VBASE_add0_user() function adds the <b>user_pwd</b> verifier information to the <b>vb</b> structure. See <a href="https://man7.org/linux/man-pages/man3/SRP_user_pwd_new.3.html">SRP_user_pwd_new(3)</a> to create and populate this record. The library takes ownership of <b>user_pwd</b>, it should not be freed by the caller.</p>
 
 <p>The SRP_VBASE_get1_by_user() function returns the password info for the user whose username matches <b>username</b>. It replaces the deprecated SRP_VBASE_get_by_user(). If no matching user is found but a seed_key and default gN parameters have been set, dummy authentication information is generated from the seed_key, allowing the server to hide the fact that it doesn&#39;t have a verifier for a particular username. When using SRP as a TLS authentication mechanism, this will cause the handshake to proceed normally but the first client will be rejected with a &quot;bad_record_mac&quot; alert, as if the password was incorrect. If no matching user is found and the seed_key is not set, NULL is returned. Ownership of the returned pointer is released to the caller, it must be freed with SRP_user_pwd_free().</p>
 
@@ -62,7 +62,7 @@ SRP_user_pwd *SRP_VBASE_get_by_user(SRP_VBASE *vb, char *username);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl-srp.html">openssl-srp(1)</a>, <a href="../man3/SRP_create_verifier.html">SRP_create_verifier(3)</a>, <a href="../man3/SRP_user_pwd_new.html">SRP_user_pwd_new(3)</a>, <a href="../man3/SSL_CTX_set_srp_password.html">SSL_CTX_set_srp_password(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl-srp.1.html">openssl-srp(1)</a>, <a href="https://man7.org/linux/man-pages/man3/SRP_create_verifier.3.html">SRP_create_verifier(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SRP_user_pwd_new.3.html">SRP_user_pwd_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_srp_password.3.html">SSL_CTX_set_srp_password(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

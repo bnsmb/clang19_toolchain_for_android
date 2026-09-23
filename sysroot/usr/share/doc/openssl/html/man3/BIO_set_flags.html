@@ -4,7 +4,7 @@
 <head>
 <title>BIO_set_flags</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -65,7 +65,7 @@ int  BIO_get_retry_flags(BIO *b);</code></pre>
 
 <p>BIO_get_retry_flags() returns retry-related bits that are currently set in <i>b</i>. The result is a subset of <b>BIO_FLAGS_RWS|BIO_FLAGS_SHOULD_RETRY</b>.</p>
 
-<p>The retry bits are interpreted by the higher level macros BIO_should_read(), BIO_should_write(), BIO_should_io_special(), BIO_retry_type() and BIO_should_retry(), as documented in <a href="../man3/BIO_should_retry.html">BIO_should_retry(3)</a>. Application code will typically use those macros rather than manipulate the underlying flags directly.</p>
+<p>The retry bits are interpreted by the higher level macros BIO_should_read(), BIO_should_write(), BIO_should_io_special(), BIO_retry_type() and BIO_should_retry(), as documented in <a href="https://man7.org/linux/man-pages/man3/BIO_should_retry.3.html">BIO_should_retry(3)</a>. Application code will typically use those macros rather than manipulate the underlying flags directly.</p>
 
 <p>The following flag bits are currently defined for use with BIO_set_flags(), BIO_clear_flags() and BIO_test_flags():</p>
 
@@ -86,7 +86,7 @@ int  BIO_get_retry_flags(BIO *b);</code></pre>
 <dt id="BIO_FLAGS_IO_SPECIAL"><b>BIO_FLAGS_IO_SPECIAL</b></dt>
 <dd>
 
-<p>The last I/O operation should be retried when some &quot;special&quot; condition becomes true. The precise meaning of this condition depends on the <b>BIO</b> type and is usually obtained via BIO_get_retry_BIO() and BIO_get_retry_reason() as described in <a href="../man3/BIO_should_retry.html">BIO_should_retry(3)</a>. This flag is normally set by the <b>BIO</b> implementation via BIO_set_retry_special().</p>
+<p>The last I/O operation should be retried when some &quot;special&quot; condition becomes true. The precise meaning of this condition depends on the <b>BIO</b> type and is usually obtained via BIO_get_retry_BIO() and BIO_get_retry_reason() as described in <a href="https://man7.org/linux/man-pages/man3/BIO_should_retry.3.html">BIO_should_retry(3)</a>. This flag is normally set by the <b>BIO</b> implementation via BIO_set_retry_special().</p>
 
 </dd>
 <dt id="BIO_FLAGS_RWS"><b>BIO_FLAGS_RWS</b></dt>
@@ -104,7 +104,7 @@ int  BIO_get_retry_flags(BIO *b);</code></pre>
 <dt id="BIO_FLAGS_BASE64_NO_NL"><b>BIO_FLAGS_BASE64_NO_NL</b></dt>
 <dd>
 
-<p>When set on a base64 filter <b>BIO</b> this flag disables the generation of newline characters in the encoded output and causes newlines to be ignored in the input. See also <a href="../man3/BIO_f_base64.html">BIO_f_base64(3)</a>. The flag has no effect on any other built-in <b>BIO</b> types.</p>
+<p>When set on a base64 filter <b>BIO</b> this flag disables the generation of newline characters in the encoded output and causes newlines to be ignored in the input. See also <a href="https://man7.org/linux/man-pages/man3/BIO_f_base64.3.html">BIO_f_base64(3)</a>. The flag has no effect on any other built-in <b>BIO</b> types.</p>
 
 </dd>
 <dt id="BIO_FLAGS_MEM_RDONLY"><b>BIO_FLAGS_MEM_RDONLY</b></dt>
@@ -139,13 +139,13 @@ int  BIO_get_retry_flags(BIO *b);</code></pre>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>Ordinary application code will rarely need to call BIO_set_flags(), BIO_clear_flags() or BIO_test_flags() directly. They are intended for <b>BIO</b> implementations and for code that forwards retry state from one <b>BIO</b> in a chain to another. After a failed I/O operation, applications should normally use BIO_should_retry() and related macros as described in <a href="../man3/BIO_should_retry.html">BIO_should_retry(3)</a> instead of inspecting the flags directly.</p>
+<p>Ordinary application code will rarely need to call BIO_set_flags(), BIO_clear_flags() or BIO_test_flags() directly. They are intended for <b>BIO</b> implementations and for code that forwards retry state from one <b>BIO</b> in a chain to another. After a failed I/O operation, applications should normally use BIO_should_retry() and related macros as described in <a href="https://man7.org/linux/man-pages/man3/BIO_should_retry.3.html">BIO_should_retry(3)</a> instead of inspecting the flags directly.</p>
 
 <p>These functions and macros are not thread-safe. If a single <b>BIO</b> is accessed from multiple threads, the caller must provide appropriate external synchronisation.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/BIO_should_retry.html">BIO_should_retry(3)</a>, <a href="../man3/BIO_f_base64.html">BIO_f_base64(3)</a>, <a href="../man7/bio.html">bio(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/BIO_should_retry.3.html">BIO_should_retry(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_f_base64.3.html">BIO_f_base64(3)</a>, <a href="https://man7.org/linux/man-pages/man7/bio.7.html">bio(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_ALGORITHM</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -47,11 +47,11 @@ struct ossl_algorithm_st {
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>The <b>OSSL_ALGORITHM</b> type is a <i>public structure</i> that describes an algorithm that a <a href="../man7/provider.html">provider(7)</a> provides. Arrays of this type are returned by providers on demand from the OpenSSL libraries to describe what algorithms the providers provide implementations of, and with what properties.</p>
+<p>The <b>OSSL_ALGORITHM</b> type is a <i>public structure</i> that describes an algorithm that a <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a> provides. Arrays of this type are returned by providers on demand from the OpenSSL libraries to describe what algorithms the providers provide implementations of, and with what properties.</p>
 
 <p>Arrays of this type must be terminated with a tuple where <i>algorithm_names</i> is NULL.</p>
 
-<p>This type of array is typically returned by the provider&#39;s operation querying function, further described in <a href="../man7/provider-base.html">&quot;Provider Functions&quot; in provider-base(7)</a>.</p>
+<p>This type of array is typically returned by the provider&#39;s operation querying function, further described in <a href="https://man7.org/linux/man-pages/man7/provider-base.7.html#Provider_Functions">&quot;Provider Functions&quot; in provider-base(7)</a>.</p>
 
 <h2 id="OSSL_ALGORITHM-fields"><b>OSSL_ALGORITHM</b> fields</h2>
 
@@ -60,7 +60,7 @@ struct ossl_algorithm_st {
 <dt id="algorithm_names"><i>algorithm_names</i></dt>
 <dd>
 
-<p>This string is a colon separated set of names / identities, and is used by the appropriate fetching functionality (such as <a href="../man3/EVP_CIPHER_fetch.html">EVP_CIPHER_fetch(3)</a>, <a href="../man3/EVP_MD_fetch.html">EVP_MD_fetch(3)</a>, etc) to find the desired algorithm.</p>
+<p>This string is a colon separated set of names / identities, and is used by the appropriate fetching functionality (such as <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_fetch.3.html">EVP_CIPHER_fetch(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_MD_fetch.3.html">EVP_MD_fetch(3)</a>, etc) to find the desired algorithm.</p>
 
 <p>Multiple names / identities allow a specific algorithm implementation to be fetched multiple ways. For example, the RSA algorithm has the following known identities:</p>
 
@@ -93,15 +93,15 @@ struct ossl_algorithm_st {
 <dt id="property_definition"><i>property_definition</i></dt>
 <dd>
 
-<p>This string defines a set of properties associated with a particular algorithm implementation, and is used by the appropriate fetching functionality (such as <a href="../man3/EVP_CIPHER_fetch.html">EVP_CIPHER_fetch(3)</a>, <a href="../man3/EVP_MD_fetch.html">EVP_MD_fetch(3)</a>, etc) for a finer grained lookup of an algorithm implementation, which is useful in case multiple implementations of the same algorithm are available.</p>
+<p>This string defines a set of properties associated with a particular algorithm implementation, and is used by the appropriate fetching functionality (such as <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_fetch.3.html">EVP_CIPHER_fetch(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_MD_fetch.3.html">EVP_MD_fetch(3)</a>, etc) for a finer grained lookup of an algorithm implementation, which is useful in case multiple implementations of the same algorithm are available.</p>
 
-<p>See <a href="../man7/property.html">property(7)</a> for a further description of the contents of this string.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a> for a further description of the contents of this string.</p>
 
 </dd>
 <dt id="implementation"><i>implementation</i></dt>
 <dd>
 
-<p>Pointer to an <a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> array, containing pointers to the functions of a particular algorithm implementation.</p>
+<p>Pointer to an <a href="https://man7.org/linux/man-pages/man3/OSSL_DISPATCH.3.html">OSSL_DISPATCH(3)</a> array, containing pointers to the functions of a particular algorithm implementation.</p>
 
 </dd>
 <dt id="algorithm_description"><i>algorithm_description</i></dt>
@@ -116,17 +116,17 @@ struct ossl_algorithm_st {
 
 <h2 id="On-the-subject-of-algorithm-names">On the subject of algorithm names</h2>
 
-<p>Providers may find the need to register ASN.1 OIDs for algorithms using <a href="../man3/OBJ_create.html">OBJ_create(3)</a> (via the <b>core_obj_create</b> upcall described in <a href="../man7/provider-base.html">provider-base(7)</a>, because some application or library -- possibly still the OpenSSL libraries, even -- use NIDs to look up algorithms.</p>
+<p>Providers may find the need to register ASN.1 OIDs for algorithms using <a href="https://man7.org/linux/man-pages/man3/OBJ_create.3.html">OBJ_create(3)</a> (via the <b>core_obj_create</b> upcall described in <a href="https://man7.org/linux/man-pages/man7/provider-base.7.html">provider-base(7)</a>, because some application or library -- possibly still the OpenSSL libraries, even -- use NIDs to look up algorithms.</p>
 
 <p>In that scenario, you must make sure that the corresponding <b>OSSL_ALGORITHM</b>&#39;s <i>algorithm_names</i> includes both the short and the long name.</p>
 
-<p>Most of the time, registering ASN.1 OIDs like this shouldn&#39;t be necessary, and applications and libraries are encouraged to use <a href="../man3/OBJ_obj2txt.html">OBJ_obj2txt(3)</a> to get a text representation of the OID, which may be a long or short name for OIDs that are registered, or the OID itself in canonical decimal text form if not (or if <a href="../man3/OBJ_obj2txt.html">OBJ_obj2txt(3)</a> is called with <i>no_name</i> = 1).</p>
+<p>Most of the time, registering ASN.1 OIDs like this shouldn&#39;t be necessary, and applications and libraries are encouraged to use <a href="https://man7.org/linux/man-pages/man3/OBJ_obj2txt.3.html">OBJ_obj2txt(3)</a> to get a text representation of the OID, which may be a long or short name for OIDs that are registered, or the OID itself in canonical decimal text form if not (or if <a href="https://man7.org/linux/man-pages/man3/OBJ_obj2txt.3.html">OBJ_obj2txt(3)</a> is called with <i>no_name</i> = 1).</p>
 
 <p>It&#39;s recommended to make sure that the corresponding <b>OSSL_ALGORITHM</b>&#39;s <i>algorithm_names</i> include known names as well as the OID itself in canonical decimal text form. That should cover all scenarios.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/crypto.html">crypto(7)</a>, <a href="../man7/provider-base.html">provider-base(7)</a>, <a href="../man7/openssl-core.h.html">openssl-core.h(7)</a>, <a href="../man7/openssl-core_dispatch.h.html">openssl-core_dispatch.h(7)</a>, <a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-base.7.html">provider-base(7)</a>, <a href="https://man7.org/linux/man-pages/man7/openssl-core.h.7.html">openssl-core.h(7)</a>, <a href="https://man7.org/linux/man-pages/man7/openssl-core_dispatch.h.7.html">openssl-core_dispatch.h(7)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_DISPATCH.3.html">OSSL_DISPATCH(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

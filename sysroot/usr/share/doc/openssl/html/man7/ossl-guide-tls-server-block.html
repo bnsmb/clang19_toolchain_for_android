@@ -4,7 +4,7 @@
 <head>
 <title>ossl-guide-tls-server-block</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -36,11 +36,11 @@
 
 <p>The complete source code for this example blocking TLS server is available in the <b>demos/guide</b> directory of the OpenSSL source distribution in the file <b>tls-server-block.c</b>. It is also available online at <a href="https://github.com/openssl/openssl/blob/master/demos/guide/tls-server-block.c">https://github.com/openssl/openssl/blob/master/demos/guide/tls-server-block.c</a>.</p>
 
-<p>We assume that you already have OpenSSL installed on your system; that you already have some fundamental understanding of OpenSSL concepts and TLS (see <a href="../man7/ossl-guide-libraries-introduction.html">ossl-guide-libraries-introduction(7)</a> and <a href="../man7/ossl-guide-tls-introduction.html">ossl-guide-tls-introduction(7)</a>); and that you know how to write and build C code and link it against the libcrypto and libssl libraries that are provided by OpenSSL. It also assumes that you have a basic understanding of TCP/IP and sockets.</p>
+<p>We assume that you already have OpenSSL installed on your system; that you already have some fundamental understanding of OpenSSL concepts and TLS (see <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libraries-introduction.7.html">ossl-guide-libraries-introduction(7)</a> and <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-introduction.7.html">ossl-guide-tls-introduction(7)</a>); and that you know how to write and build C code and link it against the libcrypto and libssl libraries that are provided by OpenSSL. It also assumes that you have a basic understanding of TCP/IP and sockets.</p>
 
 <h2 id="Creating-the-SSL_CTX-and-SSL-objects">Creating the SSL_CTX and SSL objects</h2>
 
-<p>The first step is to create an <b>SSL_CTX</b> object for our server. We use the <a href="../man3/SSL_CTX_new.html">SSL_CTX_new(3)</a> function for this purpose. We could alternatively use <a href="../man3/SSL_CTX_new_ex.html">SSL_CTX_new_ex(3)</a> if we want to associate the <b>SSL_CTX</b> with a particular <b>OSSL_LIB_CTX</b> (see <a href="../man7/ossl-guide-libraries-introduction.html">ossl-guide-libraries-introduction(7)</a> to learn about <b>OSSL_LIB_CTX</b>). We pass as an argument the return value of the function <a href="../man3/TLS_server_method.html">TLS_server_method(3)</a>. You should use this method whenever you are writing a TLS server. This method will automatically use TLS version negotiation to select the highest version of the protocol that is mutually supported by both the server and the client.</p>
+<p>The first step is to create an <b>SSL_CTX</b> object for our server. We use the <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_new.3.html">SSL_CTX_new(3)</a> function for this purpose. We could alternatively use <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_new_ex.3.html">SSL_CTX_new_ex(3)</a> if we want to associate the <b>SSL_CTX</b> with a particular <b>OSSL_LIB_CTX</b> (see <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libraries-introduction.7.html">ossl-guide-libraries-introduction(7)</a> to learn about <b>OSSL_LIB_CTX</b>). We pass as an argument the return value of the function <a href="https://man7.org/linux/man-pages/man3/TLS_server_method.3.html">TLS_server_method(3)</a>. You should use this method whenever you are writing a TLS server. This method will automatically use TLS version negotiation to select the highest version of the protocol that is mutually supported by both the server and the client.</p>
 
 <pre><code>/*
  * An SSL_CTX holds shared configuration information for multiple
@@ -52,7 +52,7 @@ if (ctx == NULL) {
     errx(res, &quot;Failed to create server SSL_CTX&quot;);
 }</code></pre>
 
-<p>We would also like to restrict the TLS versions that we are willing to accept to TLSv1.2 or above. TLS protocol versions earlier than that are generally to be avoided where possible. We can do that using <a href="../man3/SSL_CTX_set_min_proto_version.html">SSL_CTX_set_min_proto_version(3)</a>:</p>
+<p>We would also like to restrict the TLS versions that we are willing to accept to TLSv1.2 or above. TLS protocol versions earlier than that are generally to be avoided where possible. We can do that using <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_min_proto_version.3.html">SSL_CTX_set_min_proto_version(3)</a>:</p>
 
 <pre><code>/*
  * TLS versions older than TLS 1.2 are deprecated by IETF and SHOULD
@@ -64,7 +64,7 @@ if (!SSL_CTX_set_min_proto_version(ctx, TLS1_2_VERSION)) {
     errx(res, &quot;Failed to set the minimum TLS protocol version&quot;);
 }</code></pre>
 
-<p>Next we configure some option flags, see <a href="../man3/SSL_CTX_set_options.html">SSL_CTX_set_options(3)</a> for details:</p>
+<p>Next we configure some option flags, see <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_options.3.html">SSL_CTX_set_options(3)</a> for details:</p>
 
 <pre><code>/*
  * Tolerate clients hanging up without a TLS &quot;shutdown&quot;.  Appropriate in all
@@ -149,7 +149,7 @@ SSL_CTX_set_timeout(ctx, 3600);</code></pre>
 
 <p>Most servers, including this one, do not solicit client certificates. We therefore do not need a &quot;trust store&quot; and allow the handshake to complete even when the client does not present a certificate. Note: Even if a client did present a trusted ceritificate, for it to be useful, the server application would still need custom code to use the verified identity to grant nondefault access to that particular client. Some servers grant access to all clients with certificates from a private CA, this then requires processing of certificate revocation lists to deauthorise a client. It is often simpler and more secure to instead keep a list of authorised public keys.</p>
 
-<p>Though this is the default setting, we explicitly call the <a href="../man3/SSL_CTX_set_verify.html">SSL_CTX_set_verify(3)</a> function and pass the <b>SSL_VERIFY_NONE</b> value to it. The final argument to this function is a callback that you can optionally supply to override the default handling for certificate verification. Most applications do not need to do this so this can safely be set to NULL to get the default handling.</p>
+<p>Though this is the default setting, we explicitly call the <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_verify.3.html">SSL_CTX_set_verify(3)</a> function and pass the <b>SSL_VERIFY_NONE</b> value to it. The final argument to this function is a callback that you can optionally supply to override the default handling for certificate verification. Most applications do not need to do this so this can safely be set to NULL to get the default handling.</p>
 
 <pre><code>/*
  * Clients rarely employ certificate-based authentication, and so we don&#39;t
@@ -177,7 +177,7 @@ if (acceptor_bio == NULL) {
     errx(res, &quot;Error creating acceptor bio&quot;);
 }</code></pre>
 
-<p>Servers almost always want to use the &quot;SO_REUSEADDR&quot; option to avoid startup failures if there are still lingering client connections, so we do that before making the <b>first</b> call to <a href="../man3/BIO_do_accept.html">BIO_do_accept(3)</a> which creates the listening socket, without accepting a client connection. Subsequent calls to the same function will accept new connections.</p>
+<p>Servers almost always want to use the &quot;SO_REUSEADDR&quot; option to avoid startup failures if there are still lingering client connections, so we do that before making the <b>first</b> call to <a href="https://man7.org/linux/man-pages/man3/BIO_do_accept.3.html">BIO_do_accept(3)</a> which creates the listening socket, without accepting a client connection. Subsequent calls to the same function will accept new connections.</p>
 
 <pre><code>BIO_set_bind_mode(acceptor_bio, BIO_BIND_REUSEADDR);
 if (BIO_do_accept(acceptor_bio) &lt;= 0) {
@@ -259,7 +259,7 @@ return EXIT_SUCCESS;</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ossl-guide-introduction.html">ossl-guide-introduction(7)</a>, <a href="../man7/ossl-guide-libraries-introduction.html">ossl-guide-libraries-introduction(7)</a>, <a href="../man7/ossl-guide-libssl-introduction.html">ossl-guide-libssl-introduction(7)</a>, <a href="../man7/ossl-guide-tls-introduction.html">ossl-guide-tls-introduction(7)</a>, <a href="../man7/ossl-guide-tls-client-non-block.html">ossl-guide-tls-client-non-block(7)</a>, <a href="../man7/ossl-guide-quic-client-block.html">ossl-guide-quic-client-block(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ossl-guide-introduction.7.html">ossl-guide-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libraries-introduction.7.html">ossl-guide-libraries-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libssl-introduction.7.html">ossl-guide-libssl-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-introduction.7.html">ossl-guide-tls-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-client-non-block.7.html">ossl-guide-tls-client-non-block(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-client-block.7.html">ossl-guide-quic-client-block(7)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

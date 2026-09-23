@@ -4,7 +4,7 @@
 <head>
 <title>BIO_s_connect</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -68,7 +68,7 @@ long BIO_do_connect(BIO *b);</code></pre>
 
 <p>BIO_new_connect() combines BIO_new() and BIO_set_conn_hostname() into a single call: that is it creates a new connect BIO with hostname <b>name</b>.</p>
 
-<p>BIO_set_conn_hostname() uses the string <b>name</b> to set the hostname. The hostname can be an IP address; if the address is an IPv6 one, it must be enclosed in brackets <code>[</code> and <code>]</code>. The hostname can also include the port in the form hostname:port; see <a href="../man3/BIO_parse_hostserv.html">BIO_parse_hostserv(3)</a> and BIO_set_conn_port() for details.</p>
+<p>BIO_set_conn_hostname() uses the string <b>name</b> to set the hostname. The hostname can be an IP address; if the address is an IPv6 one, it must be enclosed in brackets <code>[</code> and <code>]</code>. The hostname can also include the port in the form hostname:port; see <a href="https://man7.org/linux/man-pages/man3/BIO_parse_hostserv.3.html">BIO_parse_hostserv(3)</a> and BIO_set_conn_port() for details.</p>
 
 <p>BIO_set_conn_port() sets the port to <b>port</b>. <b>port</b> can be the numerical form or a service string such as &quot;http&quot;, which will be mapped to a port number using the system function getservbyname().</p>
 
@@ -88,7 +88,7 @@ long BIO_do_connect(BIO *b);</code></pre>
 
 <p>BIO_do_connect() attempts to connect the supplied BIO. This performs an SSL/TLS handshake as far as supported by the BIO. For non-SSL BIOs the connection is done typically at TCP level. If domain name resolution yields multiple IP addresses all of them are tried after connect() failures. The function returns 1 if the connection was established successfully. A zero or negative value is returned if the connection could not be established. The call BIO_should_retry() should be used for non blocking connect BIOs to determine if the call should be retried. If a connection has already been established this call has no effect.</p>
 
-<p>BIO_set_sock_type() can be used to set a socket type value as would be passed in a call to socket(2). The only currently supported values are <b>SOCK_STREAM</b> (the default) and <b>SOCK_DGRAM</b>. If <b>SOCK_DGRAM</b> is configured, the connection created is a UDP datagram socket handled via <a href="../man3/BIO_s_datagram.html">BIO_s_datagram(3)</a>. I/O calls such as <a href="../man3/BIO_read.html">BIO_read(3)</a> and <a href="../man3/BIO_write.html">BIO_write(3)</a> are forwarded transparently to an internal <a href="../man3/BIO_s_datagram.html">BIO_s_datagram(3)</a> instance. The created <a href="../man3/BIO_s_datagram.html">BIO_s_datagram(3)</a> instance can be retrieved using BIO_get0_dgram_bio() if desired, which writes a pointer to the <a href="../man3/BIO_s_datagram.html">BIO_s_datagram(3)</a> instance to <i>*dgram_bio</i>. The lifetime of the internal <a href="../man3/BIO_s_datagram.html">BIO_s_datagram(3)</a> is managed by BIO_s_connect() and does not need to be freed by the caller.</p>
+<p>BIO_set_sock_type() can be used to set a socket type value as would be passed in a call to socket(2). The only currently supported values are <b>SOCK_STREAM</b> (the default) and <b>SOCK_DGRAM</b>. If <b>SOCK_DGRAM</b> is configured, the connection created is a UDP datagram socket handled via <a href="https://man7.org/linux/man-pages/man3/BIO_s_datagram.3.html">BIO_s_datagram(3)</a>. I/O calls such as <a href="https://man7.org/linux/man-pages/man3/BIO_read.3.html">BIO_read(3)</a> and <a href="https://man7.org/linux/man-pages/man3/BIO_write.3.html">BIO_write(3)</a> are forwarded transparently to an internal <a href="https://man7.org/linux/man-pages/man3/BIO_s_datagram.3.html">BIO_s_datagram(3)</a> instance. The created <a href="https://man7.org/linux/man-pages/man3/BIO_s_datagram.3.html">BIO_s_datagram(3)</a> instance can be retrieved using BIO_get0_dgram_bio() if desired, which writes a pointer to the <a href="https://man7.org/linux/man-pages/man3/BIO_s_datagram.3.html">BIO_s_datagram(3)</a> instance to <i>*dgram_bio</i>. The lifetime of the internal <a href="https://man7.org/linux/man-pages/man3/BIO_s_datagram.3.html">BIO_s_datagram(3)</a> is managed by BIO_s_connect() and does not need to be freed by the caller.</p>
 
 <p>BIO_get_sock_type() retrieves the value set using BIO_set_sock_type().</p>
 
@@ -161,7 +161,7 @@ BIO_free(out);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/BIO_ADDR.html">BIO_ADDR(3)</a>, <a href="../man3/BIO_parse_hostserv.html">BIO_parse_hostserv(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/BIO_ADDR.3.html">BIO_ADDR(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_parse_hostserv.3.html">BIO_parse_hostserv(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

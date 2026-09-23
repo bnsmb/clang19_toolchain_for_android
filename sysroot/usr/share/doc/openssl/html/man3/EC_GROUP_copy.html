@@ -4,7 +4,7 @@
 <head>
 <title>EC_GROUP_copy</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -73,7 +73,7 @@ int EC_GROUP_get_pentanomial_basis(const EC_GROUP *group, unsigned int *k1,
 
 int EC_GROUP_get_field_type(const EC_GROUP *group);</code></pre>
 
-<p>The following function has been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following function has been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>const EC_METHOD *EC_GROUP_method_of(const EC_GROUP *group);</code></pre>
 
@@ -93,7 +93,7 @@ int EC_GROUP_get_field_type(const EC_GROUP *group);</code></pre>
 
 <p>EC_GROUP_get_cofactor() retrieves the cofactor of <b>group</b> and copies its value into <b>cofactor</b>. It fails in case <b>group</b> is not fully initialized or if the cofactor is not set (or set to zero).</p>
 
-<p>The functions EC_GROUP_set_curve_name() and EC_GROUP_get_curve_name(), set and get the NID for the curve respectively (see <a href="../man3/EC_GROUP_new.html">EC_GROUP_new(3)</a>). If a curve does not have a NID associated with it, then EC_GROUP_get_curve_name will return NID_undef.</p>
+<p>The functions EC_GROUP_set_curve_name() and EC_GROUP_get_curve_name(), set and get the NID for the curve respectively (see <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_new.3.html">EC_GROUP_new(3)</a>). If a curve does not have a NID associated with it, then EC_GROUP_get_curve_name will return NID_undef.</p>
 
 <p>The asn1_flag value is used to determine whether the curve encoding uses explicit parameters or a named curve using an ASN1 OID: many applications only support the latter form. If asn1_flag is <b>OPENSSL_EC_NAMED_CURVE</b> then the named curve form is used and the parameters must have a corresponding named curve NID set. If asn1_flags is <b>OPENSSL_EC_EXPLICIT_CURVE</b> the parameters are explicitly encoded. The functions EC_GROUP_get_asn1_flag() and EC_GROUP_set_asn1_flag() get and set the status of the asn1_flag for the curve. Note: <b>OPENSSL_EC_EXPLICIT_CURVE</b> was added in OpenSSL 1.1.0, for previous versions of OpenSSL the value 0 must be used instead. Before OpenSSL 1.1.0 the default form was to use explicit parameters (meaning that applications would have to explicitly set the named curve form) in OpenSSL 1.1.0 and later the named curve form is the default.</p>
 
@@ -180,7 +180,7 @@ int EC_GROUP_get_field_type(const EC_GROUP *group);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/crypto.html">crypto(7)</a>, <a href="../man3/EC_GROUP_new.html">EC_GROUP_new(3)</a>, <a href="../man3/EC_POINT_new.html">EC_POINT_new(3)</a>, <a href="../man3/EC_POINT_add.html">EC_POINT_add(3)</a>, <a href="../man3/EC_KEY_new.html">EC_KEY_new(3)</a>, <a href="../man3/EC_GFp_simple_method.html">EC_GFp_simple_method(3)</a>, <a href="../man3/d2i_ECPKParameters.html">d2i_ECPKParameters(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_GROUP_new.3.html">EC_GROUP_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_POINT_new.3.html">EC_POINT_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_POINT_add.3.html">EC_POINT_add(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_KEY_new.3.html">EC_KEY_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EC_GFp_simple_method.3.html">EC_GFp_simple_method(3)</a>, <a href="https://man7.org/linux/man-pages/man3/d2i_ECPKParameters.3.html">d2i_ECPKParameters(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set_session_ticket_cb</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -137,7 +137,7 @@ int SSL_SESSION_get0_ticket_appdata(SSL_SESSION *ss, void **data, size_t *len);<
 
 <p>When the <b>gen_cb</b> callback is invoked, the SSL_get_session() function can be used to retrieve the SSL_SESSION for SSL_SESSION_set1_ticket_appdata().</p>
 
-<p>By default, in TLSv1.2 and below, a new session ticket is not issued on a successful resumption and therefore <b>gen_cb</b> will not be called. In TLSv1.3 the default behaviour is to always issue a new ticket on resumption. In both cases this behaviour can be changed if a ticket key callback is in use (see <a href="../man3/SSL_CTX_set_tlsext_ticket_key_cb.html">SSL_CTX_set_tlsext_ticket_key_cb(3)</a>).</p>
+<p>By default, in TLSv1.2 and below, a new session ticket is not issued on a successful resumption and therefore <b>gen_cb</b> will not be called. In TLSv1.3 the default behaviour is to always issue a new ticket on resumption. In both cases this behaviour can be changed if a ticket key callback is in use (see <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_tlsext_ticket_key_cb.3.html">SSL_CTX_set_tlsext_ticket_key_cb(3)</a>).</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -149,7 +149,7 @@ int SSL_SESSION_get0_ticket_appdata(SSL_SESSION *ss, void **data, size_t *len);<
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_get_session.html">SSL_get_session(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_session.3.html">SSL_get_session(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>openssl-cms</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -125,7 +125,7 @@
 <dt id="config-configfile"><b>-config</b> <i>configfile</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Configuration Option&quot; in openssl(1)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Configuration_Option">&quot;Configuration Option&quot; in openssl(1)</a>.</p>
 
 </dd>
 </dl>
@@ -159,7 +159,7 @@
 
 <p>Verify signed data. Expects a signed data on input and outputs the signed data. Both clear text and opaque signing is supported.</p>
 
-<p>By default, validation of signer certificates and their chain is done w.r.t. the S/MIME signing (<code>smimesign</code>) purpose. For details see <a href="../man1/openssl-verification-options.html">&quot;Certificate Extensions&quot; in openssl-verification-options(1)</a>.</p>
+<p>By default, validation of signer certificates and their chain is done w.r.t. the S/MIME signing (<code>smimesign</code>) purpose. For details see <a href="https://man7.org/linux/man-pages/man1/openssl-verification-options.1.html#Certificate_Extensions">&quot;Certificate Extensions&quot; in openssl-verification-options(1)</a>.</p>
 
 </dd>
 <dt id="resign"><b>-resign</b></dt>
@@ -185,7 +185,7 @@
 
 <p>When used with <b>-sign</b>, provides the digest in hexadecimal form instead of computing it from the original message content. Cannot be combined with <b>-in</b> or <b>-nodetach</b>.</p>
 
-<p>This operation is the CMS equivalent of <a href="../man1/openssl-pkeyutl.html">openssl-pkeyutl(1)</a> signing. When signing a pre-computed digest, the security relies on the digest and its computation from the original message being trusted.</p>
+<p>This operation is the CMS equivalent of <a href="https://man7.org/linux/man-pages/man1/openssl-pkeyutl.1.html">openssl-pkeyutl(1)</a> signing. When signing a pre-computed digest, the security relies on the digest and its computation from the original message being trusted.</p>
 
 </dd>
 <dt id="digest_create"><b>-digest_create</b></dt>
@@ -251,19 +251,19 @@
 <dt id="inform-DER-PEM-SMIME"><b>-inform</b> <b>DER</b>|<b>PEM</b>|<b>SMIME</b></dt>
 <dd>
 
-<p>The input format of the CMS structure (if one is being read); the default is <b>SMIME</b>. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The input format of the CMS structure (if one is being read); the default is <b>SMIME</b>. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="outform-DER-PEM-SMIME"><b>-outform</b> <b>DER</b>|<b>PEM</b>|<b>SMIME</b></dt>
 <dd>
 
-<p>The output format of the CMS structure (if one is being written); the default is <b>SMIME</b>. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The output format of the CMS structure (if one is being written); the default is <b>SMIME</b>. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="rctform-DER-PEM-SMIME"><b>-rctform</b> <b>DER</b>|<b>PEM</b>|<b>SMIME</b></dt>
 <dd>
 
-<p>The signed receipt format for use with the <b>-receipt_verify</b>; the default is <b>SMIME</b>. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The signed receipt format for use with the <b>-receipt_verify</b>; the default is <b>SMIME</b>. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="stream--indef"><b>-stream</b>, <b>-indef</b></dt>
@@ -329,7 +329,7 @@
 <dt id="passin-arg"><b>-passin</b> <i>arg</i></dt>
 <dd>
 
-<p>The private key password source. For more information about the format of <b>arg</b> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>The private key password source. For more information about the format of <b>arg</b> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="keyopt-name:parameter"><b>-keyopt</b> <i>name</i>:<i>parameter</i></dt>
@@ -341,13 +341,13 @@
 <dt id="keyform-DER-PEM-P12-ENGINE"><b>-keyform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>|<b>ENGINE</b></dt>
 <dd>
 
-<p>The format of the private key file; unspecified by default. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The format of the private key file; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="engine-id"><b>-engine</b> <i>id</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Engine_Options">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
 
 </dd>
 <dt id="provider-name"><b>-provider</b> <i>name</i></dt>
@@ -365,13 +365,13 @@
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Provider Options&quot; in openssl(1)</a>, <a href="../man7/provider.html">provider(7)</a>, and <a href="../man7/property.html">property(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Provider_Options">&quot;Provider Options&quot; in openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, and <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>.</p>
 
 </dd>
 <dt id="rand-files--writerand-file"><b>-rand</b> <i>files</i>, <b>-writerand</b> <i>file</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Random_State_Options">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
 
 </dd>
 </dl>
@@ -405,7 +405,7 @@
 <dt id="cipher"><b>-<i>cipher</i></b></dt>
 <dd>
 
-<p>The encryption algorithm to use. For example, AES (256 bits) - <b>-aes256</b> or triple DES (168 bits) - <b>-des3</b>. Any standard algorithm name (as used by the EVP_get_cipherbyname() function) can also be used preceded by a dash, for example <b>-aes-128-cbc</b>. See <a href="../man1/openssl-enc.html">openssl-enc(1)</a> for a list of ciphers supported by your version of OpenSSL.</p>
+<p>The encryption algorithm to use. For example, AES (256 bits) - <b>-aes256</b> or triple DES (168 bits) - <b>-des3</b>. Any standard algorithm name (as used by the EVP_get_cipherbyname() function) can also be used preceded by a dash, for example <b>-aes-128-cbc</b>. See <a href="https://man7.org/linux/man-pages/man1/openssl-enc.1.html">openssl-enc(1)</a> for a list of ciphers supported by your version of OpenSSL.</p>
 
 <p>Currently, the AES variants with GCM mode are the only supported AEAD algorithms.</p>
 
@@ -573,7 +573,7 @@
 <dt id="CAfile-file--no-CAfile--CApath-dir--no-CApath--CAstore-uri--no-CAstore"><b>-CAfile</b> <i>file</i>, <b>-no-CAfile</b>, <b>-CApath</b> <i>dir</i>, <b>-no-CApath</b>, <b>-CAstore</b> <i>uri</i>, <b>-no-CAstore</b></dt>
 <dd>
 
-<p>See <a href="../man1/openssl-verification-options.html">&quot;Trusted Certificate Options&quot; in openssl-verification-options(1)</a> for details.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl-verification-options.1.html#Trusted_Certificate_Options">&quot;Trusted Certificate Options&quot; in openssl-verification-options(1)</a> for details.</p>
 
 </dd>
 </dl>
@@ -633,7 +633,7 @@
 <dt id="nameopt-option"><b>-nameopt</b> <i>option</i></dt>
 <dd>
 
-<p>For the <b>-cmsout</b> operation when <b>-print</b> option is in use, specifies printing options for string fields. For most cases <b>utf8</b> is reasonable value. See <a href="../man1/openssl-namedisplay-options.html">openssl-namedisplay-options(1)</a> for details.</p>
+<p>For the <b>-cmsout</b> operation when <b>-print</b> option is in use, specifies printing options for string fields. For most cases <b>utf8</b> is reasonable value. See <a href="https://man7.org/linux/man-pages/man1/openssl-namedisplay-options.1.html">openssl-namedisplay-options(1)</a> for details.</p>
 
 </dd>
 <dt id="receipt_request_print"><b>-receipt_request_print</b></dt>
@@ -651,7 +651,7 @@
 <dt id="allow_proxy_certs--attime--no_check_time--check_ss_sig--crl_check--crl_check_all--explicit_policy--extended_crl--ignore_critical--inhibit_any--inhibit_map--no_alt_chains--partial_chain--policy--policy_check--policy_print--purpose--suiteB_128--suiteB_128_only--suiteB_192--trusted_first--use_deltas--auth_level--verify_depth--verify_email--verify_hostname--verify_ip--verify_name--x509_strict--issuer_checks"><b>-allow_proxy_certs</b>, <b>-attime</b>, <b>-no_check_time</b>, <b>-check_ss_sig</b>, <b>-crl_check</b>, <b>-crl_check_all</b>, <b>-explicit_policy</b>, <b>-extended_crl</b>, <b>-ignore_critical</b>, <b>-inhibit_any</b>, <b>-inhibit_map</b>, <b>-no_alt_chains</b>, <b>-partial_chain</b>, <b>-policy</b>, <b>-policy_check</b>, <b>-policy_print</b>, <b>-purpose</b>, <b>-suiteB_128</b>, <b>-suiteB_128_only</b>, <b>-suiteB_192</b>, <b>-trusted_first</b>, <b>-use_deltas</b>, <b>-auth_level</b>, <b>-verify_depth</b>, <b>-verify_email</b>, <b>-verify_hostname</b>, <b>-verify_ip</b>, <b>-verify_name</b>, <b>-x509_strict</b> <b>-issuer_checks</b></dt>
 <dd>
 
-<p>Set various options of certificate chain verification. See <a href="../man1/openssl-verification-options.html">&quot;Verification Options&quot; in openssl-verification-options(1)</a> for details.</p>
+<p>Set various options of certificate chain verification. See <a href="https://man7.org/linux/man-pages/man1/openssl-verification-options.1.html#Verification_Options">&quot;Verification Options&quot; in openssl-verification-options(1)</a> for details.</p>
 
 <p>Any validation errors cause the command to exit.</p>
 
@@ -676,7 +676,7 @@
 
 <p>Streaming is always used for the <b>-sign</b> operation with detached data but since the content is no longer part of the CMS structure the encoding remains DER.</p>
 
-<p>If the <b>-decrypt</b> option is used without a recipient certificate then an attempt is made to locate the recipient by trying each potential recipient in turn using the supplied private key. To thwart the MMA attack (Bleichenbacher&#39;s attack on PKCS #1 v1.5 RSA padding) all recipients are tried whether they succeed or not and if no recipients match the message is &quot;decrypted&quot; using a random key which will typically output garbage. The <b>-debug_decrypt</b> option can be used to disable the MMA attack protection and return an error if no recipient can be found: this option should be used with caution. For a fuller description see <a href="../man3/CMS_decrypt.html">CMS_decrypt(3)</a>).</p>
+<p>If the <b>-decrypt</b> option is used without a recipient certificate then an attempt is made to locate the recipient by trying each potential recipient in turn using the supplied private key. To thwart the MMA attack (Bleichenbacher&#39;s attack on PKCS #1 v1.5 RSA padding) all recipients are tried whether they succeed or not and if no recipients match the message is &quot;decrypted&quot; using a random key which will typically output garbage. The <b>-debug_decrypt</b> option can be used to disable the MMA attack protection and return an error if no recipient can be found: this option should be used with caution. For a fuller description see <a href="https://man7.org/linux/man-pages/man3/CMS_decrypt.3.html">CMS_decrypt(3)</a>).</p>
 
 <h1 id="CADES-BASIC-ELECTRONIC-SIGNATURE-CADES-BES">CADES BASIC ELECTRONIC SIGNATURE (CADES-BES)</h1>
 
@@ -747,7 +747,7 @@
 
 <h1 id="COMPATIBILITY-WITH-PKCS-7-FORMAT">COMPATIBILITY WITH PKCS#7 FORMAT</h1>
 
-<p><a href="../man1/openssl-smime.html">openssl-smime(1)</a> can only process the older <b>PKCS#7</b> format. <b>openssl cms</b> supports Cryptographic Message Syntax format. Use of some features will result in messages which cannot be processed by applications which only support the older format. These are detailed below.</p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl-smime.1.html">openssl-smime(1)</a> can only process the older <b>PKCS#7</b> format. <b>openssl cms</b> supports Cryptographic Message Syntax format. Use of some features will result in messages which cannot be processed by applications which only support the older format. These are detailed below.</p>
 
 <p>The use of the <b>-keyid</b> option with <b>-sign</b> or <b>-encrypt</b>.</p>
 
@@ -761,7 +761,7 @@
 
 <p>The use of OAEP or non-RSA keys with <b>-encrypt</b>.</p>
 
-<p>Additionally the <b>-EncryptedData_encrypt</b> and <b>-data_create</b> type cannot be processed by the older <a href="../man1/openssl-smime.html">openssl-smime(1)</a> command.</p>
+<p>Additionally the <b>-EncryptedData_encrypt</b> and <b>-data_create</b> type cannot be processed by the older <a href="https://man7.org/linux/man-pages/man1/openssl-smime.1.html">openssl-smime(1)</a> command.</p>
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
@@ -852,7 +852,7 @@
 
 <p>Print CMS signed binary data in human-readable form:</p>
 
-<p>openssl cms -in signed.cms -binary -inform DER -cmsout -print</p>
+<pre><code>openssl cms -in signed.cms -binary -inform DER -cmsout -print</code></pre>
 
 <h1 id="BUGS">BUGS</h1>
 
@@ -868,7 +868,7 @@
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ossl_store-file.html">ossl_store-file(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ossl_store-file.7.html">ossl_store-file(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

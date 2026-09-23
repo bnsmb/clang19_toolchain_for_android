@@ -4,7 +4,7 @@
 <head>
 <title>BN_mod_exp_mont</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -46,17 +46,17 @@ int BN_mod_exp_mont_consttime_x2(BIGNUM *rr1, const BIGNUM *a1,
 
 <p>BN_mod_exp_mont() computes <i>a</i> to the <i>p</i>-th power modulo <i>m</i> (<code>rr=a^p % m</code>) using Montgomery multiplication. <i>in_mont</i> is a Montgomery context and can be NULL. In the case <i>in_mont</i> is NULL, it will be initialized within the function, so you can save time on initialization if you provide it in advance.</p>
 
-<p>BN_mod_exp_mont_consttime() computes <i>a</i> to the <i>p</i>-th power modulo <i>m</i> (<code>rr=a^p % m</code>) using Montgomery multiplication. It is a variant of <a href="../man3/BN_mod_exp_mont.html">BN_mod_exp_mont(3)</a> that uses fixed windows and the special precomputation memory layout to limit data-dependency to a minimum to protect secret exponents. It is called automatically when <a href="../man3/BN_mod_exp_mont.html">BN_mod_exp_mont(3)</a> is called with parameters <i>a</i>, <i>p</i>, <i>m</i>, any of which have <b>BN_FLG_CONSTTIME</b> flag.</p>
+<p>BN_mod_exp_mont_consttime() computes <i>a</i> to the <i>p</i>-th power modulo <i>m</i> (<code>rr=a^p % m</code>) using Montgomery multiplication. It is a variant of <a href="https://man7.org/linux/man-pages/man3/BN_mod_exp_mont.3.html">BN_mod_exp_mont(3)</a> that uses fixed windows and the special precomputation memory layout to limit data-dependency to a minimum to protect secret exponents. It is called automatically when <a href="https://man7.org/linux/man-pages/man3/BN_mod_exp_mont.3.html">BN_mod_exp_mont(3)</a> is called with parameters <i>a</i>, <i>p</i>, <i>m</i>, any of which have <b>BN_FLG_CONSTTIME</b> flag.</p>
 
-<p>BN_mod_exp_mont_consttime_x2() computes two independent exponentiations <i>a1</i> to the <i>p1</i>-th power modulo <i>m1</i> (<code>rr1=a1^p1 % m1</code>) and <i>a2</i> to the <i>p2</i>-th power modulo <i>m2</i> (<code>rr2=a2^p2 % m2</code>) using Montgomery multiplication. For some fixed and equal modulus sizes <i>m1</i> and <i>m2</i> it uses optimizations that allow to speedup two exponentiations. In all other cases the function reduces to two calls of <a href="../man3/BN_mod_exp_mont_consttime.html">BN_mod_exp_mont_consttime(3)</a>.</p>
+<p>BN_mod_exp_mont_consttime_x2() computes two independent exponentiations <i>a1</i> to the <i>p1</i>-th power modulo <i>m1</i> (<code>rr1=a1^p1 % m1</code>) and <i>a2</i> to the <i>p2</i>-th power modulo <i>m2</i> (<code>rr2=a2^p2 % m2</code>) using Montgomery multiplication. For some fixed and equal modulus sizes <i>m1</i> and <i>m2</i> it uses optimizations that allow to speedup two exponentiations. In all other cases the function reduces to two calls of <a href="https://man7.org/linux/man-pages/man3/BN_mod_exp_mont_consttime.3.html">BN_mod_exp_mont_consttime(3)</a>.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
-<p>For all functions 1 is returned for success, 0 on error. The error codes can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>For all functions 1 is returned for success, 0 on error. The error codes can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/BN_mod_exp_mont.html">BN_mod_exp_mont(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BN_mod_exp_mont.3.html">BN_mod_exp_mont(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

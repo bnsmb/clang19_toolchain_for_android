@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_STORE_expect</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -38,17 +38,17 @@ int OSSL_STORE_find(OSSL_STORE_CTX *ctx, OSSL_STORE_SEARCH *search);</code></pre
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>OSSL_STORE_expect() helps applications filter what OSSL_STORE_load() returns by specifying a <b>OSSL_STORE_INFO</b> type. By default, no expectations on the types of objects to be loaded are made. <i>expected_type</i> may be 0 to indicate explicitly that no expectation is made, or it may be any of the known object types (see <a href="../man3/OSSL_STORE_INFO.html">&quot;SUPPORTED OBJECTS&quot; in OSSL_STORE_INFO(3)</a>) except for <b>OSSL_STORE_INFO_NAME</b>. For example, if <code>file:/foo/bar/store.pem</code> contains several objects of different type and only certificates are interesting, the application can simply say that it expects the type <b>OSSL_STORE_INFO_CERT</b>.</p>
+<p>OSSL_STORE_expect() helps applications filter what OSSL_STORE_load() returns by specifying a <b>OSSL_STORE_INFO</b> type. By default, no expectations on the types of objects to be loaded are made. <i>expected_type</i> may be 0 to indicate explicitly that no expectation is made, or it may be any of the known object types (see <a href="https://man7.org/linux/man-pages/man3/OSSL_STORE_INFO.3.html#SUPPORTED_OBJECTS">&quot;SUPPORTED OBJECTS&quot; in OSSL_STORE_INFO(3)</a>) except for <b>OSSL_STORE_INFO_NAME</b>. For example, if <code>file:/foo/bar/store.pem</code> contains several objects of different type and only certificates are interesting, the application can simply say that it expects the type <b>OSSL_STORE_INFO_CERT</b>.</p>
 
 <p>OSSL_STORE_find() helps applications specify a criterion for a more fine grained search of objects.</p>
 
-<p>OSSL_STORE_supports_search() checks if the loader of the given OSSL_STORE context supports the given search type. See <a href="../man3/OSSL_STORE_SEARCH.html">&quot;SUPPORTED CRITERION TYPES&quot; in OSSL_STORE_SEARCH(3)</a> for information on the supported search criterion types.</p>
+<p>OSSL_STORE_supports_search() checks if the loader of the given OSSL_STORE context supports the given search type. See <a href="https://man7.org/linux/man-pages/man3/OSSL_STORE_SEARCH.3.html#SUPPORTED_CRITERION_TYPES">&quot;SUPPORTED CRITERION TYPES&quot; in OSSL_STORE_SEARCH(3)</a> for information on the supported search criterion types.</p>
 
 <p>OSSL_STORE_expect() and OSSL_STORE_find <i>must</i> be called before the first OSSL_STORE_load() of a given session, or they will fail.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>If a more elaborate filter is required by the application, a better choice would be to use a post-processing function. See <a href="../man3/OSSL_STORE_open.html">OSSL_STORE_open(3)</a> for more information.</p>
+<p>If a more elaborate filter is required by the application, a better choice would be to use a post-processing function. See <a href="https://man7.org/linux/man-pages/man3/OSSL_STORE_open.3.html">OSSL_STORE_open(3)</a> for more information.</p>
 
 <p>However, some loaders may take advantage of the knowledge of an expected type to make object retrieval more efficient, so if a single type is expected, this method is usually preferable.</p>
 
@@ -62,7 +62,7 @@ int OSSL_STORE_find(OSSL_STORE_CTX *ctx, OSSL_STORE_SEARCH *search);</code></pre
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ossl_store.html">ossl_store(7)</a>, <a href="../man3/OSSL_STORE_INFO.html">OSSL_STORE_INFO(3)</a>, <a href="../man3/OSSL_STORE_SEARCH.html">OSSL_STORE_SEARCH(3)</a>, <a href="../man3/OSSL_STORE_load.html">OSSL_STORE_load(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ossl_store.7.html">ossl_store(7)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_STORE_INFO.3.html">OSSL_STORE_INFO(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_STORE_SEARCH.3.html">OSSL_STORE_SEARCH(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_STORE_load.3.html">OSSL_STORE_load(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

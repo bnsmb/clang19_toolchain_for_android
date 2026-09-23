@@ -4,7 +4,7 @@
 <head>
 <title>ASYNC_start_job</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -56,18 +56,18 @@ void ASYNC_get_mem_functions(ASYNC_stack_alloc_fn *alloc_fn,
 
 <p>OpenSSL implements asynchronous capabilities through an <b>ASYNC_JOB</b>. This represents code that can be started and executes until some event occurs. At that point the code can be paused and control returns to user code until some subsequent event indicates that the job can be resumed. It&#39;s OpenSSL specific implementation of cooperative multitasking.</p>
 
-<p>The creation of an <b>ASYNC_JOB</b> is a relatively expensive operation. Therefore, for efficiency reasons, jobs can be created up front and reused many times. They are held in a pool until they are needed, at which point they are removed from the pool, used, and then returned to the pool when the job completes. If the user application is multi-threaded, then ASYNC_init_thread() may be called for each thread that will initiate asynchronous jobs. Before user code exits per-thread resources need to be cleaned up. This will normally occur automatically (see <a href="../man3/OPENSSL_init_crypto.html">OPENSSL_init_crypto(3)</a>) but may be explicitly initiated by using ASYNC_cleanup_thread(). No asynchronous jobs must be outstanding for the thread when ASYNC_cleanup_thread() is called. Failing to ensure this will result in memory leaks.</p>
+<p>The creation of an <b>ASYNC_JOB</b> is a relatively expensive operation. Therefore, for efficiency reasons, jobs can be created up front and reused many times. They are held in a pool until they are needed, at which point they are removed from the pool, used, and then returned to the pool when the job completes. If the user application is multi-threaded, then ASYNC_init_thread() may be called for each thread that will initiate asynchronous jobs. Before user code exits per-thread resources need to be cleaned up. This will normally occur automatically (see <a href="https://man7.org/linux/man-pages/man3/OPENSSL_init_crypto.3.html">OPENSSL_init_crypto(3)</a>) but may be explicitly initiated by using ASYNC_cleanup_thread(). No asynchronous jobs must be outstanding for the thread when ASYNC_cleanup_thread() is called. Failing to ensure this will result in memory leaks.</p>
 
 <p>The <i>max_size</i> argument limits the number of <b>ASYNC_JOB</b>s that will be held in the pool. If <i>max_size</i> is set to 0 then no upper limit is set. When an <b>ASYNC_JOB</b> is needed but there are none available in the pool already then one will be automatically created, as long as the total of <b>ASYNC_JOB</b>s managed by the pool does not exceed <i>max_size</i>. When the pool is first initialised <i>init_size</i> <b>ASYNC_JOB</b>s will be created immediately. If ASYNC_init_thread() is not called before the pool is first used then it will be called automatically with a <i>max_size</i> of 0 (no upper limit) and an <i>init_size</i> of 0 (no <b>ASYNC_JOB</b>s created up front).</p>
 
-<p>An asynchronous job is started by calling the ASYNC_start_job() function. Initially <i>*job</i> should be NULL. <i>ctx</i> should point to an <b>ASYNC_WAIT_CTX</b> object created through the <a href="../man3/ASYNC_WAIT_CTX_new.html">ASYNC_WAIT_CTX_new(3)</a> function. <i>ret</i> should point to a location where the return value of the asynchronous function should be stored on completion of the job. <i>func</i> represents the function that should be started asynchronously. The data pointed to by <i>args</i> and of size <i>size</i> will be copied and then passed as an argument to <i>func</i> when the job starts. ASYNC_start_job will return one of the following values:</p>
+<p>An asynchronous job is started by calling the ASYNC_start_job() function. Initially <i>*job</i> should be NULL. <i>ctx</i> should point to an <b>ASYNC_WAIT_CTX</b> object created through the <a href="https://man7.org/linux/man-pages/man3/ASYNC_WAIT_CTX_new.3.html">ASYNC_WAIT_CTX_new(3)</a> function. <i>ret</i> should point to a location where the return value of the asynchronous function should be stored on completion of the job. <i>func</i> represents the function that should be started asynchronously. The data pointed to by <i>args</i> and of size <i>size</i> will be copied and then passed as an argument to <i>func</i> when the job starts. ASYNC_start_job will return one of the following values:</p>
 
 <dl>
 
 <dt id="ASYNC_ERR"><b>ASYNC_ERR</b></dt>
 <dd>
 
-<p>An error occurred trying to start the job. Check the OpenSSL error queue (e.g. see <a href="../man3/ERR_print_errors.html">ERR_print_errors(3)</a>) for more details.</p>
+<p>An error occurred trying to start the job. Check the OpenSSL error queue (e.g. see <a href="https://man7.org/linux/man-pages/man3/ERR_print_errors.3.html">ERR_print_errors(3)</a>) for more details.</p>
 
 </dd>
 <dt id="ASYNC_NO_JOBS"><b>ASYNC_NO_JOBS</b></dt>
@@ -94,7 +94,7 @@ void ASYNC_get_mem_functions(ASYNC_stack_alloc_fn *alloc_fn,
 
 <p>If executing within the context of a job (i.e. having been called directly or indirectly by the function &quot;func&quot; passed as an argument to ASYNC_start_job()) then ASYNC_pause_job() will immediately return control to the calling application with <b>ASYNC_PAUSE</b> returned from the ASYNC_start_job() call. A subsequent call to ASYNC_start_job passing in the relevant <b>ASYNC_JOB</b> in the <i>*job</i> parameter will resume execution from the ASYNC_pause_job() call. If ASYNC_pause_job() is called whilst not within the context of a job then no action is taken and ASYNC_pause_job() returns immediately.</p>
 
-<p>ASYNC_get_wait_ctx() can be used to get a pointer to the <b>ASYNC_WAIT_CTX</b> for the <i>job</i> (see <a href="../man3/ASYNC_WAIT_CTX_new.html">ASYNC_WAIT_CTX_new(3)</a>). <b>ASYNC_WAIT_CTX</b>s contain two different ways to notify applications that a job is ready to be resumed. One is a &quot;wait&quot; file descriptor, and the other is a &quot;callback&quot; mechanism.</p>
+<p>ASYNC_get_wait_ctx() can be used to get a pointer to the <b>ASYNC_WAIT_CTX</b> for the <i>job</i> (see <a href="https://man7.org/linux/man-pages/man3/ASYNC_WAIT_CTX_new.3.html">ASYNC_WAIT_CTX_new(3)</a>). <b>ASYNC_WAIT_CTX</b>s contain two different ways to notify applications that a job is ready to be resumed. One is a &quot;wait&quot; file descriptor, and the other is a &quot;callback&quot; mechanism.</p>
 
 <p>The &quot;wait&quot; file descriptor associated with <b>ASYNC_WAIT_CTX</b> is used for applications to wait for the file descriptor to be ready for &quot;read&quot; using a system function call such as select(2) or poll(2) (being ready for &quot;read&quot; indicates that the job should be resumed). If no file descriptor is made available then an application will have to periodically &quot;poll&quot; the job by attempting to restart it to see if it is ready to continue.</p>
 
@@ -283,7 +283,7 @@ Finishing</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/crypto.html">crypto(7)</a>, <a href="../man3/ERR_print_errors.html">ERR_print_errors(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a>, <a href="https://man7.org/linux/man-pages/man3/ERR_print_errors.3.html">ERR_print_errors(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

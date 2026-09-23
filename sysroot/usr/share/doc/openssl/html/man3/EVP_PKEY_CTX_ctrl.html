@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY_CTX_ctrl</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -140,7 +140,7 @@ int EVP_PKEY_CTX_set1_id(EVP_PKEY_CTX *ctx, void *id, size_t id_len);
 int EVP_PKEY_CTX_get1_id(EVP_PKEY_CTX *ctx, void *id);
 int EVP_PKEY_CTX_get1_id_len(EVP_PKEY_CTX *ctx, size_t *id_len);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>#include &lt;openssl/rsa.h&gt;
 
@@ -172,9 +172,9 @@ int EVP_PKEY_CTX_get0_ecdh_kdf_ukm(EVP_PKEY_CTX *ctx, unsigned char **ukm);</cod
 
 <p>EVP_PKEY_CTX_get_signature_md()gets the message digest type used in a signature. It can be used in the RSA, DSA and ECDSA algorithms.</p>
 
-<p>Key generation typically involves setting up parameters to be used and generating the private and public key data. Some algorithm implementations allow private key data to be set explicitly using EVP_PKEY_CTX_set_mac_key(). In this case key generation is simply the process of setting up the parameters for the key and then setting the raw key data to the value explicitly. Normally applications would call <a href="../man3/EVP_PKEY_new_raw_private_key.html">EVP_PKEY_new_raw_private_key(3)</a> or similar functions instead.</p>
+<p>Key generation typically involves setting up parameters to be used and generating the private and public key data. Some algorithm implementations allow private key data to be set explicitly using EVP_PKEY_CTX_set_mac_key(). In this case key generation is simply the process of setting up the parameters for the key and then setting the raw key data to the value explicitly. Normally applications would call <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_new_raw_private_key.3.html">EVP_PKEY_new_raw_private_key(3)</a> or similar functions instead.</p>
 
-<p>EVP_PKEY_CTX_set_mac_key() can be used with any of the algorithms supported by the <a href="../man3/EVP_PKEY_new_raw_private_key.html">EVP_PKEY_new_raw_private_key(3)</a> function.</p>
+<p>EVP_PKEY_CTX_set_mac_key() can be used with any of the algorithms supported by the <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_new_raw_private_key.3.html">EVP_PKEY_new_raw_private_key(3)</a> function.</p>
 
 <p>EVP_PKEY_CTX_set_group_name() sets the group name to <i>name</i> for parameter and key generation. For example for EC keys this will set the curve name and for DH keys it will set the name of the finite field group.</p>
 
@@ -248,7 +248,7 @@ int EVP_PKEY_CTX_get0_ecdh_kdf_ukm(EVP_PKEY_CTX *ctx, unsigned char **ukm);</cod
 
 <p>EVP_PKEY_CTX_get0_rsa_oaep_label() gets the RSA OAEP label to <i>label</i>. The return value is the label length. The padding mode must have been set to <b>RSA_PKCS1_OAEP_PADDING</b>. The resulting pointer is owned by the library and should not be freed by the caller.</p>
 
-<p><b>RSA_PKCS1_WITH_TLS_PADDING</b> is used when decrypting an RSA encrypted TLS pre-master secret in a TLS ClientKeyExchange message. It is the same as RSA_PKCS1_PADDING except that it additionally verifies that the result is the correct length and the first two bytes are the protocol version initially requested by the client. If the encrypted content is publicly invalid then the decryption will fail. However, if the padding checks fail then decryption will still appear to succeed but a random TLS premaster secret will be returned instead. This padding mode accepts two parameters which can be set using the <a href="../man3/EVP_PKEY_CTX_set_params.html">EVP_PKEY_CTX_set_params(3)</a> function. These are OSSL_ASYM_CIPHER_PARAM_TLS_CLIENT_VERSION and OSSL_ASYM_CIPHER_PARAM_TLS_NEGOTIATED_VERSION, both of which are expected to be unsigned integers. Normally only the first of these will be set and represents the TLS protocol version that was first requested by the client (e.g. 0x0303 for TLSv1.2, 0x0302 for TLSv1.1 etc). Historically some buggy clients would use the negotiated protocol version instead of the protocol version first requested. If this behaviour should be tolerated then OSSL_ASYM_CIPHER_PARAM_TLS_NEGOTIATED_VERSION should be set to the actual negotiated protocol version. Otherwise it should be left unset.</p>
+<p><b>RSA_PKCS1_WITH_TLS_PADDING</b> is used when decrypting an RSA encrypted TLS pre-master secret in a TLS ClientKeyExchange message. It is the same as RSA_PKCS1_PADDING except that it additionally verifies that the result is the correct length and the first two bytes are the protocol version initially requested by the client. If the encrypted content is publicly invalid then the decryption will fail. However, if the padding checks fail then decryption will still appear to succeed but a random TLS premaster secret will be returned instead. This padding mode accepts two parameters which can be set using the <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set_params.3.html">EVP_PKEY_CTX_set_params(3)</a> function. These are OSSL_ASYM_CIPHER_PARAM_TLS_CLIENT_VERSION and OSSL_ASYM_CIPHER_PARAM_TLS_NEGOTIATED_VERSION, both of which are expected to be unsigned integers. Normally only the first of these will be set and represents the TLS protocol version that was first requested by the client (e.g. 0x0303 for TLSv1.2, 0x0302 for TLSv1.1 etc). Historically some buggy clients would use the negotiated protocol version instead of the protocol version first requested. If this behaviour should be tolerated then OSSL_ASYM_CIPHER_PARAM_TLS_NEGOTIATED_VERSION should be set to the actual negotiated protocol version. Otherwise it should be left unset.</p>
 
 <p>Similarly to the <b>RSA_PKCS1_WITH_TLS_PADDING</b> above, since OpenSSL version 3.2.0, the use of <b>RSA_PKCS1_PADDING</b> will return a randomly generated message instead of padding errors in case padding checks fail. Applications that want to remain secure while using earlier versions of OpenSSL, or a provider that doesn&#39;t implement the implicit rejection mechanism, still need to handle both the error code from the RSA decryption operation and the returned message in a side channel secure manner. This protection against Bleichenbacher attacks can be disabled by setting <b>OSSL_ASYM_CIPHER_PARAM_IMPLICIT_REJECTION</b> (an unsigned integer) to 0.</p>
 
@@ -384,7 +384,7 @@ int EVP_PKEY_CTX_get0_ecdh_kdf_ukm(EVP_PKEY_CTX *ctx, unsigned char **ukm);</cod
 
 <p>EVP_PKEY_CTX_set_kem_op() sets the KEM operation to run. This can be set after EVP_PKEY_encapsulate_init() or EVP_PKEY_decapsulate_init() to select the kem operation. For the key types that support encapsulation and don&#39;t have the default operation, e.g. RSA, this function must be called before EVP_PKEY_encapsulate() or EVP_PKEY_decapsulate().</p>
 
-<p>The supported parameters for the built-in algorithms are documented in <a href="../man7/EVP_KEM-RSA.html">EVP_KEM-RSA(7)</a>, <a href="../man7/EVP_KEM-EC.html">EVP_KEM-EC(7)</a>, <a href="../man7/EVP_KEM-X25519.html">EVP_KEM-X25519(7)</a>, <a href="../man7/EVP_KEM-X448.html">EVP_KEM-X448(7)</a>, and <a href="../man7/EVP_KEM-ML-KEM.html">EVP_KEM-ML-KEM(7)</a>.</p>
+<p>The supported parameters for the built-in algorithms are documented in <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-RSA.7.html">EVP_KEM-RSA(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-EC.7.html">EVP_KEM-EC(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-X25519.7.html">EVP_KEM-X25519(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-X448.7.html">EVP_KEM-X448(7)</a>, and <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-ML-KEM.7.html">EVP_KEM-ML-KEM(7)</a>.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -392,7 +392,7 @@ int EVP_PKEY_CTX_get0_ecdh_kdf_ukm(EVP_PKEY_CTX *ctx, unsigned char **ukm);</cod
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_CTX_set_params.html">EVP_PKEY_CTX_set_params(3)</a>, <a href="../man3/EVP_PKEY_CTX_new.html">EVP_PKEY_CTX_new(3)</a>, <a href="../man3/EVP_PKEY_encrypt.html">EVP_PKEY_encrypt(3)</a>, <a href="../man3/EVP_PKEY_decrypt.html">EVP_PKEY_decrypt(3)</a>, <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a>, <a href="../man3/EVP_PKEY_verify.html">EVP_PKEY_verify(3)</a>, <a href="../man3/EVP_PKEY_verify_recover.html">EVP_PKEY_verify_recover(3)</a>, <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a>, <a href="../man3/EVP_PKEY_keygen.html">EVP_PKEY_keygen(3)</a> <a href="../man3/EVP_PKEY_encapsulate.html">EVP_PKEY_encapsulate(3)</a> <a href="../man3/EVP_PKEY_decapsulate.html">EVP_PKEY_decapsulate(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set_params.3.html">EVP_PKEY_CTX_set_params(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_new.3.html">EVP_PKEY_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_encrypt.3.html">EVP_PKEY_encrypt(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_decrypt.3.html">EVP_PKEY_decrypt(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify.3.html">EVP_PKEY_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify_recover.3.html">EVP_PKEY_verify_recover(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_keygen.3.html">EVP_PKEY_keygen(3)</a> <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_encapsulate.3.html">EVP_PKEY_encapsulate(3)</a> <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_decapsulate.3.html">EVP_PKEY_decapsulate(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

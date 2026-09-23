@@ -4,7 +4,7 @@
 <head>
 <title>BIO_socket_wait</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -39,7 +39,7 @@ int BIO_do_connect_retry(BIO *bio, int timeout, int nap_milliseconds);</code></p
 
 <p>BIO_socket_wait() waits on the socket <b>fd</b> for reading if <b>for_read</b> is not 0, else for writing, at most until <b>max_time</b>. It succeeds immediately if <b>max_time</b> == 0 (which means no timeout given).</p>
 
-<p>BIO_wait() waits at most until <b>max_time</b> on the given (typically socket-based) <b>bio</b>, for reading if <b>bio</b> is supposed to read, else for writing. It is used by BIO_do_connect_retry() and can be used together <a href="../man3/BIO_read.html">BIO_read(3)</a>. It succeeds immediately if <b>max_time</b> == 0 (which means no timeout given). If sockets are not available it supports polling by succeeding after sleeping at most the given <b>nap_milliseconds</b> in order to avoid a tight busy loop. Via <b>nap_milliseconds</b> the caller determines the polling granularity.</p>
+<p>BIO_wait() waits at most until <b>max_time</b> on the given (typically socket-based) <b>bio</b>, for reading if <b>bio</b> is supposed to read, else for writing. It is used by BIO_do_connect_retry() and can be used together <a href="https://man7.org/linux/man-pages/man3/BIO_read.3.html">BIO_read(3)</a>. It succeeds immediately if <b>max_time</b> == 0 (which means no timeout given). If sockets are not available it supports polling by succeeding after sleeping at most the given <b>nap_milliseconds</b> in order to avoid a tight busy loop. Via <b>nap_milliseconds</b> the caller determines the polling granularity.</p>
 
 <p>BIO_do_connect_retry() connects via the given <b>bio</b>. It retries BIO_do_connect() as far as needed to reach a definite outcome, i.e., connection succeeded, timeout has been reached, or an error occurred. For nonblocking and potentially even non-socket BIOs it polls every <b>nap_milliseconds</b> and sleeps in between using BIO_wait(). If <b>nap_milliseconds</b> is &lt; 0 then a default value of 100 ms is used. If the <b>timeout</b> parameter is &gt; 0 this indicates the maximum number of seconds to wait until the connection is established or a definite error occurred. A value of 0 enables waiting indefinitely (i.e, no timeout), while a value &lt; 0 means that BIO_do_connect() is tried only once. The function may, directly or indirectly, invoke ERR_clear_error().</p>
 
@@ -49,7 +49,7 @@ int BIO_do_connect_retry(BIO *bio, int timeout, int nap_milliseconds);</code></p
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/BIO_do_connect.html">BIO_do_connect(3)</a>, <a href="../man3/BIO_read.html">BIO_read(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/BIO_do_connect.3.html">BIO_do_connect(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_read.3.html">BIO_read(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>SSL_stream_reset</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -46,11 +46,11 @@ int SSL_stream_reset(SSL *ssl,
 
 <p><i>quic_error_code</i> is an application-specified error code, which must be in the range [0, 2**62-1]. If <i>args</i> is NULL, a value of 0 is used.</p>
 
-<p>Resetting a stream indicates to an application that the sending part of the stream is terminating abnormally. When a stream is reset, the implementation does not guarantee that any data already passed to <a href="../man3/SSL_write.html">SSL_write(3)</a> will be received by the peer, and data already passed to <a href="../man3/SSL_write.html">SSL_write(3)</a> but not yet transmitted may or may not be discarded. As such, you should only reset a stream when the information transmitted on the stream no longer matters, for example due to an error condition.</p>
+<p>Resetting a stream indicates to an application that the sending part of the stream is terminating abnormally. When a stream is reset, the implementation does not guarantee that any data already passed to <a href="https://man7.org/linux/man-pages/man3/SSL_write.3.html">SSL_write(3)</a> will be received by the peer, and data already passed to <a href="https://man7.org/linux/man-pages/man3/SSL_write.3.html">SSL_write(3)</a> but not yet transmitted may or may not be discarded. As such, you should only reset a stream when the information transmitted on the stream no longer matters, for example due to an error condition.</p>
 
 <p>This function cannot be called on a unidirectional stream initiated by the peer, as only the sending side of a stream can initiate a stream reset.</p>
 
-<p>It is also possible to trigger a stream reset by calling <a href="../man3/SSL_free.html">SSL_free(3)</a>; see the documentation for <a href="../man3/SSL_free.html">SSL_free(3)</a> for details.</p>
+<p>It is also possible to trigger a stream reset by calling <a href="https://man7.org/linux/man-pages/man3/SSL_free.3.html">SSL_free(3)</a>; see the documentation for <a href="https://man7.org/linux/man-pages/man3/SSL_free.3.html">SSL_free(3)</a> for details.</p>
 
 <p>The receiving part of the stream (for bidirectional streams) continues to function normally.</p>
 
@@ -68,7 +68,7 @@ int SSL_stream_reset(SSL *ssl,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/SSL_free.html">SSL_free(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/SSL_free.3.html">SSL_free(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

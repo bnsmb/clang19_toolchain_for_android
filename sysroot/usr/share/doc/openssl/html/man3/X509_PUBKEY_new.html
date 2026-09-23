@@ -4,7 +4,7 @@
 <head>
 <title>X509_PUBKEY_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -69,7 +69,7 @@ int X509_PUBKEY_eq(X509_PUBKEY *a, X509_PUBKEY *b);</code></pre>
 
 <p>The <b>X509_PUBKEY</b> structure represents the ASN.1 <b>SubjectPublicKeyInfo</b> structure defined in RFC5280 and used in certificates and certificate requests.</p>
 
-<p>X509_PUBKEY_new_ex() allocates and initializes an <b>X509_PUBKEY</b> structure associated with the given <b>OSSL_LIB_CTX</b> in the <i>libctx</i> parameter. Any algorithm fetches associated with using the <b>X509_PUBKEY</b> object will use the property query string <i>propq</i>. See <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further information about algorithm fetching.</p>
+<p>X509_PUBKEY_new_ex() allocates and initializes an <b>X509_PUBKEY</b> structure associated with the given <b>OSSL_LIB_CTX</b> in the <i>libctx</i> parameter. Any algorithm fetches associated with using the <b>X509_PUBKEY</b> object will use the property query string <i>propq</i>. See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further information about algorithm fetching.</p>
 
 <p>X509_PUBKEY_new() is the same as X509_PUBKEY_new_ex() except that the default (NULL) <b>OSSL_LIB_CTX</b> and a NULL property query string are used.</p>
 
@@ -107,7 +107,7 @@ int X509_PUBKEY_eq(X509_PUBKEY *a, X509_PUBKEY *b);</code></pre>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
-<p>If the allocation fails, X509_PUBKEY_new() and X509_PUBKEY_dup() return NULL and set an error code that can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>. Otherwise they return a pointer to the newly allocated structure.</p>
+<p>If the allocation fails, X509_PUBKEY_new() and X509_PUBKEY_dup() return NULL and set an error code that can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>. Otherwise they return a pointer to the newly allocated structure.</p>
 
 <p>X509_PUBKEY_free() does not return a value.</p>
 
@@ -125,7 +125,7 @@ int X509_PUBKEY_eq(X509_PUBKEY *a, X509_PUBKEY *b);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/d2i_X509.html">d2i_X509(3)</a>, <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/X509_get_pubkey.html">X509_get_pubkey(3)</a>,</p>
+<p><a href="https://man7.org/linux/man-pages/man3/d2i_X509.3.html">d2i_X509(3)</a>, <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/X509_get_pubkey.3.html">X509_get_pubkey(3)</a>,</p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

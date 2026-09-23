@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_use_psk_identity_hint</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -55,7 +55,7 @@ void SSL_set_psk_server_callback(SSL *ssl, SSL_psk_server_cb_func cb);</code></p
 
 <p>A server application wishing to use TLSv1.3 PSKs should set a callback using either SSL_CTX_set_psk_find_session_callback() or SSL_set_psk_find_session_callback() as appropriate.</p>
 
-<p>The callback function is given a pointer to the SSL connection in <b>ssl</b> and an identity in <b>identity</b> of length <b>identity_len</b>. The callback function should identify an SSL_SESSION object that provides the PSK details and store it in <b>*sess</b>. The SSL_SESSION object should, as a minimum, set the master key, the ciphersuite and the protocol version. See <a href="../man3/SSL_CTX_set_psk_use_session_callback.html">SSL_CTX_set_psk_use_session_callback(3)</a> for details.</p>
+<p>The callback function is given a pointer to the SSL connection in <b>ssl</b> and an identity in <b>identity</b> of length <b>identity_len</b>. The callback function should identify an SSL_SESSION object that provides the PSK details and store it in <b>*sess</b>. The SSL_SESSION object should, as a minimum, set the master key, the ciphersuite and the protocol version. See <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_psk_use_session_callback.3.html">SSL_CTX_set_psk_use_session_callback(3)</a> for details.</p>
 
 <p>It is also possible for the callback to succeed but not supply a PSK. In this case no PSK will be used but the handshake will continue. To do this the callback should return successfully and ensure that <b>*sess</b> is NULL.</p>
 
@@ -67,7 +67,7 @@ void SSL_set_psk_server_callback(SSL *ssl, SSL_psk_server_cb_func cb);</code></p
 
 <p>The callback for use in TLSv1.2 will also work in TLSv1.3 although it is recommended to use SSL_CTX_set_psk_find_session_callback() or SSL_set_psk_find_session_callback() for this purpose instead. If TLSv1.3 has been negotiated then OpenSSL will first check to see if a callback has been set via SSL_CTX_set_psk_find_session_callback() or SSL_set_psk_find_session_callback() and it will use that in preference. If no such callback is present then it will check to see if a callback has been set via SSL_CTX_set_psk_server_callback() or SSL_set_psk_server_callback() and use that. In this case the handshake digest will default to SHA-256 for any returned PSK. TLSv1.3 early data exchanges are possible in PSK connections only with the <b>SSL_psk_find_session_cb_func</b> callback, and are not possible with the <b>SSL_psk_server_cb_func</b> callback.</p>
 
-<p>A connection established via a TLSv1.3 PSK will appear as if session resumption has occurred so that <a href="../man3/SSL_session_reused.html">SSL_session_reused(3)</a> will return true.</p>
+<p>A connection established via a TLSv1.3 PSK will appear as if session resumption has occurred so that <a href="https://man7.org/linux/man-pages/man3/SSL_session_reused.3.html">SSL_session_reused(3)</a> will return true.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -103,7 +103,7 @@ void SSL_set_psk_server_callback(SSL *ssl, SSL_psk_server_cb_func cb);</code></p
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_CTX_set_psk_use_session_callback.html">SSL_CTX_set_psk_use_session_callback(3)</a>, <a href="../man3/SSL_set_psk_use_session_callback.html">SSL_set_psk_use_session_callback(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_psk_use_session_callback.3.html">SSL_CTX_set_psk_use_session_callback(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_set_psk_use_session_callback.3.html">SSL_set_psk_use_session_callback(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

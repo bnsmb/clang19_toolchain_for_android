@@ -4,7 +4,7 @@
 <head>
 <title>SSL_set_retry_verify</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -35,9 +35,9 @@ int SSL_set_retry_verify(SSL *ssl);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>SSL_set_retry_verify() should be called from the certificate verification callback on a client when the application wants to indicate that the handshake should be suspended and the control should be returned to the application. <a href="../man3/SSL_want_retry_verify.html">SSL_want_retry_verify(3)</a> will return 1 as a consequence until the handshake is resumed again by the application, retrying the verification step.</p>
+<p>SSL_set_retry_verify() should be called from the certificate verification callback on a client when the application wants to indicate that the handshake should be suspended and the control should be returned to the application. <a href="https://man7.org/linux/man-pages/man3/SSL_want_retry_verify.3.html">SSL_want_retry_verify(3)</a> will return 1 as a consequence until the handshake is resumed again by the application, retrying the verification step.</p>
 
-<p>Please refer to <a href="../man3/SSL_CTX_set_cert_verify_callback.html">SSL_CTX_set_cert_verify_callback(3)</a> for further details.</p>
+<p>Please refer to <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_cert_verify_callback.3.html">SSL_CTX_set_cert_verify_callback(3)</a> for further details.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -66,7 +66,7 @@ if (/* we need to retry verification callback */)
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_connect.html">SSL_connect(3)</a>, <a href="../man3/SSL_CTX_set_cert_verify_callback.html">SSL_CTX_set_cert_verify_callback(3)</a>, <a href="../man3/SSL_want_retry_verify.html">SSL_want_retry_verify(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_connect.3.html">SSL_connect(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_cert_verify_callback.3.html">SSL_CTX_set_cert_verify_callback(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_want_retry_verify.3.html">SSL_want_retry_verify(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

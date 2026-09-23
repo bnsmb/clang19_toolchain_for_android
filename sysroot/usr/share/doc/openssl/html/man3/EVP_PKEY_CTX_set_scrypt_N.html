@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY_CTX_set_scrypt_N</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -45,7 +45,7 @@ int EVP_PKEY_CTX_set_scrypt_maxmem_bytes(EVP_PKEY_CTX *pctx,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>These functions are used to set up the necessary data to use the scrypt KDF. For more information on scrypt, see <a href="../man7/EVP_KDF-SCRYPT.html">EVP_KDF-SCRYPT(7)</a>.</p>
+<p>These functions are used to set up the necessary data to use the scrypt KDF. For more information on scrypt, see <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-SCRYPT.7.html">EVP_KDF-SCRYPT(7)</a>.</p>
 
 <p>EVP_PKEY_CTX_set1_scrypt_salt() sets the <b>saltlen</b> bytes long salt value.</p>
 
@@ -55,13 +55,13 @@ int EVP_PKEY_CTX_set_scrypt_maxmem_bytes(EVP_PKEY_CTX *pctx,
 
 <h1 id="STRING-CTRLS">STRING CTRLS</h1>
 
-<p>scrypt also supports string based control operations via <a href="../man3/EVP_PKEY_CTX_ctrl_str.html">EVP_PKEY_CTX_ctrl_str(3)</a>. Similarly, the <b>salt</b> can either be specified using the <b>type</b> parameter &quot;salt&quot; or in hex encoding by using the &quot;hexsalt&quot; parameter. The work factors <b>N</b>, <b>r</b> and <b>p</b> as well as <b>maxmem_bytes</b> can be set by using the parameters &quot;N&quot;, &quot;r&quot;, &quot;p&quot; and &quot;maxmem_bytes&quot;, respectively.</p>
+<p>scrypt also supports string based control operations via <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_ctrl_str.3.html">EVP_PKEY_CTX_ctrl_str(3)</a>. Similarly, the <b>salt</b> can either be specified using the <b>type</b> parameter &quot;salt&quot; or in hex encoding by using the &quot;hexsalt&quot; parameter. The work factors <b>N</b>, <b>r</b> and <b>p</b> as well as <b>maxmem_bytes</b> can be set by using the parameters &quot;N&quot;, &quot;r&quot;, &quot;p&quot; and &quot;maxmem_bytes&quot;, respectively.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>There is a newer generic API for KDFs, <a href="../man3/EVP_KDF.html">EVP_KDF(3)</a>, which is preferred over the EVP_PKEY method.</p>
+<p>There is a newer generic API for KDFs, <a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html">EVP_KDF(3)</a>, which is preferred over the EVP_PKEY method.</p>
 
-<p>The scrypt KDF also uses EVP_PKEY_CTX_set1_pbe_pass() as well as the value from the string controls &quot;pass&quot; and &quot;hexpass&quot;. See <a href="../man3/EVP_PKEY_CTX_set1_pbe_pass.html">EVP_PKEY_CTX_set1_pbe_pass(3)</a>.</p>
+<p>The scrypt KDF also uses EVP_PKEY_CTX_set1_pbe_pass() as well as the value from the string controls &quot;pass&quot; and &quot;hexpass&quot;. See <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set1_pbe_pass.3.html">EVP_PKEY_CTX_set1_pbe_pass(3)</a>.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -69,7 +69,7 @@ int EVP_PKEY_CTX_set_scrypt_maxmem_bytes(EVP_PKEY_CTX *pctx,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_KDF.html">EVP_KDF(3)</a> <a href="../man3/EVP_PKEY_CTX_new.html">EVP_PKEY_CTX_new(3)</a>, <a href="../man3/EVP_PKEY_CTX_ctrl_str.html">EVP_PKEY_CTX_ctrl_str(3)</a>, <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_KDF.3.html">EVP_KDF(3)</a> <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_new.3.html">EVP_PKEY_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_ctrl_str.3.html">EVP_PKEY_CTX_ctrl_str(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>CMAC_CTX</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -28,7 +28,7 @@
 
 <pre><code>#include &lt;openssl/cmac.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be disabled entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>.</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be disabled entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>.</p>
 
 <pre><code>typedef struct CMAC_CTX_st CMAC_CTX;
 
@@ -45,33 +45,33 @@ int CMAC_resume(CMAC_CTX *ctx);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>The low-level MAC functions documented on this page are deprecated. Applications should use the new <a href="../man3/EVP_MAC.html">EVP_MAC(3)</a> interface. Specifically, utilize the following functions for MAC operations:</p>
+<p>The low-level MAC functions documented on this page are deprecated. Applications should use the new <a href="https://man7.org/linux/man-pages/man3/EVP_MAC.3.html">EVP_MAC(3)</a> interface. Specifically, utilize the following functions for MAC operations:</p>
 
 <dl>
 
-<dt id="EVP_MAC_CTX_new-3-to-create-a-new-MAC-context"><a href="../man3/EVP_MAC_CTX_new.html">EVP_MAC_CTX_new(3)</a> to create a new MAC context.</dt>
+<dt id="EVP_MAC_CTX_new-3-to-create-a-new-MAC-context"><a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_new.3.html">EVP_MAC_CTX_new(3)</a> to create a new MAC context.</dt>
 <dd>
 
 </dd>
-<dt id="EVP_MAC_CTX_free-3-to-free-the-MAC-context"><a href="../man3/EVP_MAC_CTX_free.html">EVP_MAC_CTX_free(3)</a> to free the MAC context.</dt>
+<dt id="EVP_MAC_CTX_free-3-to-free-the-MAC-context"><a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_free.3.html">EVP_MAC_CTX_free(3)</a> to free the MAC context.</dt>
 <dd>
 
 </dd>
-<dt id="EVP_MAC_init-3-to-initialize-the-MAC-context"><a href="../man3/EVP_MAC_init.html">EVP_MAC_init(3)</a> to initialize the MAC context.</dt>
+<dt id="EVP_MAC_init-3-to-initialize-the-MAC-context"><a href="https://man7.org/linux/man-pages/man3/EVP_MAC_init.3.html">EVP_MAC_init(3)</a> to initialize the MAC context.</dt>
 <dd>
 
 </dd>
-<dt id="EVP_MAC_update-3-to-update-the-MAC-with-data"><a href="../man3/EVP_MAC_update.html">EVP_MAC_update(3)</a> to update the MAC with data.</dt>
+<dt id="EVP_MAC_update-3-to-update-the-MAC-with-data"><a href="https://man7.org/linux/man-pages/man3/EVP_MAC_update.3.html">EVP_MAC_update(3)</a> to update the MAC with data.</dt>
 <dd>
 
 </dd>
-<dt id="EVP_MAC_final-3-to-finalize-the-MAC-and-retrieve-the-output"><a href="../man3/EVP_MAC_final.html">EVP_MAC_final(3)</a> to finalize the MAC and retrieve the output.</dt>
+<dt id="EVP_MAC_final-3-to-finalize-the-MAC-and-retrieve-the-output"><a href="https://man7.org/linux/man-pages/man3/EVP_MAC_final.3.html">EVP_MAC_final(3)</a> to finalize the MAC and retrieve the output.</dt>
 <dd>
 
 </dd>
 </dl>
 
-<p>Alternatively, for a single-step MAC computation, use the <a href="../man3/EVP_Q_mac.html">EVP_Q_mac(3)</a> function.</p>
+<p>Alternatively, for a single-step MAC computation, use the <a href="https://man7.org/linux/man-pages/man3/EVP_Q_mac.3.html">EVP_Q_mac(3)</a> function.</p>
 
 <p>The <b>CMAC_CTX</b> type is a structure used for the provision of CMAC (Cipher-based Message Authentication Code) operations.</p>
 
@@ -103,7 +103,7 @@ int CMAC_resume(CMAC_CTX *ctx);</code></pre>
 
 <h1 id="HISTORY">HISTORY</h1>
 
-<p>All functions described here were deprecated in OpenSSL 3.0. For replacements, see <a href="../man3/EVP_MAC_CTX_new.html">EVP_MAC_CTX_new(3)</a>, <a href="../man3/EVP_MAC_CTX_free.html">EVP_MAC_CTX_free(3)</a>, <a href="../man3/EVP_MAC_init.html">EVP_MAC_init(3)</a>, <a href="../man3/EVP_MAC_update.html">EVP_MAC_update(3)</a>, and <a href="../man3/EVP_MAC_final.html">EVP_MAC_final(3)</a>.</p>
+<p>All functions described here were deprecated in OpenSSL 3.0. For replacements, see <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_new.3.html">EVP_MAC_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_free.3.html">EVP_MAC_CTX_free(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_init.3.html">EVP_MAC_init(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_update.3.html">EVP_MAC_update(3)</a>, and <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_final.3.html">EVP_MAC_final(3)</a>.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

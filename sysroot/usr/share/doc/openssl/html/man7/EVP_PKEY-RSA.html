@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY-RSA</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -38,7 +38,7 @@
 
 <h2 id="Common-RSA-parameters">Common RSA parameters</h2>
 
-<p>In addition to the common parameters that all keytypes should support (see <a href="../man7/provider-keymgmt.html">&quot;Common parameters&quot; in provider-keymgmt(7)</a>), the <b>RSA</b> keytype implementation supports the following.</p>
+<p>In addition to the common parameters that all keytypes should support (see <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html#Common_parameters">&quot;Common parameters&quot; in provider-keymgmt(7)</a>), the <b>RSA</b> keytype implementation supports the following.</p>
 
 <dl>
 
@@ -51,7 +51,7 @@
 <dt id="e-OSSL_PKEY_PARAM_RSA_E-unsigned-integer">&quot;e&quot; (<b>OSSL_PKEY_PARAM_RSA_E</b>) &lt;unsigned integer&gt;</dt>
 <dd>
 
-<p>The RSA public exponent &quot;e&quot; value. This value must always be set when creating a raw key using <a href="../man3/EVP_PKEY_fromdata.html">EVP_PKEY_fromdata(3)</a>. Note that when a decryption operation is performed, that this value is used for blinding purposes to prevent timing attacks.</p>
+<p>The RSA public exponent &quot;e&quot; value. This value must always be set when creating a raw key using <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_fromdata.3.html">EVP_PKEY_fromdata(3)</a>. Note that when a decryption operation is performed, that this value is used for blinding purposes to prevent timing attacks.</p>
 
 </dd>
 <dt id="d-OSSL_PKEY_PARAM_RSA_D-unsigned-integer">&quot;d&quot; (<b>OSSL_PKEY_PARAM_RSA_D</b>) &lt;unsigned integer&gt;</dt>
@@ -280,15 +280,15 @@
 
 <h2 id="RSA-key-validation">RSA key validation</h2>
 
-<p>For RSA keys, <a href="../man3/EVP_PKEY_param_check.html">EVP_PKEY_param_check(3)</a> and <a href="../man3/EVP_PKEY_param_check_quick.html">EVP_PKEY_param_check_quick(3)</a> both return 1 unconditionally.</p>
+<p>For RSA keys, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_param_check.3.html">EVP_PKEY_param_check(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_param_check_quick.3.html">EVP_PKEY_param_check_quick(3)</a> both return 1 unconditionally.</p>
 
-<p>For RSA keys, <a href="../man3/EVP_PKEY_public_check.html">EVP_PKEY_public_check(3)</a> conforms to the SP800-56Br1 <i>public key check</i> when the OpenSSL FIPS provider is used. The OpenSSL default provider performs similar tests but relaxes the keysize restrictions for backwards compatibility.</p>
+<p>For RSA keys, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_public_check.3.html">EVP_PKEY_public_check(3)</a> conforms to the SP800-56Br1 <i>public key check</i> when the OpenSSL FIPS provider is used. The OpenSSL default provider performs similar tests but relaxes the keysize restrictions for backwards compatibility.</p>
 
-<p>For RSA keys, <a href="../man3/EVP_PKEY_public_check_quick.html">EVP_PKEY_public_check_quick(3)</a> is the same as <a href="../man3/EVP_PKEY_public_check.html">EVP_PKEY_public_check(3)</a>.</p>
+<p>For RSA keys, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_public_check_quick.3.html">EVP_PKEY_public_check_quick(3)</a> is the same as <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_public_check.3.html">EVP_PKEY_public_check(3)</a>.</p>
 
-<p>For RSA keys, <a href="../man3/EVP_PKEY_private_check.html">EVP_PKEY_private_check(3)</a> conforms to the SP800-56Br1 <i>private key test</i>.</p>
+<p>For RSA keys, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_private_check.3.html">EVP_PKEY_private_check(3)</a> conforms to the SP800-56Br1 <i>private key test</i>.</p>
 
-<p>For RSA keys, <a href="../man3/EVP_PKEY_pairwise_check.html">EVP_PKEY_pairwise_check(3)</a> conforms to the SP800-56Br1 <i>KeyPair Validation check</i> for the OpenSSL FIPS provider. The OpenSSL default provider allows testing of the validity of multi-primes.</p>
+<p>For RSA keys, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_pairwise_check.3.html">EVP_PKEY_pairwise_check(3)</a> conforms to the SP800-56Br1 <i>KeyPair Validation check</i> for the OpenSSL FIPS provider. The OpenSSL default provider allows testing of the validity of multi-primes.</p>
 
 <h1 id="CONFORMING-TO">CONFORMING TO</h1>
 
@@ -348,7 +348,7 @@ EVP_PKEY_CTX_free(pctx);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_RSA_gen.html">EVP_RSA_gen(3)</a>, <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a>, <a href="../man3/EVP_PKEY.html">EVP_PKEY(3)</a>, <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_RSA_gen.3.html">EVP_RSA_gen(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KEYMGMT.3.html">EVP_KEYMGMT(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY.3.html">EVP_PKEY(3)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

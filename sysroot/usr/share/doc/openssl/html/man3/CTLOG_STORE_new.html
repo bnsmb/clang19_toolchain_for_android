@@ -4,7 +4,7 @@
 <head>
 <title>CTLOG_STORE_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -45,7 +45,7 @@ int CTLOG_STORE_load_file(CTLOG_STORE *store, const char *file);</code></pre>
 
 <p>CTLOG_STORE_new() does the same thing as CTLOG_STORE_new_ex() but with the default library context and property query string.</p>
 
-<p>The CTLOG_STORE is then populated by CTLOG_STORE_load_default_file() or CTLOG_STORE_load_file(). CTLOG_STORE_load_default_file() loads from the default file, which is named <i>ct_log_list.cnf</i> in OPENSSLDIR (see the output of <a href="../man1/openssl-version.html">openssl-version(1)</a>). This can be overridden using an environment variable named <b>CTLOG_FILE</b>. CTLOG_STORE_load_file() loads from a caller-specified file path instead. Both of these functions append any loaded CT logs to the CTLOG_STORE.</p>
+<p>The CTLOG_STORE is then populated by CTLOG_STORE_load_default_file() or CTLOG_STORE_load_file(). CTLOG_STORE_load_default_file() loads from the default file, which is named <i>ct_log_list.cnf</i> in OPENSSLDIR (see the output of <a href="https://man7.org/linux/man-pages/man1/openssl-version.1.html">openssl-version(1)</a>). This can be overridden using an environment variable named <b>CTLOG_FILE</b>. CTLOG_STORE_load_file() loads from a caller-specified file path instead. Both of these functions append any loaded CT logs to the CTLOG_STORE.</p>
 
 <p>The expected format of the file is:</p>
 
@@ -71,7 +71,7 @@ key = &lt;base64-encoded DER SubjectPublicKeyInfo here&gt;</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ct.html">ct(7)</a>, <a href="../man3/CTLOG_STORE_get0_log_by_id.html">CTLOG_STORE_get0_log_by_id(3)</a>, <a href="../man3/SSL_CTX_set_ctlog_list_file.html">SSL_CTX_set_ctlog_list_file(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ct.7.html">ct(7)</a>, <a href="https://man7.org/linux/man-pages/man3/CTLOG_STORE_get0_log_by_id.3.html">CTLOG_STORE_get0_log_by_id(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_ctlog_list_file.3.html">SSL_CTX_set_ctlog_list_file(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

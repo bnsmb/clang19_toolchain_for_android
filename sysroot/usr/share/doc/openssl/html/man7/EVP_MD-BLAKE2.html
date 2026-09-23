@@ -4,7 +4,7 @@
 <head>
 <title>EVP_MD-BLAKE2</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -56,7 +56,7 @@
 
 <h2 id="Settable-Parameters">Settable Parameters</h2>
 
-<p>&quot;BLAKE2B-512&quot; supports the following EVP_MD_CTX_set_params() key described in <a href="../man3/EVP_DigestInit.html">&quot;PARAMETERS&quot; in EVP_DigestInit(3)</a>.</p>
+<p>&quot;BLAKE2B-512&quot; supports the following EVP_MD_CTX_set_params() key described in <a href="https://man7.org/linux/man-pages/man3/EVP_DigestInit.3.html#PARAMETERS">&quot;PARAMETERS&quot; in EVP_DigestInit(3)</a>.</p>
 
 <dl>
 
@@ -68,25 +68,25 @@
 
 <h2 id="Gettable-Parameters">Gettable Parameters</h2>
 
-<p>This implementation supports the common gettable parameters described in <a href="../man7/EVP_MD-common.html">EVP_MD-common(7)</a>.</p>
+<p>This implementation supports the common gettable parameters described in <a href="https://man7.org/linux/man-pages/man7/EVP_MD-common.7.html">EVP_MD-common(7)</a>.</p>
 
 <h2 id="Settable-Context-Parameters">Settable Context Parameters</h2>
 
-<p>The implementation supports the following <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> entries which are settable for an <b>EVP_MD_CTX</b> with <a href="../man3/EVP_DigestInit_ex2.html">EVP_DigestInit_ex2(3)</a> or <a href="../man3/EVP_MD_CTX_set_params.html">EVP_MD_CTX_set_params(3)</a>:</p>
+<p>The implementation supports the following <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> entries which are settable for an <b>EVP_MD_CTX</b> with <a href="https://man7.org/linux/man-pages/man3/EVP_DigestInit_ex2.3.html">EVP_DigestInit_ex2(3)</a> or <a href="https://man7.org/linux/man-pages/man3/EVP_MD_CTX_set_params.3.html">EVP_MD_CTX_set_params(3)</a>:</p>
 
 <dl>
 
 <dt id="size-OSSL_DIGEST_PARAM_SIZE-unsigned-integer1">&quot;size&quot; (<b>OSSL_DIGEST_PARAM_SIZE</b>) &lt;unsigned integer&gt;</dt>
 <dd>
 
-<p>Sets a different digest length for the <a href="../man3/EVP_DigestFinal.html">EVP_DigestFinal(3)</a> output. The value of the &quot;size&quot; parameter must not exceed the default digest length of the respective BLAKE2 algorithm variants, 64 for BLAKE2B-512 and 32 for BLAKE2S-256. The parameter must be set with the <a href="../man3/EVP_DigestInit_ex2.html">EVP_DigestInit_ex2(3)</a> call to have an immediate effect. When set with <a href="../man3/EVP_MD_CTX_set_params.html">EVP_MD_CTX_set_params(3)</a> it will have an effect only if the <b>EVP_MD_CTX</b> context is reinitialized.</p>
+<p>Sets a different digest length for the <a href="https://man7.org/linux/man-pages/man3/EVP_DigestFinal.3.html">EVP_DigestFinal(3)</a> output. The value of the &quot;size&quot; parameter must not exceed the default digest length of the respective BLAKE2 algorithm variants, 64 for BLAKE2B-512 and 32 for BLAKE2S-256. The parameter must be set with the <a href="https://man7.org/linux/man-pages/man3/EVP_DigestInit_ex2.3.html">EVP_DigestInit_ex2(3)</a> call to have an immediate effect. When set with <a href="https://man7.org/linux/man-pages/man3/EVP_MD_CTX_set_params.3.html">EVP_MD_CTX_set_params(3)</a> it will have an effect only if the <b>EVP_MD_CTX</b> context is reinitialized.</p>
 
 </dd>
 </dl>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/provider-digest.html">provider-digest(7)</a>, <a href="../man7/OSSL_PROVIDER-default.html">OSSL_PROVIDER-default(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/provider-digest.7.html">provider-digest(7)</a>, <a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-default.7.html">OSSL_PROVIDER-default(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

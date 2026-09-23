@@ -4,7 +4,7 @@
 <head>
 <title>config</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -48,9 +48,9 @@
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>This page documents the syntax of OpenSSL configuration files, as parsed by <a href="../man3/NCONF_load.html">NCONF_load(3)</a> and related functions. This format is used by many of the OpenSSL commands, and to initialize the libraries when used by any application.</p>
+<p>This page documents the syntax of OpenSSL configuration files, as parsed by <a href="https://man7.org/linux/man-pages/man3/NCONF_load.3.html">NCONF_load(3)</a> and related functions. This format is used by many of the OpenSSL commands, and to initialize the libraries when used by any application.</p>
 
-<p>The first part describes the general syntax of the configuration files, and subsequent sections describe the semantics of individual modules. Other modules are described in <a href="../man5/fips_config.html">fips_config(5)</a> and <a href="../man5/x509v3_config.html">x509v3_config(5)</a>. The syntax for defining ASN.1 values is described in <a href="../man3/ASN1_generate_nconf.html">ASN1_generate_nconf(3)</a>.</p>
+<p>The first part describes the general syntax of the configuration files, and subsequent sections describe the semantics of individual modules. Other modules are described in <a href="https://man7.org/linux/man-pages/man5/fips_config.5.html">fips_config(5)</a> and <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a>. The syntax for defining ASN.1 values is described in <a href="https://man7.org/linux/man-pages/man3/ASN1_generate_nconf.3.html">ASN1_generate_nconf(3)</a>.</p>
 
 <h1 id="SYNTAX">SYNTAX</h1>
 
@@ -106,7 +106,7 @@ name3 = Value 3</code></pre>
 
 <p>The <b>name</b> can contain any alphanumeric characters as well as a few punctuation symbols such as <b>.</b> <b>,</b> <b>;</b> and <b>_</b>. Whitespace after the name and before the equal sign is ignored.</p>
 
-<p>If a name is repeated in the same section, then all but the last value are ignored. In certain circumstances, such as with Certificate DNs, the same field may occur multiple times. In order to support this, commands like <a href="../man1/openssl-req.html">openssl-req(1)</a> ignore any leading text that is preceded with a period. For example:</p>
+<p>If a name is repeated in the same section, then all but the last value are ignored. In certain circumstances, such as with Certificate DNs, the same field may occur multiple times. In order to support this, commands like <a href="https://man7.org/linux/man-pages/man1/openssl-req.1.html">openssl-req(1)</a> ignore any leading text that is preceded with a period. For example:</p>
 
 <pre><code>1.OU = First OU
 2.OU = Second OU</code></pre>
@@ -226,7 +226,7 @@ identity = my_fips_module</code></pre>
 
 <h3 id="Default-provider-and-its-activation">Default provider and its activation</h3>
 
-<p>If no providers are activated explicitly, the default one is activated implicitly. See <a href="../man7/OSSL_PROVIDER-default.html">OSSL_PROVIDER-default(7)</a> for more details.</p>
+<p>If no providers are activated explicitly, the default one is activated implicitly. See <a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-default.7.html">OSSL_PROVIDER-default(7)</a> for more details.</p>
 
 <p>If you add a section explicitly activating any other provider(s), you most probably need to explicitly activate the default provider, otherwise it becomes unavailable in openssl. It may make the system remotely unavailable.</p>
 
@@ -404,7 +404,7 @@ random = CTR-DRBG</code></pre>
 <dt id="random_provider"><b>random_provider</b></dt>
 <dd>
 
-<p>This sets the provider to use for the <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a> calls instead of the built-in entropy sources. It defaults to &quot;fips&quot;. If the named provider is not loaded, the built-in entropy sources will be used.</p>
+<p>This sets the provider to use for the <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a> calls instead of the built-in entropy sources. It defaults to &quot;fips&quot;. If the named provider is not loaded, the built-in entropy sources will be used.</p>
 
 </dd>
 </dl>
@@ -491,7 +491,7 @@ default_properties = &quot;fips=yes&quot;</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl-x509.html">openssl-x509(1)</a>, <a href="../man1/openssl-req.html">openssl-req(1)</a>, <a href="../man1/openssl-ca.html">openssl-ca(1)</a>, <a href="../man1/openssl-fipsinstall.html">openssl-fipsinstall(1)</a>, <a href="../man3/ASN1_generate_nconf.html">ASN1_generate_nconf(3)</a>, <a href="../man3/EVP_set_default_properties.html">EVP_set_default_properties(3)</a>, <a href="../man3/CONF_modules_load.html">CONF_modules_load(3)</a>, <a href="../man3/CONF_modules_load_file.html">CONF_modules_load_file(3)</a>, <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a>, <a href="../man5/fips_config.html">fips_config(5)</a>, and <a href="../man5/x509v3_config.html">x509v3_config(5)</a>.</p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl-x509.1.html">openssl-x509(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-req.1.html">openssl-req(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ca.1.html">openssl-ca(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-fipsinstall.1.html">openssl-fipsinstall(1)</a>, <a href="https://man7.org/linux/man-pages/man3/ASN1_generate_nconf.3.html">ASN1_generate_nconf(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_set_default_properties.3.html">EVP_set_default_properties(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CONF_modules_load.3.html">CONF_modules_load(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CONF_modules_load_file.3.html">CONF_modules_load_file(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a>, <a href="https://man7.org/linux/man-pages/man5/fips_config.5.html">fips_config(5)</a>, and <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a>.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

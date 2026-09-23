@@ -4,7 +4,7 @@
 <head>
 <title>EVP_SealInit</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -46,7 +46,7 @@ int EVP_SealFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl);</code></p
 
 <p>If the cipher does not require an IV then the <b>iv</b> parameter is ignored and can be <b>NULL</b>.</p>
 
-<p>EVP_SealUpdate() and EVP_SealFinal() have exactly the same properties as the EVP_EncryptUpdate() and EVP_EncryptFinal() routines, as documented on the <a href="../man3/EVP_EncryptInit.html">EVP_EncryptInit(3)</a> manual page.</p>
+<p>EVP_SealUpdate() and EVP_SealFinal() have exactly the same properties as the EVP_EncryptUpdate() and EVP_EncryptFinal() routines, as documented on the <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html">EVP_EncryptInit(3)</a> manual page.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -56,7 +56,7 @@ int EVP_SealFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl);</code></p
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>Because a random secret key is generated the random number generator must be seeded when EVP_SealInit() is called. If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="../man7/RAND.html">RAND(7)</a>), the operation will fail.</p>
+<p>Because a random secret key is generated the random number generator must be seeded when EVP_SealInit() is called. If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a>), the operation will fail.</p>
 
 <p>The public key must be RSA because it is the only OpenSSL public key algorithm that supports key transport.</p>
 
@@ -66,7 +66,7 @@ int EVP_SealFinal(EVP_CIPHER_CTX *ctx, unsigned char *out, int *outl);</code></p
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/evp.html">evp(7)</a>, <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a>, <a href="../man3/EVP_EncryptInit.html">EVP_EncryptInit(3)</a>, <a href="../man3/EVP_OpenInit.html">EVP_OpenInit(3)</a>, <a href="../man7/RAND.html">RAND(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/evp.7.html">evp(7)</a>, <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html">EVP_EncryptInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_OpenInit.3.html">EVP_OpenInit(3)</a>, <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

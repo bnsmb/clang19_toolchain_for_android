@@ -4,7 +4,7 @@
 <head>
 <title>RC4_set_key</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 
 <pre><code>#include &lt;openssl/rc4.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>void RC4_set_key(RC4_KEY *key, int len, const unsigned char *data);
 
@@ -39,7 +39,7 @@ void RC4(RC4_KEY *key, unsigned long len, const unsigned char *indata,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>All of the functions described on this page are deprecated. Applications should instead use <a href="../man3/EVP_EncryptInit_ex.html">EVP_EncryptInit_ex(3)</a>, <a href="../man3/EVP_EncryptUpdate.html">EVP_EncryptUpdate(3)</a> and <a href="../man3/EVP_EncryptFinal_ex.html">EVP_EncryptFinal_ex(3)</a> or the equivalently named decrypt functions.</p>
+<p>All of the functions described on this page are deprecated. Applications should instead use <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit_ex.3.html">EVP_EncryptInit_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptUpdate.3.html">EVP_EncryptUpdate(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptFinal_ex.3.html">EVP_EncryptFinal_ex(3)</a> or the equivalently named decrypt functions.</p>
 
 <p>This library implements the Alleged RC4 cipher, which is described for example in <i>Applied Cryptography</i>. It is believed to be compatible with RC4[TM], a proprietary cipher of RSA Security Inc.</p>
 
@@ -59,13 +59,13 @@ void RC4(RC4_KEY *key, unsigned long len, const unsigned char *indata,
 
 <h1 id="NOTE">NOTE</h1>
 
-<p>Applications should use the higher level functions <a href="../man3/EVP_EncryptInit.html">EVP_EncryptInit(3)</a> etc. instead of calling these functions directly.</p>
+<p>Applications should use the higher level functions <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html">EVP_EncryptInit(3)</a> etc. instead of calling these functions directly.</p>
 
 <p>It is difficult to securely use stream ciphers. For example, do not perform multiple encryptions using the same key stream.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_EncryptInit.html">EVP_EncryptInit(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html">EVP_EncryptInit(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

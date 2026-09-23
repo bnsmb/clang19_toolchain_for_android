@@ -4,7 +4,7 @@
 <head>
 <title>provider</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -53,11 +53,11 @@
 
 <p>An <i>algorithm</i> is a named method to perform an operation. Very often, the algorithms revolve around cryptographic operations, but may also revolve around other types of operation, such as managing certain types of objects.</p>
 
-<p>See <a href="../man7/crypto.html">crypto(7)</a> for further details.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a> for further details.</p>
 
 <h2 id="Provider">Provider</h2>
 
-<p>A <i>provider</i> offers an initialization function, as a set of base functions in the form of an <a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> array, and by extension, a set of <a href="../man3/OSSL_ALGORITHM.html">OSSL_ALGORITHM(3)</a>s (see <a href="../man7/openssl-core.h.html">openssl-core.h(7)</a>). It may be a dynamically loadable module, or may be built-in, in OpenSSL libraries or in the application. If it&#39;s a dynamically loadable module, the initialization function must be named <code>OSSL_provider_init</code> and must be exported. If it&#39;s built-in, the initialization function may have any name.</p>
+<p>A <i>provider</i> offers an initialization function, as a set of base functions in the form of an <a href="https://man7.org/linux/man-pages/man3/OSSL_DISPATCH.3.html">OSSL_DISPATCH(3)</a> array, and by extension, a set of <a href="https://man7.org/linux/man-pages/man3/OSSL_ALGORITHM.3.html">OSSL_ALGORITHM(3)</a>s (see <a href="https://man7.org/linux/man-pages/man7/openssl-core.h.7.html">openssl-core.h(7)</a>). It may be a dynamically loadable module, or may be built-in, in OpenSSL libraries or in the application. If it&#39;s a dynamically loadable module, the initialization function must be named <code>OSSL_provider_init</code> and must be exported. If it&#39;s built-in, the initialization function may have any name.</p>
 
 <p>The initialization function must have the following signature:</p>
 
@@ -67,9 +67,9 @@
 
 <p><i>handle</i> is the OpenSSL library object for the provider, and works as a handle for everything the OpenSSL libraries need to know about the provider. For the provider itself, it is passed to some of the functions given in the dispatch array <i>in</i>.</p>
 
-<p><i>in</i> is a dispatch array of base functions offered by the OpenSSL libraries, and the available functions are further described in <a href="../man7/provider-base.html">provider-base(7)</a>.</p>
+<p><i>in</i> is a dispatch array of base functions offered by the OpenSSL libraries, and the available functions are further described in <a href="https://man7.org/linux/man-pages/man7/provider-base.7.html">provider-base(7)</a>.</p>
 
-<p><i>*out</i> must be assigned a dispatch array of base functions that the provider offers to the OpenSSL libraries. The functions that may be offered are further described in <a href="../man7/provider-base.html">provider-base(7)</a>, and they are the central means of communication between the OpenSSL libraries and the provider.</p>
+<p><i>*out</i> must be assigned a dispatch array of base functions that the provider offers to the OpenSSL libraries. The functions that may be offered are further described in <a href="https://man7.org/linux/man-pages/man7/provider-base.7.html">provider-base(7)</a>, and they are the central means of communication between the OpenSSL libraries and the provider.</p>
 
 <p><i>*provctx</i> should be assigned a provider specific context to allow the provider multiple simultaneous uses. This pointer will be passed to various operation functions offered by the provider.</p>
 
@@ -87,7 +87,7 @@
 
 <p><i>no_store</i> is a flag back to the OpenSSL libraries which, when nonzero, signifies that the OpenSSL libraries will not store a reference to the returned data in their internal store of implementations.</p>
 
-<p>The returned <a href="../man3/OSSL_ALGORITHM.html">OSSL_ALGORITHM(3)</a> is the foundation of any OpenSSL library API that uses providers for their implementation, most commonly in the <i>fetching</i> type of functions (see <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a>).</p>
+<p>The returned <a href="https://man7.org/linux/man-pages/man3/OSSL_ALGORITHM.3.html">OSSL_ALGORITHM(3)</a> is the foundation of any OpenSSL library API that uses providers for their implementation, most commonly in the <i>fetching</i> type of functions (see <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a>).</p>
 
 <h2 id="Operations">Operations</h2>
 
@@ -102,79 +102,79 @@
 <dt id="Digests">Digests</dt>
 <dd>
 
-<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_MD</b>. The number for this operation is <b>OSSL_OP_DIGEST</b>. The functions the provider can offer are described in <a href="../man7/provider-digest.html">provider-digest(7)</a>.</p>
+<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_MD</b>. The number for this operation is <b>OSSL_OP_DIGEST</b>. The functions the provider can offer are described in <a href="https://man7.org/linux/man-pages/man7/provider-digest.7.html">provider-digest(7)</a>.</p>
 
 </dd>
 <dt id="Symmetric-ciphers">Symmetric ciphers</dt>
 <dd>
 
-<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_CIPHER</b>. The number for this operation is <b>OSSL_OP_CIPHER</b>. The functions the provider can offer are described in <a href="../man7/provider-cipher.html">provider-cipher(7)</a>.</p>
+<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_CIPHER</b>. The number for this operation is <b>OSSL_OP_CIPHER</b>. The functions the provider can offer are described in <a href="https://man7.org/linux/man-pages/man7/provider-cipher.7.html">provider-cipher(7)</a>.</p>
 
 </dd>
 <dt id="Message-Authentication-Code-MAC">Message Authentication Code (MAC)</dt>
 <dd>
 
-<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_MAC</b>. The number for this operation is <b>OSSL_OP_MAC</b>. The functions the provider can offer are described in <a href="../man7/provider-mac.html">provider-mac(7)</a>.</p>
+<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_MAC</b>. The number for this operation is <b>OSSL_OP_MAC</b>. The functions the provider can offer are described in <a href="https://man7.org/linux/man-pages/man7/provider-mac.7.html">provider-mac(7)</a>.</p>
 
 </dd>
 <dt id="Key-Derivation-Function-KDF">Key Derivation Function (KDF)</dt>
 <dd>
 
-<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_KDF</b>. The number for this operation is <b>OSSL_OP_KDF</b>. The functions the provider can offer are described in <a href="../man7/provider-kdf.html">provider-kdf(7)</a>.</p>
+<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_KDF</b>. The number for this operation is <b>OSSL_OP_KDF</b>. The functions the provider can offer are described in <a href="https://man7.org/linux/man-pages/man7/provider-kdf.7.html">provider-kdf(7)</a>.</p>
 
 </dd>
 <dt id="Key-Exchange">Key Exchange</dt>
 <dd>
 
-<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_KEYEXCH</b>. The number for this operation is <b>OSSL_OP_KEYEXCH</b>. The functions the provider can offer are described in <a href="../man7/provider-keyexch.html">provider-keyexch(7)</a>.</p>
+<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_KEYEXCH</b>. The number for this operation is <b>OSSL_OP_KEYEXCH</b>. The functions the provider can offer are described in <a href="https://man7.org/linux/man-pages/man7/provider-keyexch.7.html">provider-keyexch(7)</a>.</p>
 
 </dd>
 <dt id="Asymmetric-Ciphers">Asymmetric Ciphers</dt>
 <dd>
 
-<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_ASYM_CIPHER</b>. The number for this operation is <b>OSSL_OP_ASYM_CIPHER</b>. The functions the provider can offer are described in <a href="../man7/provider-asym_cipher.html">provider-asym_cipher(7)</a>.</p>
+<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_ASYM_CIPHER</b>. The number for this operation is <b>OSSL_OP_ASYM_CIPHER</b>. The functions the provider can offer are described in <a href="https://man7.org/linux/man-pages/man7/provider-asym_cipher.7.html">provider-asym_cipher(7)</a>.</p>
 
 </dd>
 <dt id="Asymmetric-Key-Encapsulation">Asymmetric Key Encapsulation</dt>
 <dd>
 
-<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_KEM</b>. The number for this operation is <b>OSSL_OP_KEM</b>. The functions the provider can offer are described in <a href="../man7/provider-kem.html">provider-kem(7)</a>.</p>
+<p>In the OpenSSL libraries, the corresponding method object is <b>EVP_KEM</b>. The number for this operation is <b>OSSL_OP_KEM</b>. The functions the provider can offer are described in <a href="https://man7.org/linux/man-pages/man7/provider-kem.7.html">provider-kem(7)</a>.</p>
 
 </dd>
 <dt id="Encoding">Encoding</dt>
 <dd>
 
-<p>In the OpenSSL libraries, the corresponding method object is <b>OSSL_ENCODER</b>. The number for this operation is <b>OSSL_OP_ENCODER</b>. The functions the provider can offer are described in <a href="../man7/provider-encoder.html">provider-encoder(7)</a>.</p>
+<p>In the OpenSSL libraries, the corresponding method object is <b>OSSL_ENCODER</b>. The number for this operation is <b>OSSL_OP_ENCODER</b>. The functions the provider can offer are described in <a href="https://man7.org/linux/man-pages/man7/provider-encoder.7.html">provider-encoder(7)</a>.</p>
 
 </dd>
 <dt id="Decoding">Decoding</dt>
 <dd>
 
-<p>In the OpenSSL libraries, the corresponding method object is <b>OSSL_DECODER</b>. The number for this operation is <b>OSSL_OP_DECODER</b>. The functions the provider can offer are described in <a href="../man7/provider-decoder.html">provider-decoder(7)</a>.</p>
+<p>In the OpenSSL libraries, the corresponding method object is <b>OSSL_DECODER</b>. The number for this operation is <b>OSSL_OP_DECODER</b>. The functions the provider can offer are described in <a href="https://man7.org/linux/man-pages/man7/provider-decoder.7.html">provider-decoder(7)</a>.</p>
 
 </dd>
 <dt id="Random-Number-Generation">Random Number Generation</dt>
 <dd>
 
-<p>The number for this operation is <b>OSSL_OP_RAND</b>. The functions the provider can offer for random number generation are described in <a href="../man7/provider-rand.html">provider-rand(7)</a>.</p>
+<p>The number for this operation is <b>OSSL_OP_RAND</b>. The functions the provider can offer for random number generation are described in <a href="https://man7.org/linux/man-pages/man7/provider-rand.7.html">provider-rand(7)</a>.</p>
 
 </dd>
 <dt id="Key-Management">Key Management</dt>
 <dd>
 
-<p>The number for this operation is <b>OSSL_OP_KEYMGMT</b>. The functions the provider can offer for key management are described in <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>.</p>
+<p>The number for this operation is <b>OSSL_OP_KEYMGMT</b>. The functions the provider can offer for key management are described in <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>.</p>
 
 </dd>
 <dt id="Signing-and-Signature-Verification">Signing and Signature Verification</dt>
 <dd>
 
-<p>The number for this operation is <b>OSSL_OP_SIGNATURE</b>. The functions the provider can offer for digital signatures are described in <a href="../man7/provider-signature.html">provider-signature(7)</a>.</p>
+<p>The number for this operation is <b>OSSL_OP_SIGNATURE</b>. The functions the provider can offer for digital signatures are described in <a href="https://man7.org/linux/man-pages/man7/provider-signature.7.html">provider-signature(7)</a>.</p>
 
 </dd>
 <dt id="Store-Management">Store Management</dt>
 <dd>
 
-<p>The number for this operation is <b>OSSL_OP_STORE</b>. The functions the provider can offer for store management are described in <a href="../man7/provider-storemgmt.html">provider-storemgmt(7)</a>.</p>
+<p>The number for this operation is <b>OSSL_OP_STORE</b>. The functions the provider can offer for store management are described in <a href="https://man7.org/linux/man-pages/man7/provider-storemgmt.7.html">provider-storemgmt(7)</a>.</p>
 
 </dd>
 </dl>
@@ -205,11 +205,11 @@
 
 <h1 id="OPENSSL-PROVIDERS">OPENSSL PROVIDERS</h1>
 
-<p>OpenSSL provides a number of its own providers. These are the default, base, fips, legacy and null providers. See <a href="../man7/crypto.html">crypto(7)</a> for an overview of these providers.</p>
+<p>OpenSSL provides a number of its own providers. These are the default, base, fips, legacy and null providers. See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a> for an overview of these providers.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_DigestInit_ex.html">EVP_DigestInit_ex(3)</a>, <a href="../man3/EVP_EncryptInit_ex.html">EVP_EncryptInit_ex(3)</a>, <a href="../man3/OSSL_LIB_CTX.html">OSSL_LIB_CTX(3)</a>, <a href="../man3/EVP_set_default_properties.html">EVP_set_default_properties(3)</a>, <a href="../man3/EVP_MD_fetch.html">EVP_MD_fetch(3)</a>, <a href="../man3/EVP_CIPHER_fetch.html">EVP_CIPHER_fetch(3)</a>, <a href="../man3/EVP_KEYMGMT_fetch.html">EVP_KEYMGMT_fetch(3)</a>, <a href="../man7/openssl-core.h.html">openssl-core.h(7)</a>, <a href="../man7/provider-base.html">provider-base(7)</a>, <a href="../man7/provider-digest.html">provider-digest(7)</a>, <a href="../man7/provider-cipher.html">provider-cipher(7)</a>, <a href="../man7/provider-keyexch.html">provider-keyexch(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_DigestInit_ex.3.html">EVP_DigestInit_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit_ex.3.html">EVP_EncryptInit_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_LIB_CTX.3.html">OSSL_LIB_CTX(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_set_default_properties.3.html">EVP_set_default_properties(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_MD_fetch.3.html">EVP_MD_fetch(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_fetch.3.html">EVP_CIPHER_fetch(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KEYMGMT_fetch.3.html">EVP_KEYMGMT_fetch(3)</a>, <a href="https://man7.org/linux/man-pages/man7/openssl-core.h.7.html">openssl-core.h(7)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-base.7.html">provider-base(7)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-digest.7.html">provider-digest(7)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-cipher.7.html">provider-cipher(7)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-keyexch.7.html">provider-keyexch(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

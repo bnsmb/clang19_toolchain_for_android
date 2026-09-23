@@ -4,7 +4,7 @@
 <head>
 <title>tsget</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -32,7 +32,7 @@
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>This command can be used for sending a timestamp request, as specified in RFC 3161, to a timestamp server over HTTP or HTTPS and storing the timestamp response in a file. It cannot be used for creating the requests and verifying responses, you have to use <a href="../man1/openssl-ts.html">openssl-ts(1)</a> to do that. This command can send several requests to the server without closing the TCP connection if more than one requests are specified on the command line.</p>
+<p>This command can be used for sending a timestamp request, as specified in RFC 3161, to a timestamp server over HTTP or HTTPS and storing the timestamp response in a file. It cannot be used for creating the requests and verifying responses, you have to use <a href="https://man7.org/linux/man-pages/man1/openssl-ts.1.html">openssl-ts(1)</a> to do that. This command can send several requests to the server without closing the TCP connection if more than one requests are specified on the command line.</p>
 
 <p>This command sends the following HTTP request for each timestamp request:</p>
 
@@ -109,13 +109,13 @@ Content-Length: length of body
 <dt id="P-CA_path"><b>-P</b> <i>CA_path</i></dt>
 <dd>
 
-<p>(HTTPS) The path containing the trusted CA certificates to verify the peer&#39;s certificate. The directory must be prepared with <a href="../man1/openssl-rehash.html">openssl-rehash(1)</a>. Either option <b>-C</b> or option <b>-P</b> must be given in case of HTTPS. (Optional)</p>
+<p>(HTTPS) The path containing the trusted CA certificates to verify the peer&#39;s certificate. The directory must be prepared with <a href="https://man7.org/linux/man-pages/man1/openssl-rehash.1.html">openssl-rehash(1)</a>. Either option <b>-C</b> or option <b>-P</b> must be given in case of HTTPS. (Optional)</p>
 
 </dd>
 <dt id="r-files"><b>-r</b> <i>files</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Random State Options&quot; in openssl(1)</a> for more information.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Random_State_Options">&quot;Random State Options&quot; in openssl(1)</a> for more information.</p>
 
 </dd>
 <dt id="g-EGD_socket"><b>-g</b> <i>EGD_socket</i></dt>
@@ -174,7 +174,7 @@ tsget file1.tsq</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl.html">openssl(1)</a>, <a href="../man1/openssl-ts.html">openssl-ts(1)</a>, <a>WWW::Curl::Easy</a>, <a href="https://www.rfc-editor.org/rfc/rfc3161.html">https://www.rfc-editor.org/rfc/rfc3161.html</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl.1.html">openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ts.1.html">openssl-ts(1)</a>, <a>WWW::Curl::Easy</a>, <a href="https://www.rfc-editor.org/rfc/rfc3161.html">https://www.rfc-editor.org/rfc/rfc3161.html</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

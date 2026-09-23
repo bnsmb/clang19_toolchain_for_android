@@ -4,7 +4,7 @@
 <head>
 <title>EVP_KEYEXCH-DH</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -74,20 +74,20 @@
 <dt id="digest-check-OSSL_EXCHANGE_PARAM_FIPS_DIGEST_CHECK-integer">&quot;digest-check&quot; (<b>OSSL_EXCHANGE_PARAM_FIPS_DIGEST_CHECK</b>) &lt;integer&gt;</dt>
 <dd>
 
-<p>See <a href="../man7/provider-keyexch.html">&quot;Common Key Exchange parameters&quot; in provider-keyexch(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/provider-keyexch.7.html#Common_Key_Exchange_parameters">&quot;Common Key Exchange parameters&quot; in provider-keyexch(7)</a>.</p>
 
 </dd>
 <dt id="cekalg-OSSL_KDF_PARAM_CEK_ALG-octet-string-ptr">&quot;cekalg&quot; (<b>OSSL_KDF_PARAM_CEK_ALG</b>) &lt;octet string ptr&gt;</dt>
 <dd>
 
-<p>See <a href="../man7/provider-kdf.html">&quot;KDF Parameters&quot; in provider-kdf(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/provider-kdf.7.html#KDF_Parameters">&quot;KDF Parameters&quot; in provider-kdf(7)</a>.</p>
 
 </dd>
 </dl>
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
-<p>The examples assume a host and peer both generate keys using the same named group (or domain parameters). See <a href="../man7/EVP_PKEY-DH.html">&quot;Examples&quot; in EVP_PKEY-DH(7)</a>. Both the host and peer transfer their public key to each other.</p>
+<p>The examples assume a host and peer both generate keys using the same named group (or domain parameters). See <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DH.7.html#Examples">&quot;Examples&quot; in EVP_PKEY-DH(7)</a>. Both the host and peer transfer their public key to each other.</p>
 
 <p>To convert the peer&#39;s generated key pair to a public key in DER format in order to transfer to the host:</p>
 
@@ -140,7 +140,7 @@ void derive_secret(EVP_KEY *host_key, EVP_PKEY *peer_pub_key)
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/EVP_PKEY-DH.html">EVP_PKEY-DH(7)</a>, <a href="../man7/EVP_PKEY-FFC.html">EVP_PKEY-FFC(7)</a>, <a href="../man3/EVP_PKEY.html">EVP_PKEY(3)</a>, <a href="../man7/provider-keyexch.html">provider-keyexch(7)</a>, <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>, <a href="../man7/OSSL_PROVIDER-default.html">OSSL_PROVIDER-default(7)</a>, <a href="../man7/OSSL_PROVIDER-FIPS.html">OSSL_PROVIDER-FIPS(7)</a>,</p>
+<p><a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DH.7.html">EVP_PKEY-DH(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-FFC.7.html">EVP_PKEY-FFC(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY.3.html">EVP_PKEY(3)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-keyexch.7.html">provider-keyexch(7)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>, <a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-default.7.html">OSSL_PROVIDER-default(7)</a>, <a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-FIPS.7.html">OSSL_PROVIDER-FIPS(7)</a>,</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set_tlsext_ticket_key_cb</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -36,7 +36,7 @@ int SSL_CTX_set_tlsext_ticket_key_evp_cb(SSL_CTX sslctx,
               unsigned char iv[EVP_MAX_IV_LENGTH],
               EVP_CIPHER_CTX *ctx, EVP_MAC_CTX *hctx, int enc));</code></pre>
 
-<p>The following function has been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following function has been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int SSL_CTX_set_tlsext_ticket_key_cb(SSL_CTX sslctx,
     int (*cb)(SSL *s, unsigned char key_name[16],
@@ -53,7 +53,7 @@ int SSL_CTX_set_tlsext_ticket_key_evp_cb(SSL_CTX sslctx,
 
 <p>In order to reuse a session, a TLS client must send the session ticket extension to the server. The client must send exactly one session ticket. The server, through the callback function, either agrees to reuse the session ticket information or it starts a full TLS handshake to create a new session ticket.</p>
 
-<p>Before the callback function is started <i>ctx</i> and <i>hctx</i> have been initialised with <a href="../man3/EVP_CIPHER_CTX_reset.html">EVP_CIPHER_CTX_reset(3)</a> and <a href="../man3/EVP_MAC_CTX_new.html">EVP_MAC_CTX_new(3)</a> respectively.</p>
+<p>Before the callback function is started <i>ctx</i> and <i>hctx</i> have been initialised with <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_CTX_reset.3.html">EVP_CIPHER_CTX_reset(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_new.3.html">EVP_MAC_CTX_new(3)</a> respectively.</p>
 
 <p>For new sessions tickets, when the client doesn&#39;t present a session ticket, or an attempted retrieval of the ticket failed, or a renew option was indicated, the callback function will be called with <i>enc</i> equal to 1. The OpenSSL library expects that the function will set an arbitrary <i>name</i>, initialize <i>iv</i>, and set the cipher context <i>ctx</i> and the hash context <i>hctx</i>.</p>
 
@@ -61,9 +61,9 @@ int SSL_CTX_set_tlsext_ticket_key_evp_cb(SSL_CTX sslctx,
 
 <p>The <i>iv</i> length is the length of the IV of the corresponding cipher. The maximum IV length is <b>EVP_MAX_IV_LENGTH</b> bytes defined in <i>&lt;openssl/evp.h&gt;</i>.</p>
 
-<p>The initialization vector <i>iv</i> should be a random value. The cipher context <i>ctx</i> should use the initialisation vector <i>iv</i>. The cipher context can be set using <a href="../man3/EVP_EncryptInit_ex.html">EVP_EncryptInit_ex(3)</a>. The hmac context and digest can be set using <a href="../man3/EVP_MAC_CTX_set_params.html">EVP_MAC_CTX_set_params(3)</a> with the <b>OSSL_MAC_PARAM_KEY</b> and <b>OSSL_MAC_PARAM_DIGEST</b> parameters respectively.</p>
+<p>The initialization vector <i>iv</i> should be a random value. The cipher context <i>ctx</i> should use the initialisation vector <i>iv</i>. The cipher context can be set using <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit_ex.3.html">EVP_EncryptInit_ex(3)</a>. The hmac context and digest can be set using <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_set_params.3.html">EVP_MAC_CTX_set_params(3)</a> with the <b>OSSL_MAC_PARAM_KEY</b> and <b>OSSL_MAC_PARAM_DIGEST</b> parameters respectively.</p>
 
-<p>When the client presents a session ticket, the callback function with be called with <i>enc</i> set to 0 indicating that the <i>cb</i> function should retrieve a set of parameters. In this case <i>name</i> and <i>iv</i> have already been parsed out of the session ticket. The OpenSSL library expects that the <i>name</i> will be used to retrieve a cryptographic parameters and that the cryptographic context <i>ctx</i> will be set with the retrieved parameters and the initialization vector <i>iv</i>. using a function like <a href="../man3/EVP_DecryptInit_ex.html">EVP_DecryptInit_ex(3)</a>. The key material and digest for <i>hctx</i> need to be set using <a href="../man3/EVP_MAC_CTX_set_params.html">EVP_MAC_CTX_set_params(3)</a> with the <b>OSSL_MAC_PARAM_KEY</b> and <b>OSSL_MAC_PARAM_DIGEST</b> parameters respectively.</p>
+<p>When the client presents a session ticket, the callback function with be called with <i>enc</i> set to 0 indicating that the <i>cb</i> function should retrieve a set of parameters. In this case <i>name</i> and <i>iv</i> have already been parsed out of the session ticket. The OpenSSL library expects that the <i>name</i> will be used to retrieve a cryptographic parameters and that the cryptographic context <i>ctx</i> will be set with the retrieved parameters and the initialization vector <i>iv</i>. using a function like <a href="https://man7.org/linux/man-pages/man3/EVP_DecryptInit_ex.3.html">EVP_DecryptInit_ex(3)</a>. The key material and digest for <i>hctx</i> need to be set using <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_set_params.3.html">EVP_MAC_CTX_set_params(3)</a> with the <b>OSSL_MAC_PARAM_KEY</b> and <b>OSSL_MAC_PARAM_DIGEST</b> parameters respectively.</p>
 
 <p>If the <i>name</i> is still valid but a renewal of the ticket is required the callback function should return 2. The library will call the callback again with an argument of enc equal to 1 to set the new ticket.</p>
 
@@ -99,7 +99,7 @@ int SSL_CTX_set_tlsext_ticket_key_evp_cb(SSL_CTX sslctx,
 </dd>
 </dl>
 
-<p>The SSL_CTX_set_tlsext_ticket_key_cb() function is identical to SSL_CTX_set_tlsext_ticket_key_evp_cb() except that it takes a deprecated HMAC_CTX pointer instead of an EVP_MAC_CTX one. Before this callback function is started <i>hctx</i> will have been initialised with <a href="../man3/EVP_MAC_CTX_new.html">EVP_MAC_CTX_new(3)</a> and the digest set with <a href="../man3/EVP_MAC_CTX_set_params.html">EVP_MAC_CTX_set_params(3)</a>. The <i>hctx</i> key material can be set using <a href="../man3/HMAC_Init_ex.html">HMAC_Init_ex(3)</a>.</p>
+<p>The SSL_CTX_set_tlsext_ticket_key_cb() function is identical to SSL_CTX_set_tlsext_ticket_key_evp_cb() except that it takes a deprecated HMAC_CTX pointer instead of an EVP_MAC_CTX one. Before this callback function is started <i>hctx</i> will have been initialised with <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_new.3.html">EVP_MAC_CTX_new(3)</a> and the digest set with <a href="https://man7.org/linux/man-pages/man3/EVP_MAC_CTX_set_params.3.html">EVP_MAC_CTX_set_params(3)</a>. The <i>hctx</i> key material can be set using <a href="https://man7.org/linux/man-pages/man3/HMAC_Init_ex.3.html">HMAC_Init_ex(3)</a>.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -191,7 +191,7 @@ static int ssl_tlsext_ticket_key_cb(SSL *s, unsigned char key_name[16],
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_set_session.html">SSL_set_session(3)</a>, <a href="../man3/SSL_session_reused.html">SSL_session_reused(3)</a>, <a href="../man3/SSL_CTX_add_session.html">SSL_CTX_add_session(3)</a>, <a href="../man3/SSL_CTX_sess_number.html">SSL_CTX_sess_number(3)</a>, <a href="../man3/SSL_CTX_sess_set_get_cb.html">SSL_CTX_sess_set_get_cb(3)</a>, <a href="../man3/SSL_CTX_set_session_id_context.html">SSL_CTX_set_session_id_context(3)</a>,</p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_set_session.3.html">SSL_set_session(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_session_reused.3.html">SSL_session_reused(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_add_session.3.html">SSL_CTX_add_session(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_sess_number.3.html">SSL_CTX_sess_number(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_sess_set_get_cb.3.html">SSL_CTX_sess_set_get_cb(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_session_id_context.3.html">SSL_CTX_set_session_id_context(3)</a>,</p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

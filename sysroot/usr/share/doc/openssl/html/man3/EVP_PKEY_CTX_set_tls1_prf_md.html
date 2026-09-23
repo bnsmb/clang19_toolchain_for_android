@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY_CTX_set_tls1_prf_md</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -40,7 +40,7 @@ int EVP_PKEY_CTX_add1_tls1_prf_seed(EVP_PKEY_CTX *pctx,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>The <b>EVP_PKEY_TLS1_PRF</b> algorithm implements the PRF key derivation function for TLS. It has no associated private key and only implements key derivation using <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a>.</p>
+<p>The <b>EVP_PKEY_TLS1_PRF</b> algorithm implements the PRF key derivation function for TLS. It has no associated private key and only implements key derivation using <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a>.</p>
 
 <p>EVP_PKEY_set_tls1_prf_md() sets the message digest associated with the TLS PRF. EVP_md5_sha1() is treated as a special case which uses the PRF algorithm using both <b>MD5</b> and <b>SHA1</b> as used in TLS 1.0 and 1.1.</p>
 
@@ -50,7 +50,7 @@ int EVP_PKEY_CTX_add1_tls1_prf_seed(EVP_PKEY_CTX *pctx,
 
 <h1 id="STRING-CTRLS">STRING CTRLS</h1>
 
-<p>The TLS PRF also supports string based control operations using <a href="../man3/EVP_PKEY_CTX_ctrl_str.html">EVP_PKEY_CTX_ctrl_str(3)</a>. The <b>type</b> parameter &quot;md&quot; uses the supplied <b>value</b> as the name of the digest algorithm to use. The <b>type</b> parameters &quot;secret&quot; and &quot;seed&quot; use the supplied <b>value</b> parameter as a secret or seed value. The names &quot;hexsecret&quot; and &quot;hexseed&quot; are similar except they take a hex string which is converted to binary.</p>
+<p>The TLS PRF also supports string based control operations using <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_ctrl_str.3.html">EVP_PKEY_CTX_ctrl_str(3)</a>. The <b>type</b> parameter &quot;md&quot; uses the supplied <b>value</b> as the name of the digest algorithm to use. The <b>type</b> parameters &quot;secret&quot; and &quot;seed&quot; use the supplied <b>value</b> parameter as a secret or seed value. The names &quot;hexsecret&quot; and &quot;hexseed&quot; are similar except they take a hex string which is converted to binary.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -92,7 +92,7 @@ if (EVP_PKEY_derive(pctx, out, &amp;outlen) &lt;= 0)
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_CTX_new.html">EVP_PKEY_CTX_new(3)</a>, <a href="../man3/EVP_PKEY_CTX_ctrl_str.html">EVP_PKEY_CTX_ctrl_str(3)</a>, <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_new.3.html">EVP_PKEY_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_ctrl_str.3.html">EVP_PKEY_CTX_ctrl_str(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

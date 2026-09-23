@@ -4,7 +4,7 @@
 <head>
 <title>passphrase-encoding</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -73,11 +73,11 @@
 
 <h2 id="OSSL_STORE">OSSL_STORE</h2>
 
-<p><a href="../man7/ossl_store.html">ossl_store(7)</a> acts as a general interface to access all kinds of objects, potentially protected with a pass phrase, a PIN or something else. This API stipulates that pass phrases should be UTF-8 encoded, and that any other pass phrase encoding may give undefined results. This API relies on the application to ensure UTF-8 encoding, and doesn&#39;t check that this is the case, so what it gets, it will also pass to the underlying loader.</p>
+<p><a href="https://man7.org/linux/man-pages/man7/ossl_store.7.html">ossl_store(7)</a> acts as a general interface to access all kinds of objects, potentially protected with a pass phrase, a PIN or something else. This API stipulates that pass phrases should be UTF-8 encoded, and that any other pass phrase encoding may give undefined results. This API relies on the application to ensure UTF-8 encoding, and doesn&#39;t check that this is the case, so what it gets, it will also pass to the underlying loader.</p>
 
 <h1 id="RECOMMENDATIONS">RECOMMENDATIONS</h1>
 
-<p>This section assumes that you know what pass phrase was used for encryption, but that it may have been encoded in a different character encoding than the one used by your current input method. For example, the pass phrase may have been used at a time when your default encoding was ISO-8859-1 (i.e. &quot;naïve&quot; resulting in the byte sequence 0x6E 0x61 0xEF 0x76 0x65), and you&#39;re now in an environment where your default encoding is UTF-8 (i.e. &quot;naïve&quot; resulting in the byte sequence 0x6E 0x61 0xC3 0xAF 0x76 0x65). Whenever it&#39;s mentioned that you should use a certain character encoding, it should be understood that you either change the input method to use the mentioned encoding when you type in your pass phrase, or use some suitable tool to convert your pass phrase from your default encoding to the target encoding.</p>
+<p>This section assumes that you know what pass phrase was used for encryption, but that it may have been encoded in a different character encoding than the one used by your current input method. For example, the pass phrase may have been used at a time when your default encoding was ISO-8859-1 (i.e. &quot;na&#xEF;ve&quot; resulting in the byte sequence 0x6E 0x61 0xEF 0x76 0x65), and you&#39;re now in an environment where your default encoding is UTF-8 (i.e. &quot;na&#xEF;ve&quot; resulting in the byte sequence 0x6E 0x61 0xC3 0xAF 0x76 0x65). Whenever it&#39;s mentioned that you should use a certain character encoding, it should be understood that you either change the input method to use the mentioned encoding when you type in your pass phrase, or use some suitable tool to convert your pass phrase from your default encoding to the target encoding.</p>
 
 <p>Also note that the sub-sections below discuss human readable pass phrases. This is particularly relevant for PKCS#12 objects, where human readable pass phrases are assumed. For other objects, it&#39;s as legitimate to use any byte sequence (such as a sequence of bytes from <i>/dev/urandom</i> that&#39;s been saved away), which makes any character encoding discussion irrelevant; in such cases, simply use the same byte sequence as it is.</p>
 
@@ -99,16 +99,16 @@
 <li><p>Convert the pass phrase to UTF-8 and try with the result. Specifically with PKCS#12, this should open up any object that was created according to the specification.</p>
 
 </li>
-<li><p>Do a naïve (i.e. purely mathematical) ISO-8859-1 to UTF-8 conversion and try with the result. This differs from the previous attempt because ISO-8859-1 maps directly to U+0000 to U+00FF, which other non-UTF-8 character sets do not.</p>
+<li><p>Do a na&#xEF;ve (i.e. purely mathematical) ISO-8859-1 to UTF-8 conversion and try with the result. This differs from the previous attempt because ISO-8859-1 maps directly to U+0000 to U+00FF, which other non-UTF-8 character sets do not.</p>
 
-<p>This also takes care of the case when a UTF-8 encoded string was used with OpenSSL older than 1.1.0. (for example, <code>ï</code>, which is 0xC3 0xAF when encoded in UTF-8, would become 0xC3 0x83 0xC2 0xAF when re-encoded in the naïve manner. The conversion to BMPString would then yield 0x00 0xC3 0x00 0xA4 0x00 0x00, the erroneous/non-compliant encoding used by OpenSSL older than 1.1.0)</p>
+<p>This also takes care of the case when a UTF-8 encoded string was used with OpenSSL older than 1.1.0. (for example, <code>&#xEF;</code>, which is 0xC3 0xAF when encoded in UTF-8, would become 0xC3 0x83 0xC2 0xAF when re-encoded in the na&#xEF;ve manner. The conversion to BMPString would then yield 0x00 0xC3 0x00 0xA4 0x00 0x00, the erroneous/non-compliant encoding used by OpenSSL older than 1.1.0)</p>
 
 </li>
 </ol>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/evp.html">evp(7)</a>, <a href="../man7/ossl_store.html">ossl_store(7)</a>, <a href="../man3/EVP_BytesToKey.html">EVP_BytesToKey(3)</a>, <a href="../man3/EVP_DecryptInit.html">EVP_DecryptInit(3)</a>, <a href="../man3/PEM_do_header.html">PEM_do_header(3)</a>, <a href="../man3/PKCS12_parse.html">PKCS12_parse(3)</a>, <a href="../man3/PKCS12_newpass.html">PKCS12_newpass(3)</a>, <a href="../man3/d2i_PKCS8PrivateKey_bio.html">d2i_PKCS8PrivateKey_bio(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/evp.7.html">evp(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl_store.7.html">ossl_store(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_BytesToKey.3.html">EVP_BytesToKey(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_DecryptInit.3.html">EVP_DecryptInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/PEM_do_header.3.html">PEM_do_header(3)</a>, <a href="https://man7.org/linux/man-pages/man3/PKCS12_parse.3.html">PKCS12_parse(3)</a>, <a href="https://man7.org/linux/man-pages/man3/PKCS12_newpass.3.html">PKCS12_newpass(3)</a>, <a href="https://man7.org/linux/man-pages/man3/d2i_PKCS8PrivateKey_bio.3.html">d2i_PKCS8PrivateKey_bio(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

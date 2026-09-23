@@ -4,7 +4,7 @@
 <head>
 <title>provider-object</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -35,7 +35,7 @@
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>The provider-native object abstraction is a set of <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> keys and values that can be used to pass provider-native objects to OpenSSL library code or between different provider operation implementations with the help of OpenSSL library code.</p>
+<p>The provider-native object abstraction is a set of <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> keys and values that can be used to pass provider-native objects to OpenSSL library code or between different provider operation implementations with the help of OpenSSL library code.</p>
 
 <p>The intention is that certain provider-native operations can pass any sort of object that belong with other operations, or with OpenSSL library code.</p>
 
@@ -45,7 +45,7 @@
 
 <li><p><i>By value</i></p>
 
-<p>This means that the <i>object data</i> is passed as an octet string or an UTF8 string, which can be handled in diverse ways by other provided implementations. The encoding of the object depends on the context it&#39;s used in; for example, <a href="../man3/OSSL_DECODER.html">OSSL_DECODER(3)</a> allows multiple encodings, depending on existing decoders. If central OpenSSL library functionality is to handle the data directly, it <b>must</b> be encoded in DER for all object types except for <b>OSSL_OBJECT_NAME</b> (see <a href="#Parameter-reference">&quot;Parameter reference&quot;</a> below), where it&#39;s assumed to a plain UTF8 string.</p>
+<p>This means that the <i>object data</i> is passed as an octet string or an UTF8 string, which can be handled in diverse ways by other provided implementations. The encoding of the object depends on the context it&#39;s used in; for example, <a href="https://man7.org/linux/man-pages/man3/OSSL_DECODER.3.html">OSSL_DECODER(3)</a> allows multiple encodings, depending on existing decoders. If central OpenSSL library functionality is to handle the data directly, it <b>must</b> be encoded in DER for all object types except for <b>OSSL_OBJECT_NAME</b> (see <a href="#Parameter-reference">&quot;Parameter reference&quot;</a> below), where it&#39;s assumed to a plain UTF8 string.</p>
 
 </li>
 <li><p><i>By reference</i></p>
@@ -65,12 +65,12 @@
 
 <p>The target implementation (Y) may have a function that can take an <i>object reference</i>. This can only be used if the target implementation is from the same provider as the one originating the object abstraction in question (X).</p>
 
-<p>The exact target implementation to use is determined from the <i>object type</i> and possibly the <i>object data type</i>. For example, when the OpenSSL library receives an object abstraction with the <i>object type</i> <b>OSSL_OBJECT_PKEY</b>, it will fetch a <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a> using the <i>object data type</i> as its key type (the second argument in <a href="../man3/EVP_KEYMGMT_fetch.html">EVP_KEYMGMT_fetch(3)</a>).</p>
+<p>The exact target implementation to use is determined from the <i>object type</i> and possibly the <i>object data type</i>. For example, when the OpenSSL library receives an object abstraction with the <i>object type</i> <b>OSSL_OBJECT_PKEY</b>, it will fetch a <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a> using the <i>object data type</i> as its key type (the second argument in <a href="https://man7.org/linux/man-pages/man3/EVP_KEYMGMT_fetch.3.html">EVP_KEYMGMT_fetch(3)</a>).</p>
 
 </li>
 <li><p><i>An object exporter in the originating implementation</i></p>
 
-<p>The originating implementation (X) may have an exporter function. This exporter function can be used to export the object in <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> form, that can then be imported by the target implementation&#39;s imported function.</p>
+<p>The originating implementation (X) may have an exporter function. This exporter function can be used to export the object in <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> form, that can then be imported by the target implementation&#39;s imported function.</p>
 
 <p>This can be used when it&#39;s not possible to fetch the target implementation (Y) from the same provider.</p>
 
@@ -79,7 +79,7 @@
 
 <h2 id="Parameter-reference">Parameter reference</h2>
 
-<p>A provider-native object abstraction is an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> with a selection of the following parameters:</p>
+<p>A provider-native object abstraction is an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> with a selection of the following parameters:</p>
 
 <dl>
 
@@ -107,7 +107,7 @@
 
 <p>The object data may only be <i>passed by value</i>, and should be a UTF8 string.</p>
 
-<p>This is useful for <a href="../man7/provider-storemgmt.html">provider-storemgmt(7)</a> when a URI load results in new URIs.</p>
+<p>This is useful for <a href="https://man7.org/linux/man-pages/man7/provider-storemgmt.7.html">provider-storemgmt(7)</a> when a URI load results in new URIs.</p>
 
 </dd>
 <dt id="OSSL_OBJECT_PKEY"><b>OSSL_OBJECT_PKEY</b></dt>
@@ -138,7 +138,7 @@
 <dt id="data-type-OSSL_OBJECT_PARAM_DATA_TYPE-UTF8-string">&quot;data-type&quot; (<b>OSSL_OBJECT_PARAM_DATA_TYPE</b>) &lt;UTF8 string&gt;</dt>
 <dd>
 
-<p>The specific type of the object content. Legitimate values depend on the object type; if it is <b>OSSL_OBJECT_PKEY</b>, the data type is expected to be a key type suitable for fetching a <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a> that can handle the data.</p>
+<p>The specific type of the object content. Legitimate values depend on the object type; if it is <b>OSSL_OBJECT_PKEY</b>, the data type is expected to be a key type suitable for fetching a <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a> that can handle the data.</p>
 
 </dd>
 <dt id="data-structure-OSSL_OBJECT_PARAM_DATA_STRUCTURE-UTF8-string">&quot;data-structure&quot; (<b>OSSL_OBJECT_PARAM_DATA_STRUCTURE</b>) &lt;UTF8 string&gt;</dt>
@@ -161,7 +161,7 @@
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/provider.html">provider(7)</a>, <a href="../man3/OSSL_DECODER.html">OSSL_DECODER(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_DECODER.3.html">OSSL_DECODER(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

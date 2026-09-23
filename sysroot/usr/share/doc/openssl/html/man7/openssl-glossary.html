@@ -4,7 +4,7 @@
 <head>
 <title>openssl-glossary</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -31,7 +31,7 @@
 
 <p>Cryptographic primitives such as the SHA256 digest, or AES encryption are referred to in OpenSSL as &quot;algorithms&quot;. There can be more than one implementation for any given algorithm available for use.</p>
 
-<p><a href="../man7/crypto.html">crypto(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a></p>
 
 </dd>
 <dt id="ASN.1-ASN1">ASN.1, ASN1</dt>
@@ -47,7 +47,7 @@
 
 <p>An OpenSSL Provider that contains encoders and decoders for OpenSSL keys. All the algorithm implementations in the Base Provider are also available in the Default Provider.</p>
 
-<p><a href="../man7/OSSL_PROVIDER-base.html">OSSL_PROVIDER-base(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-base.7.html">OSSL_PROVIDER-base(7)</a></p>
 
 </dd>
 <dt id="Decoder">Decoder</dt>
@@ -55,7 +55,7 @@
 
 <p>A decoder is a type of algorithm used for decoding keys and parameters from some external format such as PEM or DER.</p>
 
-<p><a href="../man3/OSSL_DECODER_CTX_new_for_pkey.html">OSSL_DECODER_CTX_new_for_pkey(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/OSSL_DECODER_CTX_new_for_pkey.3.html">OSSL_DECODER_CTX_new_for_pkey(3)</a></p>
 
 </dd>
 <dt id="Default-Provider">Default Provider</dt>
@@ -63,7 +63,7 @@
 
 <p>An OpenSSL Provider that contains the most common OpenSSL algorithm implementations. It is loaded by default if no other provider is available. All the algorithm implementations in the Base Provider are also available in the Default Provider.</p>
 
-<p><a href="../man7/OSSL_PROVIDER-default.html">OSSL_PROVIDER-default(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-default.7.html">OSSL_PROVIDER-default(7)</a></p>
 
 </dd>
 <dt id="DER-Distinguished-Encoding-Rules">DER (&quot;Distinguished Encoding Rules&quot;)</dt>
@@ -81,13 +81,13 @@
 
 <p>An encoder is a type of algorithm used for encoding keys and parameters to some external format such as PEM or DER.</p>
 
-<p><a href="../man3/OSSL_ENCODER_CTX_new_for_pkey.html">OSSL_ENCODER_CTX_new_for_pkey(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/OSSL_ENCODER_CTX_new_for_pkey.3.html">OSSL_ENCODER_CTX_new_for_pkey(3)</a></p>
 
 </dd>
 <dt id="Explicit-Fetching">Explicit Fetching</dt>
 <dd>
 
-<p>Explicit Fetching is a type of Fetching (see Fetching). Explicit Fetching is where a function call is made to obtain an algorithm object representing an implementation such as <a href="../man3/EVP_MD_fetch.html">EVP_MD_fetch(3)</a> or <a href="../man3/EVP_CIPHER_fetch.html">EVP_CIPHER_fetch(3)</a></p>
+<p>Explicit Fetching is a type of Fetching (see Fetching). Explicit Fetching is where a function call is made to obtain an algorithm object representing an implementation such as <a href="https://man7.org/linux/man-pages/man3/EVP_MD_fetch.3.html">EVP_MD_fetch(3)</a> or <a href="https://man7.org/linux/man-pages/man3/EVP_CIPHER_fetch.3.html">EVP_CIPHER_fetch(3)</a></p>
 
 </dd>
 <dt id="Fetching">Fetching</dt>
@@ -97,7 +97,7 @@
 
 <p>Also see Explicit Fetching and Implicit Fetching.</p>
 
-<p><a href="../man7/crypto.html">crypto(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a></p>
 
 </dd>
 <dt id="FIPS-Provider">FIPS Provider</dt>
@@ -105,13 +105,13 @@
 
 <p>An OpenSSL Provider that contains OpenSSL algorithm implementations that have been validated according to the FIPS 140-2 standard.</p>
 
-<p><a href="../man7/OSSL_PROVIDER-FIPS.html">OSSL_PROVIDER-FIPS(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-FIPS.7.html">OSSL_PROVIDER-FIPS(7)</a></p>
 
 </dd>
 <dt id="Implicit-Fetching">Implicit Fetching</dt>
 <dd>
 
-<p>Implicit Fetching is a type of Fetching (see Fetching). Implicit Fetching is where an algorithm object with no associated implementation is used such as the return value from <a href="../man3/EVP_sha256.html">EVP_sha256(3)</a> or <a href="../man3/EVP_aes_128_cbc.html">EVP_aes_128_cbc(3)</a>. With implicit fetching an implementation is fetched automatically using default selection criteria the first time the algorithm is used.</p>
+<p>Implicit Fetching is a type of Fetching (see Fetching). Implicit Fetching is where an algorithm object with no associated implementation is used such as the return value from <a href="https://man7.org/linux/man-pages/man3/EVP_sha256.3.html">EVP_sha256(3)</a> or <a href="https://man7.org/linux/man-pages/man3/EVP_aes_128_cbc.3.html">EVP_aes_128_cbc(3)</a>. With implicit fetching an implementation is fetched automatically using default selection criteria the first time the algorithm is used.</p>
 
 </dd>
 <dt id="Legacy-Provider">Legacy Provider</dt>
@@ -119,7 +119,7 @@
 
 <p>An OpenSSL Provider that contains algorithm implementations that are considered insecure or are no longer in common use.</p>
 
-<p><a href="../man7/OSSL_PROVIDER-legacy.html">OSSL_PROVIDER-legacy(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-legacy.7.html">OSSL_PROVIDER-legacy(7)</a></p>
 
 </dd>
 <dt id="Library-Context">Library Context</dt>
@@ -127,7 +127,7 @@
 
 <p>A Library Context in OpenSSL is represented by the type <b>OSSL_LIB_CTX</b>. It can be thought of as a scope within which configuration options apply. If an application does not explicitly create a library context then the &quot;default&quot; one is used. Many OpenSSL functions can take a library context as an argument. A NULL value can always be passed to indicate the default library context.</p>
 
-<p><a href="../man3/OSSL_LIB_CTX.html">OSSL_LIB_CTX(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/OSSL_LIB_CTX.3.html">OSSL_LIB_CTX(3)</a></p>
 
 </dd>
 <dt id="MSBLOB">MSBLOB</dt>
@@ -141,7 +141,7 @@
 
 <p>An OpenSSL Provider that contains no algorithm implementations. This can be useful to prevent the default provider from being automatically loaded in a library context.</p>
 
-<p><a href="../man7/OSSL_PROVIDER-null.html">OSSL_PROVIDER-null(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-null.7.html">OSSL_PROVIDER-null(7)</a></p>
 
 </dd>
 <dt id="Operation">Operation</dt>
@@ -149,7 +149,7 @@
 
 <p>An operation is a group of OpenSSL functions with a common purpose such as encryption, or digesting.</p>
 
-<p><a href="../man7/crypto.html">crypto(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a></p>
 
 </dd>
 <dt id="PEM-Privacy-Enhanced-Message">PEM (&quot;Privacy Enhanced Message&quot;)</dt>
@@ -188,7 +188,7 @@ MIICdg....
 
 <p>Also see Property Query String.</p>
 
-<p><a href="../man7/property.html">property(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a></p>
 
 </dd>
 <dt id="Property-Query-String">Property Query String</dt>
@@ -198,7 +198,7 @@ MIICdg....
 
 <p>Property Query Strings are used during fetching. See Fetching.</p>
 
-<p><a href="../man7/property.html">property(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a></p>
 
 </dd>
 <dt id="Provider">Provider</dt>
@@ -206,7 +206,7 @@ MIICdg....
 
 <p>A provider in OpenSSL is a component that groups together algorithm implementations. Providers can come from OpenSSL itself or from third parties.</p>
 
-<p><a href="../man7/provider.html">provider(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a></p>
 
 </dd>
 <dt id="PVK">PVK</dt>

@@ -4,7 +4,7 @@
 <head>
 <title>SSL_get0_group_name</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -37,13 +37,13 @@ const char *SSL_get0_group_name(SSL *s);</code></pre>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
-<p>If non-NULL, SSL_get0_group_name() returns the name of the group that was used for the key agreement of the current TLS session establishment. If SSL_get0_group_name() returns NULL, an error occurred; possibly no TLS session has been established. See also <a href="../man3/SSL_get_negotiated_group.html">SSL_get_negotiated_group(3)</a>.</p>
+<p>If non-NULL, SSL_get0_group_name() returns the name of the group that was used for the key agreement of the current TLS session establishment. If SSL_get0_group_name() returns NULL, an error occurred; possibly no TLS session has been established. See also <a href="https://man7.org/linux/man-pages/man3/SSL_get_negotiated_group.3.html">SSL_get_negotiated_group(3)</a>.</p>
 
 <p>Note that the return value is valid only during the lifetime of the SSL object <i>ssl</i>.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_get_negotiated_group.html">SSL_get_negotiated_group(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_negotiated_group.3.html">SSL_get_negotiated_group(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

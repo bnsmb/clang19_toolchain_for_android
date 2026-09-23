@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_STORE_LOADER</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -54,7 +54,7 @@ int OSSL_STORE_LOADER_names_do_all(const OSSL_STORE_LOADER *loader,
                                    void (*fn)(const char *name, void *data),
                                    void *data);</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>OSSL_STORE_LOADER *OSSL_STORE_LOADER_new(ENGINE *e, const char *scheme);
 const ENGINE *OSSL_STORE_LOADER_get0_engine(const OSSL_STORE_LOADER
@@ -133,7 +133,7 @@ OSSL_STORE_LOADER *OSSL_STORE_unregister_loader(const char *scheme);</code></pre
 
 <h2 id="Legacy-Types-and-Functions-deprecated">Legacy Types and Functions (deprecated)</h2>
 
-<p>These functions help applications and engines to create loaders for schemes they support. These are all deprecated and discouraged in favour of provider implementations, see <a href="../man7/provider-storemgmt.html">provider-storemgmt(7)</a>.</p>
+<p>These functions help applications and engines to create loaders for schemes they support. These are all deprecated and discouraged in favour of provider implementations, see <a href="https://man7.org/linux/man-pages/man7/provider-storemgmt.7.html">provider-storemgmt(7)</a>.</p>
 
 <p><b>OSSL_STORE_LOADER_CTX</b> is a type template, to be defined by each loader using <code>struct ossl_store_loader_ctx_st { ... }</code>.</p>
 
@@ -186,7 +186,7 @@ OSSL_STORE_LOADER *OSSL_STORE_unregister_loader(const char *scheme);</code></pre
 <dt id="OSSL_STORE_load_fn"><b>OSSL_STORE_load_fn</b></dt>
 <dd>
 
-<p>This function takes a <b>OSSL_STORE_LOADER_CTX</b> pointer and a <b>UI_METHOD</b> with associated data. It&#39;s expected to load the next available data, mold it into a data structure that can be wrapped in a <b>OSSL_STORE_INFO</b> using one of the <a href="../man3/OSSL_STORE_INFO.html">OSSL_STORE_INFO(3)</a> functions. If no more data is available or an error occurs, this function is expected to return NULL. The <b>OSSL_STORE_eof_fn</b> and <b>OSSL_STORE_error_fn</b> functions must indicate if it was in fact the end of data or if an error occurred.</p>
+<p>This function takes a <b>OSSL_STORE_LOADER_CTX</b> pointer and a <b>UI_METHOD</b> with associated data. It&#39;s expected to load the next available data, mold it into a data structure that can be wrapped in a <b>OSSL_STORE_INFO</b> using one of the <a href="https://man7.org/linux/man-pages/man3/OSSL_STORE_INFO.3.html">OSSL_STORE_INFO(3)</a> functions. If no more data is available or an error occurs, this function is expected to return NULL. The <b>OSSL_STORE_eof_fn</b> and <b>OSSL_STORE_error_fn</b> functions must indicate if it was in fact the end of data or if an error occurred.</p>
 
 <p>Note that this function retrieves <i>one</i> data item only.</p>
 
@@ -267,7 +267,7 @@ OSSL_STORE_LOADER *OSSL_STORE_unregister_loader(const char *scheme);</code></pre
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ossl_store.html">ossl_store(7)</a>, <a href="../man3/OSSL_STORE_open.html">OSSL_STORE_open(3)</a>, <a href="../man3/OSSL_LIB_CTX.html">OSSL_LIB_CTX(3)</a>, <a href="../man7/provider-storemgmt.html">provider-storemgmt(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ossl_store.7.html">ossl_store(7)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_STORE_open.3.html">OSSL_STORE_open(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_LIB_CTX.3.html">OSSL_LIB_CTX(3)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-storemgmt.7.html">provider-storemgmt(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

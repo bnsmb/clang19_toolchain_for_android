@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY-DH</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -36,13 +36,13 @@
 
 <p>For finite field Diffie-Hellman key agreement, two classes of domain parameters can be used: &quot;safe&quot; domain parameters that are associated with approved named safe-prime groups, and a class of &quot;FIPS186-type&quot; domain parameters. FIPS186-type domain parameters should only be used for backward compatibility with existing applications that cannot be upgraded to use the approved safe-prime groups.</p>
 
-<p>See <a href="../man7/EVP_PKEY-FFC.html">EVP_PKEY-FFC(7)</a> for more information about FFC keys.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-FFC.7.html">EVP_PKEY-FFC(7)</a> for more information about FFC keys.</p>
 
 <p>The <b>DH</b> key type uses PKCS#3 format which saves <i>p</i> and <i>g</i>, but not the <i>q</i> value. The <b>DHX</b> key type uses X9.42 format which saves the value of <i>q</i> and this must be used for FIPS186-4. If key validation is required, users should be aware of the nuances associated with FIPS186-4 style parameters as discussed in <a href="#DH-and-DHX-key-validation">&quot;DH and DHX key validation&quot;</a>.</p>
 
 <h2 id="DH-and-DHX-domain-parameters">DH and DHX domain parameters</h2>
 
-<p>In addition to the common FFC parameters that all FFC keytypes should support (see <a href="../man7/EVP_PKEY-FFC.html">&quot;FFC parameters&quot; in EVP_PKEY-FFC(7)</a>) the <b>DHX</b> and <b>DH</b> keytype implementations support the following:</p>
+<p>In addition to the common FFC parameters that all FFC keytypes should support (see <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-FFC.7.html#FFC_parameters">&quot;FFC parameters&quot; in EVP_PKEY-FFC(7)</a>) the <b>DHX</b> and <b>DH</b> keytype implementations support the following:</p>
 
 <dl>
 
@@ -88,7 +88,7 @@
 
 <h2 id="DH-and-DHX-domain-parameter-key-generation-parameters">DH and DHX domain parameter / key generation parameters</h2>
 
-<p>In addition to the common FFC key generation parameters that all FFC key types should support (see <a href="../man7/EVP_PKEY-FFC.html">&quot;FFC key generation parameters&quot; in EVP_PKEY-FFC(7)</a>) the <b>DH</b> and <b>DHX</b> keytype implementation supports the following:</p>
+<p>In addition to the common FFC key generation parameters that all FFC key types should support (see <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-FFC.7.html#FFC_key_generation_parameters">&quot;FFC key generation parameters&quot; in EVP_PKEY-FFC(7)</a>) the <b>DH</b> and <b>DHX</b> keytype implementation supports the following:</p>
 
 <dl>
 
@@ -110,7 +110,7 @@
 <dt id="fips186_2">&quot;fips186_2&quot;</dt>
 <dd>
 
-<p>These are described in <a href="../man7/EVP_PKEY-FFC.html">&quot;FFC key generation parameters&quot; in EVP_PKEY-FFC(7)</a></p>
+<p>These are described in <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-FFC.7.html#FFC_key_generation_parameters">&quot;FFC key generation parameters&quot; in EVP_PKEY-FFC(7)</a></p>
 
 </dd>
 <dt id="group">&quot;group&quot;</dt>
@@ -148,17 +148,17 @@
 
 <p>For keys that are not a named group the FIPS186-4 standard specifies that the values used for FFC parameter generation are also required for parameter validation. This means that optional FFC domain parameter values for <i>seed</i>, <i>pcounter</i> and <i>gindex</i> or <i>hindex</i> may need to be stored for validation purposes. For <b>DHX</b> the <i>seed</i> and <i>pcounter</i> can be stored in ASN1 data (but the <i>gindex</i> or <i>hindex</i> cannot be stored). It is recommended to use a <b>DH</b> parameters with named safe prime group instead.</p>
 
-<p>With the OpenSSL FIPS provider, <a href="../man3/EVP_PKEY_param_check.html">EVP_PKEY_param_check(3)</a> and <a href="../man3/EVP_PKEY_param_check_quick.html">EVP_PKEY_param_check_quick(3)</a> behave in the following way: the parameters are tested if they are either an approved safe prime group OR that the FFC parameters conform to FIPS186-4 as defined in SP800-56Ar3 <i>Assurances of Domain-Parameter Validity</i>.</p>
+<p>With the OpenSSL FIPS provider, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_param_check.3.html">EVP_PKEY_param_check(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_param_check_quick.3.html">EVP_PKEY_param_check_quick(3)</a> behave in the following way: the parameters are tested if they are either an approved safe prime group OR that the FFC parameters conform to FIPS186-4 as defined in SP800-56Ar3 <i>Assurances of Domain-Parameter Validity</i>.</p>
 
-<p>The OpenSSL default provider uses simpler checks that allows there to be no <i>q</i> value for backwards compatibility, however the <a href="../man3/EVP_PKEY_param_check.html">EVP_PKEY_param_check(3)</a> will test the <i>p</i> value for being a prime (and a safe prime if <i>q</i> is missing) which can take significant time. The <a href="../man3/EVP_PKEY_param_check_quick.html">EVP_PKEY_param_check_quick(3)</a> avoids the prime tests.</p>
+<p>The OpenSSL default provider uses simpler checks that allows there to be no <i>q</i> value for backwards compatibility, however the <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_param_check.3.html">EVP_PKEY_param_check(3)</a> will test the <i>p</i> value for being a prime (and a safe prime if <i>q</i> is missing) which can take significant time. The <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_param_check_quick.3.html">EVP_PKEY_param_check_quick(3)</a> avoids the prime tests.</p>
 
-<p><a href="../man3/EVP_PKEY_public_check.html">EVP_PKEY_public_check(3)</a> conforms to SP800-56Ar3 <i>FFC Full Public-Key Validation</i>.</p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_public_check.3.html">EVP_PKEY_public_check(3)</a> conforms to SP800-56Ar3 <i>FFC Full Public-Key Validation</i>.</p>
 
-<p><a href="../man3/EVP_PKEY_public_check_quick.html">EVP_PKEY_public_check_quick(3)</a> conforms to SP800-56Ar3 <i>FFC Partial Public-Key Validation</i> when the key is an approved named safe prime group, otherwise it is the same as <a href="../man3/EVP_PKEY_public_check.html">EVP_PKEY_public_check(3)</a>.</p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_public_check_quick.3.html">EVP_PKEY_public_check_quick(3)</a> conforms to SP800-56Ar3 <i>FFC Partial Public-Key Validation</i> when the key is an approved named safe prime group, otherwise it is the same as <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_public_check.3.html">EVP_PKEY_public_check(3)</a>.</p>
 
-<p><a href="../man3/EVP_PKEY_private_check.html">EVP_PKEY_private_check(3)</a> tests that the private key is in the correct range according to SP800-56Ar3. The OpenSSL FIPS provider requires the value of <i>q</i> to be set (note that this is implicitly set for named safe prime groups). For backwards compatibility the OpenSSL default provider only requires <i>p</i> to be set.</p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_private_check.3.html">EVP_PKEY_private_check(3)</a> tests that the private key is in the correct range according to SP800-56Ar3. The OpenSSL FIPS provider requires the value of <i>q</i> to be set (note that this is implicitly set for named safe prime groups). For backwards compatibility the OpenSSL default provider only requires <i>p</i> to be set.</p>
 
-<p><a href="../man3/EVP_PKEY_pairwise_check.html">EVP_PKEY_pairwise_check(3)</a> conforms to SP800-56Ar3 <i>Owner Assurance of Pair-wise Consistency</i>.</p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_pairwise_check.3.html">EVP_PKEY_pairwise_check(3)</a> conforms to SP800-56Ar3 <i>Owner Assurance of Pair-wise Consistency</i>.</p>
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
@@ -321,7 +321,7 @@ EVP_PKEY_free(complete_domp);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/EVP_PKEY-FFC.html">EVP_PKEY-FFC(7)</a>, <a href="../man7/EVP_KEYEXCH-DH.html">EVP_KEYEXCH-DH(7)</a> <a href="../man3/EVP_PKEY.html">EVP_PKEY(3)</a>, <a href="../man7/provider-keymgmt.html">provider-keymgmt(7)</a>, <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a>, <a href="../man7/OSSL_PROVIDER-default.html">OSSL_PROVIDER-default(7)</a>, <a href="../man7/OSSL_PROVIDER-FIPS.html">OSSL_PROVIDER-FIPS(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-FFC.7.html">EVP_PKEY-FFC(7)</a>, <a href="https://man7.org/linux/man-pages/man7/EVP_KEYEXCH-DH.7.html">EVP_KEYEXCH-DH(7)</a> <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY.3.html">EVP_PKEY(3)</a>, <a href="https://man7.org/linux/man-pages/man7/provider-keymgmt.7.html">provider-keymgmt(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KEYMGMT.3.html">EVP_KEYMGMT(3)</a>, <a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-default.7.html">OSSL_PROVIDER-default(7)</a>, <a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-FIPS.7.html">OSSL_PROVIDER-FIPS(7)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

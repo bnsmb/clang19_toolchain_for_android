@@ -4,7 +4,7 @@
 <head>
 <title>BIO_s_mem</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -49,15 +49,15 @@ BIO *BIO_new_mem_buf(const void *buf, int len);</code></pre>
 
 <p>BIO_s_secmem() is like BIO_s_mem() except that the secure heap is used for buffer storage.</p>
 
-<p>BIO_s_dgram_mem() is a memory BIO that respects datagram semantics. A single call to <a href="../man3/BIO_write.html">BIO_write(3)</a> will write a single datagram to the memory BIO. A subsequent call to <a href="../man3/BIO_read.html">BIO_read(3)</a> will read the data in that datagram. The <a href="../man3/BIO_read.html">BIO_read(3)</a> call will never return more data than was written in the original <a href="../man3/BIO_write.html">BIO_write(3)</a> call even if there were subsequent <a href="../man3/BIO_write.html">BIO_write(3)</a> calls that wrote more datagrams. Each successive call to <a href="../man3/BIO_read.html">BIO_read(3)</a> will read the next datagram. If a <a href="../man3/BIO_read.html">BIO_read(3)</a> call supplies a read buffer that is smaller than the size of the datagram, then the read buffer will be completely filled and the remaining data from the datagram will be discarded.</p>
+<p>BIO_s_dgram_mem() is a memory BIO that respects datagram semantics. A single call to <a href="https://man7.org/linux/man-pages/man3/BIO_write.3.html">BIO_write(3)</a> will write a single datagram to the memory BIO. A subsequent call to <a href="https://man7.org/linux/man-pages/man3/BIO_read.3.html">BIO_read(3)</a> will read the data in that datagram. The <a href="https://man7.org/linux/man-pages/man3/BIO_read.3.html">BIO_read(3)</a> call will never return more data than was written in the original <a href="https://man7.org/linux/man-pages/man3/BIO_write.3.html">BIO_write(3)</a> call even if there were subsequent <a href="https://man7.org/linux/man-pages/man3/BIO_write.3.html">BIO_write(3)</a> calls that wrote more datagrams. Each successive call to <a href="https://man7.org/linux/man-pages/man3/BIO_read.3.html">BIO_read(3)</a> will read the next datagram. If a <a href="https://man7.org/linux/man-pages/man3/BIO_read.3.html">BIO_read(3)</a> call supplies a read buffer that is smaller than the size of the datagram, then the read buffer will be completely filled and the remaining data from the datagram will be discarded.</p>
 
-<p>It is not possible to write a zero length datagram. Calling <a href="../man3/BIO_write.html">BIO_write(3)</a> in this case will return 0 and no datagrams will be written. Calling <a href="../man3/BIO_read.html">BIO_read(3)</a> when there are no datagrams in the BIO to read will return a negative result and the &quot;retry&quot; flags will be set (i.e. calling <a href="../man3/BIO_should_retry.html">BIO_should_retry(3)</a> will return true). A datagram mem BIO will never return true from <a href="../man3/BIO_eof.html">BIO_eof(3)</a>.</p>
+<p>It is not possible to write a zero length datagram. Calling <a href="https://man7.org/linux/man-pages/man3/BIO_write.3.html">BIO_write(3)</a> in this case will return 0 and no datagrams will be written. Calling <a href="https://man7.org/linux/man-pages/man3/BIO_read.3.html">BIO_read(3)</a> when there are no datagrams in the BIO to read will return a negative result and the &quot;retry&quot; flags will be set (i.e. calling <a href="https://man7.org/linux/man-pages/man3/BIO_should_retry.3.html">BIO_should_retry(3)</a> will return true). A datagram mem BIO will never return true from <a href="https://man7.org/linux/man-pages/man3/BIO_eof.3.html">BIO_eof(3)</a>.</p>
 
 <p>Any data written to a memory BIO can be recalled by reading from it. Unless the memory BIO is read only any data read from it is deleted from the BIO.</p>
 
 <p>Memory BIOs except BIO_s_dgram_mem() support BIO_gets() and BIO_puts().</p>
 
-<p>BIO_s_dgram_mem() supports <a href="../man3/BIO_sendmmsg.html">BIO_sendmmsg(3)</a> and <a href="../man3/BIO_recvmmsg.html">BIO_recvmmsg(3)</a> calls and calls related to <b>BIO_ADDR</b> and MTU handling similarly to the <a href="../man3/BIO_s_dgram_pair.html">BIO_s_dgram_pair(3)</a>.</p>
+<p>BIO_s_dgram_mem() supports <a href="https://man7.org/linux/man-pages/man3/BIO_sendmmsg.3.html">BIO_sendmmsg(3)</a> and <a href="https://man7.org/linux/man-pages/man3/BIO_recvmmsg.3.html">BIO_recvmmsg(3)</a> calls and calls related to <b>BIO_ADDR</b> and MTU handling similarly to the <a href="https://man7.org/linux/man-pages/man3/BIO_s_dgram_pair.3.html">BIO_s_dgram_pair(3)</a>.</p>
 
 <p>If the BIO_CLOSE flag is set when a memory BIO is freed then the underlying BUF_MEM structure is also freed.</p>
 
@@ -81,7 +81,7 @@ BIO *BIO_new_mem_buf(const void *buf, int len);</code></pre>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>Writes to memory BIOs will always succeed if memory is available: that is their size can grow indefinitely. An exception is BIO_s_dgram_mem() when <a href="../man3/BIO_set_write_buf_size.html">BIO_set_write_buf_size(3)</a> is called on it. In such case the write buffer size will be fixed and any writes that would overflow the buffer will return an error.</p>
+<p>Writes to memory BIOs will always succeed if memory is available: that is their size can grow indefinitely. An exception is BIO_s_dgram_mem() when <a href="https://man7.org/linux/man-pages/man3/BIO_set_write_buf_size.3.html">BIO_set_write_buf_size(3)</a> is called on it. In such case the write buffer size will be fixed and any writes that would overflow the buffer will return an error.</p>
 
 <p>Every write after partial read (not all data in the memory buffer was read) to a read write memory BIO will have to move the unread data with an internal copy operation, if a BIO contains a lot of data and it is read in small chunks intertwined with writes the operation can be very slow. Adding a buffering BIO to the chain can speed up the process.</p>
 

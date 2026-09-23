@@ -4,7 +4,7 @@
 <head>
 <title>EVP_SKEY</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -61,7 +61,7 @@ EVP_SKEY *EVP_SKEY_to_provider(EVP_SKEY *skey, OSSL_LIB_CTX *libctx,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p><b>EVP_SKEY</b> is a generic structure to hold symmetric keys as opaque objects. The keys themselves are often referred to as the &quot;internal key&quot;, and are handled by providers using <a href="../man3/EVP_SKEYMGMT.html">EVP_SKEYMGMT(3)</a>.</p>
+<p><b>EVP_SKEY</b> is a generic structure to hold symmetric keys as opaque objects. The keys themselves are often referred to as the &quot;internal key&quot;, and are handled by providers using <a href="https://man7.org/linux/man-pages/man3/EVP_SKEYMGMT.3.html">EVP_SKEYMGMT(3)</a>.</p>
 
 <p>Conceptually, an <b>EVP_SKEY</b> internal key may hold a symmetric key, and along with those, key parameters if the key type requires them.</p>
 
@@ -71,7 +71,7 @@ EVP_SKEY *EVP_SKEY_to_provider(EVP_SKEY *skey, OSSL_LIB_CTX *libctx,
 
 <p>The EVP_SKEY_import_raw_key() function is a helper that creates an <b>EVP_SKEY</b> object containing the raw byte representation of the symmetric keys from the buffer <i>key</i> having length <i>len</i>. The <i>skeymgmtname</i> defines the name of the target <b>EVP_SKEYMGMT</b> for the newly created key.</p>
 
-<p>The EVP_SKEY_export() function extracts values from a key <i>skey</i> using the <i>selection</i>. <i>selection</i> is described below. It uses a callback <i>export_cb</i> that gets passed the value of <i>export_cbarg</i>. See <a href="../man7/openssl-core.h.html">openssl-core.h(7)</a> for more information about the callback. Note that the <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array that is passed to the callback is not persistent after the callback returns.</p>
+<p>The EVP_SKEY_export() function extracts values from a key <i>skey</i> using the <i>selection</i>. <i>selection</i> is described below. It uses a callback <i>export_cb</i> that gets passed the value of <i>export_cbarg</i>. See <a href="https://man7.org/linux/man-pages/man7/openssl-core.h.7.html">openssl-core.h(7)</a> for more information about the callback. Note that the <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array that is passed to the callback is not persistent after the callback returns.</p>
 
 <p>The EVP_SKEY_get0_raw_key() returns a pointer to a raw key bytes to the passed address and sets the key len. The returned address is managed by the internal key management and shouldn&#39;t be freed explicitly. The operation can fail when the underlying key management doesn&#39;t support export of the secret key.</p>
 
@@ -137,7 +137,7 @@ EVP_SKEY *EVP_SKEY_to_provider(EVP_SKEY *skey, OSSL_LIB_CTX *libctx,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_SKEYMGMT.html">EVP_SKEYMGMT(3)</a>, <a href="../man7/provider.html">provider(7)</a>, <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_SKEYMGMT.3.html">EVP_SKEYMGMT(3)</a>, <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

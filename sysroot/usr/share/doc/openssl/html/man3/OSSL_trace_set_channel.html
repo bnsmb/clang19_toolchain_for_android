@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_trace_set_channel</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -62,7 +62,7 @@ void OSSL_trace_set_callback(int category, OSSL_trace_cb cb, void  *data);</code
 
 <p>For the tracing code, both trace channel types are indistinguishable. These are called a <i>simple trace channel</i> and a <i>callback trace channel</i>, respectively.</p>
 
-<p><a href="../man3/OSSL_TRACE_ENABLED.html">OSSL_TRACE_ENABLED(3)</a> can be used to check whether tracing is currently enabled for the given category. Functions like <a href="../man3/OSSL_TRACE1.html">OSSL_TRACE1(3)</a> and macros like <a href="../man3/OSSL_TRACE_BEGIN.html">OSSL_TRACE_BEGIN(3)</a> can be used for producing free-text trace output.</p>
+<p><a href="https://man7.org/linux/man-pages/man3/OSSL_TRACE_ENABLED.3.html">OSSL_TRACE_ENABLED(3)</a> can be used to check whether tracing is currently enabled for the given category. Functions like <a href="https://man7.org/linux/man-pages/man3/OSSL_TRACE1.3.html">OSSL_TRACE1(3)</a> and macros like <a href="https://man7.org/linux/man-pages/man3/OSSL_TRACE_BEGIN.3.html">OSSL_TRACE_BEGIN(3)</a> can be used for producing free-text trace output.</p>
 
 <h2 id="Functions">Functions</h2>
 
@@ -123,7 +123,7 @@ void OSSL_trace_set_callback(int category, OSSL_trace_cb cb, void  *data);</code
 
 <p>Traces OpenSSL library initialization and cleanup.</p>
 
-<p>This needs special care, as OpenSSL will do automatic cleanup after exit from <code>main()</code>, and any tracing output done during this cleanup will be lost if the tracing channel or callback were cleaned away prematurely. A suggestion is to make such cleanup part of a function that&#39;s registered very early with <a href="../man3/atexit.html">atexit(3)</a>.</p>
+<p>This needs special care, as OpenSSL will do automatic cleanup after exit from <code>main()</code>, and any tracing output done during this cleanup will be lost if the tracing channel or callback were cleaned away prematurely. A suggestion is to make such cleanup part of a function that&#39;s registered very early with <a href="https://man7.org/linux/man-pages/man3/atexit.3.html">atexit(3)</a>.</p>
 
 </dd>
 <dt id="OSSL_TRACE_CATEGORY_TLS"><b>OSSL_TRACE_CATEGORY_TLS</b></dt>
@@ -330,7 +330,7 @@ END TRACE[TLS]:7f9eb0193b80</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/OSSL_TRACE_ENABLED.html">OSSL_TRACE_ENABLED(3)</a>, <a href="../man3/OSSL_TRACE_BEGIN.html">OSSL_TRACE_BEGIN(3)</a>, <a href="../man3/OSSL_TRACE1.html">OSSL_TRACE1(3)</a>, <a href="../man3/atexit.html">atexit(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/OSSL_TRACE_ENABLED.3.html">OSSL_TRACE_ENABLED(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_TRACE_BEGIN.3.html">OSSL_TRACE_BEGIN(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_TRACE1.3.html">OSSL_TRACE1(3)</a>, <a href="https://man7.org/linux/man-pages/man3/atexit.3.html">atexit(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

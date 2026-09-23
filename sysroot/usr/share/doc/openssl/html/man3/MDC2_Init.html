@@ -4,7 +4,7 @@
 <head>
 <title>MDC2_Init</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 
 <pre><code>#include &lt;openssl/mdc2.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>unsigned char *MDC2(const unsigned char *d, unsigned long n,
                     unsigned char *md);
@@ -42,7 +42,7 @@ int MDC2_Final(unsigned char *md, MDC2_CTX *c);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>All of the functions described on this page are deprecated. Applications should instead use <a href="../man3/EVP_DigestInit_ex.html">EVP_DigestInit_ex(3)</a>, <a href="../man3/EVP_DigestUpdate.html">EVP_DigestUpdate(3)</a> and <a href="../man3/EVP_DigestFinal_ex.html">EVP_DigestFinal_ex(3)</a>.</p>
+<p>All of the functions described on this page are deprecated. Applications should instead use <a href="https://man7.org/linux/man-pages/man3/EVP_DigestInit_ex.3.html">EVP_DigestInit_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_DigestUpdate.3.html">EVP_DigestUpdate(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_DigestFinal_ex.3.html">EVP_DigestFinal_ex(3)</a>.</p>
 
 <p>MDC2 is a method to construct hash functions with 128 bit output from block ciphers. These functions are an implementation of MDC2 with DES.</p>
 
@@ -56,7 +56,7 @@ int MDC2_Final(unsigned char *md, MDC2_CTX *c);</code></pre>
 
 <p>MDC2_Final() places the message digest in <b>md</b>, which must have space for MDC2_DIGEST_LENGTH == 16 bytes of output, and erases the <b>MDC2_CTX</b>.</p>
 
-<p>Applications should use the higher level functions <a href="../man3/EVP_DigestInit.html">EVP_DigestInit(3)</a> etc. instead of calling the hash functions directly.</p>
+<p>Applications should use the higher level functions <a href="https://man7.org/linux/man-pages/man3/EVP_DigestInit.3.html">EVP_DigestInit(3)</a> etc. instead of calling the hash functions directly.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -70,7 +70,7 @@ int MDC2_Final(unsigned char *md, MDC2_CTX *c);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_DigestInit.html">EVP_DigestInit(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_DigestInit.3.html">EVP_DigestInit(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

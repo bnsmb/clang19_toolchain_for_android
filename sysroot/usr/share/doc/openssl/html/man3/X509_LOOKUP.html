@@ -4,7 +4,7 @@
 <head>
 <title>X509_LOOKUP</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -80,9 +80,9 @@ int X509_LOOKUP_by_alias(X509_LOOKUP *ctx, X509_LOOKUP_TYPE type,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>The <b>X509_LOOKUP</b> structure holds the information needed to look up certificates and CRLs according to an associated <a href="../man3/X509_LOOKUP_METHOD.html">X509_LOOKUP_METHOD(3)</a>. Multiple <b>X509_LOOKUP</b> instances can be added to an <a href="../man3/X509_STORE.html">X509_STORE(3)</a> to enable lookup in that store.</p>
+<p>The <b>X509_LOOKUP</b> structure holds the information needed to look up certificates and CRLs according to an associated <a href="https://man7.org/linux/man-pages/man3/X509_LOOKUP_METHOD.3.html">X509_LOOKUP_METHOD(3)</a>. Multiple <b>X509_LOOKUP</b> instances can be added to an <a href="https://man7.org/linux/man-pages/man3/X509_STORE.3.html">X509_STORE(3)</a> to enable lookup in that store.</p>
 
-<p>X509_LOOKUP_new() creates a new <b>X509_LOOKUP</b> using the given lookup <i>method</i>. It can also be created by calling <a href="../man3/X509_STORE_add_lookup.html">X509_STORE_add_lookup(3)</a>, which will associate a <b>X509_STORE</b> with the lookup mechanism.</p>
+<p>X509_LOOKUP_new() creates a new <b>X509_LOOKUP</b> using the given lookup <i>method</i>. It can also be created by calling <a href="https://man7.org/linux/man-pages/man3/X509_STORE_add_lookup.3.html">X509_STORE_add_lookup(3)</a>, which will associate a <b>X509_STORE</b> with the lookup mechanism.</p>
 
 <p>X509_LOOKUP_init() initializes the internal state and resources as needed by the given <b>X509_LOOKUP</b> to do its work.</p>
 
@@ -92,27 +92,27 @@ int X509_LOOKUP_by_alias(X509_LOOKUP *ctx, X509_LOOKUP_TYPE type,
 
 <p>X509_LOOKUP_set_method_data() and X509_LOOKUP_get_method_data() associates and retrieves a pointer to application data to and from the given <b>X509_LOOKUP</b>, respectively.</p>
 
-<p>X509_LOOKUP_ctrl_ex() is used to set or get additional data to or from a <b>X509_LOOKUP</b> structure using any control function in the associated <a href="../man3/X509_LOOKUP_METHOD.html">X509_LOOKUP_METHOD(3)</a>. The arguments of the control command are passed via <i>argc</i> and <i>argl</i>, its return value via <i>*ret</i>. The library context <i>libctx</i> and property query <i>propq</i> are used when fetching algorithms from providers. The meaning of the arguments depends on the <i>cmd</i> number of the control command. In general, this function is not called directly, but wrapped by a macro call, see below. The control <i>cmd</i>s known to OpenSSL are discussed in more depth in <a href="#Control-Commands">&quot;Control Commands&quot;</a>.</p>
+<p>X509_LOOKUP_ctrl_ex() is used to set or get additional data to or from a <b>X509_LOOKUP</b> structure using any control function in the associated <a href="https://man7.org/linux/man-pages/man3/X509_LOOKUP_METHOD.3.html">X509_LOOKUP_METHOD(3)</a>. The arguments of the control command are passed via <i>argc</i> and <i>argl</i>, its return value via <i>*ret</i>. The library context <i>libctx</i> and property query <i>propq</i> are used when fetching algorithms from providers. The meaning of the arguments depends on the <i>cmd</i> number of the control command. In general, this function is not called directly, but wrapped by a macro call, see below. The control <i>cmd</i>s known to OpenSSL are discussed in more depth in <a href="#Control-Commands">&quot;Control Commands&quot;</a>.</p>
 
 <p>X509_LOOKUP_ctrl() is similar to X509_LOOKUP_ctrl_ex() but uses NULL for the library context <i>libctx</i> and property query <i>propq</i>.</p>
 
-<p>X509_LOOKUP_load_file_ex() passes a filename to be loaded immediately into the associated <b>X509_STORE</b>. The library context <i>libctx</i> and property query <i>propq</i> are used when fetching algorithms from providers. <i>type</i> indicates what type of object is expected. This can only be used with a lookup using the implementation <a href="../man3/X509_LOOKUP_file.html">X509_LOOKUP_file(3)</a>.</p>
+<p>X509_LOOKUP_load_file_ex() passes a filename to be loaded immediately into the associated <b>X509_STORE</b>. The library context <i>libctx</i> and property query <i>propq</i> are used when fetching algorithms from providers. <i>type</i> indicates what type of object is expected. This can only be used with a lookup using the implementation <a href="https://man7.org/linux/man-pages/man3/X509_LOOKUP_file.3.html">X509_LOOKUP_file(3)</a>.</p>
 
 <p>X509_LOOKUP_load_file() is similar to X509_LOOKUP_load_file_ex() but uses NULL for the library context <i>libctx</i> and property query <i>propq</i>.</p>
 
-<p>X509_LOOKUP_add_dir() passes a directory specification from which certificates and CRLs are loaded on demand into the associated <b>X509_STORE</b>. <i>type</i> indicates what type of object is expected. This can only be used with a lookup using the implementation <a href="../man3/X509_LOOKUP_hash_dir.html">X509_LOOKUP_hash_dir(3)</a>.</p>
+<p>X509_LOOKUP_add_dir() passes a directory specification from which certificates and CRLs are loaded on demand into the associated <b>X509_STORE</b>. <i>type</i> indicates what type of object is expected. This can only be used with a lookup using the implementation <a href="https://man7.org/linux/man-pages/man3/X509_LOOKUP_hash_dir.3.html">X509_LOOKUP_hash_dir(3)</a>.</p>
 
 <p>X509_LOOKUP_add_store_ex() passes a URI for a directory-like structure from which containers with certificates and CRLs are loaded on demand into the associated <b>X509_STORE</b>. The library context <i>libctx</i> and property query <i>propq</i> are used when fetching algorithms from providers.</p>
 
 <p>X509_LOOKUP_add_store() is similar to X509_LOOKUP_add_store_ex() but uses NULL for the library context <i>libctx</i> and property query <i>propq</i>.</p>
 
-<p>X509_LOOKUP_load_store_ex() passes a URI for a single container from which certificates and CRLs are immediately loaded into the associated <b>X509_STORE</b>. The library context <i>libctx</i> and property query <i>propq</i> are used when fetching algorithms from providers. These functions can only be used with a lookup using the implementation <a href="../man3/X509_LOOKUP_store.html">X509_LOOKUP_store(3)</a>.</p>
+<p>X509_LOOKUP_load_store_ex() passes a URI for a single container from which certificates and CRLs are immediately loaded into the associated <b>X509_STORE</b>. The library context <i>libctx</i> and property query <i>propq</i> are used when fetching algorithms from providers. These functions can only be used with a lookup using the implementation <a href="https://man7.org/linux/man-pages/man3/X509_LOOKUP_store.3.html">X509_LOOKUP_store(3)</a>.</p>
 
 <p>X509_LOOKUP_load_store() is similar to X509_LOOKUP_load_store_ex() but uses NULL for the library context <i>libctx</i> and property query <i>propq</i>.</p>
 
 <p>X509_LOOKUP_load_file_ex(), X509_LOOKUP_load_file(), X509_LOOKUP_add_dir(), X509_LOOKUP_add_store_ex() X509_LOOKUP_add_store(), X509_LOOKUP_load_store_ex() and X509_LOOKUP_load_store() are implemented as macros that use X509_LOOKUP_ctrl().</p>
 
-<p>X509_LOOKUP_by_subject_ex(), X509_LOOKUP_by_subject(), X509_LOOKUP_by_issuer_serial(), X509_LOOKUP_by_fingerprint(), and X509_LOOKUP_by_alias() look up certificates and CRLs in the <a href="../man3/X509_STORE.html">X509_STORE(3)</a> associated with the <b>X509_LOOKUP</b> using different criteria, where the looked up object is stored in <i>ret</i>. Some of the underlying <b>X509_LOOKUP_METHOD</b>s will also cache objects matching the criteria in the associated <b>X509_STORE</b>, which makes it possible to handle cases where the criteria have more than one hit.</p>
+<p>X509_LOOKUP_by_subject_ex(), X509_LOOKUP_by_subject(), X509_LOOKUP_by_issuer_serial(), X509_LOOKUP_by_fingerprint(), and X509_LOOKUP_by_alias() look up certificates and CRLs in the <a href="https://man7.org/linux/man-pages/man3/X509_STORE.3.html">X509_STORE(3)</a> associated with the <b>X509_LOOKUP</b> using different criteria, where the looked up object is stored in <i>ret</i>. Some of the underlying <b>X509_LOOKUP_METHOD</b>s will also cache objects matching the criteria in the associated <b>X509_STORE</b>, which makes it possible to handle cases where the criteria have more than one hit.</p>
 
 <h2 id="Control-Commands">Control Commands</h2>
 
@@ -164,7 +164,7 @@ int X509_LOOKUP_by_alias(X509_LOOKUP *ctx, X509_LOOKUP_TYPE type,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/X509_LOOKUP_METHOD.html">X509_LOOKUP_METHOD(3)</a>, <a href="../man3/X509_STORE.html">X509_STORE(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/X509_LOOKUP_METHOD.3.html">X509_LOOKUP_METHOD(3)</a>, <a href="https://man7.org/linux/man-pages/man3/X509_STORE.3.html">X509_STORE(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

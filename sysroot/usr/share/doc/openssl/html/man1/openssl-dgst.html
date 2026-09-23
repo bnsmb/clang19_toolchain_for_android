@@ -4,7 +4,7 @@
 <head>
 <title>openssl-dgst</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -98,7 +98,7 @@
 <dt id="r"><b>-r</b></dt>
 <dd>
 
-<p>Output the digest in the &quot;coreutils&quot; format, including newlines. Used by programs like <a href="../man1/sha1sum.html">sha1sum(1)</a>.</p>
+<p>Output the digest in the &quot;coreutils&quot; format, including newlines. Used by programs like <a href="https://man7.org/linux/man-pages/man1/sha1sum.1.html">sha1sum(1)</a>.</p>
 
 </dd>
 <dt id="out-filename"><b>-out</b> <i>filename</i></dt>
@@ -118,19 +118,19 @@
 <dt id="keyform-DER-PEM-P12-ENGINE"><b>-keyform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>|<b>ENGINE</b></dt>
 <dd>
 
-<p>The format of the key to sign with; unspecified by default. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The format of the key to sign with; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="sigopt-nm:v"><b>-sigopt</b> <i>nm</i>:<i>v</i></dt>
 <dd>
 
-<p>Pass options to the signature algorithm during sign or verify operations. Names and values of these options are algorithm-specific and documented in <a href="../man7/provider-signature.html">&quot;Signature parameters&quot; in provider-signature(7)</a>.</p>
+<p>Pass options to the signature algorithm during sign or verify operations. Names and values of these options are algorithm-specific and documented in <a href="https://man7.org/linux/man-pages/man7/provider-signature.7.html#Signature_parameters">&quot;Signature parameters&quot; in provider-signature(7)</a>.</p>
 
 </dd>
 <dt id="passin-arg"><b>-passin</b> <i>arg</i></dt>
 <dd>
 
-<p>The private key password source. For more information about the format of <i>arg</i> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>The private key password source. For more information about the format of <i>arg</i> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="verify-filename"><b>-verify</b> <i>filename</i></dt>
@@ -156,7 +156,7 @@
 
 <p>Create a hashed MAC using &quot;key&quot;.</p>
 
-<p>The <a href="../man1/openssl-mac.html">openssl-mac(1)</a> command should be preferred to using this command line option.</p>
+<p>The <a href="https://man7.org/linux/man-pages/man1/openssl-mac.1.html">openssl-mac(1)</a> command should be preferred to using this command line option.</p>
 
 </dd>
 <dt id="mac-alg"><b>-mac</b> <i>alg</i></dt>
@@ -164,7 +164,7 @@
 
 <p>Create MAC (keyed Message Authentication Code). The most popular MAC algorithm is HMAC (hash-based MAC), but there are other MAC algorithms which are not based on hash, for instance <b>gost-mac</b> algorithm, supported by the <b>gost</b> engine. MAC keys and other options should be set via <b>-macopt</b> parameter.</p>
 
-<p>The <a href="../man1/openssl-mac.html">openssl-mac(1)</a> command should be preferred to using this command line option.</p>
+<p>The <a href="https://man7.org/linux/man-pages/man1/openssl-mac.1.html">openssl-mac(1)</a> command should be preferred to using this command line option.</p>
 
 </dd>
 <dt id="macopt-nm:v"><b>-macopt</b> <i>nm</i>:<i>v</i></dt>
@@ -188,7 +188,7 @@
 </dd>
 </dl>
 
-<p>The <a href="../man1/openssl-mac.html">openssl-mac(1)</a> command should be preferred to using this command line option.</p>
+<p>The <a href="https://man7.org/linux/man-pages/man1/openssl-mac.1.html">openssl-mac(1)</a> command should be preferred to using this command line option.</p>
 
 </dd>
 <dt id="fips-fingerprint"><b>-fips-fingerprint</b></dt>
@@ -200,15 +200,15 @@
 <dt id="rand-files--writerand-file"><b>-rand</b> <i>files</i>, <b>-writerand</b> <i>file</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Random_State_Options">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
 
 </dd>
 <dt id="engine-id"><b>-engine</b> <i>id</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Engine_Options">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
 
-<p>The engine is not used for digests unless the <b>-engine_impl</b> option is used or it is configured to do so, see <a href="../man5/config.html">&quot;Engine Configuration Module&quot; in config(5)</a>.</p>
+<p>The engine is not used for digests unless the <b>-engine_impl</b> option is used or it is configured to do so, see <a href="https://man7.org/linux/man-pages/man5/config.5.html#Engine_Configuration_Module">&quot;Engine Configuration Module&quot; in config(5)</a>.</p>
 
 </dd>
 <dt id="engine_impl-id"><b>-engine_impl</b> <i>id</i></dt>
@@ -232,7 +232,7 @@
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Provider Options&quot; in openssl(1)</a>, <a href="../man7/provider.html">provider(7)</a>, and <a href="../man7/property.html">property(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Provider_Options">&quot;Provider Options&quot; in openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, and <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>.</p>
 
 </dd>
 <dt id="file"><i>file</i> ...</dt>
@@ -277,11 +277,11 @@ file.txt</code></pre>
 
 <p>Hex signatures cannot be verified using <b>openssl</b>. Instead, use &quot;xxd -r&quot; or similar program to transform the hex signature into a binary signature prior to verification.</p>
 
-<p>The <a href="../man1/openssl-mac.html">openssl-mac(1)</a> command is preferred over the <b>-hmac</b>, <b>-mac</b> and <b>-macopt</b> command line options.</p>
+<p>The <a href="https://man7.org/linux/man-pages/man1/openssl-mac.1.html">openssl-mac(1)</a> command is preferred over the <b>-hmac</b>, <b>-mac</b> and <b>-macopt</b> command line options.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl-mac.html">openssl-mac(1)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl-mac.1.html">openssl-mac(1)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

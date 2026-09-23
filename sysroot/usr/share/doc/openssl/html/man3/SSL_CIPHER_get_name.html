@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CIPHER_get_name</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -78,7 +78,7 @@ NID_auth_psk</code></pre>
 
 <p>SSL_CIPHER_is_aead() returns 1 if the cipher <b>c</b> is AEAD (e.g. GCM or ChaCha20/Poly1305), and 0 if it is not AEAD.</p>
 
-<p>SSL_CIPHER_find() returns a <b>SSL_CIPHER</b> structure which has the cipher ID stored in <b>ptr</b>. The <b>ptr</b> parameter is a two element array of <b>char</b>, which stores the two-byte TLS cipher ID (as allocated by IANA) in network byte order. This parameter is usually retrieved from a TLS packet by using functions like <a href="../man3/SSL_client_hello_get0_ciphers.html">SSL_client_hello_get0_ciphers(3)</a>. SSL_CIPHER_find() returns NULL if an error occurs or the indicated cipher is not found.</p>
+<p>SSL_CIPHER_find() returns a <b>SSL_CIPHER</b> structure which has the cipher ID stored in <b>ptr</b>. The <b>ptr</b> parameter is a two element array of <b>char</b>, which stores the two-byte TLS cipher ID (as allocated by IANA) in network byte order. This parameter is usually retrieved from a TLS packet by using functions like <a href="https://man7.org/linux/man-pages/man3/SSL_client_hello_get0_ciphers.3.html">SSL_client_hello_get0_ciphers(3)</a>. SSL_CIPHER_find() returns NULL if an error occurs or the indicated cipher is not found.</p>
 
 <p>SSL_CIPHER_get_id() returns the OpenSSL-specific ID of the given cipher <b>c</b>. That ID is not the same as the IANA-specific ID.</p>
 
@@ -153,7 +153,7 @@ RSA-PSK-AES256-CBC-SHA384 TLSv1.0 Kx=RSAPSK   Au=RSA  Enc=AES(256)  Mac=SHA384</
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_get_current_cipher.html">SSL_get_current_cipher(3)</a>, <a href="../man3/SSL_get_ciphers.html">SSL_get_ciphers(3)</a>, <a href="../man1/openssl-ciphers.html">openssl-ciphers(1)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_current_cipher.3.html">SSL_get_current_cipher(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_ciphers.3.html">SSL_get_ciphers(3)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ciphers.1.html">openssl-ciphers(1)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

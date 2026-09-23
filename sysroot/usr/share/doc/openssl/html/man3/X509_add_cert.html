@@ -4,7 +4,7 @@
 <head>
 <title>X509_add_cert</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -47,9 +47,9 @@ int X509_add_certs(STACK_OF(X509) *sk, STACK_OF(X509) *certs, int flags);</code>
 
 <p>If <b>X509_ADD_FLAG_PREPEND</b> is set then the certificates are prepended to <i>sk</i>. By default they are appended to <i>sk</i>. In both cases the original order of the added certificates is preserved.</p>
 
-<p>If <b>X509_ADD_FLAG_NO_DUP</b> is set then certificates already contained in <i>sk</i>, which is determined using <a href="../man3/X509_cmp.html">X509_cmp(3)</a>, are ignored.</p>
+<p>If <b>X509_ADD_FLAG_NO_DUP</b> is set then certificates already contained in <i>sk</i>, which is determined using <a href="https://man7.org/linux/man-pages/man3/X509_cmp.3.html">X509_cmp(3)</a>, are ignored.</p>
 
-<p>If <b>X509_ADD_FLAG_NO_SS</b> is set then certificates that are marked self-signed, which is determined using <a href="../man3/X509_self_signed.html">X509_self_signed(3)</a>, are ignored.</p>
+<p>If <b>X509_ADD_FLAG_NO_SS</b> is set then certificates that are marked self-signed, which is determined using <a href="https://man7.org/linux/man-pages/man3/X509_self_signed.3.html">X509_self_signed(3)</a>, are ignored.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -63,7 +63,7 @@ int X509_add_certs(STACK_OF(X509) *sk, STACK_OF(X509) *certs, int flags);</code>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/X509_cmp.html">X509_cmp(3)</a> <a href="../man3/X509_self_signed.html">X509_self_signed(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/X509_cmp.3.html">X509_cmp(3)</a> <a href="https://man7.org/linux/man-pages/man3/X509_self_signed.3.html">X509_self_signed(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

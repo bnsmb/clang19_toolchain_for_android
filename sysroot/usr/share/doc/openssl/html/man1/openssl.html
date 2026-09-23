@@ -4,7 +4,7 @@
 <head>
 <title>openssl</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -74,15 +74,15 @@ o  Timestamp requests, generation and verification</code></pre>
 
 <p>The <b>openssl</b> program provides a rich variety of commands (<i>command</i> in the <a href="#SYNOPSIS">&quot;SYNOPSIS&quot;</a> above). Each command can have many options and argument parameters, shown above as <i>options</i> and <i>parameters</i>.</p>
 
-<p>Detailed documentation and use cases for most standard subcommands are available (e.g., <a href="../man1/openssl-x509.html">openssl-x509(1)</a>). The subcommand <a href="../man1/openssl-list.html">openssl-list(1)</a> may be used to list subcommands.</p>
+<p>Detailed documentation and use cases for most standard subcommands are available (e.g., <a href="https://man7.org/linux/man-pages/man1/openssl-x509.1.html">openssl-x509(1)</a>). The subcommand <a href="https://man7.org/linux/man-pages/man1/openssl-list.1.html">openssl-list(1)</a> may be used to list subcommands.</p>
 
 <p>The command <b>no-</b><i>XXX</i> tests whether a command of the specified name is available. If no command named <i>XXX</i> exists, it returns 0 (success) and prints <b>no-</b><i>XXX</i>; otherwise it returns 1 and prints <i>XXX</i>. In both cases, the output goes to <b>stdout</b> and nothing is printed to <b>stderr</b>. Additional command line arguments are always ignored. Since for each cipher there is a command of the same name, this provides an easy way for shell scripts to test for the availability of ciphers in the <b>openssl</b> program. (<b>no-</b><i>XXX</i> is not able to detect pseudo-commands such as <b>quit</b>, <b>list</b>, or <b>no-</b><i>XXX</i> itself.)</p>
 
 <h2 id="Configuration-Option">Configuration Option</h2>
 
-<p>Many commands use an external configuration file for some or all of their arguments and have a <b>-config</b> option to specify that file. The default name of the file is <i>openssl.cnf</i> in the default certificate storage area, which can be determined from the <a href="../man1/openssl-version.html">openssl-version(1)</a> command using the <b>-d</b> or <b>-a</b> option. The environment variable <b>OPENSSL_CONF</b> can be used to specify a different file location or to disable loading a configuration (using the empty string).</p>
+<p>Many commands use an external configuration file for some or all of their arguments and have a <b>-config</b> option to specify that file. The default name of the file is <i>openssl.cnf</i> in the default certificate storage area, which can be determined from the <a href="https://man7.org/linux/man-pages/man1/openssl-version.1.html">openssl-version(1)</a> command using the <b>-d</b> or <b>-a</b> option. The environment variable <b>OPENSSL_CONF</b> can be used to specify a different file location or to disable loading a configuration (using the empty string).</p>
 
-<p>Among others, the configuration file can be used to load modules and to specify parameters for generating certificates and random numbers. See <a href="../man5/config.html">config(5)</a> for details.</p>
+<p>Among others, the configuration file can be used to load modules and to specify parameters for generating certificates and random numbers. See <a href="https://man7.org/linux/man-pages/man5/config.5.html">config(5)</a> for details.</p>
 
 <h2 id="Standard-Commands">Standard Commands</h2>
 
@@ -127,13 +127,13 @@ o  Timestamp requests, generation and verification</code></pre>
 <dt id="dgst"><b>dgst</b></dt>
 <dd>
 
-<p>Message Digest calculation. MAC calculations are superseded by <a href="../man1/openssl-mac.html">openssl-mac(1)</a>.</p>
+<p>Message Digest calculation. MAC calculations are superseded by <a href="https://man7.org/linux/man-pages/man1/openssl-mac.1.html">openssl-mac(1)</a>.</p>
 
 </dd>
 <dt id="dhparam"><b>dhparam</b></dt>
 <dd>
 
-<p>Generation and Management of Diffie-Hellman Parameters. Superseded by <a href="../man1/openssl-genpkey.html">openssl-genpkey(1)</a> and <a href="../man1/openssl-pkeyparam.html">openssl-pkeyparam(1)</a>.</p>
+<p>Generation and Management of Diffie-Hellman Parameters. Superseded by <a href="https://man7.org/linux/man-pages/man1/openssl-genpkey.1.html">openssl-genpkey(1)</a> and <a href="https://man7.org/linux/man-pages/man1/openssl-pkeyparam.1.html">openssl-pkeyparam(1)</a>.</p>
 
 </dd>
 <dt id="dsa"><b>dsa</b></dt>
@@ -145,7 +145,7 @@ o  Timestamp requests, generation and verification</code></pre>
 <dt id="dsaparam"><b>dsaparam</b></dt>
 <dd>
 
-<p>DSA Parameter Generation and Management. Superseded by <a href="../man1/openssl-genpkey.html">openssl-genpkey(1)</a> and <a href="../man1/openssl-pkeyparam.html">openssl-pkeyparam(1)</a>.</p>
+<p>DSA Parameter Generation and Management. Superseded by <a href="https://man7.org/linux/man-pages/man1/openssl-genpkey.1.html">openssl-genpkey(1)</a> and <a href="https://man7.org/linux/man-pages/man1/openssl-pkeyparam.1.html">openssl-pkeyparam(1)</a>.</p>
 
 </dd>
 <dt id="ec"><b>ec</b></dt>
@@ -187,7 +187,7 @@ o  Timestamp requests, generation and verification</code></pre>
 <dt id="gendsa"><b>gendsa</b></dt>
 <dd>
 
-<p>Generation of DSA Private Key from Parameters. Superseded by <a href="../man1/openssl-genpkey.html">openssl-genpkey(1)</a> and <a href="../man1/openssl-pkey.html">openssl-pkey(1)</a>.</p>
+<p>Generation of DSA Private Key from Parameters. Superseded by <a href="https://man7.org/linux/man-pages/man1/openssl-genpkey.1.html">openssl-genpkey(1)</a> and <a href="https://man7.org/linux/man-pages/man1/openssl-pkey.1.html">openssl-pkey(1)</a>.</p>
 
 </dd>
 <dt id="genpkey"><b>genpkey</b></dt>
@@ -199,7 +199,7 @@ o  Timestamp requests, generation and verification</code></pre>
 <dt id="genrsa"><b>genrsa</b></dt>
 <dd>
 
-<p>Generation of RSA Private Key. Superseded by <a href="../man1/openssl-genpkey.html">openssl-genpkey(1)</a>.</p>
+<p>Generation of RSA Private Key. Superseded by <a href="https://man7.org/linux/man-pages/man1/openssl-genpkey.1.html">openssl-genpkey(1)</a>.</p>
 
 </dd>
 <dt id="help"><b>help</b></dt>
@@ -319,7 +319,7 @@ o  Timestamp requests, generation and verification</code></pre>
 <dt id="rsautl"><b>rsautl</b></dt>
 <dd>
 
-<p>RSA command for signing, verification, encryption, and decryption. Superseded by <a href="../man1/openssl-pkeyutl.html">openssl-pkeyutl(1)</a>.</p>
+<p>RSA command for signing, verification, encryption, and decryption. Superseded by <a href="https://man7.org/linux/man-pages/man1/openssl-pkeyutl.1.html">openssl-pkeyutl(1)</a>.</p>
 
 </dd>
 <dt id="s_client"><b>s_client</b></dt>
@@ -385,7 +385,7 @@ o  Timestamp requests, generation and verification</code></pre>
 <dt id="verify"><b>verify</b></dt>
 <dd>
 
-<p>X.509 Certificate Verification. See also the <a href="../man1/openssl-verification-options.html">openssl-verification-options(1)</a> manual page.</p>
+<p>X.509 Certificate Verification. See also the <a href="https://man7.org/linux/man-pages/man1/openssl-verification-options.1.html">openssl-verification-options(1)</a> manual page.</p>
 
 </dd>
 <dt id="version"><b>version</b></dt>
@@ -550,7 +550,7 @@ o  Timestamp requests, generation and verification</code></pre>
 
 <p>The following aliases provide convenient access to the most used encodings and ciphers.</p>
 
-<p>Depending on how OpenSSL was configured and built, not all ciphers listed here may be present. See <a href="../man1/openssl-enc.html">openssl-enc(1)</a> for more information.</p>
+<p>Depending on how OpenSSL was configured and built, not all ciphers listed here may be present. See <a href="https://man7.org/linux/man-pages/man1/openssl-enc.1.html">openssl-enc(1)</a> for more information.</p>
 
 <dl>
 
@@ -707,7 +707,7 @@ o  Timestamp requests, generation and verification</code></pre>
 <dt id="version1"><b>-version</b></dt>
 <dd>
 
-<p>Provides a terse summary of the <b>openssl</b> program version. For more detailed information see <a href="../man1/openssl-version.html">openssl-version(1)</a>. Accepts <b>--version</b> as well.</p>
+<p>Provides a terse summary of the <b>openssl</b> program version. For more detailed information see <a href="https://man7.org/linux/man-pages/man1/openssl-version.1.html">openssl-version(1)</a>. Accepts <b>--version</b> as well.</p>
 
 </dd>
 </dl>
@@ -734,11 +734,11 @@ o  Timestamp requests, generation and verification</code></pre>
 
 <h2 id="Format-Options">Format Options</h2>
 
-<p>See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for manual page.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for manual page.</p>
 
 <h2 id="Pass-Phrase-Options">Pass Phrase Options</h2>
 
-<p>See the <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a> manual page.</p>
+<p>See the <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a> manual page.</p>
 
 <h2 id="Random-State-Options">Random State Options</h2>
 
@@ -764,11 +764,11 @@ o  Timestamp requests, generation and verification</code></pre>
 
 <h2 id="Certificate-Verification-Options">Certificate Verification Options</h2>
 
-<p>See the <a href="../man1/openssl-verification-options.html">openssl-verification-options(1)</a> manual page.</p>
+<p>See the <a href="https://man7.org/linux/man-pages/man1/openssl-verification-options.1.html">openssl-verification-options(1)</a> manual page.</p>
 
 <h2 id="Name-Format-Options">Name Format Options</h2>
 
-<p>See the <a href="../man1/openssl-namedisplay-options.html">openssl-namedisplay-options(1)</a> manual page.</p>
+<p>See the <a href="https://man7.org/linux/man-pages/man1/openssl-namedisplay-options.1.html">openssl-namedisplay-options(1)</a> manual page.</p>
 
 <h2 id="TLS-Version-Options">TLS Version Options</h2>
 
@@ -799,7 +799,7 @@ o  Timestamp requests, generation and verification</code></pre>
 <dt id="engine-id"><b>-engine</b> <i>id</i></dt>
 <dd>
 
-<p>Load the engine identified by <i>id</i> and use all the methods it implements (algorithms, key storage, etc.), unless specified otherwise in the command-specific documentation or it is configured to do so, as described in <a href="../man5/config.html">&quot;Engine Configuration&quot; in config(5)</a>.</p>
+<p>Load the engine identified by <i>id</i> and use all the methods it implements (algorithms, key storage, etc.), unless specified otherwise in the command-specific documentation or it is configured to do so, as described in <a href="https://man7.org/linux/man-pages/man5/config.5.html#Engine_Configuration">&quot;Engine Configuration&quot; in config(5)</a>.</p>
 
 <p>The engine will be used for key ids specified with <b>-key</b> and similar options when an option like <b>-keyform engine</b> is given.</p>
 
@@ -816,7 +816,7 @@ o  Timestamp requests, generation and verification</code></pre>
 
 <pre><code>-key org.openssl.engine:pkcs11:label_some-private-key</code></pre>
 
-<p>As a third possibility, for engines and providers that have implemented their own <a href="../man3/OSSL_STORE_LOADER.html">OSSL_STORE_LOADER(3)</a>, <code>org.openssl.engine:</code> should not be necessary. For a PKCS#11 implementation that has implemented such a loader, the PKCS#11 URI as defined in RFC 7512 should be possible to use directly:</p>
+<p>As a third possibility, for engines and providers that have implemented their own <a href="https://man7.org/linux/man-pages/man3/OSSL_STORE_LOADER.3.html">OSSL_STORE_LOADER(3)</a>, <code>org.openssl.engine:</code> should not be necessary. For a PKCS#11 implementation that has implemented such a loader, the PKCS#11 URI as defined in RFC 7512 should be possible to use directly:</p>
 
 <pre><code>-key pkcs11:object=some-private-key;pin-value=1234</code></pre>
 
@@ -827,7 +827,7 @@ o  Timestamp requests, generation and verification</code></pre>
 <dt id="provider-name"><b>-provider</b> <i>name</i></dt>
 <dd>
 
-<p>Load and initialize the provider identified by <i>name</i>. The <i>name</i> can be also a path to the provider module. In that case the provider name will be the specified path and not just the provider module name. Interpretation of relative paths is platform specific. The configured &quot;MODULESDIR&quot; path, <b>OPENSSL_MODULES</b> environment variable, or the path specified by <b>-provider-path</b> is prepended to relative paths. See <a href="../man7/provider.html">provider(7)</a> for a more detailed description.</p>
+<p>Load and initialize the provider identified by <i>name</i>. The <i>name</i> can be also a path to the provider module. In that case the provider name will be the specified path and not just the provider module name. Interpretation of relative paths is platform specific. The configured &quot;MODULESDIR&quot; path, <b>OPENSSL_MODULES</b> environment variable, or the path specified by <b>-provider-path</b> is prepended to relative paths. See <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a> for a more detailed description.</p>
 
 </dd>
 <dt id="provider-path-path"><b>-provider-path</b> <i>path</i></dt>
@@ -845,7 +845,7 @@ o  Timestamp requests, generation and verification</code></pre>
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
-<p>Specifies the <i>property query clause</i> to be used when fetching algorithms from the loaded providers. See <a href="../man7/property.html">property(7)</a> for a more detailed description.</p>
+<p>Specifies the <i>property query clause</i> to be used when fetching algorithms from the loaded providers. See <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a> for a more detailed description.</p>
 
 </dd>
 </dl>
@@ -854,17 +854,17 @@ o  Timestamp requests, generation and verification</code></pre>
 
 <p>The OpenSSL libraries can take some configuration parameters from the environment.</p>
 
-<p>For information about all environment variables used by the OpenSSL libraries, such as <b>OPENSSL_CONF</b>, <b>OPENSSL_MODULES</b>, and <b>OPENSSL_TRACE</b>, see <a href="../man7/openssl-env.html">openssl-env(7)</a>.</p>
+<p>For information about all environment variables used by the OpenSSL libraries, such as <b>OPENSSL_CONF</b>, <b>OPENSSL_MODULES</b>, and <b>OPENSSL_TRACE</b>, see <a href="https://man7.org/linux/man-pages/man7/openssl-env.7.html">openssl-env(7)</a>.</p>
 
-<p>For information about the use of environment variables in configuration, see <a href="../man5/config.html">&quot;ENVIRONMENT&quot; in config(5)</a>.</p>
+<p>For information about the use of environment variables in configuration, see <a href="https://man7.org/linux/man-pages/man5/config.5.html#ENVIRONMENT">&quot;ENVIRONMENT&quot; in config(5)</a>.</p>
 
-<p>For information about specific commands, see <a href="../man1/openssl-engine.html">openssl-engine(1)</a>, <a href="../man1/openssl-rehash.html">openssl-rehash(1)</a>, and <a href="../man1/tsget.html">tsget(1)</a>.</p>
+<p>For information about specific commands, see <a href="https://man7.org/linux/man-pages/man1/openssl-engine.1.html">openssl-engine(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-rehash.1.html">openssl-rehash(1)</a>, and <a href="https://man7.org/linux/man-pages/man1/tsget.1.html">tsget(1)</a>.</p>
 
-<p>For information about querying or specifying CPU architecture flags, see <a href="../man3/OPENSSL_ia32cap.html">OPENSSL_ia32cap(3)</a>, <a href="../man3/OPENSSL_ppccap.html">OPENSSL_ppccap(3)</a>, <a href="../man3/OPENSSL_s390xcap.html">OPENSSL_s390xcap(3)</a>, and <a href="../man3/OPENSSL_riscvcap.html">OPENSSL_riscvcap(3)</a>.</p>
+<p>For information about querying or specifying CPU architecture flags, see <a href="https://man7.org/linux/man-pages/man3/OPENSSL_armcap.3.html">OPENSSL_armcap(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OPENSSL_ia32cap.3.html">OPENSSL_ia32cap(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OPENSSL_ppccap.3.html">OPENSSL_ppccap(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OPENSSL_s390xcap.3.html">OPENSSL_s390xcap(3)</a> and <a href="https://man7.org/linux/man-pages/man3/OPENSSL_riscvcap.3.html">OPENSSL_riscvcap(3)</a>.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl-asn1parse.html">openssl-asn1parse(1)</a>, <a href="../man1/openssl-ca.html">openssl-ca(1)</a>, <a href="../man1/openssl-ciphers.html">openssl-ciphers(1)</a>, <a href="../man1/openssl-cms.html">openssl-cms(1)</a>, <a href="../man1/openssl-crl.html">openssl-crl(1)</a>, <a href="../man1/openssl-crl2pkcs7.html">openssl-crl2pkcs7(1)</a>, <a href="../man1/openssl-dgst.html">openssl-dgst(1)</a>, <a href="../man1/openssl-dhparam.html">openssl-dhparam(1)</a>, <a href="../man1/openssl-dsa.html">openssl-dsa(1)</a>, <a href="../man1/openssl-dsaparam.html">openssl-dsaparam(1)</a>, <a href="../man1/openssl-ec.html">openssl-ec(1)</a>, <a href="../man1/openssl-ecparam.html">openssl-ecparam(1)</a>, <a href="../man1/openssl-enc.html">openssl-enc(1)</a>, <a href="../man1/openssl-engine.html">openssl-engine(1)</a>, <a href="../man1/openssl-errstr.html">openssl-errstr(1)</a>, <a href="../man1/openssl-gendsa.html">openssl-gendsa(1)</a>, <a href="../man1/openssl-genpkey.html">openssl-genpkey(1)</a>, <a href="../man1/openssl-genrsa.html">openssl-genrsa(1)</a>, <a href="../man1/openssl-kdf.html">openssl-kdf(1)</a>, <a href="../man1/openssl-list.html">openssl-list(1)</a>, <a href="../man1/openssl-mac.html">openssl-mac(1)</a>, <a href="../man1/openssl-nseq.html">openssl-nseq(1)</a>, <a href="../man1/openssl-ocsp.html">openssl-ocsp(1)</a>, <a href="../man1/openssl-passwd.html">openssl-passwd(1)</a>, <a href="../man1/openssl-pkcs12.html">openssl-pkcs12(1)</a>, <a href="../man1/openssl-pkcs7.html">openssl-pkcs7(1)</a>, <a href="../man1/openssl-pkcs8.html">openssl-pkcs8(1)</a>, <a href="../man1/openssl-pkey.html">openssl-pkey(1)</a>, <a href="../man1/openssl-pkeyparam.html">openssl-pkeyparam(1)</a>, <a href="../man1/openssl-pkeyutl.html">openssl-pkeyutl(1)</a>, <a href="../man1/openssl-prime.html">openssl-prime(1)</a>, <a href="../man1/openssl-rand.html">openssl-rand(1)</a>, <a href="../man1/openssl-rehash.html">openssl-rehash(1)</a>, <a href="../man1/openssl-req.html">openssl-req(1)</a>, <a href="../man1/openssl-rsa.html">openssl-rsa(1)</a>, <a href="../man1/openssl-rsautl.html">openssl-rsautl(1)</a>, <a href="../man1/openssl-s_client.html">openssl-s_client(1)</a>, <a href="../man1/openssl-s_server.html">openssl-s_server(1)</a>, <a href="../man1/openssl-s_time.html">openssl-s_time(1)</a>, <a href="../man1/openssl-sess_id.html">openssl-sess_id(1)</a>, <a href="../man1/openssl-smime.html">openssl-smime(1)</a>, <a href="../man1/openssl-speed.html">openssl-speed(1)</a>, <a href="../man1/openssl-spkac.html">openssl-spkac(1)</a>, <a href="../man1/openssl-srp.html">openssl-srp(1)</a>, <a href="../man1/openssl-storeutl.html">openssl-storeutl(1)</a>, <a href="../man1/openssl-ts.html">openssl-ts(1)</a>, <a href="../man1/openssl-verify.html">openssl-verify(1)</a>, <a href="../man1/openssl-version.html">openssl-version(1)</a>, <a href="../man1/openssl-x509.html">openssl-x509(1)</a>, <a href="../man5/config.html">config(5)</a>, <a href="../man7/crypto.html">crypto(7)</a>, <a href="../man7/openssl-env.html">openssl-env(7)</a>. <a href="../man7/ssl.html">ssl(7)</a>, <a href="../man5/x509v3_config.html">x509v3_config(5)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl-asn1parse.1.html">openssl-asn1parse(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ca.1.html">openssl-ca(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ciphers.1.html">openssl-ciphers(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-cms.1.html">openssl-cms(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-crl.1.html">openssl-crl(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-crl2pkcs7.1.html">openssl-crl2pkcs7(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-dgst.1.html">openssl-dgst(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-dhparam.1.html">openssl-dhparam(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-dsa.1.html">openssl-dsa(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-dsaparam.1.html">openssl-dsaparam(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ec.1.html">openssl-ec(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ecparam.1.html">openssl-ecparam(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-enc.1.html">openssl-enc(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-engine.1.html">openssl-engine(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-errstr.1.html">openssl-errstr(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-gendsa.1.html">openssl-gendsa(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-genpkey.1.html">openssl-genpkey(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-genrsa.1.html">openssl-genrsa(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-kdf.1.html">openssl-kdf(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-list.1.html">openssl-list(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-mac.1.html">openssl-mac(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-nseq.1.html">openssl-nseq(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ocsp.1.html">openssl-ocsp(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-passwd.1.html">openssl-passwd(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-pkcs12.1.html">openssl-pkcs12(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-pkcs7.1.html">openssl-pkcs7(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-pkcs8.1.html">openssl-pkcs8(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-pkey.1.html">openssl-pkey(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-pkeyparam.1.html">openssl-pkeyparam(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-pkeyutl.1.html">openssl-pkeyutl(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-prime.1.html">openssl-prime(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-rand.1.html">openssl-rand(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-rehash.1.html">openssl-rehash(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-req.1.html">openssl-req(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-rsa.1.html">openssl-rsa(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-rsautl.1.html">openssl-rsautl(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-s_client.1.html">openssl-s_client(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-s_server.1.html">openssl-s_server(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-s_time.1.html">openssl-s_time(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-sess_id.1.html">openssl-sess_id(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-smime.1.html">openssl-smime(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-speed.1.html">openssl-speed(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-spkac.1.html">openssl-spkac(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-srp.1.html">openssl-srp(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-storeutl.1.html">openssl-storeutl(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ts.1.html">openssl-ts(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-verify.1.html">openssl-verify(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-version.1.html">openssl-version(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-x509.1.html">openssl-x509(1)</a>, <a href="https://man7.org/linux/man-pages/man5/config.5.html">config(5)</a>, <a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a>, <a href="https://man7.org/linux/man-pages/man7/openssl-env.7.html">openssl-env(7)</a>. <a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -878,7 +878,7 @@ o  Timestamp requests, generation and verification</code></pre>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

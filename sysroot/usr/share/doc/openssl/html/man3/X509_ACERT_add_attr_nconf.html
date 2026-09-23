@@ -4,7 +4,7 @@
 <head>
 <title>X509_ACERT_add_attr_nconf</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -42,7 +42,7 @@ int X509_ACERT_add_attr_nconf(CONF *conf, const char *section,
 
 <p>The format of <b>value</b> will vary depending on the <b>attribute_name</b>. <b>value</b> can either be a string value or an <b>ASN1_TYPE</b> object.</p>
 
-<p>To encode an <b>ASN1_TYPE</b> object, use the prefix &quot;ASN1:&quot; followed by the object description that uses the same syntax as <a href="../man3/ASN1_generate_nconf.html">ASN1_generate_nconf(3)</a>. For example:</p>
+<p>To encode an <b>ASN1_TYPE</b> object, use the prefix &quot;ASN1:&quot; followed by the object description that uses the same syntax as <a href="https://man7.org/linux/man-pages/man3/ASN1_generate_nconf.3.html">ASN1_generate_nconf(3)</a>. For example:</p>
 
 <pre><code>id-aca-group = ASN1:SEQUENCE:ietfattr
 
@@ -58,7 +58,7 @@ values = SEQUENCE:groups
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/ASN1_generate_nconf.html">ASN1_generate_nconf(3)</a>.</p>
+<p><a href="https://man7.org/linux/man-pages/man3/ASN1_generate_nconf.3.html">ASN1_generate_nconf(3)</a>.</p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

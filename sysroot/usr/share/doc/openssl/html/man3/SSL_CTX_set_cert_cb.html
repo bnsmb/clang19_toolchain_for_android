@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set_cert_cb</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -39,7 +39,7 @@ void SSL_set_cert_cb(SSL *s, int (*cert_cb)(SSL *ssl, void *arg), void *arg);</c
 
 <p>When <i>cert_cb</i> is NULL, no callback function is used.</p>
 
-<p><i>cert_cb</i> is the application defined callback. It is called before a certificate will be used by a client or server. The callback can then inspect the passed <i>ssl</i> structure and set or clear any appropriate certificates. If the callback is successful it <b>MUST</b> return 1 even if no certificates have been set. A zero is returned on error which will abort the handshake with a fatal internal error alert. A negative return value will suspend the handshake and the handshake function will return immediately. <a href="../man3/SSL_get_error.html">SSL_get_error(3)</a> will return SSL_ERROR_WANT_X509_LOOKUP to indicate, that the handshake was suspended. The next call to the handshake function will again lead to the call of <i>cert_cb</i>. It is the job of the <i>cert_cb</i> to store information about the state of the last call, if required to continue.</p>
+<p><i>cert_cb</i> is the application defined callback. It is called before a certificate will be used by a client or server. The callback can then inspect the passed <i>ssl</i> structure and set or clear any appropriate certificates. If the callback is successful it <b>MUST</b> return 1 even if no certificates have been set. A zero is returned on error which will abort the handshake with a fatal internal error alert. A negative return value will suspend the handshake and the handshake function will return immediately. <a href="https://man7.org/linux/man-pages/man3/SSL_get_error.3.html">SSL_get_error(3)</a> will return SSL_ERROR_WANT_X509_LOOKUP to indicate, that the handshake was suspended. The next call to the handshake function will again lead to the call of <i>cert_cb</i>. It is the job of the <i>cert_cb</i> to store information about the state of the last call, if required to continue.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -59,7 +59,7 @@ void SSL_set_cert_cb(SSL *s, int (*cert_cb)(SSL *ssl, void *arg), void *arg);</c
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_use_certificate.html">SSL_use_certificate(3)</a>, <a href="../man3/SSL_add1_chain_cert.html">SSL_add1_chain_cert(3)</a>, <a href="../man3/SSL_get_client_CA_list.html">SSL_get_client_CA_list(3)</a>, <a href="../man3/SSL_clear.html">SSL_clear(3)</a>, <a href="../man3/SSL_free.html">SSL_free(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_use_certificate.3.html">SSL_use_certificate(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_add1_chain_cert.3.html">SSL_add1_chain_cert(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_client_CA_list.3.html">SSL_get_client_CA_list(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_clear.3.html">SSL_clear(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_free.3.html">SSL_free(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>openssl-ca</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -42,11 +42,11 @@
 
 <p>This command emulates a CA application. See the <b>WARNINGS</b> especially when considering to use it productively.</p>
 
-<p>It generates certificates bearing X.509 version 3. Unless specified otherwise, key identifier extensions are included as described in <a href="../man5/x509v3_config.html">x509v3_config(5)</a>.</p>
+<p>It generates certificates bearing X.509 version 3. Unless specified otherwise, key identifier extensions are included as described in <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a>.</p>
 
 <p>It can be used to sign certificate requests (CSRs) in a variety of forms and generate certificate revocation lists (CRLs). It also maintains a text database of issued certificates and their status. When signing certificates, a single request can be specified with the <b>-in</b> option, or multiple requests can be processed by specifying a set of <b>certreq</b> files after all options.</p>
 
-<p>Note that there are also very lean ways of generating certificates: the <b>req</b> and <b>x509</b> commands can be used for directly creating certificates. See <a href="../man1/openssl-req.html">openssl-req(1)</a> and <a href="../man1/openssl-x509.html">openssl-x509(1)</a> for details.</p>
+<p>Note that there are also very lean ways of generating certificates: the <b>req</b> and <b>x509</b> commands can be used for directly creating certificates. See <a href="https://man7.org/linux/man-pages/man1/openssl-req.1.html">openssl-req(1)</a> and <a href="https://man7.org/linux/man-pages/man1/openssl-x509.1.html">openssl-x509(1)</a> for details.</p>
 
 <p>The descriptions of the <b>ca</b> command options are divided into each purpose.</p>
 
@@ -75,7 +75,7 @@
 <dt id="config-filename"><b>-config</b> <i>filename</i></dt>
 <dd>
 
-<p>Specifies the configuration file to use. Optional; for a description of the default value, see <a href="../man1/openssl.html">&quot;COMMAND SUMMARY&quot; in openssl(1)</a>.</p>
+<p>Specifies the configuration file to use. Optional; for a description of the default value, see <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#COMMAND_SUMMARY">&quot;COMMAND SUMMARY&quot; in openssl(1)</a>.</p>
 
 </dd>
 <dt id="name-section--section-section"><b>-name</b> <i>section</i>, <b>-section</b> <i>section</i></dt>
@@ -93,7 +93,7 @@
 <dt id="inform-DER-PEM"><b>-inform</b> <b>DER</b>|<b>PEM</b></dt>
 <dd>
 
-<p>The format to use when loading certificate request (CSR) input files; by default PEM is tried first. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The format to use when loading certificate request (CSR) input files; by default PEM is tried first. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="ss_cert-filename"><b>-ss_cert</b> <i>filename</i></dt>
@@ -135,7 +135,7 @@
 <dt id="certform-DER-PEM-P12"><b>-certform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b></dt>
 <dd>
 
-<p>The format of the data in certificate input files; unspecified by default. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The format of the data in certificate input files; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="keyfile-filename-uri"><b>-keyfile</b> <i>filename</i>|<i>uri</i></dt>
@@ -147,13 +147,13 @@
 <dt id="keyform-DER-PEM-P12-ENGINE"><b>-keyform</b> <b>DER</b>|<b>PEM</b>|<b>P12</b>|<b>ENGINE</b></dt>
 <dd>
 
-<p>The format of the private key input file; unspecified by default. See <a href="../man1/openssl-format-options.html">openssl-format-options(1)</a> for details.</p>
+<p>The format of the private key input file; unspecified by default. See <a href="https://man7.org/linux/man-pages/man1/openssl-format-options.1.html">openssl-format-options(1)</a> for details.</p>
 
 </dd>
 <dt id="sigopt-nm:v"><b>-sigopt</b> <i>nm</i>:<i>v</i></dt>
 <dd>
 
-<p>Pass options to the signature algorithm during sign operations. Names and values of these options are algorithm-specific and documented in <a href="../man7/provider-signature.html">&quot;Signature parameters&quot; in provider-signature(7)</a>.</p>
+<p>Pass options to the signature algorithm during sign operations. Names and values of these options are algorithm-specific and documented in <a href="https://man7.org/linux/man-pages/man7/provider-signature.7.html#Signature_parameters">&quot;Signature parameters&quot; in provider-signature(7)</a>.</p>
 
 </dd>
 <dt id="vfyopt-nm:v"><b>-vfyopt</b> <i>nm</i>:<i>v</i></dt>
@@ -167,13 +167,13 @@
 <dt id="key-password"><b>-key</b> <i>password</i></dt>
 <dd>
 
-<p>The password used to encrypt the private key. Since on some systems the command line arguments are visible (e.g., when using <a href="../man1/ps.html">ps(1)</a> on Unix), this option should be used with caution. Better use <b>-passin</b>.</p>
+<p>The password used to encrypt the private key. Since on some systems the command line arguments are visible (e.g., when using <a href="https://man7.org/linux/man-pages/man1/ps.1.html">ps(1)</a> on Unix), this option should be used with caution. Better use <b>-passin</b>.</p>
 
 </dd>
 <dt id="passin-arg"><b>-passin</b> <i>arg</i></dt>
 <dd>
 
-<p>The key password source for key files and certificate PKCS#12 files. For more information about the format of <b>arg</b> see <a href="../man1/openssl-passphrase-options.html">openssl-passphrase-options(1)</a>.</p>
+<p>The key password source for key files and certificate PKCS#12 files. For more information about the format of <b>arg</b> see <a href="https://man7.org/linux/man-pages/man1/openssl-passphrase-options.1.html">openssl-passphrase-options(1)</a>.</p>
 
 </dd>
 <dt id="selfsign"><b>-selfsign</b></dt>
@@ -221,7 +221,7 @@
 <dt id="md-alg"><b>-md</b> <i>alg</i></dt>
 <dd>
 
-<p>The message digest to use. Any digest supported by the <a href="../man1/openssl-dgst.html">openssl-dgst(1)</a> command can be used. For signing algorithms that do not support a digest (i.e. Ed25519 and Ed448) any message digest that is set is ignored. This option also applies to CRLs.</p>
+<p>The message digest to use. Any digest supported by the <a href="https://man7.org/linux/man-pages/man1/openssl-dgst.1.html">openssl-dgst(1)</a> command can be used. For signing algorithms that do not support a digest (i.e. Ed25519 and Ed448) any message digest that is set is ignored. This option also applies to CRLs.</p>
 
 </dd>
 <dt id="policy-arg"><b>-policy</b> <i>arg</i></dt>
@@ -259,7 +259,7 @@
 
 <p>The section of the configuration file containing certificate extensions to be added when a certificate is issued (defaults to <b>x509_extensions</b> unless the <b>-extfile</b> option is used).</p>
 
-<p>See the <a href="../man5/x509v3_config.html">x509v3_config(5)</a> manual page for details of the extension section format.</p>
+<p>See the <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a> manual page for details of the extension section format.</p>
 
 </dd>
 <dt id="extfile-file"><b>-extfile</b> <i>file</i></dt>
@@ -305,13 +305,13 @@
 <dt id="rand-files--writerand-file"><b>-rand</b> <i>files</i>, <b>-writerand</b> <i>file</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Random_State_Options">&quot;Random State Options&quot; in openssl(1)</a> for details.</p>
 
 </dd>
 <dt id="engine-id"><b>-engine</b> <i>id</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Engine_Options">&quot;Engine Options&quot; in openssl(1)</a>. This option is deprecated.</p>
 
 </dd>
 <dt id="provider-name"><b>-provider</b> <i>name</i></dt>
@@ -329,7 +329,7 @@
 <dt id="propquery-propq"><b>-propquery</b> <i>propq</i></dt>
 <dd>
 
-<p>See <a href="../man1/openssl.html">&quot;Provider Options&quot; in openssl(1)</a>, <a href="../man7/provider.html">provider(7)</a>, and <a href="../man7/property.html">property(7)</a>.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man1/openssl.1.html#Provider_Options">&quot;Provider Options&quot; in openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, and <a href="https://man7.org/linux/man-pages/man7/property.7.html">property(7)</a>.</p>
 
 </dd>
 </dl>
@@ -427,7 +427,7 @@
 <dt id="crlexts-section"><b>-crlexts</b> <i>section</i></dt>
 <dd>
 
-<p>The section of the configuration file containing CRL extensions to include. If no CRL extension section is present then a V1 CRL is created, if the CRL extension section is present (even if it is empty) then a V2 CRL is created. The CRL extensions specified are CRL extensions and <b>not</b> CRL entry extensions. It should be noted that some software (for example Netscape) can&#39;t handle V2 CRLs. See <a href="../man5/x509v3_config.html">x509v3_config(5)</a> manual page for details of the extension section format.</p>
+<p>The section of the configuration file containing CRL extensions to include. If no CRL extension section is present then a V1 CRL is created, if the CRL extension section is present (even if it is empty) then a V2 CRL is created. The CRL extensions specified are CRL extensions and <b>not</b> CRL entry extensions. It should be noted that some software (for example Netscape) can&#39;t handle V2 CRLs. See <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a> manual page for details of the extension section format.</p>
 
 </dd>
 </dl>
@@ -594,7 +594,7 @@
 
 <h1 id="SPKAC-FORMAT">SPKAC FORMAT</h1>
 
-<p>The input to the <b>-spkac</b> command line option is a Netscape signed public key and challenge. This will usually come from the <b>KEYGEN</b> tag in an HTML form to create a new private key. It is however possible to create SPKACs using <a href="../man1/openssl-spkac.html">openssl-spkac(1)</a>.</p>
+<p>The input to the <b>-spkac</b> command line option is a Netscape signed public key and challenge. This will usually come from the <b>KEYGEN</b> tag in an HTML form to create a new private key. It is however possible to create SPKACs using <a href="https://man7.org/linux/man-pages/man1/openssl-spkac.1.html">openssl-spkac(1)</a>.</p>
 
 <p>The file should contain the variable SPKAC set to the value of the SPKAC and also the required DN components as name value pairs. If you need to include the same component twice then it can be preceded by a number and a &#39;.&#39;.</p>
 
@@ -602,7 +602,7 @@
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
-<p>Note: these examples assume that the directory structure this command assumes is already set up and the relevant files already exist. This usually involves creating a CA certificate and private key with <a href="../man1/openssl-req.html">openssl-req(1)</a>, a serial number file and an empty index file and placing them in the relevant directories.</p>
+<p>Note: these examples assume that the directory structure this command assumes is already set up and the relevant files already exist. This usually involves creating a CA certificate and private key with <a href="https://man7.org/linux/man-pages/man1/openssl-req.1.html">openssl-req(1)</a>, a serial number file and an empty index file and placing them in the relevant directories.</p>
 
 <p>To use the sample configuration file below the directories <i>demoCA</i>, <i>demoCA/private</i> and <i>demoCA/newcerts</i> would be created. The CA certificate would be copied to <i>demoCA/cacert.pem</i> and its private key to <i>demoCA/private/cakey.pem</i>. A file <i>demoCA/serial</i> would be created containing for example &quot;01&quot; and the empty index file <i>demoCA/index.txt</i>.</p>
 
@@ -741,7 +741,7 @@ emailAddress           = optional</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl.html">openssl(1)</a>, <a href="../man1/openssl-req.html">openssl-req(1)</a>, <a href="../man1/openssl-spkac.html">openssl-spkac(1)</a>, <a href="../man1/openssl-x509.html">openssl-x509(1)</a>, <a href="../man1/CA.pl.html">CA.pl(1)</a>, <a href="../man5/config.html">config(5)</a>, <a href="../man5/x509v3_config.html">x509v3_config(5)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl.1.html">openssl(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-req.1.html">openssl-req(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-spkac.1.html">openssl-spkac(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-x509.1.html">openssl-x509(1)</a>, <a href="https://man7.org/linux/man-pages/man1/CA.pl.1.html">CA.pl(1)</a>, <a href="https://man7.org/linux/man-pages/man5/config.5.html">config(5)</a>, <a href="https://man7.org/linux/man-pages/man5/x509v3_config.5.html">x509v3_config(5)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

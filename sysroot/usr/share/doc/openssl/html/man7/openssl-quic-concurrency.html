@@ -4,7 +4,7 @@
 <head>
 <title>openssl-quic-concurrency</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -21,6 +21,7 @@
       <li><a href="#Legacy-Blocking-Support-Compatibility">Legacy Blocking Support Compatibility</a></li>
     </ul>
   </li>
+  <li><a href="#THREAD-CANCELLATION">THREAD CANCELLATION</a></li>
   <li><a href="#RECOMMENDED-USAGE">RECOMMENDED USAGE</a></li>
   <li><a href="#CONFIGURING-A-CONCURRENCY-MODEL">CONFIGURING A CONCURRENCY MODEL</a>
     <ul>
@@ -40,13 +41,13 @@
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>A QUIC domain is a group of QUIC resources such as listeners (see <a href="../man3/SSL_new_listener.html">SSL_new_listener(3)</a>) and connections which share common event processing resources, such as internal pollers, timers and locks. All usage of OpenSSL QUIC happens inside a QUIC domain.</p>
+<p>A QUIC domain is a group of QUIC resources such as listeners (see <a href="https://man7.org/linux/man-pages/man3/SSL_new_listener.3.html">SSL_new_listener(3)</a>) and connections which share common event processing resources, such as internal pollers, timers and locks. All usage of OpenSSL QUIC happens inside a QUIC domain.</p>
 
 <p>These resources can be accessed and used concurrently depending on the circumstances. This man page discusses the available concurrency models and how they can be used.</p>
 
 <h1 id="EXPLICIT-AND-IMPLICIT-QUIC-DOMAINS">EXPLICIT AND IMPLICIT QUIC DOMAINS</h1>
 
-<p>A QUIC domain is instantiated either explicitly (<a href="../man3/SSL_new_domain.html">SSL_new_domain(3)</a>) or implicitly by calling <a href="../man3/SSL_new.html">SSL_new(3)</a> or <a href="../man3/SSL_new_listener.html">SSL_new_listener(3)</a>:</p>
+<p>A QUIC domain is instantiated either explicitly (<a href="https://man7.org/linux/man-pages/man3/SSL_new_domain.3.html">SSL_new_domain(3)</a>) or implicitly by calling <a href="https://man7.org/linux/man-pages/man3/SSL_new.3.html">SSL_new(3)</a> or <a href="https://man7.org/linux/man-pages/man3/SSL_new_listener.3.html">SSL_new_listener(3)</a>:</p>
 
 <ul>
 
@@ -102,21 +103,31 @@
 </li>
 </ul>
 
-<p>The default concurrency model is CCM or TACM, depending on the <b>SSL_METHOD</b> used with a <b>SSL_CTX</b>. Using <a href="../man3/OSSL_QUIC_client_method.html">OSSL_QUIC_client_method(3)</a> results in a default concurrency model of CCM, whereas using <a href="../man3/OSSL_QUIC_client_thread_method.html">OSSL_QUIC_client_thread_method(3)</a> results in a default concurrency model of TACM.</p>
+<p>The default concurrency model is CCM or TACM, depending on the <b>SSL_METHOD</b> used with a <b>SSL_CTX</b>. Using <a href="https://man7.org/linux/man-pages/man3/OSSL_QUIC_client_method.3.html">OSSL_QUIC_client_method(3)</a> results in a default concurrency model of CCM, whereas using <a href="https://man7.org/linux/man-pages/man3/OSSL_QUIC_client_thread_method.3.html">OSSL_QUIC_client_thread_method(3)</a> results in a default concurrency model of TACM.</p>
 
 <p>Additional concurrency models may be offered in future releases of OpenSSL.</p>
 
 <h1 id="BLOCKING-I-O-CAPABILITIES">BLOCKING I/O CAPABILITIES</h1>
 
-<p>All of the supported concurrency models are capable of supporting blocking I/O calls, where application-level I/O calls (for example, to <a href="../man3/SSL_read_ex.html">SSL_read_ex(3)</a> or <a href="../man3/SSL_write_ex.html">SSL_write_ex(3)</a> on a QUIC stream SSL object) block until the request can be serviced. This includes the use of <a href="../man3/SSL_poll.html">SSL_poll(3)</a> in a blocking fashion.</p>
+<p>All of the supported concurrency models are capable of supporting blocking I/O calls, where application-level I/O calls (for example, to <a href="https://man7.org/linux/man-pages/man3/SSL_read_ex.3.html">SSL_read_ex(3)</a> or <a href="https://man7.org/linux/man-pages/man3/SSL_write_ex.3.html">SSL_write_ex(3)</a> on a QUIC stream SSL object) block until the request can be serviced. This includes the use of <a href="https://man7.org/linux/man-pages/man3/SSL_poll.3.html">SSL_poll(3)</a> in a blocking fashion.</p>
 
-<p>Supporting blocking API calls reliably with multi-threaded usage requires the creation of additional OS resources such as internal file descriptors to allow threads to be woken when necessary. This creation of internal OS resources is optional and may need to be explicitly requested by an application depending on the chosen concurrency model. If this functionality is disabled, depending on the chosen concurrency model, blocking API calls may not be available and calls to <a href="../man3/SSL_set_blocking_mode.html">SSL_set_blocking_mode(3)</a> attempting to enable blocking mode may fail, notwithstanding the following section.</p>
+<p>Supporting blocking API calls reliably with multi-threaded usage requires the creation of additional OS resources such as internal file descriptors to allow threads to be woken when necessary. This creation of internal OS resources is optional and may need to be explicitly requested by an application depending on the chosen concurrency model. If this functionality is disabled, depending on the chosen concurrency model, blocking API calls may not be available and calls to <a href="https://man7.org/linux/man-pages/man3/SSL_set_blocking_mode.3.html">SSL_set_blocking_mode(3)</a> attempting to enable blocking mode may fail, notwithstanding the following section.</p>
 
 <h2 id="Legacy-Blocking-Support-Compatibility">Legacy Blocking Support Compatibility</h2>
 
 <p>OpenSSL 3.2 and 3.3 contained a buggy implementation of blocking QUIC I/O calls which is only reliable under single-threaded usage. This functionality is always available in the Single-Threaded Concurrency Model (SCM), where it works reliably.</p>
 
 <p>For compatibility reasons, this functionality is also available under the default concurrency model if the application does not explicitly specify a concurrency model or disable it. This is known as Legacy Blocking Compatibility Mode, and its usage is not recommended for multi-threaded applications.</p>
+
+<h1 id="THREAD-CANCELLATION">THREAD CANCELLATION</h1>
+
+<p>The restrictions in <a href="https://man7.org/linux/man-pages/man7/openssl-threads.7.html#THREAD_CANCELLATION">&quot;THREAD CANCELLATION&quot; in openssl-threads(7)</a> also apply to OpenSSL QUIC APIs, including calls used in nonblocking mode.</p>
+
+<p>CCM and TACM use domain-wide synchronisation during API processing. Event processing may perform network I/O while it is held, which can be a POSIX cancellation point. Interruption can leave later use or teardown of the domain unsafe.</p>
+
+<p>TACM and CCM with <b>SSL_DOMAIN_FLAG_BLOCKING</b> also maintain internal wait state for blocking calls. If interruption prevents cleanup of this state, later calls on the affected domain can block indefinitely. <a href="https://man7.org/linux/man-pages/man3/SSL_poll.3.html">SSL_poll(3)</a> can maintain such state in multiple domains in one call.</p>
+
+<p>Because most blocking QUIC functions do not provide a per-call timeout, applications requiring prompt cooperative cancellation should use nonblocking mode and an application-driven event loop as described in <a href="https://man7.org/linux/man-pages/man7/openssl-quic.7.html#APPLICATION-DRIVEN_EVENT_LOOPS">&quot;APPLICATION-DRIVEN EVENT LOOPS&quot; in openssl-quic(7)</a>, waiting for the application cancellation event alongside QUIC events. Alternatively, an application can call <a href="https://man7.org/linux/man-pages/man3/SSL_poll.3.html">SSL_poll(3)</a> with a finite timeout and check a cancellation condition between calls.</p>
 
 <h1 id="RECOMMENDED-USAGE">RECOMMENDED USAGE</h1>
 
@@ -129,7 +140,7 @@
 </li>
 <li><p>An application which wants to engage in multi-threaded usage of different QUIC connections or streams in the same QUIC domain should a) select the CCM or TACM concurrency model and b) explicitly opt in or out of blocking I/O support (depending on whether the application wishes to make blocking I/O calls), disabling Legacy Blocking Compatibility Mode.</p>
 
-<p>An application should select the CCM concurrency model if the application can guarantee that a QUIC domain will be serviced regularly (for example, because the application can guarantee that the timeout returned by <a href="../man3/SSL_get_event_timeout.html">SSL_get_event_timeout(3)</a> will be handled). If an application is unable to do this, it should select the TACM concurrency model.</p>
+<p>An application should select the CCM concurrency model if the application can guarantee that a QUIC domain will be serviced regularly (for example, because the application can guarantee that the timeout returned by <a href="https://man7.org/linux/man-pages/man3/SSL_get_event_timeout.3.html">SSL_get_event_timeout(3)</a> will be handled). If an application is unable to do this, it should select the TACM concurrency model.</p>
 
 </li>
 <li><p>Applications should explicitly configure a concurrency model during initialisation.</p>
@@ -139,7 +150,7 @@
 
 <h1 id="CONFIGURING-A-CONCURRENCY-MODEL">CONFIGURING A CONCURRENCY MODEL</h1>
 
-<p>If using an explicit QUIC domain, a concurrency model is chosen when calling <a href="../man3/SSL_new_domain.html">SSL_new_domain(3)</a> by specifying zero or more of the following flags:</p>
+<p>If using an explicit QUIC domain, a concurrency model is chosen when calling <a href="https://man7.org/linux/man-pages/man3/SSL_new_domain.3.html">SSL_new_domain(3)</a> by specifying zero or more of the following flags:</p>
 
 <dl>
 
@@ -183,19 +194,19 @@
 
 <h2 id="Default-Behaviour">Default Behaviour</h2>
 
-<p>If none of <b>SSL_DOMAIN_FLAG_SINGLE_THREAD</b>, <b>SSL_DOMAIN_FLAG_MULTI_THREAD</b> or <b>SSL_DOMAIN_FLAG_THREAD_ASSISTED</b> are provided to <a href="../man3/SSL_new_domain.html">SSL_new_domain(3)</a> or another constructor function which can accept the above flags, the default concurrency model set on the <b>SSL_CTX</b> is used. This default can be set and get using <a href="../man3/SSL_CTX_set_domain_flags.html">SSL_CTX_set_domain_flags(3)</a> and <a href="../man3/SSL_CTX_get_domain_flags.html">SSL_CTX_get_domain_flags(3)</a>. Any additional flags provided (for example, <b>SSL_DOMAIN_FLAG_BLOCCKING</b>) are added to the set of inherited flags.</p>
+<p>If none of <b>SSL_DOMAIN_FLAG_SINGLE_THREAD</b>, <b>SSL_DOMAIN_FLAG_MULTI_THREAD</b> or <b>SSL_DOMAIN_FLAG_THREAD_ASSISTED</b> are provided to <a href="https://man7.org/linux/man-pages/man3/SSL_new_domain.3.html">SSL_new_domain(3)</a> or another constructor function which can accept the above flags, the default concurrency model set on the <b>SSL_CTX</b> is used. This default can be set and get using <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_domain_flags.3.html">SSL_CTX_set_domain_flags(3)</a> and <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_get_domain_flags.3.html">SSL_CTX_get_domain_flags(3)</a>. Any additional flags provided (for example, <b>SSL_DOMAIN_FLAG_BLOCCKING</b>) are added to the set of inherited flags.</p>
 
 <p>The default concurrency model set on a newly created <b>SSL_CTX</b> is determined as follows:</p>
 
 <ul>
 
-<li><p>If an <b>SSL_METHOD</b> of <a href="../man3/OSSL_QUIC_client_thread_method.html">OSSL_QUIC_client_thread_method(3)</a> is used, the Thread-Assisted Concurrency Model (TACM) is used with the <b>SSL_DOMAIN_FLAG_BLOCKING</b> flag. This provides reliable blocking functionality.</p>
+<li><p>If an <b>SSL_METHOD</b> of <a href="https://man7.org/linux/man-pages/man3/OSSL_QUIC_client_thread_method.3.html">OSSL_QUIC_client_thread_method(3)</a> is used, the Thread-Assisted Concurrency Model (TACM) is used with the <b>SSL_DOMAIN_FLAG_BLOCKING</b> flag. This provides reliable blocking functionality.</p>
 
 </li>
 <li><p>Otherwise, if OpenSSL was built without threading support, the Single-Threaded Concurrency Model (SCM) is used, with the <b>SSL_DOMAIN_FLAG_LEGACY_BLOCKING</b> flag.</p>
 
 </li>
-<li><p>Otherwise, if an <b>SSL_METHOD</b> of <a href="../man3/OSSL_QUIC_client_method.html">OSSL_QUIC_client_method(3)</a> is used, the Contentive Concurrency Model (CCM) is used with the <b>SSL_DOMAIN_FLAG_LEGACY_BLOCKING</b> flag.</p>
+<li><p>Otherwise, if an <b>SSL_METHOD</b> of <a href="https://man7.org/linux/man-pages/man3/OSSL_QUIC_client_method.3.html">OSSL_QUIC_client_method(3)</a> is used, the Contentive Concurrency Model (CCM) is used with the <b>SSL_DOMAIN_FLAG_LEGACY_BLOCKING</b> flag.</p>
 
 </li>
 <li><p>Otherwise, the Contentive Concurrency Model (CCM) is used.</p>
@@ -207,7 +218,7 @@
 
 <h2 id="Configuration-of-Concurrency-Models-with-Implicit-QUIC-Domains">Configuration of Concurrency Models with Implicit QUIC Domains</h2>
 
-<p>If an explicit QUIC domain is not explicitly created using <a href="../man3/SSL_new_domain.html">SSL_new_domain(3)</a>, an implicit QUIC domain is created when calling <a href="../man3/SSL_new_listener.html">SSL_new_listener(3)</a> or <a href="../man3/SSL_new.html">SSL_new(3)</a>. Such a domain will use the default domain flags configured on the <b>SSL_CTX</b> as described above.</p>
+<p>If an explicit QUIC domain is not explicitly created using <a href="https://man7.org/linux/man-pages/man3/SSL_new_domain.3.html">SSL_new_domain(3)</a>, an implicit QUIC domain is created when calling <a href="https://man7.org/linux/man-pages/man3/SSL_new_listener.3.html">SSL_new_listener(3)</a> or <a href="https://man7.org/linux/man-pages/man3/SSL_new.3.html">SSL_new(3)</a>. Such a domain will use the default domain flags configured on the <b>SSL_CTX</b> as described above.</p>
 
 <h1 id="CONSUMPTION-OF-OS-RESOURCES">CONSUMPTION OF OS RESOURCES</h1>
 
@@ -230,20 +241,20 @@
 <li><p><b>SSL_DOMAIN_FLAG_BLOCKING</b> or <b>SSL_DOMAIN_FLAG_LEGACY_BLOCKING</b> is enabled; and</p>
 
 </li>
-<li><p>The QUIC connection is being used with network read and write BIOs which expose supported poll descriptors. See <a href="../man7/openssl-quic.html">openssl-quic(7)</a> for details.</p>
+<li><p>The QUIC connection is being used with network read and write BIOs which expose supported poll descriptors. See <a href="https://man7.org/linux/man-pages/man7/openssl-quic.7.html">openssl-quic(7)</a> for details.</p>
 
 </li>
 </ul>
 
-<p>In all other cases, a QUIC SSL object has blocking mode disabled by default. The blocking mode can be changed explicitly using <a href="../man3/SSL_set_blocking_mode.html">SSL_set_blocking_mode(3)</a>.</p>
+<p>In all other cases, a QUIC SSL object has blocking mode disabled by default. The blocking mode can be changed explicitly using <a href="https://man7.org/linux/man-pages/man3/SSL_set_blocking_mode.3.html">SSL_set_blocking_mode(3)</a>.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/openssl-quic.html">openssl-quic(7)</a>, <a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a>, <a href="../man3/SSL_get_event_timeout.html">SSL_get_event_timeout(3)</a>, <a href="../man3/OSSL_QUIC_client_thread_method.html">OSSL_QUIC_client_thread_method(3)</a>, <a href="../man3/SSL_CTX_set_domain_flags.html">SSL_CTX_set_domain_flags(3)</a>, <a href="../man3/SSL_new_domain.html">SSL_new_domain(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/openssl-quic.7.html">openssl-quic(7)</a>, <a href="https://man7.org/linux/man-pages/man7/openssl-threads.7.html">openssl-threads(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_handle_events.3.html">SSL_handle_events(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_event_timeout.3.html">SSL_get_event_timeout(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_rpoll_descriptor.3.html">SSL_get_rpoll_descriptor(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_wpoll_descriptor.3.html">SSL_get_wpoll_descriptor(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_poll.3.html">SSL_poll(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_QUIC_client_thread_method.3.html">OSSL_QUIC_client_thread_method(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_domain_flags.3.html">SSL_CTX_set_domain_flags(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_new_domain.3.html">SSL_new_domain(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2024-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2024-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

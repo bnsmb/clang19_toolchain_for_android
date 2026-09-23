@@ -4,7 +4,7 @@
 <head>
 <title>SSL_get_ciphers</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -53,11 +53,11 @@ char *SSL_get_shared_ciphers(const SSL *s, char *buf, int size);</code></pre>
 
 <p>SSL_get_cipher_list() returns a pointer to the name of the SSL_CIPHER listed for <b>ssl</b> with <b>priority</b>. If <b>ssl</b> is NULL, no ciphers are available, or there are less ciphers than <b>priority</b> available, NULL is returned.</p>
 
-<p>SSL_get_shared_ciphers() creates a colon separated and NUL terminated list of SSL_CIPHER names that are available in both the client and the server. <b>buf</b> is the buffer that should be populated with the list of names and <b>size</b> is the size of that buffer. A pointer to <b>buf</b> is returned on success or NULL on error. If the supplied buffer is not large enough to contain the complete list of names then a truncated list of names will be returned. Note that just because a ciphersuite is available (i.e. it is configured in the cipher list) and shared by both the client and the server it does not mean that it is enabled (see the description of SSL_get1_supported_ciphers() above). This function will return available shared ciphersuites whether or not they are enabled. This is a server side function only and must only be called after the completion of the initial handshake.</p>
+<p>SSL_get_shared_ciphers() creates a colon separated and NUL terminated list of SSL_CIPHER names that are available in both the client and the server. <b>buf</b> is the buffer that should be populated with the list of names and <b>size</b> is the size of that buffer. A pointer to <b>buf</b> is returned on success or NULL on error. If the supplied buffer is not large enough to contain the complete list of names then a truncated list of names will be returned. Note that just because a ciphersuite is available (i.e. it is configured in the cipher list) and shared by both the client and the server it does not mean that it is enabled (see the description of SSL_get1_supported_ciphers() above). This function will return available shared ciphersuites whether or not they are enabled. This is a server side function only and must only be called after the completion of the initial handshake. The function sets an empty string when <b>ssl</b> fails the handshake due to the absence of shared ciphers.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>The details of the ciphers obtained by SSL_get_ciphers(), SSL_CTX_get_ciphers() SSL_get1_supported_ciphers() and SSL_get_client_ciphers() can be obtained using the <a href="../man3/SSL_CIPHER_get_name.html">SSL_CIPHER_get_name(3)</a> family of functions.</p>
+<p>The details of the ciphers obtained by SSL_get_ciphers(), SSL_CTX_get_ciphers() SSL_get1_supported_ciphers() and SSL_get_client_ciphers() can be obtained using the <a href="https://man7.org/linux/man-pages/man3/SSL_CIPHER_get_name.3.html">SSL_CIPHER_get_name(3)</a> family of functions.</p>
 
 <p>Call SSL_get_cipher_list() with <b>priority</b> starting from 0 to obtain the sorted list of available ciphers, until NULL is returned.</p>
 
@@ -73,11 +73,11 @@ char *SSL_get_shared_ciphers(const SSL *s, char *buf, int size);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_CTX_set_cipher_list.html">SSL_CTX_set_cipher_list(3)</a>, <a href="../man3/SSL_CIPHER_get_name.html">SSL_CIPHER_get_name(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_cipher_list.3.html">SSL_CTX_set_cipher_list(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CIPHER_get_name.3.html">SSL_CIPHER_get_name(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2018 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

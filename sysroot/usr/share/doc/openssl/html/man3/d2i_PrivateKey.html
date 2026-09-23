@@ -4,7 +4,7 @@
 <head>
 <title>d2i_PrivateKey</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -74,11 +74,11 @@ int i2d_PrivateKey_fp(FILE *fp, const EVP_PKEY *pkey);</code></pre>
 
 <p>d2i_AutoPrivateKey_ex() and d2i_AutoPrivateKey() are similar to d2i_PrivateKey_ex() and d2i_PrivateKey() respectively except that they attempt to automatically detect the private key format.</p>
 
-<p>i2d_PrivateKey() encodes <i>a</i>. It uses a key specific format or, if none is defined for that key type, PKCS#8 unencrypted PrivateKeyInfo format. i2d_PublicKey() does the same for public keys. i2d_KeyParams() does the same for key parameters. These functions are similar to the d2i_X509() functions; see <a href="../man3/d2i_X509.html">d2i_X509(3)</a>. i2d_PrivateKey_bio() and i2d_PrivateKey_fp() do the same thing except that they encode to a <b>BIO</b> or <b>FILE</b> respectively. Again, these work similarly to the functions described in <a href="../man3/d2i_X509.html">d2i_X509(3)</a>.</p>
+<p>i2d_PrivateKey() encodes <i>a</i>. It uses a key specific format or, if none is defined for that key type, PKCS#8 unencrypted PrivateKeyInfo format. i2d_PublicKey() does the same for public keys. i2d_KeyParams() does the same for key parameters. These functions are similar to the d2i_X509() functions; see <a href="https://man7.org/linux/man-pages/man3/d2i_X509.3.html">d2i_X509(3)</a>. i2d_PrivateKey_bio() and i2d_PrivateKey_fp() do the same thing except that they encode to a <b>BIO</b> or <b>FILE</b> respectively. Again, these work similarly to the functions described in <a href="https://man7.org/linux/man-pages/man3/d2i_X509.3.html">d2i_X509(3)</a>.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>All the functions that operate on data in memory update the data pointer <i>*pp</i> after a successful operation, just like the other d2i and i2d functions; see <a href="../man3/d2i_X509.html">d2i_X509(3)</a>.</p>
+<p>All the functions that operate on data in memory update the data pointer <i>*pp</i> after a successful operation, just like the other d2i and i2d functions; see <a href="https://man7.org/linux/man-pages/man3/d2i_X509.3.html">d2i_X509(3)</a>.</p>
 
 <p>All these functions use DER format and unencrypted keys. Applications wishing to encrypt or decrypt private keys should use other functions such as d2i_PKCS8PrivateKey() instead.</p>
 
@@ -86,15 +86,15 @@ int i2d_PrivateKey_fp(FILE *fp, const EVP_PKEY *pkey);</code></pre>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
-<p>The d2i_PrivateKey_ex(), d2i_PrivateKey(), d2i_AutoPrivateKey_ex(), d2i_AutoPrivateKey(), d2i_PrivateKey_ex_bio(), d2i_PrivateKey_bio(), d2i_PrivateKey_ex_fp(), d2i_PrivateKey_fp(), d2i_PublicKey(), d2i_KeyParams() and d2i_KeyParams_bio() functions return a valid <b>EVP_PKEY</b> structure or NULL if an error occurs. The error code can be obtained by calling <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>The d2i_PrivateKey_ex(), d2i_PrivateKey(), d2i_AutoPrivateKey_ex(), d2i_AutoPrivateKey(), d2i_PrivateKey_ex_bio(), d2i_PrivateKey_bio(), d2i_PrivateKey_ex_fp(), d2i_PrivateKey_fp(), d2i_PublicKey(), d2i_KeyParams() and d2i_KeyParams_bio() functions return a valid <b>EVP_PKEY</b> structure or NULL if an error occurs. The error code can be obtained by calling <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
-<p>i2d_PrivateKey(), i2d_PublicKey() and i2d_KeyParams() return the number of bytes successfully encoded or a negative value if an error occurs. The error code can be obtained by calling <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>i2d_PrivateKey(), i2d_PublicKey() and i2d_KeyParams() return the number of bytes successfully encoded or a negative value if an error occurs. The error code can be obtained by calling <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <p>i2d_PrivateKey_bio(), i2d_PrivateKey_fp() and i2d_KeyParams_bio() return 1 if successfully encoded or zero if an error occurs.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/crypto.html">crypto(7)</a>, <a href="../man3/d2i_PKCS8PrivateKey_bio.html">d2i_PKCS8PrivateKey_bio(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a>, <a href="https://man7.org/linux/man-pages/man3/d2i_PKCS8PrivateKey_bio.3.html">d2i_PKCS8PrivateKey_bio(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

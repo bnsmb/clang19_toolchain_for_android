@@ -4,7 +4,7 @@
 <head>
 <title>SRP_Calc_B</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -29,7 +29,7 @@
 
 <pre><code>#include &lt;openssl/srp.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>/* server side .... */
 BIGNUM *SRP_Calc_server_key(const BIGNUM *A, const BIGNUM *v, const BIGNUM *u,
@@ -60,7 +60,7 @@ BIGNUM *SRP_Calc_A(const BIGNUM *a, const BIGNUM *N, const BIGNUM *g);</code></p
 
 <p>The SRP functions described on this page are used to calculate various parameters and keys used by SRP as defined in RFC2945. The server key and <i>B</i> and <i>u</i> parameters are used on the server side and are calculated via SRP_Calc_server_key(), SRP_Calc_B_ex(), SRP_Calc_B(), SRP_Calc_u_ex() and SRP_Calc_u(). The client key and <b>x</b> and <b>A</b> parameters are used on the client side and are calculated via the functions SRP_Calc_client_key_ex(), SRP_Calc_client_key(), SRP_Calc_x_ex(), SRP_Calc_x() and SRP_Calc_A(). See RFC2945 for a detailed description of their usage and the meaning of the various BIGNUM parameters to these functions.</p>
 
-<p>Most of these functions come in two forms. Those that take a <i>libctx</i> and <i>propq</i> parameter, and those that don&#39;t. Any cryptogrpahic functions that are fetched and used during the calculation use the provided <i>libctx</i> and <i>propq</i>. See <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for more details. The variants that do not take a <i>libctx</i> and <i>propq</i> parameter use the default library context and property query string. The SRP_Calc_server_key() and SRP_Calc_A() functions do not have a form that takes <i>libctx</i> or <i>propq</i> parameters because they do not need to fetch any cryptographic algorithms.</p>
+<p>Most of these functions come in two forms. Those that take a <i>libctx</i> and <i>propq</i> parameter, and those that don&#39;t. Any cryptogrpahic functions that are fetched and used during the calculation use the provided <i>libctx</i> and <i>propq</i>. See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for more details. The variants that do not take a <i>libctx</i> and <i>propq</i> parameter use the default library context and property query string. The SRP_Calc_server_key() and SRP_Calc_A() functions do not have a form that takes <i>libctx</i> or <i>propq</i> parameters because they do not need to fetch any cryptographic algorithms.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -68,7 +68,7 @@ BIGNUM *SRP_Calc_A(const BIGNUM *a, const BIGNUM *N, const BIGNUM *g);</code></p
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl-srp.html">openssl-srp(1)</a>, <a href="../man3/SRP_VBASE_new.html">SRP_VBASE_new(3)</a>, <a href="../man3/SRP_user_pwd_new.html">SRP_user_pwd_new(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl-srp.1.html">openssl-srp(1)</a>, <a href="https://man7.org/linux/man-pages/man3/SRP_VBASE_new.3.html">SRP_VBASE_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SRP_user_pwd_new.3.html">SRP_user_pwd_new(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

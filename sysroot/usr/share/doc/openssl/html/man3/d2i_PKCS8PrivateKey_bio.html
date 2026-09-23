@@ -4,7 +4,7 @@
 <head>
 <title>d2i_PKCS8PrivateKey_bio</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -52,13 +52,13 @@ int i2d_PKCS8PrivateKey_nid_fp(FILE *fp, const EVP_PKEY *x, int nid,
 
 <p>The PKCS#8 functions encode and decode private keys in PKCS#8 format using both PKCS#5 v1.5 and PKCS#5 v2.0 password based encryption algorithms.</p>
 
-<p>Other than the use of DER as opposed to PEM these functions are identical to the corresponding <b>PEM</b> function as described in <a href="../man3/PEM_read_PrivateKey.html">PEM_read_PrivateKey(3)</a>.</p>
+<p>Other than the use of DER as opposed to PEM these functions are identical to the corresponding <b>PEM</b> function as described in <a href="https://man7.org/linux/man-pages/man3/PEM_read_PrivateKey.3.html">PEM_read_PrivateKey(3)</a>.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
 <p>These functions are currently the only way to store encrypted private keys using DER format.</p>
 
-<p>Currently all the functions use BIOs or FILE pointers, there are no functions which work directly on memory: this can be readily worked around by converting the buffers to memory BIOs, see <a href="../man3/BIO_s_mem.html">BIO_s_mem(3)</a> for details.</p>
+<p>Currently all the functions use BIOs or FILE pointers, there are no functions which work directly on memory: this can be readily worked around by converting the buffers to memory BIOs, see <a href="https://man7.org/linux/man-pages/man3/BIO_s_mem.3.html">BIO_s_mem(3)</a> for details.</p>
 
 <p>These functions make no assumption regarding the pass phrase received from the password callback. It will simply be treated as a byte sequence.</p>
 
@@ -70,7 +70,7 @@ int i2d_PKCS8PrivateKey_nid_fp(FILE *fp, const EVP_PKEY *x, int nid,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/PEM_read_PrivateKey.html">PEM_read_PrivateKey(3)</a>, <a href="../man7/passphrase-encoding.html">passphrase-encoding(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/PEM_read_PrivateKey.3.html">PEM_read_PrivateKey(3)</a>, <a href="https://man7.org/linux/man-pages/man7/passphrase-encoding.7.html">passphrase-encoding(7)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

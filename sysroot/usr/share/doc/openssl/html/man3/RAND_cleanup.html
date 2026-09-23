@@ -4,7 +4,7 @@
 <head>
 <title>RAND_cleanup</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -29,13 +29,13 @@
 
 <pre><code>#include &lt;openssl/rand.h&gt;</code></pre>
 
-<p>The following function has been deprecated since OpenSSL 1.1.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following function has been deprecated since OpenSSL 1.1.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>void RAND_cleanup(void);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>Prior to OpenSSL 1.1.0, RAND_cleanup() released all resources used by the PRNG. As of version 1.1.0, it does nothing and should not be called, since no explicit initialisation or de-initialisation is necessary. See <a href="../man3/OPENSSL_init_crypto.html">OPENSSL_init_crypto(3)</a>.</p>
+<p>Prior to OpenSSL 1.1.0, RAND_cleanup() released all resources used by the PRNG. As of version 1.1.0, it does nothing and should not be called, since no explicit initialisation or de-initialisation is necessary. See <a href="https://man7.org/linux/man-pages/man3/OPENSSL_init_crypto.3.html">OPENSSL_init_crypto(3)</a>.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -43,11 +43,11 @@
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/RAND.html">RAND(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
-<p>RAND_cleanup() was deprecated in OpenSSL 1.1.0; do not use it. See <a href="../man3/OPENSSL_init_crypto.html">OPENSSL_init_crypto(3)</a></p>
+<p>RAND_cleanup() was deprecated in OpenSSL 1.1.0; do not use it. See <a href="https://man7.org/linux/man-pages/man3/OPENSSL_init_crypto.3.html">OPENSSL_init_crypto(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

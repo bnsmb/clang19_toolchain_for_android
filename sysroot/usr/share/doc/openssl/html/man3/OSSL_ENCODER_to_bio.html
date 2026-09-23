@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_ENCODER_to_bio</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -47,7 +47,7 @@ int OSSL_ENCODER_to_fp(OSSL_ENCODER_CTX *ctx, FILE *fp);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>OSSL_ENCODER_to_data() runs the encoding process for the context <i>ctx</i>, with the output going to the <i>*pdata</i> and <i>*pdata_len</i>. If <i>*pdata</i> is NULL when OSSL_ENCODER_to_data() is called, a buffer will be allocated using <a href="../man3/OPENSSL_zalloc.html">OPENSSL_zalloc(3)</a>, and <i>*pdata</i> will be set to point at the start of that buffer, and <i>*pdata_len</i> will be assigned its length when OSSL_ENCODER_to_data() returns. If <i>*pdata</i> is non-NULL when OSSL_ENCODER_to_data() is called, <i>*pdata_len</i> is assumed to have its size. In this case, <i>*pdata</i> will be set to point after the encoded bytes, and <i>*pdata_len</i> will be assigned the number of remaining bytes.</p>
+<p>OSSL_ENCODER_to_data() runs the encoding process for the context <i>ctx</i>, with the output going to the <i>*pdata</i> and <i>*pdata_len</i>. If <i>*pdata</i> is NULL when OSSL_ENCODER_to_data() is called, a buffer will be allocated using <a href="https://man7.org/linux/man-pages/man3/OPENSSL_zalloc.3.html">OPENSSL_zalloc(3)</a>, and <i>*pdata</i> will be set to point at the start of that buffer, and <i>*pdata_len</i> will be assigned its length when OSSL_ENCODER_to_data() returns. If <i>*pdata</i> is non-NULL when OSSL_ENCODER_to_data() is called, <i>*pdata_len</i> is assumed to have its size. In this case, <i>*pdata</i> will be set to point after the encoded bytes, and <i>*pdata_len</i> will be assigned the number of remaining bytes.</p>
 
 <p>OSSL_ENCODER_to_bio() runs the encoding process for the context <i>ctx</i>, with the output going to the <b>BIO</b> <i>out</i>.</p>
 
@@ -118,7 +118,7 @@ OSSL_ENCODER_CTX_free(ectx);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/provider.html">provider(7)</a>, <a href="../man3/OSSL_ENCODER_CTX.html">OSSL_ENCODER_CTX(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_ENCODER_CTX.3.html">OSSL_ENCODER_CTX(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

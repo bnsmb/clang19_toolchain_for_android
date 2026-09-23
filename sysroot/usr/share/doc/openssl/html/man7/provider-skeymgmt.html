@@ -4,7 +4,7 @@
 <head>
 <title>provider-skeymgmt</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -66,11 +66,11 @@ const char *OSSL_FUNC_skeymgmt_get_key_id(void *keydata);</code></pre>
 
 <p>The primary responsibility of the SKEYMGMT operation is to hold the provider side key data for the OpenSSL library EVP_SKEY structure.</p>
 
-<p>All &quot;functions&quot; mentioned here are passed as function pointers between <i>libcrypto</i> and the provider in <a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> arrays via <a href="../man3/OSSL_ALGORITHM.html">OSSL_ALGORITHM(3)</a> arrays that are returned by the provider&#39;s provider_query_operation() function (see <a href="../man7/provider-base.html">&quot;Provider Functions&quot; in provider-base(7)</a>).</p>
+<p>All &quot;functions&quot; mentioned here are passed as function pointers between <i>libcrypto</i> and the provider in <a href="https://man7.org/linux/man-pages/man3/OSSL_DISPATCH.3.html">OSSL_DISPATCH(3)</a> arrays via <a href="https://man7.org/linux/man-pages/man3/OSSL_ALGORITHM.3.html">OSSL_ALGORITHM(3)</a> arrays that are returned by the provider&#39;s provider_query_operation() function (see <a href="https://man7.org/linux/man-pages/man7/provider-base.7.html#Provider_Functions">&quot;Provider Functions&quot; in provider-base(7)</a>).</p>
 
-<p>All these &quot;functions&quot; have a corresponding function type definition named <b>OSSL_FUNC_{name}_fn</b>, and a helper function to retrieve the function pointer from a <a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> element named <b>OSSL_FUNC_{name}</b>.</p>
+<p>All these &quot;functions&quot; have a corresponding function type definition named <b>OSSL_FUNC_{name}_fn</b>, and a helper function to retrieve the function pointer from a <a href="https://man7.org/linux/man-pages/man3/OSSL_DISPATCH.3.html">OSSL_DISPATCH(3)</a> element named <b>OSSL_FUNC_{name}</b>.</p>
 
-<p><a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> arrays are indexed by numbers that are provided as macros in <a href="../man7/openssl-core_dispatch.h.html">openssl-core_dispatch.h(7)</a>, as follows:</p>
+<p><a href="https://man7.org/linux/man-pages/man3/OSSL_DISPATCH.3.html">OSSL_DISPATCH(3)</a> arrays are indexed by numbers that are provided as macros in <a href="https://man7.org/linux/man-pages/man7/openssl-core_dispatch.h.7.html">openssl-core_dispatch.h(7)</a>, as follows:</p>
 
 <pre><code>OSSL_FUNC_skeymgmt_free                 OSSL_FUNC_SKEYMGMT_FREE
 
@@ -89,7 +89,7 @@ OSSL_FUNC_skeymgmt_gen_settable_params  OSSL_FUNC_SKEYMGMT_GEN_SETTABLE_PARAMS</
 
 <p>A key object is a collection of data for an symmetric key, and is represented as <i>keydata</i> in this manual.</p>
 
-<p>The exact contents of a key object are defined by the provider, and it is assumed that different operations in one and the same provider use the exact same structure to represent this collection of data, so that for example, a key object that has been created using the SKEYMGMT interface can be passed as is to other algorithms from the same provider operations, such as OSSL_FUNC_mac_init_opaque() (see <a href="../man7/provider-mac.html">provider-mac(7)</a>).</p>
+<p>The exact contents of a key object are defined by the provider, and it is assumed that different operations in one and the same provider use the exact same structure to represent this collection of data, so that for example, a key object that has been created using the SKEYMGMT interface can be passed as is to other algorithms from the same provider operations, such as OSSL_FUNC_mac_init_opaque() (see <a href="https://man7.org/linux/man-pages/man7/provider-mac.7.html">provider-mac(7)</a>).</p>
 
 <p>With the export SKEYMGMT function, it&#39;s possible to select a specific subset of data to handle, governed by the bits in a <i>selection</i> indicator. The bits are:</p>
 
@@ -129,15 +129,15 @@ OSSL_FUNC_skeymgmt_gen_settable_params  OSSL_FUNC_SKEYMGMT_GEN_SETTABLE_PARAMS</
 
 <h2 id="Key-Object-Import-and-Export-Functions">Key Object Import and Export Functions</h2>
 
-<p>OSSL_FUNC_skeymgmt_import() should import data into <i>keydata</i> with values taken from the <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array <i>params</i>. It allocates the <i>keydata</i> object (there is no separate allocation function).</p>
+<p>OSSL_FUNC_skeymgmt_import() should import data into <i>keydata</i> with values taken from the <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array <i>params</i>. It allocates the <i>keydata</i> object (there is no separate allocation function).</p>
 
 <p>OSSL_FUNC_skeymgmt_imp_settable_params() returns a list of parameters that can be provided to the OSSL_FUNC_skeymgmt_import() function.</p>
 
-<p>OSSL_FUNC_skeymgmt_export() should extract values indicated by <i>selection</i> from <i>keydata</i>, create an <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array with them and call <i>param_cb</i> with that array as well as the given <i>cbarg</i>. The passed <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array is transient and is freed upon the return from <i>param_cb</i>.</p>
+<p>OSSL_FUNC_skeymgmt_export() should extract values indicated by <i>selection</i> from <i>keydata</i>, create an <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array with them and call <i>param_cb</i> with that array as well as the given <i>cbarg</i>. The passed <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array is transient and is freed upon the return from <i>param_cb</i>.</p>
 
 <h2 id="Key-Object-Generation-Functions">Key Object Generation Functions</h2>
 
-<p>OSSL_FUNC_skeymgmt_generate() creates a new key according to the values taken from the <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array <i>params</i>. It allocates the <i>keydata</i> object.</p>
+<p>OSSL_FUNC_skeymgmt_generate() creates a new key according to the values taken from the <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> array <i>params</i>. It allocates the <i>keydata</i> object.</p>
 
 <p>OSSL_FUNC_skeymgmt_gen_settable_params() returns a list of parameters that can be provided to the OSSL_FUNC_skeymgmt_generate() function.</p>
 
@@ -147,7 +147,7 @@ OSSL_FUNC_skeymgmt_gen_settable_params  OSSL_FUNC_SKEYMGMT_GEN_SETTABLE_PARAMS</
 
 <h2 id="Common-Import-and-Export-Parameters">Common Import and Export Parameters</h2>
 
-<p>See <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> for further details on the parameters structure.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/OSSL_PARAM.3.html">OSSL_PARAM(3)</a> for further details on the parameters structure.</p>
 
 <p>Common information parameters currently recognised by built-in skeymgmt algorithms are as follows:</p>
 
@@ -179,7 +179,7 @@ OSSL_FUNC_skeymgmt_gen_settable_params  OSSL_FUNC_SKEYMGMT_GEN_SETTABLE_PARAMS</
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/provider.html">provider(7)</a>, <a href="../man3/EVP_SKEY.html">EVP_SKEY(3)</a>, <a href="../man3/EVP_KEYMGMT.html">EVP_KEYMGMT(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/provider.7.html">provider(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_SKEY.3.html">EVP_SKEY(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_KEYMGMT.3.html">EVP_KEYMGMT(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

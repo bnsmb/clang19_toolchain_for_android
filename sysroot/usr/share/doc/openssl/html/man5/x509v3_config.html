@@ -4,7 +4,7 @@
 <head>
 <title>x509v3_config</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -52,7 +52,7 @@
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>Several OpenSSL commands can add extensions to a certificate or certificate request based on the contents of a configuration file and CLI options such as <b>-addext</b>. The syntax of configuration files is described in <a href="../man5/config.html">config(5)</a>. The commands typically have an option to specify the name of the configuration file, and a section within that file; see the documentation of the individual command for details.</p>
+<p>Several OpenSSL commands can add extensions to a certificate or certificate request based on the contents of a configuration file and CLI options such as <b>-addext</b>. The syntax of configuration files is described in <a href="https://man7.org/linux/man-pages/man5/config.5.html">config(5)</a>. The commands typically have an option to specify the name of the configuration file, and a section within that file; see the documentation of the individual command for details.</p>
 
 <p>This page uses <b>extensions</b> as the name of the section, when needed in examples.</p>
 
@@ -238,7 +238,7 @@ authorityKeyIdentifier = keyid, issuer:always</code></pre>
 
 <p>The value of <b>dirName</b> is specifies the configuration section containing the distinguished name to use, as a set of name-value pairs. Multi-valued AVAs can be formed by prefacing the name with a <b>+</b> character.</p>
 
-<p>The value of <b>otherName</b> can include arbitrary data associated with an OID; the value should be the OID followed by a semicolon and the content in specified using the syntax in <a href="../man3/ASN1_generate_nconf.html">ASN1_generate_nconf(3)</a>.</p>
+<p>The value of <b>otherName</b> can include arbitrary data associated with an OID; the value should be the OID followed by a semicolon and the content in specified using the syntax in <a href="https://man7.org/linux/man-pages/man3/ASN1_generate_nconf.3.html">ASN1_generate_nconf(3)</a>.</p>
 
 <p>Examples:</p>
 
@@ -497,7 +497,7 @@ nameConstraints = excluded;email:.com</code></pre>
 
 <p>There are two ways to encode arbitrary extensions.</p>
 
-<p>The first way is to use the word ASN1 followed by the extension content using the same syntax as <a href="../man3/ASN1_generate_nconf.html">ASN1_generate_nconf(3)</a>. For example:</p>
+<p>The first way is to use the word ASN1 followed by the extension content using the same syntax as <a href="https://man7.org/linux/man-pages/man3/ASN1_generate_nconf.3.html">ASN1_generate_nconf(3)</a>. For example:</p>
 
 <pre><code>[extensions]
 1.2.3.4 = critical, ASN1:UTF8String:Some random data
@@ -524,7 +524,7 @@ field2 = UTF8:field2</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl-req.html">openssl-req(1)</a>, <a href="../man1/openssl-ca.html">openssl-ca(1)</a>, <a href="../man1/openssl-x509.html">openssl-x509(1)</a>, <a href="../man3/ASN1_generate_nconf.html">ASN1_generate_nconf(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl-req.1.html">openssl-req(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-ca.1.html">openssl-ca(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-x509.1.html">openssl-x509(1)</a>, <a href="https://man7.org/linux/man-pages/man3/ASN1_generate_nconf.3.html">ASN1_generate_nconf(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

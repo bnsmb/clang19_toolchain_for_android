@@ -4,7 +4,7 @@
 <head>
 <title>BUF_MEM_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -46,7 +46,7 @@ void BUF_reverse(unsigned char *out, const unsigned char *in, size_t size);</cod
 
 <p>BUF_MEM_new() allocates a new buffer of zero size.</p>
 
-<p>BUF_MEM_new_ex() allocates a buffer with the specified flags. The flag <b>BUF_MEM_FLAG_SECURE</b> specifies that the <b>data</b> pointer should be allocated on the secure heap; see <a href="../man3/CRYPTO_secure_malloc.html">CRYPTO_secure_malloc(3)</a>.</p>
+<p>BUF_MEM_new_ex() allocates a buffer with the specified flags. The flag <b>BUF_MEM_FLAG_SECURE</b> specifies that the <b>data</b> pointer should be allocated on the secure heap; see <a href="https://man7.org/linux/man-pages/man3/CRYPTO_secure_malloc.3.html">CRYPTO_secure_malloc(3)</a>.</p>
 
 <p>BUF_MEM_free() frees up an already existing buffer. The data is zeroed before freeing up in case the buffer contains sensitive data. If the argument is NULL, nothing is done.</p>
 
@@ -66,7 +66,7 @@ void BUF_reverse(unsigned char *out, const unsigned char *in, size_t size);</cod
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/bio.html">bio(7)</a>, <a href="../man3/CRYPTO_secure_malloc.html">CRYPTO_secure_malloc(3)</a>.</p>
+<p><a href="https://man7.org/linux/man-pages/man7/bio.7.html">bio(7)</a>, <a href="https://man7.org/linux/man-pages/man3/CRYPTO_secure_malloc.3.html">CRYPTO_secure_malloc(3)</a>.</p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

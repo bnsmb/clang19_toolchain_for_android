@@ -4,7 +4,7 @@
 <head>
 <title>SSL_set_quic_tls_cbs</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -82,7 +82,7 @@ int SSL_set_quic_tls_early_data_enabled(SSL *s, int enabled);</code></pre>
 
 <p>An <b>OSSL_DISPATCH</b> table should consist of an array of <b>OSSL_DISPATCH</b> entries where each entry is a function id, and a function pointer. The array should be terminated with an empty entry (i.e. a 0 function id, and a NULL function pointer).</p>
 
-<p>Calling the SSL_set_quic_tls_cbs() function will switch off the <b>SSL_OP_ENABLE_MIDDLEBOX_COMPAT</b> option (if set). See <a href="../man3/SSL_set_options.html">SSL_set_options(3)</a>. Additionally the minimum TLS protocol version will be set to TLS1_3_VERSION. It is an error to call this function with anything other than a TLS connection SSL object.</p>
+<p>Calling the SSL_set_quic_tls_cbs() function will switch off the <b>SSL_OP_ENABLE_MIDDLEBOX_COMPAT</b> option (if set). See <a href="https://man7.org/linux/man-pages/man3/SSL_set_options.3.html">SSL_set_options(3)</a>. Additionally the minimum TLS protocol version will be set to TLS1_3_VERSION. It is an error to call this function with anything other than a TLS connection SSL object.</p>
 
 <p>The OSSL_FUNC_SSL_QUIC_TLS_crypto_send_fn callback (function id <b>OSSL_FUNC_SSL_QUIC_TLS_CRYPTO_SEND</b>) is called when CRYPTO frame data should be sent to the peer. The data to be sent is supplied in the buffer <i>buf</i> which is of length <i>buf_len</i>. The callback may choose to consume less data than was supplied in the buffer. On successful completion of the callback the <i>consumed</i> parameter should be populated with the amount of data that the callback consumed. This should be less than or equal to the value in <i>buf_len</i>. CRYPTO data should be sent using the most recent write encryption level set via the OSSL_FUNC_SSL_QUIC_TLS_yield_secret_fn callback (if it has been called).</p>
 

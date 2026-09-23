@@ -4,7 +4,7 @@
 <head>
 <title>CMS_add0_cert</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -40,11 +40,11 @@ STACK_OF(X509_CRL) *CMS_get1_crls(CMS_ContentInfo *cms);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>CMS_add0_cert() and CMS_add1_cert() add certificate <i>cert</i> to <i>cms</i> unless it is already present. This is used by <a href="../man3/CMS_sign_ex.html">CMS_sign_ex(3)</a> and <a href="../man3/CMS_sign.html">CMS_sign(3)</a> and may be used before calling <a href="../man3/CMS_verify.html">CMS_verify(3)</a> to help chain building in certificate validation. As the 0 implies, CMS_add0_cert() adds <i>cert</i> internally to <i>cms</i> and on success it must not be freed up by the caller. In contrast, the caller of CMS_add1_cert() must free <i>cert</i>. <i>cms</i> must be of type signed data or (authenticated) enveloped data. For signed data, such a certificate can be used when signing or verifying to fill in the signer certificate or to provide an extra CA certificate that may be needed for chain building in certificate validation.</p>
+<p>CMS_add0_cert() and CMS_add1_cert() add certificate <i>cert</i> to <i>cms</i> unless it is already present. This is used by <a href="https://man7.org/linux/man-pages/man3/CMS_sign_ex.3.html">CMS_sign_ex(3)</a> and <a href="https://man7.org/linux/man-pages/man3/CMS_sign.3.html">CMS_sign(3)</a> and may be used before calling <a href="https://man7.org/linux/man-pages/man3/CMS_verify.3.html">CMS_verify(3)</a> to help chain building in certificate validation. As the 0 implies, CMS_add0_cert() adds <i>cert</i> internally to <i>cms</i> and on success it must not be freed up by the caller. In contrast, the caller of CMS_add1_cert() must free <i>cert</i>. <i>cms</i> must be of type signed data or (authenticated) enveloped data. For signed data, such a certificate can be used when signing or verifying to fill in the signer certificate or to provide an extra CA certificate that may be needed for chain building in certificate validation.</p>
 
 <p>CMS_get1_certs() returns all certificates in <i>cms</i>.</p>
 
-<p>CMS_add0_crl() and CMS_add1_crl() add CRL <i>crl</i> to <i>cms</i>. <i>cms</i> must be of type signed data or (authenticated) enveloped data. For signed data, such a CRL may be used in certificate validation with <a href="../man3/CMS_verify.html">CMS_verify(3)</a>. It may be given both for inclusion when signing a CMS message and when verifying a signed CMS message.</p>
+<p>CMS_add0_crl() and CMS_add1_crl() add CRL <i>crl</i> to <i>cms</i>. <i>cms</i> must be of type signed data or (authenticated) enveloped data. For signed data, such a CRL may be used in certificate validation with <a href="https://man7.org/linux/man-pages/man3/CMS_verify.3.html">CMS_verify(3)</a>. It may be given both for inclusion when signing a CMS message and when verifying a signed CMS message.</p>
 
 <p>CMS_get1_crls() returns all CRLs in <i>cms</i>.</p>
 
@@ -62,7 +62,7 @@ STACK_OF(X509_CRL) *CMS_get1_crls(CMS_ContentInfo *cms);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/CMS_sign.html">CMS_sign(3)</a>, <a href="../man3/CMS_sign_ex.html">CMS_sign_ex(3)</a>, <a href="../man3/CMS_verify.html">CMS_verify(3)</a>, <a href="../man3/CMS_encrypt.html">CMS_encrypt(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CMS_sign.3.html">CMS_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CMS_sign_ex.3.html">CMS_sign_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CMS_verify.3.html">CMS_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man3/CMS_encrypt.3.html">CMS_encrypt(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

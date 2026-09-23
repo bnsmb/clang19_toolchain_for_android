@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY_CTX_set_rsa_pss_keygen_md</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -48,7 +48,7 @@ int EVP_PKEY_CTX_set_rsa_pss_keygen_saltlen(EVP_PKEY_CTX *pctx,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>These are the functions that implement <a href="../man7/RSA-PSS.html">RSA-PSS(7)</a>.</p>
+<p>These are the functions that implement <a href="https://man7.org/linux/man-pages/man7/RSA-PSS.7.html">RSA-PSS(7)</a>.</p>
 
 <h2 id="Signing-and-Verification">Signing and Verification</h2>
 
@@ -56,7 +56,7 @@ int EVP_PKEY_CTX_set_rsa_pss_keygen_saltlen(EVP_PKEY_CTX *pctx,
 
 <p>The EVP_PKEY_CTX_set_rsa_pss_saltlen() macro is used to set the salt length. If the key has usage restrictions then an error is returned if an attempt is made to set the salt length below the minimum value. It is otherwise similar to the <b>RSA</b> operation except detection of the salt length (using RSA_PSS_SALTLEN_AUTO) is not supported for verification if the key has usage restrictions.</p>
 
-<p>The <a href="../man3/EVP_PKEY_CTX_set_signature_md.html">EVP_PKEY_CTX_set_signature_md(3)</a> and <a href="../man3/EVP_PKEY_CTX_set_rsa_mgf1_md.html">EVP_PKEY_CTX_set_rsa_mgf1_md(3)</a> functions are used to set the digest and MGF1 algorithms respectively. If the key has usage restrictions then an error is returned if an attempt is made to set the digest to anything other than the restricted value. Otherwise these are similar to the <b>RSA</b> versions.</p>
+<p>The <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set_signature_md.3.html">EVP_PKEY_CTX_set_signature_md(3)</a> and <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_set_rsa_mgf1_md.3.html">EVP_PKEY_CTX_set_rsa_mgf1_md(3)</a> functions are used to set the digest and MGF1 algorithms respectively. If the key has usage restrictions then an error is returned if an attempt is made to set the digest to anything other than the restricted value. Otherwise these are similar to the <b>RSA</b> versions.</p>
 
 <h2 id="Key-Generation">Key Generation</h2>
 
@@ -82,7 +82,7 @@ int EVP_PKEY_CTX_set_rsa_pss_keygen_saltlen(EVP_PKEY_CTX *pctx,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/RSA-PSS.html">RSA-PSS(7)</a>, <a href="../man3/EVP_PKEY_CTX_new.html">EVP_PKEY_CTX_new(3)</a>, <a href="../man3/EVP_PKEY_CTX_ctrl_str.html">EVP_PKEY_CTX_ctrl_str(3)</a>, <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/RSA-PSS.7.html">RSA-PSS(7)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_new.3.html">EVP_PKEY_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_ctrl_str.3.html">EVP_PKEY_CTX_ctrl_str(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

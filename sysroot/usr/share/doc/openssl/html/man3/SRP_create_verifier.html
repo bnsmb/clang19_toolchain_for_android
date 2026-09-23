@@ -4,7 +4,7 @@
 <head>
 <title>SRP_create_verifier</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 
 <pre><code>#include &lt;openssl/srp.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int SRP_create_verifier_BN_ex(const char *user, const char *pass, BIGNUM **salt,
                               BIGNUM **verifier, const BIGNUM *N,
@@ -51,13 +51,13 @@ SRP_gN *SRP_get_default_gN(const char *id);</code></pre>
 
 <p>All of the functions described on this page are deprecated. There are no available replacement functions at this time.</p>
 
-<p>The SRP_create_verifier_BN_ex() function creates an SRP password verifier from the supplied parameters as defined in section 2.4 of RFC 5054 using the library context <i>libctx</i> and property query string <i>propq</i>. Any cryptographic algorithms that need to be fetched will use the <i>libctx</i> and <i>propq</i>. See <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a>.</p>
+<p>The SRP_create_verifier_BN_ex() function creates an SRP password verifier from the supplied parameters as defined in section 2.4 of RFC 5054 using the library context <i>libctx</i> and property query string <i>propq</i>. Any cryptographic algorithms that need to be fetched will use the <i>libctx</i> and <i>propq</i>. See <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a>.</p>
 
 <p>SRP_create_verifier_BN() is the same as SRP_create_verifier_BN_ex() except the default library context and property query string is used.</p>
 
-<p>On successful exit <i>*verifier</i> will point to a newly allocated BIGNUM containing the verifier and (if a salt was not provided) <i>*salt</i> will be populated with a newly allocated BIGNUM containing a random salt. If <i>*salt</i> is not NULL then the provided salt is used instead. The caller is responsible for freeing the allocated <i>*salt</i> and <i>*verifier</i> BIGNUMS (use <a href="../man3/BN_free.html">BN_free(3)</a>).</p>
+<p>On successful exit <i>*verifier</i> will point to a newly allocated BIGNUM containing the verifier and (if a salt was not provided) <i>*salt</i> will be populated with a newly allocated BIGNUM containing a random salt. If <i>*salt</i> is not NULL then the provided salt is used instead. The caller is responsible for freeing the allocated <i>*salt</i> and <i>*verifier</i> BIGNUMS (use <a href="https://man7.org/linux/man-pages/man3/BN_free.3.html">BN_free(3)</a>).</p>
 
-<p>The SRP_create_verifier() function is similar to SRP_create_verifier_BN() but all numeric parameters are in a non-standard base64 encoding originally designed for compatibility with libsrp. This is mainly present for historical compatibility and its use is discouraged. It is possible to pass NULL as <i>N</i> and an SRP group id as <i>g</i> instead to load the appropriate gN values (see SRP_get_default_gN()). If both <i>N</i> and <i>g</i> are NULL the 8192-bit SRP group parameters are used. The caller is responsible for freeing the allocated <i>*salt</i> and <i>*verifier</i> (use <a href="../man3/OPENSSL_free.html">OPENSSL_free(3)</a>).</p>
+<p>The SRP_create_verifier() function is similar to SRP_create_verifier_BN() but all numeric parameters are in a non-standard base64 encoding originally designed for compatibility with libsrp. This is mainly present for historical compatibility and its use is discouraged. It is possible to pass NULL as <i>N</i> and an SRP group id as <i>g</i> instead to load the appropriate gN values (see SRP_get_default_gN()). If both <i>N</i> and <i>g</i> are NULL the 8192-bit SRP group parameters are used. The caller is responsible for freeing the allocated <i>*salt</i> and <i>*verifier</i> (use <a href="https://man7.org/linux/man-pages/man3/OPENSSL_free.3.html">OPENSSL_free(3)</a>).</p>
 
 <p>The SRP_check_known_gN_param() function checks that <i>g</i> and <i>N</i> are valid SRP group parameters from RFC 5054 appendix A.</p>
 
@@ -100,7 +100,7 @@ SRP_VBASE_add0_user(srpData, pwd);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man1/openssl-srp.html">openssl-srp(1)</a>, <a href="../man3/SRP_VBASE_new.html">SRP_VBASE_new(3)</a>, <a href="../man3/SRP_user_pwd_new.html">SRP_user_pwd_new(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man1/openssl-srp.1.html">openssl-srp(1)</a>, <a href="https://man7.org/linux/man-pages/man3/SRP_VBASE_new.3.html">SRP_VBASE_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SRP_user_pwd_new.3.html">SRP_user_pwd_new(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

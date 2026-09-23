@@ -4,7 +4,7 @@
 <head>
 <title>fips_module</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -64,7 +64,7 @@
 </li>
 </ul>
 
-<p>All of the above APIs are deprecated in OpenSSL 3.0 - so a simple rule is to avoid using all deprecated functions. See <a href="../man7/ossl-guide-migration.html">ossl-guide-migration(7)</a> for a list of deprecated functions.</p>
+<p>All of the above APIs are deprecated in OpenSSL 3.0 - so a simple rule is to avoid using all deprecated functions. See <a href="https://man7.org/linux/man-pages/man7/ossl-guide-migration.7.html">ossl-guide-migration(7)</a> for a list of deprecated functions.</p>
 
 <h2 id="Making-all-applications-use-the-FIPS-module-by-default">Making all applications use the FIPS module by default</h2>
 
@@ -107,7 +107,7 @@ default_properties = fips=yes</code></pre>
 
 <p>Obviously the include file location above should match the path and name of the FIPS module config file that you installed earlier. See <a href="https://github.com/openssl/openssl/blob/master/README-FIPS.md">https://github.com/openssl/openssl/blob/master/README-FIPS.md</a>.</p>
 
-<p>For FIPS usage, it is recommended that the <b>config_diagnostics</b> option is enabled to prevent accidental use of non-FIPS validated algorithms via broken or mistaken configuration. See <a href="../man5/config.html">config(5)</a>.</p>
+<p>For FIPS usage, it is recommended that the <b>config_diagnostics</b> option is enabled to prevent accidental use of non-FIPS validated algorithms via broken or mistaken configuration. See <a href="https://man7.org/linux/man-pages/man5/config.5.html">config(5)</a>.</p>
 
 <p>Any applications that use OpenSSL 3.0 and are started after these changes are made will start using only the FIPS module unless those applications take explicit steps to avoid this default behaviour. Note that this configuration also activates the &quot;base&quot; provider. The base provider does not include any cryptographic algorithms (and therefore does not impact the validation status of any cryptographic operations), but does include other supporting algorithms that may be required. It is designed to be used in conjunction with the FIPS module.</p>
 
@@ -183,7 +183,7 @@ int main(void)
 
 <p>Also note that in this example we have additionally loaded the &quot;base&quot; provider. This loads a sub-set of algorithms that are also available in the default provider - specifically non cryptographic ones which may be used in conjunction with the FIPS provider. For example this contains algorithms for encoding and decoding keys. If you decide not to load the default provider then you will usually want to load the base provider instead.</p>
 
-<p>In this example we are using the &quot;default&quot; library context. OpenSSL functions operate within the scope of a library context. If no library context is explicitly specified then the default library context is used. For further details about library contexts see the <a href="../man3/OSSL_LIB_CTX.html">OSSL_LIB_CTX(3)</a> man page.</p>
+<p>In this example we are using the &quot;default&quot; library context. OpenSSL functions operate within the scope of a library context. If no library context is explicitly specified then the default library context is used. For further details about library contexts see the <a href="https://man7.org/linux/man-pages/man3/OSSL_LIB_CTX.3.html">OSSL_LIB_CTX(3)</a> man page.</p>
 
 <h2 id="Loading-the-FIPS-module-at-the-same-time-as-other-providers">Loading the FIPS module at the same time as other providers</h2>
 
@@ -309,15 +309,15 @@ return ret;</code></pre>
 
 <p>Note that we have made use of the special &quot;null&quot; provider here which we load into the default library context. We could have chosen to use the default library context for FIPS usage, and just create one additional library context for other usages - or vice versa. However if code has not been converted to use library contexts then the default library context will be automatically used. This could be the case for your own existing applications as well as certain parts of OpenSSL itself. Not all parts of OpenSSL are library context aware. If this happens then you could &quot;accidentally&quot; use the wrong library context for a particular operation. To be sure this doesn&#39;t happen you can load the &quot;null&quot; provider into the default library context. Because a provider has been explicitly loaded, the default provider will not automatically load. This means code using the default context by accident will fail because no algorithms will be available.</p>
 
-<p>See <a href="../man7/ossl-guide-migration.html">&quot;Library Context&quot; in ossl-guide-migration(7)</a> for additional information about the Library Context.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/ossl-guide-migration.7.html#Library_Context">&quot;Library Context&quot; in ossl-guide-migration(7)</a> for additional information about the Library Context.</p>
 
 <h2 id="Using-Encoders-and-Decoders-with-the-FIPS-module">Using Encoders and Decoders with the FIPS module</h2>
 
-<p>Encoders and decoders are used to read and write keys or parameters from or to some external format (for example a PEM file). If your application generates keys or parameters that then need to be written into PEM or DER format then it is likely that you will need to use an encoder to do this. Similarly you need a decoder to read previously saved keys and parameters. In most cases this will be invisible to you if you are using APIs that existed in OpenSSL 1.1.1 or earlier such as <a href="../man3/i2d_PrivateKey.html">i2d_PrivateKey(3)</a>. However the appropriate encoder/decoder will need to be available in the library context associated with the key or parameter object. The built-in OpenSSL encoders and decoders are implemented in both the default and base providers and are not in the FIPS module boundary. However since they are not cryptographic algorithms themselves it is still possible to use them in conjunction with the FIPS module, and therefore these encoders/decoders have the <code>fips=yes</code> property against them. You should ensure that either the default or base provider is loaded into the library context in this case.</p>
+<p>Encoders and decoders are used to read and write keys or parameters from or to some external format (for example a PEM file). If your application generates keys or parameters that then need to be written into PEM or DER format then it is likely that you will need to use an encoder to do this. Similarly you need a decoder to read previously saved keys and parameters. In most cases this will be invisible to you if you are using APIs that existed in OpenSSL 1.1.1 or earlier such as <a href="https://man7.org/linux/man-pages/man3/i2d_PrivateKey.3.html">i2d_PrivateKey(3)</a>. However the appropriate encoder/decoder will need to be available in the library context associated with the key or parameter object. The built-in OpenSSL encoders and decoders are implemented in both the default and base providers and are not in the FIPS module boundary. However since they are not cryptographic algorithms themselves it is still possible to use them in conjunction with the FIPS module, and therefore these encoders/decoders have the <code>fips=yes</code> property against them. You should ensure that either the default or base provider is loaded into the library context in this case.</p>
 
 <h2 id="Using-the-FIPS-module-in-SSL-TLS">Using the FIPS module in SSL/TLS</h2>
 
-<p>Writing an application that uses libssl in conjunction with the FIPS module is much the same as writing a normal libssl application. If you are using global properties and the default library context to specify usage of FIPS validated algorithms then this will happen automatically for all cryptographic algorithms in libssl. If you are using a nondefault library context to load the FIPS provider then you can supply this to libssl using the function <a href="../man3/SSL_CTX_new_ex.html">SSL_CTX_new_ex(3)</a>. This works as a drop in replacement for the function <a href="../man3/SSL_CTX_new.html">SSL_CTX_new(3)</a> except it provides you with the capability to specify the library context to be used. You can also use the same function to specify libssl specific properties to use.</p>
+<p>Writing an application that uses libssl in conjunction with the FIPS module is much the same as writing a normal libssl application. If you are using global properties and the default library context to specify usage of FIPS validated algorithms then this will happen automatically for all cryptographic algorithms in libssl. If you are using a nondefault library context to load the FIPS provider then you can supply this to libssl using the function <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_new_ex.3.html">SSL_CTX_new_ex(3)</a>. This works as a drop in replacement for the function <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_new.3.html">SSL_CTX_new(3)</a> except it provides you with the capability to specify the library context to be used. You can also use the same function to specify libssl specific properties to use.</p>
 
 <p>In this first example we create two SSL_CTX objects using two different library contexts.</p>
 
@@ -353,11 +353,11 @@ SSL_CTX *non_fips_ssl_ctx = SSL_CTX_new_ex(NULL, &quot;provider!=fips&quot;,
 
 <p>A chain of links needs to be followed to go from an algorithm instance to the provider that implements it. The process is similar for all algorithms. Here the example of a digest is used.</p>
 
-<p>To go from an <b>EVP_MD_CTX</b> to an <b>EVP_MD</b>, use <a href="../man3/EVP_MD_CTX_md.html">EVP_MD_CTX_md(3)</a> . To go from the <b>EVP_MD</b> to its <b>OSSL_PROVIDER</b>, use <a href="../man3/EVP_MD_get0_provider.html">EVP_MD_get0_provider(3)</a>. To extract the name from the <b>OSSL_PROVIDER</b>, use <a href="../man3/OSSL_PROVIDER_get0_name.html">OSSL_PROVIDER_get0_name(3)</a>.</p>
+<p>To go from an <b>EVP_MD_CTX</b> to an <b>EVP_MD</b>, use <a href="https://man7.org/linux/man-pages/man3/EVP_MD_CTX_md.3.html">EVP_MD_CTX_md(3)</a> . To go from the <b>EVP_MD</b> to its <b>OSSL_PROVIDER</b>, use <a href="https://man7.org/linux/man-pages/man3/EVP_MD_get0_provider.3.html">EVP_MD_get0_provider(3)</a>. To extract the name from the <b>OSSL_PROVIDER</b>, use <a href="https://man7.org/linux/man-pages/man3/OSSL_PROVIDER_get0_name.3.html">OSSL_PROVIDER_get0_name(3)</a>.</p>
 
 <h2 id="FIPS-indicators">FIPS indicators</h2>
 
-<p>FIPS indicators have been added to the FIPS provider in OpenSSL 3.4. FIPS 140-3 requires indicators to be used if the FIPS provider allows non approved algorithms. An algorithm is approved if it passes all required checks such as minimum key size. By default an error will occur if any check fails. For backwards compatibility individual algorithms may override the checks by using either an option in the FIPS configuration (See <a href="../man5/fips_config.html">&quot;FIPS indicator options&quot; in fips_config(5)</a>) OR in code using an algorithm context setter. Overriding the check means that the algorithm is not FIPS compliant. <a href="../man3/OSSL_INDICATOR_set_callback.html">OSSL_INDICATOR_set_callback(3)</a> can be called to register a callback to log unapproved algorithms. At the end of any algorithm operation the approved status can be queried using an algorithm context getter to retrieve the indicator (e.g. &quot;fips-indicator&quot;). An example of an algorithm context setter is &quot;key-check&quot; in <a href="../man7/EVP_KDF-HKDF.html">&quot;Supported parameters&quot; in EVP_KDF-HKDF(7)</a>.</p>
+<p>FIPS indicators have been added to the FIPS provider in OpenSSL 3.4. FIPS 140-3 requires indicators to be used if the FIPS provider allows non approved algorithms. An algorithm is approved if it passes all required checks such as minimum key size. By default an error will occur if any check fails. For backwards compatibility individual algorithms may override the checks by using either an option in the FIPS configuration (See <a href="https://man7.org/linux/man-pages/man5/fips_config.5.html#FIPS_indicator_options">&quot;FIPS indicator options&quot; in fips_config(5)</a>) OR in code using an algorithm context setter. Overriding the check means that the algorithm is not FIPS compliant. <a href="https://man7.org/linux/man-pages/man3/OSSL_INDICATOR_set_callback.3.html">OSSL_INDICATOR_set_callback(3)</a> can be called to register a callback to log unapproved algorithms. At the end of any algorithm operation the approved status can be queried using an algorithm context getter to retrieve the indicator (e.g. &quot;fips-indicator&quot;). An example of an algorithm context setter is &quot;key-check&quot; in <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-HKDF.7.html#Supported_parameters">&quot;Supported parameters&quot; in EVP_KDF-HKDF(7)</a>.</p>
 
 <p>The following algorithms use &quot;fips-indicator&quot; to query if the algorithm is approved:</p>
 
@@ -366,25 +366,25 @@ SSL_CTX *non_fips_ssl_ctx = SSL_CTX_new_ex(NULL, &quot;provider!=fips&quot;,
 <dt id="DSA-Key-generation">DSA Key generation</dt>
 <dd>
 
-<p>DSA Key generation is no longer approved. See <a href="../man7/EVP_PKEY-DSA.html">&quot;DSA parameters&quot; in EVP_PKEY-DSA(7)</a></p>
+<p>DSA Key generation is no longer approved. See <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DSA.7.html#DSA_parameters">&quot;DSA parameters&quot; in EVP_PKEY-DSA(7)</a></p>
 
 </dd>
 <dt id="DSA-Signatures">DSA Signatures</dt>
 <dd>
 
-<p>DSA Signature generation is no longer approved. See <a href="../man7/EVP_SIGNATURE-DSA.html">&quot;Signature Parameters&quot; in EVP_SIGNATURE-DSA(7)</a></p>
+<p>DSA Signature generation is no longer approved. See <a href="https://man7.org/linux/man-pages/man7/EVP_SIGNATURE-DSA.7.html#Signature_Parameters">&quot;Signature Parameters&quot; in EVP_SIGNATURE-DSA(7)</a></p>
 
 </dd>
 <dt id="ECDSA-Signatures">ECDSA Signatures</dt>
 <dd>
 
-<p>See <a href="../man7/EVP_SIGNATURE-ECDSA.html">&quot;ECDSA Signature Parameters&quot; in EVP_SIGNATURE-ECDSA(7)</a></p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_SIGNATURE-ECDSA.7.html#ECDSA_Signature_Parameters">&quot;ECDSA Signature Parameters&quot; in EVP_SIGNATURE-ECDSA(7)</a></p>
 
 </dd>
 <dt id="EC-Key-Generation">EC Key Generation</dt>
 <dd>
 
-<p>See <a href="../man7/EVP_PKEY-EC.html">&quot;Common EC parameters&quot; in EVP_PKEY-EC(7)</a></p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-EC.7.html#Common_EC_parameters">&quot;Common EC parameters&quot; in EVP_PKEY-EC(7)</a></p>
 
 </dd>
 <dt id="RSA-Encryption">RSA Encryption</dt>
@@ -392,49 +392,49 @@ SSL_CTX *non_fips_ssl_ctx = SSL_CTX_new_ex(NULL, &quot;provider!=fips&quot;,
 
 <p>&quot;pkcs1&quot; padding is no longer approved.</p>
 
-<p>See <a href="../man7/EVP_ASYM_CIPHER-RSA.html">&quot;RSA Asymmetric Cipher parameters&quot; in EVP_ASYM_CIPHER-RSA(7)</a> and <a href="../man7/EVP_KEM-RSA.html">&quot;RSA KEM parameters&quot; in EVP_KEM-RSA(7)</a></p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_ASYM_CIPHER-RSA.7.html#RSA_Asymmetric_Cipher_parameters">&quot;RSA Asymmetric Cipher parameters&quot; in EVP_ASYM_CIPHER-RSA(7)</a> and <a href="https://man7.org/linux/man-pages/man7/EVP_KEM-RSA.7.html#RSA_KEM_parameters">&quot;RSA KEM parameters&quot; in EVP_KEM-RSA(7)</a></p>
 
 </dd>
 <dt id="RSA-Signatures">RSA Signatures</dt>
 <dd>
 
-<p>See <a href="../man7/EVP_SIGNATURE-RSA.html">&quot;Signature Parameters&quot; in EVP_SIGNATURE-RSA(7)</a></p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_SIGNATURE-RSA.7.html#Signature_Parameters">&quot;Signature Parameters&quot; in EVP_SIGNATURE-RSA(7)</a></p>
 
 </dd>
 <dt id="DRBGS">DRBGS</dt>
 <dd>
 
-<p>See <a href="../man7/EVP_RAND-HASH-DRBG.html">&quot;Supported parameters&quot; in EVP_RAND-HASH-DRBG(7)</a> and EVP_RAND-HMAC-DRBG(7)/Supported parameters&gt;</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_RAND-HASH-DRBG.7.html#Supported_parameters">&quot;Supported parameters&quot; in EVP_RAND-HASH-DRBG(7)</a> and EVP_RAND-HMAC-DRBG(7)/Supported parameters&gt;</p>
 
 </dd>
 <dt id="DES">DES</dt>
 <dd>
 
-<p>Triple-DES is not longer approved for encryption. See <a href="../man7/EVP_CIPHER-DES.html">&quot;Parameters&quot; in EVP_CIPHER-DES(7)</a></p>
+<p>Triple-DES is not longer approved for encryption. See <a href="https://man7.org/linux/man-pages/man7/EVP_CIPHER-DES.7.html#Parameters">&quot;Parameters&quot; in EVP_CIPHER-DES(7)</a></p>
 
 </dd>
 <dt id="DH">DH</dt>
 <dd>
 
-<p>See <a href="../man7/EVP_KEYEXCH-DH.html">&quot;DH and DHX key exchange parameters&quot; in EVP_KEYEXCH-DH(7)</a></p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_KEYEXCH-DH.7.html#DH_and_DHX_key_exchange_parameters">&quot;DH and DHX key exchange parameters&quot; in EVP_KEYEXCH-DH(7)</a></p>
 
 </dd>
 <dt id="ECDH">ECDH</dt>
 <dd>
 
-<p>See <a href="../man7/EVP_KEYEXCH-ECDH.html">&quot;ECDH Key Exchange parameters&quot; in EVP_KEYEXCH-ECDH(7)</a></p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_KEYEXCH-ECDH.7.html#ECDH_Key_Exchange_parameters">&quot;ECDH Key Exchange parameters&quot; in EVP_KEYEXCH-ECDH(7)</a></p>
 
 </dd>
 <dt id="KDFS">KDFS</dt>
 <dd>
 
-<p>See relevant KDF documentation e.g. <a href="../man7/EVP_KDF-HKDF.html">&quot;Supported parameters&quot; in EVP_KDF-HKDF(7)</a></p>
+<p>See relevant KDF documentation e.g. <a href="https://man7.org/linux/man-pages/man7/EVP_KDF-HKDF.7.html#Supported_parameters">&quot;Supported parameters&quot; in EVP_KDF-HKDF(7)</a></p>
 
 </dd>
 <dt id="CMAC-and-KMAC">CMAC and KMAC</dt>
 <dd>
 
-<p>See <a href="../man7/EVP_MAC-CMAC.html">&quot;Supported parameters&quot; in EVP_MAC-CMAC(7)</a> and <a href="../man7/EVP_MAC-KMAC.html">&quot;Supported parameters&quot; in EVP_MAC-KMAC(7)</a></p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_MAC-CMAC.7.html#Supported_parameters">&quot;Supported parameters&quot; in EVP_MAC-CMAC(7)</a> and <a href="https://man7.org/linux/man-pages/man7/EVP_MAC-KMAC.7.html#Supported_parameters">&quot;Supported parameters&quot; in EVP_MAC-KMAC(7)</a></p>
 
 </dd>
 </dl>
@@ -446,7 +446,7 @@ SSL_CTX *non_fips_ssl_ctx = SSL_CTX_new_ex(NULL, &quot;provider!=fips&quot;,
 <dt id="RAND-TEST-RAND">RAND-TEST-RAND</dt>
 <dd>
 
-<p>See <a href="../man7/EVP_RAND-TEST-RAND.html">&quot;Supported parameters&quot; in EVP_RAND-TEST-RAND(7)</a> The indicator callback is NOT triggered for this algorithm since it is used internally for non security purposes.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_RAND-TEST-RAND.7.html#Supported_parameters">&quot;Supported parameters&quot; in EVP_RAND-TEST-RAND(7)</a> The indicator callback is NOT triggered for this algorithm since it is used internally for non security purposes.</p>
 
 </dd>
 <dt id="X25519-and-X448-Key-Generation-and-Key-Exchange">X25519 and X448 Key Generation and Key Exchange</dt>
@@ -464,26 +464,26 @@ SSL_CTX *non_fips_ssl_ctx = SSL_CTX_new_ex(NULL, &quot;provider!=fips&quot;,
 <dt id="AES-GCM-ciphers-support-the-indicator-iv-generated">AES-GCM ciphers support the indicator &quot;iv-generated&quot;</dt>
 <dd>
 
-<p>See <a href="../man3/EVP_EncryptInit.html">&quot;PARAMETERS&quot; in EVP_EncryptInit(3)</a> for further information.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man3/EVP_EncryptInit.3.html#PARAMETERS">&quot;PARAMETERS&quot; in EVP_EncryptInit(3)</a> for further information.</p>
 
 </dd>
 <dt id="ECDSA-and-RSA-Signatures-support-the-indicator-verify-message">ECDSA and RSA Signatures support the indicator &quot;verify-message&quot;.</dt>
 <dd>
 
-<p>See <a href="../man7/EVP_SIGNATURE-ECDSA.html">&quot;ECDSA Signature Parameters&quot; in EVP_SIGNATURE-ECDSA(7)</a> and <a href="../man7/EVP_SIGNATURE-RSA.html">&quot;Signature Parameters&quot; in EVP_SIGNATURE-RSA(7)</a> /for further information.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/EVP_SIGNATURE-ECDSA.7.html#ECDSA_Signature_Parameters">&quot;ECDSA Signature Parameters&quot; in EVP_SIGNATURE-ECDSA(7)</a> and <a href="https://man7.org/linux/man-pages/man7/EVP_SIGNATURE-RSA.7.html#Signature_Parameters">&quot;Signature Parameters&quot; in EVP_SIGNATURE-RSA(7)</a> /for further information.</p>
 
 </dd>
 </dl>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>Some released versions of OpenSSL do not include a validated FIPS provider. To determine which versions have undergone the validation process, please refer to the <a href="https://www.openssl.org/source/">OpenSSL Downloads page</a>. If you require FIPS-approved functionality, it is essential to build your FIPS provider using one of the validated versions listed there. Normally, it is possible to utilize a FIPS provider constructed from one of the validated versions alongside <i>libcrypto</i> and <i>libssl</i> compiled from any release within the same major release series. This flexibility enables you to address bug fixes and CVEs that fall outside the FIPS boundary.</p>
+<p>Some released versions of OpenSSL do not include a validated FIPS provider. To determine which versions have undergone the validation process, please refer to the <a href="https://openssl-library.org/source/">OpenSSL Downloads page</a>. If you require FIPS-approved functionality, it is essential to build your FIPS provider using one of the validated versions listed there. Normally, it is possible to utilize a FIPS provider constructed from one of the validated versions alongside <i>libcrypto</i> and <i>libssl</i> compiled from any supported release from OpenSSL 3.0 onwards; provider compatibility is maintained backward and forward across these releases, including future major release series, for as long as the module remains supported. This flexibility enables you to address bug fixes and CVEs that fall outside the FIPS boundary.</p>
 
 <p>As the FIPS provider still supports non-FIPS validated algorithms, The property query <code>fips=yes</code> is mandatory for applications that want to operate in a FIPS approved manner.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ossl-guide-migration.html">ossl-guide-migration(7)</a>, <a href="../man7/crypto.html">crypto(7)</a>, <a href="../man5/fips_config.html">fips_config(5)</a>, <a href="https://www.openssl.org/source/">https://www.openssl.org/source/</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ossl-guide-migration.7.html">ossl-guide-migration(7)</a>, <a href="https://man7.org/linux/man-pages/man7/crypto.7.html">crypto(7)</a>, <a href="https://man7.org/linux/man-pages/man5/fips_config.5.html">fips_config(5)</a>, <a href="https://www.openssl.org/source/">https://www.openssl.org/source/</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -491,7 +491,7 @@ SSL_CTX *non_fips_ssl_ctx = SSL_CTX_new_ex(NULL, &quot;provider!=fips&quot;,
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2021-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2021-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_CMP_CTX_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -156,7 +156,7 @@ int OSSL_CMP_CTX_set1_senderNonce(OSSL_CMP_CTX *ctx,
 <dt id="OSSL_CMP_OPT_LOG_VERBOSITY"><b>OSSL_CMP_OPT_LOG_VERBOSITY</b></dt>
 <dd>
 
-<p>The level of severity needed for actually outputting log messages due to errors, warnings, general info, debugging, etc. Default is OSSL_CMP_LOG_INFO. See also <a href="../man3/OSSL_CMP_log_open.html">OSSL_CMP_log_open(3)</a>.</p>
+<p>The level of severity needed for actually outputting log messages due to errors, warnings, general info, debugging, etc. Default is OSSL_CMP_LOG_INFO. See also <a href="https://man7.org/linux/man-pages/man3/OSSL_CMP_log_open.3.html">OSSL_CMP_log_open(3)</a>.</p>
 
 </dd>
 <dt id="OSSL_CMP_OPT_KEEP_ALIVE"><b>OSSL_CMP_OPT_KEEP_ALIVE</b></dt>
@@ -287,16 +287,18 @@ OSSL_CRMF_POPO_KEYENC     - decrypt the encrypted certificate
 
 <p>Do not cache certificates received in the extraCerts CMP message field. Otherwise they are stored to potentially help validate further messages.</p>
 
+<p>In any case, after successfully validating an incoming message, its protection certificate (if any) is cached for reuse with validation of subsequent messages. This is done not only for efficiency but also to eliminate the need for the sender to include its certificate and related chain in the extraCerts field of subsequent messages of the same transaction.</p>
+
 </dd>
 </dl>
 
 <p>OSSL_CMP_CTX_get_option() reads the current value of the given option (e.g., OSSL_CMP_OPT_IMPLICIT_CONFIRM) from the given OSSL_CMP_CTX structure.</p>
 
-<p>OSSL_CMP_CTX_set_log_cb() sets in <i>ctx</i> the callback function <i>cb</i> for handling error queue entries and logging messages. When <i>cb</i> is NULL errors are printed to STDERR (if available, else ignored) any log messages are ignored. Alternatively, <a href="../man3/OSSL_CMP_log_open.html">OSSL_CMP_log_open(3)</a> may be used to direct logging to STDOUT.</p>
+<p>OSSL_CMP_CTX_set_log_cb() sets in <i>ctx</i> the callback function <i>cb</i> for handling error queue entries and logging messages. When <i>cb</i> is NULL errors are printed to STDERR (if available, else ignored) any log messages are ignored. Alternatively, <a href="https://man7.org/linux/man-pages/man3/OSSL_CMP_log_open.3.html">OSSL_CMP_log_open(3)</a> may be used to direct logging to STDOUT.</p>
 
 <p>OSSL_CMP_CTX_set_log_verbosity() is a macro setting the OSSL_CMP_OPT_LOG_VERBOSITY context option to the given level.</p>
 
-<p>OSSL_CMP_CTX_print_errors() outputs any entries in the OpenSSL error queue. It is similar to <a href="../man3/ERR_print_errors_cb.html">ERR_print_errors_cb(3)</a> but uses the CMP log callback function if set in the <i>ctx</i> for uniformity with CMP logging if given. Otherwise it uses <a href="../man3/ERR_print_errors.html">ERR_print_errors(3)</a> to print to STDERR (unless OPENSSL_NO_STDIO is defined).</p>
+<p>OSSL_CMP_CTX_print_errors() outputs any entries in the OpenSSL error queue. It is similar to <a href="https://man7.org/linux/man-pages/man3/ERR_print_errors_cb.3.html">ERR_print_errors_cb(3)</a> but uses the CMP log callback function if set in the <i>ctx</i> for uniformity with CMP logging if given. Otherwise it uses <a href="https://man7.org/linux/man-pages/man3/ERR_print_errors.3.html">ERR_print_errors(3)</a> to print to STDERR (unless OPENSSL_NO_STDIO is defined).</p>
 
 <p>OSSL_CMP_CTX_set1_serverPath() sets the HTTP path of the CMP server on the host, also known as &quot;CMP alias&quot;. The default is <code>/</code>.</p>
 
@@ -312,7 +314,7 @@ OSSL_CRMF_POPO_KEYENC     - decrypt the encrypted certificate
 
 <pre><code>typedef BIO *(*HTTP_bio_cb_t) (BIO *bio, void *arg, int connect, int detail);</code></pre>
 
-<p>The callback may modify the <i>bio</i> provided by <a href="../man3/OSSL_CMP_MSG_http_perform.html">OSSL_CMP_MSG_http_perform(3)</a> as described for the <i>bio_update_fn</i> parameter of <a href="../man3/OSSL_HTTP_open.html">OSSL_HTTP_open(3)</a>. The callback may make use of a custom defined argument <i>arg</i>, as described for the <i>arg</i> parameter of <a href="../man3/OSSL_HTTP_open.html">OSSL_HTTP_open(3)</a>. The argument is stored in the OSSL_CMP_CTX using OSSL_CMP_CTX_set_http_cb_arg(). See also the <b>OSSL_CMP_OPT_USE_TLS</b> option described above.</p>
+<p>The callback may modify the <i>bio</i> provided by <a href="https://man7.org/linux/man-pages/man3/OSSL_CMP_MSG_http_perform.3.html">OSSL_CMP_MSG_http_perform(3)</a> as described for the <i>bio_update_fn</i> parameter of <a href="https://man7.org/linux/man-pages/man3/OSSL_HTTP_open.3.html">OSSL_HTTP_open(3)</a>. The callback may make use of a custom defined argument <i>arg</i>, as described for the <i>arg</i> parameter of <a href="https://man7.org/linux/man-pages/man3/OSSL_HTTP_open.3.html">OSSL_HTTP_open(3)</a>. The argument is stored in the OSSL_CMP_CTX using OSSL_CMP_CTX_set_http_cb_arg(). See also the <b>OSSL_CMP_OPT_USE_TLS</b> option described above.</p>
 
 <p>OSSL_CMP_CTX_set_http_cb_arg() sets the argument, respectively a pointer to a structure containing arguments such as an <b>SSL_CTX</b> structure, optionally to be used by the http connect/disconnect callback function. <i>arg</i> is not consumed, and it must therefore explicitly be freed when not needed any more. <i>arg</i> may be NULL to clear the entry. If a non-NULL argument is set, it is an error to use OSSL_CMP_CTX_set1_proxy() or OSSL_CMP_CTX_set1_no_proxy() for setting non-NULL strings.</p>
 
@@ -323,7 +325,7 @@ OSSL_CRMF_POPO_KEYENC     - decrypt the encrypted certificate
 <pre><code>typedef OSSL_CMP_MSG *(*OSSL_CMP_transfer_cb_t) (OSSL_CMP_CTX *ctx,
                                                  const OSSL_CMP_MSG *req);</code></pre>
 
-<p>Default is NULL, which implies the use of <a href="../man3/OSSL_CMP_MSG_http_perform.html">OSSL_CMP_MSG_http_perform(3)</a>. The callback should send the CMP request message it obtains via the <i>req</i> parameter and on success return the response, else it must return NULL. The transfer callback may make use of a custom defined argument stored in the ctx by means of OSSL_CMP_CTX_set_transfer_cb_arg(), which may be retrieved again through OSSL_CMP_CTX_get_transfer_cb_arg().</p>
+<p>Default is NULL, which implies the use of <a href="https://man7.org/linux/man-pages/man3/OSSL_CMP_MSG_http_perform.3.html">OSSL_CMP_MSG_http_perform(3)</a>. The callback should send the CMP request message it obtains via the <i>req</i> parameter and on success return the response, else it must return NULL. The transfer callback may make use of a custom defined argument stored in the ctx by means of OSSL_CMP_CTX_set_transfer_cb_arg(), which may be retrieved again through OSSL_CMP_CTX_get_transfer_cb_arg().</p>
 
 <p>OSSL_CMP_CTX_set_transfer_cb_arg() sets an argument, respectively a pointer to a structure containing arguments, optionally to be used by the transfer callback. <i>arg</i> is not consumed, and it must therefore explicitly be freed when not needed any more. <i>arg</i> may be NULL to clear the entry.</p>
 
@@ -527,7 +529,7 @@ sk_OSSL_CMP_ITAV_pop_free(itavs, OSSL_CMP_ITAV_free);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/OSSL_CMP_exec_IR_ses.html">OSSL_CMP_exec_IR_ses(3)</a>, <a href="../man3/OSSL_CMP_exec_CR_ses.html">OSSL_CMP_exec_CR_ses(3)</a>, <a href="../man3/OSSL_CMP_exec_KUR_ses.html">OSSL_CMP_exec_KUR_ses(3)</a>, <a href="../man3/OSSL_CMP_exec_GENM_ses.html">OSSL_CMP_exec_GENM_ses(3)</a>, <a href="../man3/OSSL_CMP_exec_certreq.html">OSSL_CMP_exec_certreq(3)</a>, <a href="../man3/OSSL_CMP_MSG_http_perform.html">OSSL_CMP_MSG_http_perform(3)</a>, <a href="../man3/ERR_print_errors_cb.html">ERR_print_errors_cb(3)</a>, <a href="../man3/OSSL_HTTP_open.html">OSSL_HTTP_open(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/OSSL_CMP_exec_IR_ses.3.html">OSSL_CMP_exec_IR_ses(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_CMP_exec_CR_ses.3.html">OSSL_CMP_exec_CR_ses(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_CMP_exec_KUR_ses.3.html">OSSL_CMP_exec_KUR_ses(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_CMP_exec_GENM_ses.3.html">OSSL_CMP_exec_GENM_ses(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_CMP_exec_certreq.3.html">OSSL_CMP_exec_certreq(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_CMP_MSG_http_perform.3.html">OSSL_CMP_MSG_http_perform(3)</a>, <a href="https://man7.org/linux/man-pages/man3/ERR_print_errors_cb.3.html">ERR_print_errors_cb(3)</a>, <a href="https://man7.org/linux/man-pages/man3/OSSL_HTTP_open.3.html">OSSL_HTTP_open(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -539,13 +541,13 @@ sk_OSSL_CMP_ITAV_pop_free(itavs, OSSL_CMP_ITAV_free);</code></pre>
 
 <p>OSSL_CMP_CTX_set1_serialNumber(), OSSL_CMP_CTX_get0_libctx(), OSSL_CMP_CTX_get0_propq(), and OSSL_CMP_CTX_get0_validatedSrvCert() were added in OpenSSL 3.2.</p>
 
-<p>OSSL_CMP_CTX_get0_geninfo_ITAVs() was added in OpenSSL 3.3.</p>
+<p>OSSL_CMP_CTX_get0_geninfo_ITAVs() and the <b>OSSL_CMP_OPT_NO_CACHE_EXTRACERTS</b> option were added in OpenSSL 3.3.</p>
 
 <p>Support for central key generation, requested via <b>OSSL_CRMF_POPO_NONE</b>, was added in OpenSSL 3.5.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2007-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2007-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

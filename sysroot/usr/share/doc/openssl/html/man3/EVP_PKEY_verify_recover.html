@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY_verify_recover</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -42,7 +42,7 @@ int EVP_PKEY_verify_recover(EVP_PKEY_CTX *ctx,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>EVP_PKEY_verify_recover_init() initializes a public key algorithm context <i>ctx</i> for signing using the algorithm given when the context was created using <a href="../man3/EVP_PKEY_CTX_new.html">EVP_PKEY_CTX_new(3)</a> or variants thereof. The algorithm is used to fetch a <b>EVP_SIGNATURE</b> method implicitly, see <a href="../man7/provider.html">&quot;Implicit fetch&quot; in provider(7)</a> for more information about implicit fetches.</p>
+<p>EVP_PKEY_verify_recover_init() initializes a public key algorithm context <i>ctx</i> for signing using the algorithm given when the context was created using <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_new.3.html">EVP_PKEY_CTX_new(3)</a> or variants thereof. The algorithm is used to fetch a <b>EVP_SIGNATURE</b> method implicitly, see <a href="https://man7.org/linux/man-pages/man7/provider.7.html#Implicit_fetch">&quot;Implicit fetch&quot; in provider(7)</a> for more information about implicit fetches.</p>
 
 <p>EVP_PKEY_verify_recover_init_ex() is the same as EVP_PKEY_verify_recover_init() but additionally sets the passed parameters <i>params</i> on the context before returning.</p>
 
@@ -108,7 +108,7 @@ if (EVP_PKEY_verify_recover(ctx, rout, &amp;routlen, sig, siglen) &lt;= 0)
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_CTX_new.html">EVP_PKEY_CTX_new(3)</a>, <a href="../man3/EVP_PKEY_encrypt.html">EVP_PKEY_encrypt(3)</a>, <a href="../man3/EVP_PKEY_decrypt.html">EVP_PKEY_decrypt(3)</a>, <a href="../man3/EVP_PKEY_sign.html">EVP_PKEY_sign(3)</a>, <a href="../man3/EVP_PKEY_verify.html">EVP_PKEY_verify(3)</a>, <a href="../man3/EVP_PKEY_derive.html">EVP_PKEY_derive(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_CTX_new.3.html">EVP_PKEY_CTX_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_encrypt.3.html">EVP_PKEY_encrypt(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_decrypt.3.html">EVP_PKEY_decrypt(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_sign.3.html">EVP_PKEY_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_verify.3.html">EVP_PKEY_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_derive.3.html">EVP_PKEY_derive(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

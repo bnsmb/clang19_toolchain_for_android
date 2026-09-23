@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set_psk_client_callback</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -68,7 +68,7 @@ void SSL_set_psk_client_callback(SSL *ssl, SSL_psk_client_cb_func cb);</code></p
 <dt id="The-master-key">The master key</dt>
 <dd>
 
-<p>This can be set via a call to <a href="../man3/SSL_SESSION_set1_master_key.html">SSL_SESSION_set1_master_key(3)</a>.</p>
+<p>This can be set via a call to <a href="https://man7.org/linux/man-pages/man3/SSL_SESSION_set1_master_key.3.html">SSL_SESSION_set1_master_key(3)</a>.</p>
 
 </dd>
 <dt id="A-ciphersuite">A ciphersuite</dt>
@@ -80,16 +80,18 @@ void SSL_set_psk_client_callback(SSL *ssl, SSL_psk_client_cb_func cb);</code></p
 <dt id="The-protocol-version">The protocol version</dt>
 <dd>
 
-<p>This can be set via a call to <a href="../man3/SSL_SESSION_set_protocol_version.html">SSL_SESSION_set_protocol_version(3)</a> and should be TLS1_3_VERSION.</p>
+<p>This can be set via a call to <a href="https://man7.org/linux/man-pages/man3/SSL_SESSION_set_protocol_version.3.html">SSL_SESSION_set_protocol_version(3)</a> and should be TLS1_3_VERSION.</p>
 
 </dd>
 </dl>
 
-<p>Additionally the maximum early data value should be set via a call to <a href="../man3/SSL_SESSION_set_max_early_data.html">SSL_SESSION_set_max_early_data(3)</a> if the PSK will be used for sending early data.</p>
+<p>Additionally the maximum early data value should be set via a call to <a href="https://man7.org/linux/man-pages/man3/SSL_SESSION_set_max_early_data.3.html">SSL_SESSION_set_max_early_data(3)</a> if the PSK will be used for sending early data.</p>
 
 <p>Alternatively an SSL_SESSION created from a previous non-PSK handshake may also be used as the basis for a PSK.</p>
 
 <p>Ownership of the SSL_SESSION object is passed to the OpenSSL library and so it should not be freed by the application.</p>
+
+<p>Note that as described above, the callback may be called a second time during a handshake. Since ownership of the SSL_SESSION is transferred to OpenSSL on each call, if the callback wishes to return the same SSL_SESSION pointer on a subsequent invocation, it must first call <a href="https://man7.org/linux/man-pages/man3/SSL_SESSION_up_ref.3.html">SSL_SESSION_up_ref(3)</a> to increment the reference count. Failure to do so will result in a use-after-free error. Alternatively, the callback may return a different SSL_SESSION object on each call (e.g., by calling <a href="https://man7.org/linux/man-pages/man3/SSL_SESSION_dup.3.html">SSL_SESSION_dup(3)</a>).</p>
 
 <p>It is also possible for the callback to succeed but not supply a PSK. In this case no PSK will be sent to the server but the handshake will continue. To do this the callback should return successfully and ensure that <b>*sess</b> is NULL. The contents of <b>*id</b> and <b>*idlen</b> will be ignored.</p>
 
@@ -105,7 +107,7 @@ void SSL_set_psk_client_callback(SSL *ssl, SSL_psk_client_cb_func cb);</code></p
 
 <p>Note that parameter <b>hint</b> given to the callback may be <b>NULL</b>.</p>
 
-<p>A connection established via a TLSv1.3 PSK will appear as if session resumption has occurred so that <a href="../man3/SSL_session_reused.html">SSL_session_reused(3)</a> will return true.</p>
+<p>A connection established via a TLSv1.3 PSK will appear as if session resumption has occurred so that <a href="https://man7.org/linux/man-pages/man3/SSL_session_reused.3.html">SSL_session_reused(3)</a> will return true.</p>
 
 <p>There are no known security issues with sharing the same PSK between TLSv1.2 (or below) and TLSv1.3. However, the RFC has this note of caution:</p>
 
@@ -123,7 +125,7 @@ void SSL_set_psk_client_callback(SSL *ssl, SSL_psk_client_cb_func cb);</code></p
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_CTX_set_psk_find_session_callback.html">SSL_CTX_set_psk_find_session_callback(3)</a>, <a href="../man3/SSL_set_psk_find_session_callback.html">SSL_set_psk_find_session_callback(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_psk_find_session_callback.3.html">SSL_CTX_set_psk_find_session_callback(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_set_psk_find_session_callback.3.html">SSL_set_psk_find_session_callback(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -131,7 +133,7 @@ void SSL_set_psk_client_callback(SSL *ssl, SSL_psk_client_cb_func cb);</code></p
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2006-2020 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2006-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

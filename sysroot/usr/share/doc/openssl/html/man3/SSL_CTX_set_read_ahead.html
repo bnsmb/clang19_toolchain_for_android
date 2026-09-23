@@ -4,7 +4,7 @@
 <head>
 <title>SSL_CTX_set_read_ahead</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -46,7 +46,7 @@ long SSL_CTX_get_default_read_ahead(SSL_CTX *ctx);</code></pre>
 
 <h1 id="NOTES">NOTES</h1>
 
-<p>These functions have no impact when used with DTLS. The return values for SSL_CTX_get_read_head() and SSL_get_read_ahead() are undefined for DTLS. Setting <b>read_ahead</b> can impact the behaviour of the SSL_pending() function (see <a href="../man3/SSL_pending.html">SSL_pending(3)</a>).</p>
+<p>These functions have no impact when used with DTLS. The return values for SSL_CTX_get_read_head() and SSL_get_read_ahead() are undefined for DTLS. Setting <b>read_ahead</b> can impact the behaviour of the SSL_pending() function (see <a href="https://man7.org/linux/man-pages/man3/SSL_pending.3.html">SSL_pending(3)</a>).</p>
 
 <p>Since SSL_read() can return <b>SSL_ERROR_WANT_READ</b> for non-application data records, and SSL_has_pending() can&#39;t tell the difference between processed and unprocessed data, it&#39;s recommended that if read ahead is turned on that <b>SSL_MODE_AUTO_RETRY</b> is not turned off using SSL_CTX_clear_mode(). That will prevent getting <b>SSL_ERROR_WANT_READ</b> when there is still a complete record available that hasn&#39;t been processed.</p>
 
@@ -58,7 +58,7 @@ long SSL_CTX_get_default_read_ahead(SSL_CTX *ctx);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ssl.html">ssl(7)</a>, <a href="../man3/SSL_pending.html">SSL_pending(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_pending.3.html">SSL_pending(3)</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

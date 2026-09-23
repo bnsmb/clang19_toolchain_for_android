@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_CMP_log_open</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -68,13 +68,13 @@ void OSSL_CMP_print_errors_cb(OSSL_CMP_log_cb_t log_fn);</code></pre>
 
 <p>The callback function may itself do non-trivial tasks like writing to a log file or remote stream, which in turn may fail. Therefore, the function should return 1 on success and 0 on failure.</p>
 
-<p>OSSL_CMP_log_open() initializes the CMP-specific logging facility to output everything to STDOUT. It fails if the integrated tracing is disabled or STDIO is not available. It may be called during application startup. Alternatively, <a href="../man3/OSSL_CMP_CTX_set_log_cb.html">OSSL_CMP_CTX_set_log_cb(3)</a> can be used for more flexibility. As long as neither if the two is used any logging output is ignored.</p>
+<p>OSSL_CMP_log_open() initializes the CMP-specific logging facility to output everything to STDOUT. It fails if the integrated tracing is disabled or STDIO is not available. It may be called during application startup. Alternatively, <a href="https://man7.org/linux/man-pages/man3/OSSL_CMP_CTX_set_log_cb.3.html">OSSL_CMP_CTX_set_log_cb(3)</a> can be used for more flexibility. As long as neither if the two is used any logging output is ignored.</p>
 
 <p>OSSL_CMP_log_close() may be called when all activities are finished to flush any pending CMP-specific log output and deallocate related resources. It may be called multiple times. It does get called at OpenSSL shutdown.</p>
 
 <p>OSSL_CMP_print_to_bio() prints the given component info, filename, line number, severity level, and log message or error queue message to the given <i>bio</i>. <i>component</i> usually is a function or module name. If it is NULL, empty, or &quot;(unknown function)&quot; then &quot;CMP&quot; is used as fallback.</p>
 
-<p>OSSL_CMP_print_errors_cb() outputs any entries in the OpenSSL error queue. It is similar to <a href="../man3/ERR_print_errors_cb.html">ERR_print_errors_cb(3)</a> but uses the CMP log callback function <i>log_fn</i> for uniformity with CMP logging if not NULL. Otherwise it prints to STDERR using <a href="../man3/OSSL_CMP_print_to_bio.html">OSSL_CMP_print_to_bio(3)</a> (unless <b>OPENSSL_NO_STDIO</b> is defined).</p>
+<p>OSSL_CMP_print_errors_cb() outputs any entries in the OpenSSL error queue. It is similar to <a href="https://man7.org/linux/man-pages/man3/ERR_print_errors_cb.3.html">ERR_print_errors_cb(3)</a> but uses the CMP log callback function <i>log_fn</i> for uniformity with CMP logging if not NULL. Otherwise it prints to STDERR using <a href="https://man7.org/linux/man-pages/man3/OSSL_CMP_print_to_bio.3.html">OSSL_CMP_print_to_bio(3)</a> (unless <b>OPENSSL_NO_STDIO</b> is defined).</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 

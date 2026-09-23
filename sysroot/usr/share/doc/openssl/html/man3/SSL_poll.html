@@ -4,7 +4,7 @@
 <head>
 <title>SSL_poll</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -17,6 +17,7 @@
   <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
   <li><a href="#EVENT-TYPES">EVENT TYPES</a></li>
   <li><a href="#LIMITATIONS">LIMITATIONS</a></li>
+  <li><a href="#THREAD-CANCELLATION">THREAD CANCELLATION</a></li>
   <li><a href="#RETURN-VALUES">RETURN VALUES</a></li>
   <li><a href="#SEE-ALSO">SEE ALSO</a></li>
   <li><a href="#HISTORY">HISTORY</a></li>
@@ -147,7 +148,7 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 
 <p>The SSL_poll() interface reports zero or more event types on a given resource, represented by a bit mask.</p>
 
-<p>All of the event types are level triggered and represent a readiness or permanent exception condition; as such, after an event has been reported by SSL_poll() for a resource, it will continue to be reported in future SSL_poll() calls until the condition ceases to be in effect. A caller must mask the given event type bit in future SSL_poll() calls if it does not wish to receive repeated notifications and has not caused the underlying readiness condition (for example, consuming all available data using <a href="../man3/SSL_read_ex.html">SSL_read_ex(3)</a> after <b>SSL_POLL_EVENT_R</b> is reported) to be deasserted.</p>
+<p>All of the event types are level triggered and represent a readiness or permanent exception condition; as such, after an event has been reported by SSL_poll() for a resource, it will continue to be reported in future SSL_poll() calls until the condition ceases to be in effect. A caller must mask the given event type bit in future SSL_poll() calls if it does not wish to receive repeated notifications and has not caused the underlying readiness condition (for example, consuming all available data using <a href="https://man7.org/linux/man-pages/man3/SSL_read_ex.3.html">SSL_read_ex(3)</a> after <b>SSL_POLL_EVENT_R</b> is reported) to be deasserted.</p>
 
 <p>Some event types do not make sense on a given kind of resource. In this case, specifying that event type in <i>events</i> is a no-op and will be ignored, and the given event will never be reported in <i>revents</i>.</p>
 
@@ -210,7 +211,7 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 <dt id="SSL_POLL_EVENT_R"><b>SSL_POLL_EVENT_R</b></dt>
 <dd>
 
-<p>Readable. This event is raised when a QUIC stream SSL object (or a QUIC connection SSL object with a default stream attached) has application data waiting to be read using <a href="../man3/SSL_read_ex.html">SSL_read_ex(3)</a>, or a FIN event as represented by <b>SSL_ERROR_ZERO_RETURN</b> waiting to be read.</p>
+<p>Readable. This event is raised when a QUIC stream SSL object (or a QUIC connection SSL object with a default stream attached) has application data waiting to be read using <a href="https://man7.org/linux/man-pages/man3/SSL_read_ex.3.html">SSL_read_ex(3)</a>, or a FIN event as represented by <b>SSL_ERROR_ZERO_RETURN</b> waiting to be read.</p>
 
 <p>It is not raised in the event of the receiving part of the QUIC stream being reset by the peer; see <b>SSL_POLL_EVENT_ER</b>.</p>
 
@@ -218,31 +219,31 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 <dt id="SSL_POLL_EVENT_W"><b>SSL_POLL_EVENT_W</b></dt>
 <dd>
 
-<p>Writable. This event is raised when a QUIC stream SSL object (or a QUIC connection SSL object with a default stream attached) could accept more application data using <a href="../man3/SSL_write_ex.html">SSL_write_ex(3)</a>.</p>
+<p>Writable. This event is raised when a QUIC stream SSL object (or a QUIC connection SSL object with a default stream attached) could accept more application data using <a href="https://man7.org/linux/man-pages/man3/SSL_write_ex.3.html">SSL_write_ex(3)</a>.</p>
 
 <p>This event is never raised by a receive-only stream.</p>
 
-<p>This event is never raised by a stream which has had its send part concluded normally (as with <a href="../man3/SSL_stream_conclude.html">SSL_stream_conclude(3)</a>) or locally reset (as with <a href="../man3/SSL_stream_reset.html">SSL_stream_reset(3)</a>).</p>
+<p>This event is never raised by a stream which has had its send part concluded normally (as with <a href="https://man7.org/linux/man-pages/man3/SSL_stream_conclude.3.html">SSL_stream_conclude(3)</a>) or locally reset (as with <a href="https://man7.org/linux/man-pages/man3/SSL_stream_reset.3.html">SSL_stream_reset(3)</a>).</p>
 
-<p>This event does not guarantee that a subsequent call to <a href="../man3/SSL_write_ex.html">SSL_write_ex(3)</a> will succeed.</p>
+<p>This event does not guarantee that a subsequent call to <a href="https://man7.org/linux/man-pages/man3/SSL_write_ex.3.html">SSL_write_ex(3)</a> will succeed.</p>
 
 </dd>
 <dt id="SSL_POLL_EVENT_IC"><b>SSL_POLL_EVENT_IC</b></dt>
 <dd>
 
-<p>This event, which is only raised by a QUIC listener SSL object, is raised when one or more incoming QUIC connections are available to be accepted using <a href="../man3/SSL_accept_connection.html">SSL_accept_connection(3)</a>.</p>
+<p>This event, which is only raised by a QUIC listener SSL object, is raised when one or more incoming QUIC connections are available to be accepted using <a href="https://man7.org/linux/man-pages/man3/SSL_accept_connection.3.html">SSL_accept_connection(3)</a>.</p>
 
 </dd>
 <dt id="SSL_POLL_EVENT_ISB"><b>SSL_POLL_EVENT_ISB</b></dt>
 <dd>
 
-<p>This event, which is only raised by a QUIC connection SSL object, is raised when one or more incoming bidirectional streams are available to be accepted using <a href="../man3/SSL_accept_stream.html">SSL_accept_stream(3)</a>.</p>
+<p>This event, which is only raised by a QUIC connection SSL object, is raised when one or more incoming bidirectional streams are available to be accepted using <a href="https://man7.org/linux/man-pages/man3/SSL_accept_stream.3.html">SSL_accept_stream(3)</a>.</p>
 
 </dd>
 <dt id="SSL_POLL_EVENT_ISU"><b>SSL_POLL_EVENT_ISU</b></dt>
 <dd>
 
-<p>This event, which is only raised by a QUIC connection SSL object, is raised when one or more incoming unidirectional streams are available to be accepted using <a href="../man3/SSL_accept_stream.html">SSL_accept_stream(3)</a>.</p>
+<p>This event, which is only raised by a QUIC connection SSL object, is raised when one or more incoming unidirectional streams are available to be accepted using <a href="https://man7.org/linux/man-pages/man3/SSL_accept_stream.3.html">SSL_accept_stream(3)</a>.</p>
 
 </dd>
 <dt id="SSL_POLL_EVENT_OSB"><b>SSL_POLL_EVENT_OSB</b></dt>
@@ -271,6 +272,14 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 </ul>
 
 <p>This limitation may be revised in a future release of OpenSSL.</p>
+
+<h1 id="THREAD-CANCELLATION">THREAD CANCELLATION</h1>
+
+<p>A finite <i>timeout</i> limits ordinary waiting by SSL_poll(), but does not make the call safe against thread cancellation; see <a href="https://man7.org/linux/man-pages/man7/openssl-threads.7.html">openssl-threads(7)</a>.</p>
+
+<p>Cancellation can prevent SSL_poll() from removing internal wait state. Because an <i>items</i> array can span multiple QUIC domains, one interrupted call can leave stale state in several domains and cause later calls on those domains, including SSL_poll() with a finite timeout, to block indefinitely.</p>
+
+<p>For cooperative cancellation, use a finite timeout and check a cancellation condition between calls; see <a href="https://man7.org/linux/man-pages/man7/openssl-quic-concurrency.7.html#THREAD_CANCELLATION">&quot;THREAD CANCELLATION&quot; in openssl-quic-concurrency(7)</a> for the nonblocking alternative.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -308,7 +317,7 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/BIO_get_rpoll_descriptor.html">BIO_get_rpoll_descriptor(3)</a>, <a href="../man3/BIO_get_wpoll_descriptor.html">BIO_get_wpoll_descriptor(3)</a>, <a href="../man3/SSL_get_rpoll_descriptor.html">SSL_get_rpoll_descriptor(3)</a>, <a href="../man3/SSL_get_wpoll_descriptor.html">SSL_get_wpoll_descriptor(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/BIO_get_rpoll_descriptor.3.html">BIO_get_rpoll_descriptor(3)</a>, <a href="https://man7.org/linux/man-pages/man3/BIO_get_wpoll_descriptor.3.html">BIO_get_wpoll_descriptor(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_rpoll_descriptor.3.html">SSL_get_rpoll_descriptor(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_get_wpoll_descriptor.3.html">SSL_get_wpoll_descriptor(3)</a>, <a href="https://man7.org/linux/man-pages/man7/openssl-threads.7.html">openssl-threads(7)</a>, <a href="https://man7.org/linux/man-pages/man7/openssl-quic.7.html">openssl-quic(7)</a>, <a href="https://man7.org/linux/man-pages/man7/openssl-quic-concurrency.7.html">openssl-quic-concurrency(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
@@ -320,7 +329,7 @@ int SSL_poll(SSL_POLL_ITEM         *items,
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2024-2025 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2024-2026 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

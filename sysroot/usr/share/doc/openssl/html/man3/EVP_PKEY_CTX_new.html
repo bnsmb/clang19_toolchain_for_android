@@ -4,7 +4,7 @@
 <head>
 <title>EVP_PKEY_CTX_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -53,13 +53,13 @@ int EVP_PKEY_CTX_is_a(EVP_PKEY_CTX *ctx, const char *keytype);</code></pre>
 
 <p>The EVP_PKEY_CTX_new_id() function allocates public key algorithm context using the key type specified by <i>id</i> and ENGINE <i>e</i>.</p>
 
-<p>The EVP_PKEY_CTX_new_from_name() function allocates a public key algorithm context using the library context <i>libctx</i> (see <a href="../man3/OSSL_LIB_CTX.html">OSSL_LIB_CTX(3)</a>), the key type specified by <i>name</i> and the property query <i>propquery</i>. None of the arguments are duplicated, so they must remain unchanged for the lifetime of the returned <b>EVP_PKEY_CTX</b> or of any of its duplicates. Read further about the possible names in <a href="#NOTES">&quot;NOTES&quot;</a> below.</p>
+<p>The EVP_PKEY_CTX_new_from_name() function allocates a public key algorithm context using the library context <i>libctx</i> (see <a href="https://man7.org/linux/man-pages/man3/OSSL_LIB_CTX.3.html">OSSL_LIB_CTX(3)</a>), the key type specified by <i>name</i> and the property query <i>propquery</i>. None of the arguments are duplicated, so they must remain unchanged for the lifetime of the returned <b>EVP_PKEY_CTX</b> or of any of its duplicates. Read further about the possible names in <a href="#NOTES">&quot;NOTES&quot;</a> below.</p>
 
-<p>The EVP_PKEY_CTX_new_from_pkey() function allocates a public key algorithm context using the library context <i>libctx</i> (see <a href="../man3/OSSL_LIB_CTX.html">OSSL_LIB_CTX(3)</a>) and the algorithm specified by <i>pkey</i> and the property query <i>propquery</i>. None of the arguments are duplicated, so they must remain unchanged for the lifetime of the returned <b>EVP_PKEY_CTX</b> or any of its duplicates.</p>
+<p>The EVP_PKEY_CTX_new_from_pkey() function allocates a public key algorithm context using the library context <i>libctx</i> (see <a href="https://man7.org/linux/man-pages/man3/OSSL_LIB_CTX.3.html">OSSL_LIB_CTX(3)</a>) and the algorithm specified by <i>pkey</i> and the property query <i>propquery</i>. None of the arguments are duplicated, so they must remain unchanged for the lifetime of the returned <b>EVP_PKEY_CTX</b> or any of its duplicates.</p>
 
 <p>EVP_PKEY_CTX_new_id() and EVP_PKEY_CTX_new_from_name() are normally used when no <b>EVP_PKEY</b> structure is associated with the operations, for example during parameter generation or key generation for some algorithms.</p>
 
-<p>EVP_PKEY_CTX_dup() duplicates the context <i>ctx</i>. It is not supported for a keygen operation. It is however possible to duplicate a context freshly created via any of the above <code>new</code> functions, provided <a href="../man3/EVP_PKEY_keygen_init.html">EVP_PKEY_keygen_init(3)</a> has not yet been called on the source context, and then use the copy for key generation.</p>
+<p>EVP_PKEY_CTX_dup() duplicates the context <i>ctx</i>. It is not supported for a keygen operation. It is however possible to duplicate a context freshly created via any of the above <code>new</code> functions, provided <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_keygen_init.3.html">EVP_PKEY_keygen_init(3)</a> has not yet been called on the source context, and then use the copy for key generation.</p>
 
 <p>EVP_PKEY_CTX_free() frees up the context <i>ctx</i>. If <i>ctx</i> is NULL, nothing is done.</p>
 
@@ -94,7 +94,7 @@ int EVP_PKEY_CTX_is_a(EVP_PKEY_CTX *ctx, const char *keytype);</code></pre>
 
 <p>These are names like &quot;RSA&quot;, &quot;DSA&quot;, and what&#39;s available depends on what providers are currently accessible.</p>
 
-<p>The OpenSSL providers offer a set of key types available this way, please see <a href="../man7/OSSL_PROVIDER-FIPS.html">OSSL_PROVIDER-FIPS(7)</a> and <a href="../man7/OSSL_PROVIDER-default.html">OSSL_PROVIDER-default(7)</a> and related documentation for more information.</p>
+<p>The OpenSSL providers offer a set of key types available this way, please see <a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-FIPS.7.html">OSSL_PROVIDER-FIPS(7)</a> and <a href="https://man7.org/linux/man-pages/man7/OSSL_PROVIDER-default.7.html">OSSL_PROVIDER-default(7)</a> and related documentation for more information.</p>
 
 </dd>
 </dl>
@@ -109,7 +109,7 @@ int EVP_PKEY_CTX_is_a(EVP_PKEY_CTX *ctx, const char *keytype);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_PKEY_new.html">EVP_PKEY_new(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_new.3.html">EVP_PKEY_new(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>DH_get0_pqg</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 
 <pre><code>#include &lt;openssl/dh.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>void DH_get0_pqg(const DH *dh,
                  const BIGNUM **p, const BIGNUM **q, const BIGNUM **g);
@@ -54,7 +54,7 @@ ENGINE *DH_get0_engine(DH *d);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>All of the functions described on this page are deprecated. Applications should instead use <a href="../man3/EVP_PKEY_get_bn_param.html">EVP_PKEY_get_bn_param(3)</a> for any methods that return a <b>BIGNUM</b>. Refer to <a href="../man7/EVP_PKEY-DH.html">EVP_PKEY-DH(7)</a> for more information.</p>
+<p>All of the functions described on this page are deprecated. Applications should instead use <a href="https://man7.org/linux/man-pages/man3/EVP_PKEY_get_bn_param.3.html">EVP_PKEY_get_bn_param(3)</a> for any methods that return a <b>BIGNUM</b>. Refer to <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DH.7.html">EVP_PKEY-DH(7)</a> for more information.</p>
 
 <p>A DH object contains the parameters <i>p</i>, <i>q</i> and <i>g</i>. Note that the <i>q</i> parameter is optional. It also contains a public key (<i>pub_key</i>) and (optionally) a private key (<i>priv_key</i>).</p>
 
@@ -72,7 +72,7 @@ ENGINE *DH_get0_engine(DH *d);</code></pre>
 
 <p>DH_get0_engine() returns a handle to the ENGINE that has been set for this DH object, or NULL if no such ENGINE has been set. This function is deprecated. All engines should be replaced by providers.</p>
 
-<p>The DH_get_length() and DH_set_length() functions get and set the optional length parameter associated with this DH object. If the length is nonzero then it is used, otherwise it is ignored. The <i>length</i> parameter indicates the length of the secret exponent (private key) in bits. For safe prime groups the optional length parameter <i>length</i> can be set to a value greater or equal to 2 * maximum_target_security_strength(BN_num_bits(<i>p</i>)) as listed in SP800-56Ar3 Table(s) 25 &amp; 26. These functions are deprecated and should be replaced with EVP_PKEY_CTX_set_params() and EVP_PKEY_get_int_param() using the parameter key <b>OSSL_PKEY_PARAM_DH_PRIV_LEN</b> as described in <a href="../man7/EVP_PKEY-DH.html">EVP_PKEY-DH(7)</a>.</p>
+<p>The DH_get_length() and DH_set_length() functions get and set the optional length parameter associated with this DH object. If the length is nonzero then it is used, otherwise it is ignored. The <i>length</i> parameter indicates the length of the secret exponent (private key) in bits. For safe prime groups the optional length parameter <i>length</i> can be set to a value greater or equal to 2 * maximum_target_security_strength(BN_num_bits(<i>p</i>)) as listed in SP800-56Ar3 Table(s) 25 &amp; 26. These functions are deprecated and should be replaced with EVP_PKEY_CTX_set_params() and EVP_PKEY_get_int_param() using the parameter key <b>OSSL_PKEY_PARAM_DH_PRIV_LEN</b> as described in <a href="https://man7.org/linux/man-pages/man7/EVP_PKEY-DH.7.html">EVP_PKEY-DH(7)</a>.</p>
 
 <h1 id="NOTES">NOTES</h1>
 
@@ -92,7 +92,7 @@ ENGINE *DH_get0_engine(DH *d);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/DH_new.html">DH_new(3)</a>, <a href="../man3/DH_new.html">DH_new(3)</a>, <a href="../man3/DH_generate_parameters.html">DH_generate_parameters(3)</a>, <a href="../man3/DH_generate_key.html">DH_generate_key(3)</a>, <a href="../man3/DH_set_method.html">DH_set_method(3)</a>, <a href="../man3/DH_size.html">DH_size(3)</a>, <a href="../man3/DH_meth_new.html">DH_meth_new(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/DH_new.3.html">DH_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DH_new.3.html">DH_new(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DH_generate_parameters.3.html">DH_generate_parameters(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DH_generate_key.3.html">DH_generate_key(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DH_set_method.3.html">DH_set_method(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DH_size.3.html">DH_size(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DH_meth_new.3.html">DH_meth_new(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

@@ -4,7 +4,7 @@
 <head>
 <title>proxy-certificates</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -65,7 +65,7 @@
 
 <h2 id="Creating-proxy-certificates">Creating proxy certificates</h2>
 
-<p>Creating proxy certificates can be done using the <a href="../man1/openssl-x509.html">openssl-x509(1)</a> command, with some extra extensions:</p>
+<p>Creating proxy certificates can be done using the <a href="https://man7.org/linux/man-pages/man1/openssl-x509.1.html">openssl-x509(1)</a> command, with some extra extensions:</p>
 
 <pre><code>[ proxy ]
 # A proxy certificate MUST NEVER be a CA certificate.
@@ -93,7 +93,7 @@ policy = text:BC</code></pre>
 
 <p>indicates that the string is a byte sequence, without any encoding:</p>
 
-<pre><code>policy=text:räksmörgås</code></pre>
+<pre><code>policy=text:r&#xE4;ksm&#xF6;rg&#xE5;s</code></pre>
 
 </dd>
 <dt id="hex"><b>hex</b></dt>
@@ -245,7 +245,7 @@ static int verify_callback(int ok, X509_STORE_CTX *ctx)
                  * another, temporary bit array and fill it with
                  * the rights granted by the current proxy
                  * certificate, then use it as a mask on the
-                 * accumulated rights bit array, and voilà, you
+                 * accumulated rights bit array, and voil&#xE0;, you
                  * now have a new accumulated rights bit array.
                  */
                 {
@@ -327,7 +327,7 @@ static int my_X509_verify_cert(X509_STORE_CTX *ctx,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/X509_STORE_CTX_set_flags.html">X509_STORE_CTX_set_flags(3)</a>, <a href="../man3/X509_STORE_CTX_set_verify_cb.html">X509_STORE_CTX_set_verify_cb(3)</a>, <a href="../man3/X509_VERIFY_PARAM_set_flags.html">X509_VERIFY_PARAM_set_flags(3)</a>, <a href="../man3/SSL_CTX_set_cert_verify_callback.html">SSL_CTX_set_cert_verify_callback(3)</a>, <a href="../man1/openssl-req.html">openssl-req(1)</a>, <a href="../man1/openssl-x509.html">openssl-x509(1)</a>, <a href="https://tools.ietf.org/html/rfc3820">RFC 3820</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/X509_STORE_CTX_set_flags.3.html">X509_STORE_CTX_set_flags(3)</a>, <a href="https://man7.org/linux/man-pages/man3/X509_STORE_CTX_set_verify_cb.3.html">X509_STORE_CTX_set_verify_cb(3)</a>, <a href="https://man7.org/linux/man-pages/man3/X509_VERIFY_PARAM_set_flags.3.html">X509_VERIFY_PARAM_set_flags(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_CTX_set_cert_verify_callback.3.html">SSL_CTX_set_cert_verify_callback(3)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-req.1.html">openssl-req(1)</a>, <a href="https://man7.org/linux/man-pages/man1/openssl-x509.1.html">openssl-x509(1)</a>, <a href="https://tools.ietf.org/html/rfc3820">RFC 3820</a></p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

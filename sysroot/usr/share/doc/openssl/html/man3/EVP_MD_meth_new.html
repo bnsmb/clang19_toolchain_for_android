@@ -4,7 +4,7 @@
 <head>
 <title>EVP_MD_meth_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -29,7 +29,7 @@
 
 <pre><code>#include &lt;openssl/evp.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>EVP_MD *EVP_MD_meth_new(int md_type, int pkey_type);
 void EVP_MD_meth_free(EVP_MD *md);
@@ -137,7 +137,7 @@ int (*EVP_MD_meth_get_ctrl(const EVP_MD *md))(EVP_MD_CTX *ctx, int cmd,
 
 <p>EVP_MD_meth_set_cleanup() sets the function for <b>md</b> to do extra cleanup before the method&#39;s private data structure is cleaned out and freed. Note that the cleanup function is passed a <b>EVP_MD_CTX *</b>, the private data structure is then available with EVP_MD_CTX_get0_md_data(). This cleanup function is called by EVP_MD_CTX_reset() and EVP_MD_CTX_free().</p>
 
-<p>EVP_MD_meth_set_ctrl() sets the control function for <b>md</b>. See <a href="../man3/EVP_MD_CTX_ctrl.html">EVP_MD_CTX_ctrl(3)</a> for the available controls.</p>
+<p>EVP_MD_meth_set_ctrl() sets the control function for <b>md</b>. See <a href="https://man7.org/linux/man-pages/man3/EVP_MD_CTX_ctrl.3.html">EVP_MD_CTX_ctrl(3)</a> for the available controls.</p>
 
 <p>EVP_MD_meth_get_input_blocksize(), EVP_MD_meth_get_result_size(), EVP_MD_meth_get_app_datasize(), EVP_MD_meth_get_flags(), EVP_MD_meth_get_init(), EVP_MD_meth_get_update(), EVP_MD_meth_get_final(), EVP_MD_meth_get_copy(), EVP_MD_meth_get_cleanup() and EVP_MD_meth_get_ctrl() are all used to retrieve the method data given with the EVP_MD_meth_set_*() functions above.</p>
 
@@ -147,7 +147,7 @@ int (*EVP_MD_meth_get_ctrl(const EVP_MD *md))(EVP_MD_CTX *ctx, int cmd,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/EVP_DigestInit.html">EVP_DigestInit(3)</a>, <a href="../man3/EVP_SignInit.html">EVP_SignInit(3)</a>, <a href="../man3/EVP_VerifyInit.html">EVP_VerifyInit(3)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/EVP_DigestInit.3.html">EVP_DigestInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_SignInit.3.html">EVP_SignInit(3)</a>, <a href="https://man7.org/linux/man-pages/man3/EVP_VerifyInit.3.html">EVP_VerifyInit(3)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

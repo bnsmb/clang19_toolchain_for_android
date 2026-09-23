@@ -12,8 +12,8 @@
 # Perl c_rehash script, scan all files in a directory
 # and add symbolic links to their hash values.
 
-my $dir = "/data/local/tmp/sysroot/etc/security";
-my $prefix = "/data/local/tmp/sysroot/usr";
+my $dir = "/data/local/tmp/sysroot/etc/tls";
+my $prefix = "/data/local/tmp/sysroot/";
 
 my $errorcount = 0;
 my $openssl = $ENV{OPENSSL} || "openssl";

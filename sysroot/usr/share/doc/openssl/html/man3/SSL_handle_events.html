@@ -4,7 +4,7 @@
 <head>
 <title>SSL_handle_events</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -44,9 +44,9 @@ int SSL_handle_events(SSL *ssl);</code></pre>
 <dt id="DTLS-SSL-objects">DTLS SSL objects</dt>
 <dd>
 
-<p>Using SSL_handle_events() on an SSL object being used with a DTLS method allows timeout events to be handled properly. This is equivalent to a call to <a href="../man3/DTLSv1_handle_timeout.html">DTLSv1_handle_timeout(3)</a>. Since SSL_handle_events() handles a superset of the use cases of <a href="../man3/DTLSv1_handle_timeout.html">DTLSv1_handle_timeout(3)</a>, it should be preferred for new applications which do not require support for OpenSSL 3.1 or older.</p>
+<p>Using SSL_handle_events() on an SSL object being used with a DTLS method allows timeout events to be handled properly. This is equivalent to a call to <a href="https://man7.org/linux/man-pages/man3/DTLSv1_handle_timeout.3.html">DTLSv1_handle_timeout(3)</a>. Since SSL_handle_events() handles a superset of the use cases of <a href="https://man7.org/linux/man-pages/man3/DTLSv1_handle_timeout.3.html">DTLSv1_handle_timeout(3)</a>, it should be preferred for new applications which do not require support for OpenSSL 3.1 or older.</p>
 
-<p>When using DTLS, an application must call SSL_handle_events() as indicated by calls to <a href="../man3/SSL_get_event_timeout.html">SSL_get_event_timeout(3)</a>; event handling is not performed automatically by calls to other SSL functions such as <a href="../man3/SSL_read.html">SSL_read(3)</a> or <a href="../man3/SSL_write.html">SSL_write(3)</a>. Note that this is different to QUIC which also performs event handling implicitly; see below.</p>
+<p>When using DTLS, an application must call SSL_handle_events() as indicated by calls to <a href="https://man7.org/linux/man-pages/man3/SSL_get_event_timeout.3.html">SSL_get_event_timeout(3)</a>; event handling is not performed automatically by calls to other SSL functions such as <a href="https://man7.org/linux/man-pages/man3/SSL_read.3.html">SSL_read(3)</a> or <a href="https://man7.org/linux/man-pages/man3/SSL_write.3.html">SSL_write(3)</a>. Note that this is different to QUIC which also performs event handling implicitly; see below.</p>
 
 </dd>
 <dt id="QUIC-connection-SSL-objects">QUIC connection SSL objects</dt>
@@ -54,18 +54,18 @@ int SSL_handle_events(SSL *ssl);</code></pre>
 
 <p>Using SSL_handle_events() on an SSL object which represents a QUIC connection allows timeout events to be handled properly, as well as incoming network data to be processed, and queued outgoing network data to be written, if the underlying BIO has the capacity to accept it.</p>
 
-<p>Ordinarily, when an application uses an SSL object in blocking mode, it does not need to call SSL_handle_events() because OpenSSL performs ticking internally on an automatic basis. However, if an application uses a QUIC connection in nonblocking mode, it must at a minimum ensure that SSL_handle_events() is called periodically to allow timeout events to be handled. An application can find out when it next needs to call SSL_handle_events() for this purpose (if at all) by calling <a href="../man3/SSL_get_event_timeout.html">SSL_get_event_timeout(3)</a>.</p>
+<p>Ordinarily, when an application uses an SSL object in blocking mode, it does not need to call SSL_handle_events() because OpenSSL performs ticking internally on an automatic basis. However, if an application uses a QUIC connection in nonblocking mode, it must at a minimum ensure that SSL_handle_events() is called periodically to allow timeout events to be handled. An application can find out when it next needs to call SSL_handle_events() for this purpose (if at all) by calling <a href="https://man7.org/linux/man-pages/man3/SSL_get_event_timeout.3.html">SSL_get_event_timeout(3)</a>.</p>
 
-<p>Calling SSL_handle_events() on a QUIC connection SSL object being used in blocking mode is not necessary unless no I/O calls (such as <a href="../man3/SSL_read.html">SSL_read(3)</a> or <a href="../man3/SSL_write.html">SSL_write(3)</a>) will be made to the object for a substantial period of time. So long as at least one call to the SSL object is blocking, no such call is needed. However, SSL_handle_events() may optionally be used on a QUIC connection object if desired.</p>
+<p>Calling SSL_handle_events() on a QUIC connection SSL object being used in blocking mode is not necessary unless no I/O calls (such as <a href="https://man7.org/linux/man-pages/man3/SSL_read.3.html">SSL_read(3)</a> or <a href="https://man7.org/linux/man-pages/man3/SSL_write.3.html">SSL_write(3)</a>) will be made to the object for a substantial period of time. So long as at least one call to the SSL object is blocking, no such call is needed. However, SSL_handle_events() may optionally be used on a QUIC connection object if desired.</p>
 
-<p>With the thread-assisted mode of operation <a href="../man3/OSSL_QUIC_client_thread_method.html">OSSL_QUIC_client_thread_method(3)</a> it is unnecessary to call SSL_handle_events() as the assist thread handles the QUIC connection events.</p>
+<p>With the thread-assisted mode of operation <a href="https://man7.org/linux/man-pages/man3/OSSL_QUIC_client_thread_method.3.html">OSSL_QUIC_client_thread_method(3)</a> it is unnecessary to call SSL_handle_events() as the assist thread handles the QUIC connection events.</p>
 
 </dd>
 </dl>
 
 <p>Calling SSL_handle_events() on any other kind of SSL object is a no-op. This is considered a success case.</p>
 
-<p>Note that SSL_handle_events() supersedes the older <a href="../man3/DTLSv1_handle_timeout.html">DTLSv1_handle_timeout(3)</a> function for all use cases.</p>
+<p>Note that SSL_handle_events() supersedes the older <a href="https://man7.org/linux/man-pages/man3/DTLSv1_handle_timeout.3.html">DTLSv1_handle_timeout(3)</a> function for all use cases.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -73,7 +73,7 @@ int SSL_handle_events(SSL *ssl);</code></pre>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/SSL_get_event_timeout.html">SSL_get_event_timeout(3)</a>, <a href="../man3/DTLSv1_handle_timeout.html">DTLSv1_handle_timeout(3)</a>, <a href="../man7/ssl.html">ssl(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/SSL_get_event_timeout.3.html">SSL_get_event_timeout(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DTLSv1_handle_timeout.3.html">DTLSv1_handle_timeout(3)</a>, <a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

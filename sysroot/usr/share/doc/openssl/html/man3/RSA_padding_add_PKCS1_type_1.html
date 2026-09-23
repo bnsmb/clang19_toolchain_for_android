@@ -4,7 +4,7 @@
 <head>
 <title>RSA_padding_add_PKCS1_type_1</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 
 <pre><code>#include &lt;openssl/rsa.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int RSA_padding_add_PKCS1_type_1(unsigned char *to, int tlen,
                                  const unsigned char *f, int fl);
@@ -108,7 +108,7 @@ int RSA_padding_check_none(unsigned char *to, int tlen,
 </dd>
 </dl>
 
-<p>The random number generator must be seeded prior to calling RSA_padding_add_xxx(). If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="../man7/RAND.html">RAND(7)</a>), the operation will fail.</p>
+<p>The random number generator must be seeded prior to calling RSA_padding_add_xxx(). If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a>), the operation will fail.</p>
 
 <p>RSA_padding_check_xxx() verifies that the <b>fl</b> bytes at <b>f</b> contain a valid encoding for a <b>rsa_len</b> byte RSA key in the respective encoding method and stores the recovered data of at most <b>tlen</b> bytes (for <b>RSA_NO_PADDING</b>: of size <b>tlen</b>) at <b>to</b>.</p>
 
@@ -118,7 +118,7 @@ int RSA_padding_check_none(unsigned char *to, int tlen,
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
-<p>The RSA_padding_add_xxx() functions return 1 on success, 0 on error. The RSA_padding_check_xxx() functions return the length of the recovered data, -1 on error. Error codes can be obtained by calling <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>The RSA_padding_add_xxx() functions return 1 on success, 0 on error. The RSA_padding_check_xxx() functions return the length of the recovered data, -1 on error. Error codes can be obtained by calling <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="WARNINGS">WARNINGS</h1>
 
@@ -128,7 +128,7 @@ int RSA_padding_check_none(unsigned char *to, int tlen,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/RSA_public_encrypt.html">RSA_public_encrypt(3)</a>, <a href="../man3/RSA_private_decrypt.html">RSA_private_decrypt(3)</a>, <a href="../man3/RSA_sign.html">RSA_sign(3)</a>, <a href="../man3/RSA_verify.html">RSA_verify(3)</a>, <a href="../man7/RAND.html">RAND(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/RSA_public_encrypt.3.html">RSA_public_encrypt(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RSA_private_decrypt.3.html">RSA_private_decrypt(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RSA_sign.3.html">RSA_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RSA_verify.3.html">RSA_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

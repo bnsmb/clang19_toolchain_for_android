@@ -4,7 +4,7 @@
 <head>
 <title>RSA_sign_ASN1_OCTET_STRING</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 
 <pre><code>#include &lt;openssl/rsa.h&gt;</code></pre>
 
-<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="../man7/openssl_user_macros.html">openssl_user_macros(7)</a>:</p>
+<p>The following functions have been deprecated since OpenSSL 3.0, and can be hidden entirely by defining <b>OPENSSL_API_COMPAT</b> with a suitable version value, see <a href="https://man7.org/linux/man-pages/man7/openssl_user_macros.7.html">openssl_user_macros(7)</a>:</p>
 
 <pre><code>int RSA_sign_ASN1_OCTET_STRING(int dummy, unsigned char *m,
                                unsigned int m_len, unsigned char *sigret,
@@ -48,7 +48,7 @@ int RSA_verify_ASN1_OCTET_STRING(int dummy, unsigned char *m,
 
 <p><b>dummy</b> is ignored.</p>
 
-<p>The random number generator must be seeded when calling RSA_sign_ASN1_OCTET_STRING(). If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="../man7/RAND.html">RAND(7)</a>), the operation will fail.</p>
+<p>The random number generator must be seeded when calling RSA_sign_ASN1_OCTET_STRING(). If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a>), the operation will fail.</p>
 
 <p>RSA_verify_ASN1_OCTET_STRING() verifies that the signature <b>sigbuf</b> of size <b>siglen</b> is the DER representation of a given octet string <b>m</b> of size <b>m_len</b>. <b>dummy</b> is ignored. <b>rsa</b> is the signer&#39;s public key.</p>
 
@@ -56,7 +56,7 @@ int RSA_verify_ASN1_OCTET_STRING(int dummy, unsigned char *m,
 
 <p>RSA_sign_ASN1_OCTET_STRING() returns 1 on success, 0 otherwise. RSA_verify_ASN1_OCTET_STRING() returns 1 on successful verification, 0 otherwise.</p>
 
-<p>The error codes can be obtained by <a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>.</p>
+<p>The error codes can be obtained by <a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>.</p>
 
 <h1 id="BUGS">BUGS</h1>
 
@@ -64,7 +64,7 @@ int RSA_verify_ASN1_OCTET_STRING(int dummy, unsigned char *m,
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/ERR_get_error.html">ERR_get_error(3)</a>, <a href="../man3/RAND_bytes.html">RAND_bytes(3)</a>, <a href="../man3/RSA_sign.html">RSA_sign(3)</a>, <a href="../man3/RSA_verify.html">RSA_verify(3)</a>, <a href="../man7/RAND.html">RAND(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/ERR_get_error.3.html">ERR_get_error(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RAND_bytes.3.html">RAND_bytes(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RSA_sign.3.html">RSA_sign(3)</a>, <a href="https://man7.org/linux/man-pages/man3/RSA_verify.3.html">RSA_verify(3)</a>, <a href="https://man7.org/linux/man-pages/man7/RAND.7.html">RAND(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 

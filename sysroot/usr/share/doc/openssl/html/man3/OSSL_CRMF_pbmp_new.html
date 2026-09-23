@@ -4,7 +4,7 @@
 <head>
 <title>OSSL_CRMF_pbmp_new</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -43,7 +43,7 @@ OSSL_CRMF_PBMPARAMETER *OSSL_CRMF_pbmp_new(OSSL_LIB_CTX *libctx, size_t saltlen,
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>OSSL_CRMF_pbm_new() generates a PBM (Password-Based MAC) based on given PBM parameters <i>pbmp</i>, message <i>msg</i>, and secret <i>sec</i>, along with the respective lengths <i>msglen</i> and <i>seclen</i>. The optional library context <i>libctx</i> and <i>propq</i> parameters may be used to influence the selection of the MAC algorithm referenced in the <i>pbmp</i>; see <a href="../man7/crypto.html">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further information. On success writes the address of the newly allocated MAC via the <i>mac</i> reference parameter and writes the length via the <i>maclen</i> reference parameter unless it its NULL.</p>
+<p>OSSL_CRMF_pbm_new() generates a PBM (Password-Based MAC) based on given PBM parameters <i>pbmp</i>, message <i>msg</i>, and secret <i>sec</i>, along with the respective lengths <i>msglen</i> and <i>seclen</i>. The optional library context <i>libctx</i> and <i>propq</i> parameters may be used to influence the selection of the MAC algorithm referenced in the <i>pbmp</i>; see <a href="https://man7.org/linux/man-pages/man7/crypto.7.html#ALGORITHM_FETCHING">&quot;ALGORITHM FETCHING&quot; in crypto(7)</a> for further information. On success writes the address of the newly allocated MAC via the <i>mac</i> reference parameter and writes the length via the <i>maclen</i> reference parameter unless it its NULL.</p>
 
 <p>OSSL_CRMF_pbmp_new() initializes and returns a new <b>PBMParameter</b> structure with a new random salt of given length <i>saltlen</i>, OWF (one-way function) NID <i>owfnid</i>, OWF iteration count <i>itercnt</i>, and MAC NID <i>macnid</i>. The library context <i>libctx</i> parameter may be used to select the provider for the random number generation (DRBG) and may be NULL for the default.</p>
 

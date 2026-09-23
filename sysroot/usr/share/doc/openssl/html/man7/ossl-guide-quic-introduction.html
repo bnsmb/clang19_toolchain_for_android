@@ -4,7 +4,7 @@
 <head>
 <title>ossl-guide-quic-introduction</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -30,11 +30,11 @@
 
 <h1 id="INTRODUCTION">INTRODUCTION</h1>
 
-<p>This page will provide an introduction to some basic QUIC concepts and background and how it is used within OpenSSL. It assumes that you have a basic understanding of UDP/IP and sockets. It also assumes that you are familiar with some OpenSSL and TLS fundamentals (see <a href="../man7/ossl-guide-libraries-introduction.html">ossl-guide-libraries-introduction(7)</a> and <a href="../man7/ossl-guide-tls-introduction.html">ossl-guide-tls-introduction(7)</a>).</p>
+<p>This page will provide an introduction to some basic QUIC concepts and background and how it is used within OpenSSL. It assumes that you have a basic understanding of UDP/IP and sockets. It also assumes that you are familiar with some OpenSSL and TLS fundamentals (see <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libraries-introduction.7.html">ossl-guide-libraries-introduction(7)</a> and <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-introduction.7.html">ossl-guide-tls-introduction(7)</a>).</p>
 
 <h1 id="WHAT-IS-QUIC">WHAT IS QUIC?</h1>
 
-<p>QUIC is a general purpose protocol for enabling applications to securely communicate over a network. It is defined in RFC9000 (see <a href="https://datatracker.ietf.org/doc/rfc9000/">https://datatracker.ietf.org/doc/rfc9000/</a>). QUIC integrates parts of the TLS protocol for connection establishment but independently protects packets. It provides similar security guarantees to TLS such as confidentiality, integrity and authentication (see <a href="../man7/ossl-guide-tls-introduction.html">ossl-guide-tls-introduction(7)</a>).</p>
+<p>QUIC is a general purpose protocol for enabling applications to securely communicate over a network. It is defined in RFC9000 (see <a href="https://datatracker.ietf.org/doc/rfc9000/">https://datatracker.ietf.org/doc/rfc9000/</a>). QUIC integrates parts of the TLS protocol for connection establishment but independently protects packets. It provides similar security guarantees to TLS such as confidentiality, integrity and authentication (see <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-introduction.7.html">ossl-guide-tls-introduction(7)</a>).</p>
 
 <p>QUIC delivers a number of advantages:</p>
 
@@ -88,11 +88,11 @@
 
 <p>A key difference between the TLS implementation and the QUIC implementation in OpenSSL is how time is handled. The QUIC protocol requires various actions to be performed on a regular basis regardless of whether application data is being transmitted or received.</p>
 
-<p>OpenSSL introduces a new function <a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a> that will automatically process any outstanding time based events that must be handled. Alternatively calling any I/O function such as <a href="../man3/SSL_read_ex.html">SSL_read_ex(3)</a> or <a href="../man3/SSL_write_ex.html">SSL_write_ex(3)</a> will also process these events. There is also <a href="../man3/SSL_get_event_timeout.html">SSL_get_event_timeout(3)</a> which tells an application the amount of time that remains until <a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a> (or any I/O function) must be called.</p>
+<p>OpenSSL introduces a new function <a href="https://man7.org/linux/man-pages/man3/SSL_handle_events.3.html">SSL_handle_events(3)</a> that will automatically process any outstanding time based events that must be handled. Alternatively calling any I/O function such as <a href="https://man7.org/linux/man-pages/man3/SSL_read_ex.3.html">SSL_read_ex(3)</a> or <a href="https://man7.org/linux/man-pages/man3/SSL_write_ex.3.html">SSL_write_ex(3)</a> will also process these events. There is also <a href="https://man7.org/linux/man-pages/man3/SSL_get_event_timeout.3.html">SSL_get_event_timeout(3)</a> which tells an application the amount of time that remains until <a href="https://man7.org/linux/man-pages/man3/SSL_handle_events.3.html">SSL_handle_events(3)</a> (or any I/O function) must be called.</p>
 
 <p>Fortunately a blocking application that does not leave the QUIC connection idle, and is regularly calling I/O functions does not typically need to worry about this. However if you are developing a nonblocking application or one that may leave the QUIC connection idle for a period of time then you will need to arrange to call these functions.</p>
 
-<p>OpenSSL provides an optional &quot;thread assisted mode&quot; that will automatically create a background thread and will regularly call <a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a> in a thread safe manner. This provides a simple way for an application to satisfy the QUIC requirements for time based events without having to implement special logic to accomplish it.</p>
+<p>OpenSSL provides an optional &quot;thread assisted mode&quot; that will automatically create a background thread and will regularly call <a href="https://man7.org/linux/man-pages/man3/SSL_handle_events.3.html">SSL_handle_events(3)</a> in a thread safe manner. This provides a simple way for an application to satisfy the QUIC requirements for time based events without having to implement special logic to accomplish it.</p>
 
 <h1 id="QUIC-AND-TLS">QUIC AND TLS</h1>
 
@@ -108,21 +108,21 @@
 
 <h1 id="SOCKETS-AND-BLOCKING">SOCKETS AND BLOCKING</h1>
 
-<p>TLS assumes &quot;stream&quot; type semantics for its underlying transport layer protocol (usually achieved by using TCP). However QUIC assumes &quot;datagram&quot; type semantics by using UDP. An OpenSSL application using QUIC is responsible for creating a BIO to represent the underlying transport layer. This BIO must support datagrams and is typically <a href="../man3/BIO_s_datagram.html">BIO_s_datagram(3)</a>, but other <b>BIO</b> choices are available. See <a href="../man7/bio.html">bio(7)</a> for an introduction to OpenSSL&#39;s <b>BIO</b> concept.</p>
+<p>TLS assumes &quot;stream&quot; type semantics for its underlying transport layer protocol (usually achieved by using TCP). However QUIC assumes &quot;datagram&quot; type semantics by using UDP. An OpenSSL application using QUIC is responsible for creating a BIO to represent the underlying transport layer. This BIO must support datagrams and is typically <a href="https://man7.org/linux/man-pages/man3/BIO_s_datagram.3.html">BIO_s_datagram(3)</a>, but other <b>BIO</b> choices are available. See <a href="https://man7.org/linux/man-pages/man7/bio.7.html">bio(7)</a> for an introduction to OpenSSL&#39;s <b>BIO</b> concept.</p>
 
 <p>A significant difference between OpenSSL TLS applications and OpenSSL QUIC applications is the way that blocking is implemented. In TLS if your application expects blocking behaviour then you configure the underlying socket for blocking. Conversely if your application wants nonblocking behaviour then the underlying socket is configured to be nonblocking.</p>
 
-<p>With an OpenSSL QUIC application the underlying socket must always be configured to be nonblocking. Howevever the <b>SSL</b> object will, by default, still operate in blocking mode. So, from an application&#39;s perspective, calls to functions such as <a href="../man3/SSL_read_ex.html">SSL_read_ex(3)</a>, <a href="../man3/SSL_write_ex.html">SSL_write_ex(3)</a> and other I/O functions will still block. OpenSSL itself provides that blocking capability for QUIC instead of the socket. If nonblocking behaviour is desired then the application must call <a href="../man3/SSL_set_blocking_mode.html">SSL_set_blocking_mode(3)</a>.</p>
+<p>With an OpenSSL QUIC application the underlying socket must always be configured to be nonblocking. Howevever the <b>SSL</b> object will, by default, still operate in blocking mode. So, from an application&#39;s perspective, calls to functions such as <a href="https://man7.org/linux/man-pages/man3/SSL_read_ex.3.html">SSL_read_ex(3)</a>, <a href="https://man7.org/linux/man-pages/man3/SSL_write_ex.3.html">SSL_write_ex(3)</a> and other I/O functions will still block. OpenSSL itself provides that blocking capability for QUIC instead of the socket. If nonblocking behaviour is desired then the application must call <a href="https://man7.org/linux/man-pages/man3/SSL_set_blocking_mode.3.html">SSL_set_blocking_mode(3)</a>.</p>
 
 <h1 id="FURTHER-READING">FURTHER READING</h1>
 
-<p>See <a href="../man7/ossl-guide-quic-client-block.html">ossl-guide-quic-client-block(7)</a> to see an example of applying these concepts in order to write a simple blocking QUIC client.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-client-block.7.html">ossl-guide-quic-client-block(7)</a> to see an example of applying these concepts in order to write a simple blocking QUIC client.</p>
 
-<p>See <a href="../man7/ossl-guide-quic-server-block.html">ossl-guide-quic-server-block(7)</a> to see an example of applying these concepts in order to write a simple blocking QUIC server.</p>
+<p>See <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-server-block.7.html">ossl-guide-quic-server-block(7)</a> to see an example of applying these concepts in order to write a simple blocking QUIC server.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man7/ossl-guide-introduction.html">ossl-guide-introduction(7)</a>, <a href="../man7/ossl-guide-libraries-introduction.html">ossl-guide-libraries-introduction(7)</a>, <a href="../man7/ossl-guide-libssl-introduction.html">ossl-guide-libssl-introduction(7)</a>, <a href="../man7/ossl-guide-tls-introduction.html">ossl-guide-tls-introduction(7)</a>, <a href="../man7/ossl-guide-tls-client-block.html">ossl-guide-tls-client-block(7)</a>, <a href="../man7/ossl-guide-quic-client-block.html">ossl-guide-quic-client-block(7)</a>, <a href="../man7/ossl-guide-quic-client-non-block.html">ossl-guide-quic-client-non-block(7)</a>, <a href="../man7/ossl-guide-quic-multi-stream.html">ossl-guide-quic-multi-stream(7)</a>, <a href="../man7/ossl-guide-quic-server-block.html">ossl-guide-quic-server-block(7)</a>, <a href="../man7/ossl-guide-quic-server-non-block.html">ossl-guide-quic-server-non-block(7)</a>, <a href="../man7/bio.html">bio(7)</a>,</p>
+<p><a href="https://man7.org/linux/man-pages/man7/ossl-guide-introduction.7.html">ossl-guide-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libraries-introduction.7.html">ossl-guide-libraries-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-libssl-introduction.7.html">ossl-guide-libssl-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-introduction.7.html">ossl-guide-tls-introduction(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-tls-client-block.7.html">ossl-guide-tls-client-block(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-client-block.7.html">ossl-guide-quic-client-block(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-client-non-block.7.html">ossl-guide-quic-client-non-block(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-multi-stream.7.html">ossl-guide-quic-multi-stream(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-server-block.7.html">ossl-guide-quic-server-block(7)</a>, <a href="https://man7.org/linux/man-pages/man7/ossl-guide-quic-server-non-block.7.html">ossl-guide-quic-server-non-block(7)</a>, <a href="https://man7.org/linux/man-pages/man7/bio.7.html">bio(7)</a>,</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

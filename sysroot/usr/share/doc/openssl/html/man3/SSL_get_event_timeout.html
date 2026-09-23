@@ -4,7 +4,7 @@
 <head>
 <title>SSL_get_event_timeout</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:Bernd.Schemmer@bnsmb.de" />
+<link rev="made" href="mailto:bnsmb01@gmail.com" />
 </head>
 
 <body>
@@ -44,7 +44,7 @@ int SSL_get_event_timeout(SSL *s, struct timeval *tv, int *is_infinite);</code><
 <li><p>The SSL object has events which need to be handled immediately; The fields of <i>*tv</i> are set to 0 and <i>*is_infinite</i> is set to 0.</p>
 
 </li>
-<li><p>The SSL object has events which need to be handled after some amount of time (relative to the time at which SSL_get_event_timeout() was called). <i>*tv</i> is set to the amount of time after which <a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a> should be called and <i>*is_infinite</i> is set to 0.</p>
+<li><p>The SSL object has events which need to be handled after some amount of time (relative to the time at which SSL_get_event_timeout() was called). <i>*tv</i> is set to the amount of time after which <a href="https://man7.org/linux/man-pages/man3/SSL_handle_events.3.html">SSL_handle_events(3)</a> should be called and <i>*is_infinite</i> is set to 0.</p>
 
 </li>
 <li><p>There are currently no timer events which require handling in the future. The value of <i>*tv</i> is unspecified and <i>*is_infinite</i> is set to 1.</p>
@@ -54,13 +54,13 @@ int SSL_get_event_timeout(SSL *s, struct timeval *tv, int *is_infinite);</code><
 
 <p>This function is currently applicable only to DTLS and QUIC connection SSL objects. If it is called on any other kind of SSL object, it always outputs infinity. This is considered a success condition.</p>
 
-<p>For DTLS, this function can be used instead of the older <a href="../man3/DTLSv1_get_timeout.html">DTLSv1_get_timeout(3)</a> function. Note that this function differs from <a href="../man3/DTLSv1_get_timeout.html">DTLSv1_get_timeout(3)</a> in that the case where no timeout is active is considered a success condition.</p>
+<p>For DTLS, this function can be used instead of the older <a href="https://man7.org/linux/man-pages/man3/DTLSv1_get_timeout.3.html">DTLSv1_get_timeout(3)</a> function. Note that this function differs from <a href="https://man7.org/linux/man-pages/man3/DTLSv1_get_timeout.3.html">DTLSv1_get_timeout(3)</a> in that the case where no timeout is active is considered a success condition.</p>
 
 <p>Note that the value output by a call to SSL_get_event_timeout() may change as a result of other calls to the SSL object.</p>
 
-<p>Once the timeout expires, <a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a> should be called to handle any internal processing which is due; for more information, see <a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a>.</p>
+<p>Once the timeout expires, <a href="https://man7.org/linux/man-pages/man3/SSL_handle_events.3.html">SSL_handle_events(3)</a> should be called to handle any internal processing which is due; for more information, see <a href="https://man7.org/linux/man-pages/man3/SSL_handle_events.3.html">SSL_handle_events(3)</a>.</p>
 
-<p>Note that SSL_get_event_timeout() supersedes the older <a href="../man3/DTLSv1_get_timeout.html">DTLSv1_get_timeout(3)</a> function for all use cases.</p>
+<p>Note that SSL_get_event_timeout() supersedes the older <a href="https://man7.org/linux/man-pages/man3/DTLSv1_get_timeout.3.html">DTLSv1_get_timeout(3)</a> function for all use cases.</p>
 
 <p>If the call to SSL_get_event_timeout() fails, the values of <i>*tv</i> and <i>*is_infinite</i> may still be changed and their values become unspecified.</p>
 
@@ -70,7 +70,7 @@ int SSL_get_event_timeout(SSL *s, struct timeval *tv, int *is_infinite);</code><
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
-<p><a href="../man3/SSL_handle_events.html">SSL_handle_events(3)</a>, <a href="../man3/DTLSv1_get_timeout.html">DTLSv1_get_timeout(3)</a>, <a href="../man7/ssl.html">ssl(7)</a></p>
+<p><a href="https://man7.org/linux/man-pages/man3/SSL_handle_events.3.html">SSL_handle_events(3)</a>, <a href="https://man7.org/linux/man-pages/man3/DTLSv1_get_timeout.3.html">DTLSv1_get_timeout(3)</a>, <a href="https://man7.org/linux/man-pages/man7/ssl.7.html">ssl(7)</a></p>
 
 <h1 id="HISTORY">HISTORY</h1>
 
