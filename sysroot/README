@@ -613,5 +613,10 @@ History
     added the script android_explorer.sh 0.3.0
 
   21.11.2026 v2.2.0 beta /bs 
-    added the missing include file for gcc ./usr/lib/android-gcc-cross/include/tgmath.h
+    added a missing include file for gcc: ./usr/lib/android-gcc-cross/include/tgmath.h
+    updated dua to version 2.45.0
+    updated fd to version 10.5.0 
+    updated dust to version 1.2.6
+    updated sqlite3 to version 3.53.4
+    updated strace to version 7.2
 
