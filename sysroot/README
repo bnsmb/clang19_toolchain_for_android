@@ -620,8 +620,10 @@ History
     updated dust to version 1.2.6
     updated sqlite3 to version 3.53.4
     updated strace to version 7.2
-    updated stunnel to version 5.82
+    updated OpenSSL 3.5.x to OpenSSL 3.5.8
+    updated stunnel to version 5.82 using OpenSSL 3.5.8
     updated tmux to version 3.7c
-    updated openvpn to version 2.7.7
-    updated openssh to version 10.5p1
+    updated openvpn to version 2.7.7 using OpenSSL 3.5.8
+    updated openssh to version 10.5p1 using OpenSSL 3.5.8
+    updated rsync to version 3.5.1 using OpenSSL 3.5.8
 
