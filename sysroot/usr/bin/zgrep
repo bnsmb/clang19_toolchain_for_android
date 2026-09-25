@@ -1,9 +1,9 @@
-#!/system/bin/sh
+#!/bin/sh
 
 # zgrep -- a wrapper around a grep program that decompresses files as needed
 # Adapted from a version sent by Charles Levert <charles@comm.polymtl.ca>
 
-# Copyright (C) 1998, 2001-2002, 2006-2007, 2009-2023 Free Software Foundation,
+# Copyright (C) 1998, 2001-2002, 2006-2007, 2009-2026 Free Software Foundation,
 # Inc.
 
 # Copyright (C) 1993 Jean-loup Gailly
@@ -18,15 +18,14 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 grep='${GREP-'\''/system/bin/grep'\''}'
 args=
 
-version='zgrep (gzip) 1.13
-Copyright (C) 2023 Free Software Foundation, Inc.
+version='zgrep (gzip) 1.15
+Copyright (C) 2026 Free Software Foundation, Inc.
 This is free software.  You may redistribute copies of it under the terms of
 the GNU General Public License <https://www.gnu.org/licenses/gpl.html>.
 There is NO WARRANTY, to the extent permitted by law.
@@ -111,7 +110,7 @@ while test $# -ne 0; do
 
   case $option in
   (-[drRzZ] | --di* | --exc* | --inc* | --rec* | --nu*)
-    printf >&2 '%s: %s: option not supported\n' "$0" "$option"
+    printf >&2 '%s: option not supported\n' "$0"
     exit 2;;
   (-e* | --reg*)
     have_pat=1;;
@@ -141,9 +140,9 @@ while test $# -ne 0; do
       case $TMPDIR in
         / | /*/) ;;
         /*) TMPDIR=$TMPDIR/;;
-        *) TMPDIR=/tmp/;;
+        *) TMPDIR=/data/local/tmp/sysroot/tmp/;;
       esac
-      if type mktemp >/dev/null 2>&1; then
+      if command -v mktemp >/dev/null 2>&1; then
         pattmp=$(mktemp "${TMPDIR}zgrepXXXXXXXXX") || exit 2
       else
         set -C
@@ -173,7 +172,7 @@ while test $# -ne 0; do
   esac
 
   case $option in
-  (*\'?*)
+  (*\'*)
     option=\'$(printf '%s\n' "$option" | LC_ALL=C sed "$escape");;
   (*)
     option="'$option'";;

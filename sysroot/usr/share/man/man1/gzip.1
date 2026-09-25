@@ -316,8 +316,8 @@ will descend into the directory and compress all the files it finds there
 .TP
 .B \-S .suf   \-\-suffix .suf
 When compressing, use suffix .suf instead of .gz.
-Any non-empty suffix can be given, but suffixes
-other than .z and .gz should be avoided to avoid confusion when files
+Although any non-empty suffix can be given so long as it does not contain "/",
+suffixes other than .z and .gz should be avoided to avoid confusion when files
 are transferred to other systems.
 
 When decompressing, add .suf to the beginning of the list of
@@ -416,22 +416,21 @@ such as tar or zip.
 GNU tar supports the \-z option to invoke gzip transparently.
 gzip is designed as a complement to tar, not as a replacement.
 .SH "ENVIRONMENT"
-The obsolescent environment variable
+The environment variable
 .B GZIP
 can hold a set of default options for
 .BR gzip .
-These options are interpreted first and can be overwritten by explicit
+These options are interpreted first and can be overridden by explicit
 command line parameters.
 As this can cause problems when using scripts,
-this feature is supported only for options that are
-reasonably likely to not cause too much harm, and
-.B gzip
-warns if it is used.
-This feature will be removed in a future release of
-.BR gzip .
+this feature is supported only for \-\-rsyncable, \-\-synchronous,
+and options like \-9 that set the compression level;
+any other options or operands in
+.B GZIP
+are silently ignored.
 .PP
 You can use an alias or script instead.
-For example, if
+For example, instead of setting GZIP="\-9" in the environment, if
 .B gzip
 is in the directory
 .B /usr/bin
@@ -452,6 +451,7 @@ containing the following:
 .BR zmore (1),
 .BR zforce (1),
 .BR gzexe (1),
+.BR pigz (1),
 .BR zip (1),
 .BR unzip (1),
 .BR compress (1)
@@ -468,6 +468,13 @@ deflation format is specified in P. Deutsch, \s-1DEFLATE\s0 Compressed
 Data Format Specification version 1.3,
 .BR <https://www.ietf.org/rfc/rfc1951.txt> ,
 Internet RFC 1951 (May 1996).
+.PP
+The
+.B zlib
+compression library can be used to programmatically read and write
+gzip-format data.
+See
+.BR <https://zlib.net> .
 .SH "DIAGNOSTICS"
 Exit status is normally 0;
 if an error occurs, exit status is 1.
@@ -551,8 +558,8 @@ GNU gzip home page: <https://www.gnu.org/software/gzip/>
 .br
 General help using GNU software: <https://www.gnu.org/gethelp/>
 .SH "COPYRIGHT NOTICE"
-Copyright \(co 1998\(en1999, 2001\(en2002, 2012, 2015\(en2023
-Free Software Foundation, Inc.
+Copyright \(co 1998\(en1999, 2001\(en2002, 2012, 2015\(en2026 Free Software
+Foundation, Inc.
 .br
 Copyright \(co 1992, 1993 Jean-loup Gailly
 .PP
