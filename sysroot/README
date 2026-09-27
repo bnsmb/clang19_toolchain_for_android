@@ -631,6 +631,6 @@ History
     added the symbolic link lib -> ./usr/lib
     updated curl to version 8.22 using OpenSSL 3.5.8
     removed the broken symbolic links chcon getlimits ginstall make-prime-list stdbuf libstdbuf.so kill du-tests  uptime dcgen  runcon in ./usr/bin
-    updated the coreutils to version 9.12
+    updated the coreutils to version 9.12 (in /data/local/tmp/sysroot/usr/coreutils/) 
 
 
