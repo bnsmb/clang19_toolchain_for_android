@@ -209,7 +209,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # btop 1.4.4 (btop needs root access)
 # strace 7.2 
 # ltrace 0.8.1
-# coreutils 9.11 (in /data/local/tmp/sysroot/usr/coreutils/)
+# coreutils 9.12 (in /data/local/tmp/sysroot/usr/coreutils/)
 # 
 # Android SDK build tools 35.0.2:
 #   aidl zipalign aapt aapt2 dexdump split-select e2fsdroid sqlite3 fastboot sload_f2fs 
@@ -630,4 +630,7 @@ History
     updated gzip to version 1.15
     added the symbolic link lib -> ./usr/lib
     updated curl to version 8.22 using OpenSSL 3.5.8
+    removed the broken symbolic links chcon getlimits ginstall make-prime-list stdbuf libstdbuf.so kill du-tests  uptime dcgen  runcon in ./usr/bin
+    updated the coreutils to version 9.12
+
 
