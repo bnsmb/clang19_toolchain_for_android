@@ -39,10 +39,24 @@ if(CMAKE_HOST_UNIX)
         if(DEFINED ENV{PREFIX})
           set(_ANDROID_API_LEVEL_H $ENV{PREFIX}/include/android/api-level.h)
         else()
-          set(_ANDROID_API_LEVEL_H /data/local/tmp/sysroot/usr/include/android/api-level.h)
-        endif()
+          # Compiler-Pfad prüfen: gcc/g++ → AmanoTeam-Toolchain-Sysroot
 
-        set(_ANDROID_API_LEVEL_H $ENV{PREFIX}/include/android/api-level.h)
+	  message(STATUS " The toolchain used is (CMAKE_TOOLCHAIN_FILE) = ${CMAKE_TOOLCHAIN_FILE}" )
+
+	  #          if(CMAKE_TOOLCHAIN_FILE STREQUAL "/data/local/tmp/develop/android-gcc-toolchain.cmake")
+	 if(CMAKE_TOOLCHAIN_FILE MATCHES "android\\-gcc\\-toolchain")
+
+            message(STATUS " Using the api-level.h file for GCC")
+
+            set(_ANDROID_API_LEVEL_H /data/local/tmp/sysroot/usr/lib/android-gcc-cross/include/android/api-level.h)
+          else()
+	    message(STATUS "Using the api-level.h file for clang")
+            set(_ANDROID_API_LEVEL_H /data/local/tmp/sysroot/usr/include/android/api-level.h)
+          endif()
+
+	  message(STATUS "The used api-level.h file is ${_ANDROID_API_LEVEL_H}" )
+        endif()	      
+      
         set(_ANDROID_API_REGEX "#define __ANDROID_API__ ([0-9]+)")
         file(READ ${_ANDROID_API_LEVEL_H} _ANDROID_API_LEVEL_H_CONTENT)
         string(REGEX MATCH ${_ANDROID_API_REGEX} _ANDROID_API_LINE "${_ANDROID_API_LEVEL_H_CONTENT}")
