@@ -89,7 +89,7 @@ typedef struct {
  * on success, and returns NULL on failure, in which case dlerror() can be used
  * to retrieve the specific error.
  */
-void* dlopen(const char* __filename, int __flag)__THROWNL ;
+void* dlopen(const char* __filename, int __flag)__NOEXCEPTNL ;
 
 /**
  * [dlclose(3)](https://man7.org/linux/man-pages/man3/dlclose.3.html)
@@ -115,7 +115,7 @@ void* dlopen(const char* __filename, int __flag)__THROWNL ;
  * Returns 0 on success, and returns -1 on failure, in which case
  * dlerror() can be used to retrieve the specific error.
  */
-int dlclose(void* __handle) __THROWNL __attribute__((nonnull(1)));
+int dlclose(void* __handle) __NOEXCEPTNL __attribute__((nonnull(1)));
 
 /**
  * [dlerror(3)](https://man7.org/linux/man-pages/man3/dlerror.3.html)
@@ -128,7 +128,7 @@ int dlclose(void* __handle) __THROWNL __attribute__((nonnull(1)));
  * Returns a pointer to an error on success, and returns NULL if no
  * error is pending.
  */
-char* dlerror(void)__THROW ;
+char* dlerror(void)__NOEXCEPT ;
 
 /**
  * [dlsym(3)](https://man7.org/linux/man-pages/man3/dlsym.3.html)
@@ -139,7 +139,7 @@ char* dlerror(void)__THROW ;
  * Returns the address of the symbol on success, and returns NULL on failure,
  * in which case dlerror() can be used to retrieve the specific error.
  */
-void* dlsym(void* __handle, const char* __symbol)__THROW ;
+void* dlsym(void* __handle, const char* __symbol)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
 /**
@@ -153,7 +153,7 @@ void* dlsym(void* __handle, const char* __symbol)__THROW ;
  *
  * Available since API level 24.
  */
-void* dlvsym(void* __handle, const char* __symbol, const char* __version) __THROW __INTRODUCED_IN_API_N__;
+void* dlvsym(void* __handle, const char* __symbol, const char* __version) __NOEXCEPT __INTRODUCED_IN_API_N__;
 #endif
 
 
@@ -165,7 +165,7 @@ void* dlvsym(void* __handle, const char* __symbol, const char* __version) __THRO
  * the other <dlfcn.h> functions, in this case dlerror() will _not_ have
  * more information.
  */
-int dladdr(const void* __addr, Dl_info* __info) __THROW __attribute__((nonnull(1,2)));
+int dladdr(const void* __addr, Dl_info* __info) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 /**
  * A dlsym()/dlvsym() handle that returns the first symbol found in any

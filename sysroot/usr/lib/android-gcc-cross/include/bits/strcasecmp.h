@@ -46,13 +46,13 @@ __BEGIN_DECLS
  * Returns an integer less than, equal to, or greater than zero if the first string is less than,
  * equal to, or greater than the second string (ignoring case).
  */
-int strcasecmp(const char* __s1, const char* __s2) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
+int strcasecmp(const char* __s1, const char* __s2) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
 /**
  * Like strcasecmp() but taking a `locale_t`.
  */
-int strcasecmp_l(const char* __s1, const char* __s2, locale_t __l) __THROW __attribute_pure__ __INTRODUCED_IN_API_M__;
+int strcasecmp_l(const char* __s1, const char* __s2, locale_t __l) __NOEXCEPT __attribute_pure__ __INTRODUCED_IN_API_M__;
 #endif
 
 /**
@@ -63,13 +63,13 @@ int strcasecmp_l(const char* __s1, const char* __s2, locale_t __l) __THROW __att
  * first string is less than, equal to, or greater than the first `n` bytes of the second
  * string (ignoring case).
  */
-int strncasecmp(const char* __s1, const char* __s2, size_t __n) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
+int strncasecmp(const char* __s1, const char* __s2, size_t __n) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
 /**
  * Like strncasecmp() but taking a `locale_t`.
  */
-int strncasecmp_l(const char* __s1, const char* __s2, size_t __n, locale_t __l) __THROW __attribute_pure__ __INTRODUCED_IN_API_M__;
+int strncasecmp_l(const char* __s1, const char* __s2, size_t __n, locale_t __l) __NOEXCEPT __attribute_pure__ __INTRODUCED_IN_API_M__;
 #endif
 
 __END_DECLS

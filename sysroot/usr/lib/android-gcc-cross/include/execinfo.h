@@ -62,7 +62,7 @@ int backtrace(void* * buffer, int size) __INTRODUCED_IN_API_T__ __attribute__((n
  *
  * Available since API level 33.
  */
-char* * backtrace_symbols(void* const* buffer, int size) __THROW __INTRODUCED_IN_API_T__ __attribute__((nonnull(1)));
+char* * backtrace_symbols(void* const* buffer, int size) __NOEXCEPT __INTRODUCED_IN_API_T__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(33)
@@ -74,7 +74,7 @@ char* * backtrace_symbols(void* const* buffer, int size) __THROW __INTRODUCED_IN
  *
  * Available since API level 33.
  */
-void backtrace_symbols_fd(void* const* buffer, int size, int fd) __THROW __INTRODUCED_IN_API_T__ __attribute__((nonnull(1)));
+void backtrace_symbols_fd(void* const* buffer, int size, int fd) __NOEXCEPT __INTRODUCED_IN_API_T__ __attribute__((nonnull(1)));
 #endif
 
 __END_DECLS

@@ -52,7 +52,7 @@ __BEGIN_DECLS
  *
  * Available since API level 26.
  */
-int quotactl(int __op, const char* __special, int __id, char* __addr) __THROW __INTRODUCED_IN_API_O__;
+int quotactl(int __op, const char* __special, int __id, char* __addr) __NOEXCEPT __INTRODUCED_IN_API_O__;
 #endif
 
 __END_DECLS

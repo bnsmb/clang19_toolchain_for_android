@@ -17,6 +17,8 @@ while [[ "${#}" -gt '0' ]]; do
 		action='--update'
 	elif [ "${1}" = 'install' ]; then
 		action='--install'
+	elif [ "${1}" = 'copylibs' ]; then
+		action='--copylibs'
 	elif [ "${1}" = 'destroy' ]; then
 		action='--destroy'
 	elif [ "${1}" = 'remove' ] || [ "${1}" = 'uninstall' ] || [ "${1}" = 'autoremove' ] || [ "${1}" = 'purge' ]; then
@@ -26,13 +28,13 @@ while [[ "${#}" -gt '0' ]]; do
 		shift
 	elif [[ "${1}" = '-p' || "${1}" = '--prefix' || "${1}" = '--install-prefix' || \
 		"${1}" = '-c' || "${1}" = '--concurrency' || "${1}" = '--parallelism' || \
-		"${1}" = '--loglevel' ]]; then
+		"${1}" = '--loglevel' || "${1}" = '--outputdir' ]]; then
 		arg+="${1}='${2}'"
 		shift
 	elif [[ "${1}" == '-'* ]]; then
 		args+="${1} "
 	else
-		if ! [[ "${action}" = '--install' || "${action}" = '--uninstall' ]]; then
+		if ! [[ "${action}" = '--install' || "${action}" = '--uninstall' || "${action}" = '--copylibs' ]]; then
 			echo "fatal error: This argument is invalid or was not recognized: ${1}" 1>&2
 			exit '1'
 		fi

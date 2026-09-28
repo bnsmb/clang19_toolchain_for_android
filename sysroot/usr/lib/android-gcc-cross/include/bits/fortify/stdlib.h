@@ -36,7 +36,7 @@
 #define __PATH_MAX 4096
 
 char* realpath(const char* path, char* resolved)
-        __THROW __clang_error_if(!path, "'realpath': NULL path is never correct; flipped arguments?")
+        __NOEXCEPT __clang_error_if(!path, "'realpath': NULL path is never correct; flipped arguments?")
         __clang_error_if(__bos_unevaluated_lt(__bos(resolved), __PATH_MAX),
                          "'realpath' output parameter must be NULL or a pointer to a buffer "
                          "with >= PATH_MAX bytes") __attribute__((nonnull(1)));

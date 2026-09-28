@@ -44,7 +44,7 @@ __BEGIN_DECLS
  *
  * Returns a pointer to a static buffer.
  */
-char* ether_ntoa(const struct ether_addr* __addr) __THROW __attribute__((nonnull(1)));
+char* ether_ntoa(const struct ether_addr* __addr) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [ether_ntoa_r(3)](https://man7.org/linux/man-pages/man3/ether_ntoa_r.3.html) returns a string
@@ -52,7 +52,7 @@ char* ether_ntoa(const struct ether_addr* __addr) __THROW __attribute__((nonnull
  *
  * Returns a pointer to the given buffer.
  */
-char* ether_ntoa_r(const struct ether_addr* __addr, char* __buf) __THROW __attribute__((nonnull(1,2)));
+char* ether_ntoa_r(const struct ether_addr* __addr, char* __buf) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 /**
  * [ether_aton(3)](https://man7.org/linux/man-pages/man3/ether_aton.3.html) returns an `ether_addr`

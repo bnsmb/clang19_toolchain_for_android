@@ -101,7 +101,7 @@ __noreturn void _exit(int __status);
  * Returns 0 in the child, the pid of the child in the parent,
  * and returns -1 and sets `errno` on failure.
  */
-pid_t fork(void)__THROWNL ;
+pid_t fork(void)__NOEXCEPTNL ;
 
 #if __BIONIC_AVAILABILITY_GUARD(35)
 /**
@@ -117,7 +117,7 @@ pid_t fork(void)__THROWNL ;
  *
  * Available since API level 35.
  */
-pid_t _Fork(void) __THROW __INTRODUCED_IN_API_V__;
+pid_t _Fork(void) __NOEXCEPT __INTRODUCED_IN_API_V__;
 #endif
 
 /**
@@ -129,7 +129,7 @@ pid_t _Fork(void) __THROW __INTRODUCED_IN_API_V__;
  * Returns 0 in the child, the pid of the child in the parent,
  * and returns -1 and sets `errno` on failure.
  */
-pid_t vfork(void) __THROW __returns_twice;
+pid_t vfork(void) __NOEXCEPT __returns_twice;
 
 /**
  * [getpid(2)](https://man7.org/linux/man-pages/man2/getpid.2.html) returns
@@ -137,7 +137,7 @@ pid_t vfork(void) __THROW __returns_twice;
  *
  * Returns the caller's process ID.
  */
-pid_t  getpid(void)__THROW ;
+pid_t  getpid(void)__NOEXCEPT ;
 
 /**
  * [gettid(2)](https://man7.org/linux/man-pages/man2/gettid.2.html) returns
@@ -145,38 +145,38 @@ pid_t  getpid(void)__THROW ;
  *
  * Returns the caller's thread ID.
  */
-pid_t  gettid(void)__THROW ;
+pid_t  gettid(void)__NOEXCEPT ;
 
-pid_t  getpgid(pid_t __pid)__THROW ;
-int    setpgid(pid_t __pid, pid_t __pgid)__THROW ;
-pid_t  getppid(void)__THROW ;
-pid_t  getpgrp(void)__THROW ;
-int    setpgrp(void)__THROW ;
+pid_t  getpgid(pid_t __pid)__NOEXCEPT ;
+int    setpgid(pid_t __pid, pid_t __pgid)__NOEXCEPT ;
+pid_t  getppid(void)__NOEXCEPT ;
+pid_t  getpgrp(void)__NOEXCEPT ;
+int    setpgrp(void)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(17)
-pid_t  getsid(pid_t __pid) __THROW __INTRODUCED_IN_API_J_MR1__;
+pid_t  getsid(pid_t __pid) __NOEXCEPT __INTRODUCED_IN_API_J_MR1__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 
-pid_t  setsid(void)__THROW ;
+pid_t  setsid(void)__NOEXCEPT ;
 
-int execv(const char* __path, char* const* __argv) __THROW __attribute__((nonnull(1)));
-int execvp(const char* __file, char* const* __argv) __THROW __attribute__((nonnull(1)));
+int execv(const char* __path, char* const* __argv) __NOEXCEPT __attribute__((nonnull(1)));
+int execvp(const char* __file, char* const* __argv) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int execvpe(const char* __file, char* const* __argv, char* const* __envp) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+int execvpe(const char* __file, char* const* __argv, char* const* __envp) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-int execve(const char* __file, char* const* __argv, char* const* __envp) __THROW __attribute__((nonnull(1)));
-int execl(const char* __path, const char* __arg0, ...) __THROW __attribute__((__sentinel__));
-int execlp(const char* __file, const char* __arg0, ...) __THROW __attribute__((__sentinel__));
+int execve(const char* __file, char* const* __argv, char* const* __envp) __NOEXCEPT __attribute__((nonnull(1)));
+int execl(const char* __path, const char* __arg0, ...) __NOEXCEPT __attribute__((__sentinel__));
+int execlp(const char* __file, const char* __arg0, ...) __NOEXCEPT __attribute__((__sentinel__));
 int execle(const char* __path, const char* __arg0, ... /*,  char* const* __envp */)
-    __THROW __attribute__((__sentinel__(1)));
+    __NOEXCEPT __attribute__((__sentinel__(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int fexecve(int __fd, char* const* __argv, char* const* __envp) __THROW __INTRODUCED_IN_API_P__;
+int fexecve(int __fd, char* const* __argv, char* const* __envp) __NOEXCEPT __INTRODUCED_IN_API_P__;
 #endif
 
-int nice(int __incr)__THROW ;
+int nice(int __incr)__NOEXCEPT ;
 
 /**
  * [setegid(2)](https://man7.org/linux/man-pages/man2/setegid.2.html) sets
@@ -187,7 +187,7 @@ int nice(int __incr)__THROW ;
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int setegid(gid_t __gid)__THROW ;
+int setegid(gid_t __gid)__NOEXCEPT ;
 
 /**
  * [seteuid(2)](https://man7.org/linux/man-pages/man2/seteuid.2.html) sets
@@ -198,7 +198,7 @@ int setegid(gid_t __gid)__THROW ;
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int seteuid(uid_t __uid)__THROW ;
+int seteuid(uid_t __uid)__NOEXCEPT ;
 
 /**
  * [setgid(2)](https://man7.org/linux/man-pages/man2/setgid.2.html) sets
@@ -209,7 +209,7 @@ int seteuid(uid_t __uid)__THROW ;
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int setgid(gid_t __gid)__THROW ;
+int setgid(gid_t __gid)__NOEXCEPT ;
 
 /**
  * [setregid(2)](https://man7.org/linux/man-pages/man2/setregid.2.html) sets
@@ -220,7 +220,7 @@ int setgid(gid_t __gid)__THROW ;
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int setregid(gid_t __rgid, gid_t __egid)__THROW ;
+int setregid(gid_t __rgid, gid_t __egid)__NOEXCEPT ;
 
 /**
  * [setresgid(2)](https://man7.org/linux/man-pages/man2/setresgid.2.html) sets
@@ -231,7 +231,7 @@ int setregid(gid_t __rgid, gid_t __egid)__THROW ;
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int setresgid(gid_t __rgid, gid_t __egid, gid_t __sgid)__THROW ;
+int setresgid(gid_t __rgid, gid_t __egid, gid_t __sgid)__NOEXCEPT ;
 
 /**
  * [setresuid(2)](https://man7.org/linux/man-pages/man2/setresuid.2.html) sets
@@ -242,7 +242,7 @@ int setresgid(gid_t __rgid, gid_t __egid, gid_t __sgid)__THROW ;
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int setresuid(uid_t __ruid, uid_t __euid, uid_t __suid)__THROW ;
+int setresuid(uid_t __ruid, uid_t __euid, uid_t __suid)__NOEXCEPT ;
 
 /**
  * [setreuid(2)](https://man7.org/linux/man-pages/man2/setreuid.2.html) sets
@@ -253,7 +253,7 @@ int setresuid(uid_t __ruid, uid_t __euid, uid_t __suid)__THROW ;
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int setreuid(uid_t __ruid, uid_t __euid)__THROW ;
+int setreuid(uid_t __ruid, uid_t __euid)__NOEXCEPT ;
 
 /**
  * [setuid(2)](https://man7.org/linux/man-pages/man2/setuid.2.html) sets
@@ -264,39 +264,39 @@ int setreuid(uid_t __ruid, uid_t __euid)__THROW ;
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int setuid(uid_t __uid)__THROW ;
+int setuid(uid_t __uid)__NOEXCEPT ;
 
-uid_t getuid(void)__THROW ;
-uid_t geteuid(void)__THROW ;
-gid_t getgid(void)__THROW ;
-gid_t getegid(void)__THROW ;
-int getgroups(int __size, gid_t* __list)__THROW ;
-int setgroups(size_t __size, const gid_t* __list)__THROW ;
-int getresuid(uid_t* __ruid, uid_t* __euid, uid_t* __suid) __THROW __attribute__((nonnull(1,2,3)));
-int getresgid(gid_t* __rgid, gid_t* __egid, gid_t* __sgid) __THROW __attribute__((nonnull(1,2,3)));
+uid_t getuid(void)__NOEXCEPT ;
+uid_t geteuid(void)__NOEXCEPT ;
+gid_t getgid(void)__NOEXCEPT ;
+gid_t getegid(void)__NOEXCEPT ;
+int getgroups(int __size, gid_t* __list)__NOEXCEPT ;
+int setgroups(size_t __size, const gid_t* __list)__NOEXCEPT ;
+int getresuid(uid_t* __ruid, uid_t* __euid, uid_t* __suid) __NOEXCEPT __attribute__((nonnull(1,2,3)));
+int getresgid(gid_t* __rgid, gid_t* __egid, gid_t* __sgid) __NOEXCEPT __attribute__((nonnull(1,2,3)));
 char* getlogin(void);
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 int getlogin_r(char* __buffer, size_t __buffer_size) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
-long fpathconf(int __fd, int __name)__THROW ;
-long pathconf(const char* __path, int __name) __THROW __attribute__((nonnull(1)));
+long fpathconf(int __fd, int __name)__NOEXCEPT ;
+long pathconf(const char* __path, int __name) __NOEXCEPT __attribute__((nonnull(1)));
 
-int access(const char* __path, int __mode) __THROW __attribute__((nonnull(1)));
+int access(const char* __path, int __mode) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(16)
-int faccessat(int __dirfd, const char* __path, int __mode, int __flags) __THROW __INTRODUCED_IN_API_J__ __attribute__((nonnull(2)));
+int faccessat(int __dirfd, const char* __path, int __mode, int __flags) __NOEXCEPT __INTRODUCED_IN_API_J__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(16) */
 
-int link(const char* __old_path, const char* __new_path) __THROW __attribute__((nonnull(1,2)));
+int link(const char* __old_path, const char* __new_path) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int linkat(int __old_dir_fd, const char* __old_path, int __new_dir_fd, const char* __new_path, int __flags) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2,4)));
+int linkat(int __old_dir_fd, const char* __old_path, int __new_dir_fd, const char* __new_path, int __flags) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2,4)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-int unlink(const char* __path) __THROW __attribute__((nonnull(1)));
-int unlinkat(int __dirfd, const char* __path, int __flags) __THROW __attribute__((nonnull(2)));
+int unlink(const char* __path) __NOEXCEPT __attribute__((nonnull(1)));
+int unlinkat(int __dirfd, const char* __path, int __flags) __NOEXCEPT __attribute__((nonnull(2)));
 
 /**
  * [chdir(2)](https://man7.org/linux/man-pages/man2/chdir.2.html) changes
@@ -307,7 +307,7 @@ int unlinkat(int __dirfd, const char* __path, int __flags) __THROW __attribute__
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int chdir(const char* __path) __THROW __attribute__((nonnull(1)));
+int chdir(const char* __path) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [fchdir(2)](https://man7.org/linux/man-pages/man2/fchdir.2.html) changes
@@ -318,16 +318,16 @@ int chdir(const char* __path) __THROW __attribute__((nonnull(1)));
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int fchdir(int __fd)__THROW ;
+int fchdir(int __fd)__NOEXCEPT ;
 
-int rmdir(const char* __path) __THROW __attribute__((nonnull(1)));
+int rmdir(const char* __path) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [pipe(2)](https://man7.org/linux/man-pages/man2/pipe.2.html) creates a pipe.
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int pipe(int __fds[2]) __THROW __attribute__((nonnull(1)));
+int pipe(int __fds[2]) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [pipe2(2)](https://man7.org/linux/man-pages/man2/pipe2.2.html) creates a pipe,
@@ -335,32 +335,32 @@ int pipe(int __fds[2]) __THROW __attribute__((nonnull(1)));
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int pipe2(int __fds[2], int __flags) __THROW __attribute__((nonnull(1)));
+int pipe2(int __fds[2], int __flags) __NOEXCEPT __attribute__((nonnull(1)));
 
-int chroot(const char* __path) __THROW __attribute__((nonnull(1)));
-int symlink(const char* __old_path, const char* __new_path) __THROW __attribute__((nonnull(1,2)));
-
-#if __BIONIC_AVAILABILITY_GUARD(21)
-int symlinkat(const char* __old_path, int __new_dir_fd, const char* __new_path) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,3)));
-#endif /* __BIONIC_AVAILABILITY_GUARD(21) */
-
-ssize_t readlink(const char* __path, char* __buf, size_t __buf_size) __THROW __attribute__((nonnull(1,2)));
+int chroot(const char* __path) __NOEXCEPT __attribute__((nonnull(1)));
+int symlink(const char* __old_path, const char* __new_path) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-ssize_t readlinkat(int __dir_fd, const char* __path, char* __buf, size_t __buf_size) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2,3)));
+int symlinkat(const char* __old_path, int __new_dir_fd, const char* __new_path) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,3)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-int chown(const char* __path, uid_t __owner, gid_t __group) __THROW __attribute__((nonnull(1)));
-int fchown(int __fd, uid_t __owner, gid_t __group)__THROW ;
-int fchownat(int __dir_fd, const char* __path, uid_t __owner, gid_t __group, int __flags) __THROW __attribute__((nonnull(2)));
-int lchown(const char* __path, uid_t __owner, gid_t __group) __THROW __attribute__((nonnull(1)));
-char* getcwd(char* __buf, size_t __size)__THROW ;
+ssize_t readlink(const char* __path, char* __buf, size_t __buf_size) __NOEXCEPT __attribute__((nonnull(1,2)));
+
+#if __BIONIC_AVAILABILITY_GUARD(21)
+ssize_t readlinkat(int __dir_fd, const char* __path, char* __buf, size_t __buf_size) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2,3)));
+#endif /* __BIONIC_AVAILABILITY_GUARD(21) */
+
+int chown(const char* __path, uid_t __owner, gid_t __group) __NOEXCEPT __attribute__((nonnull(1)));
+int fchown(int __fd, uid_t __owner, gid_t __group)__NOEXCEPT ;
+int fchownat(int __dir_fd, const char* __path, uid_t __owner, gid_t __group, int __flags) __NOEXCEPT __attribute__((nonnull(2)));
+int lchown(const char* __path, uid_t __owner, gid_t __group) __NOEXCEPT __attribute__((nonnull(1)));
+char* getcwd(char* __buf, size_t __size)__NOEXCEPT ;
 
 /**
  * [sync(2)](https://man7.org/linux/man-pages/man2/sync.2.html) syncs changes
  * to disk, for all file systems.
  */
-void sync(void)__THROW ;
+void sync(void)__NOEXCEPT ;
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(28)
 /**
@@ -371,10 +371,10 @@ void sync(void)__THROW ;
  *
  * Available since API level 28 when compiling with `_GNU_SOURCE`.
  */
-int syncfs(int __fd) __THROW __INTRODUCED_IN_API_P__;
+int syncfs(int __fd) __NOEXCEPT __INTRODUCED_IN_API_P__;
 #endif
 
-int close(int __fd);
+int close(int __fd)__NOEXCEPT ;
 
 /**
  * [read(2)](https://man7.org/linux/man-pages/man2/read.2.html) reads
@@ -386,7 +386,7 @@ int close(int __fd);
  *
  * Returns the number of bytes read on success, and returns -1 and sets `errno` on failure.
  */
-ssize_t read(int __fd, void* __buf, size_t __count);
+ssize_t read(int __fd, void* __buf, size_t __count)__NOEXCEPT ;
 
 /**
  * [write(2)](https://man7.org/linux/man-pages/man2/write.2.html) writes
@@ -398,44 +398,44 @@ ssize_t read(int __fd, void* __buf, size_t __count);
  *
  * Returns the number of bytes written on success, and returns -1 and sets `errno` on failure.
  */
-ssize_t write(int __fd, const void* __buf, size_t __count);
+ssize_t write(int __fd, const void* __buf, size_t __count)__NOEXCEPT ;
 
-int dup(int __old_fd)__THROW ;
-int dup2(int __old_fd, int __new_fd)__THROW ;
+int dup(int __old_fd)__NOEXCEPT ;
+int dup2(int __old_fd, int __new_fd)__NOEXCEPT ;
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int dup3(int __old_fd, int __new_fd, int __flags) __THROW __INTRODUCED_IN_API_L__;
+int dup3(int __old_fd, int __new_fd, int __flags) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
-int fsync(int __fd);
-int fdatasync(int __fd);
+int fsync(int __fd)__NOEXCEPT ;
+int fdatasync(int __fd)__NOEXCEPT ;
 
 /* See https://android.googlesource.com/platform/bionic/+/main/docs/32-bit-abi.md */
 
 #if defined(__USE_FILE_OFFSET64)
-int truncate(const char* __path, off_t __length) __REDIRECT_NTH(truncate64) __attribute__((nonnull(1)));
-off_t lseek(int __fd, off_t __offset, int __whence) __REDIRECT_NTH(lseek64);
-ssize_t pread(int __fd, void* __buf, size_t __count, off_t __offset) __RENAME(pread64) __attribute__((nonnull(2)));
-ssize_t pwrite(int __fd, const void* __buf, size_t __count, off_t __offset) __RENAME(pwrite64) __attribute__((nonnull(2)));
-int ftruncate(int __fd, off_t __length) __REDIRECT_NTH(ftruncate64);
+int truncate(const char* __path, off_t __length) __REDIRECT_NOEXCEPT(truncate64) __attribute__((nonnull(1)));
+off_t lseek(int __fd, off_t __offset, int __whence) __REDIRECT_NOEXCEPT(lseek64);
+ssize_t pread(int __fd, void* __buf, size_t __count, off_t __offset) __REDIRECT_NOEXCEPT(pread64) __attribute__((nonnull(2)));
+ssize_t pwrite(int __fd, const void* __buf, size_t __count, off_t __offset) __REDIRECT_NOEXCEPT(pwrite64) __attribute__((nonnull(2)));
+int ftruncate(int __fd, off_t __length) __REDIRECT_NOEXCEPT(ftruncate64);
 #else
-int truncate(const char* __path, off_t __length) __THROW __attribute__((nonnull(1)));
-off_t lseek(int __fd, off_t __offset, int __whence)__THROW ;
-ssize_t pread(int __fd, void* __buf, size_t __count, off_t __offset) __attribute__((nonnull(2)));
-ssize_t pwrite(int __fd, const void* __buf, size_t __count, off_t __offset) __attribute__((nonnull(2)));
-int ftruncate(int __fd, off_t __length)__THROW ;
+int truncate(const char* __path, off_t __length) __NOEXCEPT __attribute__((nonnull(1)));
+off_t lseek(int __fd, off_t __offset, int __whence)__NOEXCEPT ;
+ssize_t pread(int __fd, void* __buf, size_t __count, off_t __offset) __NOEXCEPT __attribute__((nonnull(2)));
+ssize_t pwrite(int __fd, const void* __buf, size_t __count, off_t __offset) __NOEXCEPT __attribute__((nonnull(2)));
+int ftruncate(int __fd, off_t __length)__NOEXCEPT ;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int truncate64(const char* __path, off64_t __length) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+int truncate64(const char* __path, off64_t __length) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-off64_t lseek64(int __fd, off64_t __offset, int __whence)__THROW ;
-ssize_t pread64(int __fd, void* __buf, size_t __count, off64_t __offset) __attribute__((nonnull(2)));
-ssize_t pwrite64(int __fd, const void* __buf, size_t __count, off64_t __offset) __attribute__((nonnull(2)));
-int ftruncate64(int __fd, off64_t __length)__THROW ;
+off64_t lseek64(int __fd, off64_t __offset, int __whence)__NOEXCEPT ;
+ssize_t pread64(int __fd, void* __buf, size_t __count, off64_t __offset) __NOEXCEPT __attribute__((nonnull(2)));
+ssize_t pwrite64(int __fd, const void* __buf, size_t __count, off64_t __offset) __NOEXCEPT __attribute__((nonnull(2)));
+int ftruncate64(int __fd, off64_t __length)__NOEXCEPT ;
 
-int pause(void);
-unsigned int alarm(unsigned int __seconds)__THROW ;
-unsigned int sleep(unsigned int __seconds);
+int pause(void)__NOEXCEPT ;
+unsigned int alarm(unsigned int __seconds)__NOEXCEPT ;
+unsigned int sleep(unsigned int __seconds)__NOEXCEPT ;
 int usleep(useconds_t __microseconds);
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
@@ -448,11 +448,11 @@ int usleep(useconds_t __microseconds);
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int getdomainname(char* __buf, size_t __buf_size) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
+int getdomainname(char* __buf, size_t __buf_size) __NOEXCEPT __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-int setdomainname(const char* __name, size_t __n) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
+int setdomainname(const char* __name, size_t __n) __NOEXCEPT __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 #endif
 
 /**
@@ -465,20 +465,20 @@ int setdomainname(const char* __name, size_t __n) __THROW __INTRODUCED_IN_API_O_
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int gethostname(char* _buf, size_t __buf_size) __THROW __attribute__((nonnull(1)));
+int gethostname(char* _buf, size_t __buf_size) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-int sethostname(const char* __name, size_t __n) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+int sethostname(const char* __name, size_t __n) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
-int brk(void* __addr) __THROW __attribute__((nonnull(1)));
-void* sbrk(ptrdiff_t __increment)__THROW ;
+int brk(void* __addr) __NOEXCEPT __attribute__((nonnull(1)));
+void* sbrk(ptrdiff_t __increment)__NOEXCEPT ;
 
-int isatty(int __fd)__THROW ;
-char* ttyname(int __fd)__THROW ;
-int ttyname_r(int __fd, char* __buf, size_t __buf_size) __THROW __attribute__((nonnull(2)));
+int isatty(int __fd)__NOEXCEPT ;
+char* ttyname(int __fd)__NOEXCEPT ;
+int ttyname_r(int __fd, char* __buf, size_t __buf_size) __NOEXCEPT __attribute__((nonnull(2)));
 
-int acct(const char* __path)__THROW ;
+int acct(const char* __path)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /**
@@ -488,7 +488,7 @@ int acct(const char* __path)__THROW ;
  *
  * Returns the system's page size in bytes.
  */
-int getpagesize(void) __THROW __attribute_const__ __INTRODUCED_IN_API_L__;
+int getpagesize(void) __NOEXCEPT __attribute_const__ __INTRODUCED_IN_API_L__;
 #else
 __static_inline__ int getpagesize(void) {
 	long value = sysconf(_SC_PAGESIZE);
@@ -496,9 +496,9 @@ __static_inline__ int getpagesize(void) {
 }
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-long syscall(long __number, ...)__THROW ;
+long syscall(long __number, ...)__NOEXCEPT ;
 
-int daemon(int __no_chdir, int __no_close)__THROW ;
+int daemon(int __no_chdir, int __no_close)__NOEXCEPT ;
 
 #if defined(__arm__) || (defined(__mips__) && !defined(__LP64__))
 /**
@@ -508,8 +508,8 @@ int daemon(int __no_chdir, int __no_close)__THROW ;
 int cacheflush(long __addr, long __nbytes, long __cache);
 #endif
 
-pid_t tcgetpgrp(int __fd)__THROW ;
-int tcsetpgrp(int __fd, pid_t __pid)__THROW ;
+pid_t tcgetpgrp(int __fd)__NOEXCEPT ;
+int tcsetpgrp(int __fd, pid_t __pid)__NOEXCEPT ;
 
 /* Used to retry syscalls that can return EINTR. */
 #define TEMP_FAILURE_RETRY(exp) ({         \
@@ -533,7 +533,7 @@ ssize_t copy_file_range(int __fd_in, off64_t* __off_in, int __fd_out, off64_t* _
 #endif
 
 #if __ANDROID_API__ >= 28
-void swab(const void* __src, void* __dst, ssize_t __byte_count) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
+void swab(const void* __src, void* __dst, ssize_t __byte_count) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(34)
@@ -551,7 +551,7 @@ void swab(const void* __src, void* __dst, ssize_t __byte_count) __THROW __INTROD
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int close_range(unsigned int __min_fd, unsigned int __max_fd, int __flags) __THROW __INTRODUCED_IN_API_U__;
+int close_range(unsigned int __min_fd, unsigned int __max_fd, int __flags) __NOEXCEPT __INTRODUCED_IN_API_U__;
 #endif
 
 #if defined(__BIONIC_INCLUDE_FORTIFY_HEADERS)

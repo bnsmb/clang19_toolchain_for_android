@@ -116,7 +116,7 @@
 
 /* Define to the root for documentation URLs. */
 #ifndef USED_FOR_TARGET
-#define DOCUMENTATION_ROOT_URL "https://gcc.gnu.org/onlinedocs/gcc-16.1.0/"
+#define DOCUMENTATION_ROOT_URL "https://gcc.gnu.org/onlinedocs/gcc-16.2.0/"
 #endif
 
 
@@ -157,10 +157,16 @@
 #endif
 
 
+/* Define if -fPIC defaults to -fsemantic-interposition. */
+#ifndef USED_FOR_TARGET
+/* #undef ENABLE_DEFAULT_SEMANTIC_INTERPOSITION */
+#endif
+
+
 /* Define if your target supports default stack protector and it is enabled.
    */
 #ifndef USED_FOR_TARGET
-/* #undef ENABLE_DEFAULT_SSP */
+#define ENABLE_DEFAULT_SSP 1
 #endif
 
 
@@ -1992,7 +1998,7 @@
 
 /* Define to 1 if you have the `nl_langinfo' function. */
 #ifndef USED_FOR_TARGET
-/* #undef HAVE_NL_LANGINFO */
+#define HAVE_NL_LANGINFO 1
 #endif
 
 
@@ -2597,7 +2603,7 @@
 
 /* Define if your target C library provides stack protector support */
 #ifndef USED_FOR_TARGET
-/* #undef TARGET_LIBC_PROVIDES_SSP */
+#define TARGET_LIBC_PROVIDES_SSP 1
 #endif
 
 

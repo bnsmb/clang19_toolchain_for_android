@@ -107,7 +107,7 @@ struct sched_param {
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int sched_setscheduler(pid_t __pid, int __policy, const struct sched_param* __param) __THROW __attribute__((nonnull(3)));
+int sched_setscheduler(pid_t __pid, int __policy, const struct sched_param* __param) __NOEXCEPT __attribute__((nonnull(3)));
 
 /**
  * [sched_getscheduler(2)](https://man7.org/linux/man-pages/man2/sched_getscheduler.2)
@@ -116,7 +116,7 @@ int sched_setscheduler(pid_t __pid, int __policy, const struct sched_param* __pa
  * Returns a non-negative thread policy on success and returns -1 and sets
  * `errno` on failure.
  */
-int sched_getscheduler(pid_t __pid)__THROW ;
+int sched_getscheduler(pid_t __pid)__NOEXCEPT ;
 
 /**
  * [sched_yield(2)](https://man7.org/linux/man-pages/man2/sched_yield.2.html)
@@ -124,7 +124,7 @@ int sched_getscheduler(pid_t __pid)__THROW ;
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int sched_yield(void)__THROW ;
+int sched_yield(void)__NOEXCEPT ;
 
 /**
  * [sched_get_priority_max(2)](https://man7.org/linux/man-pages/man2/sched_get_priority_max.2.html)
@@ -132,7 +132,7 @@ int sched_yield(void)__THROW ;
  *
  * Returns a priority on success and returns -1 and sets `errno` on failure.
  */
-int sched_get_priority_max(int __policy)__THROW ;
+int sched_get_priority_max(int __policy)__NOEXCEPT ;
 
 /**
  * [sched_get_priority_min(2)](https://man7.org/linux/man-pages/man2/sched_get_priority_min.2.html)
@@ -140,7 +140,7 @@ int sched_get_priority_max(int __policy)__THROW ;
  *
  * Returns a priority on success and returns -1 and sets `errno` on failure.
  */
-int sched_get_priority_min(int __policy)__THROW ;
+int sched_get_priority_min(int __policy)__NOEXCEPT ;
 
 /**
  * [sched_setparam(2)](https://man7.org/linux/man-pages/man2/sched_setparam.2.html)
@@ -148,7 +148,7 @@ int sched_get_priority_min(int __policy)__THROW ;
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int sched_setparam(pid_t __pid, const struct sched_param* __param) __THROW __attribute__((nonnull(2)));
+int sched_setparam(pid_t __pid, const struct sched_param* __param) __NOEXCEPT __attribute__((nonnull(2)));
 
 /**
  * [sched_getparam(2)](https://man7.org/linux/man-pages/man2/sched_getparam.2.html)
@@ -156,7 +156,7 @@ int sched_setparam(pid_t __pid, const struct sched_param* __param) __THROW __att
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int sched_getparam(pid_t __pid, struct sched_param* __param) __THROW __attribute__((nonnull(2)));
+int sched_getparam(pid_t __pid, struct sched_param* __param) __NOEXCEPT __attribute__((nonnull(2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(17)
 /**
@@ -165,7 +165,7 @@ int sched_getparam(pid_t __pid, struct sched_param* __param) __THROW __attribute
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int sched_rr_get_interval(pid_t __pid, struct timespec* __quantum) __THROW __INTRODUCED_IN_API_J_MR1__ __attribute__((nonnull(2)));
+int sched_rr_get_interval(pid_t __pid, struct timespec* __quantum) __NOEXCEPT __INTRODUCED_IN_API_J_MR1__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 
 #if defined(__USE_GNU)
@@ -177,7 +177,7 @@ int sched_rr_get_interval(pid_t __pid, struct timespec* __quantum) __THROW __INT
  * Returns the pid of the child to the caller on success and
  * returns -1 and sets `errno` on failure.
  */
-int clone(int (* __fn)(void* ), void* __child_stack, int __flags, void* __arg, ...) __THROW __INTRODUCED_IN_API_J_MR1__;
+int clone(int (* __fn)(void* ), void* __child_stack, int __flags, void* __arg, ...) __NOEXCEPT __INTRODUCED_IN_API_J_MR1__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 #endif
 
@@ -202,7 +202,7 @@ int clone3(struct clone_args* __cl_args, size_t __size, int (* __fn)(void* ), vo
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int unshare(int __flags) __THROW __INTRODUCED_IN_API_J_MR1__;
+int unshare(int __flags) __NOEXCEPT __INTRODUCED_IN_API_J_MR1__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 #endif
 
@@ -214,7 +214,7 @@ int unshare(int __flags) __THROW __INTRODUCED_IN_API_J_MR1__;
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int setns(int __fd, int __ns_type) __THROW __INTRODUCED_IN_API_L__;
+int setns(int __fd, int __ns_type) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 #endif
 
@@ -226,7 +226,7 @@ int setns(int __fd, int __ns_type) __THROW __INTRODUCED_IN_API_L__;
  * Returns a non-negative CPU number on success and returns -1 and sets
  * `errno` on failure.
  */
-int sched_getcpu(void)__THROW ;
+int sched_getcpu(void)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_GNU)
@@ -270,7 +270,7 @@ typedef struct {
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int sched_setaffinity(pid_t __pid, size_t __cpu_set_size, const cpu_set_t* __cpu_set) __THROW __attribute__((nonnull(3)));
+int sched_setaffinity(pid_t __pid, size_t __cpu_set_size, const cpu_set_t* __cpu_set) __NOEXCEPT __attribute__((nonnull(3)));
 #endif
 
 #if defined(__USE_GNU)
@@ -280,7 +280,7 @@ int sched_setaffinity(pid_t __pid, size_t __cpu_set_size, const cpu_set_t* __cpu
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int sched_getaffinity(pid_t __pid, size_t __cpu_set_size, cpu_set_t* __cpu_set) __THROW __attribute__((nonnull(3)));
+int sched_getaffinity(pid_t __pid, size_t __cpu_set_size, cpu_set_t* __cpu_set) __NOEXCEPT __attribute__((nonnull(3)));
 #endif
 
 #if defined(__USE_GNU)
@@ -400,7 +400,7 @@ int sched_getattr(pid_t __pid, struct sched_attr* __attr, unsigned __size, unsig
  * how many bits are set in a dynamic CPU set allocated by `CPU_ALLOC`.
  */
 #define CPU_COUNT_S(setsize, set)  __sched_cpucount((setsize), (set))
-int __sched_cpucount(size_t __cpu_set_size, const cpu_set_t* __cpu_set) __THROW __attribute__((nonnull(2)));
+int __sched_cpucount(size_t __cpu_set_size, const cpu_set_t* __cpu_set) __NOEXCEPT __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_GNU)
@@ -499,7 +499,7 @@ int __sched_cpucount(size_t __cpu_set_size, const cpu_set_t* __cpu_set) __THROW 
  * allocates a CPU set large enough for CPUs in the range 0..count-1.
  */
 #define CPU_ALLOC(count)  __sched_cpualloc((count))
-cpu_set_t* __sched_cpualloc(size_t __count)__THROW ;
+cpu_set_t* __sched_cpualloc(size_t __count)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_GNU)
@@ -508,7 +508,7 @@ cpu_set_t* __sched_cpualloc(size_t __count)__THROW ;
  * deallocates a CPU set allocated by `CPU_ALLOC`.
  */
 #define CPU_FREE(set)     __sched_cpufree((set))
-void __sched_cpufree(cpu_set_t* __cpu_set) __THROW __attribute__((nonnull(1)));
+void __sched_cpufree(cpu_set_t* __cpu_set) __NOEXCEPT __attribute__((nonnull(1)));
 #endif
 
 __END_DECLS

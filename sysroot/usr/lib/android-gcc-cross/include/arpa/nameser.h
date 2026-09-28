@@ -583,29 +583,29 @@ typedef enum __ns_cert_types {
 
 
 #if __BIONIC_AVAILABILITY_GUARD(22)
-int ns_msg_getflag(ns_msg __handle, int __flag) __THROW __INTRODUCED_IN_API_L_MR1__;
-uint16_t ns_get16(const u_char* __src) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1)));
-uint32_t ns_get32(const u_char* __src) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1)));
-void ns_put16(uint16_t __src, u_char* __dst) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(2)));
-void ns_put32(uint32_t __src, u_char* __dst) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(2)));
-int ns_initparse(const u_char* __msg, int __msg_size, ns_msg* __handle) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,3)));
-int ns_skiprr(const u_char* __ptr, const u_char* __eom, ns_sect __section, int __count) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
-int ns_parserr(ns_msg* __handle, ns_sect __section, int __rr_number, ns_rr* __rr) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,4)));
-int ns_sprintrr(const ns_msg*  __handle, const ns_rr* __rr, const char* __name_ctx, const char* __origin, char* __buf, size_t __buf_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2,5)));
-int ns_sprintrrf(const u_char* __msg, size_t __msg_size, const char* __name, ns_class __class, ns_type __type, u_long __ttl, const u_char* __rdata, size_t __rdata_size, const char* __name_ctx, const char* __origin, char* __buf, size_t __buf_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,3,7,11)));
-int ns_format_ttl(u_long __ttl, char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(2)));
-int ns_name_ntol(const u_char* __src, u_char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
-int ns_name_ntop(const u_char* __src, char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
-int ns_name_pton(const char* __src, u_char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
-int ns_name_unpack(const u_char* __msg, const u_char* __eom, const u_char* __src, u_char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2,3,4)));
-int ns_name_pack(const u_char* __src, u_char* __dst, int __dst_size, const u_char* * __dn_ptrs, const u_char* * __last_dn_ptr) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
-int ns_name_uncompress(const u_char* __msg, const u_char* __eom, const u_char* __src, char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2,3,4)));
-int ns_name_compress(const char* __src, u_char* __dst, size_t __dst_size, const u_char* * __dn_ptrs, const u_char* * __last_dn_ptr) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
-int ns_name_skip(const u_char* * __ptr_ptr, const u_char* __eom) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
-void ns_name_rollback(const u_char* __src, const u_char* * __dn_ptrs, const u_char* * __last_dn_ptr) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2,3)));
+int ns_msg_getflag(ns_msg __handle, int __flag) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__;
+uint16_t ns_get16(const u_char* __src) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1)));
+uint32_t ns_get32(const u_char* __src) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1)));
+void ns_put16(uint16_t __src, u_char* __dst) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(2)));
+void ns_put32(uint32_t __src, u_char* __dst) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(2)));
+int ns_initparse(const u_char* __msg, int __msg_size, ns_msg* __handle) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,3)));
+int ns_skiprr(const u_char* __ptr, const u_char* __eom, ns_sect __section, int __count) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_parserr(ns_msg* __handle, ns_sect __section, int __rr_number, ns_rr* __rr) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,4)));
+int ns_sprintrr(const ns_msg*  __handle, const ns_rr* __rr, const char* __name_ctx, const char* __origin, char* __buf, size_t __buf_size) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2,5)));
+int ns_sprintrrf(const u_char* __msg, size_t __msg_size, const char* __name, ns_class __class, ns_type __type, u_long __ttl, const u_char* __rdata, size_t __rdata_size, const char* __name_ctx, const char* __origin, char* __buf, size_t __buf_size) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,3,7,11)));
+int ns_format_ttl(u_long __ttl, char* __dst, size_t __dst_size) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(2)));
+int ns_name_ntol(const u_char* __src, u_char* __dst, size_t __dst_size) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_name_ntop(const u_char* __src, char* __dst, size_t __dst_size) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_name_pton(const char* __src, u_char* __dst, size_t __dst_size) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_name_unpack(const u_char* __msg, const u_char* __eom, const u_char* __src, u_char* __dst, size_t __dst_size) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2,3,4)));
+int ns_name_pack(const u_char* __src, u_char* __dst, int __dst_size, const u_char* * __dn_ptrs, const u_char* * __last_dn_ptr) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_name_uncompress(const u_char* __msg, const u_char* __eom, const u_char* __src, char* __dst, size_t __dst_size) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2,3,4)));
+int ns_name_compress(const char* __src, u_char* __dst, size_t __dst_size, const u_char* * __dn_ptrs, const u_char* * __last_dn_ptr) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_name_skip(const u_char* * __ptr_ptr, const u_char* __eom) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+void ns_name_rollback(const u_char* __src, const u_char* * __dn_ptrs, const u_char* * __last_dn_ptr) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2,3)));
 
-int ns_makecanon(const char* __src, char* __dst, size_t __dst_size) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
-int ns_samename(const char* __lhs, const char* __rhs) __THROW __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_makecanon(const char* __src, char* __dst, size_t __dst_size) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
+int ns_samename(const char* __lhs, const char* __rhs) __NOEXCEPT __INTRODUCED_IN_API_L_MR1__ __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(22) */
 
 

@@ -99,15 +99,15 @@ struct lconv {
 #if __BIONIC_AVAILABILITY_GUARD(21)
 struct lconv* localeconv(void) __INTRODUCED_IN_API_L__;
 
-locale_t duplocale(locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
-void freelocale(locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
-locale_t newlocale(int __category_mask, const char* __locale_name, locale_t __base) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+locale_t duplocale(locale_t __l) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+void freelocale(locale_t __l) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+locale_t newlocale(int __category_mask, const char* __locale_name, locale_t __base) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-char* setlocale(int __category, const char* __locale_name)__THROW ;
+char* setlocale(int __category, const char* __locale_name)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-locale_t uselocale(locale_t __l) __THROW __INTRODUCED_IN_API_L__;
+locale_t uselocale(locale_t __l) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #define LC_GLOBAL_LOCALE __BIONIC_CAST(reinterpret_cast, locale_t, -1L)

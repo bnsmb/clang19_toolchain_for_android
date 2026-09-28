@@ -56,7 +56,7 @@ __BEGIN_DECLS
  *
  * Returns the new file descriptor on success, and returns -1 and sets `errno` on failure.
  */
-int timerfd_create(clockid_t __clock, int __flags) __THROW __INTRODUCED_IN_API_K__;
+int timerfd_create(clockid_t __clock, int __flags) __NOEXCEPT __INTRODUCED_IN_API_K__;
 
 /** The timerfd_settime() flag to use absolute rather than relative times. */
 #define TFD_TIMER_ABSTIME (1 << 0)
@@ -69,7 +69,7 @@ int timerfd_create(clockid_t __clock, int __flags) __THROW __INTRODUCED_IN_API_K
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int timerfd_settime(int __fd, int __flags, const struct itimerspec* __new_value, struct itimerspec* __old_value) __THROW __INTRODUCED_IN_API_K__ __attribute__((nonnull(3)));
+int timerfd_settime(int __fd, int __flags, const struct itimerspec* __new_value, struct itimerspec* __old_value) __NOEXCEPT __INTRODUCED_IN_API_K__ __attribute__((nonnull(3)));
 
 /**
  * [timerfd_gettime(2)](https://man7.org/linux/man-pages/man2/timerfd_gettime.2.html) queries the
@@ -77,7 +77,7 @@ int timerfd_settime(int __fd, int __flags, const struct itimerspec* __new_value,
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int timerfd_gettime(int __fd, struct itimerspec* __current_value) __THROW __INTRODUCED_IN_API_K__ __attribute__((nonnull(2)));
+int timerfd_gettime(int __fd, struct itimerspec* __current_value) __NOEXCEPT __INTRODUCED_IN_API_K__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(19) */
 
 __END_DECLS

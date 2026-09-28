@@ -46,7 +46,7 @@
 
 // The datestamp of the C++ library in compressed ISO date format.
 #undef __GLIBCXX__ /* The testsuite defines it to 99999999 to block PCH.  */
-#define __GLIBCXX__ 20260716
+#define __GLIBCXX__ 20260927
 
 // Macros for various attributes.
 //   _GLIBCXX_PURE
@@ -1125,7 +1125,7 @@ namespace __gnu_cxx
 /* #undef _GLIBCXX_HAVE_FWRITE_UNLOCKED */
 
 /* Define if getentropy is available in <unistd.h>. */
-/* #undef _GLIBCXX_HAVE_GETENTROPY */
+#define _GLIBCXX_HAVE_GETENTROPY 1
 
 /* Define if _Unwind_GetIPInfo is available. */
 #define _GLIBCXX_HAVE_GETIPINFO 1

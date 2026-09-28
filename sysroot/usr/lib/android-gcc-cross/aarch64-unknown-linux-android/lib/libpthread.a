@@ -1,1 +1,1 @@
-INPUT(libc.a)
+INPUT(-lc)

@@ -293,40 +293,40 @@ struct ucred {
 
 #define IPX_TYPE 1
 
-int accept(int __fd, struct sockaddr* __addr, socklen_t* __addr_length);
+int accept(int __fd, struct sockaddr* __addr, socklen_t* __addr_length)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int accept4(int __fd, struct sockaddr* __addr, socklen_t* __addr_length, int __flags) __INTRODUCED_IN_API_L__;
+int accept4(int __fd, struct sockaddr* __addr, socklen_t* __addr_length, int __flags) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-int bind(int __fd, const struct sockaddr* __addr, socklen_t __addr_length) __THROW __attribute__((nonnull(2)));
-int connect(int __fd, const struct sockaddr* __addr, socklen_t __addr_length) __attribute__((nonnull(2)));
-int getpeername(int __fd, struct sockaddr* __addr, socklen_t* __addr_length) __THROW __attribute__((nonnull(2,3)));
-int getsockname(int __fd, struct sockaddr* __addr, socklen_t* __addr_length) __THROW __attribute__((nonnull(2,3)));
-int getsockopt(int __fd, int __level, int __option, void* __value, socklen_t* __value_length) __THROW __attribute__((nonnull(5)));
-int listen(int __fd, int __backlog)__THROW ;
+int bind(int __fd, const struct sockaddr* __addr, socklen_t __addr_length) __NOEXCEPT __attribute__((nonnull(2)));
+int connect(int __fd, const struct sockaddr* __addr, socklen_t __addr_length) __NOEXCEPT __attribute__((nonnull(2)));
+int getpeername(int __fd, struct sockaddr* __addr, socklen_t* __addr_length) __NOEXCEPT __attribute__((nonnull(2,3)));
+int getsockname(int __fd, struct sockaddr* __addr, socklen_t* __addr_length) __NOEXCEPT __attribute__((nonnull(2,3)));
+int getsockopt(int __fd, int __level, int __option, void* __value, socklen_t* __value_length) __NOEXCEPT __attribute__((nonnull(5)));
+int listen(int __fd, int __backlog)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int recvmmsg(int __fd, struct mmsghdr* __msgs, unsigned int __msg_count, int __flags, const struct timespec* __timeout) __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int recvmmsg(int __fd, struct mmsghdr* __msgs, unsigned int __msg_count, int __flags, const struct timespec* __timeout) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-ssize_t recvmsg(int __fd, struct msghdr* __msg, int __flags) __attribute__((nonnull(2)));
+ssize_t recvmsg(int __fd, struct msghdr* __msg, int __flags) __NOEXCEPT __attribute__((nonnull(2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int sendmmsg(int __fd, const struct mmsghdr* __msgs, unsigned int __msg_count, int __flags) __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int sendmmsg(int __fd, const struct mmsghdr* __msgs, unsigned int __msg_count, int __flags) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-ssize_t sendmsg(int __fd, const struct msghdr* __msg, int __flags) __attribute__((nonnull(2)));
-int setsockopt(int __fd, int __level, int __option, const void* __value, socklen_t __value_length)__THROW ;
-int shutdown(int __fd, int __how)__THROW ;
-int socket(int __af, int __type, int __protocol)__THROW ;
-int socketpair(int __af, int __type, int __protocol, int __fds[2]) __THROW __attribute__((nonnull(4)));
+ssize_t sendmsg(int __fd, const struct msghdr* __msg, int __flags) __NOEXCEPT __attribute__((nonnull(2)));
+int setsockopt(int __fd, int __level, int __option, const void* __value, socklen_t __value_length)__NOEXCEPT ;
+int shutdown(int __fd, int __how)__NOEXCEPT ;
+int socket(int __af, int __type, int __protocol)__NOEXCEPT ;
+int socketpair(int __af, int __type, int __protocol, int __fds[2]) __NOEXCEPT __attribute__((nonnull(4)));
 
-ssize_t recv(int __fd, void* __buf, size_t __n, int __flags);
-ssize_t send(int __fd, const void* __buf, size_t __n, int __flags) __attribute__((nonnull(2)));
+ssize_t recv(int __fd, void* __buf, size_t __n, int __flags)__NOEXCEPT ;
+ssize_t send(int __fd, const void* __buf, size_t __n, int __flags) __NOEXCEPT __attribute__((nonnull(2)));
 
-ssize_t sendto(int __fd, const void* __buf, size_t __n, int __flags, const struct sockaddr* __dst_addr, socklen_t __dst_addr_length) __attribute__((nonnull(2)));
-ssize_t recvfrom(int __fd, void* __buf, size_t __n, int __flags, struct sockaddr* __src_addr, socklen_t* __src_addr_length);
+ssize_t sendto(int __fd, const void* __buf, size_t __n, int __flags, const struct sockaddr* __dst_addr, socklen_t __dst_addr_length) __NOEXCEPT __attribute__((nonnull(2)));
+ssize_t recvfrom(int __fd, void* __buf, size_t __n, int __flags, struct sockaddr* __src_addr, socklen_t* __src_addr_length)__NOEXCEPT ;
 
 #if defined(__BIONIC_INCLUDE_FORTIFY_HEADERS)
 #include <bits/fortify/socket.h>

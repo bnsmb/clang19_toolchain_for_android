@@ -46,7 +46,7 @@ __BEGIN_DECLS
  * Returns the number of bytes read on success,
  * and returns -1 and sets `errno` on failure.
  */
-ssize_t readv(int __fd, const struct iovec* __iov, int __count) __attribute__((nonnull(2)));
+ssize_t readv(int __fd, const struct iovec* __iov, int __count) __NOEXCEPT __attribute__((nonnull(2)));
 
 /**
  * [writev(2)](https://man7.org/linux/man-pages/man2/writev.2.html) writes
@@ -55,7 +55,7 @@ ssize_t readv(int __fd, const struct iovec* __iov, int __count) __attribute__((n
  * Returns the number of bytes written on success,
  * and returns -1 and sets `errno` on failure.
  */
-ssize_t writev(int __fd, const struct iovec* __iov, int __count) __attribute__((nonnull(2)));
+ssize_t writev(int __fd, const struct iovec* __iov, int __count) __NOEXCEPT __attribute__((nonnull(2)));
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(24)
 /**
@@ -68,7 +68,7 @@ ssize_t writev(int __fd, const struct iovec* __iov, int __count) __attribute__((
  *
  * Available since API level 24 when compiling with `_GNU_SOURCE`.
  */
-ssize_t preadv(int __fd, const struct iovec* __iov, int __count, off_t __offset) __RENAME_IF_FILE_OFFSET64(preadv64) __INTRODUCED_IN_API_N__;
+ssize_t preadv(int __fd, const struct iovec* __iov, int __count, off_t __offset) __REDIRECT_LFS_NOEXCEPT(preadv64) __INTRODUCED_IN_API_N__;
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(24)
@@ -82,7 +82,7 @@ ssize_t preadv(int __fd, const struct iovec* __iov, int __count, off_t __offset)
  *
  * Available since API level 24 when compiling with `_GNU_SOURCE`.
  */
-ssize_t pwritev(int __fd, const struct iovec* __iov, int __count, off_t __offset) __RENAME_IF_FILE_OFFSET64(pwritev64) __INTRODUCED_IN_API_N__;
+ssize_t pwritev(int __fd, const struct iovec* __iov, int __count, off_t __offset) __REDIRECT_LFS_NOEXCEPT(pwritev64) __INTRODUCED_IN_API_N__;
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(24)
@@ -91,7 +91,7 @@ ssize_t pwritev(int __fd, const struct iovec* __iov, int __count, off_t __offset
  *
  * Available since API level 24 when compiling with `_GNU_SOURCE`.
  */
-ssize_t preadv64(int __fd, const struct iovec* __iov, int __count, off64_t __offset) __INTRODUCED_IN_API_N__ __attribute__((nonnull(2)));
+ssize_t preadv64(int __fd, const struct iovec* __iov, int __count, off64_t __offset) __NOEXCEPT __INTRODUCED_IN_API_N__ __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(24)
@@ -100,7 +100,7 @@ ssize_t preadv64(int __fd, const struct iovec* __iov, int __count, off64_t __off
  *
  * Available since API level 24 when compiling with `_GNU_SOURCE`.
  */
-ssize_t pwritev64(int __fd, const struct iovec* __iov, int __count, off64_t __offset) __INTRODUCED_IN_API_N__ __attribute__((nonnull(2)));
+ssize_t pwritev64(int __fd, const struct iovec* __iov, int __count, off64_t __offset) __NOEXCEPT __INTRODUCED_IN_API_N__ __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(33)
@@ -114,7 +114,7 @@ ssize_t pwritev64(int __fd, const struct iovec* __iov, int __count, off64_t __of
  *
  * Available since API level 33 when compiling with `_GNU_SOURCE`.
  */
-ssize_t preadv2(int __fd, const struct iovec* __iov, int __count, off_t __offset, int __flags) __RENAME_IF_FILE_OFFSET64(preadv64v2) __INTRODUCED_IN_API_T__;
+ssize_t preadv2(int __fd, const struct iovec* __iov, int __count, off_t __offset, int __flags) __REDIRECT_LFS_NOEXCEPT(preadv64v2) __INTRODUCED_IN_API_T__;
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(33)
@@ -128,7 +128,7 @@ ssize_t preadv2(int __fd, const struct iovec* __iov, int __count, off_t __offset
  *
  * Available since API level 33 when compiling with `_GNU_SOURCE`.
  */
-ssize_t pwritev2(int __fd, const struct iovec* __iov, int __count, off_t __offset, int __flags) __RENAME_IF_FILE_OFFSET64(pwritev64v2) __INTRODUCED_IN_API_T__;
+ssize_t pwritev2(int __fd, const struct iovec* __iov, int __count, off_t __offset, int __flags) __REDIRECT_LFS_NOEXCEPT(pwritev64v2) __INTRODUCED_IN_API_T__;
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(33)
@@ -137,7 +137,7 @@ ssize_t pwritev2(int __fd, const struct iovec* __iov, int __count, off_t __offse
  *
  * Available since API level 33 when compiling with `_GNU_SOURCE`.
  */
-ssize_t preadv64v2(int __fd, const struct iovec* __iov, int __count, off64_t __offset, int __flags) __INTRODUCED_IN_API_T__ __attribute__((nonnull(2)));
+ssize_t preadv64v2(int __fd, const struct iovec* __iov, int __count, off64_t __offset, int __flags) __NOEXCEPT __INTRODUCED_IN_API_T__ __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(33)
@@ -146,7 +146,7 @@ ssize_t preadv64v2(int __fd, const struct iovec* __iov, int __count, off64_t __o
  *
  * Available since API level 33 when compiling with `_GNU_SOURCE`.
  */
-ssize_t pwritev64v2(int __fd, const struct iovec* __iov, int __count, off64_t __offset, int __flags) __INTRODUCED_IN_API_T__ __attribute__((nonnull(2)));
+ssize_t pwritev64v2(int __fd, const struct iovec* __iov, int __count, off64_t __offset, int __flags) __NOEXCEPT __INTRODUCED_IN_API_T__ __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(23)
@@ -159,7 +159,7 @@ ssize_t pwritev64v2(int __fd, const struct iovec* __iov, int __count, off64_t __
  *
  * Available since API level 23 when compiling with `_GNU_SOURCE`.
  */
-ssize_t process_vm_readv(pid_t __pid, const struct iovec* __local_iov, unsigned long __local_iov_count, const struct iovec* __remote_iov, unsigned long __remote_iov_count, unsigned long __flags) __THROW __INTRODUCED_IN_API_M__;
+ssize_t process_vm_readv(pid_t __pid, const struct iovec* __local_iov, unsigned long __local_iov_count, const struct iovec* __remote_iov, unsigned long __remote_iov_count, unsigned long __flags) __NOEXCEPT __INTRODUCED_IN_API_M__;
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(23)
@@ -172,7 +172,7 @@ ssize_t process_vm_readv(pid_t __pid, const struct iovec* __local_iov, unsigned 
  *
  * Available since API level 23 when compiling with `_GNU_SOURCE`.
  */
-ssize_t process_vm_writev(pid_t __pid, const struct iovec* __local_iov, unsigned long __local_iov_count, const struct iovec* __remote_iov, unsigned long __remote_iov_count, unsigned long __flags) __THROW __INTRODUCED_IN_API_M__;
+ssize_t process_vm_writev(pid_t __pid, const struct iovec* __local_iov, unsigned long __local_iov_count, const struct iovec* __remote_iov, unsigned long __remote_iov_count, unsigned long __flags) __NOEXCEPT __INTRODUCED_IN_API_M__;
 #endif
 
 __END_DECLS

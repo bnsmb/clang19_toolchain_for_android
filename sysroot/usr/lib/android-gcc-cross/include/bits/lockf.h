@@ -57,7 +57,7 @@ __BEGIN_DECLS
  *
  * See also flock().
  */
-int lockf(int __fd, int __op, off_t __length) __RENAME_IF_FILE_OFFSET64(lockf64) __INTRODUCED_IN_API_N__;
+int lockf(int __fd, int __op, off_t __length) __REDIRECT_LFS_NOEXCEPT(lockf64) __INTRODUCED_IN_API_N__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
@@ -65,7 +65,7 @@ int lockf(int __fd, int __op, off_t __length) __RENAME_IF_FILE_OFFSET64(lockf64)
  * Like lockf() but allows using a 64-bit length
  * even from a 32-bit process without `_FILE_OFFSET_BITS=64`.
  */
-int lockf64(int __fd, int __op, off64_t __length) __INTRODUCED_IN_API_N__;
+int lockf64(int __fd, int __op, off64_t __length) __NOEXCEPT __INTRODUCED_IN_API_N__;
 #endif
 
 __END_DECLS

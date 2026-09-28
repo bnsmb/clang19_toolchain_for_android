@@ -59,18 +59,18 @@ struct mntent {
 };
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int endmntent(FILE* __fp) __THROW __INTRODUCED_IN_API_L__;
+int endmntent(FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 struct mntent* getmntent(FILE* __fp) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 struct mntent* getmntent_r(FILE* __fp, struct mntent* __entry, char* __buf, int __size) __attribute__((nonnull(1,2,3)));
-FILE* setmntent(const char* __filename, const char* __type) __THROW __attribute__((nonnull(1,2)));
+FILE* setmntent(const char* __filename, const char* __type) __NOEXCEPT __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-char* hasmntopt(const struct mntent* __entry, const char* __option) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2)));
+char* hasmntopt(const struct mntent* __entry, const char* __option) __NOEXCEPT __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2)));
 #endif
 
 __END_DECLS

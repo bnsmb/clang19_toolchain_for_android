@@ -74,13 +74,10 @@ extern void android_override_options(void);
 * Enable DT_RELR packed relocations on Android 9+ (API level 28).
 */
 #define ANDROID_RELR_SPEC \
-  "%{fuse-ld=lld|fuse-ld=mold: " \
+  "%{!fuse-ld=gold: " \
   " %:version-compare(>= 23 mandroid-version-min= --pack-dyn-relocs=android) " \
   " %:version-compare(>= 28 mandroid-version-min= --use-android-relr-tags) " \
   " %:version-compare(>= 28 mandroid-version-min= --pack-dyn-relocs=android+relr) " \
-  " ;: " \
-  " %:version-compare(>= 30 mandroid-version-min= -z) " \
-  " %:version-compare(>= 30 mandroid-version-min= pack-relative-relocs) " \
   " } "
 
 /* Use read-only segments on Android 10+ (API level 29). */
@@ -118,7 +115,7 @@ extern void android_override_options(void);
   "  %{static|static-pie: crtbegin_static%O%s;: crtbegin_dynamic%O%s}}"
 
 #define ANDROID_ENDFILE_SPEC \
-  "%{shared: crtend_so%O%s;: crtend_android%O%s}"
+  "%{shared: crtend_so%O%s;: crtend_android%O%s} crt_pad_segment%O%s"
 
 /* __builtin_available hooks for the Linux/Android target.  These
    overrides are in scope whenever linux-android.h is included in

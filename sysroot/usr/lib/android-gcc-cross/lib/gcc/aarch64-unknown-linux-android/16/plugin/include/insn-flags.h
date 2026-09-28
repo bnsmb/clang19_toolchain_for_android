@@ -60,6 +60,11 @@
 #define HAVE_ccmpccfpesf_rev (TARGET_FLOAT)
 #define HAVE_ccmpccfpedf_rev (TARGET_FLOAT)
 #define HAVE_nop 1
+#define HAVE_aarch64_yield 1
+#define HAVE_aarch64_wfe 1
+#define HAVE_aarch64_wfi 1
+#define HAVE_aarch64_sev 1
+#define HAVE_aarch64_sevl 1
 #define HAVE_prefetch 1
 #define HAVE_aarch64_pldir 1
 #define HAVE_aarch64_pldx 1
@@ -14868,6 +14873,11 @@ extern rtx        gen_ccmpccfpdf_rev                                   (rtx, rtx
 extern rtx        gen_ccmpccfpesf_rev                                  (rtx, rtx, rtx, rtx, rtx, rtx);
 extern rtx        gen_ccmpccfpedf_rev                                  (rtx, rtx, rtx, rtx, rtx, rtx);
 extern rtx        gen_nop                                              (void);
+extern rtx        gen_aarch64_yield                                    (void);
+extern rtx        gen_aarch64_wfe                                      (void);
+extern rtx        gen_aarch64_wfi                                      (void);
+extern rtx        gen_aarch64_sev                                      (void);
+extern rtx        gen_aarch64_sevl                                     (void);
 extern rtx        gen_prefetch                                         (rtx, rtx, rtx);
 extern rtx        gen_aarch64_pldir                                    (rtx);
 extern rtx        gen_aarch64_pldx                                     (rtx, rtx);

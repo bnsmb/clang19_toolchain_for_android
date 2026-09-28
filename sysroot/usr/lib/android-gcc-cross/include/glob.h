@@ -117,11 +117,11 @@ typedef struct {
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int glob(const char* __pattern, int __flags, int (* __error_callback)(const char* __failure_path, int __failure_errno), glob_t* __result_ptr) __THROWNL __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,4)));
+int glob(const char* __pattern, int __flags, int (* __error_callback)(const char* __failure_path, int __failure_errno), glob_t* __result_ptr) __NOEXCEPTNL __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,4)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-void globfree(glob_t* __result_ptr) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+void globfree(glob_t* __result_ptr) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 __END_DECLS

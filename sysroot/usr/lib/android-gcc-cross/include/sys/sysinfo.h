@@ -43,7 +43,7 @@ __BEGIN_DECLS
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int sysinfo(struct sysinfo* __info) __THROW __attribute__((nonnull(1)));
+int sysinfo(struct sysinfo* __info) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
 /**
@@ -54,7 +54,7 @@ int sysinfo(struct sysinfo* __info) __THROW __attribute__((nonnull(1)));
  *
  * See also sysconf().
  */
-int get_nprocs_conf(void) __THROW __INTRODUCED_IN_API_M__;
+int get_nprocs_conf(void) __NOEXCEPT __INTRODUCED_IN_API_M__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
@@ -66,7 +66,7 @@ int get_nprocs_conf(void) __THROW __INTRODUCED_IN_API_M__;
  *
  * See also sysconf().
  */
-int get_nprocs(void) __THROW __INTRODUCED_IN_API_M__;
+int get_nprocs(void) __NOEXCEPT __INTRODUCED_IN_API_M__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
@@ -78,7 +78,7 @@ int get_nprocs(void) __THROW __INTRODUCED_IN_API_M__;
  *
  * See also sysconf().
  */
-long get_phys_pages(void) __THROW __INTRODUCED_IN_API_M__;
+long get_phys_pages(void) __NOEXCEPT __INTRODUCED_IN_API_M__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
@@ -90,7 +90,7 @@ long get_phys_pages(void) __THROW __INTRODUCED_IN_API_M__;
  *
  * See also sysconf().
  */
-long get_avphys_pages(void) __THROW __INTRODUCED_IN_API_M__;
+long get_avphys_pages(void) __NOEXCEPT __INTRODUCED_IN_API_M__;
 #endif
 
 __END_DECLS

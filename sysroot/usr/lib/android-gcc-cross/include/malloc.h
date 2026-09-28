@@ -59,7 +59,7 @@ __BEGIN_DECLS
  * other processes. Obviously this is not the case for apps, which will
  * be killed in preference to killing other processes.
  */
-__nodiscard void* malloc(size_t __byte_count) __THROW __mallocfunc __BIONIC_ALLOC_SIZE(1);
+__nodiscard void* malloc(size_t __byte_count) __NOEXCEPT __mallocfunc __BIONIC_ALLOC_SIZE(1);
 
 /**
  * [calloc(3)](https://man7.org/linux/man-pages/man3/calloc.3.html) allocates
@@ -68,7 +68,7 @@ __nodiscard void* malloc(size_t __byte_count) __THROW __mallocfunc __BIONIC_ALLO
  * Returns a pointer to the allocated memory on success and returns a null
  * pointer and sets `errno` on failure (but see the notes for malloc()).
  */
-__nodiscard void* calloc(size_t __item_count, size_t __item_size) __THROW __mallocfunc __BIONIC_ALLOC_SIZE(1,2);
+__nodiscard void* calloc(size_t __item_count, size_t __item_size) __NOEXCEPT __mallocfunc __BIONIC_ALLOC_SIZE(1,2);
 
 /**
  * [realloc(3)](https://man7.org/linux/man-pages/man3/realloc.3.html) resizes
@@ -78,7 +78,7 @@ __nodiscard void* calloc(size_t __item_count, size_t __item_size) __THROW __mall
  * memory on success and returns a null pointer and sets `errno` on failure
  * (but see the notes for malloc()).
  */
-__nodiscard void* realloc(void* __ptr, size_t __byte_count) __THROW __BIONIC_ALLOC_SIZE(2);
+__nodiscard void* realloc(void* __ptr, size_t __byte_count) __NOEXCEPT __BIONIC_ALLOC_SIZE(2);
 
 #if __ANDROID_API__ >= 29
 /**
@@ -92,7 +92,7 @@ __nodiscard void* realloc(void* __ptr, size_t __byte_count) __THROW __BIONIC_ALL
  * memory on success and returns a null pointer and sets `errno` on failure
  * (but see the notes for malloc()).
  */
-__nodiscard void* reallocarray(void* __ptr, size_t __item_count, size_t __item_size) __THROW __BIONIC_ALLOC_SIZE(2, 3) __INTRODUCED_IN_API_Q__;
+__nodiscard void* reallocarray(void* __ptr, size_t __item_count, size_t __item_size) __NOEXCEPT __BIONIC_ALLOC_SIZE(2, 3) __INTRODUCED_IN_API_Q__;
 #elif defined(__ANDROID_UNAVAILABLE_SYMBOLS_ARE_WEAK__)
 #include <errno.h>
 static __inline __nodiscard void* reallocarray(void* __ptr, size_t __item_count, size_t __item_size) __BIONIC_ALLOC_SIZE(2, 3) {
@@ -109,7 +109,7 @@ static __inline __nodiscard void* reallocarray(void* __ptr, size_t __item_count,
  * [free(3)](https://man7.org/linux/man-pages/man3/free.3.html) deallocates
  * memory on the heap.
  */
-void free(void* __ptr)__THROW ;
+void free(void* __ptr)__NOEXCEPT ;
 
 /**
  * [memalign(3)](https://man7.org/linux/man-pages/man3/memalign.3.html) allocates
@@ -120,7 +120,7 @@ void free(void* __ptr)__THROW ;
  *
  * See also posix_memalign().
  */
-__nodiscard void* memalign(size_t __alignment, size_t __byte_count) __THROW __mallocfunc __BIONIC_ALLOC_SIZE(2);
+__nodiscard void* memalign(size_t __alignment, size_t __byte_count) __NOEXCEPT __mallocfunc __BIONIC_ALLOC_SIZE(2);
 
 #if __BIONIC_AVAILABILITY_GUARD(17)
 /**
@@ -133,7 +133,7 @@ __nodiscard void* memalign(size_t __alignment, size_t __byte_count) __THROW __ma
  * case, you can define __BIONIC_DISABLE_MALLOC_USABLE_SIZE_FORTIFY_WARNINGS to disable the
  * compiler error.
  */
-__nodiscard size_t malloc_usable_size(const void* __ptr) __THROW __INTRODUCED_IN_API_J_MR1__;
+__nodiscard size_t malloc_usable_size(const void* __ptr) __NOEXCEPT __INTRODUCED_IN_API_J_MR1__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 
 #define __MALLINFO_BODY \
@@ -208,7 +208,7 @@ struct mallinfo2 mallinfo2(void) __RENAME(mallinfo);
  *
  * Available since API level 23.
  */
-int malloc_info(int __must_be_zero, FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(2)));
+int malloc_info(int __must_be_zero, FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(2)));
 #endif
 
 /**
@@ -393,7 +393,7 @@ enum HeapTaggingLevel {
  *
  * Available since API level 26.
  */
-int mallopt(int __option, int __value) __THROW __INTRODUCED_IN_API_O__;
+int mallopt(int __option, int __value) __NOEXCEPT __INTRODUCED_IN_API_O__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)

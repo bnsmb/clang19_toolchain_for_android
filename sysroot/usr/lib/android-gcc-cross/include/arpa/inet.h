@@ -38,21 +38,21 @@
 
 __BEGIN_DECLS
 
-in_addr_t inet_addr(const char* __s) __THROW __attribute__((nonnull(1)));
-int inet_aton(const char* __s, struct in_addr* __addr) __THROW __attribute__((nonnull(1)));
+in_addr_t inet_addr(const char* __s) __NOEXCEPT __attribute__((nonnull(1)));
+int inet_aton(const char* __s, struct in_addr* __addr) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-in_addr_t inet_lnaof(struct in_addr __addr) __THROW __INTRODUCED_IN_API_L__;
+in_addr_t inet_lnaof(struct in_addr __addr) __NOEXCEPT __INTRODUCED_IN_API_L__;
 struct in_addr inet_makeaddr(in_addr_t __net, in_addr_t __host) __INTRODUCED_IN_API_L__;
-in_addr_t inet_netof(struct in_addr __addr) __THROW __INTRODUCED_IN_API_L__;
-in_addr_t inet_network(const char* __s) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+in_addr_t inet_netof(struct in_addr __addr) __NOEXCEPT __INTRODUCED_IN_API_L__;
+in_addr_t inet_network(const char* __s) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-char* inet_ntoa(struct in_addr __addr)__THROW ;
-const char* inet_ntop(int __af, const void* __src, char* __dst, socklen_t __size) __THROW __attribute__((nonnull(2,3)));
-unsigned int inet_nsap_addr(const char* __ascii, unsigned char* __binary, int __n) __THROW __attribute__((nonnull(1,2)));
-char* inet_nsap_ntoa(int __binary_length, const unsigned char* __binary, char* __ascii) __THROW __attribute__((nonnull(2)));
-int inet_pton(int __af, const char* __src, void* __dst) __THROW __attribute__((nonnull(2,3)));
+char* inet_ntoa(struct in_addr __addr)__NOEXCEPT ;
+const char* inet_ntop(int __af, const void* __src, char* __dst, socklen_t __size) __NOEXCEPT __attribute__((nonnull(2,3)));
+unsigned int inet_nsap_addr(const char* __ascii, unsigned char* __binary, int __n) __NOEXCEPT __attribute__((nonnull(1,2)));
+char* inet_nsap_ntoa(int __binary_length, const unsigned char* __binary, char* __ascii) __NOEXCEPT __attribute__((nonnull(2)));
+int inet_pton(int __af, const char* __src, void* __dst) __NOEXCEPT __attribute__((nonnull(2,3)));
 
 __END_DECLS
 

@@ -74,7 +74,7 @@ __BEGIN_DECLS
  * __assert() was called by assert() on failure when compiled for C89.
  * Most users want assert() instead, but this can be useful for reporting other failures.
  */
-void __assert(const char* __file, int __line, const char* __msg) __THROW __noreturn __attribute__((nonnull(1,3)));
+void __assert(const char* __file, int __line, const char* __msg) __NOEXCEPT __noreturn __attribute__((nonnull(1,3)));
 
 /**
  * __assert2() is called by assert() on failure. Most users want assert()

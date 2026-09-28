@@ -66,6 +66,6 @@ __BEGIN_DECLS
  * This system call is not available to applications.
  * Use syslog() or `<android/log.h>` instead.
  */
-int klogctl(int __type, char* __buf, int __buf_size)__THROW ;
+int klogctl(int __type, char* __buf, int __buf_size)__NOEXCEPT ;
 
 __END_DECLS

@@ -55,6 +55,6 @@ __BEGIN_DECLS
  * Does not return on successful reboot, returns 0 if CAD was successfully enabled/disabled,
  * and returns -1 and sets `errno` on failure.
  */
-int reboot(int __op)__THROW ;
+int reboot(int __op)__NOEXCEPT ;
 
 __END_DECLS

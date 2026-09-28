@@ -47,7 +47,7 @@ __BEGIN_DECLS
  *
  * Available since API level 24.
  */
-int adjtimex(struct timex* __buf) __THROW __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
+int adjtimex(struct timex* __buf) __NOEXCEPT __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
@@ -58,7 +58,7 @@ int adjtimex(struct timex* __buf) __THROW __INTRODUCED_IN_API_N__ __attribute__(
  *
  * Available since API level 24.
  */
-int clock_adjtime(clockid_t __clock, struct timex* __tx) __THROW __INTRODUCED_IN_API_N__ __attribute__((nonnull(2)));
+int clock_adjtime(clockid_t __clock, struct timex* __tx) __NOEXCEPT __INTRODUCED_IN_API_N__ __attribute__((nonnull(2)));
 #endif
 
 __END_DECLS

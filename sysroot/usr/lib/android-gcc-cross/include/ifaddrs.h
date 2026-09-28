@@ -81,7 +81,7 @@ struct ifaddrs {
  *
  * Available since API level 24.
  */
-int getifaddrs(struct ifaddrs* * __list_ptr) __THROW __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
+int getifaddrs(struct ifaddrs* * __list_ptr) __NOEXCEPT __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
@@ -91,7 +91,7 @@ int getifaddrs(struct ifaddrs* * __list_ptr) __THROW __INTRODUCED_IN_API_N__ __a
  *
  * Available since API level 24.
  */
-void freeifaddrs(struct ifaddrs* __ptr) __THROW __INTRODUCED_IN_API_N__;
+void freeifaddrs(struct ifaddrs* __ptr) __NOEXCEPT __INTRODUCED_IN_API_N__;
 #endif
 
 __END_DECLS

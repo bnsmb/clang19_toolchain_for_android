@@ -333,7 +333,7 @@ typedef struct {
  * Returns the absolute value where possible.
  * For the most negative value, the result is unchanged (and thus also negative).
  */
-intmax_t imaxabs(intmax_t __i) __THROW __attribute_const__ __INTRODUCED_IN_API_K__;
+intmax_t imaxabs(intmax_t __i) __NOEXCEPT __attribute_const__ __INTRODUCED_IN_API_K__;
 
 /**
  * Returns `__numerator / __denominator` and `__numerator % __denominator`,
@@ -342,15 +342,15 @@ intmax_t imaxabs(intmax_t __i) __THROW __attribute_const__ __INTRODUCED_IN_API_K
  * This function was useful for portability before C99,
  * where `/` and `%` were also defined to truncate towards zero.
  */
-imaxdiv_t imaxdiv(intmax_t __numerator, intmax_t __denominator) __THROW __attribute_const__ __INTRODUCED_IN_API_K__;
+imaxdiv_t imaxdiv(intmax_t __numerator, intmax_t __denominator) __NOEXCEPT __attribute_const__ __INTRODUCED_IN_API_K__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(19) */
 
-intmax_t strtoimax(const char* __s, char* * __end_ptr, int __base) __THROW __attribute__((nonnull(1)));
-uintmax_t strtoumax(const char* __s, char* * __end_ptr, int __base) __THROW __attribute__((nonnull(1)));
+intmax_t strtoimax(const char* __s, char* * __end_ptr, int __base) __NOEXCEPT __attribute__((nonnull(1)));
+uintmax_t strtoumax(const char* __s, char* * __end_ptr, int __base) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-intmax_t wcstoimax(const wchar_t* __s, wchar_t* * __end_ptr, int __base) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
-uintmax_t wcstoumax(const wchar_t* __s, wchar_t* * __end_ptr, int __base) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+intmax_t wcstoimax(const wchar_t* __s, wchar_t* * __end_ptr, int __base) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+uintmax_t wcstoumax(const wchar_t* __s, wchar_t* * __end_ptr, int __base) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 __END_DECLS

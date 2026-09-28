@@ -49,7 +49,7 @@ __BEGIN_DECLS
  * Returns a new file descriptor on success and returns -1 and sets `errno` on
  * failure.
  */
-int epoll_create(int __size)__THROW ;
+int epoll_create(int __size)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /**
@@ -60,7 +60,7 @@ int epoll_create(int __size)__THROW ;
  * Returns a new file descriptor on success and returns -1 and sets `errno` on
  * failure.
  */
-int epoll_create1(int __flags) __THROW __INTRODUCED_IN_API_L__;
+int epoll_create1(int __flags) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -69,7 +69,7 @@ int epoll_create1(int __flags) __THROW __INTRODUCED_IN_API_L__;
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int epoll_ctl(int __epoll_fd, int __op, int __fd, struct epoll_event* __event)__THROW ;
+int epoll_ctl(int __epoll_fd, int __op, int __fd, struct epoll_event* __event)__NOEXCEPT ;
 
 /**
  * [epoll_wait(2)](https://man7.org/linux/man-pages/man2/epoll_wait.2.html)
@@ -78,13 +78,13 @@ int epoll_ctl(int __epoll_fd, int __op, int __fd, struct epoll_event* __event)__
  * Returns the number of ready file descriptors on success, 0 on timeout,
  * or -1 and sets `errno` on failure.
  */
-int epoll_wait(int __epoll_fd, struct epoll_event* __events, int __event_count, int __timeout_ms) __attribute__((nonnull(2)));
+int epoll_wait(int __epoll_fd, struct epoll_event* __events, int __event_count, int __timeout_ms) __NOEXCEPT __attribute__((nonnull(2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /**
  * Like epoll_wait() but atomically applying the given signal mask.
  */
-int epoll_pwait(int __epoll_fd, struct epoll_event* __events, int __event_count, int __timeout_ms, const sigset_t* __mask) __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int epoll_pwait(int __epoll_fd, struct epoll_event* __events, int __event_count, int __timeout_ms, const sigset_t* __mask) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -102,7 +102,7 @@ int epoll_pwait64(int __epoll_fd, struct epoll_event* __events, int __event_coun
  *
  * Available since API level 35.
  */
-int epoll_pwait2(int __epoll_fd, struct epoll_event* __events, int __event_count, const struct timespec* __timeout, const sigset_t* __mask) __INTRODUCED_IN_API_V__ __attribute__((nonnull(2)));
+int epoll_pwait2(int __epoll_fd, struct epoll_event* __events, int __event_count, const struct timespec* __timeout, const sigset_t* __mask) __NOEXCEPT __INTRODUCED_IN_API_V__ __attribute__((nonnull(2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(35)

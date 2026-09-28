@@ -65,31 +65,31 @@ int posix_spawnp(pid_t* __pid, const char* __file, const posix_spawn_file_action
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_init(posix_spawnattr_t * __attr) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+int posix_spawnattr_init(posix_spawnattr_t * __attr) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_destroy(posix_spawnattr_t * __attr) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+int posix_spawnattr_destroy(posix_spawnattr_t * __attr) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_setflags(posix_spawnattr_t * __attr, short __flags) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+int posix_spawnattr_setflags(posix_spawnattr_t * __attr, short __flags) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_getflags(const posix_spawnattr_t * __attr, short* __flags) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
+int posix_spawnattr_getflags(const posix_spawnattr_t * __attr, short* __flags) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_setpgroup(posix_spawnattr_t * __attr, pid_t __pgroup) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+int posix_spawnattr_setpgroup(posix_spawnattr_t * __attr, pid_t __pgroup) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_getpgroup(const posix_spawnattr_t * __attr, pid_t* __pgroup) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
+int posix_spawnattr_getpgroup(const posix_spawnattr_t * __attr, pid_t* __pgroup) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_setsigmask(posix_spawnattr_t * __attr, const sigset_t* __mask) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
+int posix_spawnattr_setsigmask(posix_spawnattr_t * __attr, const sigset_t* __mask) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -97,7 +97,7 @@ int posix_spawnattr_setsigmask64(posix_spawnattr_t * __attr, const sigset64_t* _
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_getsigmask(const posix_spawnattr_t * __attr, sigset_t* __mask) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
+int posix_spawnattr_getsigmask(const posix_spawnattr_t * __attr, sigset_t* __mask) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -105,7 +105,7 @@ int posix_spawnattr_getsigmask64(const posix_spawnattr_t * __attr, sigset64_t* _
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_setsigdefault(posix_spawnattr_t * __attr, const sigset_t* __mask) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
+int posix_spawnattr_setsigdefault(posix_spawnattr_t * __attr, const sigset_t* __mask) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -113,7 +113,7 @@ int posix_spawnattr_setsigdefault64(posix_spawnattr_t * __attr, const sigset64_t
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_getsigdefault(const posix_spawnattr_t * __attr, sigset_t* __mask) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
+int posix_spawnattr_getsigdefault(const posix_spawnattr_t * __attr, sigset_t* __mask) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -121,44 +121,44 @@ int posix_spawnattr_getsigdefault64(const posix_spawnattr_t * __attr, sigset64_t
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_setschedparam(posix_spawnattr_t * __attr, const struct sched_param* __param) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
+int posix_spawnattr_setschedparam(posix_spawnattr_t * __attr, const struct sched_param* __param) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_getschedparam(const posix_spawnattr_t * __attr, struct sched_param* __param) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
+int posix_spawnattr_getschedparam(const posix_spawnattr_t * __attr, struct sched_param* __param) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_setschedpolicy(posix_spawnattr_t * __attr, int __policy) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+int posix_spawnattr_setschedpolicy(posix_spawnattr_t * __attr, int __policy) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawnattr_getschedpolicy(const posix_spawnattr_t * __attr, int* __policy) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
+int posix_spawnattr_getschedpolicy(const posix_spawnattr_t * __attr, int* __policy) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawn_file_actions_init(posix_spawn_file_actions_t * __actions) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+int posix_spawn_file_actions_init(posix_spawn_file_actions_t * __actions) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawn_file_actions_destroy(posix_spawn_file_actions_t * __actions) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+int posix_spawn_file_actions_destroy(posix_spawn_file_actions_t * __actions) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawn_file_actions_addopen(posix_spawn_file_actions_t * __actions, int __fd, const char* __path, int __flags, mode_t __mode) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,3)));
+int posix_spawn_file_actions_addopen(posix_spawn_file_actions_t * __actions, int __fd, const char* __path, int __flags, mode_t __mode) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,3)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawn_file_actions_addclose(posix_spawn_file_actions_t * __actions, int __fd) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+int posix_spawn_file_actions_addclose(posix_spawn_file_actions_t * __actions, int __fd) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
-int posix_spawn_file_actions_adddup2(posix_spawn_file_actions_t * __actions, int __fd, int __new_fd) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+int posix_spawn_file_actions_adddup2(posix_spawn_file_actions_t * __actions, int __fd, int __new_fd) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(34)
 /** Synonym for posix_spawn_file_actions_addchdir(). */
-int posix_spawn_file_actions_addchdir_np(posix_spawn_file_actions_t * __actions, const char* __path) __THROW __INTRODUCED_IN_API_U__ __attribute__((nonnull(1,2)));
+int posix_spawn_file_actions_addchdir_np(posix_spawn_file_actions_t * __actions, const char* __path) __NOEXCEPT __INTRODUCED_IN_API_U__ __attribute__((nonnull(1,2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(34)
@@ -173,7 +173,7 @@ int posix_spawn_file_actions_addchdir(posix_spawn_file_actions_t * __actions, co
 
 #if __BIONIC_AVAILABILITY_GUARD(34)
 /** Synonym for posix_spawn_file_actions_addfchdir(). */
-int posix_spawn_file_actions_addfchdir_np(posix_spawn_file_actions_t * __actions, int __fd) __THROW __INTRODUCED_IN_API_U__ __attribute__((nonnull(1)));
+int posix_spawn_file_actions_addfchdir_np(posix_spawn_file_actions_t * __actions, int __fd) __NOEXCEPT __INTRODUCED_IN_API_U__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(34)

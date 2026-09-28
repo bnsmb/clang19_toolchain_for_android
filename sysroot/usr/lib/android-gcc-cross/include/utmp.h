@@ -99,12 +99,12 @@ struct utmp {
 /**
  * Returns -1 and sets errno to ENOTSUP.
  */
-int utmpname(const char* __path) __THROW __attribute__((nonnull(1)));
+int utmpname(const char* __path) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * Does nothing.
  */
-void setutent(void)__THROW ;
+void setutent(void)__NOEXCEPT ;
 
 /**
  * Does nothing and returns null.
@@ -119,7 +119,7 @@ struct utmp* pututline(const struct utmp* __entry) __attribute__((nonnull(1)));
 /**
  * Does nothing.
  */
-void endutent(void)__THROW ;
+void endutent(void)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
 /**
@@ -132,7 +132,7 @@ void endutent(void)__THROW ;
  *
  * Available since API level 23.
  */
-int login_tty(int __fd) __THROW __INTRODUCED_IN_API_M__;
+int login_tty(int __fd) __NOEXCEPT __INTRODUCED_IN_API_M__;
 #endif
 
 __END_DECLS

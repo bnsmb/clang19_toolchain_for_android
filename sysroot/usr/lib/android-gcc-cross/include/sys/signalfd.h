@@ -47,7 +47,7 @@ __BEGIN_DECLS
  *
  * Returns the file descriptor on success, and returns -1 and sets `errno` on failure.
  */
-int signalfd(int __fd, const sigset_t* __mask, int __flags) __THROW __INTRODUCED_IN_API_J_MR2__ __attribute__((nonnull(2)));
+int signalfd(int __fd, const sigset_t* __mask, int __flags) __NOEXCEPT __INTRODUCED_IN_API_J_MR2__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(18) */
 
 #if __BIONIC_AVAILABILITY_GUARD(28)

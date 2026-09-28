@@ -30,15 +30,17 @@
 #error "Never include this file directly; instead, include <fcntl.h>"
 #endif
 
+#if __BIONIC_AVAILABILITY_GUARD(17)
 int __open_2(const char*, int) __attribute__((nonnull(1)));
 int __openat_2(int, const char*, int) __attribute__((nonnull(2)));
+#endif
 /*
  * These are the easiest way to call the real open even in clang FORTIFY.
  */
 int __open_real(const char*, int, ...) __RENAME(open) __attribute__((nonnull(1)));
 int __openat_real(int, const char*, int, ...) __RENAME(openat) __attribute__((nonnull(2)));
 
-#if defined(__BIONIC_FORTIFY)
+#if defined(__BIONIC_FORTIFY) && defined(__clang__) && __ANDROID_API__ >= 17
 #define __open_too_many_args_error "too many arguments"
 #define __open_too_few_args_error "called with O_CREAT or O_TMPFILE, but missing mode"
 #define __open_useless_modes_warning "has superfluous mode bits; missing O_CREAT or O_TMPFILE?"

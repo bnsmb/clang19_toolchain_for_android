@@ -346,6 +346,6 @@ __BEGIN_DECLS
  * POSIX's best efforts, the exact set of constants that return useful results
  * will also vary by system.
  */
-long sysconf(int __name)__THROW ;
+long sysconf(int __name)__NOEXCEPT ;
 
 __END_DECLS

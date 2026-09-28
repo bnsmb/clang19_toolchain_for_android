@@ -49,7 +49,7 @@ typedef unsigned int nfds_t;
  * Returns the number of ready file descriptors on success, 0 for timeout,
  * and returns -1 and sets `errno` on failure.
  */
-int poll(struct pollfd* __fds, nfds_t __count, int __timeout_ms);
+int poll(struct pollfd* __fds, nfds_t __count, int __timeout_ms)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /**
@@ -60,7 +60,7 @@ int poll(struct pollfd* __fds, nfds_t __count, int __timeout_ms);
  * Returns the number of ready file descriptors on success, 0 for timeout,
  * and returns -1 and sets `errno` on failure.
  */
-int ppoll(struct pollfd* __fds, nfds_t __count, const struct timespec* __timeout, const sigset_t* __mask) __INTRODUCED_IN_API_L__;
+int ppoll(struct pollfd* __fds, nfds_t __count, const struct timespec* __timeout, const sigset_t* __mask) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(28)

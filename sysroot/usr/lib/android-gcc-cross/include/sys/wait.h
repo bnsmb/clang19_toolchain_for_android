@@ -38,11 +38,11 @@
 
 __BEGIN_DECLS
 
-pid_t wait(int* __status);
-pid_t waitpid(pid_t __pid, int* __status, int __options);
+pid_t wait(int* __status)__NOEXCEPT ;
+pid_t waitpid(pid_t __pid, int* __status, int __options)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(18)
-pid_t wait4(pid_t __pid, int* __status, int __options, struct rusage* __rusage) __THROWNL __INTRODUCED_IN_API_J_MR2__;
+pid_t wait4(pid_t __pid, int* __status, int __options, struct rusage* __rusage) __NOEXCEPT __INTRODUCED_IN_API_J_MR2__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(18) */
 
 /* Posix states that idtype_t should be an enumeration type, but
@@ -51,7 +51,7 @@ pid_t wait4(pid_t __pid, int* __status, int __options, struct rusage* __rusage) 
  */
 typedef int idtype_t;
 
-int waitid(idtype_t __type, id_t __id, siginfo_t* __info, int __options);
+int waitid(idtype_t __type, id_t __id, siginfo_t* __info, int __options)__NOEXCEPT ;
 
 __END_DECLS
 

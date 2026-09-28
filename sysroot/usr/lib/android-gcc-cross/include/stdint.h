@@ -247,6 +247,9 @@ typedef int64_t       intmax_t;
 #define WCHAR_WIDTH __WCHAR_WIDTH__
 #define WINT_WIDTH __WINT_WIDTH__
 
+#define __UINTPTR_WIDTH__ __SIZE_WIDTH__
+#define __UINTMAX_WIDTH__ __INTMAX_WIDTH__
+
 #define INTPTR_WIDTH __INTPTR_WIDTH__
 #define UINTPTR_WIDTH __UINTPTR_WIDTH__
 

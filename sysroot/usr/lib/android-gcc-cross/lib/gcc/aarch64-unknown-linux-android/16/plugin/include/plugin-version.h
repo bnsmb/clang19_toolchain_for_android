@@ -1,12 +1,12 @@
 #include "configargs.h"
 
 #define GCCPLUGIN_VERSION_MAJOR   16
-#define GCCPLUGIN_VERSION_MINOR   1
+#define GCCPLUGIN_VERSION_MINOR   2
 #define GCCPLUGIN_VERSION_PATCHLEVEL   1
 #define GCCPLUGIN_VERSION  (GCCPLUGIN_VERSION_MAJOR*1000 + GCCPLUGIN_VERSION_MINOR)
 
-static char basever[] = "16.1.1";
-static char datestamp[] = "20260716";
+static char basever[] = "16.2.1";
+static char datestamp[] = "20260927";
 static char devphase[] = "";
 static char revision[] = "";
 

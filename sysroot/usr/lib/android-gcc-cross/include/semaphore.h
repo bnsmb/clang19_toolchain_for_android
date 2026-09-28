@@ -46,14 +46,14 @@ typedef struct {
 #define SEM_FAILED __BIONIC_CAST(reinterpret_cast, sem_t*, 0)
 
 #if __BIONIC_AVAILABILITY_GUARD(30)
-int sem_clockwait(sem_t* __sem, clockid_t __clock, const struct timespec* __ts) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1,3)));
+int sem_clockwait(sem_t* __sem, clockid_t __clock, const struct timespec* __ts) __NOEXCEPT __INTRODUCED_IN_API_R__ __attribute__((nonnull(1,3)));
 #endif
 
-int sem_destroy(sem_t* __sem) __THROW __attribute__((nonnull(1)));
-int sem_getvalue(sem_t* __sem, int* __value) __THROW __attribute__((nonnull(1,2)));
-int sem_init(sem_t* __sem, int __shared, unsigned int __value) __THROW __attribute__((nonnull(1)));
-int sem_post(sem_t* __sem) __THROWNL __attribute__((nonnull(1)));
-int sem_timedwait(sem_t* __sem, const struct timespec* __ts) __attribute__((nonnull(1,2)));
+int sem_destroy(sem_t* __sem) __NOEXCEPT __attribute__((nonnull(1)));
+int sem_getvalue(sem_t* __sem, int* __value) __NOEXCEPT __attribute__((nonnull(1,2)));
+int sem_init(sem_t* __sem, int __shared, unsigned int __value) __NOEXCEPT __attribute__((nonnull(1)));
+int sem_post(sem_t* __sem) __NOEXCEPT __attribute__((nonnull(1)));
+int sem_timedwait(sem_t* __sem, const struct timespec* __ts) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 /**
@@ -71,13 +71,13 @@ int sem_timedwait(sem_t* __sem, const struct timespec* __ts) __attribute__((nonn
 int sem_timedwait_monotonic_np(sem_t* __sem, const struct timespec* __ts) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
 #endif
 
-int sem_trywait(sem_t* __sem) __THROWNL __attribute__((nonnull(1)));
-int sem_wait(sem_t* __sem) __attribute__((nonnull(1)));
+int sem_trywait(sem_t* __sem) __NOEXCEPT __attribute__((nonnull(1)));
+int sem_wait(sem_t* __sem) __NOEXCEPT __attribute__((nonnull(1)));
 
 /* These aren't actually implemented. */
-sem_t* sem_open(const char* __name, int _flags, ...) __THROW __attribute__((nonnull(1)));
-int sem_close(sem_t* __sem) __THROW __attribute__((nonnull(1)));
-int sem_unlink(const char* __name) __THROW __attribute__((nonnull(1)));
+sem_t* sem_open(const char* __name, int _flags, ...) __NOEXCEPT __attribute__((nonnull(1)));
+int sem_close(sem_t* __sem) __NOEXCEPT __attribute__((nonnull(1)));
+int sem_unlink(const char* __name) __NOEXCEPT __attribute__((nonnull(1)));
 
 __END_DECLS
 

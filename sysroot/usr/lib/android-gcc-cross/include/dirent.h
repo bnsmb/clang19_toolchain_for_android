@@ -57,6 +57,9 @@ __BEGIN_DECLS
 /** d_type value for a socket. */
 #define DT_SOCK 12
 #define DT_WHT 14
+ 
+#define IFTODT(x) ((x)>>12 & 0xF)
+#define DTTOIF(x) ((x)<<12)
 
 #if defined(__LP64__)
 #define __DIRENT64_INO_T ino_t
@@ -143,7 +146,7 @@ int closedir(DIR* __dir) __attribute__((nonnull(1)));
  * [rewinddir(3)](https://man7.org/linux/man-pages/man3/rewinddir.3.html)
  * rewinds a directory stream to the first entry.
  */
-void rewinddir(DIR* __dir) __THROW __attribute__((nonnull(1)));
+void rewinddir(DIR* __dir) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
 /**
@@ -153,7 +156,7 @@ void rewinddir(DIR* __dir) __THROW __attribute__((nonnull(1)));
  *
  * Available since API level 23.
  */
-void seekdir(DIR* __dir, long __location) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+void seekdir(DIR* __dir, long __location) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
@@ -166,7 +169,7 @@ void seekdir(DIR* __dir, long __location) __THROW __INTRODUCED_IN_API_M__ __attr
  *
  * Available since API level 23.
  */
-long telldir(DIR* __dir) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+long telldir(DIR* __dir) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 /**
@@ -175,20 +178,20 @@ long telldir(DIR* __dir) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(
  *
  * Returns a file descriptor on success and returns -1 and sets `errno` on failure.
  */
-int dirfd(DIR* __dir) __THROW __attribute__((nonnull(1)));
+int dirfd(DIR* __dir) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [alphasort(3)](https://man7.org/linux/man-pages/man3/alphasort.3.html) is a
  * comparator for use with scandir() that uses strcoll().
  */
-int alphasort(const struct dirent* * __lhs, const struct dirent* * __rhs) __THROW __attribute__((nonnull(1,2)));
+int alphasort(const struct dirent* * __lhs, const struct dirent* * __rhs) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /**
  * [alphasort64(3)](https://man7.org/linux/man-pages/man3/alphasort.3.html) is a
  * comparator for use with scandir64() that uses strcmp().
  */
-int alphasort64(const struct dirent64* * __lhs, const struct dirent64* * __rhs) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
+int alphasort64(const struct dirent64* * __lhs, const struct dirent64* * __rhs) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**

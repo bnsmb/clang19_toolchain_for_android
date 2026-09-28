@@ -37,38 +37,38 @@ typedef __WINT_TYPE__ wint_t;
 
 #define WEOF __BIONIC_CAST(static_cast, wint_t, -1)
 
-int iswalnum(wint_t __wc)__THROW ;
-int iswalpha(wint_t __wc)__THROW ;
+int iswalnum(wint_t __wc)__NOEXCEPT ;
+int iswalpha(wint_t __wc)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int iswblank(wint_t __wc) __THROW __INTRODUCED_IN_API_L__;
+int iswblank(wint_t __wc) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-int iswcntrl(wint_t __wc)__THROW ;
-int iswdigit(wint_t __wc)__THROW ;
-int iswgraph(wint_t __wc)__THROW ;
-int iswlower(wint_t __wc)__THROW ;
-int iswprint(wint_t __wc)__THROW ;
-int iswpunct(wint_t __wc)__THROW ;
-int iswspace(wint_t __wc)__THROW ;
-int iswupper(wint_t __wc)__THROW ;
-int iswxdigit(wint_t __wc)__THROW ;
+int iswcntrl(wint_t __wc)__NOEXCEPT ;
+int iswdigit(wint_t __wc)__NOEXCEPT ;
+int iswgraph(wint_t __wc)__NOEXCEPT ;
+int iswlower(wint_t __wc)__NOEXCEPT ;
+int iswprint(wint_t __wc)__NOEXCEPT ;
+int iswpunct(wint_t __wc)__NOEXCEPT ;
+int iswspace(wint_t __wc)__NOEXCEPT ;
+int iswupper(wint_t __wc)__NOEXCEPT ;
+int iswxdigit(wint_t __wc)__NOEXCEPT ;
 
-wint_t towlower(wint_t __wc)__THROW ;
-wint_t towupper(wint_t __wc)__THROW ;
+wint_t towlower(wint_t __wc)__NOEXCEPT ;
+wint_t towupper(wint_t __wc)__NOEXCEPT ;
 
 typedef long wctype_t;
-wctype_t wctype(const char* __name)__THROW ;
-int iswctype(wint_t __wc, wctype_t __type)__THROW ;
+wctype_t wctype(const char* __name)__NOEXCEPT ;
+int iswctype(wint_t __wc, wctype_t __type)__NOEXCEPT ;
 
 typedef const void* wctrans_t;
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-wint_t towctrans(wint_t __wc, wctrans_t __transform) __THROW __INTRODUCED_IN_API_O__;
+wint_t towctrans(wint_t __wc, wctrans_t __transform) __NOEXCEPT __INTRODUCED_IN_API_O__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-wctrans_t wctrans(const char* __name) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
+wctrans_t wctrans(const char* __name) __NOEXCEPT __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 #endif
 
 __END_DECLS

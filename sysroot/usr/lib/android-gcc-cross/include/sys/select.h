@@ -142,7 +142,7 @@ int __FD_ISSET_chk(int, const fd_set*, size_t) __INTRODUCED_IN_API_L__;
  * Returns the number of ready file descriptors on success, 0 for timeout,
  * and returns -1 and sets `errno` on failure.
  */
-int select(int __max_fd_plus_one, fd_set* __read_fds, fd_set* __write_fds, fd_set* __exception_fds, struct timeval* __timeout);
+int select(int __max_fd_plus_one, fd_set* __read_fds, fd_set* __write_fds, fd_set* __exception_fds, struct timeval* __timeout)__NOEXCEPT ;
 
 /**
  * [pselect(2)](https://man7.org/linux/man-pages/man2/pselect.2.html) waits on a
@@ -154,7 +154,7 @@ int select(int __max_fd_plus_one, fd_set* __read_fds, fd_set* __write_fds, fd_se
  * Returns the number of ready file descriptors on success, 0 for timeout,
  * and returns -1 and sets `errno` on failure.
  */
-int pselect(int __max_fd_plus_one, fd_set* __read_fds, fd_set* __write_fds, fd_set* __exception_fds, const struct timespec* __timeout, const sigset_t* __mask);
+int pselect(int __max_fd_plus_one, fd_set* __read_fds, fd_set* __write_fds, fd_set* __exception_fds, const struct timespec* __timeout, const sigset_t* __mask)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 /**

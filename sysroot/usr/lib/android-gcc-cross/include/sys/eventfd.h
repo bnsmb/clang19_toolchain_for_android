@@ -55,7 +55,7 @@ __BEGIN_DECLS
  *
  * Returns a new file descriptor on success, and returns -1 and sets `errno` on failure.
  */
-int eventfd(unsigned int __initial_value, int __flags)__THROW ;
+int eventfd(unsigned int __initial_value, int __flags)__NOEXCEPT ;
 
 /** The type used by eventfd_read() and eventfd_write(). */
 typedef uint64_t eventfd_t;

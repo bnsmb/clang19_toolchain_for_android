@@ -69,233 +69,233 @@ typedef __float_t float_t;
 #define isinf(x) __builtin_isinf(x)
 #define isnan(x) __builtin_isnan(x)
 
-double acos(double __x)__THROW ;
-float acosf(float __x)__THROW ;
-long double acosl(long double __x)__THROW ;
+double acos(double __x)__NOEXCEPT ;
+float acosf(float __x)__NOEXCEPT ;
+long double acosl(long double __x)__NOEXCEPT ;
 
-double asin(double __x)__THROW ;
-float asinf(float __x)__THROW ;
-long double asinl(long double __x)__THROW ;
+double asin(double __x)__NOEXCEPT ;
+float asinf(float __x)__NOEXCEPT ;
+long double asinl(long double __x)__NOEXCEPT ;
 
-double atan(double __x)__THROW ;
-float atanf(float __x)__THROW ;
-long double atanl(long double __x)__THROW ;
+double atan(double __x)__NOEXCEPT ;
+float atanf(float __x)__NOEXCEPT ;
+long double atanl(long double __x)__NOEXCEPT ;
 
-double atan2(double __y, double __x)__THROW ;
-float atan2f(float __y, float __x)__THROW ;
-long double atan2l(long double __y, long double __x)__THROW ;
+double atan2(double __y, double __x)__NOEXCEPT ;
+float atan2f(float __y, float __x)__NOEXCEPT ;
+long double atan2l(long double __y, long double __x)__NOEXCEPT ;
 
-double cos(double __x)__THROW ;
-float cosf(float __x)__THROW ;
-long double cosl(long double __x)__THROW ;
+double cos(double __x)__NOEXCEPT ;
+float cosf(float __x)__NOEXCEPT ;
+long double cosl(long double __x)__NOEXCEPT ;
 
-double sin(double __x)__THROW ;
-float sinf(float __x)__THROW ;
-long double sinl(long double __x)__THROW ;
+double sin(double __x)__NOEXCEPT ;
+float sinf(float __x)__NOEXCEPT ;
+long double sinl(long double __x)__NOEXCEPT ;
 
-double tan(double __x)__THROW ;
-float tanf(float __x)__THROW ;
-long double tanl(long double __x)__THROW ;
+double tan(double __x)__NOEXCEPT ;
+float tanf(float __x)__NOEXCEPT ;
+long double tanl(long double __x)__NOEXCEPT ;
 
-double acosh(double __x)__THROW ;
-float acoshf(float __x)__THROW ;
-long double acoshl(long double __x)__THROW ;
+double acosh(double __x)__NOEXCEPT ;
+float acoshf(float __x)__NOEXCEPT ;
+long double acoshl(long double __x)__NOEXCEPT ;
 
-double asinh(double __x)__THROW ;
-float asinhf(float __x)__THROW ;
-long double asinhl(long double __x)__THROW ;
+double asinh(double __x)__NOEXCEPT ;
+float asinhf(float __x)__NOEXCEPT ;
+long double asinhl(long double __x)__NOEXCEPT ;
 
-double atanh(double __x)__THROW ;
-float atanhf(float __x)__THROW ;
-long double atanhl(long double __x)__THROW ;
+double atanh(double __x)__NOEXCEPT ;
+float atanhf(float __x)__NOEXCEPT ;
+long double atanhl(long double __x)__NOEXCEPT ;
 
-double cosh(double __x)__THROW ;
-float coshf(float __x)__THROW ;
-long double coshl(long double __x)__THROW ;
+double cosh(double __x)__NOEXCEPT ;
+float coshf(float __x)__NOEXCEPT ;
+long double coshl(long double __x)__NOEXCEPT ;
 
-double sinh(double __x)__THROW ;
-float sinhf(float __x)__THROW ;
-long double sinhl(long double __x)__THROW ;
+double sinh(double __x)__NOEXCEPT ;
+float sinhf(float __x)__NOEXCEPT ;
+long double sinhl(long double __x)__NOEXCEPT ;
 
-double tanh(double __x)__THROW ;
-float tanhf(float __x)__THROW ;
-long double tanhl(long double __x)__THROW ;
+double tanh(double __x)__NOEXCEPT ;
+float tanhf(float __x)__NOEXCEPT ;
+long double tanhl(long double __x)__NOEXCEPT ;
 
-double exp(double __x)__THROW ;
-float expf(float __x)__THROW ;
-long double expl(long double __x)__THROW ;
+double exp(double __x)__NOEXCEPT ;
+float expf(float __x)__NOEXCEPT ;
+long double expl(long double __x)__NOEXCEPT ;
 
-double exp2(double __x)__THROW ;
-float exp2f(float __x)__THROW ;
-long double exp2l(long double __x)__THROW ;
+double exp2(double __x)__NOEXCEPT ;
+float exp2f(float __x)__NOEXCEPT ;
+long double exp2l(long double __x)__NOEXCEPT ;
 
-double expm1(double __x)__THROW ;
-float expm1f(float __x)__THROW ;
-long double expm1l(long double __x)__THROW ;
+double expm1(double __x)__NOEXCEPT ;
+float expm1f(float __x)__NOEXCEPT ;
+long double expm1l(long double __x)__NOEXCEPT ;
 
-double frexp(double __x, int* __exponent) __THROW __attribute__((nonnull(2)));
-float frexpf(float __x, int* __exponent) __THROW __attribute__((nonnull(2)));
-long double frexpl(long double __x, int* __exponent) __THROW __attribute__((nonnull(2)));
+double frexp(double __x, int* __exponent) __NOEXCEPT __attribute__((nonnull(2)));
+float frexpf(float __x, int* __exponent) __NOEXCEPT __attribute__((nonnull(2)));
+long double frexpl(long double __x, int* __exponent) __NOEXCEPT __attribute__((nonnull(2)));
 
-int ilogb(double __x) __THROW __attribute_const__;
-int ilogbf(float __x) __THROW __attribute_const__;
-int ilogbl(long double __x) __THROW __attribute_const__;
+int ilogb(double __x) __NOEXCEPT __attribute_const__;
+int ilogbf(float __x) __NOEXCEPT __attribute_const__;
+int ilogbl(long double __x) __NOEXCEPT __attribute_const__;
 
-double ldexp(double __x, int __exponent)__THROW ;
-float ldexpf(float __x, int __exponent)__THROW ;
-long double ldexpl(long double __x, int __exponent)__THROW ;
+double ldexp(double __x, int __exponent)__NOEXCEPT ;
+float ldexpf(float __x, int __exponent)__NOEXCEPT ;
+long double ldexpl(long double __x, int __exponent)__NOEXCEPT ;
 
-double log(double __x)__THROW ;
-float logf(float __x)__THROW ;
-long double logl(long double __x)__THROW ;
+double log(double __x)__NOEXCEPT ;
+float logf(float __x)__NOEXCEPT ;
+long double logl(long double __x)__NOEXCEPT ;
 
-double log10(double __x)__THROW ;
-float log10f(float __x)__THROW ;
-long double log10l(long double __x)__THROW ;
+double log10(double __x)__NOEXCEPT ;
+float log10f(float __x)__NOEXCEPT ;
+long double log10l(long double __x)__NOEXCEPT ;
 
-double log1p(double __x)__THROW ;
-float log1pf(float __x)__THROW ;
-long double log1pl(long double __x)__THROW ;
+double log1p(double __x)__NOEXCEPT ;
+float log1pf(float __x)__NOEXCEPT ;
+long double log1pl(long double __x)__NOEXCEPT ;
 
-double log2(double __x)__THROW ;
-float log2f(float __x)__THROW ;
-long double log2l(long double __x)__THROW ;
+double log2(double __x)__NOEXCEPT ;
+float log2f(float __x)__NOEXCEPT ;
+long double log2l(long double __x)__NOEXCEPT ;
 
-double logb(double __x)__THROW ;
-float logbf(float __x)__THROW ;
-long double logbl(long double __x)__THROW ;
+double logb(double __x)__NOEXCEPT ;
+float logbf(float __x)__NOEXCEPT ;
+long double logbl(long double __x)__NOEXCEPT ;
 
-double modf(double __x, double* __integral_part) __THROW __attribute__((nonnull(2)));
-float modff(float __x, float* __integral_part) __THROW __attribute__((nonnull(2)));
-long double modfl(long double __x, long double* __integral_part) __THROW __attribute__((nonnull(2)));
+double modf(double __x, double* __integral_part) __NOEXCEPT __attribute__((nonnull(2)));
+float modff(float __x, float* __integral_part) __NOEXCEPT __attribute__((nonnull(2)));
+long double modfl(long double __x, long double* __integral_part) __NOEXCEPT __attribute__((nonnull(2)));
 
-double scalbn(double __x, int __exponent)__THROW ;
-float scalbnf(float __x, int __exponent)__THROW ;
-long double scalbnl(long double __x, int __exponent)__THROW ;
+double scalbn(double __x, int __exponent)__NOEXCEPT ;
+float scalbnf(float __x, int __exponent)__NOEXCEPT ;
+long double scalbnl(long double __x, int __exponent)__NOEXCEPT ;
 
-double scalbln(double __x, long __exponent)__THROW ;
-float scalblnf(float __x, long __exponent)__THROW ;
-long double scalblnl(long double __x, long __exponent)__THROW ;
+double scalbln(double __x, long __exponent)__NOEXCEPT ;
+float scalblnf(float __x, long __exponent)__NOEXCEPT ;
+long double scalblnl(long double __x, long __exponent)__NOEXCEPT ;
 
-double cbrt(double __x)__THROW ;
-float cbrtf(float __x)__THROW ;
-long double cbrtl(long double __x)__THROW ;
+double cbrt(double __x)__NOEXCEPT ;
+float cbrtf(float __x)__NOEXCEPT ;
+long double cbrtl(long double __x)__NOEXCEPT ;
 
-double fabs(double __x) __THROW __attribute_const__;
-float fabsf(float __x) __THROW __attribute_const__;
-long double fabsl(long double __x) __THROW __attribute_const__;
+double fabs(double __x) __NOEXCEPT __attribute_const__;
+float fabsf(float __x) __NOEXCEPT __attribute_const__;
+long double fabsl(long double __x) __NOEXCEPT __attribute_const__;
 
-double hypot(double __x, double __y)__THROW ;
-float hypotf(float __x, float __y)__THROW ;
-long double hypotl(long double __x, long double __y)__THROW ;
+double hypot(double __x, double __y)__NOEXCEPT ;
+float hypotf(float __x, float __y)__NOEXCEPT ;
+long double hypotl(long double __x, long double __y)__NOEXCEPT ;
 
-double pow(double __x, double __y)__THROW ;
-float powf(float __x, float __y)__THROW ;
-long double powl(long double __x, long double __y)__THROW ;
+double pow(double __x, double __y)__NOEXCEPT ;
+float powf(float __x, float __y)__NOEXCEPT ;
+long double powl(long double __x, long double __y)__NOEXCEPT ;
 
-double sqrt(double __x)__THROW ;
-float sqrtf(float __x)__THROW ;
-long double sqrtl(long double __x)__THROW ;
+double sqrt(double __x)__NOEXCEPT ;
+float sqrtf(float __x)__NOEXCEPT ;
+long double sqrtl(long double __x)__NOEXCEPT ;
 
-double erf(double __x)__THROW ;
-float erff(float __x)__THROW ;
-long double erfl(long double __x)__THROW ;
+double erf(double __x)__NOEXCEPT ;
+float erff(float __x)__NOEXCEPT ;
+long double erfl(long double __x)__NOEXCEPT ;
 
-double erfc(double __x)__THROW ;
-float erfcf(float __x)__THROW ;
-long double erfcl(long double __x)__THROW ;
+double erfc(double __x)__NOEXCEPT ;
+float erfcf(float __x)__NOEXCEPT ;
+long double erfcl(long double __x)__NOEXCEPT ;
 
-double lgamma(double __x)__THROW ;
-float lgammaf(float __x)__THROW ;
-long double lgammal(long double __x)__THROW ;
+double lgamma(double __x)__NOEXCEPT ;
+float lgammaf(float __x)__NOEXCEPT ;
+long double lgammal(long double __x)__NOEXCEPT ;
 
-double tgamma(double __x)__THROW ;
-float tgammaf(float __x)__THROW ;
-long double tgammal(long double __x)__THROW ;
+double tgamma(double __x)__NOEXCEPT ;
+float tgammaf(float __x)__NOEXCEPT ;
+long double tgammal(long double __x)__NOEXCEPT ;
 
-double ceil(double __x)__THROW ;
-float ceilf(float __x)__THROW ;
-long double ceill(long double __x)__THROW ;
+double ceil(double __x)__NOEXCEPT ;
+float ceilf(float __x)__NOEXCEPT ;
+long double ceill(long double __x)__NOEXCEPT ;
 
-double floor(double __x)__THROW ;
-float floorf(float __x)__THROW ;
-long double floorl(long double __x)__THROW ;
+double floor(double __x)__NOEXCEPT ;
+float floorf(float __x)__NOEXCEPT ;
+long double floorl(long double __x)__NOEXCEPT ;
 
-double nearbyint(double __x)__THROW ;
-float nearbyintf(float __x)__THROW ;
-long double nearbyintl(long double __x)__THROW ;
+double nearbyint(double __x)__NOEXCEPT ;
+float nearbyintf(float __x)__NOEXCEPT ;
+long double nearbyintl(long double __x)__NOEXCEPT ;
 
-double rint(double __x)__THROW ;
-float rintf(float __x)__THROW ;
-long double rintl(long double __x)__THROW ;
+double rint(double __x)__NOEXCEPT ;
+float rintf(float __x)__NOEXCEPT ;
+long double rintl(long double __x)__NOEXCEPT ;
 
-long lrint(double __x)__THROW ;
-long lrintf(float __x)__THROW ;
-long lrintl(long double __x)__THROW ;
+long lrint(double __x)__NOEXCEPT ;
+long lrintf(float __x)__NOEXCEPT ;
+long lrintl(long double __x)__NOEXCEPT ;
 
-long long llrint(double __x)__THROW ;
-long long llrintf(float __x)__THROW ;
-long long llrintl(long double __x)__THROW ;
+long long llrint(double __x)__NOEXCEPT ;
+long long llrintf(float __x)__NOEXCEPT ;
+long long llrintl(long double __x)__NOEXCEPT ;
 
-double round(double __x)__THROW ;
-float roundf(float __x)__THROW ;
-long double roundl(long double __x)__THROW ;
+double round(double __x)__NOEXCEPT ;
+float roundf(float __x)__NOEXCEPT ;
+long double roundl(long double __x)__NOEXCEPT ;
 
-long lround(double __x)__THROW ;
-long lroundf(float __x)__THROW ;
-long lroundl(long double __x)__THROW ;
+long lround(double __x)__NOEXCEPT ;
+long lroundf(float __x)__NOEXCEPT ;
+long lroundl(long double __x)__NOEXCEPT ;
 
-long long llround(double __x)__THROW ;
-long long llroundf(float __x)__THROW ;
-long long llroundl(long double __x)__THROW ;
+long long llround(double __x)__NOEXCEPT ;
+long long llroundf(float __x)__NOEXCEPT ;
+long long llroundl(long double __x)__NOEXCEPT ;
 
-double trunc(double __x)__THROW ;
-float truncf(float __x)__THROW ;
-long double truncl(long double __x)__THROW ;
+double trunc(double __x)__NOEXCEPT ;
+float truncf(float __x)__NOEXCEPT ;
+long double truncl(long double __x)__NOEXCEPT ;
 
-double fmod(double __x, double __y)__THROW ;
-float fmodf(float __x, float __y)__THROW ;
-long double fmodl(long double __x, long double __y)__THROW ;
+double fmod(double __x, double __y)__NOEXCEPT ;
+float fmodf(float __x, float __y)__NOEXCEPT ;
+long double fmodl(long double __x, long double __y)__NOEXCEPT ;
 
-double remainder(double __x, double __y)__THROW ;
-float remainderf(float __x, float __y)__THROW ;
-long double remainderl(long double __x, long double __y)__THROW ;
+double remainder(double __x, double __y)__NOEXCEPT ;
+float remainderf(float __x, float __y)__NOEXCEPT ;
+long double remainderl(long double __x, long double __y)__NOEXCEPT ;
 
-double remquo(double __x, double __y, int* __quotient_bits) __THROW __attribute__((nonnull(3)));
-float remquof(float __x, float __y, int* __quotient_bits) __THROW __attribute__((nonnull(3)));
-long double remquol(long double __x, long double __y, int* __quotient_bits) __THROW __attribute__((nonnull(3)));
+double remquo(double __x, double __y, int* __quotient_bits) __NOEXCEPT __attribute__((nonnull(3)));
+float remquof(float __x, float __y, int* __quotient_bits) __NOEXCEPT __attribute__((nonnull(3)));
+long double remquol(long double __x, long double __y, int* __quotient_bits) __NOEXCEPT __attribute__((nonnull(3)));
 
-double copysign(double __value, double __sign) __THROW __attribute_const__;
-float copysignf(float __value, float __sign) __THROW __attribute_const__;
-long double copysignl(long double __value, long double __sign) __THROW __attribute_const__;
+double copysign(double __value, double __sign) __NOEXCEPT __attribute_const__;
+float copysignf(float __value, float __sign) __NOEXCEPT __attribute_const__;
+long double copysignl(long double __value, long double __sign) __NOEXCEPT __attribute_const__;
 
-double nan(const char* __kind) __THROW __attribute_const__ __attribute__((nonnull(1)));
-float nanf(const char* __kind) __THROW __attribute_const__ __attribute__((nonnull(1)));
-long double nanl(const char* __kind) __THROW __attribute_const__ __attribute__((nonnull(1)));
+double nan(const char* __kind) __NOEXCEPT __attribute_const__ __attribute__((nonnull(1)));
+float nanf(const char* __kind) __NOEXCEPT __attribute_const__ __attribute__((nonnull(1)));
+long double nanl(const char* __kind) __NOEXCEPT __attribute_const__ __attribute__((nonnull(1)));
 
-double nextafter(double __x, double __y)__THROW ;
-float nextafterf(float __x, float __y)__THROW ;
-long double nextafterl(long double __x, long double __y)__THROW ;
+double nextafter(double __x, double __y)__NOEXCEPT ;
+float nextafterf(float __x, float __y)__NOEXCEPT ;
+long double nextafterl(long double __x, long double __y)__NOEXCEPT ;
 
-double nexttoward(double __x, long double __y)__THROW ;
-float nexttowardf(float __x, long double __y)__THROW ;
-long double nexttowardl(long double __x, long double __y)__THROW ;
+double nexttoward(double __x, long double __y)__NOEXCEPT ;
+float nexttowardf(float __x, long double __y)__NOEXCEPT ;
+long double nexttowardl(long double __x, long double __y)__NOEXCEPT ;
 
-double fdim(double __x, double __y)__THROW ;
-float fdimf(float __x, float __y)__THROW ;
-long double fdiml(long double __x, long double __y)__THROW ;
+double fdim(double __x, double __y)__NOEXCEPT ;
+float fdimf(float __x, float __y)__NOEXCEPT ;
+long double fdiml(long double __x, long double __y)__NOEXCEPT ;
 
-double fmax(double __x, double __y) __THROW __attribute_const__;
-float fmaxf(float __x, float __y) __THROW __attribute_const__;
-long double fmaxl(long double __x, long double __y) __THROW __attribute_const__;
+double fmax(double __x, double __y) __NOEXCEPT __attribute_const__;
+float fmaxf(float __x, float __y) __NOEXCEPT __attribute_const__;
+long double fmaxl(long double __x, long double __y) __NOEXCEPT __attribute_const__;
 
-double fmin(double __x, double __y) __THROW __attribute_const__;
-float fminf(float __x, float __y) __THROW __attribute_const__;
-long double fminl(long double __x, long double __y) __THROW __attribute_const__;
+double fmin(double __x, double __y) __NOEXCEPT __attribute_const__;
+float fminf(float __x, float __y) __NOEXCEPT __attribute_const__;
+long double fminl(long double __x, long double __y) __NOEXCEPT __attribute_const__;
 
-double fma(double __x, double __y, double __z)__THROW ;
-float fmaf(float __x, float __y, float __z)__THROW ;
-long double fmal(long double __x, long double __y, long double __z)__THROW ;
+double fma(double __x, double __y, double __z)__NOEXCEPT ;
+float fmaf(float __x, float __y, float __z)__NOEXCEPT ;
+long double fmal(long double __x, long double __y, long double __z)__NOEXCEPT ;
 
 #define isgreater(x, y) __builtin_isgreater((x), (y))
 #define isgreaterequal(x, y) __builtin_isgreaterequal((x), (y))
@@ -308,12 +308,12 @@ long double fmal(long double __x, long double __y, long double __z)__THROW ;
 
 extern int signgam;
 
-double j0(double __x)__THROW ;
-double j1(double __x)__THROW ;
-double jn(int __n, double __x)__THROW ;
-double y0(double __x)__THROW ;
-double y1(double __x)__THROW ;
-double yn(int __n, double __x)__THROW ;
+double j0(double __x)__NOEXCEPT ;
+double j1(double __x)__NOEXCEPT ;
+double jn(int __n, double __x)__NOEXCEPT ;
+double y0(double __x)__NOEXCEPT ;
+double y1(double __x)__NOEXCEPT ;
+double yn(int __n, double __x)__NOEXCEPT ;
 
 #define M_E		2.7182818284590452354	/* e */
 #define M_LOG2E		1.4426950408889634074	/* log 2e */
@@ -354,27 +354,27 @@ double yn(int __n, double __x)__THROW ;
 /* Extensions in both BSD and GNU. */
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-double gamma(double __x)__THROW ;
+double gamma(double __x)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-double scalb(double __x, double __exponent)__THROW ;
+double scalb(double __x, double __exponent)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-double drem(double __x, double __y)__THROW ;
+double drem(double __x, double __y)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-int finite(double __x) __THROW __attribute_const__;
+int finite(double __x) __NOEXCEPT __attribute_const__;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-int isinff(float __x) __THROW __attribute_const__;
+int isinff(float __x) __NOEXCEPT __attribute_const__;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-int isnanf(float __x) __THROW __attribute_const__;
+int isnanf(float __x) __NOEXCEPT __attribute_const__;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
@@ -382,59 +382,59 @@ double gamma_r(double __x, int* __sign) __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-double lgamma_r(double __x, int* __sign) __THROW __attribute__((nonnull(2)));
+double lgamma_r(double __x, int* __sign) __NOEXCEPT __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-double significand(double __x)__THROW ;
+double significand(double __x)__NOEXCEPT ;
 #endif
 
 #if (defined(__USE_BSD) || defined(__USE_GNU))
-long double lgammal_r(long double __x, int* __sign) __THROW __attribute__((nonnull(2)));
+long double lgammal_r(long double __x, int* __sign) __NOEXCEPT __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-long double significandl(long double __x)__THROW ;
+long double significandl(long double __x)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-float dremf(float __x, float __y)__THROW ;
+float dremf(float __x, float __y)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-int finitef(float __x) __THROW __attribute_const__;
+int finitef(float __x) __NOEXCEPT __attribute_const__;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-float gammaf(float __x)__THROW ;
+float gammaf(float __x)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-float j0f(float __x)__THROW ;
+float j0f(float __x)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-float j1f(float __x)__THROW ;
+float j1f(float __x)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-float jnf(int __n, float __x)__THROW ;
+float jnf(int __n, float __x)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-float scalbf(float __x, float __exponent)__THROW ;
+float scalbf(float __x, float __exponent)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-float y0f(float __x)__THROW ;
+float y0f(float __x)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-float y1f(float __x)__THROW ;
+float y1f(float __x)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-float ynf(int __n, float __x)__THROW ;
+float ynf(int __n, float __x)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
@@ -442,31 +442,31 @@ float gammaf_r(float __x, int* __sign) __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-float lgammaf_r(float __x, int* __sign) __THROW __attribute__((nonnull(2)));
+float lgammaf_r(float __x, int* __sign) __NOEXCEPT __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-float significandf(float __x)__THROW ;
+float significandf(float __x)__NOEXCEPT ;
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-void sincos(double __x, double* __sin, double* __cos) __THROW __attribute__((nonnull(2,3)));
+void sincos(double __x, double* __sin, double* __cos) __NOEXCEPT __attribute__((nonnull(2,3)));
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-void sincosf(float __x, float* __sin, float* __cos) __THROW __attribute__((nonnull(2,3)));
+void sincosf(float __x, float* __sin, float* __cos) __NOEXCEPT __attribute__((nonnull(2,3)));
 #endif
 
 #if defined(__USE_BSD) || defined(__USE_GNU)
-void sincosl(long double __x, long double* __sin, long double* __cos) __THROW __attribute__((nonnull(2,3)));
+void sincosl(long double __x, long double* __sin, long double* __cos) __NOEXCEPT __attribute__((nonnull(2,3)));
 #endif
 
 #if defined(__USE_GNU)
-int isinfl(long double __x) __THROW __attribute_const__;
+int isinfl(long double __x) __NOEXCEPT __attribute_const__;
 #endif
 
 #if defined(__USE_GNU)
-int isnanl(long double __x) __THROW __attribute_const__;
+int isnanl(long double __x) __NOEXCEPT __attribute_const__;
 #endif
 
 __END_DECLS

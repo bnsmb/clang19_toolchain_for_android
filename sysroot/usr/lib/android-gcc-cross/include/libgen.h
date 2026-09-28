@@ -65,7 +65,7 @@ char* __posix_basename(const char* __path) __RENAME(basename);
  * Note that Android's cv-qualifiers differ from POSIX; Android's implementation doesn't
  * modify its input and uses thread-local storage for the result if necessary.
  */
-char* dirname(const char* __path)__THROW ;
+char* dirname(const char* __path)__NOEXCEPT ;
 
 #if !defined(__LP64__)
 /** Deprecated. Use dirname() instead. */

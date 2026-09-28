@@ -51,20 +51,20 @@ __BEGIN_DECLS
 #define EXIT_FAILURE 1
 #define EXIT_SUCCESS 0
 
-__noreturn void abort(void)__THROW ;
-__noreturn void exit(int __status)__THROW ;
+__noreturn void abort(void)__NOEXCEPT ;
+__noreturn void exit(int __status)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-__noreturn void _Exit(int __status) __THROW __INTRODUCED_IN_API_L__;
+__noreturn void _Exit(int __status) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #else
-__noreturn void _Exit(int __status) __REDIRECT_NTH(_exit);
+__noreturn void _Exit(int __status) __REDIRECT_NOEXCEPT(_exit);
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-int atexit(void (* __fn)(void)) __THROW __attribute__((nonnull(1)));
+int atexit(void (* __fn)(void)) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int at_quick_exit(void (* __fn)(void)) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
-void quick_exit(int __status) __THROW __noreturn __INTRODUCED_IN_API_L__;
+int at_quick_exit(void (* __fn)(void)) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+void quick_exit(int __status) __NOEXCEPT __noreturn __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -81,7 +81,7 @@ void quick_exit(int __status) __THROW __noreturn __INTRODUCED_IN_API_L__;
  * the operating system might: <time.h> functions check $TZ, for example,
  * and various <stdlib.h> and <stdio.h> functions check $TMPDIR.
  */
-char* getenv(const char* __name) __THROW __attribute__((nonnull(1)));
+char* getenv(const char* __name) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [putenv(3)](https://man7.org/linux/man-pages/man3/putenv.3.html)
@@ -109,7 +109,7 @@ char* getenv(const char* __name) __THROW __attribute__((nonnull(1)));
  * so portable code may prefer to always use heap-allocated assignment strings,
  * or to let setenv() create them behind the scenes.
  */
-int putenv(char* __assignment) __THROW __attribute__((nonnull(1)));
+int putenv(char* __assignment) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [setenv(3)](https://man7.org/linux/man-pages/man3/setenv.3.html)
@@ -132,7 +132,7 @@ int putenv(char* __assignment) __THROW __attribute__((nonnull(1)));
  * are constants: you can pass putenv() a string literal
  * of the form "name=value" to avoid heap allocation.
  */
-int setenv(const char* __name, const char* __value, int __overwrite) __THROW __attribute__((nonnull(1,2)));
+int setenv(const char* __name, const char* __value, int __overwrite) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 /**
  * [unsetenv(3)](https://man7.org/linux/man-pages/man3/unsetenv.3.html)
@@ -149,7 +149,7 @@ int setenv(const char* __name, const char* __value, int __overwrite) __THROW __a
  * This function leaks memory rather than free anything so that pointers
  * already handed out by getenv() are not invalidated.
  */
-int unsetenv(const char* __name) __THROW __attribute__((nonnull(1)));
+int unsetenv(const char* __name) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [clearenv(3)](https://man7.org/linux/man-pages/man3/unsetenv.3.html)
@@ -166,10 +166,10 @@ int unsetenv(const char* __name) __THROW __attribute__((nonnull(1)));
  * This function leaks memory rather than free anything so that pointers
  * already handed out by getenv() are not invalidated.
  */
-int clearenv(void)__THROW ;
+int clearenv(void)__NOEXCEPT ;
 
-char* mkdtemp(char* __template) __THROW __attribute__((nonnull(1)));
-char* mktemp(char* __template) __THROW __attribute__((__deprecated__("mktemp is unsafe, use mkstemp or tmpfile instead")));
+char* mkdtemp(char* __template) __NOEXCEPT __attribute__((nonnull(1)));
+char* mktemp(char* __template) __NOEXCEPT __attribute__((__deprecated__("mktemp is unsafe, use mkstemp or tmpfile instead")));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
 int mkostemp64(char* __template, int __flags) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
@@ -213,9 +213,7 @@ void free_sized(void* __ptr, size_t __size) __INTRODUCED_IN(37);
 */
 void free_aligned_sized(void* __ptr, size_t __alignment, size_t __size) __INTRODUCED_IN(37);
 
-#if __BIONIC_AVAILABILITY_GUARD(16)
-int posix_memalign(void* * __memptr, size_t __alignment, size_t __size) __THROW __INTRODUCED_IN_API_J__;
-#endif /* __BIONIC_AVAILABILITY_GUARD(16) */
+int posix_memalign(void* * __memptr, size_t __alignment, size_t __size)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 /**
@@ -227,10 +225,10 @@ int posix_memalign(void* * __memptr, size_t __alignment, size_t __size) __THROW 
  *
  * Available since API level 28.
  */
-__nodiscard void* aligned_alloc(size_t __alignment, size_t __size) __THROW __INTRODUCED_IN_API_P__;
+__nodiscard void* aligned_alloc(size_t __alignment, size_t __size) __NOEXCEPT __INTRODUCED_IN_API_P__;
 #endif
 
-__nodiscard char* realpath(const char* __path, char* __resolved) __THROW __attribute__((nonnull(1)));
+__nodiscard char* realpath(const char* __path, char* __resolved) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [system(3)](https://man7.org/linux/man-pages/man3/system.3.html) executes
@@ -282,33 +280,33 @@ void qsort(void* __array, size_t __n, size_t __size, int (* __comparator)(const 
 void qsort_r(void* __array, size_t __n, size_t __size, int (* __comparator)(const void* __lhs, const void* __rhs, void* __context), void* __context) __INTRODUCED_IN_API_W__ __attribute__((nonnull(4)));
 #endif
 
-uint32_t arc4random(void)__THROW ;
-uint32_t arc4random_uniform(uint32_t __upper_bound)__THROW ;
-void arc4random_buf(void* __buf, size_t __n) __THROW __attribute__((nonnull(1)));
+uint32_t arc4random(void)__NOEXCEPT ;
+uint32_t arc4random_uniform(uint32_t __upper_bound)__NOEXCEPT ;
+void arc4random_buf(void* __buf, size_t __n) __NOEXCEPT __attribute__((nonnull(1)));
 
 #define RAND_MAX 0x7fffffff
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int rand_r(unsigned int* __seed_ptr) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+int rand_r(unsigned int* __seed_ptr) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-double drand48(void)__THROW ;
-double erand48(unsigned short __xsubi[3]) __THROW __attribute__((nonnull(1)));
-long jrand48(unsigned short __xsubi[3]) __THROW __attribute__((nonnull(1)));
+double drand48(void)__NOEXCEPT ;
+double erand48(unsigned short __xsubi[3]) __NOEXCEPT __attribute__((nonnull(1)));
+long jrand48(unsigned short __xsubi[3]) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-void lcong48(unsigned short __param[7]) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+void lcong48(unsigned short __param[7]) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
-long lrand48(void)__THROW ;
-long mrand48(void)__THROW ;
-long nrand48(unsigned short __xsubi[3]) __THROW __attribute__((nonnull(1)));
-unsigned short* seed48(unsigned short __seed16v[3]) __THROW __attribute__((nonnull(1)));
-void srand48(long __seed)__THROW ;
+long lrand48(void)__NOEXCEPT ;
+long mrand48(void)__NOEXCEPT ;
+long nrand48(unsigned short __xsubi[3]) __NOEXCEPT __attribute__((nonnull(1)));
+unsigned short* seed48(unsigned short __seed16v[3]) __NOEXCEPT __attribute__((nonnull(1)));
+void srand48(long __seed)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-char* initstate(unsigned int __seed, char* __state, size_t __n) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
-char* setstate(char* __state) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+char* initstate(unsigned int __seed, char* __state, size_t __n) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+char* setstate(char* __state) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 int getpt(void);
@@ -317,12 +315,12 @@ int getpt(void);
 int posix_openpt(int __flags) __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-char* ptsname(int __fd)__THROW ;
-int ptsname_r(int __fd, char* __buf, size_t __n) __THROW __attribute__((nonnull(2)));
-int unlockpt(int __fd)__THROW ;
+char* ptsname(int __fd)__NOEXCEPT ;
+int ptsname_r(int __fd, char* __buf, size_t __n) __NOEXCEPT __attribute__((nonnull(2)));
+int unlockpt(int __fd)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-int getsubopt(char* * __option, char* const* __tokens, char* * __value_ptr) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2,3)));
+int getsubopt(char* * __option, char* const* __tokens, char* * __value_ptr) __NOEXCEPT __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,2,3)));
 #endif
 
 typedef struct {
@@ -337,7 +335,7 @@ typedef struct {
  * This function was useful for portability before C99,
  * where `/` and `%` were also defined to truncate towards zero.
  */
-div_t div(int __numerator, int __denominator) __THROW __attribute_const__;
+div_t div(int __numerator, int __denominator) __NOEXCEPT __attribute_const__;
 
 typedef struct {
   long int quot;
@@ -351,7 +349,7 @@ typedef struct {
  * This function was useful for portability before C99,
  * where `/` and `%` were also defined to truncate towards zero.
  */
-ldiv_t ldiv(long __numerator, long __denominator) __THROW __attribute_const__;
+ldiv_t ldiv(long __numerator, long __denominator) __NOEXCEPT __attribute_const__;
 
 typedef struct {
   long long int quot;
@@ -365,7 +363,7 @@ typedef struct {
  * This function was useful for portability before C99,
  * where `/` and `%` were also defined to truncate towards zero.
  */
-lldiv_t lldiv(long long __numerator, long long __denominator) __THROW __attribute_const__;
+lldiv_t lldiv(long long __numerator, long long __denominator) __NOEXCEPT __attribute_const__;
 
 #if __BIONIC_AVAILABILITY_GUARD(29)
 /**
@@ -375,7 +373,7 @@ lldiv_t lldiv(long long __numerator, long long __denominator) __THROW __attribut
  *
  * Returns the number of samples written to `__averages` (at most 3), and returns -1 on failure.
  */
-int getloadavg(double __averages[], int __n) __THROW __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
+int getloadavg(double __averages[], int __n) __NOEXCEPT __INTRODUCED_IN_API_Q__ __attribute__((nonnull(1)));
 #endif
 
 
@@ -387,20 +385,20 @@ const char* getprogname(void) __INTRODUCED_IN_API_L__;
 void setprogname(const char* __name) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-int mblen(const char* __s, size_t __n) __THROW __INTRODUCED_IN_API_O__;
+int mblen(const char* __s, size_t __n) __NOEXCEPT __INTRODUCED_IN_API_O__;
 #endif
 
-size_t mbstowcs(wchar_t* __dst, const char* __src, size_t __n)__THROW ;
+size_t mbstowcs(wchar_t* __dst, const char* __src, size_t __n)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int mbtowc(wchar_t* __wc_ptr, const char*  __s, size_t __n) __THROW __INTRODUCED_IN_API_L__;
-int wctomb(char* __dst, wchar_t __wc) __THROW __INTRODUCED_IN_API_L__;
+int mbtowc(wchar_t* __wc_ptr, const char*  __s, size_t __n) __NOEXCEPT __INTRODUCED_IN_API_L__;
+int wctomb(char* __dst, wchar_t __wc) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-size_t wcstombs(char* __dst, const wchar_t* __src, size_t __n)__THROW ;
+size_t wcstombs(char* __dst, const wchar_t* __src, size_t __n)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21) && !defined(__ANDROID_UNAVAILABLE_SYMBOLS_ARE_WEAK__)
-size_t __ctype_get_mb_cur_max(void) __THROW __INTRODUCED_IN_API_L__;
+size_t __ctype_get_mb_cur_max(void) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #define MB_CUR_MAX __ctype_get_mb_cur_max()
 #else
 #define MB_CUR_MAX 1
@@ -414,25 +412,25 @@ size_t __ctype_get_mb_cur_max(void) __THROW __INTRODUCED_IN_API_L__;
  * Returns the absolute value where possible.
  * For the most negative value, the result is unchanged (and thus also negative).
  */
-int abs(int __x) __THROW __attribute_const__;
+int abs(int __x) __NOEXCEPT __attribute_const__;
 
 /**
  * Returns the absolute value where possible.
  * For the most negative value, the result is unchanged (and thus also negative).
  */
-long labs(long __x) __THROW __attribute_const__;
+long labs(long __x) __NOEXCEPT __attribute_const__;
 
 /**
  * Returns the absolute value where possible.
  * For the most negative value, the result is unchanged (and thus also negative).
  */
-long long llabs(long long __x) __THROW __attribute_const__;
+long long llabs(long long __x) __NOEXCEPT __attribute_const__;
 
-int rand(void)__THROW ;
-void srand(unsigned int __seed)__THROW ;
-long random(void)__THROW ;
-void srandom(unsigned int __seed)__THROW ;
-int grantpt(int __fd)__THROW ;
+int rand(void)__NOEXCEPT ;
+void srand(unsigned int __seed)__NOEXCEPT ;
+long random(void)__NOEXCEPT ;
+void srandom(unsigned int __seed)__NOEXCEPT ;
+int grantpt(int __fd)__NOEXCEPT ;
 
 /**
  * [atof(3)](https://man7.org/linux/man-pages/man3/atof.3.html) converts a
@@ -440,7 +438,7 @@ int grantpt(int __fd)__THROW ;
  *
  * Returns the double; use strtof() or strtod() if you need to detect errors.
  */
-double atof(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1)));
+double atof(const char* __s) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1)));
 
 /**
  * [atoi(3)](https://man7.org/linux/man-pages/man3/atoi.3.html) converts a
@@ -448,7 +446,7 @@ double atof(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1
  *
  * Returns the int or 0 on error; use strtol() if you need to detect errors.
  */
-int atoi(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1)));
+int atoi(const char* __s) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1)));
 
 /**
  * [atol(3)](https://man7.org/linux/man-pages/man3/atol.3.html) converts a
@@ -456,7 +454,7 @@ int atoi(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1)))
  *
  * Returns the long or 0 on error; use strtol() if you need to detect errors.
  */
-long atol(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1)));
+long atol(const char* __s) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1)));
 
 /**
  * [atoll(3)](https://man7.org/linux/man-pages/man3/atoll.3.html) converts a
@@ -464,7 +462,7 @@ long atol(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1))
  *
  * Returns the long long or 0 on error; use strtol() if you need to detect errors.
  */
-long long atoll(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1)));
+long long atoll(const char* __s) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1)));
 
 /**
  * [strtol(3)](https://man7.org/linux/man-pages/man3/strtol.3.html) converts a
@@ -474,10 +472,10 @@ long long atoll(const char* __s) __THROW __attribute_pure__ __attribute__((nonnu
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-long strtol(const char* __s, char* * __end_ptr, int __base) __THROW __attribute__((nonnull(1)));
+long strtol(const char* __s, char* * __end_ptr, int __base) __NOEXCEPT __attribute__((nonnull(1)));
 
 /** Equivalent to strtol() on Android. */
-long strtol_l(const char* __s, char* * __end_ptr, int, locale_t __l) __REDIRECT_NTH(strtol) __attribute__((nonnull(1,4)));
+long strtol_l(const char* __s, char* * __end_ptr, int, locale_t __l) __REDIRECT_NOEXCEPT(strtol) __attribute__((nonnull(1,4)));
 
 /**
  * [strtoll(3)](https://man7.org/linux/man-pages/man3/strtoll.3.html) converts a
@@ -487,10 +485,10 @@ long strtol_l(const char* __s, char* * __end_ptr, int, locale_t __l) __REDIRECT_
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-long long strtoll(const char* __s, char* * __end_ptr, int __base) __THROW __attribute__((nonnull(1)));
+long long strtoll(const char* __s, char* * __end_ptr, int __base) __NOEXCEPT __attribute__((nonnull(1)));
 
 /** Equivalent to strtoll() on Android. */
-long long strtoll_l(const char* __s, char* * __end_ptr, int __base, locale_t __l) __REDIRECT_NTH(strtoll) __attribute__((nonnull(1,4)));
+long long strtoll_l(const char* __s, char* * __end_ptr, int __base, locale_t __l) __REDIRECT_NOEXCEPT(strtoll) __attribute__((nonnull(1,4)));
 
 /**
  * [strtoul(3)](https://man7.org/linux/man-pages/man3/strtoul.3.html) converts a
@@ -500,10 +498,10 @@ long long strtoll_l(const char* __s, char* * __end_ptr, int __base, locale_t __l
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-unsigned long strtoul(const char* __s, char* * __end_ptr, int __base) __THROW __attribute__((nonnull(1)));
+unsigned long strtoul(const char* __s, char* * __end_ptr, int __base) __NOEXCEPT __attribute__((nonnull(1)));
 
 /** Equivalent to strtoul() on Android. */
-unsigned long strtoul_l(const char* __s, char* * __end_ptr, int __base, locale_t __l) __REDIRECT_NTH(strtoul) __attribute__((nonnull(1,4)));
+unsigned long strtoul_l(const char* __s, char* * __end_ptr, int __base, locale_t __l) __REDIRECT_NOEXCEPT(strtoul) __attribute__((nonnull(1,4)));
 
 /**
  * [strtoull(3)](https://man7.org/linux/man-pages/man3/strtoull.3.html) converts a
@@ -513,10 +511,10 @@ unsigned long strtoul_l(const char* __s, char* * __end_ptr, int __base, locale_t
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-unsigned long long strtoull(const char* __s, char* * __end_ptr, int __base) __THROW __attribute__((nonnull(1)));
+unsigned long long strtoull(const char* __s, char* * __end_ptr, int __base) __NOEXCEPT __attribute__((nonnull(1)));
 
 /** Equivalent to strtoull() on Android. */
-unsigned long long strtoull_l(const char* __s, char* * __end_ptr, int __base, locale_t __l) __REDIRECT_NTH(strtoull) __attribute__((nonnull(1,4)));
+unsigned long long strtoull_l(const char* __s, char* * __end_ptr, int __base, locale_t __l) __REDIRECT_NOEXCEPT(strtoull) __attribute__((nonnull(1,4)));
 
 /**
  * [strtof(3)](https://man7.org/linux/man-pages/man3/strtof.3.html) converts a
@@ -526,10 +524,10 @@ unsigned long long strtoull_l(const char* __s, char* * __end_ptr, int __base, lo
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-float strtof(const char* __s, char* * __end_ptr) __THROW __attribute__((nonnull(1)));
+float strtof(const char* __s, char* * __end_ptr) __NOEXCEPT __attribute__((nonnull(1)));
 
 /** Equivalent to strtof() on Android. */
-float strtof_l(const char* __s, char* * __end_ptr, locale_t __l) __REDIRECT_NTH(strtof) __attribute__((nonnull(1,3)));
+float strtof_l(const char* __s, char* * __end_ptr, locale_t __l) __REDIRECT_NOEXCEPT(strtof) __attribute__((nonnull(1,3)));
 
 /**
  * [strtod(3)](https://man7.org/linux/man-pages/man3/strtod.3.html) converts a
@@ -539,10 +537,10 @@ float strtof_l(const char* __s, char* * __end_ptr, locale_t __l) __REDIRECT_NTH(
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-double strtod(const char* __s, char* * __end_ptr) __THROW __attribute__((nonnull(1)));
+double strtod(const char* __s, char* * __end_ptr) __NOEXCEPT __attribute__((nonnull(1)));
 
 /** Equivalent to strtod() on Android. */
-double strtod_l(const char* __s, char* * __end_ptr, locale_t __l) __REDIRECT_NTH(strtod) __attribute__((nonnull(1,3)));
+double strtod_l(const char* __s, char* * __end_ptr, locale_t __l) __REDIRECT_NOEXCEPT(strtod) __attribute__((nonnull(1,3)));
 
 /**
  * [strtold(3)](https://man7.org/linux/man-pages/man3/strtold.3.html) converts a
@@ -552,10 +550,10 @@ double strtod_l(const char* __s, char* * __end_ptr, locale_t __l) __REDIRECT_NTH
  * `__end_ptr` is set to the last character in `__s` that was converted.
  * errno is set to ERANGE if the result overflowed or underflowed.
  */
-long double strtold(const char* __s, char* * __end_ptr) __THROW __attribute__((nonnull(1)));
+long double strtold(const char* __s, char* * __end_ptr) __NOEXCEPT __attribute__((nonnull(1)));
 
 /** Equivalent to strtold() on Android. */
-long double strtold_l(const char* __s, char* * __end_ptr, locale_t __l) __REDIRECT_NTH(strtold) __attribute__((nonnull(1,3)));
+long double strtold_l(const char* __s, char* * __end_ptr, locale_t __l) __REDIRECT_NOEXCEPT(strtold) __attribute__((nonnull(1,3)));
 
 __END_DECLS
 

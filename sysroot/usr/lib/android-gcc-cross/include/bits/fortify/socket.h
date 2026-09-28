@@ -73,7 +73,14 @@ ssize_t recv(int socket, void* const buf __pass_object_size0, size_t len, int fl
     __overloadable
     __clang_error_if(__bos_unevaluated_lt(__bos0(buf), len),
                      "'recv' called with size bigger than buffer") {
-  return recvfrom(socket, buf, len, flags, NULL, 0);
+#if __ANDROID_API__ >= 24 && __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
+  size_t bos = __bos0(buf);
+
+  if (!__bos_trivially_ge(bos, len)) {
+    return __recvfrom_chk(socket, buf, len, bos, flags, NULL, 0);
+  }
+#endif
+  return __call_bypassing_fortify(recv)(socket, buf, len, flags);
 }
 
 __BIONIC_FORTIFY_INLINE
@@ -81,7 +88,14 @@ ssize_t send(int socket, const void* const buf __pass_object_size0, size_t len, 
     __overloadable
     __clang_error_if(__bos_unevaluated_lt(__bos0(buf), len),
                      "'send' called with size bigger than buffer") {
-  return sendto(socket, buf, len, flags, NULL, 0);
+#if __ANDROID_API__ >= 26 && __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
+  size_t bos = __bos0(buf);
+
+  if (!__bos_trivially_ge(bos, len)) {
+    return __sendto_chk(socket, buf, len, bos, flags, NULL, 0);
+  }
+#endif
+  return __call_bypassing_fortify(send)(socket, buf, len, flags);
 }
 
 #endif /* __BIONIC_FORTIFY */

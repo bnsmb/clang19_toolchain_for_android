@@ -38,20 +38,20 @@
 
 __BEGIN_DECLS
 
-int gettimeofday(struct timeval* __tv, struct timezone* __tz)__THROW ;
-int settimeofday(const struct timeval* __tv, const struct timezone* __tz)__THROW ;
+int gettimeofday(struct timeval* __tv, struct timezone* __tz)__NOEXCEPT ;
+int settimeofday(const struct timeval* __tv, const struct timezone* __tz)__NOEXCEPT ;
 
-int getitimer(int __which, struct itimerval* __current_value) __THROW __attribute__((nonnull(2)));
-int setitimer(int __which, const struct itimerval* __new_value, struct itimerval* __old_value) __THROW __attribute__((nonnull(2)));
+int getitimer(int __which, struct itimerval* __current_value) __NOEXCEPT __attribute__((nonnull(2)));
+int setitimer(int __which, const struct itimerval* __new_value, struct itimerval* __old_value) __NOEXCEPT __attribute__((nonnull(2)));
 
-int utimes(const char* __path, const struct timeval __times[2]) __THROW __attribute__((nonnull(1)));
+int utimes(const char* __path, const struct timeval __times[2]) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if defined(__USE_BSD) && __BIONIC_AVAILABILITY_GUARD(26)
-int futimes(int __fd, const struct timeval __times[2]) __THROW __INTRODUCED_IN_API_O__;
+int futimes(int __fd, const struct timeval __times[2]) __NOEXCEPT __INTRODUCED_IN_API_O__;
 #endif
 
 #if defined(__USE_BSD) && __BIONIC_AVAILABILITY_GUARD(26)
-int lutimes(const char* __path, const struct timeval __times[2]) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
+int lutimes(const char* __path, const struct timeval __times[2]) __NOEXCEPT __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(26)
@@ -68,7 +68,7 @@ int lutimes(const char* __path, const struct timeval __times[2]) __THROW __INTRO
  *
  * Available since API level 26 when compiling with `_GNU_SOURCE`.
  */
-int futimesat(int __dir_fd, const char* __path, const struct timeval __times[2]) __THROW __INTRODUCED_IN_API_O__;
+int futimesat(int __dir_fd, const char* __path, const struct timeval __times[2]) __NOEXCEPT __INTRODUCED_IN_API_O__;
 #endif
 
 #define timerclear(a)   \

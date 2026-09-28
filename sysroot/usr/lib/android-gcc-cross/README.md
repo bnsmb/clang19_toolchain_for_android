@@ -1,6 +1,8 @@
 # android-gcc-cross
 
-This version of GCC uses the patchset from the [TUR](https://github.com/termux-user-repository/tur/tree/master/tur/gcc-15) port of GCC for Android, with additional patches to improve cross-compilation support and enable its usage in Gradle projects as a replacement for Clang.
+This is a GCC compiler targeting Android. It can be used as a cross-compiler on Windows, Linux, and macOS to compile C/C++ programs for Android, and it can also be installed on Termux and used as a native compiler.
+
+The project originally started as an adaptation of the [TUR](https://github.com/termux-user-repository/tur/tree/master/tur/gcc-15) port of GCC, but most of the patches have since been rewritten from scratch, and the project is now maintained independently of TUR.
 
 ## Installation
 
@@ -76,6 +78,9 @@ Essentially, it overrides the locally installed NDK’s `clang`/`clang++` comman
 #### Building the project
 
 After patching the NDK, you are almost ready to go and compile the project. Just run `./gradlew clean` before compiling it to make sure compiled objects from previous builds (Clang) don't interfere with the new build.
+
+> [!NOTE]
+> We aim to be a drop-in replacement, but having consistent behavior between the two compilers in all aspects is simply not realistic. Projects that don't rely on Clang-specific features or quirks (sometimes you do this without intending to) will likely compile without requiring any additional changes. In other cases, you might need to make changes to your build system (which is the most common case) or the code itself.
 
 ### CMake
 
@@ -164,14 +169,8 @@ Essentially, these scripts handle the setup of `CC`, `CXX`, `LD`, and other envi
 
 The toolchain allows you to change its behavior in certain scenarios through the use of environment variables. Below are all the switches it supports and their intended purposes:
 
-- `PINO_RUNTIME_RPATH`  
-  - Automatically appends the path to the directory containing GCC libraries (e.g., libsanitizer (AddressSanitizer), libatomic, and libstdc++) to your executables’ RPATH. This is only useful when running inside Termux.
-
 - `PINO_STATIC_RUNTIME`  
   - Tells the cross-compiler to prefer linking with the static versions of the GCC runtime libraries rather than the dynamic ones. See [Static vs dynamic linking](#static-vs-dynamic-linking).
-
-- `PINO_NEON`  
-  - Tells the cross-compiler to enable support for NEON intrinsics on ARMv7. See [NEON intrinsics](#neon-intrinsics).
 
 - `PINO_ARM_MODE`  
   - Tells the cross-compiler to generate code in ARM mode rather than Thumb-1/Thumb-2 mode.
@@ -218,53 +217,6 @@ Below is an example of building a CMake project that uses prebuilt dependencies 
     cmake --build build
     ```
 
-## ABIs
-
-The NDK has its own page explaining its supported architectures and ABIs (see [Android ABIs](https://developer.android.com/ndk/guides/abis)), but since our toolchain differs from the upstream NDK in some aspects, this section covers the specifics of both and compares their behavior.
-
-<!--
-> [!NOTE]  
-> The ABIs `armeabi`, `mips`, and `mips64` are obsolete in the upstream NDK and are no longer available for cross-compilation in modern versions of the toolchain. Pino, however, has restored support for those architectures.
--->
-
-### `armeabi-v7a`
-
-This refers to the ARMv7-A system architecture. Just like the Clang NDK, our toolchain uses `softfp` hardware floating-point and generates code in `Thumb-2` mode by default.
-
-The Clang NDK defaults to using the `VFPv3-D32` floating-point unit along with the **ARM Advanced SIMD (Neon)** extension. Our toolchain, however, defaults to using the `VFPv3-D16` floating-point unit and disables the Neon extension by default.
-
-The reason for using `VFPv3-D16` instead of `VFPv3-D32` and disabling Neon is to support backward compatibility with older hardware. When first introduced in the NDK, the ARMv7-A target didn't require `VFPv3-D32` and `Neon`; they were completely optional features, so there might still be hardware around that doesn't support these instruction sets. Also, not everyone needs those fancy floating-point operations. If for some reason you do, enable it manually.
-
-### `arm64-v8a`
-
-This refers to the ARMv8 system architecture. Our toolchain enables PAC (Pointer Authentication Code) and BTI (Branch Target Identification) by default for this architecture, while on Clang, these features are optional. Other than that, there are no differences between our toolchain and the upstream NDK.
-
-### `x86`
-
-This refers to the i386 system architecture. Just like the upstream NDK, GCC also assumes a 16-byte stack alignment before a function call. There are no additional differences between the ABI supported by our toolchain and the ABI supported by the upstream NDK.
-
-### `x86_64`
-
-This refers to the x64 system architecture. There are no additional differences between the ABI supported by our toolchain and the ABI supported by the upstream NDK.
-
-### `riscv64`
-
-This refers to the RISC-V system architecture. There is currently no ABI page for this architecture in the Android documentation, so I can't make a proper comparison. Our toolchain emits code for the RV64GC architecture on the LP64D (hardfloat double) ABI by default.
-
-<!--
-### `armeabi`
-
-This refers to the ARMv5TE system architecture. It uses `softfp` hardware floating-point and generates code in `Thumb-1` mode. The `VFPv2` floating-point unit is the default, without the Neon extension. This matches the upstream NDK.
-
-### `mips`
-
-This refers to the MIPS32r2 system architecture. It uses `hard` hardware floating-point and generates code targeting the 32-bit ABI by default, optionally supporting the o32 ABI as well. This matches the upstream NDK.
-
-### `mips64`
-
-This refers to the MIPS64r6 system architecture. It uses `hard` hardware floating-point and generates code targeting the 64-bit ABI by default. This matches the upstream NDK.
--->
-
 ### Static vs dynamic linking
 
 The toolchain provides a flag switch with functionality similar to the NDK's [ANDROID_STL/APP_STL](https://developer.android.com/ndk/guides/cpp-support#selecting_a_c_runtime) flag. It allows you to choose between static and shared runtimes when linking C/C++ code:
@@ -278,23 +230,6 @@ PINO_STATIC_RUNTIME: bool = [true/false]
 
 By default, `PINO_STATIC_RUNTIME` assumes no specific behavior and will use whatever value was passed to `ANDROID_STL` in CMake/ndk-build.
 
-### NEON Intrinsics
-
-Unlike the upstream NDK, our toolchain disables NEON by default for the `armeabi-v7a` target. The reasoning behind this is explained [here](#armeabi-v7a).
-
-If you want to enable NEON intrinsics, you can set the `PINO_NEON` environment variable:
-
-```nim
-PINO_NEON: bool = [true/false]
-```
-
-## Known bugs/limitations
-
-- `-D_FORTIFY_SOURCE` has no effect.
-  - The fortify headers shipped with the NDK currently rely on Clang-specific syntax that is not supported by GCC. We need to either adapt these headers or migrate to a GCC-compatible alternative, such as [fortify-headers](https://github.com/jvoisin/fortify-headers).
-- The HWAddressSanitizer (`-fsanitize=hwaddress`) runtime is broken.
-  - We have not yet fully investigated what is needed to make it work. If you really need it, use the older AddressSanitizer implementation (`-fsanitize=address`) implementation instead.
-
 ## Releases
 
 * [GCC 16](https://github.com/AmanoTeam/android-gcc-cross/releases/tag/gcc-16) - current stable release
@@ -307,7 +242,7 @@ Additionally, it supports cross-compiling software for architectures whose suppo
 
 The toolchain includes support for the C and C++ frontends.
 
-The toolchain supports targeting Android versions from 4.0.1 (API level 14) up to Android 16 (API level 36).
+The toolchain supports targeting Android versions from 4.0.1 (API level 14) up to Android 17 (API level 37).
 
 ## License
 

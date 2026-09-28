@@ -134,7 +134,6 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 #undef ULONG_MAX
 #define ULONG_MAX (LONG_MAX * 2UL + 1UL)
 
-#if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
 /* Minimum and maximum values a `signed long long int' can hold.  */
 # undef LLONG_MIN
 # define LLONG_MIN (-LLONG_MAX - 1LL)
@@ -144,7 +143,6 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 /* Maximum value an `unsigned long long int' can hold.  (Minimum is 0).  */
 # undef ULLONG_MAX
 # define ULLONG_MAX (LLONG_MAX * 2ULL + 1ULL)
-#endif
 
 #if defined (__GNU_LIBRARY__) ? defined (__USE_GNU) : !defined (__STRICT_ANSI__)
 /* Minimum and maximum values a `signed long long int' can hold.  */
@@ -158,8 +156,6 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 # define ULONG_LONG_MAX (LONG_LONG_MAX * 2ULL + 1ULL)
 #endif
 
-#if (defined __STDC_WANT_IEC_60559_BFP_EXT__ \
-     || (defined (__STDC_VERSION__) && __STDC_VERSION__ > 201710L))
 /* TS 18661-1 / C23 widths of integer types.  */
 # undef CHAR_WIDTH
 # define CHAR_WIDTH __SCHAR_WIDTH__
@@ -183,9 +179,7 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 # define LLONG_WIDTH __LONG_LONG_WIDTH__
 # undef ULLONG_WIDTH
 # define ULLONG_WIDTH __LONG_LONG_WIDTH__
-#endif
 
-#if defined (__STDC_VERSION__) && __STDC_VERSION__ > 201710L
 /* C23 width and limit of _Bool.  */
 # undef BOOL_MAX
 # define BOOL_MAX 1
@@ -200,7 +194,6 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 # ifndef __STDC_VERSION_LIMITS_H__
 #  define __STDC_VERSION_LIMITS_H__	202311L
 # endif
-#endif
 
 #endif /* _LIMITS_H___ */
 /* This administrivia gets added to the end of limits.h

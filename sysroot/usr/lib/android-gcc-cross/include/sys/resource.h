@@ -43,25 +43,25 @@ __BEGIN_DECLS
 typedef unsigned long rlim_t;
 typedef unsigned long long rlim64_t;
 
-int getrlimit(int __resource, struct rlimit* __limit)__THROW ;
-int setrlimit(int __resource, const struct rlimit* __limit)__THROW ;
+int getrlimit(int __resource, struct rlimit* __limit)__NOEXCEPT ;
+int setrlimit(int __resource, const struct rlimit* __limit)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int getrlimit64(int __resource, struct rlimit64* __limit) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
-int setrlimit64(int __resource, const struct rlimit64* __limit) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int getrlimit64(int __resource, struct rlimit64* __limit) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int setrlimit64(int __resource, const struct rlimit64* __limit) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-int getpriority(int __which, id_t __who)__THROW ;
-int setpriority(int __which, id_t __who, int __priority)__THROW ;
+int getpriority(int __which, id_t __who)__NOEXCEPT ;
+int setpriority(int __which, id_t __who, int __priority)__NOEXCEPT ;
 
-int getrusage(int __who, struct rusage* __usage) __THROW __attribute__((nonnull(2)));
+int getrusage(int __who, struct rusage* __usage) __NOEXCEPT __attribute__((nonnull(2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-int prlimit(pid_t __pid, int __resource, const struct rlimit* __new_limit, struct rlimit* __old_limit) __THROW __INTRODUCED_IN_API_N__;
+int prlimit(pid_t __pid, int __resource, const struct rlimit* __new_limit, struct rlimit* __old_limit) __NOEXCEPT __INTRODUCED_IN_API_N__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(24) */
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int prlimit64(pid_t __pid, int __resource, const struct rlimit64* __new_limit, struct rlimit64* __old_limit) __THROW __INTRODUCED_IN_API_L__;
+int prlimit64(pid_t __pid, int __resource, const struct rlimit64* __new_limit, struct rlimit64* __old_limit) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 __END_DECLS

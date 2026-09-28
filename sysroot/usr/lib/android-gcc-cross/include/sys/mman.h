@@ -50,9 +50,9 @@ __BEGIN_DECLS
  * Returns the address of the mapping on success,
  * and returns `MAP_FAILED` and sets `errno` on failure.
  */
-void* mmap(void* __addr, size_t __size, int __prot, int __flags, int __fd, off_t __offset) __REDIRECT_NTH(mmap64);
+void* mmap(void* __addr, size_t __size, int __prot, int __flags, int __fd, off_t __offset) __REDIRECT_NOEXCEPT(mmap64);
 #else
-void* mmap(void* __addr, size_t __size, int __prot, int __flags, int __fd, off_t __offset)__THROW ;
+void* mmap(void* __addr, size_t __size, int __prot, int __flags, int __fd, off_t __offset)__NOEXCEPT ;
 #endif
 
 /**
@@ -60,7 +60,7 @@ void* mmap(void* __addr, size_t __size, int __prot, int __flags, int __fd, off_t
  *
  * See https://android.googlesource.com/platform/bionic/+/main/docs/32-bit-abi.md
  */
-void* mmap64(void* __addr, size_t __size, int __prot, int __flags, int __fd, off64_t __offset)__THROW ;
+void* mmap64(void* __addr, size_t __size, int __prot, int __flags, int __fd, off64_t __offset)__NOEXCEPT ;
 
 /**
  * [munmap(2)](https://man7.org/linux/man-pages/man2/munmap.2.html)
@@ -68,7 +68,7 @@ void* mmap64(void* __addr, size_t __size, int __prot, int __flags, int __fd, off
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int munmap(void* __addr, size_t __size) __THROW __attribute__((nonnull(1)));
+int munmap(void* __addr, size_t __size) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [msync(2)](https://man7.org/linux/man-pages/man2/msync.2.html)
@@ -76,7 +76,7 @@ int munmap(void* __addr, size_t __size) __THROW __attribute__((nonnull(1)));
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int msync(void* __addr, size_t __size, int __flags) __attribute__((nonnull(1)));
+int msync(void* __addr, size_t __size, int __flags) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [mprotect(2)](https://man7.org/linux/man-pages/man2/mprotect.2.html)
@@ -84,7 +84,7 @@ int msync(void* __addr, size_t __size, int __flags) __attribute__((nonnull(1)));
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int mprotect(void* __addr, size_t __size, int __prot) __THROW __attribute__((nonnull(1)));
+int mprotect(void* __addr, size_t __size, int __prot) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [mremap(2)](https://man7.org/linux/man-pages/man2/mremap.2.html)
@@ -93,7 +93,7 @@ int mprotect(void* __addr, size_t __size, int __prot) __THROW __attribute__((non
  * Returns the address of the mapping on success,
  * and returns `MAP_FAILED` and sets `errno` on failure.
  */
-void* mremap(void* __old_addr, size_t __old_size, size_t __new_size, int __flags, ...) __THROW __attribute__((nonnull(1)));
+void* mremap(void* __old_addr, size_t __old_size, size_t __new_size, int __flags, ...) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(17)
 /**
@@ -102,7 +102,7 @@ void* mremap(void* __old_addr, size_t __old_size, size_t __new_size, int __flags
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int mlockall(int __flags) __THROW __INTRODUCED_IN_API_J_MR1__;
+int mlockall(int __flags) __NOEXCEPT __INTRODUCED_IN_API_J_MR1__;
 
 /**
  * [munlockall(2)](https://man7.org/linux/man-pages/man2/munlockall.2.html)
@@ -110,7 +110,7 @@ int mlockall(int __flags) __THROW __INTRODUCED_IN_API_J_MR1__;
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int munlockall(void) __THROW __INTRODUCED_IN_API_J_MR1__;
+int munlockall(void) __NOEXCEPT __INTRODUCED_IN_API_J_MR1__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 
 /**
@@ -119,7 +119,7 @@ int munlockall(void) __THROW __INTRODUCED_IN_API_J_MR1__;
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int mlock(const void* __addr, size_t __size) __THROW __attribute__((nonnull(1)));
+int mlock(const void* __addr, size_t __size) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(30)
 /**
@@ -130,7 +130,7 @@ int mlock(const void* __addr, size_t __size) __THROW __attribute__((nonnull(1)))
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int mlock2(const void* __addr, size_t __size, int __flags) __THROW __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+int mlock2(const void* __addr, size_t __size, int __flags) __NOEXCEPT __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 #endif
 
 /**
@@ -139,7 +139,7 @@ int mlock2(const void* __addr, size_t __size, int __flags) __THROW __INTRODUCED_
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int munlock(const void* __addr, size_t __size) __THROW __attribute__((nonnull(1)));
+int munlock(const void* __addr, size_t __size) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [mincore(2)](https://man7.org/linux/man-pages/man2/mincore.2.html)
@@ -147,7 +147,7 @@ int munlock(const void* __addr, size_t __size) __THROW __attribute__((nonnull(1)
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int mincore(void* __addr, size_t __size, unsigned char* __vector) __THROW __attribute__((nonnull(1,3)));
+int mincore(void* __addr, size_t __size, unsigned char* __vector) __NOEXCEPT __attribute__((nonnull(1,3)));
 
 /**
  * [madvise(2)](https://man7.org/linux/man-pages/man2/madvise.2.html)
@@ -155,7 +155,7 @@ int mincore(void* __addr, size_t __size, unsigned char* __vector) __THROW __attr
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int madvise(void* __addr, size_t __size, int __advice) __THROW __attribute__((nonnull(1)));
+int madvise(void* __addr, size_t __size, int __advice) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(31)
 /**
@@ -170,7 +170,7 @@ int madvise(void* __addr, size_t __size, int __advice) __THROW __attribute__((no
  *
  * Returns the number of bytes advised on success, and returns -1 and sets `errno` on failure.
  */
-ssize_t process_madvise(int __pid_fd, const struct iovec* __iov, size_t __count, int __advice, unsigned __flags) __THROW __INTRODUCED_IN_API_S__ __attribute__((nonnull(2)));
+ssize_t process_madvise(int __pid_fd, const struct iovec* __iov, size_t __count, int __advice, unsigned __flags) __NOEXCEPT __INTRODUCED_IN_API_S__ __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(30)
@@ -182,7 +182,7 @@ ssize_t process_madvise(int __pid_fd, const struct iovec* __iov, size_t __count,
  *
  * Available since API level 30 when compiling with `_GNU_SOURCE`.
  */
-int memfd_create(const char* __name, unsigned __flags) __THROW __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+int memfd_create(const char* __name, unsigned __flags) __NOEXCEPT __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
 #endif
 
 #if __ANDROID_API__ >= 23
@@ -219,7 +219,7 @@ int memfd_create(const char* __name, unsigned __flags) __THROW __INTRODUCED_IN_A
  *
  * Returns 0 on success, and returns a positive error number on failure.
  */
-int posix_madvise(void* __addr, size_t __size, int __advice) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+int posix_madvise(void* __addr, size_t __size, int __advice) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(36)

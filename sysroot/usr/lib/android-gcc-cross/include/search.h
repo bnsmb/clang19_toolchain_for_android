@@ -68,13 +68,13 @@ struct hsearch_data {
  * [insque(3)](https://man7.org/linux/man-pages/man3/insque.3.html) inserts
  * an item in a queue (an intrusive doubly-linked list).
  */
-void insque(void* __element, void* __previous) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+void insque(void* __element, void* __previous) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 
 /**
  * [remque(3)](https://man7.org/linux/man-pages/man3/remque.3.html) removes
  * an item from a queue (an intrusive doubly-linked list).
  */
-void remque(void* __element) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+void remque(void* __element) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -88,7 +88,7 @@ void remque(void* __element) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonn
  *
  * Available since API level 28.
  */
-int hcreate(size_t __n) __THROW __INTRODUCED_IN_API_P__;
+int hcreate(size_t __n) __NOEXCEPT __INTRODUCED_IN_API_P__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -100,7 +100,7 @@ int hcreate(size_t __n) __THROW __INTRODUCED_IN_API_P__;
  *
  * Available since API level 28.
  */
-void hdestroy(void) __THROW __INTRODUCED_IN_API_P__;
+void hdestroy(void) __NOEXCEPT __INTRODUCED_IN_API_P__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -115,7 +115,7 @@ void hdestroy(void) __THROW __INTRODUCED_IN_API_P__;
  *
  * Available since API level 28.
  */
-ENTRY* hsearch(ENTRY __entry, ACTION __action) __THROW __INTRODUCED_IN_API_P__;
+ENTRY* hsearch(ENTRY __entry, ACTION __action) __NOEXCEPT __INTRODUCED_IN_API_P__;
 #endif
 
 #if (defined(__USE_BSD) || defined(__USE_GNU)) && __BIONIC_AVAILABILITY_GUARD(28)
@@ -127,7 +127,7 @@ ENTRY* hsearch(ENTRY __entry, ACTION __action) __THROW __INTRODUCED_IN_API_P__;
  *
  * Available since API level 28 when compiling with `_BSD_SOURCE` or `_GNU_SOURCE`.
  */
-int hcreate_r(size_t __n, struct hsearch_data* __table) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(2)));
+int hcreate_r(size_t __n, struct hsearch_data* __table) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(2)));
 #endif
 
 #if (defined(__USE_BSD) || defined(__USE_GNU)) && __BIONIC_AVAILABILITY_GUARD(28)
@@ -137,7 +137,7 @@ int hcreate_r(size_t __n, struct hsearch_data* __table) __THROW __INTRODUCED_IN_
  *
  * Available since API level 28 when compiling with `_BSD_SOURCE` or `_GNU_SOURCE`.
  */
-void hdestroy_r(struct hsearch_data* __table) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+void hdestroy_r(struct hsearch_data* __table) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if (defined(__USE_BSD) || defined(__USE_GNU)) && __BIONIC_AVAILABILITY_GUARD(28)
@@ -150,7 +150,7 @@ void hdestroy_r(struct hsearch_data* __table) __THROW __INTRODUCED_IN_API_P__ __
  *
  * Available since API level 28 when compiling with `_BSD_SOURCE` or `_GNU_SOURCE`.
  */
-int hsearch_r(ENTRY __entry, ACTION __action, ENTRY* * __result, struct hsearch_data* __table) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(3,4)));
+int hsearch_r(ENTRY __entry, ACTION __action, ENTRY* * __result, struct hsearch_data* __table) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(3,4)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(21)

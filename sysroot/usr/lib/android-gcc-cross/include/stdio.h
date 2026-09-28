@@ -103,10 +103,10 @@ extern FILE __sF[] /* __REMOVED_IN(23, "Use stdin/stdout/stderr") */;
 #define L_tmpnam 4096
 #define TMP_MAX 308915776
 
-void clearerr(FILE* __fp) __THROW __attribute__((nonnull(1)));
+void clearerr(FILE* __fp) __NOEXCEPT __attribute__((nonnull(1)));
 int fclose(FILE* __fp) __attribute__((nonnull(1)));
-__nodiscard int feof(FILE* __fp) __THROW __attribute__((nonnull(1)));
-__nodiscard int ferror(FILE* __fp) __THROW __attribute__((nonnull(1)));
+__nodiscard int feof(FILE* __fp) __NOEXCEPT __attribute__((nonnull(1)));
+__nodiscard int ferror(FILE* __fp) __NOEXCEPT __attribute__((nonnull(1)));
 int fflush(FILE* __fp);
 __nodiscard int fgetc(FILE* __fp) __attribute__((nonnull(1)));
 char* fgets(char* __buf, int __size, FILE* __fp) __attribute__((nonnull(1,3)));
@@ -155,7 +155,7 @@ int printf(const char* __fmt, ...) __printflike(1, 2) __attribute__((nonnull(1))
 int putc(int __ch, FILE* __fp) __attribute__((nonnull(2)));
 int putchar(int __ch);
 int puts(const char* __s) __attribute__((nonnull(1)));
-int remove(const char* __path) __THROW __attribute__((nonnull(1)));
+int remove(const char* __path) __NOEXCEPT __attribute__((nonnull(1)));
 void rewind(FILE* __fp) __attribute__((nonnull(1)));
 
 /**
@@ -163,8 +163,8 @@ void rewind(FILE* __fp) __attribute__((nonnull(1)));
  */
 int scanf(const char* __fmt, ...) __scanflike(1, 2) __attribute__((nonnull(1)));
 
-void setbuf(FILE* __fp, char* __buf) __THROW __attribute__((nonnull(1)));
-int setvbuf(FILE* __fp, char* __buf, int __mode, size_t __size) __THROW __attribute__((nonnull(1)));
+void setbuf(FILE* __fp, char* __buf) __NOEXCEPT __attribute__((nonnull(1)));
+int setvbuf(FILE* __fp, char* __buf, int __mode, size_t __size) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [sscanf(3)](https://man7.org/linux/man-pages/man3/sscanf.3.html)
@@ -179,7 +179,7 @@ int setvbuf(FILE* __fp, char* __buf, int __mode, size_t __size) __THROW __attrib
  * Returns the number of successful matches,
  * or EOF if there are no matches before the end of the string.
  */
-int sscanf(const char* __s, const char* __fmt, ...) __THROW __scanflike(2, 3) __attribute__((nonnull(1,2)));
+int sscanf(const char* __s, const char* __fmt, ...) __NOEXCEPT __scanflike(2, 3) __attribute__((nonnull(1,2)));
 
 int ungetc(int __ch, FILE* __fp) __attribute__((nonnull(2)));
 int vfprintf(FILE* __fp, const char* __fmt, va_list __args) __printflike(2, 0) __attribute__((nonnull(1,2)));
@@ -205,14 +205,14 @@ char* gets(char* __buf) __attribute__((__deprecated__("gets() is unsafe, use get
 #endif
 
 int sprintf(char* __s, const char* __fmt, ...)
-    __THROWNL __printflike(2, 3) __warnattr_strict("sprintf is often misused; please use snprintf") __attribute__((nonnull(2)));
+    __NOEXCEPTNL __printflike(2, 3) __warnattr_strict("sprintf is often misused; please use snprintf") __attribute__((nonnull(2)));
 int vsprintf(char* __s, const char* __fmt, va_list __args)
-    __THROWNL __printflike(2, 0) __warnattr_strict("vsprintf is often misused; please use vsnprintf") __attribute__((nonnull(2)));
+    __NOEXCEPTNL __printflike(2, 0) __warnattr_strict("vsprintf is often misused; please use vsnprintf") __attribute__((nonnull(2)));
 char* tmpnam(char* __s)
-    __THROW __attribute__((__deprecated__("tmpnam is unsafe, use mkstemp or tmpfile instead")));
+    __NOEXCEPT __attribute__((__deprecated__("tmpnam is unsafe, use mkstemp or tmpfile instead")));
 #define P_tmpdir "/tmp/" /* deprecated */
 char* tempnam(const char* __dir, const char* __prefix)
-    __THROW __attribute__((__deprecated__("tempnam is unsafe, use mkstemp or tmpfile instead")));
+    __NOEXCEPT __attribute__((__deprecated__("tempnam is unsafe, use mkstemp or tmpfile instead")));
 
 /**
  * [rename(2)](https://man7.org/linux/man-pages/man2/rename.2.html) changes
@@ -220,7 +220,7 @@ char* tempnam(const char* __dir, const char* __prefix)
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int rename(const char* __old_path, const char* __new_path) __THROW __attribute__((nonnull(1,2)));
+int rename(const char* __old_path, const char* __new_path) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 /**
  * [renameat(2)](https://man7.org/linux/man-pages/man2/renameat.2.html) changes
@@ -228,7 +228,7 @@ int rename(const char* __old_path, const char* __new_path) __THROW __attribute__
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int renameat(int __old_dir_fd, const char* __old_path, int __new_dir_fd, const char* __new_path) __THROW __attribute__((nonnull(2,4)));
+int renameat(int __old_dir_fd, const char* __old_path, int __new_dir_fd, const char* __new_path) __NOEXCEPT __attribute__((nonnull(2,4)));
 
 #if defined(__USE_GNU)
 /**
@@ -264,7 +264,7 @@ int renameat(int __old_dir_fd, const char* __old_path, int __new_dir_fd, const c
  *
  * Available since API level 30 when compiling with `_GNU_SOURCE`.
  */
-int renameat2(int __old_dir_fd, const char* __old_path, int __new_dir_fd, const char* __new_path, unsigned __flags) __THROW __INTRODUCED_IN_API_R__ __attribute__((nonnull(2,4)));
+int renameat2(int __old_dir_fd, const char* __old_path, int __new_dir_fd, const char* __new_path, unsigned __flags) __NOEXCEPT __INTRODUCED_IN_API_R__ __attribute__((nonnull(2,4)));
 #endif
 
 int fseek(FILE* __fp, long __offset, int __whence) __attribute__((nonnull(1)));
@@ -356,38 +356,38 @@ __nodiscard FILE* tmpfile(void);
 __nodiscard FILE* tmpfile64(void) __INTRODUCED_IN_API_N__;
 #endif
 
-int snprintf(char* __buf, size_t __size, const char* __fmt, ...) __THROWNL __printflike(3, 4) __attribute__((nonnull(3)));
+int snprintf(char* __buf, size_t __size, const char* __fmt, ...) __NOEXCEPTNL __printflike(3, 4) __attribute__((nonnull(3)));
 int vfscanf(FILE* __fp, const char* __fmt, va_list __args) __scanflike(2, 0) __attribute__((nonnull(1,2)));
 int vscanf(const char* __fmt , va_list __args) __scanflike(1, 0) __attribute__((nonnull(1)));
-int vsnprintf(char* __buf, size_t __size, const char* __fmt, va_list __args) __THROWNL __printflike(3, 0) __attribute__((nonnull(3)));
-int vsscanf(const char* __s, const char* __fmt, va_list __args) __THROW __scanflike(2, 0) __attribute__((nonnull(1,2)));
+int vsnprintf(char* __buf, size_t __size, const char* __fmt, va_list __args) __NOEXCEPTNL __printflike(3, 0) __attribute__((nonnull(3)));
+int vsscanf(const char* __s, const char* __fmt, va_list __args) __NOEXCEPT __scanflike(2, 0) __attribute__((nonnull(1,2)));
 
 #define L_ctermid 1024 /* size for ctermid() */
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
-char* ctermid(char* __buf) __THROW __INTRODUCED_IN_API_O__;
+char* ctermid(char* __buf) __NOEXCEPT __INTRODUCED_IN_API_O__;
 #endif
 
-__nodiscard FILE* fdopen(int __fd, const char* __mode) __THROW __attribute__((nonnull(2)));
-__nodiscard int fileno(FILE* __fp) __THROW __attribute__((nonnull(1)));
+__nodiscard FILE* fdopen(int __fd, const char* __mode) __NOEXCEPT __attribute__((nonnull(2)));
+__nodiscard int fileno(FILE* __fp) __NOEXCEPT __attribute__((nonnull(1)));
 int pclose(FILE* __fp) __attribute__((nonnull(1)));
 __nodiscard FILE* popen(const char* __command, const char* __mode) __attribute__((nonnull(1,2)));
-void flockfile(FILE*  __fp) __THROW __attribute__((nonnull(1)));
-int ftrylockfile(FILE* __fp) __THROW __attribute__((nonnull(1)));
-void funlockfile(FILE* __fp) __THROW __attribute__((nonnull(1)));
+void flockfile(FILE*  __fp) __NOEXCEPT __attribute__((nonnull(1)));
+int ftrylockfile(FILE* __fp) __NOEXCEPT __attribute__((nonnull(1)));
+void funlockfile(FILE* __fp) __NOEXCEPT __attribute__((nonnull(1)));
 __nodiscard int getc_unlocked(FILE* __fp) __attribute__((nonnull(1)));
 __nodiscard int getchar_unlocked(void);
 int putc_unlocked(int __ch, FILE* __fp) __attribute__((nonnull(2)));
 int putchar_unlocked(int __ch);
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-__nodiscard FILE* fmemopen(void* __buf, size_t __size, const char* __mode) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(3)));
+__nodiscard FILE* fmemopen(void* __buf, size_t __size, const char* __mode) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(3)));
 #endif
 #if __BIONIC_AVAILABILITY_GUARD(23)
-__nodiscard FILE* open_memstream(char* * __ptr, size_t* __size_ptr) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1,2)));
+__nodiscard FILE* open_memstream(char* * __ptr, size_t* __size_ptr) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1,2)));
 #endif
 
-int  asprintf(char* * __s_ptr, const char* __fmt, ...) __THROWNL __printflike(2, 3) __attribute__((nonnull(1,2)));
+int  asprintf(char* * __s_ptr, const char* __fmt, ...) __NOEXCEPTNL __printflike(2, 3) __attribute__((nonnull(1,2)));
 
 /**
  * fgetln() is a less portable and harder to use variant of getline().
@@ -398,22 +398,22 @@ int  asprintf(char* * __s_ptr, const char* __fmt, ...) __THROWNL __printflike(2,
 char* fgetln(FILE* __fp, size_t* __length_ptr) __attribute__((nonnull(1,2)));
 
 int fpurge(FILE* __fp) __attribute__((nonnull(1)));
-void setbuffer(FILE* __fp, char* __buf, int __size) __THROW __attribute__((nonnull(1)));
-int setlinebuf(FILE* __fp) __THROW __attribute__((nonnull(1)));
-int vasprintf(char* * __s_ptr, const char* __fmt, va_list __args) __THROWNL __printflike(2, 0) __attribute__((nonnull(1,2)));
+void setbuffer(FILE* __fp, char* __buf, int __size) __NOEXCEPT __attribute__((nonnull(1)));
+int setlinebuf(FILE* __fp) __NOEXCEPT __attribute__((nonnull(1)));
+int vasprintf(char* * __s_ptr, const char* __fmt, va_list __args) __NOEXCEPTNL __printflike(2, 0) __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-void clearerr_unlocked(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+void clearerr_unlocked(FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 #if __BIONIC_AVAILABILITY_GUARD(23)
-__nodiscard int feof_unlocked(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+__nodiscard int feof_unlocked(FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 #if __BIONIC_AVAILABILITY_GUARD(23)
-__nodiscard int ferror_unlocked(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+__nodiscard int ferror_unlocked(FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-__nodiscard int fileno_unlocked(FILE* __fp) __THROW __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
+__nodiscard int fileno_unlocked(FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
 #endif
 
 #define fropen(cookie, fn) funopen(cookie, fn, 0, 0, 0)

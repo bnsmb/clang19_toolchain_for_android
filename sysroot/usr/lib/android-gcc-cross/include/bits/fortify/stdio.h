@@ -30,7 +30,9 @@
 #error "Never include this file directly; instead, include <stdio.h>"
 #endif
 
+#if __BIONIC_AVAILABILITY_GUARD(17)
 char* __fgets_chk(char*, int, FILE*, size_t) __attribute__((nonnull(1)));
+#endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
 size_t __fread_chk(void*, size_t, size_t, FILE*, size_t) __INTRODUCED_IN_API_N__ __attribute__((nonnull(1)));
@@ -42,7 +44,7 @@ size_t __fwrite_chk(const void*, size_t, size_t, FILE*, size_t) __INTRODUCED_IN_
 
 #if defined(__BIONIC_FORTIFY) && !defined(__BIONIC_NO_STDIO_FORTIFY)
 
-#if __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
+#if __ANDROID_API__ >= 17 && __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
 /* No diag -- clang diagnoses misuses of this on its own.  */
 __BIONIC_FORTIFY_INLINE __printflike(3, 0)
 int vsnprintf(char* const __pass_object_size dest, size_t size, const char* format, va_list ap)
@@ -57,14 +59,16 @@ int vsprintf(char* const __pass_object_size dest, const char* format, va_list ap
 }
 #endif
 
+#if defined(__clang__)
 __BIONIC_ERROR_FUNCTION_VISIBILITY
 int sprintf(char* dest, const char* format)
-    __THROWNL __overloadable
+    __NOEXCEPTNL __overloadable
     __enable_if(__bos_unevaluated_lt(__bos(dest), __builtin_strlen(format)),
                 "format string will always overflow destination buffer")
     __clang_error_if(1, "format string will always overflow destination buffer");
+#endif
 
-#if __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
+#if __ANDROID_API__ >= 17 && __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
 __BIONIC_FORTIFY_VARIADIC __printflike(2, 3)
 int sprintf(char* const __pass_object_size dest, const char* format, ...) __overloadable {
     va_list va;
@@ -137,7 +141,7 @@ char* fgets(char* const __pass_object_size dest, int size, FILE* stream)
         __clang_error_if(size < 0, "in call to 'fgets', size should not be negative")
         __clang_error_if(__bos_unevaluated_lt(__bos(dest), size),
                          "in call to 'fgets', size is larger than the destination buffer") {
-#if __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
+#if __ANDROID_API__ >= 17 && __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
     size_t bos = __bos(dest);
 
     if (!__bos_dynamic_check_impl_and(bos, >=, (size_t)size, size >= 0)) {

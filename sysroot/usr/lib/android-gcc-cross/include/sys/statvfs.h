@@ -99,7 +99,7 @@ struct statvfs64 { __STATVFS64_BODY __STATVFS64_CODA };
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int statvfs(const char* __path, struct statvfs* __buf) __THROW __INTRODUCED_IN_API_K__ __attribute__((nonnull(1,2)));
+int statvfs(const char* __path, struct statvfs* __buf) __NOEXCEPT __INTRODUCED_IN_API_K__ __attribute__((nonnull(1,2)));
 
 /**
  * [fstatvfs(3)](https://man7.org/linux/man-pages/man3/fstatvfs.3.html)
@@ -107,15 +107,15 @@ int statvfs(const char* __path, struct statvfs* __buf) __THROW __INTRODUCED_IN_A
  *
  * Returns 0 on success, and returns -1 and sets `errno` on failure.
  */
-int fstatvfs(int __fd, struct statvfs* __buf) __THROW __INTRODUCED_IN_API_K__ __attribute__((nonnull(2)));
+int fstatvfs(int __fd, struct statvfs* __buf) __NOEXCEPT __INTRODUCED_IN_API_K__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(19) */
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** Equivalent to statvfs() . */
-int statvfs64(const char* __path, struct statvfs64* __buf) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
+int statvfs64(const char* __path, struct statvfs64* __buf) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
 
 /** Equivalent to fstatvfs(). */
-int fstatvfs64(int __fd, struct statvfs64* __buf) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int fstatvfs64(int __fd, struct statvfs64* __buf) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 __END_DECLS

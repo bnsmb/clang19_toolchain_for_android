@@ -46,10 +46,10 @@ __BEGIN_DECLS
  *
  * Returns the number of bytes copied on success, and returns -1 and sets `errno` on failure.
  */
-ssize_t sendfile(int __out_fd, int __in_fd, off_t* __offset, size_t __count) __REDIRECT_NTH(sendfile64) __INTRODUCED_IN_API_L__;
+ssize_t sendfile(int __out_fd, int __in_fd, off_t* __offset, size_t __count) __REDIRECT_NOEXCEPT(sendfile64) __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 #else
-ssize_t sendfile(int __out_fd, int __in_fd, off_t* __offset, size_t __count)__THROW ;
+ssize_t sendfile(int __out_fd, int __in_fd, off_t* __offset, size_t __count)__NOEXCEPT ;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
@@ -57,7 +57,7 @@ ssize_t sendfile(int __out_fd, int __in_fd, off_t* __offset, size_t __count)__TH
  * Like sendfile() but allows using a 64-bit offset
  * even from a 32-bit process without `_FILE_OFFSET_BITS=64`.
  */
-ssize_t sendfile64(int __out_fd, int __in_fd, off64_t* __offset, size_t __count) __THROW __INTRODUCED_IN_API_L__;
+ssize_t sendfile64(int __out_fd, int __in_fd, off64_t* __offset, size_t __count) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 __END_DECLS

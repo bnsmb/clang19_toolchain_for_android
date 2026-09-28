@@ -28,7 +28,9 @@
 
 #pragma once
 
+#if __BIONIC_AVAILABILITY_GUARD(18)
 mode_t __umask_chk(mode_t);
+#endif
 mode_t __umask_real(mode_t mode) __RENAME(umask);
 
 #if defined(__BIONIC_FORTIFY)
@@ -39,7 +41,7 @@ mode_t umask(mode_t mode)
     __overloadable
     __enable_if(1, "")
     __clang_error_if(mode & ~0777, "'umask' called with invalid mode") {
-#if __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
+#if __ANDROID_API__ >= 18 && __BIONIC_FORTIFY_RUNTIME_CHECKS_ENABLED
   return __umask_chk(mode);
 #else
   return __umask_real(mode);

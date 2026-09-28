@@ -45,15 +45,15 @@ struct if_nameindex {
   char* if_name;
 };
 
-char* if_indextoname(unsigned __index, char* __buf) __THROW __attribute__((nonnull(2)));
-unsigned if_nametoindex(const char* __name) __THROW __attribute__((nonnull(1)));
+char* if_indextoname(unsigned __index, char* __buf) __NOEXCEPT __attribute__((nonnull(2)));
+unsigned if_nametoindex(const char* __name) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
 struct if_nameindex* if_nameindex(void) __INTRODUCED_IN_API_N__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(24)
-void if_freenameindex(struct if_nameindex* __ptr) __THROW __INTRODUCED_IN_API_N__;
+void if_freenameindex(struct if_nameindex* __ptr) __NOEXCEPT __INTRODUCED_IN_API_N__;
 #endif
 
 __END_DECLS

@@ -142,9 +142,15 @@
 #define __nodiscard __attribute__((__warn_unused_result__))
 #define __wur __nodiscard
 
+#if defined(__clang__)
 #define __enable_if(cond, msg) __attribute__((__enable_if__(cond, msg)))
 #define __clang_error_if(cond, msg) __attribute__((__diagnose_if__(cond, msg, "error")))
 #define __clang_warning_if(cond, msg) __attribute__((__diagnose_if__(cond, msg, "warning")))
+#else
+#define __enable_if(cond, msg)
+#define __clang_error_if(cond, msg)
+#define __clang_warning_if(cond, msg)
+#endif
 
 #if defined(ANDROID_STRICT)
 /*
@@ -251,34 +257,50 @@
 
 #if defined(__BIONIC_FORTIFY)
 #  define __bos0(s) __bosn((s), 0)
-#  if _FORTIFY_SOURCE >= 3
-#    define __pass_object_size_n(n) __attribute__((__pass_dynamic_object_size__(n)))
+#  if defined(__clang__)
+#    if _FORTIFY_SOURCE >= 3
+#      define __pass_object_size_n(n) __attribute__((__pass_dynamic_object_size__(n)))
+#    else
+#      define __pass_object_size_n(n) __attribute__((__pass_object_size__(n)))
+#    endif
 #  else
-#    define __pass_object_size_n(n) __attribute__((__pass_object_size__(n)))
+#    define __pass_object_size_n(n)
 #  endif
 
 /*
  * FORTIFY'ed functions all have either enable_if or pass_object_size, which
  * makes taking their address impossible. Saying (&read)(foo, bar, baz); will
  * therefore call the unFORTIFYed version of read.
- */
-#  define __call_bypassing_fortify(fn) (&fn)
-/*
+ *
  * Because clang-FORTIFY uses overloads, we can't mark functions as `extern inline` without making
  * them available externally. FORTIFY'ed functions try to be as close to possible as 'invisible';
  * having stack protectors detracts from that (b/182948263).
  */
-#  define __BIONIC_FORTIFY_INLINE static __inline __attribute__((__no_stack_protector__)) \
-      __always_inline
+#  if defined(__clang__)
+#    define __BIONIC_FORTIFY_INLINE static __inline __attribute__((__no_stack_protector__)) \
+         __always_inline
 /*
  * We should use __BIONIC_FORTIFY_VARIADIC instead of __BIONIC_FORTIFY_INLINE
  * for variadic functions because compilers cannot inline them.
  * The __always_inline attribute is useless, misleading, and could trigger
  * clang compiler bug to incorrectly inline variadic functions.
  */
-#  define __BIONIC_FORTIFY_VARIADIC static __inline
+#    define __BIONIC_FORTIFY_VARIADIC static __inline
 /* Error functions don't have bodies, so they can just be static. */
-#  define __BIONIC_ERROR_FUNCTION_VISIBILITY static __unused
+#    define __BIONIC_ERROR_FUNCTION_VISIBILITY static __unused
+#    define __call_bypassing_fortify(fn) (&fn)
+#  else
+#    define __BIONIC_FORTIFY_INLINE extern __inline __attribute__((__always_inline__, \
+         __gnu_inline__, __no_stack_protector__))
+#    define __BIONIC_FORTIFY_VARIADIC extern __inline __attribute__((__gnu_inline__, \
+         __no_stack_protector__))
+#    define __BIONIC_ERROR_FUNCTION_VISIBILITY static __unused
+#    define __call_bypassing_fortify(fn)                     \
+       __extension__({                                      \
+         extern __typeof(fn) __bionic_bypass_##fn __asm__(#fn); \
+         __bionic_bypass_##fn;                               \
+       })
+#  endif
 #else
 /* Further increase sharing for some inline functions */
 #  define __pass_object_size_n(n)
@@ -304,13 +326,18 @@
 #define __bos_trivially_ge(bos_val, index) __bos_dynamic_check_impl((bos_val), >=, (index))
 #define __bos_trivially_gt(bos_val, index) __bos_dynamic_check_impl((bos_val), >, (index))
 
-#if 0 /* defined(__BIONIC_FORTIFY) || defined(__BIONIC_DECLARE_FORTIFY_HELPERS) */
+#if defined(__BIONIC_FORTIFY) || defined(__BIONIC_DECLARE_FORTIFY_HELPERS)
 #  define __BIONIC_INCLUDE_FORTIFY_HEADERS 1
 #endif
 
+#if defined(__clang__)
 #define __overloadable __attribute__((__overloadable__))
 
 #define __diagnose_as_builtin(...) __attribute__((__diagnose_as_builtin__(__VA_ARGS__)))
+#else
+#define __overloadable
+#define __diagnose_as_builtin(...)
+#endif
 
 /* Used to tag non-static symbols that are private and never exposed by the shared library. */
 #define __LIBC_HIDDEN__ __attribute__((__visibility__("hidden")))
@@ -365,23 +392,23 @@
 
 #if defined(__cplusplus)
 	#if __cplusplus >= 201103L
-		#define __THROW noexcept (true)
+		#define __NOEXCEPT noexcept (true)
 	#else
-		#define __THROW throw ()
+		#define __NOEXCEPT throw ()
 	#endif
 	
-	#define __THROWNL __THROW
+	#define __NOEXCEPTNL __NOEXCEPT
 #else
-	#define __THROW __attribute__((__nothrow__ , __leaf__))
-	#define __THROWNL __attribute__((__nothrow__))
+	#define __NOEXCEPT __attribute__((__nothrow__ , __leaf__))
+	#define __NOEXCEPTNL __attribute__((__nothrow__))
 #endif
 
 #if defined(__cplusplus)
-	#define __REDIRECT_NTH(name) __THROW __RENAME(#name)
-	#define __REDIRECT_IF_FILE_OFFSET64_NTH(name) __THROW __RENAME_IF_FILE_OFFSET64(#name)
+	#define __REDIRECT_NOEXCEPT(name) __NOEXCEPT __RENAME(#name)
+	#define __REDIRECT_LFS_NOEXCEPT(name) __NOEXCEPT __RENAME_IF_FILE_OFFSET64(#name)
 #else
-	#define __REDIRECT_NTH(name) __RENAME(#name) __THROW
-	#define __REDIRECT_IF_FILE_OFFSET64_NTH(name) __RENAME_IF_FILE_OFFSET64(#name) __THROW
+	#define __REDIRECT_NOEXCEPT(name) __RENAME(#name) __NOEXCEPT
+	#define __REDIRECT_LFS_NOEXCEPT(name) __RENAME_IF_FILE_OFFSET64(#name) __NOEXCEPT
 #endif
 
 #define _Nonnull
@@ -470,6 +497,10 @@
 
 #if !defined(__ANDROID_API_W__)
 #define __ANDROID_API_W__ 36
+#endif
+
+#if !defined(__ANDROID_API_X__)
+#define __ANDROID_API_X__ 37
 #endif
 
 #define __PINO_SYMBOL_UNAVAILABLE_ERROR__(a, b) ("This symbol is only available on Android " a " (API level " ___STRING(b) ") or higher")
@@ -604,6 +635,12 @@
 	#define __INTRODUCED_IN_API_W__ __PINO_SYMBOL_AVAILABILITY__("16", __ANDROID_API_W__)
 #else
 	#define __INTRODUCED_IN_API_W__ __INTRODUCED_IN(__ANDROID_API_W__)
+#endif
+
+#if __ANDROID_API__ < __ANDROID_API_X__
+	#define __INTRODUCED_IN_API_X__ __PINO_SYMBOL_AVAILABILITY__("17", __ANDROID_API_X__)
+#else
+	#define __INTRODUCED_IN_API_X__ __INTRODUCED_IN(__ANDROID_API_X__)
 #endif
 
 #include <android/versioning.h>

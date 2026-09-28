@@ -61,8 +61,8 @@ __BEGIN_DECLS
 /* We take a few real-time signals for ourselves. May as well use the same names as glibc. */
 #define SIGRTMIN (__libc_current_sigrtmin())
 #define SIGRTMAX (__libc_current_sigrtmax())
-int __libc_current_sigrtmin(void) __THROW __INTRODUCED_IN_API_L__;
-int __libc_current_sigrtmax(void) __THROW __INTRODUCED_IN_API_L__;
+int __libc_current_sigrtmin(void) __NOEXCEPT __INTRODUCED_IN_API_L__;
+int __libc_current_sigrtmax(void) __NOEXCEPT __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 extern const char* const sys_siglist[_NSIG];
@@ -70,17 +70,17 @@ extern const char* const sys_signame[_NSIG]; /* BSD compatibility. */
 
 #define si_timerid si_tid /* glibc compatibility. */
 
-int sigaction(int __signal, const struct sigaction* __new_action, struct sigaction* __old_action)__THROW ;
+int sigaction(int __signal, const struct sigaction* __new_action, struct sigaction* __old_action)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 int sigaction64(int __signal, const struct sigaction64* __new_action, struct sigaction64* __old_action) __INTRODUCED_IN_API_P__;
 #endif
 
-int siginterrupt(int __signal, int __flag)__THROW ;
+int siginterrupt(int __signal, int __flag)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-sighandler_t signal(int __signal, sighandler_t __handler) __THROW __INTRODUCED_IN_API_L__;
-int sigaddset(sigset_t* __set, int __signal) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+sighandler_t signal(int __signal, sighandler_t __handler) __NOEXCEPT __INTRODUCED_IN_API_L__;
+int sigaddset(sigset_t* __set, int __signal) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -88,7 +88,7 @@ int sigaddset64(sigset64_t* __set, int __signal) __INTRODUCED_IN_API_P__ __attri
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int sigdelset(sigset_t* __set, int __signal) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+int sigdelset(sigset_t* __set, int __signal) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -96,7 +96,7 @@ int sigdelset64(sigset64_t* __set, int __signal) __INTRODUCED_IN_API_P__ __attri
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int sigemptyset(sigset_t* __set) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+int sigemptyset(sigset_t* __set) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -104,7 +104,7 @@ int sigemptyset64(sigset64_t* __set) __INTRODUCED_IN_API_P__ __attribute__((nonn
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int sigfillset(sigset_t* __set) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+int sigfillset(sigset_t* __set) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -112,7 +112,7 @@ int sigfillset64(sigset64_t* __set) __INTRODUCED_IN_API_P__ __attribute__((nonnu
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-int sigismember(const sigset_t* __set, int __signal) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+int sigismember(const sigset_t* __set, int __signal) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -120,25 +120,25 @@ int sigismember64(const sigset64_t* __set, int __signal) __INTRODUCED_IN_API_P__
 #endif
 
 
-int sigpending(sigset_t* __set) __THROW __attribute__((nonnull(1)));
+int sigpending(sigset_t* __set) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 int sigpending64(sigset64_t* __set) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
-int sigprocmask(int __how, const sigset_t* __new_set, sigset_t* __old_set)__THROW ;
+int sigprocmask(int __how, const sigset_t* __new_set, sigset_t* __old_set)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 int sigprocmask64(int __how, const sigset64_t* __new_set, sigset64_t* __old_set) __INTRODUCED_IN_API_P__;
 #endif
 
-int sigsuspend(const sigset_t* __mask) __attribute__((nonnull(1)));
+int sigsuspend(const sigset_t* __mask) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 int sigsuspend64(const sigset64_t* __mask) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
-int sigwait(const sigset_t* __set, int* __signal) __attribute__((nonnull(1,2)));
+int sigwait(const sigset_t* __set, int* __signal) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 int sigwait64(const sigset64_t* __set, int* __signal) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1,2)));
@@ -146,13 +146,13 @@ int sigwait64(const sigset64_t* __set, int* __signal) __INTRODUCED_IN_API_P__ __
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
 int sighold(int __signal)
-  __THROW __attribute__((__deprecated__("use sigprocmask() or pthread_sigmask() instead")))
+  __NOEXCEPT __attribute__((__deprecated__("use sigprocmask() or pthread_sigmask() instead")))
   __INTRODUCED_IN_API_O__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
 int sigignore(int __signal)
-  __THROW __attribute__((__deprecated__("use sigaction() instead"))) __INTRODUCED_IN_API_O__;
+  __NOEXCEPT __attribute__((__deprecated__("use sigaction() instead"))) __INTRODUCED_IN_API_O__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
@@ -162,48 +162,48 @@ int sigpause(int __signal)
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
 int sigrelse(int __signal)
-  __THROW __attribute__((__deprecated__("use sigprocmask() or pthread_sigmask() instead")))
+  __NOEXCEPT __attribute__((__deprecated__("use sigprocmask() or pthread_sigmask() instead")))
   __INTRODUCED_IN_API_O__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
 sighandler_t sigset(int __signal, sighandler_t __handler)
-  __THROW __attribute__((__deprecated__("use sigaction() instead"))) __INTRODUCED_IN_API_O__;
+  __NOEXCEPT __attribute__((__deprecated__("use sigaction() instead"))) __INTRODUCED_IN_API_O__;
 #endif
 
-int raise(int __signal)__THROW ;
-int kill(pid_t __pid, int __signal)__THROW ;
-int killpg(int __pgrp, int __signal)__THROW ;
+int raise(int __signal)__NOEXCEPT ;
+int kill(pid_t __pid, int __signal)__NOEXCEPT ;
+int killpg(int __pgrp, int __signal)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(16)
 int tgkill(int __tgid, int __tid, int __signal) __INTRODUCED_IN_API_J__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(16) */
 
-int sigaltstack(const stack_t* __new_signal_stack, stack_t*  __old_signal_stack)__THROW ;
+int sigaltstack(const stack_t* __new_signal_stack, stack_t*  __old_signal_stack)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(17)
 void psiginfo(const siginfo_t* __info, const char* __msg) __INTRODUCED_IN_API_J_MR1__ __attribute__((nonnull(1)));
 void psignal(int __signal, const char* __msg) __INTRODUCED_IN_API_J_MR1__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 
-int pthread_kill(pthread_t __pthread, int __signal)__THROW ;
+int pthread_kill(pthread_t __pthread, int __signal)__NOEXCEPT ;
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(29)
-int pthread_sigqueue(pthread_t __pthread, int __signal, const union sigval __value) __THROW __INTRODUCED_IN_API_Q__;
+int pthread_sigqueue(pthread_t __pthread, int __signal, const union sigval __value) __NOEXCEPT __INTRODUCED_IN_API_Q__;
 #endif
 
-int pthread_sigmask(int __how, const sigset_t* __new_set, sigset_t* __old_set)__THROW ;
+int pthread_sigmask(int __how, const sigset_t* __new_set, sigset_t* __old_set)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
 int pthread_sigmask64(int __how, const sigset64_t* __new_set, sigset64_t* __old_set) __INTRODUCED_IN_API_P__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-int sigqueue(pid_t __pid, int __signal, const union sigval __value) __THROW __INTRODUCED_IN_API_M__;
+int sigqueue(pid_t __pid, int __signal, const union sigval __value) __NOEXCEPT __INTRODUCED_IN_API_M__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-int sigtimedwait(const sigset_t* __set, siginfo_t* __info, const struct timespec* __timeout) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+int sigtimedwait(const sigset_t* __set, siginfo_t* __info, const struct timespec* __timeout) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -211,7 +211,7 @@ int sigtimedwait64(const sigset64_t* __set, siginfo_t* __info, const struct time
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
-int sigwaitinfo(const sigset_t* __set, siginfo_t* __info) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+int sigwaitinfo(const sigset_t* __set, siginfo_t* __info) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)

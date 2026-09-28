@@ -41,9 +41,3 @@
 #include <bits/termios_inlines.h>
 
 #endif
-
-#if __ANDROID_API__ < 35
-
-#include <bits/termios_winsize_inlines.h>
-
-#endif

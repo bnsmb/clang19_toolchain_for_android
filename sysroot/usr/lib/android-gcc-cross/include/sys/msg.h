@@ -47,22 +47,22 @@ typedef __kernel_ulong_t msglen_t;
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
 /** Not useful on Android; disallowed by SELinux. */
-int msgctl(int __msg_id, int __op, struct msqid_ds* __buf) __THROW __INTRODUCED_IN_API_O__;
+int msgctl(int __msg_id, int __op, struct msqid_ds* __buf) __NOEXCEPT __INTRODUCED_IN_API_O__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
 /** Not useful on Android; disallowed by SELinux. */
-int msgget(key_t __key, int __flags) __THROW __INTRODUCED_IN_API_O__;
+int msgget(key_t __key, int __flags) __NOEXCEPT __INTRODUCED_IN_API_O__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
 /** Not useful on Android; disallowed by SELinux. */
-ssize_t msgrcv(int __msg_id, void* __msgbuf_ptr, size_t __size, long __type, int __flags) __INTRODUCED_IN_API_O__ __attribute__((nonnull(2)));
+ssize_t msgrcv(int __msg_id, void* __msgbuf_ptr, size_t __size, long __type, int __flags) __NOEXCEPT __INTRODUCED_IN_API_O__ __attribute__((nonnull(2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
 /** Not useful on Android; disallowed by SELinux. */
-int msgsnd(int __msg_id, const void* __msgbuf_ptr, size_t __size, int __flags) __INTRODUCED_IN_API_O__ __attribute__((nonnull(2)));
+int msgsnd(int __msg_id, const void* __msgbuf_ptr, size_t __size, int __flags) __NOEXCEPT __INTRODUCED_IN_API_O__ __attribute__((nonnull(2)));
 #endif
 
 __END_DECLS

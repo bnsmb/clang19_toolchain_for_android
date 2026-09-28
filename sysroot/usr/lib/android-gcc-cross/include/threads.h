@@ -78,105 +78,99 @@ enum {
 # define thread_local _Thread_local
 #endif
 
-#if __ANDROID_API__ >= 30
-// This file is implemented as static inlines before API level 30.
-
 /**
  * Unblocks all threads blocked on `__cond`.
  */
-int cnd_broadcast(cnd_t* __cond) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+int cnd_broadcast(cnd_t* __cond) __attribute__((nonnull(1)));
 
 /**
  * Destroys a condition variable.
  */
-void cnd_destroy(cnd_t* __cond) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+void cnd_destroy(cnd_t* __cond) __attribute__((nonnull(1)));
 
 /**
  * Creates a condition variable.
  */
-int cnd_init(cnd_t* __cond) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+int cnd_init(cnd_t* __cond) __attribute__((nonnull(1)));
 
 /**
  * Unblocks one thread blocked on `__cond`.
  */
-int cnd_signal(cnd_t* __cond) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+int cnd_signal(cnd_t* __cond) __attribute__((nonnull(1)));
 
 /**
  * Unlocks `__mutex` and blocks until `__cond` is signaled or `__timeout` occurs.
  */
-int cnd_timedwait(cnd_t* __cond, mtx_t* __mutex, const struct timespec* __timeout)
-    __INTRODUCED_IN_API_R__ __attribute__((nonnull(1,2,3)));
+int cnd_timedwait(cnd_t* __cond, mtx_t* __mutex, const struct timespec* __timeout) __attribute__((nonnull(1,2,3)));
 
 /**
  * Unlocks `__mutex` and blocks until `__cond` is signaled.
  */
-int cnd_wait(cnd_t* __cond, mtx_t* __mutex) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1,2)));
+int cnd_wait(cnd_t* __cond, mtx_t* __mutex) __attribute__((nonnull(1,2)));
 
 
 
 /**
  * Destroys a mutex.
  */
-void mtx_destroy(mtx_t* __mutex) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+void mtx_destroy(mtx_t* __mutex) __attribute__((nonnull(1)));
 
 /**
  * Creates a mutex.
  */
-int mtx_init(mtx_t* __mutex, int __type) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+int mtx_init(mtx_t* __mutex, int __type) __attribute__((nonnull(1)));
 
 /**
  * Blocks until `__mutex` is acquired.
  */
-int mtx_lock(mtx_t* __mutex) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+int mtx_lock(mtx_t* __mutex) __attribute__((nonnull(1)));
 
 /**
  * Blocks until `__mutex` is acquired or `__timeout` expires.
  */
-int mtx_timedlock(mtx_t* __mutex, const struct timespec* __timeout) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1,2)));
+int mtx_timedlock(mtx_t* __mutex, const struct timespec* __timeout) __attribute__((nonnull(1,2)));
 
 /**
  * Acquires `__mutex` or returns `thrd_busy`.
  */
-int mtx_trylock(mtx_t* __mutex) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+int mtx_trylock(mtx_t* __mutex) __attribute__((nonnull(1)));
 
 /**
  * Unlocks `__mutex`.
  */
-int mtx_unlock(mtx_t* __mutex) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
-
-
+int mtx_unlock(mtx_t* __mutex) __attribute__((nonnull(1)));
 
 /**
  * Creates a new thread running `__function(__arg)`, and sets `*__thrd` to
  * the new thread.
  */
-int thrd_create(thrd_t* __thrd, thrd_start_t __function, void* __arg) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1,2)));
+int thrd_create(thrd_t* __thrd, thrd_start_t __function, void* __arg) __attribute__((nonnull(1,2)));
 
 /**
  * Returns the `thrd_t` corresponding to the caller.
  */
-thrd_t thrd_current(void) __INTRODUCED_IN_API_R__;
+thrd_t thrd_current(void);
 
 /**
  * Tells the OS to automatically dispose of `__thrd` when it exits.
  */
-int thrd_detach(thrd_t __thrd) __INTRODUCED_IN_API_R__;
+int thrd_detach(thrd_t __thrd);
 
 /**
  * Tests whether two threads are the same thread.
  */
-int thrd_equal(thrd_t __lhs, thrd_t __rhs) __INTRODUCED_IN_API_R__;
+int thrd_equal(thrd_t __lhs, thrd_t __rhs);
 
 /**
  * Terminates the calling thread, setting its result to `__result`.
  */
-void thrd_exit(int __result) __noreturn __INTRODUCED_IN_API_R__;
+void thrd_exit(int __result) __noreturn;
 
 /**
  * Blocks until `__thrd` terminates. If `__result` is not null, `*__result`
  * is set to the exiting thread's result.
  */
-int thrd_join(thrd_t __thrd, int* __result) __INTRODUCED_IN_API_R__;
+int thrd_join(thrd_t __thrd, int* __result);
 
 /**
  * Blocks the caller for at least `__duration` unless a signal is delivered.
@@ -185,40 +179,34 @@ int thrd_join(thrd_t __thrd, int* __result) __INTRODUCED_IN_API_R__;
  *
  * Returns 0 on success, or -1 if a signal was delivered.
  */
-int thrd_sleep(const struct timespec* __duration, struct timespec* __remaining) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+int thrd_sleep(const struct timespec* __duration, struct timespec* __remaining) __attribute__((nonnull(1)));
 
 /**
  * Request that other threads should be scheduled.
  */
-void thrd_yield(void) __INTRODUCED_IN_API_R__;
-
-
+void thrd_yield(void);
 
 /**
  * Creates a thread-specific storage key with the associated destructor (which
  * may be null).
  */
-int tss_create(tss_t* __key, tss_dtor_t __dtor) __INTRODUCED_IN_API_R__ __attribute__((nonnull(1)));
+int tss_create(tss_t* __key, tss_dtor_t __dtor) __attribute__((nonnull(1)));
 
 /**
  * Destroys a thread-specific storage key.
  */
-void tss_delete(tss_t __key) __INTRODUCED_IN_API_R__;
+void tss_delete(tss_t __key);
 
 /**
  * Returns the value for the current thread held in the thread-specific storage
  * identified by `__key`.
  */
-void* tss_get(tss_t __key) __INTRODUCED_IN_API_R__;
+void* tss_get(tss_t __key);
 
 /**
  * Sets the current thread's value for the thread-specific storage identified
  * by `__key` to `__value`.
  */
-int tss_set(tss_t __key, void* __value) __INTRODUCED_IN_API_R__ __attribute__((nonnull(2)));
-
-#endif
+int tss_set(tss_t __key, void* __value) __attribute__((nonnull(2)));
 
 __END_DECLS
-
-#include <android/legacy_threads_inlines.h>

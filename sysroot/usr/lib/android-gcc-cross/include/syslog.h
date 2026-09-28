@@ -230,7 +230,7 @@ void openlog(const char* __prefix, int __option, int __facility);
  * sets which log priorities will actually be logged. See `LOG_MASK` and
  * `LOG_UPTO`.
  */
-int setlogmask(int __mask)__THROW ;
+int setlogmask(int __mask)__NOEXCEPT ;
 
 /**
  * [syslog(3)](https://man7.org/linux/man-pages/man3/syslog.3.html) formats

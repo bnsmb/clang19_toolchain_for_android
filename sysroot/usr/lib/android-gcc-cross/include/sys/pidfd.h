@@ -50,7 +50,7 @@ __BEGIN_DECLS
  *
  * Available since API level 31.
  */
-int pidfd_open(pid_t __pid, unsigned int __flags) __THROW __INTRODUCED_IN_API_S__;
+int pidfd_open(pid_t __pid, unsigned int __flags) __NOEXCEPT __INTRODUCED_IN_API_S__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(31)
@@ -64,7 +64,7 @@ int pidfd_open(pid_t __pid, unsigned int __flags) __THROW __INTRODUCED_IN_API_S_
  *
  * Available since API level 31.
  */
-int pidfd_getfd(int __pidfd, int __targetfd, unsigned int __flags) __THROW __INTRODUCED_IN_API_S__;
+int pidfd_getfd(int __pidfd, int __targetfd, unsigned int __flags) __NOEXCEPT __INTRODUCED_IN_API_S__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(31)
@@ -76,7 +76,7 @@ int pidfd_getfd(int __pidfd, int __targetfd, unsigned int __flags) __THROW __INT
  *
  * Available since API level 31.
  */
-int pidfd_send_signal(int __pidfd, int __sig, siginfo_t * __info, unsigned int __flags) __THROW __INTRODUCED_IN_API_S__;
+int pidfd_send_signal(int __pidfd, int __sig, siginfo_t * __info, unsigned int __flags) __NOEXCEPT __INTRODUCED_IN_API_S__;
 #endif
 
 __END_DECLS

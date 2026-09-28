@@ -24,14 +24,14 @@
  * Set to 0 if this is a release build, or 1 for beta 1,
  * 2 for beta 2, and so on.
  */
-#define __NDK_BETA__ 2
+#define __NDK_BETA__ 0
 
 /**
  * Build number for this NDK.
  *
  * For a local development build of the NDK, this is 0.
  */
-#define __NDK_BUILD__ 15729638
+#define __NDK_BUILD__ 16248370
 
 /**
  * Set to 1 if this is a canary build, 0 if not.

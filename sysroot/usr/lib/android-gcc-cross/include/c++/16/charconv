@@ -664,7 +664,7 @@ namespace __detail
   operator^=(chars_format& __lhs, chars_format __rhs) noexcept
   { return __lhs = __lhs ^ __rhs; }
 
-#if defined __cpp_lib_to_chars || _GLIBCXX_HAVE_USELOCALE
+#if defined __cpp_lib_to_chars || __ANDROID_API__ >= 21
   from_chars_result
   from_chars(const char* __first, const char* __last, float& __value,
 	     chars_format __fmt = chars_format::general) noexcept;

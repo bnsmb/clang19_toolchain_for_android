@@ -40,6 +40,6 @@ __BEGIN_DECLS
 /**
  * [ioctl(2)](https://man7.org/linux/man-pages/man2/ioctl.2.html) operates on device files.
  */
-int ioctl(int __fd, int __op, ...)__THROW ;
+int ioctl(int __fd, int __op, ...)__NOEXCEPT ;
 
 __END_DECLS

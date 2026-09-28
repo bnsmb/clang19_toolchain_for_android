@@ -179,13 +179,6 @@ __BEGIN_DECLS
 int android_get_application_target_sdk_version() __INTRODUCED_IN_API_N__;
 #endif
 
-#if __ANDROID_API__ < 29
-/* android_get_device_api_level is a static inline before API level 29. */
-#define __GET_DEVICE_API_LEVEL_INLINE__
-#include <bits/get_device_api_level_inlines.h>
-#undef __GET_DEVICE_API_LEVEL_INLINE__
-#else
-
 /**
  * Returns the API level of the device we're actually running on, or -1 on failure.
  *
@@ -196,9 +189,7 @@ int android_get_application_target_sdk_version() __INTRODUCED_IN_API_N__;
  *
  * Available since API level 29.
  */
-int android_get_device_api_level() __INTRODUCED_IN_API_Q__;
-
-#endif
+int android_get_device_api_level();
 
 #endif /* defined(__ASSEMBLER__) */
 

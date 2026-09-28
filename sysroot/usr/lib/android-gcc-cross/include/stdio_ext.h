@@ -45,7 +45,7 @@ __BEGIN_DECLS
  *
  * Available since API level 23.
  */
-size_t __fbufsize(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+size_t __fbufsize(FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
@@ -55,7 +55,7 @@ size_t __fbufsize(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((non
  *
  * Available since API level 23.
  */
-int __freadable(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+int __freadable(FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -65,7 +65,7 @@ int __freadable(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnu
  *
  * Available since API level 28.
  */
-int __freading(FILE* __fp) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+int __freading(FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
@@ -75,7 +75,7 @@ int __freading(FILE* __fp) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnul
  *
  * Available since API level 23.
  */
-int __fwritable(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+int __fwritable(FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(28)
@@ -85,7 +85,7 @@ int __fwritable(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnu
  *
  * Available since API level 28.
  */
-int __fwriting(FILE* __fp) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
+int __fwriting(FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
@@ -95,14 +95,14 @@ int __fwriting(FILE* __fp) __THROW __INTRODUCED_IN_API_P__ __attribute__((nonnul
  *
  * Available since API level 23.
  */
-int __flbf(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+int __flbf(FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 /**
  * [__fpurge(3)](https://man7.org/linux/man-pages/man3/__fpurge.3.html) discards the contents of
  * the stream's buffer.
  */
-void __fpurge(FILE* __fp) __REDIRECT_NTH(fpurge) __attribute__((nonnull(1)));
+void __fpurge(FILE* __fp) __REDIRECT_NOEXCEPT(fpurge) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
 /**
@@ -111,7 +111,7 @@ void __fpurge(FILE* __fp) __REDIRECT_NTH(fpurge) __attribute__((nonnull(1)));
  *
  * Available since API level 23.
  */
-size_t __fpending(FILE* __fp) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+size_t __fpending(FILE* __fp) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(34)
@@ -160,7 +160,7 @@ void __fseterr(FILE* __fp) __INTRODUCED_IN_API_P__ __attribute__((nonnull(1)));
  *
  * Available since API level 23.
  */
-int __fsetlocking(FILE* __fp, int __type) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+int __fsetlocking(FILE* __fp, int __type) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 __END_DECLS

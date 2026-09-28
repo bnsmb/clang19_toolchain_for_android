@@ -122,7 +122,7 @@ FTSENT* fts_children(FTS* __fts, int __options) __INTRODUCED_IN_API_L__ __attrib
 int fts_close(FTS* __fts) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 FTS* fts_open(char* const* __path, int __options, int (* __comparator)(const FTSENT* *  __lhs, const FTSENT* * __rhs)) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 FTSENT* fts_read(FTS* __fts) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
-int fts_set(FTS* __fts, FTSENT* __entry, int __options) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
+int fts_set(FTS* __fts, FTSENT* __entry, int __options) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 __END_DECLS

@@ -197,17 +197,17 @@ struct addrinfo {
 #define IPPORT_RESERVED 1024
 
 int getaddrinfo(const char* __node, const char* __service, const struct addrinfo* __hints, struct addrinfo* * __result) __attribute__((nonnull(4)));
-void freeaddrinfo(struct addrinfo* __ptr)__THROW ;
+void freeaddrinfo(struct addrinfo* __ptr)__NOEXCEPT ;
 
 /* Android ABI error: POSIX getnameinfo(3) uses socklen_t rather than size_t. */
 int getnameinfo(const struct sockaddr* __sa, socklen_t __sa_length, char* __host, size_t __host_length, char* __service, size_t __service_length, int __flags) __attribute__((nonnull(1)));
-const char* gai_strerror(int __error)__THROW ;
+const char* gai_strerror(int __error)__NOEXCEPT ;
 
 /* These functions are obsolete. Use getaddrinfo/getnameinfo instead. */
 #define h_errno (*__get_h_errno())
 int* __get_h_errno(void);
-void herror(const char* __s) __THROW __attribute__((nonnull(1)));
-const char* hstrerror(int __error)__THROW ;
+void herror(const char* __s) __NOEXCEPT __attribute__((nonnull(1)));
+const char* hstrerror(int __error)__NOEXCEPT ;
 struct hostent* gethostbyaddr(const void* __addr, socklen_t __length, int __type) __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(23)

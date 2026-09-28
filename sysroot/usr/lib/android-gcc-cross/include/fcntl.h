@@ -93,12 +93,14 @@ __BEGIN_DECLS
 /** Flag for splice(). */
 #define SPLICE_F_GIFT 8
 
+#if __BIONIC_AVAILABILITY_GUARD(26)
 /** Flag for sync_file_range(). */
 #define SYNC_FILE_RANGE_WAIT_BEFORE 1
 /** Flag for sync_file_range(). */
 #define SYNC_FILE_RANGE_WRITE 2
 /** Flag for sync_file_range(). */
 #define SYNC_FILE_RANGE_WAIT_AFTER 4
+#endif /* __BIONIC_AVAILABILITY_GUARD(26) */
 
 /**
  * [creat(2)](https://man7.org/linux/man-pages/man2/creat.2.html)
@@ -107,11 +109,11 @@ __BEGIN_DECLS
  * Returns a new file descriptor on success and returns -1 and sets `errno` on
  * failure.
  */
-int creat(const char* __path, mode_t __mode) __attribute__((nonnull(1)));
+int creat(const char* __path, mode_t __mode) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** See creat(). */
-int creat64(const char* __path, mode_t __mode) __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+int creat64(const char* __path, mode_t __mode) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -203,9 +205,9 @@ int fallocate64(int __fd, int __mode, off64_t __offset, off64_t __length) __INTR
  *
  * Returns 0 on success and returns an error number on failure.
  */
-int posix_fadvise(int __fd, off_t __offset, off_t __length, int __advice) __REDIRECT_IF_FILE_OFFSET64_NTH(posix_fadvise64) __INTRODUCED_IN_API_L__;
+int posix_fadvise(int __fd, off_t __offset, off_t __length, int __advice) __REDIRECT_LFS_NOEXCEPT(posix_fadvise64) __INTRODUCED_IN_API_L__;
 /** See posix_fadvise(). */
-int posix_fadvise64(int __fd, off64_t __offset, off64_t __length, int __advice)__THROW ;
+int posix_fadvise64(int __fd, off64_t __offset, off64_t __length, int __advice)__NOEXCEPT ;
 
 /**
  * [posix_fallocate(2)](https://man7.org/linux/man-pages/man2/posix_fallocate.2.html)
@@ -227,7 +229,7 @@ int posix_fallocate64(int __fd, off64_t __offset, off64_t __length);
  *
  * Available when compiling with `_GNU_SOURCE`.
  */
-ssize_t readahead(int __fd, off64_t __offset, size_t __length)__THROW ;
+ssize_t readahead(int __fd, off64_t __offset, size_t __length)__NOEXCEPT ;
 #endif /* __BIONIC_AVAILABILITY_GUARD(16) */   
 #endif
 

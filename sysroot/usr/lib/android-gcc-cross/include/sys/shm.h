@@ -49,22 +49,22 @@ typedef unsigned long shmatt_t;
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
 /** Not useful on Android; disallowed by SELinux. */
-void* shmat(int __shm_id, const void* __addr, int __flags) __THROW __INTRODUCED_IN_API_O__;
+void* shmat(int __shm_id, const void* __addr, int __flags) __NOEXCEPT __INTRODUCED_IN_API_O__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
 /** Not useful on Android; disallowed by SELinux. */
-int shmctl(int __shm_id, int __op, struct shmid_ds* __buf) __THROW __INTRODUCED_IN_API_O__;
+int shmctl(int __shm_id, int __op, struct shmid_ds* __buf) __NOEXCEPT __INTRODUCED_IN_API_O__;
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
 /** Not useful on Android; disallowed by SELinux. */
-int shmdt(const void* __addr) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
+int shmdt(const void* __addr) __NOEXCEPT __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
 /** Not useful on Android; disallowed by SELinux. */
-int shmget(key_t __key, size_t __size, int __flags) __THROW __INTRODUCED_IN_API_O__;
+int shmget(key_t __key, size_t __size, int __flags) __NOEXCEPT __INTRODUCED_IN_API_O__;
 #endif
 
 __END_DECLS

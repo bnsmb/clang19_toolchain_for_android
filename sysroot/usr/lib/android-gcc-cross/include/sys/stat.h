@@ -185,7 +185,7 @@ struct stat64 { __STAT64_BODY };
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int chmod(const char* __path, mode_t __mode) __THROW __attribute__((nonnull(1)));
+int chmod(const char* __path, mode_t __mode) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [fchmod(2)](https://man7.org/linux/man-pages/man2/fchmod.2.html)
@@ -193,7 +193,7 @@ int chmod(const char* __path, mode_t __mode) __THROW __attribute__((nonnull(1)))
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int fchmod(int __fd, mode_t __mode)__THROW ;
+int fchmod(int __fd, mode_t __mode)__NOEXCEPT ;
 
 /**
  * [fchmodat(2)](https://man7.org/linux/man-pages/man2/fchmodat.2.html)
@@ -201,7 +201,7 @@ int fchmod(int __fd, mode_t __mode)__THROW ;
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int fchmodat(int __dir_fd, const char* __path, mode_t __mode, int __flags) __THROW __attribute__((nonnull(2)));
+int fchmodat(int __dir_fd, const char* __path, mode_t __mode, int __flags) __NOEXCEPT __attribute__((nonnull(2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(36)
 /**
@@ -214,7 +214,7 @@ int fchmodat(int __dir_fd, const char* __path, mode_t __mode, int __flags) __THR
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int lchmod(const char* __path, mode_t __mode) __THROW __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
+int lchmod(const char* __path, mode_t __mode) __NOEXCEPT __INTRODUCED_IN_API_W__ __attribute__((nonnull(1)));
 #endif
 
 /**
@@ -223,7 +223,7 @@ int lchmod(const char* __path, mode_t __mode) __THROW __INTRODUCED_IN_API_W__ __
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int mkdir(const char* __path, mode_t __mode) __THROW __attribute__((nonnull(1)));
+int mkdir(const char* __path, mode_t __mode) __NOEXCEPT __attribute__((nonnull(1)));
 
 /**
  * [mkdirat(2)](https://man7.org/linux/man-pages/man2/mkdirat.2.html)
@@ -231,7 +231,7 @@ int mkdir(const char* __path, mode_t __mode) __THROW __attribute__((nonnull(1)))
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int mkdirat(int __dir_fd, const char* __path, mode_t __mode) __THROW __attribute__((nonnull(2)));
+int mkdirat(int __dir_fd, const char* __path, mode_t __mode) __NOEXCEPT __attribute__((nonnull(2)));
 
 /**
  * [fstat(2)](https://man7.org/linux/man-pages/man2/fstat.2.html)
@@ -239,11 +239,11 @@ int mkdirat(int __dir_fd, const char* __path, mode_t __mode) __THROW __attribute
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int fstat(int __fd, struct stat* __buf) __THROW __attribute__((nonnull(2)));
+int fstat(int __fd, struct stat* __buf) __NOEXCEPT __attribute__((nonnull(2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** An alias for fstat(). */
-int fstat64(int __fd, struct stat64* __buf) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int fstat64(int __fd, struct stat64* __buf) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -252,11 +252,11 @@ int fstat64(int __fd, struct stat64* __buf) __THROW __INTRODUCED_IN_API_L__ __at
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int fstatat(int __dir_fd, const char* __path, struct stat* __buf, int __flags) __THROW __attribute__((nonnull(3)));
+int fstatat(int __dir_fd, const char* __path, struct stat* __buf, int __flags) __NOEXCEPT __attribute__((nonnull(3)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** An alias for fstatat(). */
-int fstatat64(int __dir_fd, const char* __path, struct stat64* __buf, int __flags) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(3)));
+int fstatat64(int __dir_fd, const char* __path, struct stat64* __buf, int __flags) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(3)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -265,11 +265,11 @@ int fstatat64(int __dir_fd, const char* __path, struct stat64* __buf, int __flag
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int lstat(const char* __path, struct stat* __buf) __THROW __attribute__((nonnull(1,2)));
+int lstat(const char* __path, struct stat* __buf) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** An alias for lstat(). */
-int lstat64(const char* __path, struct stat64* __buf) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
+int lstat64(const char* __path, struct stat64* __buf) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -278,11 +278,11 @@ int lstat64(const char* __path, struct stat64* __buf) __THROW __INTRODUCED_IN_AP
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int stat(const char* __path, struct stat* __buf) __THROW __attribute__((nonnull(1,2)));
+int stat(const char* __path, struct stat* __buf) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** An alias for stat(). */
-int stat64(const char* __path, struct stat64* __buf) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
+int stat64(const char* __path, struct stat64* __buf) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -291,7 +291,7 @@ int stat64(const char* __path, struct stat64* __buf) __THROW __INTRODUCED_IN_API
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int mknod(const char* __path, mode_t __mode, dev_t __dev) __THROW __attribute__((nonnull(1)));
+int mknod(const char* __path, mode_t __mode, dev_t __dev) __NOEXCEPT __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /**
@@ -300,7 +300,7 @@ int mknod(const char* __path, mode_t __mode, dev_t __dev) __THROW __attribute__(
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int mknodat(int __dir_fd, const char* __path, mode_t __mode, dev_t __dev) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
+int mknodat(int __dir_fd, const char* __path, mode_t __mode, dev_t __dev) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /**
@@ -309,7 +309,7 @@ int mknodat(int __dir_fd, const char* __path, mode_t __mode, dev_t __dev) __THRO
  *
  * Returns the previous file mode creation mask.
  */
-mode_t umask(mode_t __mask)__THROW ;
+mode_t umask(mode_t __mask)__NOEXCEPT ;
 
 #if defined(__BIONIC_INCLUDE_FORTIFY_HEADERS)
 #include <bits/fortify/stat.h>
@@ -322,7 +322,7 @@ mode_t umask(mode_t __mask)__THROW ;
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int mkfifo(const char* __path, mode_t __mode) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
+int mkfifo(const char* __path, mode_t __mode) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
@@ -332,7 +332,7 @@ int mkfifo(const char* __path, mode_t __mode) __THROW __INTRODUCED_IN_API_L__ __
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int mkfifoat(int __dir_fd, const char* __path, mode_t __mode) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(2)));
+int mkfifoat(int __dir_fd, const char* __path, mode_t __mode) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(2)));
 #endif
 
 /**
@@ -361,7 +361,7 @@ int mkfifoat(int __dir_fd, const char* __path, mode_t __mode) __THROW __INTRODUC
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int utimensat(int __dir_fd, const char* __path, const struct timespec __times[2], int __flags)__THROW ;
+int utimensat(int __dir_fd, const char* __path, const struct timespec __times[2], int __flags)__NOEXCEPT ;
 
 #if __BIONIC_AVAILABILITY_GUARD(19)
 /**
@@ -374,7 +374,7 @@ int utimensat(int __dir_fd, const char* __path, const struct timespec __times[2]
  *
  * Returns 0 on success and returns -1 and sets `errno` on failure.
  */
-int futimens(int __fd, const struct timespec __times[2]) __THROW __INTRODUCED_IN_API_K__;
+int futimens(int __fd, const struct timespec __times[2]) __NOEXCEPT __INTRODUCED_IN_API_K__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(19) */
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(30)
@@ -386,7 +386,7 @@ int futimens(int __fd, const struct timespec __times[2]) __THROW __INTRODUCED_IN
  *
  * Available since API level 30 when compiling with `_GNU_SOURCE`.
  */
-int statx(int __dir_fd, const char* __path, int __flags, unsigned __mask, struct statx* __buf) __THROW __INTRODUCED_IN_API_R__ __attribute__((nonnull(5)));
+int statx(int __dir_fd, const char* __path, int __flags, unsigned __mask, struct statx* __buf) __NOEXCEPT __INTRODUCED_IN_API_R__ __attribute__((nonnull(5)));
 #endif
 
 __END_DECLS

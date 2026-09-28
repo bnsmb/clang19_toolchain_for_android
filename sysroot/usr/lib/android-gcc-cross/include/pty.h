@@ -50,7 +50,7 @@ __BEGIN_DECLS
  *
  * Available since API level 23.
  */
-int openpty(int* __pty_fd, int* __tty_fd, char* __tty_name, const struct termios* __termios_ptr, const struct winsize* __winsize_ptr) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1,2)));
+int openpty(int* __pty_fd, int* __tty_fd, char* __tty_name, const struct termios* __termios_ptr, const struct winsize* __winsize_ptr) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1,2)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(23)
@@ -63,7 +63,7 @@ int openpty(int* __pty_fd, int* __tty_fd, char* __tty_name, const struct termios
  *
  * Available since API level 23.
  */
-int forkpty(int* __parent_pty_fd, char* __child_tty_name, const struct termios* __termios_ptr, const struct winsize* __winsize_ptr) __THROW __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+int forkpty(int* __parent_pty_fd, char* __child_tty_name, const struct termios* __termios_ptr, const struct winsize* __winsize_ptr) __NOEXCEPT __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
 
 __END_DECLS

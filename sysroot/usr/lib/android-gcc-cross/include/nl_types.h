@@ -75,7 +75,7 @@ nl_catd catopen(const char* __name, int __flag) __INTRODUCED_IN_API_O__ __attrib
  *
  * Available since API level 28.
  */
-char* catgets(nl_catd __catalog, int __set_number, int __msg_number, const char* __msg) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,4)));
+char* catgets(nl_catd __catalog, int __set_number, int __msg_number, const char* __msg) __NOEXCEPT __INTRODUCED_IN_API_O__ __attribute__((nonnull(1,4)));
 #endif
 
 #if __BIONIC_AVAILABILITY_GUARD(26)
@@ -84,7 +84,7 @@ char* catgets(nl_catd __catalog, int __set_number, int __msg_number, const char*
  *
  * On Android, this always returns -1 with `errno` set to `EBADF`.
  */
-int catclose(nl_catd __catalog) __THROW __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
+int catclose(nl_catd __catalog) __NOEXCEPT __INTRODUCED_IN_API_O__ __attribute__((nonnull(1)));
 #endif
 
 __END_DECLS

@@ -41,22 +41,22 @@ __BEGIN_DECLS
 #include <strings.h>
 #endif
 
-void* memccpy(void* __dst, const void* __src, int __stop_char, size_t __n) __THROW __attribute__((nonnull(1,2)));
-void* memchr(const void* __s, int __ch, size_t __n) __THROW __attribute_pure__ __attribute__((nonnull(1)));
+void* memccpy(void* __dst, const void* __src, int __stop_char, size_t __n) __NOEXCEPT __attribute__((nonnull(1,2)));
+void* memchr(const void* __s, int __ch, size_t __n) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1)));
 #if defined(__cplusplus)
-extern "C++" void* memrchr(void* __s, int __ch, size_t __n) __REDIRECT_NTH(memrchr) __attribute_pure__ __attribute__((nonnull(1)));
-extern "C++" const void* memrchr(const void* __s, int __ch, size_t __n) __REDIRECT_NTH(memrchr) __attribute_pure__ __attribute__((nonnull(1)));
+extern "C++" void* memrchr(void* __s, int __ch, size_t __n) __REDIRECT_NOEXCEPT(memrchr) __attribute_pure__ __attribute__((nonnull(1)));
+extern "C++" const void* memrchr(const void* __s, int __ch, size_t __n) __REDIRECT_NOEXCEPT(memrchr) __attribute_pure__ __attribute__((nonnull(1)));
 #else
-void* memrchr(const void* __s, int __ch, size_t __n) __THROW __attribute_pure__ __attribute__((nonnull(1)));
+void* memrchr(const void* __s, int __ch, size_t __n) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1)));
 #endif
-int memcmp(const void* __lhs, const void* __rhs, size_t __n) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
-void* memcpy(void*, const void*, size_t) __THROW __attribute__((nonnull(1,2)));
+int memcmp(const void* __lhs, const void* __rhs, size_t __n) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1,2)));
+void* memcpy(void*, const void*, size_t) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 #if defined(__USE_GNU)
-void* mempcpy(void* __dst, const void* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
+void* mempcpy(void* __dst, const void* __src, size_t __n) __NOEXCEPT __attribute__((nonnull(1,2)));
 #endif
 
-void* memmove(void* __dst, const void* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
+void* memmove(void* __dst, const void* __src, size_t __n) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 /**
  * [memset(3)](https://man7.org/linux/man-pages/man3/memset.3.html) writes the
@@ -64,9 +64,8 @@ void* memmove(void* __dst, const void* __src, size_t __n) __THROW __attribute__(
  *
  * Returns `dst`.
  */
-void* memset(void* __dst, int __ch, size_t __n) __THROW __attribute__((nonnull(1)));
+void* memset(void* __dst, int __ch, size_t __n) __NOEXCEPT __attribute__((nonnull(1)));
 
-#if __ANDROID_API__ >= 34
 /**
  * [memset_explicit(3)](https://man7.org/linux/man-pages/man3/memset_explicit.3.html)
  * writes the bottom 8 bits of the given int to the next `n` bytes of `dst`,
@@ -76,16 +75,11 @@ void* memset(void* __dst, int __ch, size_t __n) __THROW __attribute__((nonnull(1
  *
  * Available from API level 34, or with __ANDROID_UNAVAILABLE_SYMBOLS_ARE_WEAK__.
  */
-void* memset_explicit(void* __dst, int __ch, size_t __n) __INTRODUCED_IN_API_U__ __attribute__((nonnull(1)));
-#elif defined(__ANDROID_UNAVAILABLE_SYMBOLS_ARE_WEAK__)
-#define __BIONIC_MEMSET_EXPLICIT_INLINE static __inline
-#include <bits/memset_explicit_impl.h>
-#undef __BIONIC_MEMSET_EXPLICIT_INLINE
-#endif
+void* memset_explicit(void* __dst, int __ch, size_t __n) __attribute__((nonnull(1)));
 
-void* memmem(const void* __haystack, size_t __haystack_size, const void* __needle, size_t __needle_size) __THROW __attribute_pure__ __attribute__((nonnull(1,3)));
+void* memmem(const void* __haystack, size_t __haystack_size, const void* __needle, size_t __needle_size) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1,3)));
 
-char* strchr(const char* __s, int __ch) __THROW __attribute_pure__ __attribute__((nonnull(1)));
+char* strchr(const char* __s, int __ch) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(18)
 char* __strchr_chk(const char* __s, int __ch, size_t __n) __INTRODUCED_IN_API_J_MR2__ __attribute__((nonnull(1)));
@@ -93,39 +87,39 @@ char* __strchr_chk(const char* __s, int __ch, size_t __n) __INTRODUCED_IN_API_J_
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(24)
 #if defined(__cplusplus)
-extern "C++" char* strchrnul(char* __s, int __ch) __REDIRECT_NTH(strchrnul) __attribute_pure__ __INTRODUCED_IN_API_N__;
-extern "C++" const char* strchrnul(const char* __s, int __ch) __REDIRECT_NTH(strchrnul) __attribute_pure__ __INTRODUCED_IN_API_N__;
+extern "C++" char* strchrnul(char* __s, int __ch) __REDIRECT_NOEXCEPT(strchrnul) __attribute_pure__ __INTRODUCED_IN_API_N__;
+extern "C++" const char* strchrnul(const char* __s, int __ch) __REDIRECT_NOEXCEPT(strchrnul) __attribute_pure__ __INTRODUCED_IN_API_N__;
 #else
-char* strchrnul(const char* __s, int __ch) __THROW __attribute_pure__ __INTRODUCED_IN_API_N__;
+char* strchrnul(const char* __s, int __ch) __NOEXCEPT __attribute_pure__ __INTRODUCED_IN_API_N__;
 #endif
 #endif
 
-char* strrchr(const char* __s, int __ch) __THROW __attribute_pure__ __attribute__((nonnull(1)));
+char* strrchr(const char* __s, int __ch) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(18)
 char* __strrchr_chk(const char* __s, int __ch, size_t __n) __INTRODUCED_IN_API_J_MR2__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(18) */
 
-size_t strlen(const char* __s) __THROW __attribute_pure__ __attribute__((nonnull(1)));
+size_t strlen(const char* __s) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1)));
 
 #if __BIONIC_AVAILABILITY_GUARD(17)
 size_t __strlen_chk(const char* __s, size_t __n) __INTRODUCED_IN_API_J_MR1__ __attribute__((nonnull(1)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(17) */
 
-int strcmp(const char* __lhs, const char* __rhs) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
+int strcmp(const char* __lhs, const char* __rhs) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
-char* stpcpy(char* __dst, const char* __src) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
+char* stpcpy(char* __dst, const char* __src) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(1,2)));
 #else
 __static_inline__ char* __attribute__((nonnull(1,2))) stpcpy(char* __dst, const char* __src) { return __builtin_stpcpy(__dst, __src); }
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
-char* strcpy(char* __dst, const char* __src) __THROW __attribute__((nonnull(1,2)));
-char* strcat(char* __dst, const char* __src) __THROW __attribute__((nonnull(1,2)));
-char* strdup(const char* __s) __THROW __attribute__((nonnull(1)));
+char* strcpy(char* __dst, const char* __src) __NOEXCEPT __attribute__((nonnull(1,2)));
+char* strcat(char* __dst, const char* __src) __NOEXCEPT __attribute__((nonnull(1,2)));
+char* strdup(const char* __s) __NOEXCEPT __attribute__((nonnull(1)));
 
-char* strstr(const char* __haystack, const char* __needle) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
-char* strcasestr(const char* __haystack, const char* __needle) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
+char* strstr(const char* __haystack, const char* __needle) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1,2)));
+char* strcasestr(const char* __haystack, const char* __needle) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1,2)));
 
 /**
  * [strtok(3)](https://man7.org/linux/man-pages/man3/strtok.3.html)
@@ -137,7 +131,7 @@ char* strcasestr(const char* __haystack, const char* __needle) __THROW __attribu
  * See strsep() if you want empty tokens returned too.
  */
 char* strtok(char* __s, const char* __delimiter)
-    __THROW __attribute__((__deprecated__("strtok() is not thread-safe; use strtok_r() instead")));
+    __NOEXCEPT __attribute__((__deprecated__("strtok() is not thread-safe; use strtok_r() instead")));
 
 /**
  * [strtok_r(3)](https://man7.org/linux/man-pages/man3/strtok_r.3.html)
@@ -145,7 +139,7 @@ char* strtok(char* __s, const char* __delimiter)
  *
  * See strsep() if you want empty tokens returned too.
  */
-char* strtok_r(char* __s, const char* __delimiter, char* * __pos_ptr) __THROW __attribute__((nonnull(2,3)));
+char* strtok_r(char* __s, const char* __delimiter, char* * __pos_ptr) __NOEXCEPT __attribute__((nonnull(2,3)));
 
 /**
  * [strerror(3)](https://man7.org/linux/man-pages/man3/strerror.3.html)
@@ -158,12 +152,12 @@ char* strtok_r(char* __s, const char* __delimiter, char* * __pos_ptr) __THROW __
  *
  * Returns a pointer to a string.
  */
-char* strerror(int __errno_value)__THROW ;
+char* strerror(int __errno_value)__NOEXCEPT ;
 
 /**
  * Equivalent to strerror() on Android where only C/POSIX locales are available.
  */
-char* strerror_l(int __errno_value, locale_t __l) __REDIRECT_NTH(strerror) __attribute__((nonnull(2)));
+char* strerror_l(int __errno_value, locale_t __l) __REDIRECT_NOEXCEPT(strerror) __attribute__((nonnull(2)));
 
 #if defined(__USE_GNU) && __ANDROID_API__ >= 23
 /**
@@ -177,9 +171,9 @@ char* strerror_l(int __errno_value, locale_t __l) __REDIRECT_NTH(strerror) __att
  * The GNU variant is available since API level 23 if `_GNU_SOURCE` is defined.
  * The POSIX variant is available otherwise.
  */
-char* strerror_r(int __errno_value, char* __buf, size_t __n) __REDIRECT_NTH(__gnu_strerror_r) __INTRODUCED_IN_API_M__;
+char* strerror_r(int __errno_value, char* __buf, size_t __n) __REDIRECT_NOEXCEPT(__gnu_strerror_r) __INTRODUCED_IN_API_M__;
 #else /* POSIX */
-int strerror_r(int __errno_value, char* __buf, size_t __n) __THROW __attribute__((nonnull(2)));
+int strerror_r(int __errno_value, char* __buf, size_t __n) __NOEXCEPT __attribute__((nonnull(2)));
 #endif
 
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(35)
@@ -195,7 +189,7 @@ int strerror_r(int __errno_value, char* __buf, size_t __n) __THROW __attribute__
  *
  * Available since API level 35 when compiling with `_GNU_SOURCE`.
  */
-const char* strerrorname_np(int __errno_value) __THROW __INTRODUCED_IN_API_V__;
+const char* strerrorname_np(int __errno_value) __NOEXCEPT __INTRODUCED_IN_API_V__;
 #endif
 
 #if defined(__USE_GNU)
@@ -208,26 +202,26 @@ const char* strerrorname_np(int __errno_value) __THROW __INTRODUCED_IN_API_V__;
  *
  * Available when compiling with `_GNU_SOURCE`.
  */
-const char* strerrordesc_np(int __errno_value) __REDIRECT_NTH(strerror);
+const char* strerrordesc_np(int __errno_value) __REDIRECT_NOEXCEPT(strerror);
 #endif
 
-size_t strnlen(const char* __s, size_t __n) __THROW __attribute_pure__ __attribute__((nonnull(1)));
-char* strncat(char* __dst, const char* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
-char* strndup(const char* __s, size_t __n) __THROW __attribute__((nonnull(1)));
-int strncmp(const char* __lhs, const char* __rhs, size_t __n) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
+size_t strnlen(const char* __s, size_t __n) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1)));
+char* strncat(char* __dst, const char* __src, size_t __n) __NOEXCEPT __attribute__((nonnull(1,2)));
+char* strndup(const char* __s, size_t __n) __NOEXCEPT __attribute__((nonnull(1)));
+int strncmp(const char* __lhs, const char* __rhs, size_t __n) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1,2)));
 
-char* stpncpy(char* __dst, const char* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
-char* strncpy(char* __dst, const char* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
+char* stpncpy(char* __dst, const char* __src, size_t __n) __NOEXCEPT __attribute__((nonnull(1,2)));
+char* strncpy(char* __dst, const char* __src, size_t __n) __NOEXCEPT __attribute__((nonnull(1,2)));
 
-size_t strlcat(char* __dst, const char* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
-size_t strlcpy(char* __dst, const char* __src, size_t __n) __THROW __attribute__((nonnull(1,2)));
+size_t strlcat(char* __dst, const char* __src, size_t __n) __NOEXCEPT __attribute__((nonnull(1,2)));
+size_t strlcpy(char* __dst, const char* __src, size_t __n) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 /**
  * [strcspn(3)](https://man7.org/linux/man-pages/man3/strcspn.3.html)
  * returns the length of the prefix containing only characters _not_ in
  * the reject set.
  */
-size_t strcspn(const char* __s, const char* __reject) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
+size_t strcspn(const char* __s, const char* __reject) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1,2)));
 
 /**
  * [strpbrk(3)](https://man7.org/linux/man-pages/man3/strpbrk.3.html)
@@ -236,7 +230,7 @@ size_t strcspn(const char* __s, const char* __reject) __THROW __attribute_pure__
  *
  * See strspn() if you want an index instead.
  */
-char* strpbrk(const char* __s, const char* __accept) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
+char* strpbrk(const char* __s, const char* __accept) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1,2)));
 
 /**
  * [strsep(3)](https://man7.org/linux/man-pages/man3/strsep.3.html)
@@ -244,7 +238,7 @@ char* strpbrk(const char* __s, const char* __accept) __THROW __attribute_pure__ 
  *
  * See strtok_r() if you don't want empty tokens.
  */
-char* strsep(char* * __s_ptr, const char* __delimiter) __THROW __attribute__((nonnull(1,2)));
+char* strsep(char* * __s_ptr, const char* __delimiter) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 /**
  * [strspn(3)](https://man7.org/linux/man-pages/man3/strspn.3.html)
@@ -253,7 +247,7 @@ char* strsep(char* * __s_ptr, const char* __delimiter) __THROW __attribute__((no
  *
  * See strpbrk() if you want a pointer instead.
  */
-size_t strspn(const char* __s, const char* __accept) __THROW __attribute__((nonnull(1,2)));
+size_t strspn(const char* __s, const char* __accept) __NOEXCEPT __attribute__((nonnull(1,2)));
 
 /**
  * [strsignal(3)](https://man7.org/linux/man-pages/man3/strsignal.3.html)
@@ -265,22 +259,22 @@ size_t strspn(const char* __s, const char* __accept) __THROW __attribute__((nonn
  *
  * Returns a pointer to a string. For invalid signals, the string is in TLS.
  */
-char* strsignal(int __signal)__THROW ;
+char* strsignal(int __signal)__NOEXCEPT ;
 
 /** Equivalent to strcmp() on Android. */
-int strcoll(const char* __lhs, const char* __rhs) __THROW __attribute_pure__ __attribute__((nonnull(1,2)));
+int strcoll(const char* __lhs, const char* __rhs) __NOEXCEPT __attribute_pure__ __attribute__((nonnull(1,2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** Equivalent to strcmp() on Android. */
-int strcoll_l(const char* __lhs, const char* __rhs, locale_t __l) __THROW __attribute_pure__ __INTRODUCED_IN_API_L__;
+int strcoll_l(const char* __lhs, const char* __rhs, locale_t __l) __NOEXCEPT __attribute_pure__ __INTRODUCED_IN_API_L__;
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /** Equivalent to strlcpy() on Android. */
-size_t strxfrm(char* __dst, const char* __src, size_t __n) __THROW __attribute__((nonnull(2)));
+size_t strxfrm(char* __dst, const char* __src, size_t __n) __NOEXCEPT __attribute__((nonnull(2)));
 
 #if __BIONIC_AVAILABILITY_GUARD(21)
 /** Equivalent to strlcpy() on Android. */
-size_t strxfrm_l(char* __dst, const char* __src, size_t __n, locale_t __l) __THROW __INTRODUCED_IN_API_L__ __attribute__((nonnull(2,4)));
+size_t strxfrm_l(char* __dst, const char* __src, size_t __n, locale_t __l) __NOEXCEPT __INTRODUCED_IN_API_L__ __attribute__((nonnull(2,4)));
 #endif /* __BIONIC_AVAILABILITY_GUARD(21) */
 
 /*
@@ -289,8 +283,8 @@ size_t strxfrm_l(char* __dst, const char* __src, size_t __n, locale_t __l) __THR
  */
 #if defined(__USE_GNU) && __BIONIC_AVAILABILITY_GUARD(23) && !defined(basename)
 #if defined(__cplusplus)
-extern "C++" char* basename(char* __path) __REDIRECT_NTH(__gnu_basename) __INTRODUCED_IN_API_M__;
-extern "C++" const char* basename(const char* __path) __REDIRECT_NTH(__gnu_basename) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
+extern "C++" char* basename(char* __path) __REDIRECT_NOEXCEPT(__gnu_basename) __INTRODUCED_IN_API_M__;
+extern "C++" const char* basename(const char* __path) __REDIRECT_NOEXCEPT(__gnu_basename) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #else
 char* basename(const char* __path) __RENAME(__gnu_basename) __INTRODUCED_IN_API_M__ __attribute__((nonnull(1)));
 #endif
