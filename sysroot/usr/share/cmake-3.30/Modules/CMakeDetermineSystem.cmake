@@ -45,7 +45,7 @@ if(CMAKE_HOST_UNIX)
             set(_ANDROID_API_LEVEL_H /data/local/tmp/sysroot/usr/lib/android-gcc-cross/include/android/api-level.h)
           else()
             message(STATUS "Using the api-level.h file for clang")
-            set(_ANDROID_API_LEVEL_H /data/local/tmp/sysroot/usr/include/android/api-level.h)
+            set(_ANDROID_API_LEVEL_H /data/local/tmp/sysroot/usr/clang19/include/android/api-level.h)
           endif()
 
           message(STATUS "The used api-level.h file is ${_ANDROID_API_LEVEL_H}" )

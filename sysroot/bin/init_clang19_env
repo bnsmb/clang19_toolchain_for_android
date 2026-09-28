@@ -478,6 +478,8 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     if [ -d "${GCC_BIN_DIR}" ] ; then
       add_path "${GCC_BIN_DIR}"
 
+      alias add_gcc_lib='LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/local/tmp/sysroot/usr/lib/android-gcc-cross/lib/ '
+      
       [ -x "${GCC_BIN_DIR}/gcc" ] && GCC="${GCC_BIN_DIR}/gcc" 
     else
       echo "No GCC toolchain found"
@@ -801,6 +803,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     if [ ${THISRC} != 0 ] ; then
       print_warning "WARNING: Executing \"${GCC} --version\" ended with RC=${THISRC}"
     fi
+
   else
     if [ ${IGNORE_GCC_TOOLCHAIN} = ${__FALSE} ] ; then
       echo "INFO: The gcc does not exist in this environment"

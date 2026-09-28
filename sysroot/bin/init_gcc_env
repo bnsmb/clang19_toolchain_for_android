@@ -612,7 +612,9 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   alias sysroot="cd ${GCC_SYSROOT}; pwd"
 
   alias setlibpath="export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}"
- 
+
+  alias add_gcc_lib='LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/local/tmp/sysroot/usr/lib/android-gcc-cross/lib/ '
+
   alias addlib='LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/local/tmp/develop/sysroot/usr/lib '
 
   alias cp_crt_libs='cp ${NDK_DIR}/sysroot/usr/lib/${CPU_TYPE}-linux-android/${API}/crt*.o .'
