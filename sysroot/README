@@ -127,6 +127,11 @@ Now you can use gcc and c++ to compile C and C++ source files.
 Please note that the directory /data/local/tmp/sysroot is hardcoded in the binaries and scripts used for gcc.
 
 
+Use the cmake tool chain file /data/local/tmp/sysroot/android-gcc-toolchain.cmake to use cmake together with gcc or g++ , e.g:
+
+cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/android-gcc-toolchain.cmake ...
+
+
 # The tools included in the tar file with the clang19 toolchain are:
 # 
 # clang 19.0.0
@@ -633,4 +638,5 @@ History
     updated the coreutils to version 9.12 (in /data/local/tmp/sysroot/usr/coreutils/) 
     updated the gcc toolchain to version 16.2.1_20260927
     updated cmake 4.x to version 4.4.2
-
+    added the cmake toolchain file ./android-gcc-toolchain.cmake for building programs with the gcc/g++
+    moved the api-level.h file for clang from /data/local/tmp/sysroot/usr/include/android/api-level.h to /data/local/tmp/sysroot/usr/clang19/include/android/api-level.h
