@@ -43,7 +43,6 @@ if(CMAKE_HOST_UNIX)
 
 	  message(STATUS " The toolchain used is (CMAKE_TOOLCHAIN_FILE) = ${CMAKE_TOOLCHAIN_FILE}" )
 
-	  #          if(CMAKE_TOOLCHAIN_FILE STREQUAL "/data/local/tmp/develop/android-gcc-toolchain.cmake")
 	 if(CMAKE_TOOLCHAIN_FILE MATCHES "android\\-gcc")
 
             message(STATUS " Using the api-level.h file for GCC")
