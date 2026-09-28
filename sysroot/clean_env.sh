@@ -6,6 +6,9 @@
 #     initial version
 #   21.01.2026 1.1.0 /bs
 #     the files and sub directories for ./home are now copied from ./etc/template/home
+#   28.01.2026 1.2.0 /bs
+#     added the cmmmand to remove the directory ./out
+#     removed the commands to delete the test binaries (helloworld_in*) in the base directory 
 #
 SYSROOT="${SYSROOT:=/data/local/tmp/sysroot}"
 
@@ -25,12 +28,8 @@ fi
 
 
 echo "Removing all config files and temporary files in \"${SYSROOT}\" ...."
-\rm -f helloworld_in_c++ 
-\rm -f helloworld_in_c
-\rm -f helloworld_in_c_with_gcc
-\rm -f helloworld_in_c++_with_g++
-\rm -f helloworld_in_c++_with_g++_*
-\rm -f helloworld_in_c_with_gcc_*
+\rm -rf ./out
+
 \rm -f ls etc/ssh/*key*
 \rm -f etc/security/ca-certificates.crt
 \rm -rf etc/security/cacerts/*
