@@ -130,8 +130,8 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 # The tools included in the tar file with the clang19 toolchain are:
 # 
 # clang 19.0.0
-# gcc 16.1.1 20260716
-# cmake 3.30.4, 4.0.1, and 4.3.0
+# gcc 16.2.1_20260927 
+# cmake 3.30.4, 4.0.1, and 4.4.2
 # ninja 1.13.1
 # make 4.4.1
 # meson 1.9.1
@@ -614,7 +614,6 @@ History
     added the script android_explorer.sh 0.3.0
 
   21.11.2026 v2.2.0 beta /bs 
-    added a missing include file for gcc: ./usr/lib/android-gcc-cross/include/tgmath.h
     updated dua to version 2.45.0
     updated fd to version 10.5.0 
     updated dust to version 1.2.6
@@ -632,5 +631,6 @@ History
     updated curl to version 8.22 using OpenSSL 3.5.8
     removed the broken symbolic links chcon getlimits ginstall make-prime-list stdbuf libstdbuf.so kill du-tests  uptime dcgen  runcon in ./usr/bin
     updated the coreutils to version 9.12 (in /data/local/tmp/sysroot/usr/coreutils/) 
-
+    updated the gcc toolchain to version 16.2.1_20260927
+    updated cmake 4.x to version 4.4.2
 
