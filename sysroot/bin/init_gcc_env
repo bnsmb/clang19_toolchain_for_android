@@ -8,7 +8,8 @@
 # History
 #  30.05.2026 v1.0.0 /bs
 #    initial release
-#    
+#  29.09.2026 v1.1.0 /bs
+#    the first directory with libraries in the varaable LDFLAGS is now "${GCC_SYSROOT}/usr/lib/android-gcc-cross/aarch64-unknown-linux-android${API}/lib
 #    
 __TRUE=0
 __FALSE=1
