@@ -1,1 +1,1 @@
-/data/local/tmp/sysroot/usr/lib/android-gcc-cross/bin/aarch64-unknown-linux-android21-gcc
+../../../lib/android-gcc-cross/bin/aarch64-unknown-linux-android21-gcc

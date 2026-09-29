@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/system/bin/env bash
 
 kopt="${-}"
 

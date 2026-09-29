@@ -37,6 +37,14 @@ declare -r multilib='-m32'
 
 [ "${VERBOSE}"x != ""x ] && ( echo; echo "Eexcuting now \"${REAL_BINARY} -march=native  ${@}\" ... " ; echo )  >&2
 
-exec ${REAL_BINARY}  -march=native "${@}"
+
+P=""
+case $0 in
+   *clang | *clang++ | *lto-dump )
+    P="-march=native"
+    ;;
+esac
+
+exec ${REAL_BINARY}  $P "${@}"
         
 #	exec '/data/local/tmp/sysroot/usr/lib/android-gcc-cross/bin/aarch64-unknown-linux-android36-gcc' -march=native "${@}"
