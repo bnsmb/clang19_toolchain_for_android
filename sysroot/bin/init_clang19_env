@@ -479,7 +479,8 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
       add_path "${GCC_BIN_DIR}"
 
       alias add_gcc_lib='LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/data/local/tmp/sysroot/usr/lib/android-gcc-cross/lib/ '
-      
+      alias add_gcc_lib_all='LD_LIBRARY_PATH=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/lib/:/data/local/tmp/develop/sysroot/usr/lib:${LD_LIBRARY_PATH} '
+
       [ -x "${GCC_BIN_DIR}/gcc" ] && GCC="${GCC_BIN_DIR}/gcc" 
     else
       echo "No GCC toolchain found"
