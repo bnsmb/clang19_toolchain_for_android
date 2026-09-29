@@ -154,7 +154,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/b
 # binutils 2.45 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
 # 
 # autoconf 2.72
-# automake 1.17
+# automake 1.16, 1.17, 1.18, and 1.19
 # m4 1.4.21
 # libtool 2.5.3
 # patch 2.8 (gnupatch)
@@ -661,4 +661,5 @@ History
     the script myconfigure now selects the default TARGET_ROOT depending on the name of the script
     ./sysroot/usr/lib/libcurl.so now only needs the standard libraries from the Android OS
     corrected the script bin/init_gcc_env (see the script for details)
+    added automake 1.16, 1.18, and 1.19
  
