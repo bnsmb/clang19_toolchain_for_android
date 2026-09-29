@@ -1,18 +1,54 @@
-# template file with ./configure command for using with the clang19 tool chain
+#
+# script with the ./configure command for compiling a unix source code  with the clang19 from the clang19 toolchain
+#
+#h#
+#h# Usage: $0 [target_root]i [parameter_for_configure]
+#h#
+#h# The default for target_root is based on the filename
+#h#
+# default target directory used by "make install"
+#
 #
 #
 
 APP="$( echo $PWD | awk -F/ '{ print $NF}' | cut -f1 -d"-" )"
 
-# APP="openvpn"
+ADDITIONAL_CONFIGURE_OPTIONS=""
+TARGET_ROOT=""
 
-# default target directory used by "make install"
-#
-TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
+case $1 in
+  -h | --help | help ) 
+    grep "^#h#" $0 | cut -c4-  | sed "s/\$0/$0/g"
+    exit 1
+   ;;
 
-#TARGET_ROOT="/data/local/tmp/sysroot"
-#
-echo "Configuring \"${APP}\" for the target root \"${TARGET_ROOT}\" ..."
+  /* )
+    TARGET_ROOT="$1"
+    shift
+    ;;
+
+esac
+
+[ $# -ne 0 ] && ADDITIONAL_CONFIGURE_OPTIONS="${ADDITIONAL_CONFIGURE_OPTIONS} $@"
+
+if [ "${TARGET_ROOT}"x = ""x ] ; then
+  if [[ $0 == *sysroot* ]] ; then
+    TARGET_ROOT="/data/local/tmp/sysroot"
+  elif [[ $0 == *system* ]] ; then
+    TARGET_ROOT="/system"
+  else
+    TARGET_ROOT="/data/local/tmp/develop/sysroot"
+  fi
+fi
+
+echo
+echo "------------------------------------------------------------------------ "
+echo "*** Using the target root \"${TARGET_ROOT}\" "
+if [ "${ADDITIONAL_CONFIGURE_OPTIONS}"x != ""x ] ; then
+  echo "*** Using the additional configure options \"${ADDITIONAL_CONFIGURE_OPTIONS}\" "
+fi
+echo "------------------------------------------------------------------------ "
+echo
 
 DEBUG_CFLAGS=""
 
@@ -27,7 +63,7 @@ CFLAGS="${CFLAGS} -Wno-implicit-function-declaration -Wno-int-conversion ${DEBUG
 
 # add additional CFLAGS for the compiler here
 #
-CFLAGS="${CFLAGS} "
+CFLAGS="${CFLAGS}  -D_GNU_SOURCE"
 
 # C++ compiler options
 # 
@@ -42,40 +78,54 @@ CXXFLAGS="${CFLAGS}"
 # add additional configure options here
 #
 CONFIGURE_OPTIONS="
-
   --prefix=${TARGET_ROOT}/usr 
   --exec-prefix=${TARGET_ROOT}/usr 
 
   --bindir=${TARGET_ROOT}/usr/bin 
-
   --sbindir=${TARGET_ROOT}/usr/bin
   --libexecdir=${TARGET_ROOT}/usr/libexec
   --sysconfdir=${TARGET_ROOT}/etc
-  --sharedstatedir=${TARGET_ROOT}/usr/share/com
-  --localstatedir=${TARGET_ROOT}/var
-  --runstatedir=${TARGET_ROOT}/usr/run
+#  --sharedstatedir=${TARGET_ROOT}/usr/share/com
+#  --localstatedir=${TARGET_ROOT}/var
+#  --runstatedir=${TARGET_ROOT}/usr/run
   --libdir=${TARGET_ROOT}/usr/lib
   --includedir=${TARGET_ROOT}/usr/include
-  --oldincludedir=${TARGET_ROOT}/usr/include
-  --datarootdir=${TARGET_ROOT}/usr/share
-  --datadir=${TARGET_ROOT}/usr/share
-  --infodir=${TARGET_ROOT}/usr/share/info
-  --localedir=${TARGET_ROOT}/usr/share/locale
-  --mandir=${TARGET_ROOT}/usr/share/man
-  --docdir=${TARGET_ROOT}/usr/share/doc/${APP}
-  --htmldir=${TARGET_ROOT}/usr/share/doc/${APP}
-  --dvidir=${TARGET_ROOT}/usr/share/doc/${APP}
-  --pdfdir=${TARGET_ROOT}/usr/share/doc/${APP}
-  --psdir=${TARGET_ROOT}/usr/share/doc/${APP}
+#  --oldincludedir=${TARGET_ROOT}/usr/include
+#  --datarootdir=${TARGET_ROOT}/usr/share
+#  --datadir=${TARGET_ROOT}/usr/share
+#  --infodir=${TARGET_ROOT}/usr/share/info
+#  --localedir=${TARGET_ROOT}/usr/share/locale
+#  --mandir=${TARGET_ROOT}/usr/share/man
+
+#  --docdir=${TARGET_ROOT}/usr/share/doc/openvpn
+#  --htmldir=${TARGET_ROOT}/usr/share/doc/openvpn
+#  --dvidir=${TARGET_ROOT}/usr/share/doc/openvpn
+#  --pdfdir=${TARGET_ROOT}/usr/share/doc/openvpn
+#  --psdir=${TARGET_ROOT}/usr/share/doc/openvpn
+
 "
+
+# remove commment lines from the CONFIGURE_OPTIONS
+# 
+CONFIGURE_OPTIONS="$( echo "${CONFIGURE_OPTIONS}" | grep -E -v "^#|^$" )"
 
 #
 # set PREFIX to "echo" or something similar before calling this script to run it in dry-run mode
 #
-${PREFIX}  ./configure  CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" ${CONFIGURE_OPTIONS} $* 
+${PREFIX}  ./configure  ${CONFIGURE_OPTIONS} ${ADDITIONAL_CONFIGURE_OPTIONS} 
+
 THISRC=$?
 
+echo 
+echo "------------------------------------------------------------------------ "
+echo "*** Using the target root \"${TARGET_ROOT}\" "
+if [ "${ADDITIONAL_CONFIGURE_OPTIONS}"x != ""x ] ; then
+  echo "*** Using the additional configure options \"${ADDITIONAL_CONFIGURE_OPTIONS}\" "
+fi
+echo "------------------------------------------------------------------------ "
 echo
+
 echo "Configuring \"${APP}\" for the target root \"${TARGET_ROOT}\" ended with RC=${THISRC}"
 
+exit ${THISRC}
 
