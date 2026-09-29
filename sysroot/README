@@ -86,12 +86,19 @@ The include file sysroot/usr/include/add_missing_definitions.h contains definiti
 
 Some configure scripts and makefiles for standard Unix tools use libraries that are not available (and not needed) in Android, e.g. libpthread.so.
 
-A dummy (= empty) libpthread.so is part of the clang19 toolchain:
+A dummy (= empty) libraries for libpthread.so and librt.so are part of the clang19 toolchain:
 
-[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot $ ls -l usr/lib/libpthread.*                                                                                                               
--rw-r--r-- 1 shell shell 1218 2025-09-21 15:04 usr/lib/libpthread.a
--rw-r--r-- 1 shell shell 5272 2025-09-21 15:04 usr/lib/libpthread.so
-[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot $ 
+[clang19 toolchain] [shell@localhost /data/local/tmp/sysroot]$ date
+Tue Sep 29 09:51:29 CEST 2026
+[clang19 toolchain] [shell@localhost /data/local/tmp/sysroot]$ 
+
+[clang19 toolchain] [shell@localhost /data/local/tmp/sysroot]$ ls -l usr/lib/librt*  usr/lib/libpthread*
+-rw-rw-r-- 1 shell shell 1218 2026-03-25 16:58 usr/lib/libpthread.a
+-rw-rw-r-- 1 shell shell 5272 2026-03-25 16:58 usr/lib/libpthread.so
+-rw-r--r-- 1 shell shell 1216 2026-09-28 15:40 usr/lib/librt.a
+-rw-r--r-- 1 shell shell 5272 2026-09-28 15:40 usr/lib/librt.so
+[clang19 toolchain] [shell@localhost /data/local/tmp/sysroot]$ 
+
 
 
 To create another dummy (empty) library to satisfy the requirements of these configure scripts or make files the script
@@ -127,9 +134,13 @@ Now you can use gcc and c++ to compile C and C++ source files.
 Please note that the directory /data/local/tmp/sysroot is hardcoded in the binaries and scripts used for gcc.
 
 
-Use the cmake tool chain file /data/local/tmp/sysroot/android-gcc-toolchain.cmake to use cmake together with gcc or g++ , e.g:
+Use the cmake tool chain file 
 
-cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/android-gcc-toolchain.cmake ...
+/data/local/tmp/sysroot/android-gcc-toolchain.cmake 
+
+to use cmake together with gcc or g++ , e.g:
+
+cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/android-gcc-toolchain.cmake ...
 
 
 # The tools included in the tar file with the clang19 toolchain are:
@@ -294,13 +305,16 @@ PATH=/data/local/tmp/sysroot/usr/bin:$PATH cpan
 
 There are multiple versions of cmake in the tar file:
 
-[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot/usr/bin $ ls -hl cmake*                                                                                                                                                                             
-lrwxrwxrwx 1 shell shell  13 2026-03-18 20:30 cmake -> ./cmake-4.3.0
--rwxrwxr-x 1 shell shell 10M 2026-01-05 16:41 cmake-3.30
--rwxrwxr-x 1 shell shell 11M 2026-01-05 16:41 cmake-4.0.1
--rwxr-xr-x 1 shell shell 19M 2026-03-19 15:53 cmake-4.3.0
-[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot/usr/bin $ 
+[clang19 toolchain] [shell@localhost ~]$ date
+Tue Sep 29 09:49:26 CEST 2026
+[clang19 toolchain] [shell@localhost ~]$ 
 
+[clang19 toolchain] [shell@localhost ~]$ ls -l /data/local/tmp/sysroot/usr/bin/cmake*
+lrwxrwxrwx 1 shell shell       13 2026-09-28 09:49 /data/local/tmp/sysroot/usr/bin/cmake -> ./cmake-4.4.2
+-rwxrwxr-x 1 shell shell 10033864 2026-03-25 16:58 /data/local/tmp/sysroot/usr/bin/cmake-3.30
+-rwxrwxr-x 1 shell shell 11735888 2026-03-25 16:58 /data/local/tmp/sysroot/usr/bin/cmake-4.0.1
+-rwxr-xr-x 1 shell shell 13253784 2026-09-28 09:42 /data/local/tmp/sysroot/usr/bin/cmake-4.4.2
+[clang19 toolchain] [shell@localhost ~]$ 
 
 To use another cmake version just modify the symbolic link for cmake.
 
