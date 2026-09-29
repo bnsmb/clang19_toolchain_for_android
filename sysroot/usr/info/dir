@@ -14,28 +14,13 @@ File: dir,	Node: Top	This is the top of the INFO tree
 
 * Menu:
 
-GNU organization
-* Standards: (standards).       GNU coding standards.
-
 Individual utilities
-* autoconf-invocation: (autoconf)autoconf Invocation.
-                                                How to create configuration 
-                                                  scripts
-* autoheader: (autoconf)autoheader Invocation.  How to create configuration 
-                                                  templates
-* autom4te: (autoconf)autom4te Invocation.      The Autoconf executables 
-                                                  backbone
-* autoreconf: (autoconf)autoreconf Invocation.  Remaking multiple 
-                                                  ‘configure’ scripts
-* autoscan: (autoconf)autoscan Invocation.      Semi-automatic 
-                                                  ‘configure.ac’ writing
-* autoupdate: (autoconf)autoupdate Invocation.  Automatic update of 
-                                                  ‘configure.ac’
-* config.status: (autoconf)config.status Invocation.
-                                                Recreating configurations.
-* configure: (autoconf)configure Invocation.    Configuring a package.
-* ifnames: (autoconf)ifnames Invocation.        Listing conditionals in source.
-* testsuite: (autoconf)testsuite Invocation.    Running an Autotest test suite.
+* aclocal-invocation: (automake)aclocal Invocation.
+                                                Generating aclocal.m4.
+* automake-invocation: (automake)automake Invocation.
+                                                Generating Makefile.in.
 
 Software development
-* Autoconf: (autoconf).         Create source code configuration scripts.
+* Automake: (automake).         Making GNU standards-compliant Makefiles.
+* Automake-history: (automake-history).
+                                History of Automake development.

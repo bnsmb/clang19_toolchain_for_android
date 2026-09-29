@@ -1,10 +1,11 @@
-This is automake.info, produced by makeinfo version 7.1 from
+This is automake.info, produced by makeinfo version 7.3 from
 automake.texi.
 
-This manual is for GNU Automake (version 1.17, 12 July 2024), a program
-that creates GNU standards-compliant Makefiles from template files.
+This manual is for GNU Automake (version 1.19, 3 September 2026), a
+program that creates GNU standards-compliant Makefiles from template
+files.
 
-   Copyright © 1995-2024 Free Software Foundation, Inc.
+   Copyright © 1995-2026 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -30,10 +31,11 @@ File: automake.info,  Node: Top,  Next: Introduction,  Up: (dir)
 GNU Automake
 ************
 
-This manual is for GNU Automake (version 1.17, 12 July 2024), a program
-that creates GNU standards-compliant Makefiles from template files.
+This manual is for GNU Automake (version 1.19, 3 September 2026), a
+program that creates GNU standards-compliant Makefiles from template
+files.
 
-   Copyright © 1995-2024 Free Software Foundation, Inc.
+   Copyright © 1995-2026 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -175,6 +177,7 @@ Building Programs and Libraries
 * Fortran 9x Support::          Compiling Fortran 9x sources
 * Java Support with gcj::       Compiling Java sources using gcj
 * Vala Support::                Compiling Vala sources
+* Algol 68 Support::            Compiling Algol 68 sources
 * Support for Other Languages:: Compiling other languages
 * Dependencies::                Automatic dependency tracking
 * EXEEXT::                      Support for executable extensions
@@ -364,7 +367,6 @@ Indices
 * Variable Index::              Index of Makefile variables
 * General Index::               General index
 
-
 
 File: automake.info,  Node: Introduction,  Next: Autotools Introduction,  Prev: Top,  Up: Top
 
@@ -472,13 +474,13 @@ is to unpack the package, run ‘./configure && make && make install’, and
 repeat with the next package to install.
 
    We call this build system the “GNU Build System”, since it was grown
-out of the GNU project.  However it is used by a vast number of other
+out of the GNU project.  However, it is used by a vast number of other
 packages: following any existing convention has its advantages.
 
    The Autotools are tools that will create a GNU Build System for your
 package.  Autoconf mostly focuses on ‘configure’ and Automake on
 ‘Makefile’s.  It is entirely possible to create a GNU Build System
-without the help of these tools.  However it is rather burdensome and
+without the help of these tools, but it is rather burdensome and
 error-prone.  We will discuss this again after some illustration of the
 GNU Build System in action.
 
@@ -597,8 +599,8 @@ installation.
 
    Presently most packages do not have any ‘installcheck’ tests because
 the existence of ‘installcheck’ is little known, and its usefulness is
-neglected.  Our little toy package is no better: ‘make installcheck’
-does nothing.
+neglected.  Our toy package is no better: ‘make installcheck’ does
+nothing.
 
 
 File: automake.info,  Node: Standard Targets,  Next: Standard Directory Variables,  Prev: Basic Installation,  Up: Use Cases
@@ -612,28 +614,32 @@ The words ‘check’, ‘install’, and ‘installcheck’, passed as argument
 ‘make’, are called “targets”.  ‘make’ is a shorthand for ‘make all’,
 ‘all’ being the default target in the GNU Build System.
 
-   Here is a list of the most useful targets that the GNU Coding
-Standards specify.
+   Here is a list of the most commonly useful targets that the GNU
+Coding Standards specify.
 
 ‘make all’
      Build programs, libraries, documentation, etc. (same as ‘make’).
+
 ‘make install’
      Install what needs to be installed, copying the files from the
      package's tree to system-wide directories.
-‘make install-strip’
-     Same as ‘make install’, then strip debugging symbols.  Some users
-     like to trade space for useful bug reports...
+
 ‘make uninstall’
      The opposite of ‘make install’: erase the installed files.  (This
      needs to be run from the same build tree that was installed.)
+
 ‘make clean’
      Erase from the build tree the files built by ‘make all’.
+
 ‘make distclean’
      Additionally erase anything ‘./configure’ created.
+
 ‘make check’
      Run the test suite, if any.
+
 ‘make installcheck’
      Check the installed programs or libraries, if supported.
+
 ‘make dist’
      Recreate ‘PACKAGE-VERSION.tar.gz’ from all the source files.
 
@@ -1165,8 +1171,8 @@ Although nesting packages isn't something we would recommend to someone
 who is discovering the Autotools, it is a nice feature worthy of mention
 in this small advertising tour.
 
-   Autoconfiscated packages (that means packages whose build system have
-been created by Autoconf and friends) can be nested to arbitrary depth.
+   Autoconfiscated packages (meaning packages with a build system
+created by Autoconf and friends) can be nested to arbitrary depth.
 
    A typical setup is that package A will distribute one of the
 libraries it needs in a subdirectory.  This library B is a complete
@@ -1371,13 +1377,13 @@ tools should be invoked and why.  (But for the curious: the basic idea
 is to run:
 
   1. ‘aclocal’ (*note aclocal Invocation::),
-  2. ‘autoconf’ (*note (autoconf)::),
+  2. ‘autoconf’ (*note (autoconf)Top::),
   3. (if needed) ‘autoheader’ (part of the Autoconf distribution), and
   4. ‘automake’ (*note automake Invocation::).
 
-If needed, tools related to Gettext (*note (gettext)::) and Libtool
-(*note (libtool)::) are also invoked at different points.  Thus, as you
-can see, using ‘autoreconf’ is quite a bit more convenient.
+If needed, tools related to Gettext (*note (gettext)Top::) and Libtool
+(*note (libtool)Top::) are also invoked at different points.  Thus, as
+you can see, using ‘autoreconf’ is quite a bit more convenient.
 
    Nevertheless, because Autoconf and Automake have separate manuals, an
 essential idea to understand is that Autoconf is in charge of creating
@@ -1426,7 +1432,7 @@ your package, or your own mail address.
    The argument to ‘AM_INIT_AUTOMAKE’ is a list of options for
 ‘automake’ (*note Options::).  ‘-Wall’ and ‘-Werror’ ask ‘automake’ to
 turn on all warnings and report them as errors.  We are speaking of
-*Automake* warnings here, such as dubious instructions in ‘Makefile.am’.
+_Automake_ warnings here, such as dubious instructions in ‘Makefile.am’.
 This has absolutely nothing to do with how the compiler will be called,
 even though it may support options with similar names.  Using ‘-Wall
 -Werror’ is a safe setting when starting to work on a package: you do
@@ -1673,18 +1679,20 @@ see *note Options::.
      Currently the following checks are made:
 
         • The files ‘INSTALL’, ‘NEWS’, ‘README’, ‘AUTHORS’, and
-          ‘ChangeLog’, plus one of ‘COPYING.LIB’, ‘COPYING.LESSER’ or
-          ‘COPYING’, are required at the topmost directory of the
-          package.
+          ‘ChangeLog’, plus a license file, are required at the topmost
+          directory of the package.  Any one of ‘COPYING’,
+          ‘COPYING.LIB’, ‘COPYING.LESSER’, ‘COPYINGv2’, ‘COPYINGv3’,
+          ‘COPYING.LESSERv2’ and ‘COPYING.LESSERv3’ is accepted as the
+          license file.
 
           If the ‘--add-missing’ option is given, ‘automake’ will add a
           generic version of the ‘INSTALL’ file as well as the ‘COPYING’
           file containing the text of the current version of the GNU
           General Public License existing at the time of this Automake
           release (version 3 as this is written,
-          <https://www.gnu.org/copyleft/gpl.html>).  However, an
-          existing ‘COPYING’ file will never be overwritten by
-          ‘automake’.
+          <https://www.gnu.org/copyleft/gpl.html>).  However, ‘automake’
+          never overwrites any of the license files listed above, and
+          adds no ‘COPYING’ file when one of them is already present.
 
         • The options ‘no-installman’ and ‘no-installinfo’ are
           prohibited.
@@ -2013,8 +2021,8 @@ source in case you need more recent versions.
 ‘mkinstalldirs’
      This script used to be a wrapper around ‘mkdir -p’, which is not
      portable.  Now we prefer to use ‘install-sh -d’ when ‘configure’
-     finds that ‘mkdir -p’ does not work, this makes one less script to
-     distribute.
+     finds that ‘mkdir -p’ does not work; this makes for one less script
+     to distribute.
 
      For backward compatibility ‘mkinstalldirs’ is still used and
      distributed when ‘automake’ finds it in a package.  But it is no
@@ -2210,7 +2218,7 @@ dependencies (i.e., ‘aclocal.m4’ and any included file), therefore
 ‘autoconf’ must be in your ‘PATH’.  If there is an ‘AUTOCONF’ variable
 in your environment it will be used instead of ‘autoconf’; this allows
 you to select a particular version of Autoconf.  By the way, don't
-misunderstand this paragraph: ‘automake’ runs ‘autoconf’ to *scan* your
+misunderstand this paragraph: ‘automake’ runs ‘autoconf’ to _scan_ your
 ‘configure.ac’; this won't build ‘configure’ and you still have to run
 ‘autoconf’ yourself for this purpose.
 
@@ -3440,6 +3448,40 @@ File: automake.info,  Node: Public Macros,  Next: Obsolete Macros,  Up: Macros
      Automake options::):
           AM_INIT_AUTOMAKE([no-define ...])
 
+‘AM_OPTIONAL_AUTOMAKE([OPTIONS])’
+     OPTIONS is a whitespace-separated list of ‘dist-’ option names,
+     using the same spellings ‘AM_INIT_AUTOMAKE’ accepts: ‘dist-bzip2’,
+     ‘dist-bzip3’, ‘dist-xz’, ‘dist-lzip’, ‘dist-zstd’, ‘dist-zip’,
+     ‘dist-shar’, and ‘dist-tarZ’.  For each, ‘make dist’ builds the
+     matching archive when its compressor or archiver is available and
+     skips it otherwise, including when a tool present at ‘configure’
+     time is gone by ‘make dist’ time; a missing listed tool does not
+     make ‘make dist’ fail.  An unknown OPTION is reported as a ‘syntax’
+     warning and ignored.
+
+     This is meant for systems that intentionally lack some compression
+     tools, such as minimal container or CI images, where installing
+     ‘bzip3’, ‘lzip’, ‘zstd’, etc. only so that ‘make distcheck’
+     succeeds is undesirable.  It avoids overriding ‘DIST_TARGETS’ or
+     ‘DIST_ARCHIVES’ by hand.
+
+     The macro does not pass the options to ‘automake’; it uses only the
+     ‘distdir’ target and ‘$(am__tar)’, present since Automake 1.10, so
+     an older ‘automake’ that does not recognize an option (such as
+     ‘dist-bzip3’) is not a problem.
+
+          AM_INIT_AUTOMAKE([-Wall foreign dist-bzip2 dist-xz dist-zip])
+          AM_OPTIONAL_AUTOMAKE([dist-bzip3])
+
+     Here ‘.tar.gz’, ‘.tar.bz2’, ‘.tar.xz’, and ‘.zip’ are always built
+     (and ‘make dist’ fails if their tools are missing), while
+     ‘.tar.bz3’ is built only if ‘bzip3’ is installed.
+
+     A given ‘dist-’ option should appear in ‘AM_INIT_AUTOMAKE’ or
+     ‘AM_OPTIONAL_AUTOMAKE’, not both; listing it in ‘AM_INIT_AUTOMAKE’
+     already makes that format mandatory.  The macro may be called more
+     than once; repeating an option is a no-op.
+
 ‘AM_PATH_LISPDIR’
      Searches for the program ‘emacs’, and, if found, sets the output
      variable ‘lispdir’ to the full path to Emacs' site-lisp directory.
@@ -4052,6 +4094,7 @@ to build programs and libraries.
 * Fortran 9x Support::          Compiling Fortran 9x sources
 * Java Support with gcj::       Compiling Java sources using gcj
 * Vala Support::                Compiling Vala sources
+* Algol 68 Support::            Compiling Algol 68 sources
 * Support for Other Languages::  Compiling other languages
 * Dependencies::                Automatic dependency tracking
 * EXEEXT::                      Support for executable extensions
@@ -4129,9 +4172,11 @@ File: automake.info,  Node: Linking,  Next: Conditional Sources,  Prev: Program 
 
 If you need to link against libraries that are not found by ‘configure’,
 you can use ‘LDADD’ to do so.  This variable is used to specify
-additional objects or libraries to link with; it is inappropriate for
-specifying specific linker flags; you should use ‘AM_LDFLAGS’ for this
-purpose.
+additional objects or libraries to link with.  Libraries to link with
+can be indicated either as file names or through ‘-L’ and ‘-l’ options.
+
+   For other linker options (not ‘-L’ or ‘-l’), ‘LDADD’ is
+inappropriate.  You should use ‘AM_LDFLAGS’ for this purpose.
 
    Sometimes, multiple programs are built in one directory but do not
 share the same link-time requirements.  In this case, you can use the
@@ -5971,7 +6016,7 @@ the ‘--main=’ option.  The easiest way to do this is to use the
 ‘_LDFLAGS’ variable for the program.
 
 
-File: automake.info,  Node: Vala Support,  Next: Support for Other Languages,  Prev: Java Support with gcj,  Up: Programs
+File: automake.info,  Node: Vala Support,  Next: Algol 68 Support,  Prev: Java Support with gcj,  Up: Programs
 
 8.17 Vala Support
 =================
@@ -5995,19 +6040,19 @@ example, alternative platform-specific definitions of the same methods.
 will locate the Vala compiler and optionally check its version number.
 
  -- Macro: AM_PROG_VALAC ([MINIMUM-VERSION], [ACTION-IF-FOUND],
-     [ACTION-IF-NOT-FOUND]) Search for a Vala compiler in ‘PATH’.  If it
-     is found, the variable ‘VALAC’ is set to point to it (see below for
-     more details).  This macro takes three optional arguments.  The
-     first argument, if present, is the minimum version of the Vala API
-     required to compile this package.  For Vala releases, this is the
-     same as the major and minor release number; e.g., when ‘valac
-     --version’ reports ‘0.48.7’, ‘valac --api-version’ reports ‘0.48’.
-     If a compiler is found and satisfies MINIMUM-VERSION, then
-     ACTION-IF-FOUND is run (this defaults to do nothing).  Otherwise,
-     ACTION-IF-NOT-FOUND is run.  If ACTION-IF-NOT-FOUND is not
-     specified, the default value is to print a warning in case no
-     compiler is found, or if a too-old version of the compiler is
-     found.
+          [ACTION-IF-NOT-FOUND])
+     Search for a Vala compiler in ‘PATH’.  If it is found, the variable
+     ‘VALAC’ is set to point to it (see below for more details).  This
+     macro takes three optional arguments.  The first argument, if
+     present, is the minimum version of the Vala API required to compile
+     this package.  For Vala releases, this is the same as the major and
+     minor release number; e.g., when ‘valac --version’ reports
+     ‘0.48.7’, ‘valac --api-version’ reports ‘0.48’.  If a compiler is
+     found and satisfies MINIMUM-VERSION, then ACTION-IF-FOUND is run
+     (this defaults to do nothing).  Otherwise, ACTION-IF-NOT-FOUND is
+     run.  If ACTION-IF-NOT-FOUND is not specified, the default value is
+     to print a warning in case no compiler is found, or if a too-old
+     version of the compiler is found.
 
    There are a few variables that are used when compiling Vala sources:
 
@@ -6029,9 +6074,41 @@ Renamed Objects::) to produce different C files from one Vala source
 file.
 
 
-File: automake.info,  Node: Support for Other Languages,  Next: Dependencies,  Prev: Vala Support,  Up: Programs
+File: automake.info,  Node: Algol 68 Support,  Next: Support for Other Languages,  Prev: Vala Support,  Up: Programs
 
-8.18 Support for Other Languages
+8.18 Algol 68 Support
+=====================
+
+Automake includes support for Algol 68, using GCC.
+
+   Any package including Algol 68 code must define the output variable
+‘A68’ in ‘configure.ac’; the simplest way to do this is to use the
+‘AC_PROG_A68’ macro (*note Particular Program Checks:
+(autoconf)Particular Programs.).
+
+   A few additional variables are defined when an Algol 68 source file
+is seen:
+
+‘A68’
+     The name of the Algol 68 compiler.
+
+‘A68FLAGS’
+     Any flags to pass to the Algol 68 compiler.
+
+‘AM_A68FLAGS’
+     The maintainer's variant of ‘A68FLAGS’.
+
+‘A68COMPILE’
+     The command used to compile an Algol 68 source file.  The file name
+     is appended to form the complete command line.
+
+‘A68LINK’
+     The command used to link a pure Algol 68 program or shared library.
+
+
+File: automake.info,  Node: Support for Other Languages,  Next: Dependencies,  Prev: Algol 68 Support,  Up: Programs
+
+8.19 Support for Other Languages
 ================================
 
 Automake currently only includes full support for C, C++ (*note C++
@@ -6047,13 +6124,13 @@ the suffix rule handling (*note Suffixes::).
 
 File: automake.info,  Node: Dependencies,  Next: EXEEXT,  Prev: Support for Other Languages,  Up: Programs
 
-8.19 Automatic dependency tracking
+8.20 Automatic dependency tracking
 ==================================
 
-As a developer it is often painful to continually update the
-‘Makefile.am’ whenever the include-file dependencies change in a
-project.  Automake supplies a way to automatically track dependency
-changes (*note Dependency Tracking::).
+As a developer it is painful to continually update the ‘Makefile.am’
+whenever the include-file dependencies change in a project.  Automake
+supplies a way to automatically track dependency changes (*note
+Dependency Tracking::).
 
    Automake always uses complete dependencies for a compilation,
 including system headers.  Automake's model is that dependency
@@ -6099,10 +6176,20 @@ to the shell variable ‘$enable_dependency_tracking’ (all
      # stuff to do when it's enabled
      endif
 
+   Automake does not have support for extending the dependency tracking
+at runtime, e.g., if you want to have dependencies for a new language.
+However, Nick Bowler sketched how to do this in a message to the
+‘automake’ mailing list:
+<https://lists.gnu.org/archive/html/automake/2025-07/msg00014.html>.
+Although this necessarily uses various implementation details of
+Automake, and thus can't be considered future-proof, we don't have any
+plans or expectations for changing the dependency implementation in any
+substantive way.
+
 
 File: automake.info,  Node: EXEEXT,  Prev: Dependencies,  Up: Programs
 
-8.20 Support for executable extensions
+8.21 Support for executable extensions
 ======================================
 
 On some platforms, such as Windows, executables are expected to have an
@@ -6138,10 +6225,10 @@ program using such a substitution, then your ‘configure.ac’ must take
 care to add ‘$(EXEEXT)’ when constructing the output variable.
 
    Sometimes maintainers like to write an explicit link rule for their
-program.  Without executable extension support, this is easy--you simply
-write a rule whose target is the name of the program.  However, when
-executable extension support is enabled, you must instead add the
-‘$(EXEEXT)’ suffix.
+program.  Without executable extension support, you can simply write a
+rule whose target is the name of the program.  However, when executable
+extension support is enabled, you must instead add the ‘$(EXEEXT)’
+suffix.
 
    This might be a nuisance for maintainers who know their package will
 never run on a platform that has executable extensions.  For those
@@ -6354,9 +6441,10 @@ because it's a known dependency of the associated object.
    To emphasize, ‘BUILT_SOURCES’ is honored only by ‘make all’, ‘make
 check’, ‘make install’, and ‘make install-exec’ (and ‘make dist’).  This
 means you cannot build an arbitrary target (e.g., ‘make foo’) in a clean
-tree if it depends on a built source.  However it will succeed if you
-have run ‘make all’ earlier, because accurate dependencies are already
-available.
+tree if it depends on a built source (unless you explicitly create a
+dependency for ‘foo’ on ‘$(BUILT_SOURCES)’).  It will succeed if you
+have run ‘make all’ earlier, though, because accurate dependencies are
+already available.
 
    The next section illustrates and discusses the handling of built
 sources on a toy example.
@@ -6377,8 +6465,8 @@ installation-dependent and not distributed: it needs to be built.  Here
 ‘make’ variable ‘bindir’ (inherited from ‘configure’).
 
    We suggest several implementations below.  It's not meant to be an
-exhaustive listing of all ways to handle built sources, but it will give
-you a few ideas if you encounter this issue.
+exhaustive listing of all ways to handle built sources, but to give you
+a few ideas if you encounter this issue.
 
 First Try
 .........
@@ -6411,17 +6499,18 @@ symptom is as follows.
      make: *** [foo.o] Error 1
 
    In this example ‘bindir.h’ is not distributed nor installed, and it
-is not even being built on-time.  One may wonder if the
-‘nodist_foo_SOURCES = bindir.h’ line has any use at all.  This line
-simply states that ‘bindir.h’ is a source of ‘foo’, so for instance, it
-should be inspected while generating tags (*note Tags::).  In other
-words, it does not help our present problem, and the build would fail
-identically without it.
+is not even being built on-time.
+
+   One may wonder if the ‘nodist_foo_SOURCES = bindir.h’ line has any
+use at all.  This line merely declares that ‘bindir.h’ is a source of
+‘foo’, so for instance, it should be inspected while generating tags
+(*note Tags::).  In other words, it does not help our present problem,
+and the build would fail identically without it.
 
 Using ‘BUILT_SOURCES’
 .....................
 
-A solution is to require ‘bindir.h’ to be built before anything else.
+One solution is to require ‘bindir.h’ to be built before anything else.
 This is what ‘BUILT_SOURCES’ is meant for (*note Sources::).
 
      bin_PROGRAMS = foo
@@ -6481,19 +6570,19 @@ and record such dependencies explicitly in the ‘Makefile.am’.
    You don't have to list _all_ the dependencies of ‘foo.o’ explicitly,
 only those that might need to be built.  If a dependency already exists,
 it will not hinder the first compilation and will be recorded by the
-normal dependency tracking code.  (After this first compilation, the
+normal dependency tracking code.  After this first compilation, the
 dependency tracking code will also have recorded the dependency between
-‘foo.o’ and ‘bindir.h’, so our explicit dependency is only useful to the
-first build.)
+‘foo.o’ and ‘bindir.h’, so our explicit dependency is useful only to the
+first build, but does no harm.
 
-   Adding explicit dependencies like this can be a bit dangerous if you
-are not careful enough.  This is due to the way Automake tries not to
-overwrite your rules (it assumes you know better than it).
-‘foo.$(OBJEXT): bindir.h’ supersedes any rule Automake may want to
-output to build ‘foo.$(OBJEXT)’.  It happens to work in this case
-because Automake doesn't have to output any ‘foo.$(OBJEXT):’ target: it
-relies on a suffix rule instead (i.e., ‘.c.$(OBJEXT):’).  Always check
-the generated ‘Makefile.in’ if you do this.
+   Adding explicit dependencies like this can be dangerous, because
+Automake does not overwrite your own rules (it assumes you know better
+than it).  Thus, ‘foo.$(OBJEXT): bindir.h’ supersedes any rule Automake
+may want to output to build ‘foo.$(OBJEXT)’.  It works in this case
+because Automake doesn't output any ‘foo.$(OBJEXT):’ target: it relies
+on a suffix rule instead (i.e., ‘.c.$(OBJEXT):’).  So, in this approach,
+you should always check the generated ‘Makefile.in’ for
+Automake-generated rules with the same target.
 
 Build ‘bindir.h’ from ‘configure’
 .................................
@@ -6538,16 +6627,15 @@ dependent on ‘bindir.c’, so ‘bindir.c’ will get built first.
 Which is best?
 ..............
 
-There is no panacea, of course.  Each solution has its merits and
-drawbacks.
+There is no panacea.  Each solution has its merits and drawbacks.
 
-   You cannot use ‘BUILT_SOURCES’ if the ability to run ‘make foo’ on a
-clean tree is important to you.
+   You cannot use ‘BUILT_SOURCES’ if the ability to run ‘make foo’ for
+any ‘foo’ on a clean tree is important to you.
 
-   You won't add explicit dependencies if you are leery of overriding an
-Automake rule by mistake.
+   You won't want to define explicit dependencies if you are leery of
+overriding an Automake rule by mistake.
 
-   Building files from ‘./configure’ is not always possible, neither is
+   Building files from ‘./configure’ is not always possible; neither is
 converting ‘.h’ files into ‘.c’ files.
 
 
@@ -6728,8 +6816,7 @@ files in your ‘Makefile.am’, depending on whether you want your files
 installed in ‘pythondir’ or ‘pkgpythondir’, respectively.
 
  -- Macro: AM_PATH_PYTHON ([VERSION], [ACTION-IF-FOUND],
-     [ACTION-IF-NOT-FOUND])
-
+          [ACTION-IF-NOT-FOUND])
      Search for a Python interpreter on the system.  This macro takes
      three optional arguments.  The first argument, if present, is the
      minimum version of Python required for this package:
@@ -6832,247 +6919,4 @@ Install Paths::.
 * Menu:
 
 * Supported Python versions::
-
-
-File: automake.info,  Node: Supported Python versions,  Up: Python
-
-10.5.1 Supported versions
--------------------------
-
-Automake guarantees releases will support all Python versions that are
-still supported by the Python project at the time of the Automake
-release.  Support for EOL versions of Python are not guaranteed, but
-will be considered as long as it is not onerous to do so, and there are
-large supported distros including them.  If you need to support older
-Python versions, please use a previous Automake release.
-
-   Here are the current support plans.
-
-Version     Status
---------------------------
-0.x         Not
-            supported
-1.x         Not
-            supported
-2.0-2.6     Untested,
-            but should
-            work
-2.7         Supported
-            (until Apr
-            2026)
-3.0-3.3     Untested,
-            but should
-            work
-3.4         Supported
-            (until Apr
-            2022)
-3.5         Supported
-            (until Apr
-            2024)
-3.6         Supported
-            (until Apr
-            2028)
-3.7         Supported
-            (until Apr
-            2028)
-3.8         Supported
-            (until Apr
-            2030)
-3.9         Supported
-            (until Apr
-            2030)
-3.10        Supported
-            (until Apr
-            2030)
-
-
-File: automake.info,  Node: Documentation,  Next: Install,  Prev: Other GNU Tools,  Up: Top
-
-11 Building documentation
-*************************
-
-Currently Automake provides support for Texinfo and man pages.
-
-* Menu:
-
-* Texinfo::
-* Man Pages::
-
-
-File: automake.info,  Node: Texinfo,  Next: Man Pages,  Up: Documentation
-
-11.1 Texinfo
-============
-
-If the current directory contains Texinfo source, you must declare it
-with the ‘TEXINFOS’ primary.  Generally Texinfo files are converted into
-info, and thus the ‘info_TEXINFOS’ variable is most commonly used here.
-Any Texinfo source file should have the ‘.texi’ extension.  Automake
-also accepts ‘.txi’ or ‘.texinfo’ extensions, but their use is
-discouraged now, and will elicit runtime warnings.
-
-   Automake generates rules to build ‘.info’, ‘.dvi’, ‘.ps’, ‘.pdf’ and
-‘.html’ files from your Texinfo sources.  Following the GNU Coding
-Standards, only the ‘.info’ files are built by ‘make all’ and installed
-by ‘make install’ (unless you use ‘no-installinfo’, see below).
-Furthermore, ‘.info’ files are automatically distributed so that Texinfo
-is not a prerequisite for installing your package.
-
-   It is worth noting that, contrary to what happens with the other
-formats, the generated ‘.info’ files are by default placed in ‘srcdir’
-rather than in the ‘builddir’.  This can be changed with the
-‘info-in-builddir’ option.
-
-   If the Texinfo sources are in a subdirectory relative to the
-Makefile, then ‘-I’ flags for the subdirectory, both in the source
-directory and in the build directory, will automatically be added.
-There is no need to specify these in ‘$(MAKEINFO)’, ‘$(MAKEINFOFLAGS)’,
-etc.
-
-   If a Texinfo source file contains an ‘@setfilename’ directive, and
-its argument has extension ‘.info’ (or no extension, but this is
-discouraged), that argument should be the same as the basename of the
-Texinfo file, extended with ‘.info’.  The Make rules generated by
-Automake assume this, and will not work if the ‘@setfilename’ is for
-some other name.
-
-   If a Texinfo source ‘foo.texi’ is not present, but ‘foo.texi.in’
-exists, Texinfo will read that ‘.texi.in’ file for ‘@setfilename’ and
-‘@include version.texi’ (described below).
-
-   Texinfo source files need not be present at all, and if present, need
-not contain ‘@setfilename’.  Then the file name given in the Makefile.am
-will be used.
-
-   Other documentation formats can be built on request by ‘make dvi’,
-‘make ps’, ‘make pdf’ and ‘make html’, and they can be installed with
-‘make install-dvi’, ‘make install-ps’, ‘make install-pdf’ and ‘make
-install-html’ explicitly.  ‘make uninstall’ will remove everything: the
-Texinfo documentation installed by default as well as all the above
-optional formats.
-
-   All of these targets can be extended using ‘-local’ rules (*note
-Extending::).
-
-   If a ‘.texi’ file ‘@include’s ‘version.texi’ (actually any file named
-‘vers...texi’, then that file will be automatically generated.  The file
-‘version.texi’ defines four Texinfo flags you can reference using
-‘@value{EDITION}’, ‘@value{VERSION}’, ‘@value{UPDATED}’, and
-‘@value{UPDATED-MONTH}’.
-
-‘EDITION’
-‘VERSION’
-     Both of these flags hold the version number of your program.  They
-     are kept separate for clarity.
-
-‘UPDATED’
-     This holds the date the primary ‘.texi’ file was last modified.
-
-‘UPDATED-MONTH’
-     This holds the name of the month in which the primary ‘.texi’ file
-     was last modified.
-
-   The ‘version.texi’ support requires the ‘mdate-sh’ script; this
-script is supplied with Automake and automatically included when
-‘automake’ is invoked with the ‘--add-missing’ option.
-
-   If you have multiple Texinfo files, and you want to use the
-‘version.texi’ feature, then you have to have a separate version file
-for each Texinfo file.  Automake will treat any include in a Texinfo
-file that matches ‘vers*.texi’ just like an automatically generated
-version file.
-
-   Often an Info file depends on more than one ‘.texi’ file.  For
-instance, in GNU Hello, ‘hello.texi’ includes the file ‘fdl.texi’.  You
-can tell Automake about these dependencies using the ‘TEXI_TEXINFOS’
-variable.  Here is how GNU Hello does it:
-
-     info_TEXINFOS = hello.texi
-     hello_TEXINFOS = fdl.texi
-
-   By default, Automake requires the file ‘texinfo.tex’ to appear in the
-same directory as the ‘Makefile.am’ file that lists the ‘.texi’ files.
-If you used ‘AC_CONFIG_AUX_DIR’ in ‘configure.ac’ (*note Finding
-'configure' Input: (autoconf)Input.), then ‘texinfo.tex’ is looked for
-there.  In both cases, ‘automake’ then supplies ‘texinfo.tex’ if
-‘--add-missing’ is given, and takes care of its distribution.  However,
-if you set the ‘TEXINFO_TEX’ variable (see below), it overrides the
-location of the file and turns off its installation into the source as
-well as its distribution.
-
-   The option ‘no-texinfo.tex’ can be used to eliminate the requirement
-for the file ‘texinfo.tex’.  Use of the variable ‘TEXINFO_TEX’ is
-preferable, however, because that allows the ‘dvi’, ‘ps’, and ‘pdf’
-targets to still work.
-
-   Automake generates an ‘install-info’ rule; some people apparently use
-this.  By default, info pages are installed by ‘make install’, so
-running ‘make install-info’ is pointless.  This can be prevented via the
-‘no-installinfo’ option.  In this case, ‘.info’ files are not installed
-by default, and user must request this explicitly using ‘make
-install-info’.
-
-   By default, ‘make install-info’ and ‘make uninstall-info’ will try to
-run the ‘install-info’ program (if available) to update (or
-create/remove) the ‘${infodir}/dir’ index.  If this is undesired, it can
-be prevented by exporting the ‘AM_UPDATE_INFO_DIR’ variable to "‘no’".
-
-   The following variables are used by the Texinfo build rules.
-
-‘MAKEINFO’
-     The name of the program invoked to build ‘.info’ files.  This
-     variable is defined by Automake.  If the ‘makeinfo’ program is
-     found on the system then it will be used by default; otherwise
-     ‘missing’ will be used instead.
-
-‘MAKEINFOHTML’
-     The command invoked to build ‘.html’ files.  Automake defines this
-     to ‘$(MAKEINFO) --html’.
-
-‘MAKEINFOFLAGS’
-     User flags passed to each invocation of ‘$(MAKEINFO)’ and
-     ‘$(MAKEINFOHTML)’.  This user variable (*note User Variables::) is
-     not expected to be defined in any ‘Makefile’; it can be used by
-     users to pass extra flags to suit their needs.
-
-‘AM_MAKEINFOFLAGS’
-‘AM_MAKEINFOHTMLFLAGS’
-‘AM_TEXI2FLAGS’
-     Maintainer flags passed to each ‘makeinfo’ invocation.  Unlike
-     ‘MAKEINFOFLAGS’, these variables are meant to be defined by
-     maintainers in ‘Makefile.am’.  ‘$(AM_MAKEINFOFLAGS)’ is passed to
-     ‘makeinfo’ when building ‘.info’ files; ‘$(AM_MAKEINFOHTMLFLAGS)’
-     is used when building ‘.html’ files; and ‘$(AM_TEXI2FLAGS)’ is used
-     when building ‘.dvi’ and ‘.pdf’ files.
-
-     For instance, the following setting can be used to obtain one
-     single ‘.html’ file per manual, without node separators.
-          AM_MAKEINFOHTMLFLAGS = --no-headers --no-split
-
-     ‘AM_MAKEINFOHTMLFLAGS’ defaults to ‘$(AM_MAKEINFOFLAGS)’.  This
-     means that defining ‘AM_MAKEINFOFLAGS’ without defining
-     ‘AM_MAKEINFOHTMLFLAGS’ will impact builds of both ‘.info’ and
-     ‘.html’ files.
-
-‘TEXI2DVI’
-     The name of the command that converts a ‘.texi’ file into a ‘.dvi’
-     file.  This defaults to ‘texi2dvi’, a script that ships with the
-     Texinfo package.
-
-‘TEXI2PDF’
-     The name of the command that translates a ‘.texi’ file into a
-     ‘.pdf’ file.  This defaults to ‘$(TEXI2DVI) --pdf --batch’.
-
-‘DVIPS’
-     The name of the command that builds a ‘.ps’ file out of a ‘.dvi’
-     file.  This defaults to ‘dvips’.
-
-‘TEXINFO_TEX’
-     If your package has Texinfo files in many directories, you can use
-     the variable ‘TEXINFO_TEX’ to tell Automake where to find the
-     canonical ‘texinfo.tex’ for your package.  The value of this
-     variable should be the relative path from the current ‘Makefile.am’
-     to ‘texinfo.tex’:
-
-          TEXINFO_TEX = ../doc/texinfo.tex
 

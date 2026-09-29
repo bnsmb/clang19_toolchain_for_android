@@ -1,10 +1,10 @@
-This is automake-history.info, produced by makeinfo version 7.1 from
+This is automake-history.info, produced by makeinfo version 7.3 from
 automake-history.texi.
 
 This manual describes (part of) the history of GNU Automake, a program
 that creates GNU standards-compliant Makefiles from template files.
 
-   Copyright © 1995-2024 Free Software Foundation, Inc.
+   Copyright © 1995-2026 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -27,7 +27,7 @@ Brief History of Automake
 This manual describes (part of) the history of GNU Automake, a program
 that creates GNU standards-compliant Makefiles from template files.
 
-   Copyright © 1995-2024 Free Software Foundation, Inc.
+   Copyright © 1995-2026 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -60,7 +60,6 @@ Techniques for Computing Dependencies
 Copying This Manual
 
 * GNU Free Documentation License::  License for copying this manual
-
 
 
 File: automake-history.info,  Node: Timeline,  Next: Dependency Tracking Evolution,  Prev: Top,  Up: Top
@@ -213,10 +212,9 @@ File: automake-history.info,  Node: Timeline,  Next: Dependency Tracking Evoluti
      Extra files to distribute must be listed in ‘DIST_OTHER’ (the
      ancestor of ‘EXTRA_DIST’).  Also extra directories that are to be
      distributed should appear in ‘DIST_SUBDIRS’, but the manual
-     describes this as a temporary ugly hack (today extra directories
+     describes this as a temporary ugly hack.  Today, extra directories
      should also be listed in ‘EXTRA_DIST’, and ‘DIST_SUBDIRS’ is used
-     for another purpose, *note Conditional Subdirectories:
-     (automake)Conditional Subdirectories.).
+     for another purpose (*note (automake)Conditional Subdirectories::).
 
 1995-11-26 Automake 0.21
 
@@ -1078,9 +1076,11 @@ File: automake-history.info,  Node: Future Directions for Dependencies,  Prev: R
 ----------------------------------------
 
 Currently, only languages and compilers understood by Automake can have
-dependency tracking enabled.  We would like to see if it is practical
-(and worthwhile) to let this support be extended by the user to
-languages unknown to Automake.
+dependency tracking enabled.  Although it would be worthwhile to support
+extensions by the user to languages unknown to Automake, there are no
+plans to implement this (patches welcome).  Nevertheless, *note
+(automake)Dependencies::, for information on how a user might do this
+now, albeit unofficially.
 
 
 File: automake-history.info,  Node: Releases,  Next: Copying This Manual,  Prev: Dependency Tracking Evolution,  Up: Top
@@ -1189,7 +1189,7 @@ A.1 GNU Free Documentation License
 
                      Version 1.3, 3 November 2008
 
-     Copyright © 2000-2024 Free Software Foundation, Inc.
+     Copyright © 2000-2026 Free Software Foundation, Inc.
      <https://fsf.org/>
 
      Everyone is permitted to copy and distribute verbatim copies
@@ -1663,21 +1663,20 @@ recommend releasing these examples in parallel under your choice of free
 software license, such as the GNU General Public License, to permit
 their use in free software.
 
-
 
 Tag Table:
 Node: Top853
-Node: Timeline2386
-Node: Dependency Tracking Evolution34540
-Node: First Take on Dependencies35382
-Node: Dependencies As Side Effects38130
-Node: Dependencies for the User40243
-Node: Techniques for Dependencies45337
-Node: Recommendations for Tool Writers47059
-Node: Future Directions for Dependencies47782
-Node: Releases48252
-Node: Copying This Manual53667
-Node: GNU Free Documentation License53894
+Node: Timeline2385
+Node: Dependency Tracking Evolution34509
+Node: First Take on Dependencies35351
+Node: Dependencies As Side Effects38099
+Node: Dependencies for the User40212
+Node: Techniques for Dependencies45306
+Node: Recommendations for Tool Writers47028
+Node: Future Directions for Dependencies47751
+Node: Releases48359
+Node: Copying This Manual53774
+Node: GNU Free Documentation License54001
 
 End Tag Table
 
