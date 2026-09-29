@@ -636,9 +636,12 @@ History
     updated curl to version 8.22 using OpenSSL 3.5.8
     removed the broken symbolic links chcon getlimits ginstall make-prime-list stdbuf libstdbuf.so kill du-tests  uptime dcgen  runcon in ./usr/bin
     updated the coreutils to version 9.12 (in /data/local/tmp/sysroot/usr/coreutils/) 
-    updated the gcc toolchain to version 16.2.1_20260927
+    updated the gcc toolchain to version 16.2.1_20260927 and removed the files for non-arm64 CPUs
     updated cmake 4.x to version 4.4.2
     added the cmake toolchain file ./android-gcc-toolchain.cmake for building programs with the gcc/g++
     moved the api-level.h file for clang from /data/local/tmp/sysroot/usr/include/android/api-level.h to /data/local/tmp/sysroot/usr/clang19/include/android/api-level.h
     added the empty dummy libraries librt.so and librt.a
     added the include file usr/include/android_affinity_fix.h with definitions available in the bionic libarieries but missing in the include file sched.sh
+    added the alias add_gcc_lib
+    corrected the entry libz.so to libz.so.1 in the gcc toolchain binary ./usr/lib/android-gcc-cross/bin/aarch64-unknown-linux-android-as
+
