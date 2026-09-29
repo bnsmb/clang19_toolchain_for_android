@@ -349,7 +349,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
 # ---------------------------------------------------------------------
 
-  LIB_DIRS="${GCC_SYSROOT}/usr/lib"
+  LIB_DIRS="${GCC_SYSROOT}/usr/lib/android-gcc-cross/aarch64-unknown-linux-android${API}/lib ${GCC_SYSROOT}/usr/lib"
 
   OBJ_DIRS=""
 
