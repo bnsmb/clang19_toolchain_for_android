@@ -25,7 +25,7 @@
 
 # shellcheck disable=SC2006
 
-prefix='/data/local/tmp/sysroot/usr'
+prefix='/data/local/tmp/sysroot'
 # Used in 'libdir'
 # shellcheck disable=SC2034
 exec_prefix="${prefix}"
@@ -39,7 +39,7 @@ Usage: curl-config [OPTION]
 
 Available values for OPTION include:
 
-  --built-shared says 'yes' if libcurl was built shared
+  --built-shared        says 'yes' if libcurl was built shared
   --ca                  CA bundle install path
   --cc                  compiler
   --cflags              preprocessor and compiler flags
@@ -74,7 +74,7 @@ while test "$#" -gt 0; do
     ;;
 
   --cc)
-    echo '/data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android28-clang'
+    echo '/data/local/tmp/sysroot/usr/clang19/bin/clang'
     ;;
 
   --prefix)
@@ -82,20 +82,20 @@ while test "$#" -gt 0; do
     ;;
 
   --feature|--features)
-    for feature in alt-svc AsynchDNS brotli CAcert HSTS HTTP2 HTTP3 HTTPS-proxy IDN IPv6 Largefile libz NTLM PSL SSL threadsafe TLS-SRP UnixSockets zstd ''; do
+    for feature in alt-svc AsynchDNS brotli HSTS HTTP2 HTTPS-proxy IDN IPv6 Largefile libz PSL SSL threadsafe UnixSockets zstd ''; do
       test -n "$feature" && echo "$feature"
     done
     ;;
 
   --protocols)
     # shellcheck disable=SC2043
-    for protocol in DICT FILE FTP FTPS GOPHER GOPHERS HTTP HTTPS IMAP IMAPS IPFS IPNS MQTT POP3 POP3S RTSP SCP SFTP SMB SMBS SMTP SMTPS TELNET TFTP WS WSS; do
+    for protocol in DICT FILE FTP FTPS GOPHER GOPHERS HTTP HTTPS IMAP IMAPS IPFS IPNS MQTT MQTTS POP3 POP3S RTSP SCP SFTP SMTP SMTPS TELNET TFTP WS WSS; do
       echo "$protocol"
     done
     ;;
 
   --version)
-    echo 'libcurl 8.13.0-DEV'
+    echo 'libcurl 8.22.0'
     exit 0
     ;;
 
@@ -107,11 +107,11 @@ while test "$#" -gt 0; do
     # dash as that's used for things like version 1.2.3-pre1
     cpatch=`echo "$checkfor" | cut -d. -f3 | cut -d- -f1`
 
-    vmajor=`echo '8.13.0-DEV' | cut -d. -f1`
-    vminor=`echo '8.13.0-DEV' | cut -d. -f2`
+    vmajor=`echo '8.22.0' | cut -d. -f1`
+    vminor=`echo '8.22.0' | cut -d. -f2`
     # when extracting the patch part we strip off everything after a
     # dash as that's used for things like version 1.2.3-pre1
-    vpatch=`echo '8.13.0-DEV' | cut -d. -f3 | cut -d- -f1`
+    vpatch=`echo '8.22.0' | cut -d. -f3 | cut -d- -f1`
 
     if test "$vmajor" -gt "$cmajor"; then
       exit 0
@@ -127,12 +127,12 @@ while test "$#" -gt 0; do
       fi
     fi
 
-    echo "requested version $checkfor is newer than existing 8.13.0-DEV"
+    echo "requested version $checkfor is newer than existing 8.22.0"
     exit 1
     ;;
 
   --vernum)
-    echo '080d00'
+    echo '081600'
     exit 0
     ;;
 
@@ -141,7 +141,7 @@ while test "$#" -gt 0; do
     ;;
 
   --cflags)
-    if test "X${prefix}/include" = 'X/usr/include'; then
+    if test "${prefix}/include" = '/usr/include'; then
       echo ''
     else
       echo " -I${prefix}/include"
@@ -149,25 +149,25 @@ while test "$#" -gt 0; do
     ;;
 
   --libs)
-    if test "X${exec_prefix}/lib" != 'X/usr/lib' -a "X${exec_prefix}/lib" != 'X/usr/lib64'; then
+    if test "${exec_prefix}/lib" != '/usr/lib' && test "${exec_prefix}/lib" != '/usr/lib64'; then
       curllibdir="-L${exec_prefix}/lib "
     else
       curllibdir=''
     fi
-    if test 'Xyes' = 'Xno'; then
-      echo "${curllibdir}-lcurl -lnghttp3 -lnghttp2 -lidn2 -lssh2 -lssh2 -lpsl -lssl -lcrypto -lssl -lcrypto -lzstd -lzstd -lbrotlidec -lbrotlidec -lz -lidn2 -lunistring -ldl -lm"
+    if test 'yes' = 'no'; then
+      echo "${curllibdir}-lcurl -lnghttp2 -lidn2 -lssh2 -lssh2 -lpsl -lssl -lcrypto -lssl -lcrypto -lzstd -lzstd -lbrotlidec -lbrotlidec -lbrotlicommon -lz"
     else
       echo "${curllibdir}-lcurl"
     fi
     ;;
 
   --ssl-backends)
-    echo 'OpenSSL v3+'
+    echo 'OpenSSL'
     ;;
 
   --static-libs)
-    if test 'Xyes' != 'Xno'; then
-      echo "${exec_prefix}/lib/libcurl.a -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -L/data/develop/android/sysroot/usr/lib -lnghttp3 -lnghttp2 -lidn2 -lssh2 -lssh2 -lpsl -lssl -lcrypto -lssl -lcrypto -lzstd -lzstd -lbrotlidec -lbrotlidec -lz -lidn2 -lunistring -ldl -lm"
+    if test 'yes' != 'no'; then
+      echo "${exec_prefix}/lib/libcurl.a -L/data/local/tmp/sysroot/usr/lib -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/31 -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android -L/data/local/tmp/develop/sysroot/usr/lib -L/data/local/tmp/develop/sysroot/usr/lib -L/data/local/tmp/develop/sysroot/usr/lib -L/data/local/tmp/sysroot/lib -L/data/local/tmp/sysroot/usr/lib -L/data/local/tmp/develop/sysroot/usr/lib -L/data/local/tmp/sysroot/usr/lib -L/data/local/tmp/sysroot/lib -lnghttp2 -lidn2 -lssh2 -lssh2 -lpsl -lssl -lcrypto -lssl -lcrypto -lzstd -lzstd -lbrotlidec -lbrotlidec -lbrotlicommon -lz"
     else
       echo 'curl was built with static libraries disabled' >&2
       exit 1
@@ -175,7 +175,7 @@ while test "$#" -gt 0; do
     ;;
 
   --configure)
-    echo " 'CFLAGS=--sysroot /data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -O2 -fPIE -fPIC -I/data/develop/android/sysroot/usr/include   -Wno-implicit-function-declaration -Wno-int-conversion' 'CPPFLAGS=--sysroot /data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -O2 -fPIE -fPIC -I/data/develop/android/sysroot/usr/include   -Wno-implicit-function-declaration -Wno-int-conversion -DANDROID' 'LDFLAGS=--sysroot /data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -s -pie -L/data/develop/android/sysroot/usr/lib ' 'LIBS=-lidn2 -lunistring -ldl -lm ' '--host=aarch64-linux-android' '--target=aarch64-linux-android' '--prefix=/data/local/tmp/sysroot/usr' '--enable-optimize' '--enable-symbol-hiding' '--disable-manual' '--enable-threaded-resolver' '--enable-alt-svc' '--enable-hsts' '--with-openssl=/data/develop/android/sysroot/usr' '--with-brotli=/data/develop/android/sysroot/usr' '--with-zstd=/data/develop/android/sysroot/usr' '--with-ca-path=/system/etc/security' '--with-nghttp2={TARGET_SYSROOT}/usr' '--with-libidn2=/data/develop/android/sysroot/usr' '--with-libssh2=/data/develop/android/sysroot/usr' '--without-quiche' '--enable-shared' '--with-ca-path=/data/local/tmp/sysroot/etc/security/cacerts' '--with-ca-bundle=/data/local/tmp/sysroot/etc/security/ca-certificates.crt' '-with-ca-fallback' '-with-ca-embed=/data/develop/android/source/curl-curl-8_13_0/ca-certificates.crt' '--with-openssl-quic' '--with-nghttp3' 'host_alias=aarch64-linux-android' 'target_alias=aarch64-linux-android' 'CC=/data/develop/android/android-ndk/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android28-clang'"
+    echo " '--prefix=/data/local/tmp/sysroot/usr/' 'CFLAGS= -I/data/local/tmp/sysroot/usr/include  -I/data/local/tmp/sysroot/usr/clang19/include  -I/data/local/tmp/sysroot/usr/ndk/r27d/include  -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include/aarch64-linux-android  -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include  -I/data/local/tmp/develop/sysroot/usr/include  --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot  -Wno-implicit-function-declaration -Wno-int-conversion  ' 'LDFLAGS= -L/data/local/tmp/sysroot/usr/lib  -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/31  -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android  -L/data/local/tmp/develop/sysroot/usr/lib  -B/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/31/  --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot  -lc  ' '--prefix=/data/local/tmp/sysroot' '--enable-optimize' '--enable-symbol-hiding' '--disable-manual' '--enable-threaded-resolver' '--enable-alt-svc' '--enable-hsts' '--with-openssl=/data/local/tmp/develop/sysroot/usr' '--with-brotli=/data/local/tmp/develop/sysroot/usr' '--with-zstd=/data/local/tmp/develop/sysroot/usr' '--with-ca-path=/data/local/tmp/sysroot/etc/security' '--with-nghttp2={TARGET_SYSROOT}/usr' '--with-libidn2=/data/local/tmp/develop/sysroot/usr' '--with-libssh2=/data/local/tmp/develop/sysroot/usr' '--without-quiche' '--enable-shared' '--with-ca-path=/data/local/tmp/sysroot/etc/security/cacerts' '--with-ca-bundle=/data/local/tmp/sysroot/etc/security/ca-certificates.crt' '-with-ca-fallback' '-with-ca-embed=/data/local/tmp/develop/curl-8.22.0/ca-certificates.crt' '--with-openssl-quic' 'CC=/data/local/tmp/sysroot/usr/clang19/bin/clang' 'CPPFLAGS= -I/data/local/tmp/sysroot/usr/include  -I/data/local/tmp/sysroot/usr/clang19/include  -I/data/local/tmp/sysroot/usr/ndk/r27d/include  -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include/aarch64-linux-android  -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include  -I/data/local/tmp/develop/sysroot/usr/include  --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot ' 'CPP=/data/local/tmp/sysroot/usr/clang19/bin/clang-cpp'"
     ;;
 
   *)
