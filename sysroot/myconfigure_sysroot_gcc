@@ -1,0 +1,28 @@
+
+#
+# cmake syntax for compiling a source code with gcc/g++ for the target directory /data/local/tmp/sysroot/usr
+#
+# Usage: myconfigure_sysroot_gcc [additional_parameter_for_cmake]
+#
+#
+CMAKE_OPTIONS="
+  -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/build/cmake/aarch64-unknown-linux-android24.cmake \
+  -DCMAKE_INSTALL_PREFIX=/data/local/tmp/sysroot/usr/ \
+  -DBUILD_SHARED_LIBS=ON \
+  -DBUILD_STATIC_LIBS=ON \
+  -DCMAKE_VERBOSE_MAKEFILE=ON \
+  $* \
+  -G "Unix Makefiles" ..
+"
+
+# remove comment lines from the CMAKE_OPTIONS
+# 
+CMAKE_OPTIONS="$( echo "${CMAKE_OPTIONS}" | grep -E -v "^#|^$" )"
+
+#
+# set PREFIX to "echo" or something similar before calling this script to run it in dry-run mode
+#
+${PREFIX} cmake ${CMAKE_OPTIONS}
+ 
+
+
