@@ -12,7 +12,6 @@ CMAKE_OPTIONS="
   -DBUILD_STATIC_LIBS=ON \
   -DCMAKE_VERBOSE_MAKEFILE=ON \
   $* \
-  -G "Unix Makefiles" ..
 "
 
 # remove comment lines from the CMAKE_OPTIONS
@@ -22,7 +21,9 @@ CMAKE_OPTIONS="$( echo "${CMAKE_OPTIONS}" | grep -E -v "^#|^$" )"
 #
 # set PREFIX to "echo" or something similar before calling this script to run it in dry-run mode
 #
-${PREFIX} cmake ${CMAKE_OPTIONS}
+${PREFIX} cmake ${CMAKE_OPTIONS} \
+  -G "Unix Makefiles" ..
+
  
 
 
