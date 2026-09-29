@@ -135,12 +135,12 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 
 
 Use the cmake tool chain file 
-
-/data/local/tmp/sysroot/android-gcc-toolchain.cmake 
+i
+/data/local/tmp/sysroot/usr/lib/android-gcc-cross/build/cmake/aarch64-unknown-linux-android24.cmake
 
 to use cmake together with gcc or g++ , e.g:
 
-cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/android-gcc-toolchain.cmake ...
+cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/build/cmake/aarch64-unknown-linux-android24.cmake
 
 
 # The tools included in the tar file with the clang19 toolchain are:
