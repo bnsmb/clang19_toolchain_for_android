@@ -887,6 +887,26 @@ static void __attribute__((__noreturn__)) zramctl_print_version(void)
     exit(EXIT_SUCCESS);
 }
 
+/*
+ * zramctl needs root (or CAP_SYS_ADMIN) to control zram devices and
+ * to read some of the sysfs attributes.  If we are not running as
+ * root, we refuse to do anything except print version/usage information.
+ *
+ * The check uses geteuid() rather than getuid() because a setuid-root
+ * binary would otherwise be incorrectly rejected.  On Android, su is
+ * usually a setuid binary, so geteuid() is the correct choice.
+ */
+static void zramctl_require_root_or_die(void)
+{
+    if (geteuid() == 0)
+        return;
+
+    DBG_BASIC("not running as root (euid=%u), refusing to continue",
+              (unsigned) geteuid());
+    errx(EXIT_FAILURE,
+         _("zramctl requires root privileges (run as root or via su)"));
+}
+
 /* --------------------------------------------------------------------- */
 /* mm_stat and column data                                              */
 /* --------------------------------------------------------------------- */
@@ -1348,6 +1368,12 @@ int main(int argc, char **argv)
             errtryhelp(EXIT_FAILURE);
         }
     }
+
+    /*
+     * From this point on we are going to do real work, so refuse to
+     * continue if we are not root.  -V and -h already exited above.
+     */
+    zramctl_require_root_or_die();
 
     if (find && optind < argc)
         errx(EXIT_FAILURE, _("option --find is mutually exclusive "
