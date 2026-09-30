@@ -135,7 +135,7 @@ Please note that the directory /data/local/tmp/sysroot is hardcoded in the binar
 
 
 Use the cmake tool chain file 
-i
+
 /data/local/tmp/sysroot/usr/lib/android-gcc-cross/build/cmake/aarch64-unknown-linux-android24.cmake
 
 to use cmake together with gcc or g++ , e.g:
@@ -260,7 +260,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/b
 # unrar 7.23
 # lzip 1.26
 #
-# and some tools written Rust as replacement for existing Unix tools:
+# some tools written Rust as replacement for existing Unix tools:
 #
 # bat 0.26.1 (https://github.com/sharkdp/bat; a better replacement for cat)
 # ripgrep 15.2.0 (https://github.com/BurntSushi/ripgrep/, a replacement for recursive grep)
@@ -272,7 +272,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/b
 # eva 0.3.1 (https://github.com/oppiliappan/eva, a command line calculator)
 # dua 2.45.0
 # 
-# and some additional tools written in Rust:
+# some additional tools written in Rust:
 #
 # rustcan 2.3.0 (https://github.com/RustScan/RustScan, a port scanner )
 # miniserv 0.35.0 (https://github.com/svenstaro/miniserve, a minimal http server)
@@ -656,10 +656,14 @@ History
     added the empty dummy libraries librt.so and librt.a
     added the include file usr/include/android_affinity_fix.h with definitions available in the bionic libarieries but missing in the include file sched.sh
     added the alias add_gcc_lib
-    corrected the entry libz.so to libz.so.1 in the gcc toolchain binary ./usr/lib/android-gcc-cross/bin/aarch64-unknown-linux-android-as
+    corrected the entry libz.so to libz.so.1 in the gcc toolchain binaries
+      usr/lib/android-gcc-cross/bin/aarch64-unknown-linux-android-as 
+      usr/lib/android-gcc-cross/bin/aarch64-unknown-linux-android-ar 
+      usr/lib/android-gcc-cross/bin/aarch64-unknown-linux-android-ld.bfd 
+      usr/lib/android-gcc-cross/bin/aarch64-unknown-linux-android-ranlib
     added the script myconfigure_sysroot_gcc_cmake with the cmake command to compile source code with cmake and gcc
     the script myconfigure now selects the default TARGET_ROOT depending on the name of the script
     ./sysroot/usr/lib/libcurl.so now only needs the standard libraries from the Android OS
     corrected the script bin/init_gcc_env (see the script for details)
     added automake 1.16, 1.18, and 1.19
- 
+    added an extended zramctl binary -- this binary uses the /dev/block directory tree from Android 
