@@ -12,11 +12,21 @@
 #  02.08.2025 2.1.0 /bs
 #    added the directory /system/usr/lib to he LD_LIBRARY_PATH if it exists
 #
+#  01.10.2026 2.2.0 /bs
+#    myldd now uses readelf to list the libraries required or a binary if ldd failed
+#
+# Supported environment variables:
+#  
+#   READELF - readelf binary to use; use "none" to disable the use of readelf
+#             default is to search readelf via PATH variable
+#
 if [ $# -eq 0 -o  "$1"x = "-h"x  -o "$1"x = "--help"x ] ; then
   echo "Usage $0 [binary] [...]"
   exit 1
 fi
 
+READELF="${READELF:=$( which readelf )}"
+	
 while [ $# -ne 0 ] ;  do
   echo ""	
   CUR_FILE="$1"
@@ -42,5 +52,12 @@ while [ $# -ne 0 ] ;  do
   [  !  -z ${VERBOSE} ] && echo "The LD_LIBRARY_PATH used for this command is ${LD_LIBRARY_PATH}"
   echo "# Executing ldd \"${CUR_FILE}\" "
   ldd "${CUR_FILE}"
+  if [ $? -ne 0 -o "${VERBOSE}"x != ""x  ] ; then
+     if [ "${READELF}"x != ""x -a "${READELF}"x != "none"x ] ; then
+       echo 
+       echo "Libraries required by \"${CUR_FILE}\" are:"
+       ${READELF} -d "${CUR_FILE}"  | grep NEEDED | awk '{ print $NF  }' | tr -d "[]"  | sed "s/^/  /g"
+     fi
+   fi
 done
 

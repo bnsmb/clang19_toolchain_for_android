@@ -667,3 +667,5 @@ History
     corrected the script bin/init_gcc_env (see the script for details)
     added automake 1.16, 1.18, and 1.19
     added an extended zramctl binary -- this binary uses the /dev/block directory tree from Android 
+    updated myldd to version 2.2.0
+
