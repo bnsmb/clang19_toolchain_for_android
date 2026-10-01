@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# script to check the libc in the various Android NDKs for one or more symbols
+#
+#h#
+#h#Usage: find_symbol_in_ndk_libcs [symbol1] [... symbol#]
+#h#
+
+case $1 in 
+  "" | -h | --help )
+    grep "^#h#" $0 | cut -c4- 
+    exit 1
+    ;;
+esac
+
+echo 
+echo "Searching the symbols in the libc files in \"${SYSROOT}/usr/lib/aarch64-linux-android/*/libc.so\" ..."
+echo
+
+while [ $# -ne 0 ] ;do
+  CUR_SYMBOL="$1"
+  shift
+
+  echo
+  echo "*** Searching the symbol \"${CUR_SYMBOL}\" ..."
+  for CUR_LIBC in ${SYSROOT}/usr/lib/aarch64-linux-android/*/libc.so ; do 
+    echo "** ${CUR_LIBC}:" ;  nm ${CUR_LIBC} | grep  "${CUR_SYMBOL}" 
+  done
+done
+echo
+
+
