@@ -42,6 +42,11 @@ if  [ "${SEPOLICY_INJECT}"x != ""x -a "${LOAD_POLICY}"x != ""x ] ; then
     echo "Enabling icmp_socket access for the user \"shell\" (this is necessary to use mtr)..."
     sepolicy-inject -s shell -t port -c icmp_socket -p name_bind -P "${TMP_SEPOLICY_FILE}" -o "${TMP_SEPOLICY_FILE}" 
 
+# allow shell proc_swaps file { read open gettattr }
+#
+    echo "Enable access for /proc for the usre \"shell\" ..."
+    sepolicy-inject -s shell -t proc_swaps -c file -p read,open,getattr  -P "${TMP_SEPOLICY_FILE}" -o "${TMP_SEPOLICY_FILE}" 
+
 
     echo "Reloading the SELinux policy from the file \"${TMP_SEPOLICY_FILE}\" ..."   
     cp "${TMP_SEPOLICY_FILE}" /sys/fs/selinux/policy  && \

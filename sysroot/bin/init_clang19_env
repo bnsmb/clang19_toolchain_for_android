@@ -110,19 +110,22 @@
 #    added the alias update_config_guess to update config.guess and config.sub in the current directory
 #    added the alias ll=exa
 #
-# 15.07.2026 v1.5.17 /bs
+#  15.07.2026 v1.5.17 /bs
 #    added the alias cat="bat --paging=never"
 #
-# 20.07.2026 v1.5.18 /bs
+#  20.07.2026 v1.5.18 /bs
 #    added the alias readelf=/data/local/tmp/sysroot/usr/bin/readelf
 #    added the alias alias fix_paste="printf '\e[?2004l'"
 #    the script now defines the environment variable PERL5LIB
 #
-# 23.07.2026 v1.5.19 /bs
+#  23.07.2026 v1.5.19 /bs
 #    /data/local/tmp/sysroot/bin is now in the PATH variable before /data/local/tmp/sysroot/usr/bin
 #
-# 19.09.2026 v1.5.20 /bs
+#  19.09.2026 v1.5.20 /bs
 #   the example source files are now in the directory "./examples" and the binaries are created in the directory "./out"
+#
+#  02.10.2026 v	1.5.21 /bs
+#   added code to allow the user shell access to /proc in SELinux if root access is available
 #
 
 __TRUE=0
@@ -881,6 +884,9 @@ echo
         echo "Enabling hard links for the user \"shell\" ..."
         ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file file link" '
  
+
+	echo "Enabling access to proc for the user \"shell\" ..."
+        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell proc_swaps file { read open gettattr }" '
 
         if [ ${OS_VERSION} -gt 13 ] ; then
           echo "Enabling creating and using fifos for the user \"shell\" ..."
