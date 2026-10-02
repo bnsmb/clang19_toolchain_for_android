@@ -670,4 +670,5 @@ History
     updated myldd to version 2.2.0
     the init script now adds a SELlinux rule to allow access of /proc for the user shell
     added the binary swapon from the util-linux version 2.42.1
+    added the dummy library libutil.so / libutil.a
 
