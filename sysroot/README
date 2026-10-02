@@ -668,4 +668,6 @@ History
     added automake 1.16, 1.18, and 1.19
     added an extended zramctl binary -- this binary uses the /dev/block directory tree from Android 
     updated myldd to version 2.2.0
+    the init script now adds a SELlinux rule to allow access of /proc for the user shell
+    added the binary swapon from the util-linux version 2.42.1
 
