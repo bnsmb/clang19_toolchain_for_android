@@ -10,13 +10,13 @@
 #    script rewritten
 #
 #  02.08.2025 2.1.0 /bs
-#    added the directory /system/usr/lib to he LD_LIBRARY_PATH if it exists
+#    added the directory /system/usr/lib to the LD_LIBRARY_PATH if it exists
 #
 #  01.10.2026 2.2.0 /bs
-#    myldd now uses readelf to list the libraries required or a binary if ldd failed
+#    myldd now uses readelf to list the libraries required for a binary if ldd failed
 #
 #  03.10.2026 2.2.1 /bs
-#    readelf is now only used for files with type ELF something
+#    if the output of readelf is empty it is now ignored
 #
 #
 # Supported environment variables:
