@@ -15,6 +15,10 @@
 #  01.10.2026 2.2.0 /bs
 #    myldd now uses readelf to list the libraries required or a binary if ldd failed
 #
+#  03.10.2026 2.2.1 /bs
+#    readelf is now only used for files with type ELF something
+#
+#
 # Supported environment variables:
 #  
 #   READELF - readelf binary to use; use "none" to disable the use of readelf
@@ -54,9 +58,15 @@ while [ $# -ne 0 ] ;  do
   ldd "${CUR_FILE}"
   if [ $? -ne 0 -o "${VERBOSE}"x != ""x  ] ; then
      if [ "${READELF}"x != ""x -a "${READELF}"x != "none"x ] ; then
-       echo 
-       echo "Libraries required by \"${CUR_FILE}\" are:"
-       ${READELF} -d "${CUR_FILE}"  | grep NEEDED | awk '{ print $NF  }' | tr -d "[]"  | sed "s/^/  /g"
+#
+# try readelf
+#
+       CUR_OUTPUT="$(  ${READELF} -d "${CUR_FILE}" 2>/dev/null | grep NEEDED | awk '{ print $NF  }' | tr -d "[]"  | sed "s/^/  /g" )"
+       if [ "${CUR_OUTPUT}"x != ""x ] ; then
+         echo 
+         echo "Libraries required by \"${CUR_FILE}\" are:"
+         echo "${CUR_OUTPUT}"
+       fi
      fi
    fi
 done
