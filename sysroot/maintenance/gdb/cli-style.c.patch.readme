@@ -1,0 +1,8 @@
+
+This patch disables the color support in gdb
+
+To enable color support in gdb set the variable COLOR to a non-empty value:
+
+COLOR=y gdb -tui ....
+
+
