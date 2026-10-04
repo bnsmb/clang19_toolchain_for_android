@@ -23,7 +23,7 @@ dependency_libs=' -L/data/develop/android/sysroot/usr/lib'
 weak_library_names=''
 
 # Version information for libsframe.
-current=2
+current=3
 age=0
 revision=0
 

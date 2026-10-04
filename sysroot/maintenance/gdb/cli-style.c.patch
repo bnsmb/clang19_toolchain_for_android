@@ -1,0 +1,27 @@
+--- gdb/cli/cli-style.c.org	2026-10-03 14:47:06.207337497 +0200
++++ gdb/cli/cli-style.c	2026-10-03 14:52:05.744355302 +0200
+@@ -27,7 +27,7 @@
+ 
+ /* True if styling is enabled.  */
+ 
+-#if defined (__MSDOS__)
++#if defined (__MSDOS__) || defined (__ANDROID__)
+ static bool cli_styling = false;
+ #else
+ static bool cli_styling = true;
+@@ -123,10 +123,15 @@
+ void
+ disable_styling_from_environment ()
+ {
++
+   const char *no_color = getenv ("NO_COLOR");
+   if (no_color != nullptr && *no_color != '\0')
+     cli_styling = false;
+ 
++  const char *color = getenv ("COLOR");
++  if ( color != nullptr && *color != '\0')
++    cli_styling = true;
++
+   if (!terminal_supports_styling ())
+     cli_styling = false;
+ }

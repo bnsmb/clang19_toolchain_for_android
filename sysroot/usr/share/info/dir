@@ -14,14 +14,10 @@ File: dir,	Node: Top	This is the top of the INFO tree
 
 * Menu:
 
-Compression
-* Gzip: (gzip).                 General (de)compression of files (lzw).
-
-Individual utilities
-* gunzip: (gzip)Overview.                       Decompression.
-* gzexe: (gzip)Overview.                        Compress executables.
-* zcat: (gzip)Overview.                         Decompression to stdout.
-* zdiff: (gzip)Overview.                        Compare compressed files.
-* zforce: (gzip)Overview.                       Force .gz extension on files.
-* zgrep: (gzip)Overview.                        Search compressed files.
-* zmore: (gzip)Overview.                        Decompression output by pages.
+Software development
+* Annotate: (annotate).         The obsolete annotation interface.
+* Bfd: (bfd).                   The Binary File Descriptor library.
+* CTF: (ctf-spec).              The CTF file format.
+* Gdb: (gdb).                   The GNU debugger.
+* SFrame: (sframe-spec).        The Simple Frame format.
+* gdbserver: (gdb) Server.      The GNU debugging server.
