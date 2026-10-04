@@ -128,8 +128,8 @@ if test -z "$browser" ; then
 	if test -x /bin/start; then
 		browser_candidates="start $browser_candidates"
 	fi
-	# /usr/bin/cygstart indicates Cygwin
-	if test -x /usr/bin/cygstart; then
+	# /system/bin/cygstart indicates Cygwin
+	if test -x /system/bin/cygstart; then
 		browser_candidates="cygstart $browser_candidates"
 	fi
 

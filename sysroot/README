@@ -188,7 +188,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/b
 # sshd/ssh 10.5p1
 # OpenSSL 3.5.8 and 4.0.1
 # 
-# git 2.49
+# git 2.56
 # git-lfs 3.7.1
 # gitui 0.28.1 (https://github.com/gitui-org/gitui, a textmode GUI for git commands)
 # 
@@ -673,4 +673,5 @@ History
     added the dummy library libutil.so / libutil.a
     the script myldd now uses readelf if ldd failed
     updated gdb to version 18.1
+    updated git to version 2.56.0 
 

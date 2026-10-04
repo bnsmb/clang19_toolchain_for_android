@@ -3,7 +3,7 @@
 # Copyright (c) 2006 Eric Wong
 #
 
-PERL='/usr/bin/perl'
+PERL='/data/local/tmp/sysroot/usr/bin/perl'
 OPTIONS_KEEPDASHDASH=
 OPTIONS_STUCKLONG=
 OPTIONS_SPEC="\
@@ -226,7 +226,7 @@ EOF
 	# portable way to run ruby, which could be installed anywhere, really.
 	# generate a standalone server script in $fqgitdir/gitweb.
 	cat >"$fqgitdir/gitweb/$httpd.rb" <<EOF
-#!/usr/bin/env ruby
+#!/system/bin/env ruby
 require 'webrick'
 require 'logger'
 options = {
@@ -615,7 +615,7 @@ python_conf() {
 	# This assumes that python is in user's $PATH
 	# This script is Python 2 and 3 compatible
 	cat > "$fqgitdir/gitweb/gitweb.py" <<EOF
-#!/usr/bin/env python
+#!/system/bin/env python
 import os
 import sys
 
@@ -716,7 +716,7 @@ EOF
 
 gitweb_conf() {
 	cat > "$fqgitdir/gitweb/gitweb_config.perl" <<EOF
-#!/usr/bin/perl
+#!/data/local/tmp/sysroot/usr/bin/perl
 our \$projectroot = "$(dirname "$fqgitdir")";
 our \$git_temp = "$fqgitdir/gitweb/tmp";
 our \$projects_list = \$projectroot;
