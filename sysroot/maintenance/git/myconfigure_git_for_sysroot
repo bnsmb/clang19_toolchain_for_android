@@ -1,0 +1,54 @@
+# 
+# configure usage to cross compile git for Android on an arm64 CPU  on the PC with the Android NDK (since version 2.5x some git components are written for rust)
+#
+
+CFLAGS="$CFLAGS -DNO_GECOS_IN_PWENT=1 "
+LDFLAGS="$LDFLAGS -ldl -lnghttp2 -lpsl1 -lidn2 -liconv -lunistring -lbrotlidec -lzstd -lssh2 -lbrotlicommon -lcrypto -lssl -lncurses "
+CXXFLAGS="$CFLAGS"
+CXXFLAGS="$CXXFLAGS "
+
+CONFIGURE_OPTIONS="
+ac_cv_lib_curl_curl_global_init=yes
+ac_cv_fread_reads_directories=yes
+ac_cv_header_libintl_h=no
+ac_cv_iconv_omits_bom=no
+ac_cv_snprintf_returns_bogus=no
+--with-curl
+--with-expat
+--with-libpcre2
+--with-openssl=/data/develop/android/sysroot/usr
+--without-iconv
+--with-gitconfig=/data/local/tmp/sysroot/etc/gitconfig
+--with-gitattributes=/data/local/tmp/sysroot/etc/gitattributes
+--mandir=/data/local/tmp/sysroot/usr/share/man
+"
+
+TARGET_ROOT=/data/local/tmp/sysroot/
+
+${PREFIX}  ./configure --host ${TARGET} --target=${TARGET} --prefix=${TARGET_ROOT}/usr/ CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" ${CONFIGURE_OPTIONS} $* 
+
+echo "
+
+Use
+
+CARGO_BUILD_TARGET=aarch64-linux-android make -j8
+
+to compile with rust
+
+Use
+
+make -j8 NO_RUST=0
+
+to compile without rust (-> all git components written in rust are then missing!)
+
+use 
+
+make man 
+
+to create the mange pages and 
+
+make install-man 
+
+to install the man pages
+"
+
