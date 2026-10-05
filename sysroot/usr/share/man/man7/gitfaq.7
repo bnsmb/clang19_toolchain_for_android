@@ -2,12 +2,12 @@
 .\"     Title: gitfaq
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GITFAQ" "7" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GITFAQ" "7" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -96,10 +96,21 @@ environment variable\&. You can see
 for details on the order in which these options are consulted\&.
 .sp
 Note that in all cases, the editor value will be passed to the shell, so any arguments containing spaces should be appropriately quoted\&. Additionally, if your editor normally detaches from the terminal when invoked, you should specify it with an argument that makes it not do that, or else Git will not see any changes\&. An example of a configuration addressing both of these issues on Windows would be the configuration "C:\eProgram
-\fBFiles\fR\eVim\egvim\&.exe"
+\fBFiles\eVim\egvim\&.exe\fR"
 \fB\-\-nofork\fR, which quotes the filename with spaces and specifies the
 \fB\-\-nofork\fR
 option to avoid backgrounding the process\&.
+.RE
+.PP
+Why not have \fBcommit\&.signoff\fR and other configuration variables?
+.RS 4
+Git intentionally does not (and will not) provide a configuration variable, such as
+\fBcommit\&.signoff\fR, to automatically add
+\fB\-\-signoff\fR
+by default\&. The reason is to protect the legal and intentional significance of a sign\-off\&. If there were more automated and widely publicized ways for sign\-offs to be appended, it would become easier for someone to argue later that a "Signed\-off\-by" trailer was just added out of habit or by automation, without the committer\(cqs full awareness or intent to certify their agreement with the Developer Certificate of Origin (DCO) or a similar statement\&. This could undermine the sign\-off\(cqs credibility in legal or contractual situations\&.
+.sp
+There exists
+\fBformat\&.signoff\fR, but that is a historical mistake, and it is not an excuse to add more mistakes of the same kind on top\&.
 .RE
 .SH "CREDENTIALS"
 .PP
@@ -258,9 +269,41 @@ An example of the kind of corruption that can occur is conflicts over the state 
 \fBgit\fR
 \fBgc\fR, causing data loss\&.
 .sp
-Therefore, it\(cqs better to push your work to either the other system or a central server using the normal push and pull mechanism\&. However, this doesn\(cqt always preserve important data, like stashes, so some people prefer to share a working tree across systems\&.
+Therefore, it\(cqs better to push your work to either the other system or a central server using the normal push and pull mechanism\&. In Git 2\&.51, Git learned to import and export stashes, so it\(cqs possible to synchronize the state of the working tree by stashing it with
+\fBgit\fR
+\fBstash\fR, then exporting either all stashes with
+\fBgit\fR
+\fBstash\fR
+\fBexport\fR
+\fB\-\-to\-ref\fR
+\fBrefs/heads/stashes\fR
+(assuming you want to export to the
+\fBstashes\fR
+branch) or selecting stashes by adding their numbers to the end of that command\&. It\(cqs also possible to include untracked files by using the
+\fB\-\-include\-untracked\fR
+argument when stashing the data in the first place, but be careful not to do this if any of these contain sensitive information\&.
 .sp
-If you do this, the recommended approach is to use
+You can then push the
+\fBstashes\fR
+branch (or whatever branch you\(cqve exported to), fetch them to the local system (such as with
+\fBgit\fR
+\fBfetch\fR
+\fBorigin\fR
+\fB+stashes:stashes\fR), and import the stashes on the other system with
+\fBgit\fR
+\fBstash\fR
+\fBimport\fR
+\fBstashes\fR
+(again, changing the name as necessary)\&. Applying the changes to the working tree can be done with
+\fBgit\fR
+\fBstash\fR
+\fBpop\fR
+or
+\fBgit\fR
+\fBstash\fR
+\fBapply\fR\&. This is the approach that is most robust and most likely to avoid unintended problems\&.
+.sp
+Having said that, there are some cases where people nevertheless prefer to share a working tree across systems\&. If you do this, the recommended approach is to use
 \fBrsync\fR
 \fB\-a\fR
 \fB\-\-delete\-after\fR
@@ -303,7 +346,7 @@ The repository (including all worktrees and the Git directory) is in a quiescent
 \fBgc\fR
 and operations invoked by your editor)\&.
 .sp
-Be aware that even with these recommendations, syncing in this way has some risk since it bypasses Git\(cqs normal integrity checking for repositories, so having backups is advised\&. You may also wish to do a
+Be aware that even with these recommendations, syncing working trees in this way has some risk since it bypasses Git\(cqs normal integrity checking for repositories, so having backups is advised\&. You may also wish to do a
 \fBgit\fR
 \fBfsck\fR
 to verify the integrity of your data on the destination system after syncing\&.

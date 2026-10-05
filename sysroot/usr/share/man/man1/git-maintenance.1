@@ -2,12 +2,12 @@
 .\"     Title: git-maintenance
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-MAINTENANCE" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-MAINTENANCE" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -35,6 +35,7 @@ git-maintenance \- Run tasks to optimize Git repository data
 \fIgit maintenance\fR run [<options>]
 \fIgit maintenance\fR start [\-\-scheduler=<scheduler>]
 \fIgit maintenance\fR (stop|register|unregister) [<options>]
+\fIgit maintenance\fR is\-needed [<options>]
 .fi
 .sp
 .SH "DESCRIPTION"
@@ -169,6 +170,21 @@ subcommand will report an error if the current repository is not already registe
 \fB\-\-force\fR
 option to return success even when the current repository is not registered\&.
 .RE
+.PP
+is\-needed
+.RS 4
+Check whether maintenance needs to be run without actually running it\&. Exits with a 0 status code if maintenance needs to be run, 1 otherwise\&. Ideally used with the
+\fI\-\-auto\fR
+flag\&.
+.sp
+If one or more
+\fB\-\-task\fR
+options are specified, then those tasks are checked in that order\&. Otherwise, the tasks are determined by which
+\fBmaintenance\&.\fR\fI<task>\fR\fB\&.enabled\fR
+config options are true\&. By default, only
+\fBmaintenance\&.gc\&.enabled\fR
+is true\&.
+.RE
 .SH "TASKS"
 .PP
 commit\-graph
@@ -212,7 +228,15 @@ loose\-objects
 .RS 4
 The
 \fBloose\-objects\fR
-job cleans up loose objects and places them into pack\-files\&. In order to prevent race conditions with concurrent Git commands, it follows a two\-step process\&. First, it deletes any loose objects that already exist in a pack\-file; concurrent Git processes will examine the pack\-file for the object data instead of the loose object\&. Second, it creates a new pack\-file (starting with "loose\-") containing a batch of loose objects\&. The batch size is limited to 50 thousand objects to prevent the job from taking too long on a repository with many loose objects\&. The
+job cleans up loose objects and places them into pack\-files\&. In order to prevent race conditions with concurrent Git commands, it follows a two\-step process\&. First, it deletes any loose objects that already exist in a pack\-file; concurrent Git processes will examine the pack\-file for the object data instead of the loose object\&. Second, it creates a new pack\-file (starting with "loose\-") containing a batch of loose objects\&.
+.sp
+The batch size defaults to fifty thousand objects to prevent the job from taking too long on a repository with many loose objects\&. Use the
+\fBmaintenance\&.loose\-objects\&.batchSize\fR
+config option to adjust this size, including a value of
+\fB0\fR
+to remove the limit\&.
+.sp
+The
 \fBgc\fR
 task writes unreachable objects as loose objects to be cleaned up by a later step only if they are not re\-added to a pack\-file; for this reason it is not advisable to enable both the
 \fBloose\-objects\fR
@@ -258,6 +282,33 @@ task collects the loose reference files and collects them into a single file\&. 
 \fBgit-pack-refs\fR(1)
 for more information\&.
 .RE
+.PP
+reflog\-expire
+.RS 4
+The
+\fBreflog\-expire\fR
+task deletes any entries in the reflog older than the expiry threshold\&. See
+\fBgit-reflog\fR(1)
+for more information\&.
+.RE
+.PP
+rerere\-gc
+.RS 4
+The
+\fBrerere\-gc\fR
+task invokes garbage collection for stale entries in the rerere cache\&. See
+\fBgit-rerere\fR(1)
+for more information\&.
+.RE
+.PP
+worktree\-prune
+.RS 4
+The
+\fBworktree\-prune\fR
+task deletes stale or broken worktrees\&. See
+\fBgit-worktree\fR(1)
+for more information\&.
+.RE
 .SH "OPTIONS"
 .PP
 \-\-auto
@@ -272,7 +323,9 @@ config setting, or when the number of pack\-files exceeds the
 \fBgc\&.autoPackLimit\fR
 config setting\&. Not compatible with the
 \fB\-\-schedule\fR
-option\&.
+option\&. When combined with the
+\fBis\-needed\fR
+subcommand, check if the required thresholds are met without actually running maintenance\&.
 .RE
 .PP
 \-\-schedule
@@ -488,17 +541,20 @@ is used as a fallback\&. Defaults to true if both are unset, meaning that the ma
 .PP
 maintenance\&.strategy
 .RS 4
-This string config option provides a way to specify one of a few recommended schedules for background maintenance\&. This only affects which tasks are run during
+This string config option provides a way to specify one of a few recommended strategies for repository maintenance\&. This affects which tasks are run during
 \fBgit\fR
 \fBmaintenance\fR
-\fBrun\fR
-\fB\-\-schedule=X\fR
-commands, provided no
+\fBrun\fR, provided no
 \fB\-\-task=\fR\fI<task>\fR
-arguments are provided\&. Further, if a
-\fBmaintenance\&.\fR\fI<task>\fR\fB\&.schedule\fR
-config value is set, then that value is used instead of the one provided by
-\fBmaintenance\&.strategy\fR\&. The possible strategy strings are:
+arguments are provided\&. This setting impacts manual maintenance, auto\-maintenance as well as scheduled maintenance\&. The tasks that run may be different depending on the maintenance type\&.
+.sp
+The maintenance strategy can be further tweaked by setting
+\fBmaintenance\&.\fR\fI<task>\fR\fB\&.enabled\fR
+and
+\fBmaintenance\&.\fR\fI<task>\fR\fB\&.schedule\fR\&. If set, these values are used instead of the defaults provided by
+\fBmaintenance\&.strategy\fR\&.
+.sp
+The possible strategies are:
 .sp
 .RS 4
 .ie n \{\
@@ -508,7 +564,35 @@ config value is set, then that value is used instead of the one provided by
 .sp -1
 .IP \(bu 2.3
 .\}
-\fBnone\fR: This default setting implies no tasks are run at any schedule\&.
+\fBnone\fR: This strategy implies no tasks are run at all\&. This is the default strategy for scheduled maintenance\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBgc\fR: This strategy runs the
+\fBgc\fR
+task\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBgeometric\fR: This strategy performs geometric repacking of packfiles and keeps auxiliary data structures up\-to\-date\&. The strategy expires data in the reflog and removes worktrees that cannot be located anymore\&. When the geometric repacking strategy would decide to do an all\-into\-one repack, then the strategy generates a cruft pack for all unreachable objects\&. Objects that are already part of a cruft pack will be expired\&.
+.sp
+This repacking strategy is a full replacement for the
+\fBgc\fR
+strategy and is recommended for large repositories\&. This is the default strategy for manual maintenance\&.
 .RE
 .sp
 .RS 4
@@ -531,7 +615,9 @@ and
 \fBincremental\-repack\fR
 tasks daily, and the
 \fBpack\-refs\fR
-task weekly\&.
+task weekly\&. Manual repository maintenance uses the
+\fBgc\fR
+task\&.
 .RE
 .RE
 .PP
@@ -595,6 +681,15 @@ option\&. A negative value will force the task to run every time\&. Otherwise, a
 \fBmaintenance\&.loose\-objects\&.auto\fR\&. The default value is 100\&.
 .RE
 .PP
+maintenance\&.loose\-objects\&.batchSize
+.RS 4
+This integer config option controls the maximum number of loose objects written into a packfile during the
+\fBloose\-objects\fR
+task\&. The default is fifty thousand\&. Use value
+\fB0\fR
+to indicate no limit\&.
+.RE
+.PP
 maintenance\&.incremental\-repack\&.auto
 .RS 4
 This integer config option controls how often the
@@ -609,6 +704,77 @@ task will not run with the
 \fB\-\-auto\fR
 option\&. A negative value will force the task to run every time\&. Otherwise, a positive value implies the command should run when the number of pack\-files not in the multi\-pack\-index is at least the value of
 \fBmaintenance\&.incremental\-repack\&.auto\fR\&. The default value is 10\&.
+.RE
+.PP
+maintenance\&.geometric\-repack\&.auto
+.RS 4
+This integer config option controls how often the
+\fBgeometric\-repack\fR
+task should be run as part of
+\fBgit\fR
+\fBmaintenance\fR
+\fBrun\fR
+\fB\-\-auto\fR\&. If zero, then the
+\fBgeometric\-repack\fR
+task will not run with the
+\fB\-\-auto\fR
+option\&. A negative value will force the task to run every time\&. Otherwise, a positive value implies the command should run either when there are packfiles that need to be merged together to retain the geometric progression, or when there are at least this many loose objects that would be written into a new packfile\&. The default value is 6700\&.
+.RE
+.PP
+maintenance\&.geometric\-repack\&.splitFactor
+.RS 4
+This integer config option controls the factor used for the geometric sequence\&. See the
+\fB\-\-geometric=\fR
+option in
+\fBgit-repack\fR(1)
+for more details\&. Defaults to
+\fB2\fR\&.
+.RE
+.PP
+maintenance\&.reflog\-expire\&.auto
+.RS 4
+This integer config option controls how often the
+\fBreflog\-expire\fR
+task should be run as part of
+\fBgit\fR
+\fBmaintenance\fR
+\fBrun\fR
+\fB\-\-auto\fR\&. If zero, then the
+\fBreflog\-expire\fR
+task will not run with the
+\fB\-\-auto\fR
+option\&. A negative value will force the task to run every time\&. Otherwise, a positive value implies the command should run when the number of expired reflog entries in the "HEAD" reflog is at least the value of
+\fBmaintenance\&.loose\-objects\&.auto\fR\&. The default value is 100\&.
+.RE
+.PP
+maintenance\&.rerere\-gc\&.auto
+.RS 4
+This integer config option controls how often the
+\fBrerere\-gc\fR
+task should be run as part of
+\fBgit\fR
+\fBmaintenance\fR
+\fBrun\fR
+\fB\-\-auto\fR\&. If zero, then the
+\fBrerere\-gc\fR
+task will not run with the
+\fB\-\-auto\fR
+option\&. A negative value will force the task to run every time\&. Otherwise, a positive value implies the command should run when the estimated number of stale entries that would be pruned is greater than or equal to the configured value\&. The default value is 512\&.
+.RE
+.PP
+maintenance\&.worktree\-prune\&.auto
+.RS 4
+This integer config option controls how often the
+\fBworktree\-prune\fR
+task should be run as part of
+\fBgit\fR
+\fBmaintenance\fR
+\fBrun\fR
+\fB\-\-auto\fR\&. If zero, then the
+\fBworktree\-prune\fR
+task will not run with the
+\fB\-\-auto\fR
+option\&. A negative value will force the task to run every time\&. Otherwise, a positive value implies the command should run when the number of prunable worktrees exceeds the value\&. The default value is 1\&.
 .RE
 .SH "GIT"
 .sp

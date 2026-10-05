@@ -2,12 +2,12 @@
 .\"     Title: git-hook
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-HOOK" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-HOOK" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,23 +28,131 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-git-hook \- Run git hooks
+git-hook \- Run Git hooks
 .SH "SYNOPSIS"
 .sp
 .nf
-\fIgit hook\fR run [\-\-ignore\-missing] [\-\-to\-stdin=<path>] <hook\-name> [\-\- <hook\-args>]
+\fIgit hook\fR run [\-\-allow\-unknown\-hook\-name] [\-\-ignore\-missing] [\-\-to\-stdin=<path>] [(\-j|\-\-jobs) <n>]
+        <hook\-name> [\-\- <hook\-args>]
+\fIgit hook\fR list [\-\-allow\-unknown\-hook\-name] [\-z] [\-\-show\-scope] <hook\-name>
 .fi
 .sp
 .SH "DESCRIPTION"
 .sp
-A command interface for running git hooks (see \fBgithooks\fR(5)), for use by other scripted git commands\&.
+A command interface for running Git hooks (see \fBgithooks\fR(5)), for use by other scripted Git commands\&.
+.sp
+This command parses the default configuration files for sets of configs like so:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[hook "linter"]
+  event = pre\-commit
+  command = ~/bin/linter \-\-cpp20
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+In this example, [\fBhook\fR "linter"] represents one script \- \fB~/bin/linter\fR \fB\-\-cpp20\fR \- which can be shared by many repos, and even by many hook events, if appropriate\&.
+.sp
+To add an unrelated hook which runs on a different event, for example a spell\-checker for your commit messages, you would write a configuration like so:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[hook "linter"]
+  event = pre\-commit
+  command = ~/bin/linter \-\-cpp20
+[hook "spellcheck"]
+  event = commit\-msg
+  command = ~/bin/spellchecker
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+With this config, when you run \fIgit commit\fR, first \fB~/bin/linter\fR \fB\-\-cpp20\fR will have a chance to check your files to be committed (during the \fBpre\-commit\fR hook event), and then \fB~/bin/spellchecker\fR will have a chance to check your commit message (during the \fBcommit\-msg\fR hook event)\&.
+.sp
+Commands are run in the order Git encounters their associated \fBhook\&.\fR\fI<friendly\-name>\fR\fB\&.event\fR configs during the configuration parse (see \fBgit-config\fR(1))\&. Although multiple \fBhook\&.linter\&.event\fR configs can be added, only one \fBhook\&.linter\&.command\fR event is valid \- Git uses "last\-one\-wins" to determine which command to run\&.
+.sp
+So if you wanted your linter to run when you commit as well as when you push, you would configure it like so:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[hook "linter"]
+  event = pre\-commit
+  event = pre\-push
+  command = ~/bin/linter \-\-cpp20
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+With this config, \fB~/bin/linter\fR \fB\-\-cpp20\fR would be run by Git before a commit is generated (during \fBpre\-commit\fR) as well as before a push is performed (during \fBpre\-push\fR)\&.
+.sp
+And if you wanted to run your linter as well as a secret\-leak detector during only the "pre\-commit" hook event, you would configure it instead like so:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[hook "linter"]
+  event = pre\-commit
+  command = ~/bin/linter \-\-cpp20
+[hook "no\-leaks"]
+  event = pre\-commit
+  command = ~/bin/leak\-detector
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+With this config, before a commit is generated (during \fBpre\-commit\fR), Git would first start \fB~/bin/linter\fR \fB\-\-cpp20\fR and second start \fB~/bin/leak\-detector\fR\&. It would evaluate the output of each when deciding whether to proceed with the commit\&.
+.sp
+For a full list of hook events which you can set your \fBhook\&.\fR\fI<friendly\-name>\fR\fB\&.event\fR to, and how hooks are invoked during those events, see \fBgithooks\fR(5)\&.
+.sp
+Git will ignore any \fBhook\&.\fR\fI<friendly\-name>\fR\fB\&.event\fR that specifies an event it doesn\(cqt recognize\&. This is intended so that tools which wrap Git can use the hook infrastructure to run their own hooks; see "WRAPPERS" for more guidance\&.
+.sp
+In general, when instructions suggest adding a script to \fB\&.git/hooks/\fR\fI<hook\-event>\fR, you can specify it in the config instead by running:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+git config set hook\&.<some\-name>\&.command <path\-to\-script>
+git config set \-\-append hook\&.<some\-name>\&.event <hook\-event>
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+This way you can share the script between multiple repos\&. That is, \fBcp\fR \fB~/my\-script\&.sh\fR \fB~/project/\&.git/hooks/pre\-commit\fR would become:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+git config set hook\&.my\-script\&.command ~/my\-script\&.sh
+git config set \-\-append hook\&.my\-script\&.event pre\-commit
+.fi
+.if n \{\
+.RE
+.\}
+.sp
 .SH "SUBCOMMANDS"
 .PP
 run
 .RS 4
-Run the
+Runs hooks configured for
+\fI<hook\-name>\fR, in the order they are discovered during the config parse\&. The default
 \fI<hook\-name>\fR
-hook\&. See
+from the hookdir is run last\&. See
 \fBgithooks\fR(5)
 for supported hook names\&.
 .sp
@@ -56,7 +164,37 @@ Any positional arguments to the hook should be passed after a mandatory
 \fBgithooks\fR(5)
 for arguments hooks might expect (if any)\&.
 .RE
+.PP
+list [\-z] [\-\-show\-scope]
+.RS 4
+Print a list of hooks which will be run on
+\fI<hook\-name>\fR
+event\&. If no hooks are configured for that event, print a warning and return 1\&. Use
+\fB\-z\fR
+to terminate output lines with NUL instead of newlines\&.
+.RE
 .SH "OPTIONS"
+.PP
+\-\-allow\-unknown\-hook\-name
+.RS 4
+By default
+\fBgit\fR
+\fBhook\fR
+\fBrun\fR
+and
+\fBgit\fR
+\fBhook\fR
+\fBlist\fR
+will bail out when
+\fI<hook\-name>\fR
+is not a hook event known to Git (see
+\fBgithooks\fR(5)
+for the list of known hooks)\&. This is meant to help catch typos such as
+\fBprereceive\fR
+when
+\fBpre\-receive\fR
+was intended\&. Pass this flag to allow unknown hook names\&.
+.RE
 .PP
 \-\-to\-stdin
 .RS 4
@@ -66,6 +204,227 @@ For "run"; specify a file which will be streamed into the hook\(cqs stdin\&. The
 \-\-ignore\-missing
 .RS 4
 Ignore any missing hook by quietly returning zero\&. Used for tools that want to do a blind one\-shot run of a hook that may or may not be present\&.
+.RE
+.PP
+\-z
+.RS 4
+Terminate "list" output lines with NUL instead of newlines\&.
+.RE
+.PP
+\-\-show\-scope
+.RS 4
+For "list"; prefix each configured hook\(cqs friendly name with a tab\-separated config scope (e\&.g\&.
+\fBlocal\fR,
+\fBglobal\fR,
+\fBsystem\fR), mirroring the output style of
+\fBgit\fR
+\fBconfig\fR
+\fB\-\-show\-scope\fR\&. Traditional hooks from the hookdir are unaffected\&.
+.RE
+.PP
+\-j, \-\-jobs
+.RS 4
+Only valid for
+\fBrun\fR\&.
+.sp
+Specify how many hooks to run simultaneously\&. If this flag is not specified, the value of the
+\fBhook\&.jobs\fR
+config is used, see
+\fBgit-config\fR(1)\&. If neither is specified, defaults to 1 (serial execution)\&.
+.sp
+When greater than 1, it overrides the per\-hook
+\fBhook\&.\fR\fI<friendly\-name>\fR\fB\&.parallel\fR
+setting, allowing all hooks for the event to run concurrently, even if they are not individually marked as parallel\&.
+.sp
+Some hooks always run sequentially regardless of this flag or the
+\fBhook\&.jobs\fR
+config, because Git knows they cannot safely run in parallel:
+\fBapplypatch\-msg\fR,
+\fBpre\-commit\fR,
+\fBprepare\-commit\-msg\fR,
+\fBcommit\-msg\fR,
+\fBpost\-commit\fR,
+\fBpost\-checkout\fR, and
+\fBpush\-to\-checkout\fR\&.
+.RE
+.SH "WRAPPERS"
+.sp
+\fBgit\fR \fBhook\fR \fBrun\fR has been designed to make it easy for tools which wrap Git to configure and execute hooks using the Git hook infrastructure\&. It is possible to provide arguments and stdin via the command line, as well as specifying parallel or series execution if the user has provided multiple hooks\&.
+.sp
+Assuming your wrapper wants to support a hook named "mywrapper\-start\-tests", you can have your users specify their hooks like so:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[hook "setup\-test\-dashboard"]
+  event = mywrapper\-start\-tests
+  command = ~/mywrapper/setup\-dashboard\&.py \-\-tap
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+Then, in your \fImywrapper\fR tool, you can invoke any users\*(Aq configured hooks by running:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+git hook run \-\-allow\-unknown\-hook\-name mywrapper\-start\-tests \e
+  # providing something to stdin
+  \-\-stdin some\-tempfile\-123 \e
+  # execute multiple hooks in parallel
+  \-\-jobs 3 \e
+  # plus some arguments of your own\&.\&.\&.
+  \-\- \e
+  \-\-testname bar \e
+  baz
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+Take care to name your wrapper\(cqs hook events in a way which is unlikely to overlap with Git\(cqs native hooks (see \fBgithooks\fR(5)) \- a hook event named \(oqmywrappertool\-validate\-commit` is much less likely to be added to native Git than a hook event named \fBvalidate\-commit\fR\&. If Git begins to use a hook event named the same thing as your wrapper hook, it may invoke your users\(cq hooks in unintended and unsupported ways\&.
+.SH "CONFIGURATION"
+.PP
+hook\&.<friendly\-name>\&.command
+.RS 4
+The command to execute for
+\fBhook\&.\fR\fI<friendly\-name>\fR\&.
+\fI<friendly\-name>\fR
+is a unique name that identifies this hook\&. The hook events that trigger the command are configured with
+\fBhook\&.\fR\fI<friendly\-name>\fR\fB\&.event\fR\&. The value can be an executable path or a shell oneliner\&. If more than one value is specified for the same
+\fI<friendly\-name>\fR, only the last value parsed is used\&.
+.RE
+.PP
+hook\&.<friendly\-name>\&.event
+.RS 4
+The hook events that trigger
+\fBhook\&.\fR\fI<friendly\-name>\fR\&. The value is the name of a hook event, like "pre\-commit" or "update"\&. (See
+\fBgithooks\fR(5)
+for a complete list of hook events\&.) On the specified event, the associated
+\fBhook\&.\fR\fI<friendly\-name>\fR\fB\&.command\fR
+is executed\&. This is a multi\-valued key\&. To run
+\fBhook\&.\fR\fI<friendly\-name>\fR
+on multiple events, specify the key more than once\&. An empty value resets the list of events, clearing any previously defined events for
+\fBhook\&.\fR\fI<friendly\-name>\fR\&.
+.sp
+The
+\fI<friendly\-name>\fR
+must not be the same as a known hook event name (e\&.g\&. do not use
+\fBhook\&.pre\-commit\&.event\fR)\&. Using a known event name as a friendly\-name is a fatal error because it creates an ambiguity with
+\fBhook\&.\fR\fI<event>\fR\fB\&.enabled\fR
+and
+\fBhook\&.\fR\fI<event>\fR\fB\&.jobs\fR\&. For unknown event names, a warning is issued when
+\fI<friendly\-name>\fR
+matches the event value\&.
+.RE
+.PP
+hook\&.<friendly\-name>\&.enabled
+.RS 4
+Whether the hook
+\fBhook\&.\fR\fI<friendly\-name>\fR
+is enabled\&. Defaults to
+\fBtrue\fR\&. Set to
+\fBfalse\fR
+to disable the hook without removing its configuration\&. This is particularly useful when a hook is defined in a system or global config file and needs to be disabled for a specific repository\&.
+.RE
+.PP
+hook\&.<friendly\-name>\&.parallel
+.RS 4
+Whether the hook
+\fBhook\&.\fR\fI<friendly\-name>\fR
+may run in parallel with other hooks for the same event\&. Defaults to
+\fBfalse\fR\&. Set to
+\fBtrue\fR
+only when the hook script is safe to run concurrently with other hooks for the same event\&. If any hook for an event does not have this set to
+\fBtrue\fR, all hooks for that event run sequentially regardless of
+\fBhook\&.jobs\fR\&. Only configured (named) hooks need to declare this\&. Traditional hooks found in the hooks directory do not need to, and run in parallel when the effective job count is greater than 1\&.
+.RE
+.PP
+hook\&.<event>\&.enabled
+.RS 4
+Switch to enable or disable all hooks for the
+\fI<event>\fR
+hook event\&. When set to
+\fBfalse\fR, no hooks fire for that event, regardless of any per\-hook
+\fBhook\&.\fR\fI<friendly\-name>\fR\fB\&.enabled\fR
+settings\&. Defaults to
+\fBtrue\fR\&.
+.sp
+Note on naming:
+\fI<event>\fR
+must be the event name (e\&.g\&.
+\fBpre\-commit\fR), not a hook friendly\-name\&. Since using a known event name as a friendly\-name is disallowed (see
+\fBhook\&.\fR\fI<friendly\-name>\fR\fB\&.event\fR
+above), there is no ambiguity between event\-level and per\-hook
+\fB\&.enabled\fR
+settings for known events\&. For unknown events, if a friendly\-name matches the event name despite the warning,
+\fB\&.enabled\fR
+is treated as per\-hook only\&.
+.RE
+.PP
+hook\&.<event>\&.jobs
+.RS 4
+Specifies how many hooks can be run simultaneously for the
+\fI<event>\fR
+hook event (e\&.g\&.
+\fBhook\&.post\-receive\&.jobs\fR
+\fB=\fR
+\fB4\fR)\&. Overrides
+\fBhook\&.jobs\fR
+for this specific event\&. The same parallelism restrictions apply: this setting has no effect unless all configured hooks for the event have
+\fBhook\&.\fR\fI<friendly\-name>\fR\fB\&.parallel\fR
+set to
+\fBtrue\fR\&. Set to
+\fB\-1\fR
+to use the number of available CPU cores\&. Must be a positive integer or
+\fB\-1\fR; zero is rejected with a warning\&.
+.sp
+Note on naming: although this key resembles
+\fBhook\&.\fR\fI<friendly\-name>\fR\fB\&.*\fR
+(a per\-hook setting),
+\fI<event>\fR
+must be the event name, not a hook friendly name\&. The key component is stored literally and looked up by event name at runtime with no translation between the two namespaces\&. A key like
+\fBhook\&.my\-hook\&.jobs\fR
+is stored under "my\-hook" but the lookup at runtime uses the event name (e\&.g\&. "post\-receive"), so
+\fBhook\&.my\-hook\&.jobs\fR
+is silently ignored even when
+\fBmy\-hook\fR
+is registered for that event\&. Use
+\fBhook\&.post\-receive\&.jobs\fR
+or any other valid event name when setting
+\fBhook\&.\fR\fI<event>\fR\fB\&.jobs\fR\&.
+.RE
+.PP
+hook\&.jobs
+.RS 4
+Specifies how many hooks can be run simultaneously during parallelized hook execution\&. If unspecified, defaults to 1 (serial execution)\&. Set to
+\fB\-1\fR
+to use the number of available CPU cores\&. Can be overridden on a per\-event basis with
+\fBhook\&.\fR\fI<event>\fR\fB\&.jobs\fR\&. Some hooks always run sequentially regardless of this setting because they operate on shared data and cannot safely be parallelized:
+.PP
+\fBapplypatch\-msg\fR, \fBprepare\-commit\-msg\fR, \fBcommit\-msg\fR
+.RS 4
+Receive a commit message file and may rewrite it in place\&.
+.RE
+.PP
+\fBpre\-commit\fR, \fBpost\-checkout\fR, \fBpush\-to\-checkout\fR, \fBpost\-commit\fR
+.RS 4
+Access the working tree, index, or repository state\&.
+.RE
+.sp
+This setting has no effect unless all configured hooks for the event have
+\fBhook\&.\fR\fI<friendly\-name>\fR\fB\&.parallel\fR
+set to
+\fBtrue\fR\&.
+.sp
+For
+\fBpre\-push\fR
+hooks, which normally keep stdout and stderr separate, setting this to a value greater than 1 (or passing
+\fB\-j\fR) will merge stdout into stderr to allow correct de\-interleaving of parallel output\&.
 .RE
 .SH "SEE ALSO"
 .sp

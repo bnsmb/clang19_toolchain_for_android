@@ -2,12 +2,12 @@
 .\"     Title: gitpacking
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GITPACKING" "7" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GITPACKING" "7" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -93,7 +93,7 @@ All stable commits are grouped into pseudo\-merges of equal size (\fBbitmapPseud
 .sp
 Among unstable commits, the pseudo\-merge machinery will attempt to combine older commits into large groups as opposed to newer commits which will appear in smaller groups\&. This is based on the heuristic that references whose tip commit is older are less likely to be modified to point at a different commit than a reference whose tip commit is newer\&.
 .sp
-The size of groups is determined by a power\-law decay function, and the decay parameter roughly corresponds to "k" in \fBf\fR(\fBn\fR) \fB=\fR \fBC\fR*n^(\fB\-k/100\fR), where \fBf\fR(\fBn\fR) describes the size of the \fBn\fR\-th pseudo\-merge group\&. The sample rate controls what percentage of eligible commits are considered as candidates\&. The threshold parameter indicates the minimum age (so as to avoid including too\-recent commits in a pseudo\-merge group, making it less likely to be valid)\&. The "maxMerges" parameter sets an upper\-bound on the number of pseudo\-merge commits an individual group
+The size of groups is determined by a power\-law decay function, and the decay parameter roughly corresponds to "k" in \fBf\fR(\fBn\fR) \fB=\fR \fBC*n^\fR(\fB\-k/100\fR), where \fBf\fR(\fBn\fR) describes the size of the \fBn\fR\-th pseudo\-merge group\&. The sample rate controls what percentage of eligible commits are considered as candidates\&. The threshold parameter indicates the minimum age (so as to avoid including too\-recent commits in a pseudo\-merge group, making it less likely to be valid)\&. The "maxMerges" parameter sets an upper\-bound on the number of pseudo\-merge commits an individual group
 .sp
 The "stable"\-related parameters control "stable" pseudo\-merge groups, comprised of a fixed number of commits which are older than the configured "stable threshold" value and may be grouped together in chunks of "stableSize" in order of age\&.
 .sp
@@ -111,7 +111,7 @@ The exact configuration for pseudo\-merges is as follows:
 .ps -1
 .br
 .sp
-The configuration options in \fBbitmapPseudoMerge\&.\fR* are considered EXPERIMENTAL and may be subject to change or be removed entirely in the future\&. For more information about the pseudo\-merge bitmap feature, see the "Pseudo\-merge bitmaps" section of \fBgitpacking\fR(7)\&.
+The configuration options in \fBbitmapPseudoMerge\&.*\fR are considered EXPERIMENTAL and may be subject to change or be removed entirely in the future\&. For more information about the pseudo\-merge bitmap feature, see the "Pseudo\-merge bitmaps" section of \fBgitpacking\fR(7)\&.
 .sp .5v
 .RE
 .PP
@@ -141,7 +141,7 @@ in the function
 \fBf\fR(\fBn\fR)
 \fB=\fR
 \fBC\fR
-*
+\fB*\fR
 \fBn^\-k\fR, where
 \fBf\fR(\fBn\fR) is the size of the `n`th group\&.
 .sp
@@ -162,11 +162,10 @@ If all groups are the same size, it is possible that groups containing newer com
 .PP
 bitmapPseudoMerge\&.<name>\&.sampleRate
 .RS 4
-Determines the proportion of non\-bitmapped commits (among reference tips) which are selected for inclusion in an unstable pseudo\-merge bitmap\&. Must be between
+Determines the proportion of non\-bitmapped commits (among reference tips) which are selected for inclusion in an unstable pseudo\-merge bitmap\&. Must be greater than
 \fB0\fR
-and
-\fB1\fR
-(inclusive)\&. The default is
+and less than or equal to
+\fB1\fR\&. The default is
 \fB1\fR\&.
 .RE
 .PP
@@ -216,7 +215,7 @@ Suppose that you have a repository with a large number of references, and you wa
         pattern = "refs/"
         threshold = now
         stableThreshold = never
-        sampleRate = 100
+        sampleRate = 1
         maxMerges = 64
 .fi
 .if n \{\
@@ -250,7 +249,7 @@ Suppose instead that you are working in a fork\-network repository, with each fo
         pattern = "refs/virtual/([0\-9]+)/(heads|tags)/"
         threshold = now
         stableThreshold = never
-        sampleRate = 100
+        sampleRate = 1
         maxMerges = 64
 .fi
 .if n \{\

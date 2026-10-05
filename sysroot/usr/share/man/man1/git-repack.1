@@ -2,12 +2,12 @@
 .\"     Title: git-repack
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-REPACK" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-REPACK" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -32,7 +32,10 @@ git-repack \- Pack unpacked objects in a repository
 .SH "SYNOPSIS"
 .sp
 .nf
-\fIgit repack\fR [\-a] [\-A] [\-d] [\-f] [\-F] [\-l] [\-n] [\-q] [\-b] [\-m] [\-\-window=<n>] [\-\-depth=<n>] [\-\-threads=<n>] [\-\-keep\-pack=<pack\-name>] [\-\-write\-midx]
+\fIgit repack\fR [\-a] [\-A] [\-d] [\-f] [\-F] [\-l] [\-n] [\-q] [\-b] [\-m]
+        [\-\-window=<n>] [\-\-depth=<n>] [\-\-threads=<n>] [\-\-keep\-pack=<pack\-name>]
+        [\-\-write\-midx[=<mode>]] [\-\-name\-hash\-version=<n>] [\-\-path\-walk]
+        [\-\-filter=<filter\-spec>] [\-\-drop\-filtered [\-\-dry\-run]]
 .fi
 .sp
 .SH "DESCRIPTION"
@@ -107,18 +110,22 @@ invocation\&. Only useful with
 .PP
 \-\-max\-cruft\-size=<n>
 .RS 4
-Repack cruft objects into packs as large as
+Override
+\fB\-\-max\-pack\-size\fR
+for cruft packs\&. Inherits the value of
+\fB\-\-max\-pack\-size\fR
+(if any) by default\&. See the documentation for
+\fB\-\-max\-pack\-size\fR
+for more details\&.
+.RE
+.PP
+\-\-combine\-cruft\-below\-size=<n>
+.RS 4
+When generating cruft packs without pruning, only repack existing cruft packs whose size is strictly less than
 \fI<n>\fR
-bytes before creating new packs\&. As long as there are enough cruft packs smaller than
-\fI<n>\fR, repacking will cause a new cruft pack to be created containing objects from any combined cruft packs, along with any new unreachable objects\&. Cruft packs larger than
+bytes, which can optionally be suffixed with "k", "m", or "g"\&. Cruft packs whose size is greater than or equal to
 \fI<n>\fR
-will not be modified\&. When the new cruft pack is larger than
-\fI<n>\fR
-bytes, it will be split into multiple packs, all of which are guaranteed to be at most
-\fI<n>\fR
-bytes in size\&. Only useful with
-\fB\-\-cruft\fR
-\fB\-d\fR\&.
+are left as\-is and not repacked\&. Useful when you want to avoid repacking large cruft pack(s) in repositories that have many and/or large unreachable objects\&.
 .RE
 .PP
 \-\-expire\-to=<dir>
@@ -243,6 +250,33 @@ sections of
 \fBgitrepository-layout\fR(5)\&.
 .RE
 .PP
+\-\-drop\-filtered
+.RS 4
+Delete the local objects that match the
+\fB\-\-filter\fR
+specification instead of keeping them in a separate packfile, reclaiming the disk space they occupy\&. This is intended for partial clones, where the filtered objects are promisor objects that remain recoverable from the promisor remote and are lazily re\-fetched on demand when they are next needed\&.
+.sp
+Only large blobs are supported for now, so
+\fB\-\-filter=blob:limit=\fR\fI<n>\fR
+is currently the only accepted filter\&. Because dropped objects must be recoverable, this option requires a promisor remote to be configured and refuses to run otherwise\&.
+.sp
+This option requires
+\fB\-a\fR, and implies
+\fB\-d\fR: the objects are dropped by rebuilding the promisor pack without them and then removing the now redundant old packs, so the redundant packs must be deleted for the space to actually be reclaimed\&. It is incompatible with
+\fB\-\-filter\-to\fR
+and with bitmap writing (\fB\-b\fR/\fB\-\-write\-bitmap\-index\fR), since filtering breaks the single\-pack closure that bitmaps require\&. A bitmap setting coming from configuration is silently disabled for the duration of the command\&.
+.sp
+As a convenience, since dropped objects remain recoverable by lazy fetch,
+\fB\-\-drop\-filtered\fR
+refuses to run while another operation (merge, rebase, am, cherry\-pick, revert, or bisect) is in progress, to avoid a surprising network fetch mid\-operation, and refuses to drop any blob that the current index references, since such a blob would only be lazily re\-fetched by the next command that inspects the working tree\&. These checks are skipped in bare repositories, which have neither a working tree nor an index\&.
+.RE
+.PP
+\-\-dry\-run
+.RS 4
+Only meaningful with
+\fB\-\-drop\-filtered\fR\&. List the objects that would be dropped, one object ID per line, without rebuilding any pack or deleting anything\&.
+.RE
+.PP
 \-b, \-\-write\-bitmap\-index
 .RS 4
 Write a reachability bitmap index as part of the repack\&. This only makes sense when used with
@@ -321,10 +355,57 @@ selects the largest resulting pack as the preferred pack for object selection by
 \fBgit-multi-pack-index\fR(1))\&.
 .RE
 .PP
-\-m, \-\-write\-midx
+\-m, \-\-write\-midx[=<mode>]
 .RS 4
 Write a multi\-pack index (see
-\fBgit-multi-pack-index\fR(1)) containing the non\-redundant packs\&.
+\fBgit-multi-pack-index\fR(1)) containing the non\-redundant packs\&. The following modes are available:
+.PP
+\fBdefault\fR
+.RS 4
+Write a single MIDX covering all packs\&. This is the default when
+\fB\-\-write\-midx\fR
+is given without an explicit mode\&.
+.RE
+.PP
+\fBincremental\fR
+.RS 4
+Write an incremental MIDX chain instead of a single flat MIDX\&.
+.sp
+Without
+\fB\-\-geometric\fR, a new MIDX layer is appended to the existing chain (or a new chain is started) containing whatever packs were written by the repack\&. Existing layers are preserved as\-is\&.
+.sp
+When combined with
+\fB\-\-geometric\fR, the incremental mode maintains a chain of MIDX layers that is compacted over time using a geometric merging strategy\&. Each repack creates a new tip layer containing the newly written pack(s)\&. Adjacent layers are then merged whenever the newer layer\(cqs object count exceeds
+\fB1/repack\&.midxSplitFactor\fR
+of the next deeper layer\(cqs count\&. Layers that do not meet this condition are retained as\-is\&.
+.sp
+The result is that newer (tip) layers tend to contain many small packs with relatively few objects, while older (deeper) layers contain fewer, larger packs covering more objects\&. Because compaction is driven by the tip of the chain, newer layers are also rewritten more frequently than older ones, which are only touched when enough objects have accumulated to justify merging into them\&. This keeps the total number of layers logarithmic relative to the total number of objects\&.
+.sp
+Only packs in the tip MIDX layer are considered as candidates for the geometric repack; packs in deeper layers are left untouched\&. If the tip layer contains fewer packs than
+\fBrepack\&.midxNewLayerThreshold\fR, those packs are excluded from the geometry entirely, and a new layer is created for any new pack(s) without disturbing the existing chain\&.
+.RE
+.RE
+.PP
+\-\-name\-hash\-version=<n>
+.RS 4
+Provide this argument to the underlying
+\fBgit\fR
+\fBpack\-objects\fR
+process\&. See
+\fBgit-pack-objects\fR(1)
+for full details\&.
+.RE
+.PP
+\-\-path\-walk
+.RS 4
+Pass the
+\fB\-\-path\-walk\fR
+option to the underlying
+\fBgit\fR
+\fBpack\-objects\fR
+process\&. See
+\fBgit-pack-objects\fR(1)
+for full details\&.
 .RE
 .SH "CONFIGURATION"
 .sp

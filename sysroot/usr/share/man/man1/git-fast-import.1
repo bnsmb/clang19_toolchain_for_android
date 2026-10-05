@@ -2,12 +2,12 @@
 .\"     Title: git-fast-import
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-FAST\-IMPORT" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-FAST\-IMPORT" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -32,7 +32,7 @@ git-fast-import \- Backend for fast Git data importers
 .SH "SYNOPSIS"
 .sp
 .nf
-frontend | \fIgit fast\-import\fR [<options>]
+\fIgit fast\-import\fR [<options>]
 .fi
 .sp
 .SH "DESCRIPTION"
@@ -73,18 +73,138 @@ commands\&. However, some of these options are unsafe (e\&.g\&., allowing fast\-
 \fBimport\-marks\-if\-exists\fR
 feature commands\&.
 .sp
-.if n \{\
-.RS 4
-.\}
-.nf
-Only enable this option if you trust the program generating the
-fast\-import stream! This option is enabled automatically for
-remote\-helpers that use the `import` capability, as they are
-already trusted to run their own code\&.
-.fi
-.if n \{\
+Only enable this option if you trust the program generating the fast\-import stream! This option is enabled automatically for remote\-helpers that use the
+\fBimport\fR
+capability, as they are already trusted to run their own code\&.
+.sp
+Note that this option has to be spelled in full, and has to appear before any option whose value is separated from it by a space, for the unsafe
+\fBfeature\fR
+commands in the stream to be allowed\&. So
+\fB\-\-allow\-unsafe\fR
+or
+\fB\-\-depth\fR
+\fB5\fR
+\fB\-\-allow\-unsafe\-features\fR
+still refuse them, while
+\fB\-\-allow\-unsafe\-features\fR
+\fB\-\-depth\fR
+\fB5\fR
+and
+\fB\-\-depth=5\fR
+\fB\-\-allow\-unsafe\-features\fR
+allow them\&.
 .RE
+.PP
+\fB\-\-signed\-tags=\fR\fI<mode>\fR
+.RS 4
+Specify how to handle signed tags\&. Behaves in the same way as the
+\fB\-\-signed\-commits=\fR\fI<mode>\fR
+below\&. Like for signed commits, the default mode is
+\fBverbatim\fR\&.
+.RE
+.PP
+\fB\-\-signed\-commits=\fR\fI<mode>\fR
+.RS 4
+Specify how to handle signed commits\&. The following <mode>s are supported:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
 .\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBverbatim\fR, which is the default, will silently import commit signatures\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBwarn\-verbatim\fR
+will import them, but will display a warning\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBabort\fR
+will make this program die when encountering a signed commit\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBstrip\fR
+will silently make the commits unsigned\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBwarn\-strip\fR
+will make them unsigned, but will display a warning\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBstrip\-if\-invalid\fR
+will check signatures and, if they are invalid, will strip them and display a warning\&. The validation is performed in the same way as
+\fBgit-verify-commit\fR(1)
+does it\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBsign\-if\-invalid\fR[\fB=\fR\fI<keyid>\fR], similar to
+\fBstrip\-if\-invalid\fR, verifies commit signatures and replaces invalid signatures with newly created ones\&. Valid signatures are left unchanged\&. If
+\fI<keyid>\fR
+is provided, that key is used for signing; otherwise the configured default signing key is used\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fBabort\-if\-invalid\fR
+will make this program die when encountering a signed commit that is unable to be verified\&.
+.RE
 .RE
 .SS "Options for Frontends"
 .PP
@@ -135,7 +255,7 @@ Before processing any input, load the marks specified in <file>\&. The input fil
 Like \-\-import\-marks but instead of erroring out, silently skips the file if it does not exist\&.
 .RE
 .PP
-\-\-[no\-]relative\-marks
+\-\-relative\-marks, \-\-no\-relative\-marks
 .RS 4
 After specifying \-\-relative\-marks the paths specified with \-\-import\-marks= and \-\-export\-marks= are relative to an internal directory in the current repository\&. In git\-fast\-import this means that the paths are relative to the \&.git/info/fast\-import directory\&. However, other importers may use a different location\&.
 .sp
@@ -191,7 +311,7 @@ See
 .RE
 .SH "PERFORMANCE"
 .sp
-The design of fast\-import allows it to import large projects in a minimum amount of memory usage and processing time\&. Assuming the frontend is able to keep up with fast\-import and feed it a constant stream of data, import times for projects holding 10+ years of history and containing 100,000+ individual commits are generally completed in just 1\-2 hours on quite modest (~$2,000 USD) hardware\&.
+The design of fast\-import allows it to import large projects in a minimum amount of memory usage and processing time\&. Assuming the frontend is able to keep up with fast\-import and feed it a constant stream of data, import times for projects holding 10+ years of history and containing 100,000+ individual commits are generally completed in just 1\-2 hours on quite modest hardware (~$2,000 USD in 2007)\&.
 .sp
 Most bottlenecks appear to be in foreign source data access (the source just cannot extract revisions fast enough) or disk IO (fast\-import writes as fast as the disk will take the data)\&. Imports will run faster if the source data is stored on a different drive than the destination Git repository (due to less IO contention)\&.
 .SH "DEVELOPMENT COST"
@@ -403,7 +523,8 @@ Create or update a branch with a new commit, recording one logical change to the
         original\-oid?
         (\*(Aqauthor\*(Aq (SP <name>)? SP LT <email> GT SP <when> LF)?
         \*(Aqcommitter\*(Aq (SP <name>)? SP LT <email> GT SP <when> LF
-        (\*(Aqencoding\*(Aq SP <encoding>)?
+        (\*(Aqgpgsig\*(Aq SP <algo> SP <format> LF data)?
+        (\*(Aqencoding\*(Aq SP <encoding> LF)?
         data
         (\*(Aqfrom\*(Aq SP <commit\-ish> LF)?
         (\*(Aqmerge\*(Aq SP <commit\-ish> LF)*
@@ -448,6 +569,82 @@ The \fBcommitter\fR command indicates who made this commit, and when they made i
 Here \fI<name>\fR is the person\(cqs display name (for example \(lqCom M Itter\(rq) and \fI<email>\fR is the person\(cqs email address (\(lqcm@example\&.com\(rq)\&. \fBLT\fR and \fBGT\fR are the literal less\-than (\ex3c) and greater\-than (\ex3e) symbols\&. These are required to delimit the email address from the other fields in the line\&. Note that \fI<name>\fR and \fI<email>\fR are free\-form and may contain any sequence of bytes, except \fBLT\fR, \fBGT\fR and \fBLF\fR\&. \fI<name>\fR is typically UTF\-8 encoded\&.
 .sp
 The time of the change is specified by \fI<when>\fR using the date format that was selected by the \-\-date\-format=<fmt> command\-line option\&. See \(lqDate Formats\(rq above for the set of supported formats, and their syntax\&.
+.RE
+.sp
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.ps +1
+\fBgpgsig\fR
+.RS 4
+.sp
+The optional \fBgpgsig\fR command is used to include a PGP/GPG signature or other cryptographic signature that signs the commit data\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+        \*(Aqgpgsig\*(Aq SP <git\-hash\-algo> SP <signature\-format> LF data
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+The \fBgpgsig\fR command takes two arguments:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fI<git\-hash\-algo>\fR
+specifies which Git object format this signature applies to, either
+\fBsha1\fR
+or
+\fBsha256\fR\&. This allows to know which representation of the commit was signed (the SHA\-1 or the SHA\-256 version) which helps with both signature verification and interoperability between repos with different hash functions\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fI<signature\-format>\fR
+specifies the type of signature, such as
+\fBopenpgp\fR,
+\fBx509\fR,
+\fBssh\fR, or
+\fBunknown\fR\&. This is a convenience for tools that process the stream, so they don\(cqt have to parse the ASCII armor to identify the signature type\&.
+.RE
+.sp
+A commit may have at most one signature for the SHA\-1 object format (stored in the "gpgsig" header) and one for the SHA\-256 object format (stored in the "gpgsig\-sha256" header)\&.
+.sp
+See below for a detailed description of the \fBdata\fR command which contains the raw signature data\&.
+.sp
+Signatures are not yet checked in the current implementation though\&. (Already setting the \fBextensions\&.compatObjectFormat\fR configuration option might help with verifying both SHA\-1 and SHA\-256 object format signatures when it will be implemented\&.)
+.if n \{\
+.sp
+.\}
+.RS 4
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.ps +1
+\fBNote\fR
+.ps -1
+.br
+.sp
+This is highly experimental and the format of the \fBgpgsig\fR command may change in the future without compatibility guarantees\&.
+.sp .5v
+.RE
 .RE
 .sp
 .it 1 an-trap
@@ -610,7 +807,8 @@ must be either a mark reference (\fB:\fR\fI<idnum>\fR) set by a prior
 command, or a full 40\-byte SHA\-1 of an existing Git blob object\&. If
 \fI<mode>\fR
 is
-\fB040000\fR` then
+\fB040000\fR
+then
 \fI<dataref>\fR
 must be the full 40\-byte SHA\-1 of an existing Git tree object or a mark reference set with
 \fB\-\-import\-marks\fR\&.
@@ -704,7 +902,7 @@ A \fI<path>\fR can be written as unquoted bytes or a C\-style quoted string\&.
 .sp
 When a \fI<path>\fR does not start with a double quote ("), it is an unquoted string and is parsed as literal bytes without any escape sequences\&. However, if the filename contains \fBLF\fR or starts with double quote, it cannot be represented as an unquoted string and must be quoted\&. Additionally, the source \fI<path>\fR in \fBfilecopy\fR or \fBfilerename\fR must be quoted if it contains SP\&.
 .sp
-When a \fI<path>\fR starts with a double quote ("), it is a C\-style quoted string, where the complete filename is enclosed in a pair of double quotes and escape sequences are used\&. Certain characters must be escaped by preceding them with a backslash: \fBLF\fR is written as \en, backslash as \e\e, and double quote as \e"\&. Some characters may optionally be written with escape sequences: \ea for bell, \eb for backspace, \ef for form feed, \en for line feed, \er for carriage return, \et for horizontal tab, and \ev for vertical tab\&. Any byte can be written with 3\-digit octal codes (e\&.g\&., \e033)\&. All filenames can be represented as quoted strings\&.
+When a \fI<path>\fR starts with a double quote ("), it is a C\-style quoted string, where the complete filename is enclosed in a pair of double quotes and escape sequences are used\&. Certain characters must be escaped by preceding them with a backslash: \fBLF\fR is written as \fB\en\fR, backslash as \fB\e\e\fR, and double quote as \fB\e\fR"\&. Some characters may optionally be written with escape sequences: \fB\ea\fR for bell, \fB\eb\fR for backspace, \fB\ef\fR for form feed, \fB\en\fR for line feed, \fB\er\fR for carriage return, \fB\et\fR for horizontal tab, and \fB\ev\fR for vertical tab\&. Any byte can be written with 3\-digit octal codes (e\&.g\&., \fB\e033\fR)\&. All filenames can be represented as quoted strings\&.
 .sp
 A \fI<path>\fR must use UNIX\-style directory separators (forward slash \fB/\fR) and its value must be in canonical form\&. That is it must not:
 .sp
@@ -764,7 +962,7 @@ are invalid)\&.
 .sp
 The root of the tree can be represented by an empty string as \fI<path>\fR\&.
 .sp
-\fI<path>\fR cannot contain NUL, either literally or escaped as \e000\&. It is recommended that \fI<path>\fR always be encoded using UTF\-8\&.
+\fI<path>\fR cannot contain NUL, either literally or escaped as \fB\e000\fR\&. It is recommended that \fI<path>\fR always be encoded using UTF\-8\&.
 .RE
 .sp
 .it 1 an-trap

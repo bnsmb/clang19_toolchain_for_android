@@ -2,12 +2,12 @@
 .\"     Title: git-rebase
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-REBASE" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-REBASE" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -41,35 +41,9 @@ git-rebase \- Reapply commits on top of another base tip
 .sp
 .SH "DESCRIPTION"
 .sp
-If \fI<branch>\fR is specified, \fBgit\fR \fBrebase\fR will perform an automatic \fBgit\fR \fBswitch\fR \fI<branch>\fR before doing anything else\&. Otherwise it remains on the current branch\&.
+Transplant a series of commits onto a different starting point\&. You can also use \fBgit\fR \fBrebase\fR to reorder or combine commits: see INTERACTIVE MODE below for how to do that\&.
 .sp
-If \fI<upstream>\fR is not specified, the upstream configured in \fBbranch\&.\fR\fI<name>\fR\fB\&.remote\fR and \fBbranch\&.\fR\fI<name>\fR\fB\&.merge\fR options will be used (see \fBgit-config\fR(1) for details) and the \fB\-\-fork\-point\fR option is assumed\&. If you are currently not on any branch or if the current branch does not have a configured upstream, the rebase will abort\&.
-.sp
-All changes made by commits in the current branch but that are not in \fI<upstream>\fR are saved to a temporary area\&. This is the same set of commits that would be shown by \fBgit\fR \fBlog\fR \fI<upstream>\fR\fB\&.\&.\fR\fBHEAD\fR; or by \fBgit\fR \fBlog\fR \*(Aqfork_point\*(Aq\fB\&.\&.\fR\fBHEAD\fR, if \fB\-\-fork\-point\fR is active (see the description on \fB\-\-fork\-point\fR below); or by \fBgit\fR \fBlog\fR \fBHEAD\fR, if the \fB\-\-root\fR option is specified\&.
-.sp
-The current branch is reset to \fI<upstream>\fR or \fI<newbase>\fR if the \fB\-\-onto\fR option was supplied\&. This has the exact same effect as \fBgit\fR \fBreset\fR \fB\-\-hard\fR \fI<upstream>\fR (or \fI<newbase>\fR)\&. \fBORIG_HEAD\fR is set to point at the tip of the branch before the reset\&.
-.if n \{\
-.sp
-.\}
-.RS 4
-.it 1 an-trap
-.nr an-no-space-flag 1
-.nr an-break-flag 1
-.br
-.ps +1
-\fBNote\fR
-.ps -1
-.br
-.sp
-\fBORIG_HEAD\fR is not guaranteed to still point to the previous branch tip at the end of the rebase if other commands that write that pseudo\-ref (e\&.g\&. \fBgit\fR \fBreset\fR) are used during the rebase\&. The previous branch tip, however, is accessible using the reflog of the current branch (i\&.e\&. \fB@\fR{1}, see \fBgitrevisions\fR(7))\&.
-.sp .5v
-.RE
-.sp
-The commits that were previously saved into the temporary area are then reapplied to the current branch, one by one, in order\&. Note that any commits in \fBHEAD\fR which introduce the same textual changes as a commit in \fBHEAD\fR\fB\&.\&.\fR\fI<upstream>\fR are omitted (i\&.e\&., a patch already accepted upstream with a different commit message or timestamp will be skipped)\&.
-.sp
-It is possible that a merge failure will prevent this process from being completely automatic\&. You will have to resolve any such merge failure and run \fBgit\fR \fBrebase\fR \fB\-\-continue\fR\&. Another option is to bypass the commit that caused the merge failure with \fBgit\fR \fBrebase\fR \fB\-\-skip\fR\&. To check out the original \fI<branch>\fR and remove the \fB\&.git/rebase\-apply\fR working files, use the command \fBgit\fR \fBrebase\fR \fB\-\-abort\fR instead\&.
-.sp
-Assume the following history exists and the current branch is "topic":
+For example, imagine that you have been working on the \fBtopic\fR branch in this history, and you want to "catch up" to the work done on the \fBmaster\fR branch\&.
 .sp
 .if n \{\
 .RS 4
@@ -84,20 +58,7 @@ Assume the following history exists and the current branch is "topic":
 .\}
 .sp
 .sp
-From this point, the result of either of the following commands:
-.sp
-.if n \{\
-.RS 4
-.\}
-.nf
-git rebase master
-git rebase master topic
-.fi
-.if n \{\
-.RE
-.\}
-.sp
-would be:
+You want to transplant the commits you made on \fBtopic\fR since it diverged from \fBmaster\fR (i\&.e\&. A, B, and C), on top of the current \fBmaster\fR\&. You can do this by running \fBgit\fR \fBrebase\fR \fBmaster\fR while the \fBtopic\fR branch is checked out\&. If you want to rebase \fBtopic\fR while on another branch, \fBgit\fR \fBrebase\fR \fBmaster\fR \fBtopic\fR is a shortcut for \fBgit\fR \fBcheckout\fR \fBtopic\fR && \fBgit\fR \fBrebase\fR \fBmaster\fR\&.
 .sp
 .if n \{\
 .RS 4
@@ -112,37 +73,161 @@ would be:
 .\}
 .sp
 .sp
-\fBNOTE:\fR The latter form is just a short\-hand of \fBgit\fR \fBcheckout\fR \fBtopic\fR followed by \fBgit\fR \fBrebase\fR \fBmaster\fR\&. When rebase exits \fBtopic\fR will remain the checked\-out branch\&.
+If there is a merge conflict during this process, \fBgit\fR \fBrebase\fR will stop at the first problematic commit and leave conflict markers\&. If this happens, you can do one of these things:
 .sp
-If the upstream branch already contains a change you have made (e\&.g\&., because you mailed a patch which was applied upstream), then that commit will be skipped and warnings will be issued (if the \fImerge\fR backend is used)\&. For example, running \fBgit\fR \fBrebase\fR \fBmaster\fR on the following history (in which \fBA\fR\*(Aq and \fBA\fR introduce the same set of changes, but have different committer information):
+.RS 4
+.ie n \{\
+\h'-04' 1.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  1." 4.2
+.\}
+Resolve the conflict\&. You can use
+\fBgit\fR
+\fBdiff\fR
+to find the markers (<<<<<<) and make edits to resolve the conflict\&. For each file you edit, you need to tell Git that the conflict has been resolved\&. You can mark the conflict as resolved with
+\fBgit\fR
+\fBadd\fR
+\fI<filename>\fR\&. After resolving all of the conflicts, you can continue the rebasing process with
 .sp
 .if n \{\
 .RS 4
 .\}
 .nf
-          A\-\-\-B\-\-\-C topic
-         /
-    D\-\-\-E\-\-\-A\*(Aq\-\-\-F master
+git rebase \-\-continue
 .fi
 .if n \{\
 .RE
 .\}
+.RE
 .sp
-.sp
-will result in:
+.RS 4
+.ie n \{\
+\h'-04' 2.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  2." 4.2
+.\}
+Stop the
+\fBgit\fR
+\fBrebase\fR
+and return your branch to its original state with
 .sp
 .if n \{\
 .RS 4
 .\}
 .nf
-                   B\*(Aq\-\-\-C\*(Aq topic
-                  /
-    D\-\-\-E\-\-\-A\*(Aq\-\-\-F master
+git rebase \-\-abort
 .fi
 .if n \{\
 .RE
 .\}
+.RE
 .sp
+.RS 4
+.ie n \{\
+\h'-04' 3.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  3." 4.2
+.\}
+Skip the commit that caused the merge conflict with
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+git rebase \-\-skip
+.fi
+.if n \{\
+.RE
+.\}
+.RE
+.sp
+If you don\(cqt specify an \fI<upstream>\fR to rebase onto, the upstream configured in \fBbranch\&.\fR\fI<name>\fR\fB\&.remote\fR and \fBbranch\&.\fR\fI<name>\fR\fB\&.merge\fR options will be used (see \fBgit-config\fR(1) for details) and the \fB\-\-fork\-point\fR option is assumed\&. If you are currently not on any branch or if the current branch does not have a configured upstream, the rebase will abort\&.
+.sp
+Here is a simplified description of what \fBgit\fR \fBrebase\fR \fI<upstream>\fR does:
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 1.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  1." 4.2
+.\}
+Make a list of all commits on your current branch since it branched off from
+\fI<upstream>\fR
+that do not have an equivalent commit in
+\fI<upstream>\fR\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 2.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  2." 4.2
+.\}
+Check out
+\fI<upstream>\fR
+with the equivalent of
+\fBgit\fR
+\fBcheckout\fR
+\fB\-\-detach\fR
+\fI<upstream>\fR\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 3.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  3." 4.2
+.\}
+Replay the commits, one by one, in order\&. This is similar to running
+\fBgit\fR
+\fBcherry\-pick\fR
+\fI<commit>\fR
+for each commit\&. See REBASING MERGES for how merges are handled\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 4.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  4." 4.2
+.\}
+Update your branch to point to the final commit with the equivalent of
+\fBgit\fR
+\fBcheckout\fR
+\fB\-B\fR
+\fI<branch>\fR\&.
+.RE
+.if n \{\
+.sp
+.\}
+.RS 4
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.ps +1
+\fBNote\fR
+.ps -1
+.br
+.sp
+When starting the rebase, \fBORIG_HEAD\fR is set to point to the commit at the tip of the to\-be\-rebased branch\&. However, \fBORIG_HEAD\fR is not guaranteed to still point to that commit at the end of the rebase if other commands that change \fBORIG_HEAD\fR (like \fBgit\fR \fBreset\fR) are used during the rebase\&. The previous branch tip, however, is accessible using the reflog of the current branch (i\&.e\&. \fB@\fR{1}, see \fBgitrevisions\fR(7))\&.
+.sp .5v
+.RE
+.SH "TRANSPLANTING A TOPIC BRANCH WITH \-\-ONTO"
 .sp
 Here is how you would transplant a topic branch based on one branch to another, to pretend that you forked the topic branch from the latter branch, using \fBrebase\fR \fB\-\-onto\fR\&.
 .sp
@@ -279,42 +364,6 @@ would result in the removal of commits F and G:
 .sp
 .sp
 This is useful if F and G were flawed in some way, or should not be part of topicA\&. Note that the argument to \fB\-\-onto\fR and the \fI<upstream>\fR parameter can be any valid commit\-ish\&.
-.sp
-In case of conflict, \fBgit\fR \fBrebase\fR will stop at the first problematic commit and leave conflict markers in the tree\&. You can use \fBgit\fR \fBdiff\fR to locate the markers (<<<<<<) and make edits to resolve the conflict\&. For each file you edit, you need to tell Git that the conflict has been resolved, typically this would be done with
-.sp
-.if n \{\
-.RS 4
-.\}
-.nf
-git add <filename>
-.fi
-.if n \{\
-.RE
-.\}
-.sp
-After resolving the conflict manually and updating the index with the desired resolution, you can continue the rebasing process with
-.sp
-.if n \{\
-.RS 4
-.\}
-.nf
-git rebase \-\-continue
-.fi
-.if n \{\
-.RE
-.\}
-.sp
-Alternatively, you can undo the \fIgit rebase\fR with
-.sp
-.if n \{\
-.RS 4
-.\}
-.nf
-git rebase \-\-abort
-.fi
-.if n \{\
-.RE
-.\}
 .SH "MODE OPTIONS"
 .sp
 The options in this section cannot be used with any other option, including not with each other:
@@ -372,6 +421,8 @@ option is not specified, the starting point is
 .sp
 As a special case, you may use "A\&.\&.\&.B" as a shortcut for the merge base of A and B if there is exactly one merge base\&. You can leave out at most one of A and B, in which case it defaults to HEAD\&.
 .RE
+.sp
+See TRANSPLANTING A TOPIC BRANCH WITH \-\-ONTO above for examples\&.
 .PP
 \-\-keep\-base
 .RS 4
@@ -578,15 +629,14 @@ option\&.
 See also INCOMPATIBLE OPTIONS below\&.
 .RE
 .PP
-\-\-rerere\-autoupdate, \-\-no\-rerere\-autoupdate
+\fB\-\-rerere\-autoupdate\fR, \fB\-\-no\-rerere\-autoupdate\fR
 .RS 4
 After the rerere mechanism reuses a recorded resolution on the current conflict to update the files in the working tree, allow it to also update the index with the result of resolution\&.
 \fB\-\-no\-rerere\-autoupdate\fR
 is a good way to double\-check what
-\fBrerere\fR
+\fBgit-rerere\fR(1)
 did and catch potential mismerges, before committing the result to the index with a separate
-\fBgit\fR
-\fBadd\fR\&.
+\fBgit-add\fR(1)\&.
 .RE
 .PP
 \-S[<keyid>], \-\-gpg\-sign[=<keyid>], \-\-no\-gpg\-sign
@@ -738,6 +788,21 @@ See also INCOMPATIBLE OPTIONS below\&.
 .RS 4
 Instead of using the current time as the committer date, use the author date of the commit being rebased as the committer date\&. This option implies
 \fB\-\-force\-rebase\fR\&.
+.if n \{\
+.sp
+.\}
+.RS 4
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.ps +1
+\fBWarning\fR
+.ps -1
+.br
+The history walking machinery assumes that commits have non\-decreasing commit timestamps\&. You should consider if you really need to use this option\&. Then you should only use this option to override the committer date when rebasing commits on top of a base which commit is older (in terms of the commit date) than the oldest commit you are applying (in terms of the author date)\&.
+.sp .5v
+.RE
 .RE
 .PP
 \-\-ignore\-date, \-\-reset\-author\-date
@@ -755,6 +820,15 @@ Add a
 trailer to all the rebased commits\&. Note that if
 \fB\-\-interactive\fR
 is given then only commits marked to be picked, edited or reworded will have the trailer added\&.
+.sp
+See also INCOMPATIBLE OPTIONS below\&.
+.RE
+.PP
+\-\-trailer=<trailer>
+.RS 4
+Append the given trailer to every rebased commit message, processed via
+\fBgit-interpret-trailers\fR(1)\&. This option implies
+\fB\-\-force\-rebase\fR\&.
 .sp
 See also INCOMPATIBLE OPTIONS below\&.
 .RE
@@ -867,7 +941,7 @@ See also INCOMPATIBLE OPTIONS below\&.
 .PP
 \-\-autosquash, \-\-no\-autosquash
 .RS 4
-Automatically squash commits with specially formatted messages into previous commits being rebased\&. If a commit message starts with "squash! ", "fixup! " or "amend! ", the remainder of the subject line is taken as a commit specifier, which matches a previous commit if it matches the subject line or the hash of that commit\&. If no commit matches fully, matches of the specifier with the start of commit subjects are considered\&.
+Automatically squash commits with specially formatted messages into previous commits being rebased\&. If a commit message starts with "squash! ", "fixup! " or "amend! ", the remainder of the title is taken as a commit specifier, which matches a previous commit if it matches the title or the hash of that commit\&. If no commit matches fully, matches of the specifier with the start of commit titles are considered\&.
 .sp
 In the rebase todo list, the actions of squash, fixup and amend commits are changed from
 \fBpick\fR
@@ -887,7 +961,7 @@ The recommended way to create commits with squash markers is by using the
 or
 \fB\-\-fixup=reword:\fR
 options of
-\fBgit-commit\fR(1), which take the target commit as an argument and automatically fill in the subject line of the new commit from that\&.
+\fBgit-commit\fR(1), which take the target commit as an argument and automatically fill in the title of the new commit from that\&.
 .sp
 Setting configuration variable
 \fBrebase\&.autoSquash\fR
@@ -1116,6 +1190,17 @@ are incompatible with the following options:
 \-\-root when used without \-\-onto
 .RE
 .sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\-\-trailer
+.RE
+.sp
 In addition, the following pairs of options are incompatible:
 .sp
 .RS 4
@@ -1225,38 +1310,40 @@ State directories: The two backends keep their state in different directories un
 .sp
 The merge mechanism (\fBgit\fR \fBmerge\fR and \fBgit\fR \fBpull\fR commands) allows the backend \fImerge strategies\fR to be chosen with \fB\-s\fR option\&. Some strategies can also take their own options, which can be passed by giving \fB\-X\fR\fI<option>\fR arguments to \fBgit\fR \fBmerge\fR and/or \fBgit\fR \fBpull\fR\&.
 .PP
-ort
+\fBort\fR
 .RS 4
 This is the default merge strategy when pulling or merging one branch\&. This strategy can only resolve two heads using a 3\-way merge algorithm\&. When there is more than one common ancestor that can be used for 3\-way merge, it creates a merged tree of the common ancestors and uses that as the reference tree for the 3\-way merge\&. This has been reported to result in fewer merge conflicts without causing mismerges by tests done on actual merge commits taken from Linux 2\&.6 kernel development history\&. Additionally this strategy can detect and handle merges involving renames\&. It does not make use of detected copies\&. The name for this algorithm is an acronym ("Ostensibly Recursive\(cqs Twin") and came from the fact that it was written as a replacement for the previous default algorithm,
 \fBrecursive\fR\&.
 .sp
+In the case where the path is a submodule, if the submodule commit used on one side of the merge is a descendant of the submodule commit used on the other side of the merge, Git attempts to fast\-forward to the descendant\&. Otherwise, Git will treat this case as a conflict, suggesting as a resolution a submodule commit that is descendant of the conflicting ones, if one exists\&.
+.sp
 The
-\fIort\fR
+\fBort\fR
 strategy can take the following options:
 .PP
-ours
+\fBours\fR
 .RS 4
 This option forces conflicting hunks to be auto\-resolved cleanly by favoring
 \fIour\fR
 version\&. Changes from the other tree that do not conflict with our side are reflected in the merge result\&. For a binary file, the entire contents are taken from our side\&.
 .sp
 This should not be confused with the
-\fIours\fR
+\fBours\fR
 merge strategy, which does not even look at what the other tree contains at all\&. It discards everything the other tree did, declaring
 \fIour\fR
 history contains all that happened in it\&.
 .RE
 .PP
-theirs
+\fBtheirs\fR
 .RS 4
 This is the opposite of
-\fIours\fR; note that, unlike
-\fIours\fR, there is no
-\fItheirs\fR
+\fBours\fR; note that, unlike
+\fBours\fR, there is no
+\fBtheirs\fR
 merge strategy to confuse this merge option with\&.
 .RE
 .PP
-ignore\-space\-change, ignore\-all\-space, ignore\-space\-at\-eol, ignore\-cr\-at\-eol
+\fBignore\-space\-change\fR, \fBignore\-all\-space\fR, \fBignore\-space\-at\-eol\fR, \fBignore\-cr\-at\-eol\fR
 .RS 4
 Treats lines with the indicated type of whitespace change as unchanged for the sake of a three\-way merge\&. Whitespace changes mixed with other changes to a line are not ignored\&. See also
 \fBgit-diff\fR(1)
@@ -1309,14 +1396,14 @@ Otherwise, the merge proceeds in the usual way\&.
 .RE
 .RE
 .PP
-renormalize
+\fBrenormalize\fR
 .RS 4
-This runs a virtual check\-out and check\-in of all three stages of a file when resolving a three\-way merge\&. This option is meant to be used when merging branches with different clean filters or end\-of\-line normalization rules\&. See "Merging branches with differing checkin/checkout attributes" in
+This runs a virtual check\-out and check\-in of all three stages of any file which needs a three\-way merge\&. This option is meant to be used when merging branches with different clean filters or end\-of\-line normalization rules\&. See "Merging branches with differing checkin/checkout attributes" in
 \fBgitattributes\fR(5)
 for details\&.
 .RE
 .PP
-no\-renormalize
+\fBno\-renormalize\fR
 .RS 4
 Disables the
 \fBrenormalize\fR
@@ -1325,63 +1412,22 @@ option\&. This overrides the
 configuration variable\&.
 .RE
 .PP
-find\-renames[=<n>]
+\fBfind\-renames\fR[\fB=\fR\fI<n>\fR]
 .RS 4
 Turn on rename detection, optionally setting the similarity threshold\&. This is the default\&. This overrides the
-\fImerge\&.renames\fR
+\fBmerge\&.renames\fR
 configuration variable\&. See also
 \fBgit-diff\fR(1)
 \fB\-\-find\-renames\fR\&.
 .RE
 .PP
-rename\-threshold=<n>
+\fBrename\-threshold=\fR\fI<n>\fR
 .RS 4
 Deprecated synonym for
 \fBfind\-renames=\fR\fI<n>\fR\&.
 .RE
 .PP
-subtree[=<path>]
-.RS 4
-This option is a more advanced form of
-\fIsubtree\fR
-strategy, where the strategy makes a guess on how two trees must be shifted to match with each other when merging\&. Instead, the specified path is prefixed (or stripped from the beginning) to make the shape of two trees to match\&.
-.RE
-.RE
-.PP
-recursive
-.RS 4
-This can only resolve two heads using a 3\-way merge algorithm\&. When there is more than one common ancestor that can be used for 3\-way merge, it creates a merged tree of the common ancestors and uses that as the reference tree for the 3\-way merge\&. This has been reported to result in fewer merge conflicts without causing mismerges by tests done on actual merge commits taken from Linux 2\&.6 kernel development history\&. Additionally this can detect and handle merges involving renames\&. It does not make use of detected copies\&. This was the default strategy for resolving two heads from Git v0\&.99\&.9k until v2\&.33\&.0\&.
-.sp
-The
-\fIrecursive\fR
-strategy takes the same options as
-\fIort\fR\&. However, there are three additional options that
-\fIort\fR
-ignores (not documented above) that are potentially useful with the
-\fIrecursive\fR
-strategy:
-.PP
-patience
-.RS 4
-Deprecated synonym for
-\fBdiff\-algorithm=patience\fR\&.
-.RE
-.PP
-diff\-algorithm=[patience|minimal|histogram|myers]
-.RS 4
-Use a different diff algorithm while merging, which can help avoid mismerges that occur due to unimportant matching lines (such as braces from distinct functions)\&. See also
-\fBgit-diff\fR(1)
-\fB\-\-diff\-algorithm\fR\&. Note that
-\fBort\fR
-specifically uses
-\fBdiff\-algorithm=histogram\fR, while
-\fBrecursive\fR
-defaults to the
-\fBdiff\&.algorithm\fR
-config setting\&.
-.RE
-.PP
-no\-renames
+\fBno\-renames\fR
 .RS 4
 Turn off rename detection\&. This overrides the
 \fBmerge\&.renames\fR
@@ -1389,33 +1435,74 @@ configuration variable\&. See also
 \fBgit-diff\fR(1)
 \fB\-\-no\-renames\fR\&.
 .RE
+.PP
+\fBhistogram\fR
+.RS 4
+Deprecated synonym for
+\fBdiff\-algorithm=histogram\fR\&.
 .RE
 .PP
-resolve
+\fBpatience\fR
+.RS 4
+Deprecated synonym for
+\fBdiff\-algorithm=patience\fR\&.
+.RE
+.PP
+\fBdiff\-algorithm=\fR(\fBhistogram\fR|\fBminimal\fR|\fBmyers\fR|\fBpatience\fR)
+.RS 4
+Use a different diff algorithm while merging, which can help avoid mismerges that occur due to unimportant matching lines (such as braces from distinct functions)\&. See also
+\fBgit-diff\fR(1)
+\fB\-\-diff\-algorithm\fR\&. Note that
+\fBort\fR
+defaults to
+\fBdiff\-algorithm=histogram\fR, while regular diffs currently default to the
+\fBdiff\&.algorithm\fR
+config setting\&.
+.RE
+.PP
+\fBsubtree\fR[\fB=\fR\fI<path>\fR]
+.RS 4
+This option is a more advanced form of
+\fIsubtree\fR
+strategy, where the strategy makes a guess on how two trees must be shifted to match with each other when merging\&. Instead, the specified path is prefixed (or stripped from the beginning) to make the shape of two trees to match\&.
+.RE
+.RE
+.PP
+\fBrecursive\fR
+.RS 4
+This is now a synonym for
+\fBort\fR\&. It was an alternative implementation until v2\&.49\&.0, but was redirected to mean
+\fBort\fR
+in v2\&.50\&.0\&. The previous recursive strategy was the default strategy for resolving two heads from Git v0\&.99\&.9k until v2\&.33\&.0\&.
+.RE
+.PP
+\fBresolve\fR
 .RS 4
 This can only resolve two heads (i\&.e\&. the current branch and another branch you pulled from) using a 3\-way merge algorithm\&. It tries to carefully detect criss\-cross merge ambiguities\&. It does not handle renames\&.
 .RE
 .PP
-octopus
+\fBoctopus\fR
 .RS 4
 This resolves cases with more than two heads, but refuses to do a complex merge that needs manual resolution\&. It is primarily meant to be used for bundling topic branch heads together\&. This is the default merge strategy when pulling or merging more than one branch\&.
 .RE
 .PP
-ours
+\fBours\fR
 .RS 4
-This resolves any number of heads, but the resulting tree of the merge is always that of the current branch head, effectively ignoring all changes from all other branches\&. It is meant to be used to supersede old development history of side branches\&. Note that this is different from the \-Xours option to the
-\fIrecursive\fR
+This resolves any number of heads, but the resulting tree of the merge is always that of the current branch head, effectively ignoring all changes from all other branches\&. It is meant to be used to supersede old development history of side branches\&. Note that this is different from the
+\fB\-Xours\fR
+option to the
+\fBort\fR
 merge strategy\&.
 .RE
 .PP
-subtree
+\fBsubtree\fR
 .RS 4
 This is a modified
 \fBort\fR
 strategy\&. When merging trees A and B, if B corresponds to a subtree of A, B is first adjusted to match the tree structure of A, instead of reading the trees at the same level\&. This adjustment is also done to the common ancestor tree\&.
 .RE
 .sp
-With the strategies that use 3\-way merge (including the default, \fIort\fR), if a change is made on both branches, but later reverted on one of the branches, that change will be present in the merged result; some people find this behavior confusing\&. It occurs because only the heads and the merge base are considered when performing a merge, not the individual commits\&. The merge algorithm therefore considers the reverted change as no change at all, and substitutes the changed version instead\&.
+With the strategies that use 3\-way merge (including the default, \fBort\fR), if a change is made on both branches, but later reverted on one of the branches, that change will be present in the merged result; some people find this behavior confusing\&. It occurs because only the heads and the merge base are considered when performing a merge, not the individual commits\&. The merge algorithm therefore considers the reverted change as no change at all, and substitutes the changed version instead\&.
 .SH "NOTES"
 .sp
 You should understand the implications of using \fBgit\fR \fBrebase\fR on a repository that you share\&. See also RECOVERING FROM UPSTREAM REBASE below\&.
@@ -1966,7 +2053,7 @@ The interactive rebase command was originally designed to handle individual patc
 .sp
 However, there are legitimate reasons why a developer may want to recreate merge commits: to keep the branch structure (or "commit topology") when working on multiple, inter\-related branches\&.
 .sp
-In the following example, the developer works on a topic branch that refactors the way buttons are defined, and on another topic branch that uses that refactoring to implement a "Report a bug" button\&. The output of \fBgit\fR \fBlog\fR \fB\-\-graph\fR \fB\-\-format=\fR%s \fB\-5\fR may look like this:
+In the following example, the developer works on a topic branch that refactors the way buttons are defined, and on another topic branch that uses that refactoring to implement a "Report a bug" button\&. The output of \fBgit\fR \fBlog\fR \fB\-\-graph\fR \fB\-\-format=%s\fR \fB\-5\fR may look like this:
 .sp
 .if n \{\
 .RS 4
@@ -2233,7 +2320,7 @@ Part of the \fBgit\fR(1) suite
 .IP " 1." 4
 revert-a-faulty-merge How-To
 .RS 4
-\%file:///data/local/tmp/sysroot/usr/share/doc/git/howto/revert-a-faulty-merge.html
+\%file:///data/local/tmp/sysroot//usr/share/doc/git/howto/revert-a-faulty-merge.html
 .RE
 .IP " 2." 4
 \fBfilter-repo\fR

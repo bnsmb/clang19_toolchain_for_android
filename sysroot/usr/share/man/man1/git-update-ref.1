@@ -2,12 +2,12 @@
 .\"     Title: git-update-ref
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-UPDATE\-REF" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-UPDATE\-REF" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -32,7 +32,9 @@ git-update-ref \- Update the object name stored in a ref safely
 .SH "SYNOPSIS"
 .sp
 .nf
-\fIgit update\-ref\fR [\-m <reason>] [\-\-no\-deref] (\-d <ref> [<old\-oid>] | [\-\-create\-reflog] <ref> <new\-oid> [<old\-oid>] | \-\-stdin [\-z])
+\fBgit\fR \fBupdate\-ref\fR [\fB\-m\fR \fI<reason>\fR] [\fB\-\-no\-deref\fR] \fB\-d\fR \fI<ref>\fR [\fI<old\-oid>\fR]
+\fBgit\fR \fBupdate\-ref\fR [\fB\-m\fR \fI<reason>\fR] [\fB\-\-no\-deref\fR] [\fB\-\-create\-reflog\fR] \fI<ref>\fR \fI<new\-oid>\fR [\fI<old\-oid>\fR]
+\fBgit\fR \fBupdate\-ref\fR [\fB\-m\fR \fI<reason>\fR] [\fB\-\-no\-deref\fR] \fB\-\-stdin\fR [\fB\-z\fR] [\fB\-\-batch\-updates\fR]
 .fi
 .sp
 .SH "DESCRIPTION"
@@ -41,7 +43,7 @@ Given two arguments, stores the <new\-oid> in the <ref>, possibly dereferencing 
 .sp
 Given three arguments, stores the <new\-oid> in the <ref>, possibly dereferencing the symbolic refs, after verifying that the current value of the <ref> matches <old\-oid>\&. E\&.g\&. \fBgit\fR \fBupdate\-ref\fR \fBrefs/heads/master\fR \fI<new\-oid>\fR \fI<old\-oid>\fR updates the master branch head to <new\-oid> only if its current value is <old\-oid>\&. You can specify 40 "0" or an empty string as <old\-oid> to make sure that the ref you are creating does not exist\&.
 .sp
-The final arguments are object names; this command without any options does not support updating a symbolic ref to point to another ref (see \fBgit-symbolic-ref\fR(1))\&. But \fBgit\fR \fBupdate\-ref\fR \fB\-\-stdin\fR does have the \fBsymref\-\fR* commands so that regular refs and symbolic refs can be committed in the same transaction\&.
+The final arguments are object names; this command without any options does not support updating a symbolic ref to point to another ref (see \fBgit-symbolic-ref\fR(1))\&. But \fBgit\fR \fBupdate\-ref\fR \fB\-\-stdin\fR does have the \fBsymref\-*\fR commands so that regular refs and symbolic refs can be committed in the same transaction\&.
 .sp
 If \-\-no\-deref is given, <ref> itself is overwritten, rather than the result of following the symbolic pointers\&.
 .sp
@@ -72,6 +74,18 @@ abort LF
 .\}
 .sp
 With \fB\-\-create\-reflog\fR, update\-ref will create a reflog for each ref even if one would not ordinarily be created\&.
+.sp
+With \fB\-\-batch\-updates\fR, update\-ref executes the updates in a batch but allows individual updates to fail due to invalid or incorrect user input, applying only the successful updates\&. However, system\-related errors\(emsuch as I/O failures or memory issues\(emwill result in a full failure of all batched updates\&. Any failed updates will be reported in the following format:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+rejected SP (<old\-oid> | <old\-target>) SP (<new\-oid> | <new\-target>) SP <rejection\-reason> LF
+.fi
+.if n \{\
+.RE
+.\}
 .sp
 Quote fields containing whitespace as if they were strings in C source code; i\&.e\&., surrounded by double\-quotes and with backslash escapes\&. Use 40 "0" characters or the empty string to specify a zero value\&. To specify a missing value, omit the value and its preceding SP entirely\&.
 .sp
@@ -127,8 +141,11 @@ verify
 .RS 4
 Verify <ref> against <old\-oid> but do not change it\&. If <old\-oid> is zero or missing, the ref must not exist\&.
 .RE
-.sp
-symref\-create: Create symbolic ref <ref> with <new\-target> after verifying that it does not exist\&.
+.PP
+symref\-create
+.RS 4
+Create symbolic ref <ref> with <new\-target> after verifying that it does not exist\&.
+.RE
 .PP
 symref\-delete
 .RS 4

@@ -2,12 +2,12 @@
 .\"     Title: git-diff
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-DIFF" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-DIFF" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -37,7 +37,7 @@ git-diff \- Show changes between commits, commit and working tree, etc
 \fBgit\fR \fBdiff\fR [\fI<options>\fR] [\fB\-\-merge\-base\fR] \fI<commit>\fR [\fI<commit>\fR\&...] \fI<commit>\fR [\fB\-\-\fR] [\fI<path>\fR\&...]
 \fBgit\fR \fBdiff\fR [\fI<options>\fR] \fI<commit>\fR\fB\&...\fR\fI<commit>\fR [\fB\-\-\fR] [\fI<path>\fR\&...]
 \fBgit\fR \fBdiff\fR [\fI<options>\fR] \fI<blob>\fR \fI<blob>\fR
-\fBgit\fR \fBdiff\fR [\fI<options>\fR] \fB\-\-no\-index\fR [\fB\-\-\fR] \fI<path>\fR \fI<path>\fR
+\fBgit\fR \fBdiff\fR [\fI<options>\fR] \fB\-\-no\-index\fR [\fB\-\-\fR] \fI<path>\fR \fI<path>\fR [\fI<pathspec>\fR\&...]
 .fi
 .sp
 .SH "DESCRIPTION"
@@ -52,12 +52,12 @@ tell Git to further add to the index but you still haven\(cqt\&. You can stage t
 \fBgit-add\fR(1)\&.
 .RE
 .PP
-\fBgit\fR \fBdiff\fR [\fI<options>\fR] \fB\-\-no\-index\fR [\fB\-\-\fR] \fI<path>\fR \fI<path>\fR
+\fBgit\fR \fBdiff\fR [\fI<options>\fR] \fB\-\-no\-index\fR [\fB\-\-\fR] \fI<path>\fR \fI<path>\fR [\fI<pathspec>\fR\&.\&.\&.]
 .RS 4
 This form is to compare the given two paths on the filesystem\&. You can omit the
 \fB\-\-no\-index\fR
 option when running the command in a working tree controlled by Git and at least one of the paths points outside the working tree, or when running the command outside a working tree controlled by Git\&. This form implies
-\fB\-\-exit\-code\fR\&.
+\fB\-\-exit\-code\fR\&. If both paths point to directories, additional pathspecs may be provided\&. These will limit the files included in the difference\&. All such pathspecs must be relative as they apply to both sides of the diff\&.
 .RE
 .PP
 \fBgit\fR \fBdiff\fR [\fI<options>\fR] \fB\-\-cached\fR [\fB\-\-merge\-base\fR] [\fI<commit>\fR] [\fB\-\-\fR] [\fI<path>\fR\&.\&.\&.]
@@ -231,7 +231,14 @@ earlier on the command line in an alias\&.
 .RS 4
 Generate diffs with
 \fI<n>\fR
-lines of context instead of the usual three\&. Implies
+lines of context\&. The number of context lines defaults to
+\fBdiff\&.context\fR
+or 3 if the configuration variable is unset\&. (\fB\-U\fR
+without
+\fI<n>\fR
+is silently accepted as a synonym for
+\fB\-p\fR
+due to a historical accident)\&. Implies
 \fB\-\-patch\fR\&.
 .RE
 .PP
@@ -385,7 +392,7 @@ Output only the last line of the
 format containing total number of modified files, as well as number of added and deleted lines\&.
 .RE
 .PP
-\fB\-X\fR [\fI<param>\fR\fB,\&.\fR\&.\&.], \fB\-\-dirstat\fR[\fB=\fR\fI<param>\fR\fB,\&.\fR\&.\&.]
+\fB\-X\fR [\fI<param>\fR\fB,\fR\&.\&.\&.], \fB\-\-dirstat\fR[\fB=\fR\fI<param>\fR\fB,\fR\&.\&.\&.]
 .RS 4
 Output the distribution of relative amount of changes for each sub\-directory\&. The behavior of
 \fB\-\-dirstat\fR
@@ -406,7 +413,8 @@ Compute the dirstat numbers by doing the regular line\-based diff analysis, and 
 behavior than the
 \fBchanges\fR
 behavior, but it does count rearranged lines within a file as much as other changes\&. The resulting output is consistent with what you get from the other
-\fB\-\-\fR*stat options\&.
+\fB\-\-*stat\fR
+options\&.
 .RE
 .PP
 \fBfiles\fR
@@ -430,7 +438,7 @@ An integer parameter specifies a cut\-off percent (3% by default)\&. Directories
 .RE
 .sp
 Example: The following will count changed files, while ignoring directories with less than 10% of the total amount of changed files, and accumulating child directory counts in the parent directories:
-\fB\-\-dirstat=files,10,cumulative\fR\&.
+\fB\-\-dirstat=files\fR,10,cumulative\&.
 .RE
 .PP
 \fB\-\-cumulative\fR
@@ -439,10 +447,10 @@ Synonym for
 \fB\-\-dirstat=cumulative\fR\&.
 .RE
 .PP
-\fB\-\-dirstat\-by\-file\fR[\fB=\fR\fI<param>\fR\fB,\&.\fR\&.\&.]
+\fB\-\-dirstat\-by\-file\fR[\fB=\fR\fI<param>\fR\fB,\fR\&.\&.\&.]
 .RS 4
 Synonym for
-\fB\-\-dirstat=files,\fR\fI<param>\fR\fB,\&.\fR\&.\&.\&.
+\fB\-\-dirstat=files\fR,\fI<param>\fR\fB,\fR\&.\&.\&.\&.
 .RE
 .PP
 \fB\-\-summary\fR
@@ -602,7 +610,7 @@ Turn off move detection\&. This can be used to override configuration settings\&
 \fB\-\-color\-moved=no\fR\&.
 .RE
 .PP
-\fB\-\-color\-moved\-ws=\fR\fI<mode>\fR\fB,\&.\fR\&.\&.
+\fB\-\-color\-moved\-ws=\fR\fI<mode>\fR\fB,\fR\&.\&.\&.
 .RS 4
 This configures how whitespace is ignored when performing the move detection for
 \fB\-\-color\-moved\fR\&. It can be set by the
@@ -678,6 +686,12 @@ Disable word diff again\&.
 .RE
 .sp
 Note that despite the name of the first mode, color is used to highlight the changed parts in all modes if enabled\&.
+.sp
+The
+\fB\-\-word\-diff\fR
+option operates by taking the same line\-by\-line diff that is produced without the option and computing word\-by\-word changes within each hunk\&. This may produce a larger diff than a dedicated word\-diff tool would\&. If Git acquires a different implementation in the future, the output may change\&. Note that this is similar to the
+\fB\-\-diff\-algorithm\fR
+option, which may also change the output\&.
 .RE
 .PP
 \fB\-\-word\-diff\-regex=\fR\fI<regex>\fR
@@ -715,7 +729,7 @@ plus (if a regex was specified)
 Turn off rename detection, even when the configuration file gives the default to do so\&.
 .RE
 .PP
-\fB\-\-\fR[\fBno\-\fR]\fBrename\-empty\fR
+\fB\-\-rename\-empty\fR, \fB\-\-no\-rename\-empty\fR
 .RS 4
 Whether to use empty blobs as rename source\&.
 .RE
@@ -744,7 +758,7 @@ reset the list to
 and
 \fBall\fR
 is a shorthand for
-\fBold,new,context\fR\&. When this option is not given, and the configuration variable
+\fBold\fR,new,context\&. When this option is not given, and the configuration variable
 \fBdiff\&.wsErrorHighlight\fR
 is not set, only whitespace errors in
 \fBnew\fR
@@ -787,7 +801,8 @@ It affects the way a change that amounts to a total rewrite of a file not as a s
 controls this aspect of the
 \fB\-B\fR
 option (defaults to 60%)\&.
-\fB\-B/70\fR% specifies that less than 30% of the original should remain in the result for Git to consider it a total rewrite (i\&.e\&. otherwise the resulting patch will be a series of deletion and insertion mixed together with context lines)\&.
+\fB\-B/70%\fR
+specifies that less than 30% of the original should remain in the result for Git to consider it a total rewrite (i\&.e\&. otherwise the resulting patch will be a series of deletion and insertion mixed together with context lines)\&.
 .sp
 When used with
 \fB\-M\fR, a totally\-rewritten file is also considered as the source of a rename (usually
@@ -797,7 +812,8 @@ only considers a file that disappeared as the source of a rename), and the numbe
 controls this aspect of the
 \fB\-B\fR
 option (defaults to 50%)\&.
-\fB\-B20\fR% specifies that a change with addition and deletion compared to 20% or more of the file\(cqs size are eligible for being picked up as a possible source of a rename to another file\&.
+\fB\-B20%\fR
+specifies that a change with addition and deletion compared to 20% or more of the file\(cqs size are eligible for being picked up as a possible source of a rename to another file\&.
 .RE
 .PP
 \fB\-M\fR[\fI<n>\fR], \fB\-\-find\-renames\fR[\fB=\fR\fI<n>\fR]
@@ -805,14 +821,17 @@ option (defaults to 50%)\&.
 Detect renames\&. If
 \fI<n>\fR
 is specified, it is a threshold on the similarity index (i\&.e\&. amount of addition/deletions compared to the file\(cqs size)\&. For example,
-\fB\-M90\fR% means Git should consider a delete/add pair to be a rename if more than 90% of the file hasn\(cqt changed\&. Without a % sign, the number is to be read as a fraction, with a decimal point before it\&. I\&.e\&.,
+\fB\-M90%\fR
+means Git should consider a delete/add pair to be a rename if more than 90% of the file hasn\(cqt changed\&. Without a
+\fB%\fR
+sign, the number is to be read as a fraction, with a decimal point before it\&. I\&.e\&.,
 \fB\-M5\fR
 becomes 0\&.5, and is thus the same as
-\fB\-M50\fR%\&. Similarly,
+\fB\-M50%\fR\&. Similarly,
 \fB\-M05\fR
 is the same as
-\fB\-M5\fR%\&. To limit detection to exact renames, use
-\fB\-M100\fR%\&. The default similarity index is 50%\&.
+\fB\-M5%\fR\&. To limit detection to exact renames, use
+\fB\-M100%\fR\&. The default similarity index is 50%\&.
 .RE
 .PP
 \fB\-C\fR[\fI<n>\fR], \fB\-\-find\-copies\fR[\fB=\fR\fI<n>\fR]
@@ -856,9 +875,11 @@ options involve some preliminary steps that can detect subsets of renames/copies
 \fBdiff\&.renameLimit\fR\&. Note that a value of 0 is treated as unlimited\&.
 .RE
 .PP
-\fB\-\-diff\-filter=\fR[(\fBA\fR|\fBC\fR|\fBD\fR|\fBM\fR|\fBR\fR|\fBT\fR|\fBU\fR|\fBX\fR|\fBB\fR)\fB\&.\&.\&.\fR[*]]
+\fB\-\-diff\-filter=\fR[(\fBA\fR|\fBC\fR|\fBD\fR|\fBM\fR|\fBR\fR|\fBT\fR|\fBU\fR|\fBX\fR|\fBB\fR)\fB\&.\&.\&.\fR[\fB*\fR]]
 .RS 4
-Select only files that are Added (\fBA\fR), Copied (\fBC\fR), Deleted (\fBD\fR), Modified (\fBM\fR), Renamed (\fBR\fR), have their type (i\&.e\&. regular file, symlink, submodule, \&...) changed (\fBT\fR), are Unmerged (\fBU\fR), are Unknown (\fBX\fR), or have had their pairing Broken (\fBB\fR)\&. Any combination of the filter characters (including none) can be used\&. When * (All\-or\-none) is added to the combination, all paths are selected if there is any file that matches other criteria in the comparison; if there is no file that matches other criteria, nothing is selected\&.
+Select only files that are Added (\fBA\fR), Copied (\fBC\fR), Deleted (\fBD\fR), Modified (\fBM\fR), Renamed (\fBR\fR), have their type (i\&.e\&. regular file, symlink, submodule, \&...) changed (\fBT\fR), are Unmerged (\fBU\fR), are Unknown (\fBX\fR), or have had their pairing Broken (\fBB\fR)\&. Any combination of the filter characters (including none) can be used\&. When
+\fB*\fR
+(All\-or\-none) is added to the combination, all paths are selected if there is any file that matches other criteria in the comparison; if there is no file that matches other criteria, nothing is selected\&.
 .sp
 Also, these upper\-case letters can be downcased to exclude\&. E\&.g\&.
 \fB\-\-diff\-filter=ad\fR
@@ -988,7 +1009,7 @@ Blank lines are ignored, so they can be used as separators for readability\&.
 .sp -1
 .IP \(bu 2.3
 .\}
-Lines starting with a hash ("#") are ignored, so they can be used for comments\&. Add a backslash ("\e") to the beginning of the pattern if it starts with a hash\&.
+Lines starting with a hash ("#") are ignored, so they can be used for comments\&. Add a backslash ("\fB\e\fR") to the beginning of the pattern if it starts with a hash\&.
 .RE
 .sp
 .RS 4
@@ -1005,7 +1026,7 @@ Each other line contains a single pattern\&.
 Patterns have the same syntax and semantics as patterns used for
 \fBfnmatch\fR(3) without the
 \fBFNM_PATHNAME\fR
-flag, except a pathname also matches a pattern if removing any number of the final pathname components matches the pattern\&. For example, the pattern "\fBfoo\fR*bar" matches "\fBfooasdfbar\fR" and "\fBfoo/bar/baz/asdf\fR" but not "\fBfoobarx\fR"\&.
+flag, except a pathname also matches a pattern if removing any number of the final pathname components matches the pattern\&. For example, the pattern "\fBfoo*bar\fR" matches "\fBfooasdfbar\fR" and "\fBfoo/bar/baz/asdf\fR" but not "\fBfoobarx\fR"\&.
 .RE
 .PP
 \fB\-\-skip\-to=\fR\fI<file>\fR, \fB\-\-rotate\-to=\fR\fI<file>\fR
@@ -1214,6 +1235,94 @@ and non\-existent in
 \fB\-\-cached\fR\&. This option could be reverted with
 \fB\-\-ita\-visible\-in\-index\fR\&. Both options are experimental and could be removed in future\&.
 .RE
+.PP
+\fB\-\-max\-depth=\fR\fI<depth>\fR
+.RS 4
+For each pathspec given on command line, descend at most
+\fI<depth>\fR
+levels of directories\&. A value of
+\fB\-1\fR
+means no limit\&. Cannot be combined with wildcards in the pathspec\&. Given a tree containing
+\fBfoo/bar/baz\fR, the following list shows the matches generated by each set of options:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-\-max\-depth=0\fR
+\fB\-\-\fR
+\fBfoo\fR:
+\fBfoo\fR
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-\-max\-depth=1\fR
+\fB\-\-\fR
+\fBfoo\fR:
+\fBfoo/bar\fR
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-\-max\-depth=1\fR
+\fB\-\-\fR
+\fBfoo/bar\fR:
+\fBfoo/bar/baz\fR
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-\-max\-depth=1\fR
+\fB\-\-\fR
+\fBfoo\fR
+\fBfoo/bar\fR:
+\fBfoo/bar/baz\fR
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fB\-\-max\-depth=2\fR
+\fB\-\-\fR
+\fBfoo\fR:
+\fBfoo/bar/baz\fR
+.RE
+.sp
+If no pathspec is given, the depth is measured as if all top\-level entries were specified\&. Note that this is different than measuring from the root, in that
+\fB\-\-max\-depth=0\fR
+would still return
+\fBfoo\fR\&. This allows you to still limit depth while asking for a subset of the top\-level entries\&.
+.sp
+Note that this option is only supported for diffs between tree objects, not against the index or working tree\&.
+.RE
 .sp
 For more detailed explanation on these common options, see also \fBgitdiffcore\fR(7)\&.
 .PP
@@ -1309,7 +1418,7 @@ compares the trees named by the two arguments\&.
 compares the index and the files on the filesystem\&.
 .RE
 .sp
-The \fBgit\-diff\-tree\fR command begins its output by printing the hash of what is being compared\&. After that, all the commands print one output line per changed file\&.
+All the commands print one output line per changed file, except \fBgit\fR \fBdiff\-files\fR in the case of an unmerged file, which prints both an "unmerged" and an "in\-place edit" line\&.
 .sp
 An output line is formatted this way:
 .sp
@@ -1350,7 +1459,7 @@ a colon\&.
 .sp -1
 .IP "  2." 4.2
 .\}
-mode for "src"; 000000 if creation or unmerged\&.
+mode for "src"; 000000 if creation, or if "src" is from the index and is unmerged\&.
 .RE
 .sp
 .RS 4
@@ -1372,7 +1481,7 @@ a space\&.
 .sp -1
 .IP "  4." 4.2
 .\}
-mode for "dst"; 000000 if deletion or unmerged\&.
+mode for "dst"; 000000 if deletion, or if "dst" is from the index and is unmerged\&.
 .RE
 .sp
 .RS 4
@@ -1394,7 +1503,7 @@ a space\&.
 .sp -1
 .IP "  6." 4.2
 .\}
-sha1 for "src"; 0{40} if creation or unmerged\&.
+sha1 for "src"; 0{40} if creation, or if "src" is from the index and is unmerged\&.
 .RE
 .sp
 .RS 4
@@ -1416,7 +1525,7 @@ a space\&.
 .sp -1
 .IP "  8." 4.2
 .\}
-sha1 for "dst"; 0{40} if deletion, unmerged or "work tree out of sync with the index"\&.
+sha1 for "dst"; 0{40} if deletion, if "dst" is from the index and is unmerged, or if "dst" is from the work tree and is out of sync with the index\&.
 .RE
 .sp
 .RS 4
@@ -2453,9 +2562,9 @@ option to
 \fBgit\fR
 \fBdiff\fR
 and friends\&. The defaults can be overridden on the command line (using
-\fB\-\-dirstat=\fR\fI<param>\fR\fB,\&.\fR\&.\&.)\&. The fallback defaults (when not changed by
+\fB\-\-dirstat=\fR\fI<param>\fR\fB,\fR\&.\&.\&.)\&. The fallback defaults (when not changed by
 \fBdiff\&.dirstat\fR) are
-\fBchanges,noncumulative,3\fR\&. The following parameters are available:
+\fBchanges\fR,noncumulative,3\&. The following parameters are available:
 .PP
 \fBchanges\fR
 .RS 4
@@ -2469,7 +2578,8 @@ Compute the dirstat numbers by doing the regular line\-based diff analysis, and 
 behavior than the
 \fBchanges\fR
 behavior, but it does count rearranged lines within a file as much as other changes\&. The resulting output is consistent with what you get from the other
-\fB\-\-\fR*stat options\&.
+\fB\-\-*stat\fR
+options\&.
 .RE
 .PP
 \fBfiles\fR
@@ -2493,7 +2603,7 @@ An integer parameter specifies a cut\-off percent (3% by default)\&. Directories
 .RE
 .sp
 Example: The following will count changed files, while ignoring directories with less than 10% of the total amount of changed files, and accumulating child directory counts in the parent directories:
-\fBfiles,10,cumulative\fR\&.
+\fBfiles\fR,10,cumulative\&.
 .RE
 .PP
 \fBdiff\&.statNameWidth\fR
@@ -2783,131 +2893,6 @@ Set this option to
 to make the diff driver cache the text conversion outputs\&. See
 \fBgitattributes\fR(5)
 for details\&.
-.PP
-\fBaraxis\fR
-.RS 4
-Use Araxis Merge (requires a graphical session)
-.RE
-.PP
-\fBbc\fR
-.RS 4
-Use Beyond Compare (requires a graphical session)
-.RE
-.PP
-\fBbc3\fR
-.RS 4
-Use Beyond Compare (requires a graphical session)
-.RE
-.PP
-\fBbc4\fR
-.RS 4
-Use Beyond Compare (requires a graphical session)
-.RE
-.PP
-\fBcodecompare\fR
-.RS 4
-Use Code Compare (requires a graphical session)
-.RE
-.PP
-\fBdeltawalker\fR
-.RS 4
-Use DeltaWalker (requires a graphical session)
-.RE
-.PP
-\fBdiffmerge\fR
-.RS 4
-Use DiffMerge (requires a graphical session)
-.RE
-.PP
-\fBdiffuse\fR
-.RS 4
-Use Diffuse (requires a graphical session)
-.RE
-.PP
-\fBecmerge\fR
-.RS 4
-Use ECMerge (requires a graphical session)
-.RE
-.PP
-\fBemerge\fR
-.RS 4
-Use Emacs\*(Aq Emerge
-.RE
-.PP
-\fBexamdiff\fR
-.RS 4
-Use ExamDiff Pro (requires a graphical session)
-.RE
-.PP
-\fBguiffy\fR
-.RS 4
-Use Guiffy\(cqs Diff Tool (requires a graphical session)
-.RE
-.PP
-\fBgvimdiff\fR
-.RS 4
-Use gVim (requires a graphical session)
-.RE
-.PP
-\fBkdiff3\fR
-.RS 4
-Use KDiff3 (requires a graphical session)
-.RE
-.PP
-\fBkompare\fR
-.RS 4
-Use Kompare (requires a graphical session)
-.RE
-.PP
-\fBmeld\fR
-.RS 4
-Use Meld (requires a graphical session)
-.RE
-.PP
-\fBnvimdiff\fR
-.RS 4
-Use Neovim
-.RE
-.PP
-\fBopendiff\fR
-.RS 4
-Use FileMerge (requires a graphical session)
-.RE
-.PP
-\fBp4merge\fR
-.RS 4
-Use HelixCore P4Merge (requires a graphical session)
-.RE
-.PP
-\fBsmerge\fR
-.RS 4
-Use Sublime Merge (requires a graphical session)
-.RE
-.PP
-\fBtkdiff\fR
-.RS 4
-Use TkDiff (requires a graphical session)
-.RE
-.PP
-\fBvimdiff\fR
-.RS 4
-Use Vim
-.RE
-.PP
-\fBvscode\fR
-.RS 4
-Use Visual Studio Code (requires a graphical session)
-.RE
-.PP
-\fBwinmerge\fR
-.RS 4
-Use WinMerge (requires a graphical session)
-.RE
-.PP
-\fBxxdiff\fR
-.RS 4
-Use xxdiff (requires a graphical session)
-.RE
 .RE
 .PP
 \fBdiff\&.indentHeuristic\fR
@@ -2958,7 +2943,7 @@ reset the list to
 and
 \fBall\fR
 is a shorthand for
-\fBold,new,context\fR\&. The whitespace errors are colored with
+\fBold\fR,new,context\&. The whitespace errors are colored with
 \fBcolor\&.diff\&.whitespace\fR\&. The command line option
 \fB\-\-ws\-error\-highlight=\fR\fI<kind>\fR
 overrides this setting\&.

@@ -2,12 +2,12 @@
 .\"     Title: git-check-attr
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-CHECK\-ATTR" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-CHECK\-ATTR" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -134,7 +134,6 @@ README caveat=unspecified
 .IP \(bu 2.3
 .\}
 Listing a single attribute:
-.RE
 .sp
 .if n \{\
 .RS 4
@@ -147,7 +146,7 @@ org/example/MyClass\&.java: diff: java
 .RE
 .\}
 .sp
-
+.RE
 .sp
 .RS 4
 .ie n \{\
@@ -158,7 +157,6 @@ org/example/MyClass\&.java: diff: java
 .IP \(bu 2.3
 .\}
 Listing multiple attributes for a file:
-.RE
 .sp
 .if n \{\
 .RS 4
@@ -173,7 +171,7 @@ org/example/MyClass\&.java: myAttr: set
 .RE
 .\}
 .sp
-
+.RE
 .sp
 .RS 4
 .ie n \{\
@@ -184,7 +182,6 @@ org/example/MyClass\&.java: myAttr: set
 .IP \(bu 2.3
 .\}
 Listing all attributes for a file:
-.RE
 .sp
 .if n \{\
 .RS 4
@@ -198,7 +195,7 @@ org/example/MyClass\&.java: myAttr: set
 .RE
 .\}
 .sp
-
+.RE
 .sp
 .RS 4
 .ie n \{\
@@ -209,7 +206,6 @@ org/example/MyClass\&.java: myAttr: set
 .IP \(bu 2.3
 .\}
 Listing an attribute for multiple files:
-.RE
 .sp
 .if n \{\
 .RS 4
@@ -223,7 +219,7 @@ org/example/NoMyAttr\&.java: myAttr: unspecified
 .RE
 .\}
 .sp
-
+.RE
 .sp
 .RS 4
 .ie n \{\
@@ -234,7 +230,6 @@ org/example/NoMyAttr\&.java: myAttr: unspecified
 .IP \(bu 2.3
 .\}
 Not all values are equally unambiguous:
-.RE
 .sp
 .if n \{\
 .RS 4
@@ -247,6 +242,7 @@ README: caveat: unspecified
 .RE
 .\}
 .sp
+.RE
 .SH "SEE ALSO"
 .sp
 \fBgitattributes\fR(5)\&.

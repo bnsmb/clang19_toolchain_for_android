@@ -2,12 +2,12 @@
 .\"     Title: git-cherry-pick
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-CHERRY\-PICK" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-CHERRY\-PICK" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -66,7 +66,9 @@ pointer stay at the last commit successfully made\&.
 .\}
 The
 \fBCHERRY_PICK_HEAD\fR
-ref is set to point at the commit that introduced the change that is difficult to apply\&.
+ref is set to point at the commit that introduced the change that is difficult to apply, unless the
+\fB\-\-no\-commit\fR
+option was given\&.
 .RE
 .sp
 .RS 4
@@ -161,6 +163,12 @@ Usually you cannot cherry\-pick a merge because you do not know which side of th
 Usually the command automatically creates a sequence of commits\&. This flag applies the changes necessary to cherry\-pick each named commit to your working tree and the index, without making any commit\&. In addition, when this option is used, your index does not have to match the HEAD commit\&. The cherry\-pick is done against the beginning state of your index\&.
 .sp
 This is useful when cherry\-picking more than one commits\*(Aq effect to your index in a row\&.
+.sp
+This option does not record
+\fBCHERRY_PICK_HEAD\fR, so a plain
+\fBgit\fR
+\fBcommit\fR
+afterwards records you as the author\&. That is by design: what you are building is your own work, which you keep changing before committing, rather than a reproduction of the original commit\&.
 .RE
 .PP
 \-s, \-\-signoff
@@ -255,15 +263,14 @@ Pass the merge strategy\-specific option through to the merge strategy\&. See
 for details\&.
 .RE
 .PP
-\-\-rerere\-autoupdate, \-\-no\-rerere\-autoupdate
+\fB\-\-rerere\-autoupdate\fR, \fB\-\-no\-rerere\-autoupdate\fR
 .RS 4
 After the rerere mechanism reuses a recorded resolution on the current conflict to update the files in the working tree, allow it to also update the index with the result of resolution\&.
 \fB\-\-no\-rerere\-autoupdate\fR
 is a good way to double\-check what
-\fBrerere\fR
+\fBgit-rerere\fR(1)
 did and catch potential mismerges, before committing the result to the index with a separate
-\fBgit\fR
-\fBadd\fR\&.
+\fBgit-add\fR(1)\&.
 .RE
 .SH "SEQUENCER SUBCOMMANDS"
 .PP

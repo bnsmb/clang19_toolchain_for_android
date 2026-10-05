@@ -2,12 +2,12 @@
 .\"     Title: git-cat-file
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-CAT\-FILE" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-CAT\-FILE" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -33,8 +33,7 @@ git-cat-file \- Provide contents or details of repository objects
 .sp
 .nf
 \fIgit cat\-file\fR <type> <object>
-\fIgit cat\-file\fR (\-e | \-p) <object>
-\fIgit cat\-file\fR (\-t | \-s) [\-\-allow\-unknown\-type] <object>
+\fIgit cat\-file\fR (\-e | \-p | \-t | \-s) <object>
 \fIgit cat\-file\fR (\-\-textconv | \-\-filters)
              [<rev>:<path|tree\-ish> | \-\-path=<path|tree\-ish> <rev>]
 \fIgit cat\-file\fR (\-\-batch | \-\-batch\-check | \-\-batch\-command) [\-\-batch\-all\-objects]
@@ -102,7 +101,7 @@ being a commit object that contains it, or to ask for a "blob" with
 being a tag object that points at it\&.
 .RE
 .PP
-\-\-[no\-]mailmap, \-\-[no\-]use\-mailmap
+\-\-mailmap, \-\-no\-mailmap, \-\-use\-mailmap, \-\-no\-use\-mailmap
 .RS 4
 Use mailmap file to map author, committer and tagger names and email addresses to canonical real names and email addresses\&. See
 \fBgit-shortlog\fR(1)\&.
@@ -128,6 +127,31 @@ Show the content as converted by the filters configured in the current working t
 has to be of the form
 \fI<tree\-ish>\fR\fB:\fR\fI<path>\fR, or
 \fB:\fR\fI<path>\fR\&.
+.RE
+.PP
+\-\-filter=<filter\-spec>, \-\-no\-filter
+.RS 4
+Omit objects from the list of printed objects\&. This can only be used in combination with one of the batched modes\&. Excluded objects that have been explicitly requested via any of the batch modes that read objects via standard input (\fB\-\-batch\fR,
+\fB\-\-batch\-check\fR) will be reported as "filtered"\&. Excluded objects in
+\fB\-\-batch\-all\-objects\fR
+mode will not be printed at all\&. The
+\fI<filter\-spec>\fR
+may be one of the following:
+.sp
+The form
+\fI\-\-filter=blob:none\fR
+omits all blobs\&.
+.sp
+The form
+\fI\-\-filter=blob:limit=<n>[kmg]\fR
+omits blobs of size at least n bytes or units\&. n may be zero\&. The suffixes k, m, and g can be used to name units in KiB, MiB, or GiB\&. For example,
+\fIblob:limit=1k\fR
+is the same as
+\fIblob:limit=1024\fR\&.
+.sp
+The form
+\fI\-\-filter=object:type=(tag|commit|tree|blob)\fR
+omits all objects which are not of the requested type\&.
 .RE
 .PP
 \-\-path=<path>
@@ -272,6 +296,18 @@ Print object info for object reference
 \fB\-\-batch\-check\fR\&.
 .RE
 .PP
+remote\-object\-info <remote> <object>\&...
+.RS 4
+Print object info for object references
+\fI<object>\fR
+at specified
+\fI<remote>\fR
+without downloading objects from the remote\&. Raise an error when the
+\fBobject\-info\fR
+capability is not supported by the remote\&. Raise an error when no object references are provided\&. This command may be combined with
+\fB\-\-buffer\fR\&.
+.RE
+.PP
 flush
 .RS 4
 Used with
@@ -284,6 +320,14 @@ is issued\&. When
 \fB\-\-buffer\fR
 is not used, commands are flushed each time without issuing
 \fBflush\fR\&.
+.RE
+.PP
+\fBmailmap\fR (\fI<bool>\fR)
+.RS 4
+Enable or disable mailmap for subsequent commands\&. The
+\fI<bool>\fR
+argument accepts the same boolean values as
+\fBgit-config\fR(1)\&. The mailmap data is read upon the first use and only once\&.
 .RE
 .RE
 .PP
@@ -317,15 +361,6 @@ is in use, visit objects in an order which may be more efficient for accessing t
 \fB\-\-batch\fR\&. Note that
 \fBcat\-file\fR
 will still show each object only once, even if it is stored multiple times in the repository\&.
-.RE
-.PP
-\-\-allow\-unknown\-type
-.RS 4
-Allow
-\fB\-s\fR
-or
-\fB\-t\fR
-to query broken/corrupt objects of unknown type\&.
 .RE
 .PP
 \-\-follow\-symlinks
@@ -472,9 +507,9 @@ If \fI<type>\fR is specified, the raw (though uncompressed) contents of the \fI<
 .sp
 If \fB\-\-batch\fR or \fB\-\-batch\-check\fR is given, \fBcat\-file\fR will read objects from stdin, one per line, and print information about them in the same order as they have been read\&. By default, the whole line is considered as an object, as if it were fed to \fBgit-rev-parse\fR(1)\&.
 .sp
-When \fB\-\-batch\-command\fR is given, \fBcat\-file\fR will read commands from stdin, one per line, and print information based on the command given\&. With \fB\-\-batch\-command\fR, the \fBinfo\fR command followed by an object will print information about the object the same way \fB\-\-batch\-check\fR would, and the \fBcontents\fR command followed by an object prints contents in the same way \fB\-\-batch\fR would\&.
+When \fB\-\-batch\-command\fR is given, \fBcat\-file\fR will read commands from stdin, one per line, and print information based on the command given\&. With \fB\-\-batch\-command\fR, the \fBinfo\fR command followed by an object will print information about the object the same way \fB\-\-batch\-check\fR would, and the \fBcontents\fR command followed by an object prints contents in the same way \fB\-\-batch\fR would\&. The \fBremote\-object\-info\fR command followed by a remote and object IDs prints object info from the remote without downloading the objects\&.
 .sp
-You can specify the information shown for each object by using a custom \fI<format>\fR\&. The \fI<format>\fR is copied literally to stdout for each object, with placeholders of the form %(\fBatom\fR) expanded, followed by a newline\&. The available atoms are:
+You can specify the information shown for each object by using a custom \fI<format>\fR\&. The \fI<format>\fR is copied literally to stdout for each object, with placeholders of the form \fB%\fR(\fBatom\fR) expanded, followed by a newline\&. The available atoms are:
 .PP
 \fBobjectname\fR
 .RS 4
@@ -487,6 +522,11 @@ The type of the object (the same as
 \fBcat\-file\fR
 \fB\-t\fR
 reports)\&.
+.RE
+.PP
+\fBobjectmode\fR
+.RS 4
+If the specified object has mode information (such as a tree or index entry), the mode expressed as an octal integer\&. Otherwise, empty string\&.
 .RE
 .PP
 \fBobjectsize\fR
@@ -513,12 +553,15 @@ below\&.
 .PP
 \fBrest\fR
 .RS 4
-If this atom is used in the output string, input lines are split at the first whitespace boundary\&. All characters before that whitespace are considered to be the object name; characters after that first run of whitespace (i\&.e\&., the "rest" of the line) are output in place of the %(\fBrest\fR) atom\&.
+If this atom is used in the output string, input lines are split at the first whitespace boundary\&. All characters before that whitespace are considered to be the object name; characters after that first run of whitespace (i\&.e\&., the "rest" of the line) are output in place of the
+\fB%\fR(\fBrest\fR) atom\&.
 .RE
 .sp
-If no format is specified, the default format is %(\fBobjectname\fR) %(\fBobjecttype\fR) %(\fBobjectsize\fR)\&.
+The command \fBremote\-object\-info\fR only supports the \fB%\fR(\fBobjectname\fR), \fB%\fR(\fBobjectsize\fR) and \fB%\fR(\fBobjecttype\fR) placeholders\&. See \fBCAVEATS\fR below for more information\&.
 .sp
-If \fB\-\-batch\fR is specified, or if \fB\-\-batch\-command\fR is used with the \fBcontents\fR command, the object information is followed by the object contents (consisting of %(\fBobjectsize\fR) bytes), followed by a newline\&.
+If no format is specified, the default format is \fB%\fR(\fBobjectname\fR) \fB%\fR(\fBobjecttype\fR) \fB%\fR(\fBobjectsize\fR)\&.
+.sp
+If \fB\-\-batch\fR is specified, or if \fB\-\-batch\-command\fR is used with the \fBcontents\fR command, the object information is followed by the object contents (consisting of \fB%\fR(\fBobjectsize\fR) bytes), followed by a newline\&.
 .sp
 For example, \fB\-\-batch\fR without a custom format would produce:
 .sp
@@ -534,7 +577,7 @@ For example, \fB\-\-batch\fR without a custom format would produce:
 .\}
 .sp
 .sp
-Whereas \fB\-\-batch\-check=\fR\*(Aq%(\fBobjectname\fR) %(\fBobjecttype\fR)\*(Aq would produce:
+Whereas \fB\-\-batch\-check=\fR\*(Aq%(\fBobjectname\fR) \fB%\fR(\fBobjecttype\fR)\*(Aq would produce:
 .sp
 .if n \{\
 .RS 4
@@ -560,6 +603,19 @@ If a name is specified on stdin that cannot be resolved to an object in the repo
 .\}
 .sp
 .sp
+If a name is specified on stdin that is filtered out via \fB\-\-filter=\fR, then \fBcat\-file\fR will ignore any custom format and print:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+<object> SP excluded LF
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
 If a name is specified that might refer to more than one object (an ambiguous short sha), then \fBcat\-file\fR will ignore any custom format and print:
 .sp
 .if n \{\
@@ -567,6 +623,19 @@ If a name is specified that might refer to more than one object (an ambiguous sh
 .\}
 .nf
 <object> SP ambiguous LF
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+If a name is specified that refers to a submodule entry in a tree and the target object does not exist in the repository, then \fBcat\-file\fR will ignore any custom format and print (with the object ID of the submodule):
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+<oid> SP submodule LF
 .fi
 .if n \{\
 .RE
@@ -648,6 +717,8 @@ is printed when, during symlink resolution, a file is used as a directory name\&
 .sp
 Alternatively, when \fB\-Z\fR is passed, the line feeds in any of the above examples are replaced with NUL terminators\&. This ensures that output will be parsable if the output itself would contain a linefeed and is thus recommended for scripting purposes\&.
 .SH "CAVEATS"
+.sp
+Note that only \fB%\fR(\fBobjectname\fR), \fB%\fR(\fBobjectsize\fR) and \fB%\fR(\fBobjecttype\fR) are currently supported by the \fBremote\-object\-info\fR command\&. Using any other placeholder in the format string will return an empty string in its position\&.
 .sp
 Note that the sizes of objects on disk are reported accurately, but care should be taken in drawing conclusions about which refs or objects are responsible for disk usage\&. The size of a packed non\-delta object may be much larger than the size of objects which delta against it, but the choice of which object is the base and which is the delta is arbitrary and is subject to change during a repack\&.
 .sp

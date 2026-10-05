@@ -2,12 +2,12 @@
 .\"     Title: gitsubmodules
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GITSUBMODULES" "7" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GITSUBMODULES" "7" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -50,7 +50,7 @@ Assuming the submodule has a Git directory at \fB$GIT_DIR/modules/foo/\fR and a 
 .sp
 The \fBgitlink\fR entry contains the object name of the commit that the superproject expects the submodule\(cqs working directory to be at\&.
 .sp
-The section \fBsubmodule\&.foo\&.\fR* in the \fB\&.gitmodules\fR file gives additional hints to Git\(cqs porcelain layer\&. For example, the \fBsubmodule\&.foo\&.url\fR setting specifies where to obtain the submodule\&.
+The section \fBsubmodule\&.foo\&.*\fR in the \fB\&.gitmodules\fR file gives additional hints to Git\(cqs porcelain layer\&. For example, the \fBsubmodule\&.foo\&.url\fR setting specifies where to obtain the submodule\&.
 .sp
 Submodules can be used for at least two different use cases:
 .sp

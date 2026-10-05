@@ -2,12 +2,12 @@
 .\"     Title: gitglossary
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GITGLOSSARY" "7" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GITGLOSSARY" "7" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -402,7 +402,9 @@ index
 .RS 4
 A collection of files with stat information, whose contents are stored as objects\&. The index is a stored version of your
 working tree\&. Truth be told, it can also contain a second, and even a third version of a working tree, which are used when
-merging\&.
+merging\&. See "THE INDEX" in
+\fBgitdatamodel\fR(7)
+for details\&.
 .RE
 .PP
 index entry
@@ -443,7 +445,9 @@ object
 .RS 4
 The unit of storage in Git\&. It is uniquely identified by the
 SHA\-1
-of its contents\&. Consequently, an object cannot be changed\&.
+of its contents\&. Consequently, an object cannot be changed\&. See "OBJECTS" in
+\fBgitdatamodel\fR(7)
+for details\&.
 .RE
 .PP
 object database
@@ -455,9 +459,9 @@ object name\&. The objects usually live in
 \fB$GIT_DIR/objects/\fR\&.
 .RE
 .PP
-object identifier (oid)
+object identifier, object ID, oid
 .RS 4
-Synonym for
+Synonyms for
 object name\&.
 .RE
 .PP
@@ -597,7 +601,9 @@ The magic word
 .PP
 literal
 .RS 4
-Wildcards in the pattern such as * or ? are treated as literal characters\&.
+Wildcards in the pattern such as
+\fB*\fR
+or ? are treated as literal characters\&.
 .RE
 .PP
 icase
@@ -609,7 +615,7 @@ glob
 .RS 4
 Git treats the pattern as a shell glob suitable for consumption by fnmatch(3) with the FNM_PATHNAME flag: wildcards in the pattern will not match a / in the pathname\&. For example, "Documentation/*\&.html" matches "Documentation/git\&.html" but not "Documentation/ppc/ppc\&.html" or "tools/perf/Documentation/perf\&.html"\&.
 .sp
-Two consecutive asterisks ("**") in patterns matched against full pathname may have special meaning:
+Two consecutive asterisks ("\fB**\fR") in patterns matched against full pathname may have special meaning:
 .sp
 .RS 4
 .ie n \{\
@@ -619,7 +625,7 @@ Two consecutive asterisks ("**") in patterns matched against full pathname may h
 .sp -1
 .IP \(bu 2.3
 .\}
-A leading "**" followed by a slash means match in all directories\&. For example, "**/foo" matches file or directory "\fBfoo\fR" anywhere, the same as pattern "\fBfoo\fR"\&. "**/foo/bar" matches file or directory "\fBbar\fR" anywhere that is directly under directory "\fBfoo\fR"\&.
+A leading "\fB**\fR" followed by a slash means match in all directories\&. For example, "\fB**/foo\fR" matches file or directory "\fBfoo\fR" anywhere\&. "\fB**/foo/bar\fR" matches file or directory "\fBbar\fR" anywhere that is directly under directory "\fBfoo\fR"\&.
 .RE
 .sp
 .RS 4
@@ -630,7 +636,7 @@ A leading "**" followed by a slash means match in all directories\&. For example
 .sp -1
 .IP \(bu 2.3
 .\}
-A trailing "\fB/\fR**" matches everything inside\&. For example, "\fBabc/\fR**" matches all files inside directory "abc", relative to the location of the
+A trailing "\fB/**\fR" matches everything inside\&. For example, "\fBabc/**\fR" matches all files inside directory "abc", relative to the location of the
 \fB\&.gitignore\fR
 file, with infinite depth\&.
 .RE
@@ -643,7 +649,7 @@ file, with infinite depth\&.
 .sp -1
 .IP \(bu 2.3
 .\}
-A slash followed by two consecutive asterisks then a slash matches zero or more directories\&. For example, "\fBa/\fR**/b" matches "\fBa/b\fR", "\fBa/x/b\fR", "\fBa/x/y/b\fR" and so on\&.
+A slash followed by two consecutive asterisks then a slash matches zero or more directories\&. For example, "\fBa/**/b\fR" matches "\fBa/b\fR", "\fBa/x/b\fR", "\fBa/x/y/b\fR" and so on\&.
 .RE
 .sp
 .RS 4
@@ -655,9 +661,9 @@ A slash followed by two consecutive asterisks then a slash matches zero or more 
 .IP \(bu 2.3
 .\}
 Other consecutive asterisks are considered invalid\&.
+.RE
 .sp
 Glob magic is incompatible with literal magic\&.
-.RE
 .RE
 .PP
 attr
@@ -720,9 +726,9 @@ be set to the string
 "!ATTR" requires that the attribute
 \fBATTR\fR
 be unspecified\&.
+.RE
 .sp
 Note that when matching against a tree object, attributes are still obtained from working tree, not from the given tree object\&.
-.RE
 .RE
 .PP
 exclude
@@ -915,9 +921,9 @@ The name consists of only upper\-case characters or underscores\&.
 .IP \(bu 2.3
 .\}
 The name ends with "\fB_HEAD\fR" or is equal to "\fBHEAD\fR"\&.
+.RE
 .sp
 There are some irregular refs in the root of the hierarchy that do not match these rules\&. The following list is exhaustive and shall not be extended in the future:
-.RE
 .sp
 .RS 4
 .ie n \{\
@@ -972,13 +978,16 @@ There are some irregular refs in the root of the hierarchy that do not match the
 .IP \(bu 2.3
 .\}
 \fBMERGE_AUTOSTASH\fR
+.RE
 .sp
 Different subhierarchies are used for different purposes\&. For example, the
 \fBrefs/heads/\fR
 hierarchy is used to represent local branches whereas the
 \fBrefs/tags/\fR
 hierarchy is used to represent local tags\&.\&.
-.RE
+.sp
+See also "REFERENCES" in
+\fBgitdatamodel\fR(7)\&.
 .RE
 .PP
 reflog
@@ -987,7 +996,11 @@ A reflog shows the local "history" of a ref\&. In other words, it can tell you w
 \fIthis\fR
 repository was, and what was the current state in
 \fIthis\fR
-repository, yesterday 9:14pm\&. See
+repository, yesterday 9:14pm\&.
+.sp
+See "REFLOGS" in
+\fBgitdatamodel\fR(7)
+for a short explanation of the format\&. See
 \fBgit-reflog\fR(1)
 for details\&.
 .RE
@@ -1281,7 +1294,7 @@ A repository can have zero (i\&.e\&. bare repository) or one or more worktrees a
 .RE
 .SH "SEE ALSO"
 .sp
-\fBgittutorial\fR(7), \fBgittutorial-2\fR(7), \fBgitcvs-migration\fR(7), \fBgiteveryday\fR(7), \m[blue]\fBThe Git User\(cqs Manual\fR\m[]\&\s-2\u[1]\d\s+2
+\fBgitdatamodel\fR(7), \fBgittutorial\fR(7), \fBgittutorial-2\fR(7), \fBgitcvs-migration\fR(7), \fBgiteveryday\fR(7), \m[blue]\fBThe Git User\(cqs Manual\fR\m[]\&\s-2\u[1]\d\s+2
 .SH "GIT"
 .sp
 Part of the \fBgit\fR(1) suite
@@ -1289,5 +1302,5 @@ Part of the \fBgit\fR(1) suite
 .IP " 1." 4
 The Git User\(cqs Manual
 .RS 4
-\%file:///data/local/tmp/sysroot/usr/share/doc/git/user-manual.html
+\%file:///data/local/tmp/sysroot//usr/share/doc/git/user-manual.html
 .RE

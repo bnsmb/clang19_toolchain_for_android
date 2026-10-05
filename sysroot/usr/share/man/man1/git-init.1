@@ -2,12 +2,12 @@
 .\"     Title: git-init
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-INIT" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-INIT" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -83,29 +83,15 @@ Historically, we warned that SHA\-256 repositories may later need backward incom
 Specify the given ref storage
 \fI<format>\fR
 for the repository\&. The valid values are:
-.sp
-.RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
-.\}
-.el \{\
-.sp -1
-.IP \(bu 2.3
-.\}
+.PP
 \fBfiles\fR
+.RS 4
 for loose files with packed\-refs\&. This is the default\&.
 .RE
-.sp
-.RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
-.\}
-.el \{\
-.sp -1
-.IP \(bu 2.3
-.\}
+.PP
 \fBreftable\fR
-for the reftable format\&. This format is experimental and its internals are subject to change\&.
+.RS 4
+for the reftable format\&.
 .RE
 .RE
 .PP
@@ -129,9 +115,11 @@ If this is a reinitialization, the repository will be moved to the specified pat
 Use
 \fI<branch\-name>\fR
 for the initial branch in the newly created repository\&. If not specified, fall back to the default name (currently
-\fBmaster\fR, but this is subject to change in the future; the name can be customized via the
+\fBmaster\fR, but this will change to
+\fBmain\fR
+when Git 3\&.0 is released)\&. The default name can be customized via the
 \fBinit\&.defaultBranch\fR
-configuration variable)\&.
+configuration variable\&.
 .RE
 .PP
 \fB\-\-shared\fR[\fB=\fR(\fBfalse\fR|\fBtrue\fR|\fBumask\fR|\fBgroup\fR|\fBall\fR|\fBworld\fR|\fBeverybody\fR|\fI<perm>\fR)]
@@ -327,6 +315,22 @@ in
 \fBgit-init\fR(1)\&. Both the command line option and the
 \fBGIT_DEFAULT_REF_FORMAT\fR
 environment variable take precedence over this config\&.
+.RE
+.PP
+init\&.defaultSubmodulePathConfig
+.RS 4
+A boolean that specifies if
+\fBgit\fR
+\fBinit\fR
+and
+\fBgit\fR
+\fBclone\fR
+should automatically set
+\fBextensions\&.submodulePathConfig\fR
+to
+\fBtrue\fR\&. This allows all new repositories to automatically use the submodule path extension\&. Defaults to
+\fBfalse\fR
+when unset\&.
 .RE
 .SH "GIT"
 .sp

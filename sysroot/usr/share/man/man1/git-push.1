@@ -2,12 +2,12 @@
 .\"     Title: git-push
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-PUSH" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-PUSH" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -32,84 +32,157 @@ git-push \- Update remote refs along with associated objects
 .SH "SYNOPSIS"
 .sp
 .nf
-\fIgit push\fR [\-\-all | \-\-branches | \-\-mirror | \-\-tags] [\-\-follow\-tags] [\-\-atomic] [\-n | \-\-dry\-run] [\-\-receive\-pack=<git\-receive\-pack>]
-           [\-\-repo=<repository>] [\-f | \-\-force] [\-d | \-\-delete] [\-\-prune] [\-q | \-\-quiet] [\-v | \-\-verbose]
-           [\-u | \-\-set\-upstream] [\-o <string> | \-\-push\-option=<string>]
-           [\-\-[no\-]signed|\-\-signed=(true|false|if\-asked)]
-           [\-\-force\-with\-lease[=<refname>[:<expect>]] [\-\-force\-if\-includes]]
-           [\-\-no\-verify] [<repository> [<refspec>\&...]]
+\fBgit\fR \fBpush\fR [\fB\-\-all\fR | \fB\-\-branches\fR | \fB\-\-mirror\fR | \fB\-\-tags\fR] [\fB\-\-follow\-tags\fR] [\fB\-\-atomic\fR] [\fB\-n\fR | \fB\-\-dry\-run\fR] [\fB\-\-receive\-pack=\fR\fI<git\-receive\-pack>\fR]
+         [\fB\-\-repo=\fR\fI<repository>\fR] [\fB\-f\fR | \fB\-\-force\fR] [\fB\-d\fR | \fB\-\-delete\fR] [\fB\-\-prune\fR] [\fB\-q\fR | \fB\-\-quiet\fR] [\fB\-v\fR | \fB\-\-verbose\fR]
+         [\fB\-u\fR | \fB\-\-set\-upstream\fR] [\fB\-o\fR \fI<string>\fR | \fB\-\-push\-option=\fR\fI<string>\fR]
+         [\fB\-\-\fR[\fBno\-\fR]\fBsigned\fR | \fB\-\-signed=\fR(\fBtrue\fR|\fBfalse\fR|\fBif\-asked\fR)]
+         [\fB\-\-force\-with\-lease\fR[\fB=\fR\fI<refname>\fR[\fB:\fR\fI<expect>\fR]] [\fB\-\-force\-if\-includes\fR]]
+         [\fB\-\-no\-verify\fR] [\fI<repository>\fR [\fI<refspec>\fR\&...]]
 .fi
 .sp
 .SH "DESCRIPTION"
 .sp
-Updates remote refs using local refs, while sending objects necessary to complete the given refs\&.
+Updates one or more branches, tags, or other references in one or more remote repositories from your local repository, and sends all necessary data that isn\(cqt already on the remote\&.
+.sp
+The simplest way to push is \fBgit\fR \fBpush\fR \fI<remote>\fR \fI<branch>\fR\&. \fBgit\fR \fBpush\fR \fBorigin\fR \fBmain\fR will push the local \fBmain\fR branch to the \fBmain\fR branch on the remote named \fBorigin\fR\&.
+.sp
+You can also push to multiple remotes at once by using a remote group\&. A remote group is a named list of remotes configured via \fBremotes\&.\fR\fI<name>\fR in your git config:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git config remotes\&.all\-remotes "origin gitlab backup"
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+Then \fBgit\fR \fBpush\fR \fBall\-remotes\fR will push to \fBorigin\fR, \fBgitlab\fR, and \fBbackup\fR in turn, as if you had run \fBgit\fR \fBpush\fR against each one individually\&. Each remote is pushed independently using its own push mapping configuration\&. There is a \fBremotes\&.\fR\fI<group>\fR entry in the configuration file\&. (See \fBgit-config\fR(1))\&.
+.sp
+The \fI<repository>\fR argument defaults to the upstream for the current branch, or \fBorigin\fR if there\(cqs no configured upstream\&.
+.sp
+To decide which branches, tags, or other refs to push, Git uses (in order of precedence):
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 1.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  1." 4.2
+.\}
+The
+\fI<refspec>\fR
+argument(s) (for example
+\fBmain\fR
+in
+\fBgit\fR
+\fBpush\fR
+\fBorigin\fR
+\fBmain\fR) or the
+\fB\-\-all\fR,
+\fB\-\-mirror\fR, or
+\fB\-\-tags\fR
+options
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 2.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  2." 4.2
+.\}
+The
+\fBremote\&.\fR\fI<name>\fR\fB\&.push\fR
+configuration for the repository being pushed to
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 3.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  3." 4.2
+.\}
+The
+\fBpush\&.default\fR
+configuration\&. The default is
+\fBpush\&.default=simple\fR, which will push to a branch with the same name as the current branch\&. See the
+CONFIGURATION
+section below for more on
+\fBpush\&.default\fR\&.
+.RE
+.sp
+\fBgit\fR \fBpush\fR may fail if you haven\(cqt set an upstream for the current branch, depending on what \fBpush\&.default\fR is set to\&. See the UPSTREAM BRANCHES section below for more on how to set and use upstreams\&.
 .sp
 You can make interesting things happen to a repository every time you push into it, by setting up \fIhooks\fR there\&. See documentation for \fBgit-receive-pack\fR(1)\&.
-.sp
-When the command line does not specify where to push with the \fI<repository>\fR argument, \fBbranch\&.\fR*\&.remote configuration for the current branch is consulted to determine where to push\&. If the configuration is missing, it defaults to \fIorigin\fR\&.
-.sp
-When the command line does not specify what to push with \fI<refspec>\fR\&.\&.\&. arguments or \fB\-\-all\fR, \fB\-\-mirror\fR, \fB\-\-tags\fR options, the command finds the default \fI<refspec>\fR by consulting \fBremote\&.\fR*\&.push configuration, and if it is not found, honors \fBpush\&.default\fR configuration to decide what to push (See \fBgit-config\fR(1) for the meaning of \fBpush\&.default\fR)\&.
-.sp
-When neither the command\-line nor the configuration specifies what to push, the default behavior is used, which corresponds to the \fBsimple\fR value for \fBpush\&.default\fR: the current branch is pushed to the corresponding upstream branch, but as a safety measure, the push is aborted if the upstream branch does not have the same name as the local one\&.
 .SH "OPTIONS"
 .PP
-<repository>
+\fI<repository>\fR
 .RS 4
 The "remote" repository that is the destination of a push operation\&. This parameter can be either a URL (see the section
 GIT URLS
-below) or the name of a remote (see the section
+below), the name of a remote (see the section
 REMOTES
+below), or the name of a remote group (see the section
+REMOTE GROUPS
 below)\&.
 .RE
 .PP
-<refspec>\&...
+\fI<refspec>\fR\&.\&.\&.
 .RS 4
-Specify what destination ref to update with what source object\&. The format of a <refspec> parameter is an optional plus
-\fB+\fR, followed by the source object <src>, followed by a colon
-\fB:\fR, followed by the destination ref <dst>\&.
+Specify what destination ref to update with what source object\&.
 .sp
-The <src> is often the name of the branch you would want to push, but it can be any arbitrary "SHA\-1 expression", such as
-\fBmaster~4\fR
-or
-\fBHEAD\fR
-(see
+The format for a refspec is [\fB+\fR]\fI<src>\fR[\fB:\fR\fI<dst>\fR], for example
+\fBmain\fR,
+\fBmain:other\fR, or
+\fBHEAD^:refs/heads/main\fR\&.
+.sp
+The
+\fI<src>\fR
+is often the name of the local branch to push, but it can be any arbitrary "SHA\-1 expression" (see
 \fBgitrevisions\fR(7))\&.
 .sp
-The <dst> tells which ref on the remote side is updated with this push\&. Arbitrary expressions cannot be used here, an actual ref must be named\&. If
-\fBgit\fR
-\fBpush\fR
-[\fI<repository>\fR] without any
-\fI<refspec>\fR
-argument is set to update some ref at the destination with
+The
+\fI<dst>\fR
+determines what ref to update on the remote side\&. It must be the name of a branch, tag, or other ref, not an arbitrary expression\&.
+.sp
+The
+\fB+\fR
+is optional and does the same thing as
+\fB\-\-force\fR\&.
+.sp
+You can write a refspec using the fully expanded form (for example
+\fBrefs/heads/main:refs/heads/main\fR) which specifies the exact source and destination, or with a shorter form (for example
+\fBmain\fR
+or
+\fBmain:other\fR)\&. Here are the rules for how refspecs are expanded, as well as various other special refspec forms:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
 \fI<src>\fR
-with
-\fBremote\&.\fR\fI<repository>\fR\fB\&.push\fR
-configuration variable,
-\fB:\fR\fI<dst>\fR
-part can be omitted\(emsuch a push will update a ref that
-\fI<src>\fR
-normally updates without any
-\fI<refspec>\fR
-on the command line\&. Otherwise, missing
+without a
 \fB:\fR\fI<dst>\fR
 means to update the same ref as the
-\fI<src>\fR\&.
-.sp
-If <dst> doesn\(cqt start with
-\fBrefs/\fR
-(e\&.g\&.
-\fBrefs/heads/master\fR) we will try to infer where in
-\fBrefs/\fR* on the destination <repository> it belongs based on the type of <src> being pushed and whether <dst> is ambiguous\&.
-.sp
-.RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
-.\}
-.el \{\
-.sp -1
-.IP \(bu 2.3
-.\}
-If <dst> unambiguously refers to a ref on the <repository> remote, then push to that ref\&.
+\fI<src>\fR, unless the
+\fBremote\&.\fR\fI<repository>\fR\fB\&.push\fR
+configuration specifies a different
+\fI<dst>\fR\&. For example, if
+\fBmain\fR
+is a branch, then the refspec
+\fBmain\fR
+expands to
+\fBmain:refs/heads/main\fR\&.
 .RE
 .sp
 .RS 4
@@ -120,7 +193,14 @@ If <dst> unambiguously refers to a ref on the <repository> remote, then push to 
 .sp -1
 .IP \(bu 2.3
 .\}
-If <src> resolves to a ref starting with refs/heads/ or refs/tags/, then prepend that to <dst>\&.
+If
+\fI<dst>\fR
+unambiguously refers to a ref on the <repository> remote, then expand it to that ref\&. For example, if
+\fBv1\&.0\fR
+is a tag on the remote, then
+\fBHEAD:v1\&.0\fR
+expands to
+\fBHEAD:refs/tags/v1\&.0\fR\&.
 .RE
 .sp
 .RS 4
@@ -131,81 +211,147 @@ If <src> resolves to a ref starting with refs/heads/ or refs/tags/, then prepend
 .sp -1
 .IP \(bu 2.3
 .\}
-Other ambiguity resolutions might be added in the future, but for now any other cases will error out with an error indicating what we tried, and depending on the
-\fBadvice\&.pushUnqualifiedRefname\fR
-configuration (see
-\fBgit-config\fR(1)) suggest what refs/ namespace you may have wanted to push to\&.
+If
+\fI<src>\fR
+resolves to a ref starting with
+\fBrefs/heads/\fR
+or
+\fBrefs/tags/\fR, then prepend that to <dst>\&. For example, if
+\fBmain\fR
+is a branch, then
+\fBmain:other\fR
+expands to
+\fBmain:refs/heads/other\fR
 .RE
 .sp
-The object referenced by <src> is used to update the <dst> reference on the remote side\&. Whether this is allowed depends on where in
-\fBrefs/\fR* the <dst> reference lives as described in detail below, in those sections "update" means any modifications except deletes, which as noted after the next few sections are treated differently\&.
-.sp
-The
-\fBrefs/heads/\fR* namespace will only accept commit objects, and updates only if they can be fast\-forwarded\&.
-.sp
-The
-\fBrefs/tags/\fR* namespace will accept any kind of object (as commits, trees and blobs can be tagged), and any updates to them will be rejected\&.
-.sp
-It\(cqs possible to push any type of object to any namespace outside of
-\fBrefs/\fR{tags,heads}/*\&. In the case of tags and commits, these will be treated as if they were the commits inside
-\fBrefs/heads/\fR* for the purposes of whether the update is allowed\&.
-.sp
-I\&.e\&. a fast\-forward of commits and tags outside
-\fBrefs/\fR{tags,heads}/* is allowed, even in cases where what\(cqs being fast\-forwarded is not a commit, but a tag object which happens to point to a new commit which is a fast\-forward of the commit the last tag (or commit) it\(cqs replacing\&. Replacing a tag with an entirely different tag is also allowed, if it points to the same commit, as well as pushing a peeled tag, i\&.e\&. pushing the commit that existing tag object points to, or a new tag object which an existing commit points to\&.
-.sp
-Tree and blob objects outside of
-\fBrefs/\fR{tags,heads}/* will be treated the same way as if they were inside
-\fBrefs/tags/\fR*, any update of them will be rejected\&.
-.sp
-All of the rules described above about what\(cqs not allowed as an update can be overridden by adding an the optional leading
-\fB+\fR
-to a refspec (or using
-\fB\-\-force\fR
-command line option)\&. The only exception to this is that no amount of forcing will make the
-\fBrefs/heads/\fR* namespace accept a non\-commit object\&. Hooks and configuration can also override or amend these rules, see e\&.g\&.
-\fBreceive\&.denyNonFastForwards\fR
-in
-\fBgit-config\fR(1)
-and
-\fBpre\-receive\fR
-and
-\fBupdate\fR
-in
-\fBgithooks\fR(5)\&.
-.sp
-Pushing an empty <src> allows you to delete the <dst> ref from the remote repository\&. Deletions are always accepted without a leading
-\fB+\fR
-in the refspec (or
-\fB\-\-force\fR), except when forbidden by configuration or hooks\&. See
-\fBreceive\&.denyDeletes\fR
-in
-\fBgit-config\fR(1)
-and
-\fBpre\-receive\fR
-and
-\fBupdate\fR
-in
-\fBgithooks\fR(5)\&.
-.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
 The special refspec
 \fB:\fR
 (or
 \fB+:\fR
 to allow non\-fast\-forward updates) directs Git to push "matching" branches: for every branch that exists on the local side, the remote side is updated if a branch of the same name already exists on the remote side\&.
+.RE
 .sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+\fI<src>\fR
+may contain a
+\fB*\fR
+to indicate a simple pattern match\&. This works like a glob that matches any ref matching the pattern\&. There must be only one
+\fB*\fR
+in both the
+\fI<src>\fR
+and
+\fI<dst>\fR\&. It will map refs to the destination by replacing the * with the contents matched from the source\&. For example,
+\fBrefs/heads/*:refs/heads/*\fR
+will push all branches\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A refspec starting with
+\fB^\fR
+is a negative refspec\&. This specifies refs to exclude\&. A ref will be considered to match if it matches at least one positive refspec, and does not match any negative refspec\&. Negative refspecs can be pattern refspecs\&. They must only contain a
+\fI<src>\fR\&. Fully spelled out hex object names are also not supported\&. For example,
+\fBgit\fR
+\fBpush\fR
+\fBorigin\fR
+\*(Aqrefs/heads/*\*(Aq \*(Aq^refs/heads/dev\-*\*(Aq will push all branches except for those starting with
+\fBdev\-\fR
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If
+\fI<src>\fR
+is empty, it deletes the
+\fI<dst>\fR
+ref from the remote repository\&. For example,
+\fBgit\fR
+\fBpush\fR
+\fBorigin\fR
+\fB:dev\fR
+will delete the
+\fBdev\fR
+branch\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
 \fBtag\fR
 \fI<tag>\fR
-means the same as
-\fBrefs/tags/\fR\fI<tag>\fR\fB:refs/tags/\fR\fI<tag>\fR\&.
+expands to
+\fBrefs/tags/\fR\fI<tag>\fR\fB:refs/tags/\fR\fI<tag>\fR\&. This is technically a special syntax for
+\fBgit\fR
+\fBpush\fR
+and not a refspec, since in
+\fBgit\fR
+\fBpush\fR
+\fBorigin\fR
+\fBtag\fR
+\fBv1\&.0\fR
+the arguments
+\fBtag\fR
+and
+\fBv1\&.0\fR
+are separate\&.
 .RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If the refspec can\(cqt be expanded unambiguously, error out with an error indicating what was tried, and depending on the
+\fBadvice\&.pushUnqualifiedRefname\fR
+configuration (see
+\fBgit-config\fR(1)) suggest what refs/ namespace you may have wanted to push to\&.
+.RE
+.RE
+.sp
+Not all updates are allowed: see PUSH RULES below for the details\&.
 .PP
-\-\-all, \-\-branches
+\fB\-\-all\fR, \fB\-\-branches\fR
 .RS 4
 Push all branches (i\&.e\&. refs under
 \fBrefs/heads/\fR); cannot be used with other <refspec>\&.
 .RE
 .PP
-\-\-prune
+\fB\-\-prune\fR
 .RS 4
 Remove remote branches that don\(cqt have a local counterpart\&. For example a remote branch
 \fBtmp\fR
@@ -214,14 +360,15 @@ will be removed if a local branch with the same name doesn\(cqt exist any more\&
 \fBpush\fR
 \fB\-\-prune\fR
 \fBremote\fR
-\fBrefs/heads/\fR*:refs/tmp/* would make sure that remote
+\fBrefs/heads/*:refs/tmp/*\fR
+would make sure that remote
 \fBrefs/tmp/foo\fR
 will be removed if
 \fBrefs/heads/foo\fR
 doesn\(cqt exist\&.
 .RE
 .PP
-\-\-mirror
+\fB\-\-mirror\fR
 .RS 4
 Instead of naming each ref to push, specifies that all refs under
 \fBrefs/\fR
@@ -233,29 +380,29 @@ Instead of naming each ref to push, specifies that all refs under
 is set\&.
 .RE
 .PP
-\-n, \-\-dry\-run
+\fB\-n\fR, \fB\-\-dry\-run\fR
 .RS 4
 Do everything except actually send the updates\&.
 .RE
 .PP
-\-\-porcelain
+\fB\-\-porcelain\fR
 .RS 4
 Produce machine\-readable output\&. The output status line for each ref will be tab\-separated and sent to stdout instead of stderr\&. The full symbolic names of the refs will be given\&.
 .RE
 .PP
-\-d, \-\-delete
+\fB\-d\fR, \fB\-\-delete\fR
 .RS 4
 All listed refs are deleted from the remote repository\&. This is the same as prefixing all refs with a colon\&.
 .RE
 .PP
-\-\-tags
+\fB\-\-tags\fR
 .RS 4
 All refs under
 \fBrefs/tags\fR
 are pushed, in addition to refspecs explicitly listed on the command line\&.
 .RE
 .PP
-\-\-follow\-tags
+\fB\-\-follow\-tags\fR
 .RS 4
 Push all the refs that would be pushed without this option, and also push annotated tags in
 \fBrefs/tags\fR
@@ -266,31 +413,43 @@ in
 \fBgit-config\fR(1)\&.
 .RE
 .PP
-\-\-[no\-]signed, \-\-signed=(true|false|if\-asked)
+\fB\-\-signed\fR, \fB\-\-no\-signed\fR, \fB\-\-signed=\fR(\fBtrue\fR|\fBfalse\fR|\fBif\-asked\fR)
 .RS 4
-GPG\-sign the push request to update refs on the receiving side, to allow it to be checked by the hooks and/or be logged\&. If
-\fBfalse\fR
-or
-\fB\-\-no\-signed\fR, no signing will be attempted\&. If
-\fBtrue\fR
-or
-\fB\-\-signed\fR, the push will fail if the server does not support signed pushes\&. If set to
-\fBif\-asked\fR, sign if and only if the server supports signed pushes\&. The push will also fail if the actual call to
+GPG\-sign the push request to update refs on the receiving side, to allow it to be checked by the hooks and/or be logged\&. Possible values are:
+.PP
+\fBfalse\fR, \fB\-\-no\-signed\fR
+.RS 4
+no signing will be attempted\&.
+.RE
+.PP
+\fBtrue\fR, \fB\-\-signed\fR
+.RS 4
+the push will fail if the server does not support signed pushes\&.
+.RE
+.PP
+\fBif\-asked\fR
+.RS 4
+sign if and only if the server supports signed pushes\&. The push will also fail if the actual call to
 \fBgpg\fR
 \fB\-\-sign\fR
 fails\&. See
 \fBgit-receive-pack\fR(1)
 for the details on the receiving end\&.
 .RE
+.RE
 .PP
-\-\-[no\-]atomic
+\fB\-\-atomic\fR, \fB\-\-no\-atomic\fR
 .RS 4
 Use an atomic transaction on the remote side if available\&. Either all refs are updated, or on error, no refs are updated\&. If the server does not support atomic pushes the push will fail\&.
 .RE
 .PP
-\-o <option>, \-\-push\-option=<option>
+\fB\-o\fR \fI<option>\fR, \fB\-\-push\-option=\fR\fI<option>\fR
 .RS 4
-Transmit the given string to the server, which passes them to the pre\-receive as well as the post\-receive hook\&. The given string must not contain a NUL or LF character\&. When multiple
+Transmit the given string to the server, which passes them to the pre\-receive as well as the post\-receive hook\&. The given string must not contain a
+\fINUL\fR
+or
+\fILF\fR
+character\&. When multiple
 \fB\-\-push\-option=\fR\fI<option>\fR
 are given, they are all sent to the other side in the order listed on the command line\&. When no
 \fB\-\-push\-option=\fR\fI<option>\fR
@@ -299,18 +458,25 @@ is given from the command line, the values of configuration variable
 are used instead\&.
 .RE
 .PP
-\-\-receive\-pack=<git\-receive\-pack>, \-\-exec=<git\-receive\-pack>
+\fB\-\-receive\-pack=\fR\fI<git\-receive\-pack>\fR, \fB\-\-exec=\fR\fI<git\-receive\-pack>\fR
 .RS 4
 Path to the
 \fIgit\-receive\-pack\fR
-program on the remote end\&. Sometimes useful when pushing to a remote repository over ssh, and you do not have the program in a directory on the default $PATH\&.
+program on the remote end\&. Sometimes useful when pushing to a remote repository over ssh, and you do not have the program in a directory on the default
+\fB$PATH\fR\&.
 .RE
 .PP
-\-\-[no\-]force\-with\-lease, \-\-force\-with\-lease=<refname>, \-\-force\-with\-lease=<refname>:<expect>
+\fB\-\-force\-with\-lease\fR, \fB\-\-no\-force\-with\-lease\fR, \fB\-\-force\-with\-lease=\fR\fI<refname>\fR, \fB\-\-force\-with\-lease=\fR\fI<refname>\fR\fB:\fR\fI<expect>\fR
 .RS 4
-Usually, "git push" refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it\&.
+Usually,
+\fBgit\fR
+\fBpush\fR
+refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it\&.
 .sp
-This option overrides this restriction if the current value of the remote ref is the expected value\&. "git push" fails otherwise\&.
+This option overrides this restriction if the current value of the remote ref is the expected value\&.
+\fBgit\fR
+\fBpush\fR
+fails otherwise\&.
 .sp
 Imagine that you have to rebase what you have already published\&. You will have to bypass the "must fast\-forward" rule in order to replace the history you originally published with the rebased history\&. If somebody else built on top of your original history while you are rebasing, the tip of the branch at the remote may advance with their commit, and blindly pushing with
 \fB\-\-force\fR
@@ -321,10 +487,14 @@ This option allows you to say that you expect the history you are updating is wh
 \fB\-\-force\-with\-lease\fR
 alone, without specifying the details, will protect all remote refs that are going to be updated by requiring their current value to be the same as the remote\-tracking branch we have for them\&.
 .sp
-\fB\-\-force\-with\-lease=\fR\fI<refname>\fR, without specifying the expected value, will protect the named ref (alone), if it is going to be updated, by requiring its current value to be the same as the remote\-tracking branch we have for it\&.
+\fB\-\-force\-with\-lease=\fR\fI<refname>\fR, without specifying the expected value, will protect
+\fI<refname>\fR
+(alone), if it is going to be updated, by requiring its current value to be the same as the remote\-tracking branch we have for it\&.
 .sp
 \fB\-\-force\-with\-lease=\fR\fI<refname>\fR\fB:\fR\fI<expect>\fR
-will protect the named ref (alone), if it is going to be updated, by requiring its current value to be the same as the specified value
+will protect
+\fI<refname>\fR
+(alone), if it is going to be updated, by requiring its current value to be the same as the specified value
 \fI<expect>\fR
 (which is allowed to be different from the remote\-tracking branch we have for the refname, or we do not even have to have such a remote\-tracking branch when this form is used)\&. If
 \fI<expect>\fR
@@ -334,7 +504,10 @@ Note that all forms other than
 \fB\-\-force\-with\-lease=\fR\fI<refname>\fR\fB:\fR\fI<expect>\fR
 that specifies the expected current value of the ref explicitly are still experimental and their semantics may change as we gain experience with this feature\&.
 .sp
-"\-\-no\-force\-with\-lease" will cancel all the previous \-\-force\-with\-lease on the command line\&.
+\fB\-\-no\-force\-with\-lease\fR
+will cancel all the previous
+\fB\-\-force\-with\-lease\fR
+on the command line\&.
 .sp
 A general note on safety: supplying this option without an expected value, i\&.e\&. as
 \fB\-\-force\-with\-lease\fR
@@ -423,13 +596,15 @@ as an ancillary option along with
 \fB\-\-force\-with\-lease\fR[\fB=\fR\fI<refname>\fR] (i\&.e\&., without saying what exact commit the ref on the remote side must be pointing at, or which refs on the remote side are being protected) at the time of "push" will verify if updates from the remote\-tracking refs that may have been implicitly updated in the background are integrated locally before allowing a forced update\&.
 .RE
 .PP
-\-f, \-\-force
+\fB\-f\fR, \fB\-\-force\fR
 .RS 4
-Usually, the command refuses to update a remote ref that is not an ancestor of the local ref used to overwrite it\&. Also, when
-\fB\-\-force\-with\-lease\fR
-option is used, the command refuses to update a remote ref whose current value does not match what is expected\&.
+Usually,
+\fBgit\fR
+\fBpush\fR
+will refuse to update a branch that is not an ancestor of the commit being pushed\&.
 .sp
-This flag disables these checks, and can cause the remote repository to lose commits; use it with care\&.
+This flag disables that check, the other safety checks in PUSH RULES below, and the checks in
+\fB\-\-force\-with\-lease\fR\&. It can cause the remote repository to lose commits; use it with care\&.
 .sp
 Note that
 \fB\-\-force\fR
@@ -438,7 +613,8 @@ applies to all the refs that are pushed, hence using it with
 set to
 \fBmatching\fR
 or with multiple push destinations configured with
-\fBremote\&.\fR*\&.push may overwrite refs other than the current branch (including local refs that are strictly behind their remote counterpart)\&. To force a push to only one branch, use a
+\fBremote\&.\fR\fI<name>\fR\fB\&.push\fR
+may overwrite refs other than the current branch (including local refs that are strictly behind their remote counterpart)\&. To force a push to only one branch, use a
 \fB+\fR
 in front of the refspec to push (e\&.g
 \fBgit\fR
@@ -451,7 +627,7 @@ branch)\&. See the
 \fI<refspec>\fR\&.\&.\&. section above for details\&.
 .RE
 .PP
-\-\-[no\-]force\-if\-includes
+\fB\-\-force\-if\-includes\fR, \fB\-\-no\-force\-if\-includes\fR
 .RS 4
 Force an update only if the tip of the remote\-tracking ref has been integrated locally\&.
 .sp
@@ -466,12 +642,14 @@ Specifying
 disables this behavior\&.
 .RE
 .PP
-\-\-repo=<repository>
+\fB\-\-repo=\fR\fI<repository>\fR
 .RS 4
-This option is equivalent to the <repository> argument\&. If both are specified, the command\-line argument takes precedence\&.
+This option is equivalent to the
+\fI<repository>\fR
+argument\&. If both are specified, the command\-line argument takes precedence\&.
 .RE
 .PP
-\-u, \-\-set\-upstream
+\fB\-u\fR, \fB\-\-set\-upstream\fR
 .RS 4
 For every branch that is up to date or successfully pushed, add upstream (tracking) reference, used by argument\-less
 \fBgit-pull\fR(1)
@@ -481,60 +659,85 @@ in
 \fBgit-config\fR(1)\&.
 .RE
 .PP
-\-\-[no\-]thin
+\fB\-\-thin\fR, \fB\-\-no\-thin\fR
 .RS 4
 These options are passed to
 \fBgit-send-pack\fR(1)\&. A thin transfer significantly reduces the amount of sent data when the sender and receiver share many of the same objects in common\&. The default is
 \fB\-\-thin\fR\&.
 .RE
 .PP
-\-q, \-\-quiet
+\fB\-q\fR, \fB\-\-quiet\fR
 .RS 4
 Suppress all output, including the listing of updated refs, unless an error occurs\&. Progress is not reported to the standard error stream\&.
 .RE
 .PP
-\-v, \-\-verbose
+\fB\-v\fR, \fB\-\-verbose\fR
 .RS 4
 Run verbosely\&.
 .RE
 .PP
-\-\-progress
+\fB\-\-progress\fR
 .RS 4
-Progress status is reported on the standard error stream by default when it is attached to a terminal, unless \-q is specified\&. This flag forces progress status even if the standard error stream is not directed to a terminal\&.
+Progress status is reported on the standard error stream by default when it is attached to a terminal, unless
+\fB\-q\fR
+is specified\&. This flag forces progress status even if the standard error stream is not directed to a terminal\&.
 .RE
 .PP
-\-\-no\-recurse\-submodules, \-\-recurse\-submodules=check|on\-demand|only|no
+\fB\-\-no\-recurse\-submodules\fR, \fB\-\-recurse\-submodules=\fR(\fBcheck\fR|\fBon\-demand\fR|\fBonly\fR|\fBno\fR)
 .RS 4
-May be used to make sure all submodule commits used by the revisions to be pushed are available on a remote\-tracking branch\&. If
-\fIcheck\fR
-is used Git will verify that all submodule commits that changed in the revisions to be pushed are available on at least one remote of the submodule\&. If any commits are missing the push will be aborted and exit with non\-zero status\&. If
-\fIon\-demand\fR
-is used all submodules that changed in the revisions to be pushed will be pushed\&. If on\-demand was not able to push all necessary revisions it will also be aborted and exit with non\-zero status\&. If
-\fIonly\fR
-is used all submodules will be pushed while the superproject is left unpushed\&. A value of
-\fIno\fR
-or using
-\fB\-\-no\-recurse\-submodules\fR
-can be used to override the push\&.recurseSubmodules configuration variable when no submodule recursion is required\&.
+May be used to make sure all submodule commits used by the revisions to be pushed are available on a remote\-tracking branch\&. Possible values are:
+.PP
+\fBcheck\fR
+.RS 4
+Git will verify that all submodule commits that changed in the revisions to be pushed are available on at least one remote of the submodule\&. If any commits are missing the push will be aborted and exit with non\-zero status\&.
+.RE
+.PP
+\fBon\-demand\fR
+.RS 4
+all submodules that changed in the revisions to be pushed will be pushed\&. If
+\fBon\-demand\fR
+was not able to push all necessary revisions it will also be aborted and exit with non\-zero status\&.
+.RE
+.PP
+\fBonly\fR
+.RS 4
+all submodules will be pushed while the superproject is left unpushed\&.
+.RE
+.PP
+\fBno\fR
+.RS 4
+override the
+\fBpush\&.recurseSubmodules\fR
+configuration variable when no submodule recursion is required\&. Similar to using
+\fB\-\-no\-recurse\-submodules\fR\&.
+.RE
 .sp
 When using
-\fIon\-demand\fR
+\fBon\-demand\fR
 or
-\fIonly\fR, if a submodule has a "push\&.recurseSubmodules={on\-demand,only}" or "submodule\&.recurse" configuration, further recursion will occur\&. In this case, "only" is treated as "on\-demand"\&.
+\fBonly\fR, if a submodule has a
+\fBpush\&.recurseSubmodules=\fR(\fBon\-demand\fR|\fBonly\fR) or
+\fBsubmodule\&.recurse\fR
+configuration, further recursion will occur\&. In this case,
+\fBonly\fR
+is treated as
+\fBon\-demand\fR\&.
 .RE
 .PP
-\-\-[no\-]verify
+\fB\-\-verify\fR, \fB\-\-no\-verify\fR
 .RS 4
 Toggle the pre\-push hook (see
-\fBgithooks\fR(5))\&. The default is \-\-verify, giving the hook a chance to prevent the push\&. With \-\-no\-verify, the hook is bypassed completely\&.
+\fBgithooks\fR(5))\&. The default is
+\fB\-\-verify\fR, giving the hook a chance to prevent the push\&. With
+\fB\-\-no\-verify\fR, the hook is bypassed completely\&.
 .RE
 .PP
-\-4, \-\-ipv4
+\fB\-4\fR, \fB\-\-ipv4\fR
 .RS 4
 Use IPv4 addresses only, ignoring IPv6 addresses\&.
 .RE
 .PP
-\-6, \-\-ipv6
+\fB\-6\fR, \fB\-\-ipv6\fR
 .RS 4
 Use IPv6 addresses only, ignoring IPv4 addresses\&.
 .RE
@@ -825,7 +1028,7 @@ You can choose to provide the name of a file in \fB$GIT_DIR/remotes\fR\&. The UR
 .\}
 .sp
 .sp
-\fBPush:\fR lines are used by \fIgit push\fR and \fBPull:\fR lines are used by \fIgit pull\fR and \fIgit fetch\fR\&. Multiple \fBPush:\fR and \fBPull:\fR lines may be specified for additional branch mappings\&.
+\fBPush:\fR lines are used by \fBgit\fR \fBpush\fR and \fBPull:\fR lines are used by \fBgit\fR \fBpull\fR and \fBgit\fR \fBfetch\fR\&. Multiple \fBPush:\fR and \fBPull:\fR lines may be specified for additional branch mappings\&.
 .SS "Named file in \fB$GIT_DIR/branches\fR"
 .sp
 You can choose to provide the name of a file in \fB$GIT_DIR/branches\fR\&. The URL in this file will be used to access the repository\&. This file should have the following format:
@@ -870,6 +1073,187 @@ git push uses:
 .RE
 .\}
 .sp
+.SH "UPSTREAM BRANCHES"
+.sp
+Branches in Git can optionally have an upstream remote branch\&. Git defaults to using the upstream branch for remote operations, for example:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+It\(cqs the default for
+\fBgit\fR
+\fBpull\fR
+or
+\fBgit\fR
+\fBfetch\fR
+with no arguments\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+It\(cqs the default for
+\fBgit\fR
+\fBpush\fR
+with no arguments, with some exceptions\&. For example, you can use the
+\fBbranch\&.\fR\fI<name>\fR\fB\&.pushRemote\fR
+option to push to a different remote than you pull from, and by default with
+\fBpush\&.default=simple\fR
+the upstream branch you configure must have the same name\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Various commands, including
+\fBgit\fR
+\fBcheckout\fR
+and
+\fBgit\fR
+\fBstatus\fR, will show you how many commits have been added to your current branch and the upstream since you forked from it, for example "Your branch and
+\fIorigin/main\fR
+have diverged, and have 2 and 3 different commits each respectively"\&.
+.RE
+.sp
+The upstream is stored in \fB\&.git/config\fR, in the "\fBremote\fR" and "\fBmerge\fR" fields\&. For example, if \fBmain\fR\*(Aqs upstream is \fBorigin/main\fR:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[branch "main"]
+   remote = origin
+   merge = refs/heads/main
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+You can set an upstream branch explicitly with \fBgit\fR \fBpush\fR \fB\-\-set\-upstream\fR \fI<remote>\fR \fI<branch>\fR but Git will often automatically set the upstream for you, for example:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+When you clone a repository, Git will automatically set the upstream for the default branch\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If you have the
+\fBpush\&.autoSetupRemote\fR
+configuration option set,
+\fBgit\fR
+\fBpush\fR
+will automatically set the upstream the first time you push a branch\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Checking out a remote\-tracking branch with
+\fBgit\fR
+\fBcheckout\fR
+\fI<branch>\fR
+will automatically create a local branch with that name and set the upstream to the remote branch\&.
+.RE
+.if n \{\
+.sp
+.\}
+.RS 4
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.ps +1
+\fBNote\fR
+.ps -1
+.br
+.sp
+Upstream branches are sometimes referred to as "tracking information", as in "set the branch\(cqs tracking information"\&.
+.sp .5v
+.RE
+.SH "REMOTE GROUPS"
+.sp
+A remote group is a named list of remotes configured via \fBremotes\&.\fR\fI<name>\fR in your git config:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+$ git config remotes\&.all\-remotes "r1 r2 r3"
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+When a group name is given as the \fI<repository>\fR argument, the push is performed to each member remote in turn\&. The defining principle is:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+git push <options> all\-remotes <args>
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+is exactly equivalent to:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+git push <options> r1 <args>
+git push <options> r2 <args>
+\&.\&.\&.
+git push <options> rN <args>
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+where r1, r2, \&..., rN are the members of \fBall\-remotes\fR\&. No special behaviour is added or removed \(em the group is purely a shorthand for running the same push command against each member remote individually\&.
+.sp
+When pushing to a group of more than one remote, Git spawns a separate \fBgit\fR \fBpush\fR subprocess for each member remote in sequence\&. Each subprocess receives the same flags and refspecs as the original invocation\&. This means that per\-remote push mappings configured via \fBremote\&.\fR\fI<name>\fR\fB\&.push\fR and mirror mode (\fBremote\&.\fR\fI<name>\fR\fB\&.mirror\fR) are evaluated independently for each remote, and a mirror remote in the group cannot affect the push behaviour of other non\-mirror remotes in the same group\&.
+.sp
+The \fB\-\-atomic\fR option is not supported for group pushes, because atomicity can only be guaranteed within a single transport connection to a single remote\&. Git will refuse the invocation with an error if \fB\-\-atomic\fR is combined with a group name\&.
+.sp
+If any member remote fails whether due to a push rejection (e\&.g\&. a non\-fast\-forward update, a server\-side hook refusing a ref) or a connection error (e\&.g\&. the repository does not exist, authentication fails, or the network is unreachable), Git reports the error and continues pushing to the remaining remotes in the group\&. The overall exit code is non\-zero if any member push fails\&.
+.sp
+This means the user is responsible for ensuring that the sequence of individual pushes makes sense\&. If \fBgit\fR \fBpush\fR \fBr1\fR` would fail for a given set of options and arguments, then \fBgit\fR \fBpush\fR \fBall\-remotes\fR will fail in the same way when it reaches r1\&. The group push does not do anything special to make a failing individual push succeed\&.
 .SH "OUTPUT"
 .sp
 The output of "git push" depends on the transport method used; this section describes the output when pushing over the Git protocol (either locally or via ssh)\&.
@@ -887,7 +1271,7 @@ The status of the push is output in tabular form, with each line representing th
 .\}
 .sp
 .sp
-If \-\-porcelain is used, then each line of the output is of the form:
+If \fB\-\-porcelain\fR is used, then each line of the output is of the form:
 .sp
 .if n \{\
 .RS 4
@@ -900,9 +1284,9 @@ If \-\-porcelain is used, then each line of the output is of the form:
 .\}
 .sp
 .sp
-The status of up\-to\-date refs is shown only if \-\-porcelain or \-\-verbose option is used\&.
+The status of up\-to\-date refs is shown only if \fB\-\-porcelain\fR or \fB\-\-verbose\fR option is used\&.
 .PP
-flag
+\fI<flag>\fR
 .RS 4
 A single character indicating the status of the ref:
 .PP
@@ -921,7 +1305,7 @@ for a successful forced update;
 for a successfully deleted ref;
 .RE
 .PP
-*
+\fB*\fR
 .RS 4
 for a successfully pushed new ref;
 .RE
@@ -937,7 +1321,7 @@ for a ref that was up to date and did not need pushing\&.
 .RE
 .RE
 .PP
-summary
+\fI<summary>\fR
 .RS 4
 For a successfully pushed ref, the summary shows the old and new values of the ref in a form suitable for using as an argument to
 \fBgit\fR
@@ -992,6 +1376,74 @@ reason
 .RS 4
 A human\-readable explanation\&. In the case of successfully pushed refs, no explanation is needed\&. For a failed ref, the reason for failure is described\&.
 .RE
+.SH "PUSH RULES"
+.sp
+As a safety feature, the \fBgit\fR \fBpush\fR command only allows certain kinds of updates to prevent you from accidentally losing data on the remote\&.
+.sp
+Because branches and tags are intended to be used differently, the safety rules for pushing to a branch are different from the rules for pushing to a tag\&. In the following rules "update" means any modifications except deletions and creations\&. Deletions and creations are always allowed, except when forbidden by configuration or hooks\&.
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 1.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  1." 4.2
+.\}
+If the push destination is a
+\fBbranch\fR
+(\fBrefs/heads/*\fR): only fast\-forward updates are allowed, which means the destination must be an ancestor of the source commit\&. The source must be a commit\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 2.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  2." 4.2
+.\}
+If the push destination is a
+\fBtag\fR
+(\fBrefs/tags/*\fR): all updates will be rejected\&. The source can be any object\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04' 3.\h'+01'\c
+.\}
+.el \{\
+.sp -1
+.IP "  3." 4.2
+.\}
+If the push destination is not a branch or tag:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If the source is a tree or blob object, any updates will be rejected
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+If the source is a tag or commit object, any fast\-forward update is allowed, even in cases where what\(cqs being fast\-forwarded is not a commit, but a tag object which happens to point to a new commit which is a fast\-forward of the commit the last tag (or commit) it\(cqs replacing\&. Replacing a tag with an entirely different tag is also allowed, if it points to the same commit, as well as pushing a peeled tag, i\&.e\&. pushing the commit that existing tag object points to, or a new tag object which an existing commit points to\&.
+.RE
+.RE
+.sp
+You can override these rules by passing \fB\-\-force\fR or by adding the optional leading \fB+\fR to a refspec\&. The only exceptions are that no amount of forcing will make a branch accept a non\-commit object, and forcing won\(cqt make the remote repository accept a push that it\(cqs configured to deny\&.
+.sp
+Hooks and configuration can also override or amend these rules, see e\&.g\&. \fBreceive\&.denyNonFastForwards\fR and \fBreceive\&.denyDeletes\fR in \fBgit-config\fR(1) and \fBpre\-receive\fR and \fBupdate\fR in \fBgithooks\fR(5)\&.
 .SH "NOTE ABOUT FAST\-FORWARDS"
 .sp
 When an update changes a branch (or more in general, a ref) that used to point at commit A to point at another commit B, it is called a fast\-forward update if and only if B is a descendant of A\&.
@@ -1040,7 +1492,7 @@ You can perform "git pull", resolve potential conflicts, and "git push" the resu
 .sp
 Updating A with the resulting merge commit will fast\-forward and your push will be accepted\&.
 .sp
-Alternatively, you can rebase your change between X and B on top of A, with "git pull \-\-rebase", and push the result back\&. The rebase will create a new commit D that builds the change between X and B on top of A\&.
+Alternatively, you can rebase your change between X and B on top of A, with \fBgit\fR \fBpull\fR \fB\-\-rebase\fR, and push the result back\&. The rebase will create a new commit D that builds the change between X and B on top of A\&.
 .sp
 .if n \{\
 .RS 4
@@ -1057,7 +1509,7 @@ Alternatively, you can rebase your change between X and B on top of A, with "git
 .sp
 Again, updating A with this commit will fast\-forward and your push will be accepted\&.
 .sp
-There is another common situation where you may encounter non\-fast\-forward rejection when you try to push, and it is possible even when you are pushing into a repository nobody else pushes into\&. After you push commit A yourself (in the first picture in this section), replace it with "git commit \-\-amend" to produce commit B, and you try to push it out, because forgot that you have pushed A out already\&. In such a case, and only if you are certain that nobody in the meantime fetched your earlier commit A (and started building on top of it), you can run "git push \-\-force" to overwrite it\&. In other words, "git push \-\-force" is a method reserved for a case where you do mean to lose history\&.
+There is another common situation where you may encounter non\-fast\-forward rejection when you try to push, and it is possible even when you are pushing into a repository nobody else pushes into\&. After you push commit A yourself (in the first picture in this section), replace it with \fBgit\fR \fBcommit\fR \fB\-\-amend\fR to produce commit B, and you try to push it out, because forgot that you have pushed A out already\&. In such a case, and only if you are certain that nobody in the meantime fetched your earlier commit A (and started building on top of it), you can run \fBgit\fR \fBpush\fR \fB\-\-force\fR to overwrite it\&. In other words, \fBgit\fR \fBpush\fR \fB\-\-force\fR is a method reserved for a case where you do mean to lose history\&.
 .SH "EXAMPLES"
 .PP
 \fBgit\fR \fBpush\fR
@@ -1074,7 +1526,9 @@ Works like
 Without additional configuration, pushes the current branch to the configured upstream (\fBbranch\&.\fR\fI<name>\fR\fB\&.merge\fR
 configuration variable) if it has the same name as the current branch, and errors out without pushing otherwise\&.
 .sp
-The default behavior of this command when no <refspec> is given can be configured by setting the
+The default behavior of this command when no
+\fI<refspec>\fR
+is given can be configured by setting the
 \fBpush\fR
 option of the remote, or the
 \fBpush\&.default\fR
@@ -1086,7 +1540,9 @@ use
 \fBgit\fR
 \fBconfig\fR
 \fBremote\&.origin\&.push\fR
-\fBHEAD\fR\&. Any valid <refspec> (like the ones in the examples below) can be configured as the default for
+\fBHEAD\fR\&. Any valid
+\fI<refspec>\fR
+(like the ones in the examples below) can be configured as the default for
 \fBgit\fR
 \fBpush\fR
 \fBorigin\fR\&.
@@ -1095,7 +1551,9 @@ use
 \fBgit\fR \fBpush\fR \fBorigin\fR \fB:\fR
 .RS 4
 Push "matching" branches to
-\fBorigin\fR\&. See <refspec> in the
+\fBorigin\fR\&. See
+\fI<refspec>\fR
+in the
 OPTIONS
 section above for a description of "matching" branches\&.
 .RE
@@ -1264,20 +1722,24 @@ As in #1, the attacker chooses an object ID X to steal\&. The victim sends an ob
 .sp
 Everything below this line in this section is selectively included from the \fBgit-config\fR(1) documentation\&. The content is the same as what\(cqs found there:
 .PP
-push\&.autoSetupRemote
+\fBpush\&.autoSetupRemote\fR
 .RS 4
-If set to "true" assume
+If set to
+\fBtrue\fR
+assume
 \fB\-\-set\-upstream\fR
-on default push when no upstream tracking exists for the current branch; this option takes effect with push\&.default options
-\fIsimple\fR,
-\fIupstream\fR, and
-\fIcurrent\fR\&. It is useful if by default you want new branches to be pushed to the default remote (like the behavior of
-\fIpush\&.default=current\fR) and you also want the upstream tracking to be set\&. Workflows most likely to benefit from this option are
-\fIsimple\fR
+on default push when no upstream tracking exists for the current branch; this option takes effect with
+\fBpush\&.default\fR
+options
+\fBsimple\fR,
+\fBupstream\fR, and
+\fBcurrent\fR\&. It is useful if by default you want new branches to be pushed to the default remote (like the behavior of
+\fBpush\&.default=current\fR) and you also want the upstream tracking to be set\&. Workflows most likely to benefit from this option are
+\fBsimple\fR
 central workflows where all branches are expected to have the same name on the remote\&.
 .RE
 .PP
-push\&.default
+\fBpush\&.default\fR
 .RS 4
 Defines the action
 \fBgit\fR
@@ -1285,104 +1747,62 @@ Defines the action
 should take if no refspec is given (whether from the command\-line, config, or elsewhere)\&. Different values are well\-suited for specific workflows; for instance, in a purely central workflow (i\&.e\&. the fetch source is equal to the push destination),
 \fBupstream\fR
 is probably what you want\&. Possible values are:
-.sp
-.RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
-.\}
-.el \{\
-.sp -1
-.IP \(bu 2.3
-.\}
+.PP
 \fBnothing\fR
-\- do not push anything (error out) unless a refspec is given\&. This is primarily meant for people who want to avoid mistakes by always being explicit\&.
-.RE
-.sp
 .RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
-.\}
-.el \{\
-.sp -1
-.IP \(bu 2.3
-.\}
+do not push anything (error out) unless a refspec is given\&. This is primarily meant for people who want to avoid mistakes by always being explicit\&.
+.RE
+.PP
 \fBcurrent\fR
-\- push the current branch to update a branch with the same name on the receiving end\&. Works in both central and non\-central workflows\&.
-.RE
-.sp
 .RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
-.\}
-.el \{\
-.sp -1
-.IP \(bu 2.3
-.\}
+push the current branch to update a branch with the same name on the receiving end\&. Works in both central and non\-central workflows\&.
+.RE
+.PP
 \fBupstream\fR
-\- push the current branch back to the branch whose changes are usually integrated into the current branch (which is called
+.RS 4
+push the current branch back to the branch whose changes are usually integrated into the current branch (which is called
 \fB@\fR{upstream})\&. This mode only makes sense if you are pushing to the same repository you would normally pull from (i\&.e\&. central workflow)\&.
 .RE
-.sp
-.RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
-.\}
-.el \{\
-.sp -1
-.IP \(bu 2.3
-.\}
+.PP
 \fBtracking\fR
-\- This is a deprecated synonym for
+.RS 4
+this is a deprecated synonym for
 \fBupstream\fR\&.
 .RE
-.sp
-.RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
-.\}
-.el \{\
-.sp -1
-.IP \(bu 2.3
-.\}
+.PP
 \fBsimple\fR
-\- push the current branch with the same name on the remote\&.
+.RS 4
+push the current branch with the same name on the remote\&.
 .sp
-If you are working on a centralized workflow (pushing to the same repository you pull from, which is typically
-\fBorigin\fR), then you need to configure an upstream branch with the same name\&.
+This mode requires that the remote repository to be pushed to is known\&. When pushing back to the same remote you pull from, the current branch must also have an upstream tracking branch with the same name\&.
 .sp
 This mode is the default since Git 2\&.0, and is the safest option suited for beginners\&.
 .RE
-.sp
-.RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
-.\}
-.el \{\
-.sp -1
-.IP \(bu 2.3
-.\}
+.PP
 \fBmatching\fR
-\- push all branches having the same name on both ends\&. This makes the repository you are pushing to remember the set of branches that will be pushed out (e\&.g\&. if you always push
-\fImaint\fR
+.RS 4
+push all branches having the same name on both ends\&. This makes the repository you are pushing to remember the set of branches that will be pushed out (e\&.g\&. if you always push
+\fBmaint\fR
 and
-\fImaster\fR
+\fBmaster\fR
 there and no other branches, the repository you push to will have these two branches, and your local
-\fImaint\fR
+\fBmaint\fR
 and
-\fImaster\fR
+\fBmaster\fR
 will be pushed there)\&.
 .sp
 To use this mode effectively, you have to make sure
 \fIall\fR
 the branches you would push out are ready to be pushed out before running
-\fIgit push\fR, as the whole point of this mode is to allow you to push all of the branches in one go\&. If you usually finish work on only one branch and push out the result, while other branches are unfinished, this mode is not for you\&. Also this mode is not suitable for pushing into a shared central repository, as other people may add new branches there, or update the tip of existing branches outside your control\&.
+\fBgit\fR
+\fBpush\fR, as the whole point of this mode is to allow you to push all of the branches in one go\&. If you usually finish work on only one branch and push out the result, while other branches are unfinished, this mode is not for you\&. Also this mode is not suitable for pushing into a shared central repository, as other people may add new branches there, or update the tip of existing branches outside your control\&.
 .sp
 This used to be the default, but not since Git 2\&.0 (\fBsimple\fR
 is the new default)\&.
 .RE
 .RE
 .PP
-push\&.followTags
+\fBpush\&.followTags\fR
 .RS 4
 If set to true, enable
 \fB\-\-follow\-tags\fR
@@ -1390,29 +1810,32 @@ option by default\&. You may override this configuration at time of push by spec
 \fB\-\-no\-follow\-tags\fR\&.
 .RE
 .PP
-push\&.gpgSign
+\fBpush\&.gpgSign\fR
 .RS 4
 May be set to a boolean value, or the string
-\fIif\-asked\fR\&. A true value causes all pushes to be GPG signed, as if
+\fBif\-asked\fR\&. A true value causes all pushes to be GPG signed, as if
 \fB\-\-signed\fR
 is passed to
 \fBgit-push\fR(1)\&. The string
-\fIif\-asked\fR
+\fBif\-asked\fR
 causes pushes to be signed if the server supports it, as if
 \fB\-\-signed=if\-asked\fR
 is passed to
-\fIgit push\fR\&. A false value may override a value from a lower\-priority config file\&. An explicit command\-line flag always overrides this config option\&.
+\fBgit\fR
+\fBpush\fR\&. A false value may override a value from a lower\-priority config file\&. An explicit command\-line flag always overrides this config option\&.
 .RE
 .PP
-push\&.pushOption
+\fBpush\&.pushOption\fR
 .RS 4
 When no
 \fB\-\-push\-option=\fR\fI<option>\fR
 argument is given from the command line,
 \fBgit\fR
 \fBpush\fR
-behaves as if each <value> of this variable is given as
-\fB\-\-push\-option=\fR\fI<value>\fR\&.
+behaves as if each
+\fI<option>\fR
+of this variable is given as
+\fB\-\-push\-option=\fR\fI<option>\fR\&.
 .sp
 This is a multi\-valued variable, and an empty value can be used in a higher priority configuration file (e\&.g\&.
 \fB\&.git/config\fR
@@ -1444,21 +1867,28 @@ This will result in only b (a and c are cleared)\&.
 .sp
 .RE
 .PP
-push\&.recurseSubmodules
+\fBpush\&.recurseSubmodules\fR
 .RS 4
-May be "check", "on\-demand", "only", or "no", with the same behavior as that of "push \-\-recurse\-submodules"\&. If not set,
-\fIno\fR
+May be
+\fBcheck\fR,
+\fBon\-demand\fR,
+\fBonly\fR, or
+\fBno\fR, with the same behavior as that of
+\fBpush\fR
+\fB\-\-recurse\-submodules\fR\&. If not set,
+\fBno\fR
 is used by default, unless
-\fIsubmodule\&.recurse\fR
+\fBsubmodule\&.recurse\fR
 is set (in which case a
-\fItrue\fR
+\fBtrue\fR
 value means
-\fIon\-demand\fR)\&.
+\fBon\-demand\fR)\&.
 .RE
 .PP
-push\&.useForceIfIncludes
+\fBpush\&.useForceIfIncludes\fR
 .RS 4
-If set to "true", it is equivalent to specifying
+If set to
+\fBtrue\fR, it is equivalent to specifying
 \fB\-\-force\-if\-includes\fR
 as an option to
 \fBgit-push\fR(1)
@@ -1467,16 +1897,24 @@ in the command line\&. Adding
 at the time of push overrides this configuration setting\&.
 .RE
 .PP
-push\&.negotiate
+\fBpush\&.negotiate\fR
 .RS 4
-If set to "true", attempt to reduce the size of the packfile sent by rounds of negotiation in which the client and the server attempt to find commits in common\&. If "false", Git will rely solely on the server\(cqs ref advertisement to find commits in common\&.
+If set to
+\fBtrue\fR, attempt to reduce the size of the packfile sent by rounds of negotiation in which the client and the server attempt to find commits in common\&. If
+\fBfalse\fR, Git will rely solely on the server\(cqs ref advertisement to find commits in common\&.
 .RE
 .PP
-push\&.useBitmaps
+\fBpush\&.useBitmaps\fR
 .RS 4
-If set to "false", disable use of bitmaps for "git push" even if
+If set to
+\fBfalse\fR, disable use of bitmaps for
+\fBgit\fR
+\fBpush\fR
+even if
 \fBpack\&.useBitmaps\fR
-is "true", without preventing other git operations from using bitmaps\&. Default is true\&.
+is
+\fBtrue\fR, without preventing other git operations from using bitmaps\&. Default is
+\fBtrue\fR\&.
 .RE
 .SH "GIT"
 .sp

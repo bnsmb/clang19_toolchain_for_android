@@ -2,12 +2,12 @@
 .\"     Title: git-ls-tree
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-LS\-TREE" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-LS\-TREE" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -155,10 +155,28 @@ Do not limit the listing to the current working directory\&. Implies \-\-full\-n
 .PP
 \-\-format=<format>
 .RS 4
-A string that interpolates %(\fBfieldname\fR) from the result being shown\&. It also interpolates %% to %, and %xNN where
+A string that interpolates
+\fB%\fR(\fBfieldname\fR) from the result being shown\&. It also interpolates
+\fB%%\fR
+to
+\fB%\fR, and
+\fB%xNN\fR
+where
 \fBNN\fR
 are hex digits interpolates to character with hex code
-\fBNN\fR; for example %x00 interpolates to \e0 (NUL), %x09 to \et (TAB) and %x0a to \en (LF)\&. When specified,
+\fBNN\fR; for example
+\fB%x00\fR
+interpolates to
+\fB\e0\fR
+(NUL),
+\fB%x09\fR
+to
+\fB\et\fR
+(TAB) and
+\fB%x0a\fR
+to
+\fB\en\fR
+(LF)\&. When specified,
 \fB\-\-format\fR
 cannot be combined with other format\-altering options, including
 \fB\-\-long\fR,
@@ -209,7 +227,7 @@ Without the \fB\-z\fR option, pathnames with "unusual" characters are quoted as 
 .sp
 Customized format:
 .sp
-It is possible to print in a custom format by using the \fB\-\-format\fR option, which is able to interpolate different fields using a %(\fBfieldname\fR) notation\&. For example, if you only care about the "objectname" and "path" fields, you can execute with a specific "\-\-format" like
+It is possible to print in a custom format by using the \fB\-\-format\fR option, which is able to interpolate different fields using a \fB%\fR(\fBfieldname\fR) notation\&. For example, if you only care about the "objectname" and "path" fields, you can execute with a specific "\-\-format" like
 .sp
 .if n \{\
 .RS 4

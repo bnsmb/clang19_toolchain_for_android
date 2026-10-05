@@ -2,12 +2,12 @@
 .\"     Title: gitcli
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GITCLI" "7" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GITCLI" "7" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -164,7 +164,9 @@ $ git restore \e*\&.c
 .RE
 .\}
 .sp
-The former lets your shell expand the fileglob, and you are asking the dot\-C files in your working tree to be overwritten with the version in the index\&. The latter passes the *\&.c to Git, and you are asking the paths in the index that match the pattern to be checked out to your working tree\&. After running
+The former lets your shell expand the fileglob, and you are asking the dot\-C files in your working tree to be overwritten with the version in the index\&. The latter passes the
+\fB*\&.c\fR
+to Git, and you are asking the paths in the index that match the pattern to be checked out to your working tree\&. After running
 \fBgit\fR
 \fBadd\fR
 \fBhello\&.c\fR;
@@ -358,6 +360,11 @@ Some Git commands take options that are only used for plumbing or that are depre
 .SS "Negating options"
 .sp
 Options with long option names can be negated by prefixing \fB\-\-no\-\fR\&. For example, \fBgit\fR \fBbranch\fR has the option \fB\-\-track\fR which is \fIon\fR by default\&. You can use \fB\-\-no\-track\fR to override that behaviour\&. The same goes for \fB\-\-color\fR and \fB\-\-no\-color\fR\&.
+.SS "Options trump configuration and environment"
+.sp
+When there is a configuration variable or an environment variable that tweak the behaviour of an aspect of a Git command, and also a command line option that tweaks the same, the command line option overrides what the configuration and/or environment variable say\&.
+.sp
+For example, the \fBuser\&.name\fR configuration variable is used to specify the human\-readable name used by the \fBgit\fR \fBcommit\fR command to record the author and the committer name in a newly created commit\&. The \fBGIT_AUTHOR_NAME\fR environment variable, if set, takes precedence when deciding what author name to record\&. The \fB\-\-author=\fR\fI<author>\fR command line option of the \fBgit\fR \fBcommit\fR command, when given, takes precedence over these two sources of information\&.
 .SS "Aggregating short options"
 .sp
 Commands that support the enhanced option parser allow you to aggregate short options\&. This means that you can for example use \fBgit\fR \fBrm\fR \fB\-rf\fR or \fBgit\fR \fBclean\fR \fB\-fdx\fR\&.
@@ -396,6 +403,24 @@ $ git describe \-\-abbrev 10 HEAD  # NOT WHAT YOU MEANT
 .RE
 .\}
 .sp
+.SS "Magic filename options"
+.sp
+Options that take a filename allow a prefix \fB:\fR(\fBoptional\fR)\&. For example:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+git commit \-F :(optional)COMMIT_EDITMSG
+# if COMMIT_EDITMSG does not exist, the above is equivalent to
+git commit
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.sp
+Like with configuration values, if the named file is missing Git behaves as if the option was not given at all\&. See "Values" in \fBgit-config\fR(1)\&.
 .SH "NOTES ON FREQUENTLY CONFUSED OPTIONS"
 .sp
 Many commands that can work on files in the working tree and/or in the index can take \fB\-\-cached\fR and/or \fB\-\-index\fR options\&. Sometimes people incorrectly think that, because the index was originally called cache, these two are synonyms\&. They are \fBnot\fR \(em these two options mean very different things\&.

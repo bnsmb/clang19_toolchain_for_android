@@ -2,12 +2,12 @@
 .\"     Title: git-commit-tree
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-COMMIT\-TREE" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-COMMIT\-TREE" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -138,12 +138,21 @@ is the number of seconds since the UNIX epoch\&.
 \fI<time\-zone\-offset>\fR
 is a positive or negative offset from UTC\&. For example CET (which is 1 hour ahead of UTC) is
 \fB+0100\fR\&.
+.sp
+It is safer to prepend the
+\fI<unix\-timestamp>\fR
+with
+\fB@\fR
+(e\&.g\&.,
+\fB@0\fR
+\fB+0000\fR), which forces Git to interpret it as a raw timestamp\&. This is required for values less than 100,000,000 (which have fewer than 9 digits) to avoid confusion with other date formats like
+\fBYYYYMMDD\fR\&.
 .RE
 .PP
 RFC 2822
 .RS 4
 The standard date format as described by RFC 2822, for example
-\fBThu,\fR
+\fBThu\fR,
 \fB07\fR
 \fBApr\fR
 \fB2005\fR
@@ -237,9 +246,11 @@ Although we encourage that the commit log messages are encoded in UTF\-8, both t
 .sp -1
 .IP "  1." 4.2
 .\}
-\fIgit commit\fR
+\fBgit\fR
+\fBcommit\fR
 and
-\fIgit commit\-tree\fR
+\fBgit\fR
+\fBcommit\-tree\fR
 issue a warning if the commit log message given to it does not look like a valid UTF\-8 string, unless you explicitly say your project uses a legacy encoding\&. The way to say this is to have
 \fBi18n\&.commitEncoding\fR
 in
@@ -272,9 +283,12 @@ header\&. This is to help other people who look at them later\&. Lack of this he
 .sp -1
 .IP "  2." 4.2
 .\}
-\fIgit log\fR,
-\fIgit show\fR,
-\fIgit blame\fR
+\fBgit\fR
+\fBlog\fR,
+\fBgit\fR
+\fBshow\fR,
+\fBgit\fR
+\fBblame\fR
 and friends look at the
 \fBencoding\fR
 header of a commit object, and try to re\-code the log message into UTF\-8 unless otherwise specified\&. You can specify the desired output encoding with

@@ -1,0 +1,368 @@
+'\" t
+.\"     Title: gitformat-loose
+.\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 10/05/2026
+.\"    Manual: Git Manual
+.\"    Source: Git 2.56.0
+.\"  Language: English
+.\"
+.TH "GITFORMAT\-LOOSE" "5" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gitformat-loose \- Git loose object format
+.SH "SYNOPSIS"
+.sp
+.nf
+$GIT_DIR/objects/[0\-9a\-f][0\-9a\-f]/*
+$GIT_DIR/objects/object\-map/map\-*\&.map
+.fi
+.sp
+.SH "DESCRIPTION"
+.sp
+Loose objects are how Git stores individual objects, where every object is written as a separate file\&.
+.sp
+Over the lifetime of a repository, objects are usually written as loose objects initially\&. Eventually, these loose objects will be compacted into packfiles via repository maintenance to improve disk space usage and speed up the lookup of these objects\&.
+.SH "LOOSE OBJECTS"
+.sp
+Each loose object contains a prefix, followed immediately by the data of the object\&. The prefix contains \fI<type>\fR \fI<size>\fR\fB\e0\fR\&. \fI<type>\fR is one of \fBblob\fR, \fBtree\fR, \fBcommit\fR, or \fBtag\fR and \fBsize\fR is the size of the data (without the prefix) as a decimal integer expressed in ASCII\&.
+.sp
+The entire contents, prefix and data concatenated, is then compressed with zlib and the compressed data is stored in the file\&. The object ID of the object is the SHA\-1 or SHA\-256 (as appropriate) hash of the uncompressed data\&.
+.sp
+The file for the loose object is stored under the \fBobjects\fR directory, with the first two hex characters of the object ID being the directory and the remaining characters being the file name\&. This is done to shard the data and avoid too many files being in one directory, since some file systems perform poorly with many items in a directory\&.
+.sp
+As an example, the empty tree contains the data (when uncompressed) \fBtree\fR \fB0\e0\fR and, in a SHA\-256 repository, would have the object ID \fB6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321\fR and would be stored under \fB$GIT_DIR/objects/6e/f19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321\fR\&.
+.sp
+Similarly, a blob containing the contents \fBabc\fR would have the uncompressed data of \fBblob\fR \fB3\e0abc\fR\&.
+.SH "LOOSE OBJECT MAPPING"
+.sp
+When the \fBcompatObjectFormat\fR option is used, Git needs to store a mapping between the repository\(cqs main algorithm and the compatibility algorithm for loose objects as well as some auxiliary information\&.
+.sp
+The mapping consists of a set of files under \fB$GIT_DIR/objects/object\-map\fR ending in \fB\&.map\fR\&. The portion of the filename before the extension is that of the main hash checksum (that is, the one specified in \fBextensions\&.objectformat\fR) in hex format\&.
+.sp
+\fBgit\fR \fBgc\fR will repack existing entries into one file, removing any unnecessary objects, such as obsolete shallow entries or loose objects that have been packed\&.
+.sp
+The file format is as follows\&. All values are in network byte order and all 4\-byte and 8\-byte values must be 4\-byte aligned in the file, so the NUL padding may be required in some cases\&. Git always uses the smallest number of NUL bytes (including zero) that is required for the padding in order to make writing files deterministic\&.
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A header appears at the beginning and consists of the following:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A 4\-byte mapping signature:
+\fBLMAP\fR
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+4\-byte version number: 1
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+4\-byte length of the header section (including reserved entries but excluding any NUL padding)\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+4\-byte number of objects declared in this map file\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+4\-byte number of object formats declared in this map file\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+For each object format:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+4\-byte format identifier (e\&.g\&.,
+\fBsha1\fR
+for SHA\-1)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+4\-byte length in bytes of shortened object names (that is, prefixes of the full object names)\&. This is the shortest possible length needed to make names in the shortened object name table unambiguous\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+8\-byte integer, recording where tables relating to this format are stored in this index file, as an offset from the beginning\&.
+.RE
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+8\-byte offset to the trailer from the beginning of this file\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+The remainder of the header section is reserved for future use\&. Readers must ignore unrecognized data here\&.
+.RE
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Zero or more NUL bytes\&. These are used to improve the alignment of the 4\-byte quantities below\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Tables for the first object format:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A sorted table of shortened object names\&. These are prefixes of the names of all objects in this file, packed together to reduce the cache footprint of the binary search for a specific object name\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A sorted table of full object names\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A table of 4\-byte metadata values\&.
+.RE
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Zero or more NUL bytes\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Tables for subsequent object formats:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A sorted table of shortened object names\&. These are prefixes of the names of all objects in this file, packed together without offset values to reduce the cache footprint of the binary search for a specific object name\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A table of full object names in the order specified by the first object format\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A table of 4\-byte values mapping object name order to the order of the first object format\&. For an object in the table of sorted shortened object names, the value at the corresponding index in this table is the index in the previous table for that same object\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Zero or more NUL bytes\&.
+.RE
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+The trailer consists of the following:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Hash checksum of all of the above using the main hash\&.
+.RE
+.RE
+.sp
+The lower six bits of each metadata table contain a type field indicating the reason that this object is stored:
+.PP
+0
+.RS 4
+Reserved\&.
+.RE
+.PP
+1
+.RS 4
+This object is stored as a loose object in the repository\&.
+.RE
+.PP
+2
+.RS 4
+This object is a shallow entry\&. The mapping refers to a shallow value returned by a remote server\&.
+.RE
+.PP
+3
+.RS 4
+This object is a submodule entry\&. The mapping refers to the commit stored representing a submodule\&.
+.RE
+.sp
+Other data may be stored in this field in the future\&. Bits that are not used must be zero\&.
+.SH "GIT"
+.sp
+Part of the \fBgit\fR(1) suite

@@ -2,12 +2,12 @@
 .\"     Title: git-rerere
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-RERERE" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-RERERE" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -58,7 +58,7 @@ You need to set the configuration variable \fBrerere\&.enabled\fR in order to en
 .RE
 .SH "COMMANDS"
 .sp
-Normally, \fIgit rerere\fR is run without arguments or user\-intervention\&. However, it has several commands that allow it to interact with its working state\&.
+Normally, \fIgit rerere\fR is run without arguments or user\-intervention\&. However, it has several commands that allow users to interact with its working state\&.
 .PP
 \fIclear\fR
 .RS 4
@@ -71,7 +71,7 @@ will automatically invoke this command\&.
 .PP
 \fIforget\fR <pathspec>
 .RS 4
-Reset the conflict resolutions which rerere has recorded for the current conflict in <pathspec>\&.
+Reset the conflict resolutions which rerere has recorded for the current conflicts in paths that match <pathspec>\&.
 .RE
 .PP
 \fIdiff\fR
@@ -134,7 +134,7 @@ For such a test, you need to merge master and topic somehow\&. One way to do it 
 .\}
 .sp
 .sp
-The commits marked with * touch the same area in the same file; you need to resolve the conflicts when creating the commit marked with \fB+\fR\&. Then you can test the result to make sure your work\-in\-progress still works with what is in the latest master\&.
+The commits marked with \fB*\fR touch the same area in the same file; you need to resolve the conflicts when creating the commit marked with \fB+\fR\&. Then you can test the result to make sure your work\-in\-progress still works with what is in the latest master\&.
 .sp
 After this test merge, there are two ways to continue your work on the topic\&. The easiest is to build on top of the test merge commit \fB+\fR, and when your work in the topic branch is finally ready, pull the topic branch into master, and/or ask the upstream to pull from you\&. By that time, however, the master or the upstream might have been advanced since the test merge \fB+\fR, in which case the final commit graph would look like this:
 .sp
@@ -181,7 +181,7 @@ As an alternative, to keep the topic branch clean of test merges, you could blow
 .\}
 .sp
 .sp
-This would leave only one merge commit when your topic branch is finally ready and merged into the master branch\&. This merge would require you to resolve the conflict, introduced by the commits marked with *\&. However, this conflict is often the same conflict you resolved when you created the test merge you blew away\&. \fIgit rerere\fR helps you resolve this final conflicted merge using the information from your earlier hand resolve\&.
+This would leave only one merge commit when your topic branch is finally ready and merged into the master branch\&. This merge would require you to resolve the conflict, introduced by the commits marked with \fB*\fR\&. However, this conflict is often the same conflict you resolved when you created the test merge you blew away\&. \fIgit rerere\fR helps you resolve this final conflicted merge using the information from your earlier hand resolve\&.
 .sp
 Running the \fIgit rerere\fR command immediately after a conflicted automerge records the conflicted working tree files, with the usual conflict markers <<<<<<<, \fB=======\fR, and >>>>>>> in them\&. Later, after you are done resolving the conflicts, running \fIgit rerere\fR again will record the resolved state of these files\&. Suppose you did this when you created the test merge of master into the topic branch\&.
 .sp

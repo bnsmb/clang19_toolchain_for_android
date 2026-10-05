@@ -2,12 +2,12 @@
 .\"     Title: git-refs
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-REFS" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-REFS" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -32,8 +32,21 @@ git-refs \- Low\-level access to refs
 .SH "SYNOPSIS"
 .sp
 .nf
-\fIgit refs migrate\fR \-\-ref\-format=<format> [\-\-dry\-run]
-\fIgit refs verify\fR [\-\-strict] [\-\-verbose]
+\fBgit\fR \fBrefs\fR \fBmigrate\fR \fB\-\-ref\-format=\fR\fI<format>\fR [\fB\-\-no\-reflog\fR] [\fB\-\-dry\-run\fR]
+\fBgit\fR \fBrefs\fR \fBverify\fR [\fB\-\-strict\fR] [\fB\-\-verbose\fR]
+\fBgit\fR \fBrefs\fR \fBlist\fR [\fB\-\-count=\fR\fI<count>\fR] [\fB\-\-shell\fR|\fB\-\-perl\fR|\fB\-\-python\fR|\fB\-\-tcl\fR]
+                   [(\fB\-\-sort=\fR\fI<key>\fR)\&...] [\fB\-\-format=\fR\fI<format>\fR]
+                   [\fB\-\-include\-root\-refs\fR] [\fB\-\-points\-at=\fR\fI<object>\fR]
+                   [\fB\-\-merged\fR[\fB=\fR\fI<object>\fR]] [\fB\-\-no\-merged\fR[\fB=\fR\fI<object>\fR]]
+                   [\fB\-\-contains\fR[\fB=\fR\fI<object>\fR]] [\fB\-\-no\-contains\fR[\fB=\fR\fI<object>\fR]]
+                   [(\fB\-\-exclude=\fR\fI<pattern>\fR)\&...] [\fB\-\-start\-after=\fR\fI<marker>\fR]
+                   [ \fB\-\-stdin\fR | (\fI<pattern>\fR\fB\&...\fR)]
+\fBgit\fR \fBrefs\fR \fBexists\fR \fI<ref>\fR
+\fBgit\fR \fBrefs\fR \fBoptimize\fR [\fB\-\-all\fR] [\fB\-\-no\-prune\fR] [\fB\-\-auto\fR] [\fB\-\-include\fR \fI<pattern>\fR] [\fB\-\-exclude\fR \fI<pattern>\fR]
+\fBgit\fR \fBrefs\fR \fBcreate\fR [\fB\-\-message=\fR\fI<reason>\fR] [\fB\-\-no\-deref\fR] [\fB\-\-create\-reflog\fR] \fI<ref>\fR \fI<new\-value>\fR
+\fBgit\fR \fBrefs\fR \fBdelete\fR [\fB\-\-message=\fR\fI<reason>\fR] [\fB\-\-no\-deref\fR] \fI<ref>\fR [\fI<old\-value>\fR]
+\fBgit\fR \fBrefs\fR \fBupdate\fR [\fB\-\-message=\fR\fI<reason>\fR] [\fB\-\-no\-deref\fR] [\fB\-\-create\-reflog\fR] \fI<ref>\fR \fI<new\-value>\fR [\fI<old\-value>\fR]
+\fBgit\fR \fBrefs\fR \fBrename\fR [\fB\-\-message=\fR\fI<reason>\fR] \fI<old\-ref>\fR \fI<new\-ref>\fR
 .fi
 .sp
 .SH "DESCRIPTION"
@@ -41,67 +54,21 @@ git-refs \- Low\-level access to refs
 This command provides low\-level access to refs\&.
 .SH "COMMANDS"
 .PP
-migrate
+\fBmigrate\fR
 .RS 4
 Migrate ref store between different formats\&.
-.RE
-.PP
-verify
-.RS 4
-Verify reference database consistency\&.
-.RE
-.SH "OPTIONS"
+.if n \{\
 .sp
-The following options are specific to \fIgit refs migrate\fR:
-.PP
-\-\-ref\-format=<format>
-.RS 4
-The ref format to migrate the ref store to\&. Can be one of:
-.sp
-.RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
 .\}
-.el \{\
-.sp -1
-.IP \(bu 2.3
-.\}
-\fBfiles\fR
-for loose files with packed\-refs\&. This is the default\&.
-.RE
-.sp
 .RS 4
-.ie n \{\
-\h'-04'\(bu\h'+03'\c
-.\}
-.el \{\
-.sp -1
-.IP \(bu 2.3
-.\}
-\fBreftable\fR
-for the reftable format\&. This format is experimental and its internals are subject to change\&.
-.RE
-.RE
-.PP
-\-\-dry\-run
-.RS 4
-Perform the migration, but do not modify the repository\&. The migrated refs will be written into a separate directory that can be inspected separately\&. The name of the directory will be reported on stdout\&. This can be used to double check that the migration works as expected before performing the actual migration\&.
-.RE
-.sp
-The following options are specific to \fIgit refs verify\fR:
-.PP
-\-\-strict
-.RS 4
-Enable stricter error checking\&. This will cause warnings to be reported as errors\&. See
-\fBgit-fsck\fR(1)\&.
-.RE
-.PP
-\-\-verbose
-.RS 4
-When verifying the reference database consistency, be chatty\&.
-.RE
-.SH "KNOWN LIMITATIONS"
-.sp
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.ps +1
+\fBWarning\fR
+.ps -1
+.br
 The ref format migration has several known limitations in its current form:
 .sp
 .RS 4
@@ -123,10 +90,378 @@ It is not possible to migrate repositories that have worktrees\&.
 .sp -1
 .IP \(bu 2.3
 .\}
-There is no way to block concurrent writes to the repository during an ongoing migration\&. Concurrent writes can lead to an inconsistent migrated state\&. Users are expected to block writes on a higher level\&. If your repository is registered for scheduled maintenance, it is recommended to unregister it first with git\-maintenance(1)\&.
+There is no way to block concurrent writes to the repository during an ongoing migration\&. Concurrent writes can lead to an inconsistent migrated state\&. Users are expected to block writes on a higher level\&. If your repository is registered for scheduled maintenance, it is recommended to unregister it first with
+\fBgit-maintenance\fR(1)\&.
 .RE
 .sp
 These limitations may eventually be lifted\&.
+.sp .5v
+.RE
+.RE
+.PP
+\fBverify\fR
+.RS 4
+Verify reference database consistency\&.
+.RE
+.PP
+\fBlist\fR
+.RS 4
+List references in the repository with support for filtering, formatting, and sorting\&. This subcommand is an alias for
+\fBgit-for-each-ref\fR(1)
+and offers identical functionality\&.
+.RE
+.PP
+\fBexists\fR
+.RS 4
+Check whether the given reference exists\&. Returns an exit code of 0 if it does, 2 if it is missing, and 1 in case looking up the reference failed with an error other than the reference being missing\&. This does not verify whether the reference resolves to an actual object\&.
+.RE
+.PP
+\fBoptimize\fR
+.RS 4
+Optimizes references to improve repository performance and reduce disk usage\&. This subcommand is an alias for
+\fBgit-pack-refs\fR(1)
+and offers identical functionality\&.
+.RE
+.PP
+\fBcreate\fR
+.RS 4
+Create the given reference, which must not already exist, pointing at
+\fI<new\-value>\fR\&.
+.RE
+.PP
+\fBdelete\fR
+.RS 4
+Delete the given reference\&. This subcommand mirrors
+\fBgit\fR
+\fBupdate\-ref\fR
+\fB\-d\fR
+(see
+\fBgit-update-ref\fR(1))\&. When
+\fI<old\-value>\fR
+is given, the reference is only deleted after verifying that it currently contains
+\fI<old\-value>\fR\&.
+.RE
+.PP
+\fBupdate\fR
+.RS 4
+Update the given reference to point at
+\fI<new\-value>\fR\&. If
+\fI<old\-value>\fR
+is given, the reference is only updated after verifying that it currently contains
+\fI<old\-value>\fR\&. As a special case, an all\-zeroes
+\fI<new\-value>\fR
+deletes the branch, whereas an all\-zeroes
+\fI<old\-value>\fR
+ensures that the branch does not yet exist\&.
+.RE
+.PP
+\fBrename\fR
+.RS 4
+Rename the reference
+\fI<oldref>\fR
+to
+\fI<newref>\fR\&. The old reference must exist and the new reference must not yet exist, and both must have a well\-formed name (see
+\fBgit-check-ref-format\fR(1))\&.
+.RE
+.SH "OPTIONS"
+.sp
+The following options are specific to \fBgit\fR \fBrefs\fR \fBmigrate\fR:
+.PP
+\fB\-\-ref\-format=\fR\fI<format>\fR
+.RS 4
+The ref format to migrate the ref store to\&. Can be one of:
+.PP
+\fBfiles\fR
+.RS 4
+for loose files with packed\-refs\&. This is the default\&.
+.RE
+.PP
+\fBreftable\fR
+.RS 4
+for the reftable format\&.
+.RE
+.RE
+.PP
+\fB\-\-dry\-run\fR
+.RS 4
+Perform the migration, but do not modify the repository\&. The migrated refs will be written into a separate directory that can be inspected separately\&. The name of the directory will be reported on stdout\&. This can be used to double check that the migration works as expected before performing the actual migration\&.
+.RE
+.PP
+\fB\-\-reflog\fR, \fB\-\-no\-reflog\fR
+.RS 4
+Choose between migrating the reflog data to the new backend, and discarding them\&. The default is "\-\-reflog", to migrate\&.
+.RE
+.sp
+The following options are specific to \fBgit\fR \fBrefs\fR \fBverify\fR:
+.PP
+\fB\-\-strict\fR
+.RS 4
+Enable stricter error checking\&. This will cause warnings to be reported as errors\&. See
+\fBgit-fsck\fR(1)\&.
+.RE
+.PP
+\fB\-\-verbose\fR
+.RS 4
+When verifying the reference database consistency, be chatty\&.
+.RE
+.sp
+The following options are specific to \fIgit refs list\fR:
+.PP
+\fI<pattern>\fR\&.\&.\&.
+.RS 4
+If one or more
+\fI<pattern>\fR
+parameters are given, only refs are shown that match against at least one pattern, either using
+\fBfnmatch\fR(3) or literally, in the latter case matching completely or from the beginning up to a slash\&.
+.RE
+.PP
+\fB\-\-stdin\fR
+.RS 4
+The list of patterns is read from standard input instead of from the argument list\&.
+.RE
+.PP
+\fB\-\-count=\fR\fI<count>\fR
+.RS 4
+Stop after showing
+\fI<count>\fR
+refs\&.
+.RE
+.PP
+\fB\-\-sort=\fR\fI<key>\fR
+.RS 4
+Sort on the field name
+\fI<key>\fR\&. Prefix
+\fB\-\fR
+to sort in descending order of the value\&. When unspecified,
+\fBrefname\fR
+is used\&. You may use the
+\fB\-\-sort=\fR\fI<key>\fR
+option multiple times, in which case the last key becomes the primary key\&.
+.RE
+.PP
+\fB\-\-format\fR[\fB=\fR\fI<format>\fR]
+.RS 4
+A string that interpolates
+\fB%\fR(\fBfieldname\fR) from a ref being shown and the object it points at\&. In addition, the string literal
+\fB%%\fR
+renders as
+\fB%\fR
+and
+\fB%xx\fR
+\- where
+\fBxx\fR
+are hex digits \- renders as the character with hex code
+\fBxx\fR\&. For example,
+\fB%00\fR
+interpolates to
+\fB\e0\fR
+(\fINUL\fR),
+\fB%09\fR
+to
+\fB\et\fR
+(\fITAB\fR), and
+\fB%0a\fR
+to
+\fB\en\fR
+(\fILF\fR)\&.
+.RE
+.sp
+When unspecified, \fI<format>\fR defaults to \fB%\fR(\fBobjectname\fR) \fBSPC\fR \fB%\fR(\fBobjecttype\fR) \fBTAB\fR \fB%\fR(\fBrefname\fR)\&.
+.PP
+\fB\-\-color\fR[\fB=\fR\fI<when>\fR]
+.RS 4
+Respect any colors specified in the
+\fB\-\-format\fR
+option\&. The
+\fI<when>\fR
+field must be one of
+\fBalways\fR,
+\fBnever\fR, or
+\fBauto\fR
+(if
+\fI<when>\fR
+is absent, behave as if
+\fBalways\fR
+was given)\&.
+.RE
+.PP
+\fB\-\-shell\fR, \fB\-\-perl\fR, \fB\-\-python\fR, \fB\-\-tcl\fR
+.RS 4
+If given, strings that substitute
+\fB%\fR(\fBfieldname\fR) placeholders are quoted as string literals suitable for the specified host language\&. This is meant to produce a scriptlet that can directly be "eval"ed\&.
+.RE
+.PP
+\fB\-\-points\-at=\fR\fI<object>\fR
+.RS 4
+Only list refs which points at the given object\&.
+.RE
+.PP
+\fB\-\-merged\fR[\fB=\fR\fI<object>\fR]
+.RS 4
+Only list refs whose tips are reachable from the specified commit (\fBHEAD\fR
+if not specified)\&.
+.RE
+.PP
+\fB\-\-no\-merged\fR[\fB=\fR\fI<object>\fR]
+.RS 4
+Only list refs whose tips are not reachable from
+\fI<object>\fR(\fBHEAD\fR
+if not specified)\&.
+.RE
+.PP
+\fB\-\-contains\fR[\fB=\fR\fI<object>\fR]
+.RS 4
+Only list refs which contain
+\fI<object>\fR(\fBHEAD\fR
+if not specified)\&.
+.RE
+.PP
+\fB\-\-no\-contains\fR[\fB=\fR\fI<object>\fR]
+.RS 4
+Only list refs which don\(cqt contain
+\fI<object>\fR
+(\fBHEAD\fR
+if not specified)\&.
+.RE
+.PP
+\fB\-\-ignore\-case\fR
+.RS 4
+Sorting and filtering refs are case insensitive\&.
+.RE
+.PP
+\fB\-\-omit\-empty\fR
+.RS 4
+Do not print a newline after formatted refs where the format expands to the empty string\&.
+.RE
+.PP
+\fB\-\-exclude=\fR\fI<excluded\-pattern>\fR
+.RS 4
+If one or more
+\fB\-\-exclude\fR
+options are given, only refs which do not match any
+\fI<excluded\-pattern>\fR
+parameters are shown\&. Matching is done using the same rules as
+\fI<pattern>\fR
+above\&.
+.RE
+.PP
+\fB\-\-include\-root\-refs\fR
+.RS 4
+List root refs (\fBHEAD\fR
+and pseudorefs) apart from regular refs\&.
+.RE
+.PP
+\fB\-\-start\-after=\fR\fI<marker>\fR
+.RS 4
+Allows paginating the output by skipping references up to and including the specified marker\&. When paging, it should be noted that references may be deleted, modified or added between invocations\&. Output will only yield those references which follow the marker lexicographically\&. Output begins from the first reference that would come after the marker alphabetically\&. Cannot be used with
+\fB\-\-sort=\fR\fI<key>\fR
+or
+\fB\-\-stdin\fR
+options, or the
+\fI<pattern>\fR
+argument(s) to limit the refs\&.
+.RE
+.sp
+The following options are specific to \fIgit refs optimize\fR:
+.PP
+\fB\-\-all\fR
+.RS 4
+The command by default packs all tags and refs that are already packed, and leaves other refs alone\&. This is because branches are expected to be actively developed and packing their tips does not help performance\&. This option causes all refs to be packed as well, with the exception of hidden refs, broken refs, and symbolic refs\&. Useful for a repository with many branches of historical interests\&.
+.RE
+.PP
+\fB\-\-no\-prune\fR
+.RS 4
+The command usually removes loose refs under
+\fB$GIT_DIR/refs\fR
+hierarchy after packing them\&. This option tells it not to\&.
+.RE
+.PP
+\fB\-\-auto\fR
+.RS 4
+Pack refs as needed depending on the current state of the ref database\&. The behavior depends on the ref format used by the repository and may change in the future\&.
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+"files": Loose references are packed into the
+\fBpacked\-refs\fR
+file based on the ratio of loose references to the size of the
+\fBpacked\-refs\fR
+file\&. The bigger the
+\fBpacked\-refs\fR
+file, the more loose references need to exist before we repack\&.
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+"reftable": Tables are compacted such that they form a geometric sequence\&. For two tables N and N+1, where N+1 is newer, this maintains the property that N is at least twice as big as N+1\&. Only tables that violate this property are compacted\&.
+.RE
+.RE
+.PP
+\fB\-\-include\fR \fI<pattern>\fR
+.RS 4
+Pack refs based on a
+\fBglob\fR(\fB7\fR) pattern\&. Repetitions of this option accumulate inclusion patterns\&. If a ref is both included in
+\fB\-\-include\fR
+and
+\fB\-\-exclude\fR,
+\fB\-\-exclude\fR
+takes precedence\&. Using
+\fB\-\-include\fR
+will preclude all tags from being included by default\&. Symbolic refs and broken refs will never be packed\&. When used with
+\fB\-\-all\fR, it will be a noop\&. Use
+\fB\-\-no\-include\fR
+to clear and reset the list of patterns\&.
+.RE
+.PP
+\fB\-\-exclude\fR \fI<pattern>\fR
+.RS 4
+Do not pack refs matching the given
+\fBglob\fR(\fB7\fR) pattern\&. Repetitions of this option accumulate exclusion patterns\&. Use
+\fB\-\-no\-exclude\fR
+to clear and reset the list of patterns\&. If a ref is already packed, including it with
+\fB\-\-exclude\fR
+will not unpack it\&.
+.sp
+When used with
+\fB\-\-all\fR, pack only loose refs which do not match any of the provided
+\fB\-\-exclude\fR
+patterns\&.
+.sp
+When used with
+\fB\-\-include\fR, refs provided to
+\fB\-\-include\fR, minus refs that are provided to
+\fB\-\-exclude\fR
+will be packed\&.
+.RE
+.sp
+The following options are specific to commands which write references:
+.PP
+\fB\-\-create\-reflog\fR
+.RS 4
+Create a reflog for the reference even if one would not ordinarily be created\&.
+.RE
+.PP
+\fB\-\-message=\fR\fI<reason>\fR
+.RS 4
+Use the given <reason> string for the reflog entry associated with the update\&. An empty message is rejected\&.
+.RE
+.PP
+\fB\-\-no\-deref\fR
+.RS 4
+Operate on <ref> itself rather than the reference it points to via a symbolic ref\&.
+.RE
 .SH "GIT"
 .sp
 Part of the \fBgit\fR(1) suite

@@ -2,12 +2,12 @@
 .\"     Title: gitformat-index
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GITFORMAT\-INDEX" "5" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GITFORMAT\-INDEX" "5" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -919,7 +919,7 @@ A sequence of NUL\-terminated strings, preceded by the size of the sequence in v
 .sp -1
 .IP \(bu 2.3
 .\}
-Stat data of $GIT_DIR/info/exclude\&. See "Index entry" section from ctime field until "file size"\&.
+Stat data of $GIT_COMMON_DIR/info/exclude\&. See "Index entry" section from ctime field until "file size"\&.
 .RE
 .sp
 .RS 4
@@ -952,7 +952,7 @@ Stat data of core\&.excludesFile
 .sp -1
 .IP \(bu 2.3
 .\}
-Hash of $GIT_DIR/info/exclude\&. A null hash means the file does not exist\&.
+Hash of $GIT_COMMON_DIR/info/exclude\&. A null hash means the file does not exist\&.
 .RE
 .sp
 .RS 4

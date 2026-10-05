@@ -2,12 +2,12 @@
 .\"     Title: git-add
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-ADD" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-ADD" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -35,28 +35,42 @@ git-add \- Add file contents to the index
 \fBgit\fR \fBadd\fR [\fB\-\-verbose\fR | \fB\-v\fR] [\fB\-\-dry\-run\fR | \fB\-n\fR] [\fB\-\-force\fR | \fB\-f\fR] [\fB\-\-interactive\fR | \fB\-i\fR] [\fB\-\-patch\fR | \fB\-p\fR]
         [\fB\-\-edit\fR | \fB\-e\fR] [\fB\-\-\fR[\fBno\-\fR]\fBall\fR | \fB\-A\fR | \fB\-\-\fR[\fBno\-\fR]\fBignore\-removal\fR | [\fB\-\-update\fR | \fB\-u\fR]] [\fB\-\-sparse\fR]
         [\fB\-\-intent\-to\-add\fR | \fB\-N\fR] [\fB\-\-refresh\fR] [\fB\-\-ignore\-errors\fR] [\fB\-\-ignore\-missing\fR] [\fB\-\-renormalize\fR]
-        [\fB\-\-chmod=\fR(\fB+\fR|\fB\-\fR)\fBx\fR] [\fB\-\-pathspec\-from\-file=\fR\fI<file>\fR [\fB\-\-pathspec\-file\-nul\fR]]
+        [\fB\-\-resolved\fR] [\fB\-\-chmod=\fR(\fB+\fR|\fB\-\fR)\fBx\fR] [\fB\-\-pathspec\-from\-file=\fR\fI<file>\fR [\fB\-\-pathspec\-file\-nul\fR]]
         [\fB\-\-\fR] [\fI<pathspec>\fR\&...]
 .fi
 .sp
 .SH "DESCRIPTION"
 .sp
-This command updates the index using the current content found in the working tree, to prepare the content staged for the next commit\&. It typically adds the current content of existing paths as a whole, but with some options it can also be used to add content with only part of the changes made to the working tree files applied, or remove paths that do not exist in the working tree anymore\&.
+Add contents of new or changed files to the index\&. The "index" (also known as the "staging area") is what you use to prepare the contents of the next commit\&.
 .sp
-The "index" holds a snapshot of the content of the working tree, and it is this snapshot that is taken as the contents of the next commit\&. Thus after making any changes to the working tree, and before running the commit command, you must use the \fBadd\fR command to add any new or modified files to the index\&.
+When you run \fBgit\fR \fBcommit\fR without any other arguments, it will only commit staged changes\&. For example, if you\(cqve edited \fBfile\&.c\fR and want to commit your changes to that file, you can run:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+git add file\&.c
+git commit
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+You can also add only part of your changes to a file with \fBgit\fR \fBadd\fR \fB\-p\fR\&.
 .sp
 This command can be performed multiple times before a commit\&. It only adds the content of the specified file(s) at the time the add command is run; if you want subsequent changes included in the next commit, then you must run \fBgit\fR \fBadd\fR again to add the new content to the index\&.
 .sp
 The \fBgit\fR \fBstatus\fR command can be used to obtain a summary of which files have changes that are staged for the next commit\&.
 .sp
-The \fBgit\fR \fBadd\fR command will not add ignored files by default\&. If any ignored files were explicitly specified on the command line, \fBgit\fR \fBadd\fR will fail with a list of ignored files\&. Ignored files reached by directory recursion or filename globbing performed by Git (quote your globs before the shell) will be silently ignored\&. The \fBgit\fR \fBadd\fR command can be used to add ignored files with the \fB\-f\fR (force) option\&.
+The \fBgit\fR \fBadd\fR command will not add ignored files by default\&. You can use the \fB\-\-force\fR option to add ignored files\&. If you specify the exact filename of an ignored file, \fBgit\fR \fBadd\fR will fail with a list of ignored files\&. Otherwise it will silently ignore the file\&.
 .sp
 Please see \fBgit-commit\fR(1) for alternative ways to add content to a commit\&.
 .SH "OPTIONS"
 .PP
 \fI<pathspec>\fR\&.\&.\&.
 .RS 4
-Files to add content from\&. Fileglobs (e\&.g\&. *\&.c) can be given to add all matching files\&. Also a leading directory name (e\&.g\&.
+Files to add content from\&. Fileglobs (e\&.g\&.
+\fB*\&.c\fR) can be given to add all matching files\&. Also a leading directory name (e\&.g\&.
 \fBdir\fR
 to add
 \fBdir/file1\fR
@@ -93,7 +107,11 @@ Be verbose\&.
 .PP
 \fB\-f\fR, \fB\-\-force\fR
 .RS 4
-Allow adding otherwise ignored files\&.
+Allow adding otherwise ignored files\&. The option is also used when
+\fBsubmodule\&.\fR\fI<name>\fR\fB\&.ignore=all\fR
+is set, but you want to stage an update of the submodule\&. The
+\fBpath\fR
+to the submodule must be explicitly specified\&.
 .RE
 .PP
 \fB\-\-sparse\fR
@@ -120,6 +138,29 @@ This effectively runs
 \fB\-\-interactive\fR, but bypasses the initial command menu and directly jumps to the
 \fBpatch\fR
 subcommand\&. See \(lqInteractive mode\(rq for details\&.
+.RE
+.PP
+\fB\-U\fR\fI<n>\fR, \fB\-\-unified=\fR\fI<n>\fR
+.RS 4
+Generate diffs with
+\fI<n>\fR
+lines of context\&. The number of context lines defaults to
+\fBdiff\&.context\fR
+or 3 if the configuration variable is unset\&. (\fB\-U\fR
+without
+\fI<n>\fR
+is silently accepted as a synonym for
+\fB\-p\fR
+due to a historical accident)\&.
+.RE
+.PP
+\fB\-\-inter\-hunk\-context=\fR\fI<n>\fR
+.RS 4
+Show the context between diff hunks, up to the specified
+\fI<number>\fR
+of lines, thereby fusing hunks that are close to each other\&. Defaults to
+\fBdiff\&.interHunkContext\fR
+or 0 if the config option is unset\&.
 .RE
 .PP
 \fB\-e\fR, \fB\-\-edit\fR
@@ -228,6 +269,16 @@ cleans to
 \fICRCRLF\fR
 sequence is only partially cleaned to
 \fICRLF\fR\&.
+.RE
+.PP
+\fB\-\-resolved\fR
+.RS 4
+Update the index for unmerged paths matching
+\fI<pathspec>\fR
+where no conflict markers remain in the working tree\&. Unmerged paths without conflict markers (including binary files and file deletions) are staged as resolved, while any path with leftover conflict markers causes the command to refuse to stage any files\&. Cannot be combined with
+\fB\-u\fR
+or
+\fB\-A\fR\&.
 .RE
 .PP
 \fB\-\-chmod=\fR(\fB+\fR|\fB\-\fR)\fBx\fR
@@ -455,13 +506,14 @@ a \- stage this hunk and all later hunks in the file
 d \- do not stage this hunk or any of the later hunks in the file
 g \- select a hunk to go to
 / \- search for a hunk matching the given regex
-j \- leave this hunk undecided, see next undecided hunk
-J \- leave this hunk undecided, see next hunk
-k \- leave this hunk undecided, see previous undecided hunk
-K \- leave this hunk undecided, see previous hunk
+j \- go to the next undecided hunk, roll over at the bottom
+J \- go to the next hunk, roll over at the bottom
+k \- go to the previous undecided hunk, roll over at the top
+K \- go to the previous hunk, roll over at the top
 s \- split the current hunk into smaller hunks
 e \- manually edit the current hunk
 p \- print the current hunk
+P \- print the current hunk using the pager
 ? \- print help
 .fi
 .if n \{\

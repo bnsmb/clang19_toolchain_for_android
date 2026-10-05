@@ -2,12 +2,12 @@
 .\"     Title: git-multi-pack-index
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-MULTI\-PACK\-INDEX" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-MULTI\-PACK\-INDEX" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -32,13 +32,24 @@ git-multi-pack-index \- Write and verify multi\-pack\-indexes
 .SH "SYNOPSIS"
 .sp
 .nf
-\fIgit multi\-pack\-index\fR [\-\-object\-dir=<dir>] [\-\-[no\-]bitmap] <sub\-command>
+\fIgit multi\-pack\-index\fR [<options>] write [\-\-preferred\-pack=<pack>]
+                         [\-\-[no\-]bitmap] [\-\-[no\-]incremental] [\-\-[no\-]stdin\-packs]
+                         [\-\-refs\-snapshot=<path>] [\-\-[no\-]write\-chain\-file]
+                         [\-\-base=<checksum>]
+\fIgit multi\-pack\-index\fR [<options>] compact [\-\-[no\-]incremental]
+                         [\-\-[no\-]bitmap] [\-\-base=<checksum>] [\-\-[no\-]write\-chain\-file]
+                         <from> <to>
+\fIgit multi\-pack\-index\fR [<options>] verify
+\fIgit multi\-pack\-index\fR [<options>] expire
+\fIgit multi\-pack\-index\fR [<options>] repack [\-\-batch\-size=<size>]
 .fi
 .sp
 .SH "DESCRIPTION"
 .sp
 Write or verify a multi\-pack\-index (MIDX) file\&.
 .SH "OPTIONS"
+.sp
+The following command\-line options are applicable to all sub\-commands:
 .PP
 \-\-object\-dir=<dir>
 .RS 4
@@ -52,12 +63,13 @@ for the pack\-files to index\&.
 must be an alternate of the current repository\&.
 .RE
 .PP
-\-\-[no\-]progress
+\-\-progress, \-\-no\-progress
 .RS 4
 Turn progress on/off explicitly\&. If neither is specified, progress is shown if standard error is connected to a terminal\&. Supported by sub\-commands
 \fBwrite\fR,
 \fBverify\fR,
-\fBexpire\fR, and `repack\&.
+\fBexpire\fR, and
+\fBrepack\fR\&.
 .RE
 .sp
 The following subcommands are available:
@@ -70,9 +82,7 @@ sub\-command:
 .PP
 \-\-preferred\-pack=<pack>
 .RS 4
-Optionally specify the tie\-breaking pack used when multiple packs contain the same object\&.
-\fI<pack>\fR
-must contain at least one object\&. If not given, ties are broken in favor of the pack with the lowest mtime\&.
+When specified, break ties in favor of this pack when there are additional copies of its objects in other packs\&. Ties for objects not found in the preferred pack are always resolved in favor of the copy in the pack with the highest mtime\&. If unspecified, the pack with the lowest mtime is used by default\&. The preferred pack must have at least one object\&.
 .RE
 .PP
 \-\-[no\-]bitmap
@@ -108,9 +118,58 @@ marker)\&.
 .PP
 \-\-incremental
 .RS 4
-Write an incremental MIDX file containing only objects and packs not present in an existing MIDX layer\&. Migrates non\-incremental MIDXs to incremental ones when necessary\&. Incompatible with
-\fB\-\-bitmap\fR\&.
+Write an incremental MIDX file containing only objects and packs not present in an existing MIDX layer\&. Migrates non\-incremental MIDXs to incremental ones when necessary\&.
 .RE
+.PP
+\-\-[no\-]write\-chain\-file
+.RS 4
+When used with
+\fB\-\-incremental\fR, write a new MIDX layer but do not update the multi\-pack\-index\-chain file\&. The checksum of the new layer is printed to standard output, allowing the caller to assemble and write the chain itself\&. Requires
+\fB\-\-incremental\fR\&.
+.RE
+.PP
+\-\-base=<checksum>
+.RS 4
+Specify the checksum of an existing MIDX layer to use as the base when writing a new incremental layer\&. The special value
+\fBnone\fR
+indicates that the new layer should have no base (i\&.e\&., it becomes a root layer)\&. Requires
+\fB\-\-no\-write\-chain\-file\fR\&.
+.RE
+.RE
+.PP
+compact
+.RS 4
+Write a new MIDX layer containing only objects and packs present in the range
+\fI<from>\fR
+to
+\fI<to>\fR, where both arguments are checksums of existing layers in the MIDX chain\&.
+.PP
+\-\-incremental
+.RS 4
+Write the result to a MIDX chain instead of writing a stand\-alone MIDX\&.
+.RE
+.PP
+\-\-[no\-]bitmap
+.RS 4
+Control whether or not a multi\-pack bitmap is written\&.
+.RE
+.PP
+\-\-[no\-]write\-chain\-file
+.RS 4
+When used with
+\fB\-\-incremental\fR, write a new compacted MIDX layer but do not update the multi\-pack\-index\-chain file\&. The checksum of the new layer is printed to standard output\&. Requires
+\fB\-\-incremental\fR\&.
+.RE
+.PP
+\-\-base=<checksum>
+.RS 4
+Specify the checksum of an existing MIDX layer to use as the base for the compacted result, instead of using the immediate parent of
+\fI<from>\fR\&. The special value
+\fBnone\fR
+indicates that the result should have no base\&.
+.RE
+.sp
+Note that the compact command requires writing a version\-2 midx that cannot be read by versions of Git prior to v2\&.54\&.
 .RE
 .PP
 verify
@@ -275,5 +334,5 @@ Part of the \fBgit\fR(1) suite
 .IP " 1." 4
 The Multi-Pack-Index Design Document
 .RS 4
-\%file:///data/local/tmp/sysroot/usr/share/doc/git/technical/multi-pack-index.html
+\%file:///data/local/tmp/sysroot//usr/share/doc/git/technical/multi-pack-index.html
 .RE

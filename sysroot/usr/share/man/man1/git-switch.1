@@ -2,12 +2,12 @@
 .\"     Title: git-switch
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-SWITCH" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-SWITCH" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -32,10 +32,10 @@ git-switch \- Switch branches
 .SH "SYNOPSIS"
 .sp
 .nf
-\fIgit switch\fR [<options>] [\-\-no\-guess] <branch>
-\fIgit switch\fR [<options>] \-\-detach [<start\-point>]
-\fIgit switch\fR [<options>] (\-c|\-C) <new\-branch> [<start\-point>]
-\fIgit switch\fR [<options>] \-\-orphan <new\-branch>
+\fBgit\fR \fBswitch\fR [\fI<options>\fR] [\fB\-\-no\-guess\fR] \fI<branch>\fR
+\fBgit\fR \fBswitch\fR [\fI<options>\fR] \fB\-\-detach\fR [\fI<start\-point>\fR]
+\fBgit\fR \fBswitch\fR [\fI<options>\fR] (\fB\-c\fR|\fB\-C\fR) \fI<new\-branch>\fR [\fI<start\-point>\fR]
+\fBgit\fR \fBswitch\fR [\fI<options>\fR] \fB\-\-orphan\fR \fI<new\-branch>\fR
 .fi
 .sp
 .SH "DESCRIPTION"
@@ -45,47 +45,54 @@ Switch to a specified branch\&. The working tree and the index are updated to ma
 Optionally a new branch could be created with either \fB\-c\fR, \fB\-C\fR, automatically from a remote branch of same name (see \fB\-\-guess\fR), or detach the working tree from any branch with \fB\-\-detach\fR, along with switching\&.
 .sp
 Switching branches does not require a clean index and working tree (i\&.e\&. no differences compared to \fBHEAD\fR)\&. The operation is aborted however if the operation leads to loss of local changes, unless told otherwise with \fB\-\-discard\-changes\fR or \fB\-\-merge\fR\&.
-.sp
-THIS COMMAND IS EXPERIMENTAL\&. THE BEHAVIOR MAY CHANGE\&.
 .SH "OPTIONS"
 .PP
-<branch>
+\fI<branch>\fR
 .RS 4
 Branch to switch to\&.
 .RE
 .PP
-<new\-branch>
+\fI<new\-branch>\fR
 .RS 4
 Name for the new branch\&.
 .RE
 .PP
-<start\-point>
+\fI<start\-point>\fR
 .RS 4
 The starting point for the new branch\&. Specifying a
 \fI<start\-point>\fR
-allows you to create a branch based on some other point in history than where HEAD currently points\&. (Or, in the case of
+allows you to create a branch based on some other point in history than where
+\fBHEAD\fR
+currently points\&. (Or, in the case of
 \fB\-\-detach\fR, allows you to inspect and detach from some other point\&.)
 .sp
 You can use the
-\fB@\fR{\-N} syntax to refer to the N\-th last branch/commit switched to using "git switch" or "git checkout" operation\&. You may also specify
+\fB@\fR{\-\fI<N>\fR} syntax to refer to the
+\fI<N>\fR\-th last branch/commit switched to using
+\fBgit\fR
+\fBswitch\fR
+or
+\fBgit\fR
+\fBcheckout\fR
+operation\&. You may also specify
 \fB\-\fR
 which is synonymous to
 \fB@\fR{\-1}\&. This is often used to switch quickly between two branches, or to undo a branch switch by mistake\&.
 .sp
 As a special case, you may use
-\fBA\fR\fB\&.\&.\&.\fR\fBB\fR
+\fI<rev\-a>\fR\fB\&.\&.\&.\fR\fI<rev\-b>\fR
 as a shortcut for the merge base of
-\fBA\fR
+\fI<rev\-a>\fR
 and
-\fBB\fR
+\fI<rev\-b>\fR
 if there is exactly one merge base\&. You can leave out at most one of
-\fBA\fR
+\fI<rev\-a>\fR
 and
-\fBB\fR, in which case it defaults to
+\fI<rev\-b>\fR, in which case it defaults to
 \fBHEAD\fR\&.
 .RE
 .PP
-\-c <new\-branch>, \-\-create <new\-branch>
+\fB\-c\fR \fI<new\-branch>\fR, \fB\-\-create\fR \fI<new\-branch>\fR
 .RS 4
 Create a new branch named
 \fI<new\-branch>\fR
@@ -104,10 +111,13 @@ $ git switch <new\-branch>
 .RE
 .\}
 .sp
-that is to say, the branch is not reset/created unless "git switch" is successful (e\&.g\&., when the branch is in use in another worktree, not just the current branch stays the same, but the branch is not reset to the start\-point, either)\&.
+that is to say, the branch is not reset/created unless
+\fBgit\fR
+\fBswitch\fR
+is successful (e\&.g\&., when the branch is in use in another worktree, not just the current branch stays the same, but the branch is not reset to the start\-point, either)\&.
 .RE
 .PP
-\-C <new\-branch>, \-\-force\-create <new\-branch>
+\fB\-C\fR \fI<new\-branch>\fR, \fB\-\-force\-create\fR \fI<new\-branch>\fR
 .RS 4
 Similar to
 \fB\-\-create\fR
@@ -120,8 +130,8 @@ already exists, it will be reset to
 .RS 4
 .\}
 .nf
-$ git branch \-f <new\-branch>
-$ git switch <new\-branch>
+$ git branch \-f _<new\-branch>_
+$ git switch _<new\-branch>_
 .fi
 .if n \{\
 .RE
@@ -129,14 +139,14 @@ $ git switch <new\-branch>
 .sp
 .RE
 .PP
-\-d, \-\-detach
+\fB\-d\fR, \fB\-\-detach\fR
 .RS 4
 Switch to a commit for inspection and discardable experiments\&. See the "DETACHED HEAD" section in
 \fBgit-checkout\fR(1)
 for details\&.
 .RE
 .PP
-\-\-guess, \-\-no\-guess
+\fB\-\-guess\fR, \fB\-\-no\-guess\fR
 .RS 4
 If
 \fI<branch>\fR
@@ -178,13 +188,13 @@ The default behavior can be set via the
 configuration variable\&.
 .RE
 .PP
-\-f, \-\-force
+\fB\-f\fR, \fB\-\-force\fR
 .RS 4
 An alias for
 \fB\-\-discard\-changes\fR\&.
 .RE
 .PP
-\-\-discard\-changes
+\fB\-\-discard\-changes\fR
 .RS 4
 Proceed even if the index or the working tree differs from
 \fBHEAD\fR\&. Both the index and working tree are restored to match the switching target\&. If
@@ -192,34 +202,41 @@ Proceed even if the index or the working tree differs from
 is specified, submodule content is also restored to match the switching target\&. This is used to throw away local changes\&.
 .RE
 .PP
-\-m, \-\-merge
+\fB\-m\fR, \fB\-\-merge\fR
 .RS 4
-If you have local modifications to one or more files that are different between the current branch and the branch to which you are switching, the command refuses to switch branches in order to preserve your modifications in context\&. However, with this option, a three\-way merge between the current branch, your working tree contents, and the new branch is done, and you will be on the new branch\&.
-.sp
-When a merge conflict happens, the index entries for conflicting paths are left unmerged, and you need to resolve the conflicts and mark the resolved paths with
+If you have local modifications to one or more files that are different between the current branch and the branch to which you are switching, the command normally refuses to switch branches in order to preserve your modifications in context\&. However, with this option, the conflicting local changes are automatically stashed before the switch and reapplied afterwards\&. If the local changes do not overlap with the differences between branches, the switch proceeds without stashing\&. If reapplying the stash results in conflicts, the entry is saved to the stash list\&. Resolve the conflicts and run
 \fBgit\fR
-\fBadd\fR
-(or
+\fBstash\fR
+\fBdrop\fR
+when done, or clear the working tree (e\&.g\&. with
 \fBgit\fR
-\fBrm\fR
-if the merge should result in deletion of the path)\&.
+\fBreset\fR
+\fB\-\-hard\fR) before running
+\fBgit\fR
+\fBstash\fR
+\fBpop\fR
+later to re\-apply your changes\&.
 .RE
 .PP
-\-\-conflict=<style>
+\fB\-\-conflict=\fR\fI<style>\fR
 .RS 4
 The same as
 \fB\-\-merge\fR
 option above, but changes the way the conflicting hunks are presented, overriding the
 \fBmerge\&.conflictStyle\fR
-configuration variable\&. Possible values are "merge" (default), "diff3", and "zdiff3"\&.
+configuration variable\&. Possible values are
+\fBmerge\fR
+(default),
+\fBdiff3\fR, and
+\fBzdiff3\fR\&.
 .RE
 .PP
-\-q, \-\-quiet
+\fB\-q\fR, \fB\-\-quiet\fR
 .RS 4
 Quiet, suppress feedback messages\&.
 .RE
 .PP
-\-\-progress, \-\-no\-progress
+\fB\-\-progress\fR, \fB\-\-no\-progress\fR
 .RS 4
 Progress status is reported on the standard error stream by default when it is attached to a terminal, unless
 \fB\-\-quiet\fR
@@ -227,7 +244,7 @@ is specified\&. This flag enables progress reporting even if not attached to a t
 \fB\-\-quiet\fR\&.
 .RE
 .PP
-\-t, \-\-track [direct|inherit]
+\fB\-t\fR, \fB\-\-track\fR[ (\fBdirect\fR|\fBinherit\fR)]
 .RS 4
 When creating a new branch, set up "upstream" configuration\&.
 \fB\-c\fR
@@ -250,27 +267,27 @@ as the local branch when branching off of
 in such a case\&.
 .RE
 .PP
-\-\-no\-track
+\fB\-\-no\-track\fR
 .RS 4
 Do not set up "upstream" configuration, even if the
 \fBbranch\&.autoSetupMerge\fR
 configuration variable is true\&.
 .RE
 .PP
-\-\-orphan <new\-branch>
+\fB\-\-orphan\fR \fI<new\-branch>\fR
 .RS 4
 Create a new unborn branch, named
 \fI<new\-branch>\fR\&. All tracked files are removed\&.
 .RE
 .PP
-\-\-ignore\-other\-worktrees
+\fB\-\-ignore\-other\-worktrees\fR
 .RS 4
 \fBgit\fR
 \fBswitch\fR
 refuses when the wanted ref is already checked out by another worktree\&. This option makes it check the ref out anyway\&. In other words, the ref can be held by more than one worktree\&.
 .RE
 .PP
-\-\-recurse\-submodules, \-\-no\-recurse\-submodules
+\fB\-\-recurse\-submodules\fR, \fB\-\-no\-recurse\-submodules\fR
 .RS 4
 Using
 \fB\-\-recurse\-submodules\fR
@@ -322,21 +339,24 @@ error: You have local changes to \*(Aqfrotz\*(Aq; not switching branches\&.
 .\}
 .sp
 .sp
-You can give the \fB\-m\fR flag to the command, which would try a three\-way merge:
+You can give the \fB\-m\fR flag to the command, which will carry your local changes to the new branch:
 .sp
 .if n \{\
 .RS 4
 .\}
 .nf
 $ git switch \-m mytopic
-Auto\-merging frotz
+Applied autostash\&.
+Switched to branch \*(Aqmytopic\*(Aq
+The following paths have local changes:
+M       frotz
 .fi
 .if n \{\
 .RE
 .\}
 .sp
 .sp
-After this three\-way merge, the local modifications are \fInot\fR registered in your index file, so \fBgit\fR \fBdiff\fR would show you what changes you made since the tip of the new branch\&.
+After the switch, the local modifications are reapplied and are \fInot\fR registered in your index file, so \fBgit\fR \fBdiff\fR would show you what changes you made since the tip of the new branch\&.
 .sp
 To switch back to the previous branch before we switched to mytopic (i\&.e\&. "master" branch):
 .sp
@@ -351,7 +371,7 @@ $ git switch \-
 .\}
 .sp
 .sp
-You can grow a new branch from any commit\&. For example, switch to "HEAD~3" and create branch "fixup":
+You can grow a new branch from any commit\&. For example, switch to "\fBHEAD~3\fR" and create branch "\fBfixup\fR":
 .sp
 .if n \{\
 .RS 4
@@ -372,8 +392,8 @@ If you want to start a new branch from a remote branch of the same name:
 .\}
 .nf
 $ git switch new\-topic
-Branch \*(Aqnew\-topic\*(Aq set up to track remote branch \*(Aqnew\-topic\*(Aq from \*(Aqorigin\*(Aq
-Switched to a new branch \*(Aqnew\-topic\*(Aq
+Branch `new\-topic` set up to track remote branch `new\-topic` from `origin`
+Switched to a new branch `new\-topic`
 .fi
 .if n \{\
 .RE
@@ -410,7 +430,7 @@ $ git switch \-c good\-surprises
 .sp
 Everything below this line in this section is selectively included from the \fBgit-config\fR(1) documentation\&. The content is the same as what\(cqs found there:
 .PP
-checkout\&.defaultRemote
+\fBcheckout\&.defaultRemote\fR
 .RS 4
 When you run
 \fBgit\fR
@@ -449,7 +469,7 @@ when
 refers to a remote branch\&. This setting might be used for other checkout\-like commands or functionality in the future\&.
 .RE
 .PP
-checkout\&.guess
+\fBcheckout\&.guess\fR
 .RS 4
 Provides the default value for the
 \fB\-\-guess\fR
@@ -466,16 +486,29 @@ and
 \fBgit-checkout\fR(1)\&.
 .RE
 .PP
-checkout\&.workers
+\fBcheckout\&.workers\fR
 .RS 4
 The number of parallel workers to use when updating the working tree\&. The default is one, i\&.e\&. sequential execution\&. If set to a value less than one, Git will use as many workers as the number of logical cores available\&. This setting and
 \fBcheckout\&.thresholdForParallelism\fR
 affect all commands that perform checkout\&. E\&.g\&. checkout, clone, reset, sparse\-checkout, etc\&.
+.if n \{\
 .sp
-Note: Parallel checkout usually delivers better performance for repositories located on SSDs or over NFS\&. For repositories on spinning disks and/or machines with a small number of cores, the default sequential checkout often performs better\&. The size and compression level of a repository might also influence how well the parallel version performs\&.
+.\}
+.RS 4
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.ps +1
+\fBNote\fR
+.ps -1
+.br
+Parallel checkout usually delivers better performance for repositories located on SSDs or over NFS\&. For repositories on spinning disks and/or machines with a small number of cores, the default sequential checkout often performs better\&. The size and compression level of a repository might also influence how well the parallel version performs\&.
+.sp .5v
+.RE
 .RE
 .PP
-checkout\&.thresholdForParallelism
+\fBcheckout\&.thresholdForParallelism\fR
 .RS 4
 When running parallel checkout with a small number of files, the cost of subprocess spawning and inter\-process communication might outweigh the parallelization gains\&. This setting allows you to define the minimum number of files for which parallel checkout should be attempted\&. The default is 100\&.
 .RE

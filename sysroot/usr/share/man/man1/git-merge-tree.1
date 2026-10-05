@@ -2,12 +2,12 @@
 .\"     Title: git-merge-tree
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-MERGE\-TREE" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-MERGE\-TREE" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -102,10 +102,18 @@ etc\&.
 After the merge completes, a new toplevel tree object is created\&. See \fBOUTPUT\fR below for details\&.
 .SH "OPTIONS"
 .PP
+\-\-stdin
+.RS 4
+Read the commits to merge from the standard input rather than the command\-line\&. See
+INPUT FORMAT
+below for more information\&. Implies
+\fB\-z\fR\&.
+.RE
+.PP
 \-z
 .RS 4
 Do not quote filenames in the <Conflicted file info> section, and end each filename with a NUL character rather than newline\&. Also begin the messages section with a NUL character instead of a newline\&. See
-the section called \(lqOUTPUT\(rq
+OUTPUT
 below for more information\&.
 .RE
 .PP
@@ -114,9 +122,14 @@ below for more information\&.
 In the Conflicted file info section, instead of writing a list of (mode, oid, stage, path) tuples to output for conflicted files, just provide a list of filenames with conflicts (and do not list filenames multiple times if they have multiple conflicting stages)\&.
 .RE
 .PP
-\-\-[no\-]messages
+\-\-messages, \-\-no\-messages
 .RS 4
 Write any informational messages such as "Auto\-merging <path>" or CONFLICT notices to the end of stdout\&. If unspecified, the default is to include these messages if there are merge conflicts, and to omit them otherwise\&.
+.RE
+.PP
+\-\-quiet
+.RS 4
+Disable all output from the program\&. Useful when you are only interested in the exit status\&. Allows merge\-tree to exit early when it finds a conflict, and allows it to avoid writing most objects created by merges\&.
 .RE
 .PP
 \-\-allow\-unrelated\-histories
@@ -126,10 +139,15 @@ merge\-tree will by default error out if the two branches specified share no com
 .PP
 \-\-merge\-base=<tree\-ish>
 .RS 4
-Instead of finding the merge\-bases for <branch1> and <branch2>, specify a merge\-base for the merge, and specifying multiple bases is currently not supported\&. This option is incompatible with
+Instead of finding the merge\-bases for <branch1> and <branch2>, specify a merge\-base for the merge\&. This option is incompatible with
 \fB\-\-stdin\fR\&.
 .sp
-As the merge\-base is provided directly, <branch1> and <branch2> do not need to specify commits; trees are enough\&.
+Specifying multiple bases is currently not supported, which means that when merging two branches with more than one merge\-base, using this option may cause merge results to differ from what
+\fBgit\fR
+\fBmerge\fR
+would compute\&. This can include potentially losing some changes made on one side of the history in the resulting merge\&.
+.sp
+With this option, since the merge\-base is provided directly, <branch1> and <branch2> do not need to specify commits; trees are enough\&.
 .RE
 .PP
 \-X<option>, \-\-strategy\-option=<option>
@@ -196,8 +214,6 @@ This is an integer status followed by a NUL character\&. The integer status is:
 .nf
 0: merge had conflicts
 1: merge was clean
-<0: something prevented the merge from running (e\&.g\&. access to repository
-    objects denied by filesystem)
 .fi
 .if n \{\
 .RE

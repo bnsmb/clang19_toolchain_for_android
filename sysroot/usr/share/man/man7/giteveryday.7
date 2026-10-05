@@ -2,12 +2,12 @@
 .\"     Title: giteveryday
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GITEVERYDAY" "7" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GITEVERYDAY" "7" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -510,7 +510,8 @@ clone sets these configuration variables by default\&. It arranges
 \fBgit\fR
 \fBpull\fR
 to fetch and store the branches of mothership machine to local
-\fBremotes/origin/\fR* remote\-tracking branches\&.
+\fBremotes/origin/*\fR
+remote\-tracking branches\&.
 T}
 \fB3.\fR\h'-2n':T{
 arrange
@@ -520,7 +521,8 @@ to push all local branches to their corresponding branch of the mothership machi
 T}
 \fB4.\fR\h'-2n':T{
 push will stash all our work away on
-\fBremotes/satellite/\fR* remote\-tracking branches on the mothership machine\&. You could use this as a back\-up method\&. Likewise, you can pretend that mothership "fetched" from you (useful when access is one sided)\&.
+\fBremotes/satellite/*\fR
+remote\-tracking branches on the mothership machine\&. You could use this as a back\-up method\&. Likewise, you can pretend that mothership "fetched" from you (useful when access is one sided)\&.
 T}
 \fB5.\fR\h'-2n':T{
 on mothership machine, merge the work done on the satellite machine into the master branch\&.
@@ -989,5 +991,5 @@ Part of the \fBgit\fR(1) suite
 .IP " 1." 4
 update hook howto
 .RS 4
-\%file:///data/local/tmp/sysroot/usr/share/doc/git/howto/update-hook-example.html
+\%file:///data/local/tmp/sysroot//usr/share/doc/git/howto/update-hook-example.html
 .RE

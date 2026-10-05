@@ -2,12 +2,12 @@
 .\"     Title: git-fsmonitor--daemon
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-FSMONITOR\-\-DAEMON" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-FSMONITOR\-\-DAEMON" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -79,11 +79,50 @@ The fsmonitor daemon does not currently know about submodules and does not know 
 .sp
 By default, the fsmonitor daemon refuses to work with network\-mounted repositories; this may be overridden by setting \fBfsmonitor\&.allowRemote\fR to \fBtrue\fR\&. Note, however, that the fsmonitor daemon is not guaranteed to work correctly with all network\-mounted repositories, so such use is considered experimental\&.
 .sp
-On Mac OS, the inter\-process communication (IPC) between various Git commands and the fsmonitor daemon is done via a Unix domain socket (UDS) \(em a special type of file \(em which is supported by native Mac OS filesystems, but not on network\-mounted filesystems, NTFS, or FAT32\&. Other filesystems may or may not have the needed support; the fsmonitor daemon is not guaranteed to work with these filesystems and such use is considered experimental\&.
+On Mac OS and Linux, the inter\-process communication (IPC) between various Git commands and the fsmonitor daemon is done via a Unix domain socket (UDS) \(em a special type of file \(em which is supported by native Mac OS and Linux filesystems, but not on network\-mounted filesystems, NTFS, or FAT32\&. Other filesystems may or may not have the needed support; the fsmonitor daemon is not guaranteed to work with these filesystems and such use is considered experimental\&.
 .sp
-By default, the socket is created in the \fB\&.git\fR directory\&. However, if the \fB\&.git\fR directory is on a network\-mounted filesystem, it will instead be created at \fB$HOME/\&.git\-fsmonitor\-\fR* unless \fB$HOME\fR itself is on a network\-mounted filesystem, in which case you must set the configuration variable \fBfsmonitor\&.socketDir\fR to the path of a directory on a Mac OS native filesystem in which to create the socket file\&.
+By default, the socket is created in the \fB\&.git\fR directory\&. However, if the \fB\&.git\fR directory is on a network\-mounted filesystem, it will instead be created at \fB$HOME/\&.git\-fsmonitor\-*\fR unless \fB$HOME\fR itself is on a network\-mounted filesystem, in which case you must set the configuration variable \fBfsmonitor\&.socketDir\fR to the path of a directory on a native filesystem in which to create the socket file\&.
 .sp
-If none of the above directories (\fB\&.git\fR, \fB$HOME\fR, or \fBfsmonitor\&.socketDir\fR) is on a native Mac OS file filesystem the fsmonitor daemon will report an error that will cause the daemon and the currently running command to exit\&.
+If none of the above directories (\fB\&.git\fR, \fB$HOME\fR, or \fBfsmonitor\&.socketDir\fR) is on a native filesystem the fsmonitor daemon will report an error that will cause the daemon and the currently running command to exit\&.
+.SS "LINUX CAVEATS"
+.sp
+On Linux, the fsmonitor daemon uses inotify to monitor filesystem events\&. The inotify system has per\-user limits on the number of watches that can be created\&. The default limit is typically 8192 watches per user\&.
+.sp
+For large repositories with many directories, you may need to increase this limit\&. Check the current limit with:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+cat /proc/sys/fs/inotify/max_user_watches
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+To temporarily increase the limit:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+sudo sysctl fs\&.inotify\&.max_user_watches=65536
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+To make the change permanent, add to \fB/etc/sysctl\&.conf\fR:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+fs\&.inotify\&.max_user_watches=65536
+.fi
+.if n \{\
+.RE
+.\}
 .SH "CONFIGURATION"
 .sp
 Everything below this line in this section is selectively included from the \fBgit-config\fR(1) documentation\&. The content is the same as what\(cqs found there:
@@ -102,7 +141,7 @@ is set to
 .PP
 fsmonitor\&.socketDir
 .RS 4
-This Mac OS\-specific option, if set, specifies the directory in which to create the Unix domain socket used for communication between the fsmonitor daemon and various Git commands\&. The directory must reside on a native Mac OS filesystem\&. Only respected when
+This Mac OS and Linux\-specific option, if set, specifies the directory in which to create the Unix domain socket used for communication between the fsmonitor daemon and various Git commands\&. The directory must reside on a native filesystem\&. Only respected when
 \fBcore\&.fsmonitor\fR
 is set to
 \fBtrue\fR\&.
@@ -114,5 +153,5 @@ Part of the \fBgit\fR(1) suite
 .IP " 1." 4
 simple IPC
 .RS 4
-\%file:///data/local/tmp/sysroot/usr/share/doc/git/technical/api-simple-ipc.html
+\%file:///data/local/tmp/sysroot//usr/share/doc/git/technical/api-simple-ipc.html
 .RE

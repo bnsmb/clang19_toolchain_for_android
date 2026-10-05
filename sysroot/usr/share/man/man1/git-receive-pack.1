@@ -2,12 +2,12 @@
 .\"     Title: git-receive-pack
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-RECEIVE\-PACK" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-RECEIVE\-PACK" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -65,6 +65,11 @@ to serve up
 in
 \fBgit-upload-pack\fR(1)\&.
 .RE
+.PP
+\-\-skip\-connectivity\-check
+.RS 4
+Bypasses the connectivity checks that validate the existence of all objects in the transitive closure of reachable objects\&. This option is intended for server operators that want to implement their own object connectivity validation outside of Git\&. This is useful in such cases where the server\-side knows additional information about how Git is being used and thus can rely on certain guarantees to more efficiently compute object connectivity that Git itself cannot make\&. Usage of this option without a reliable external mechanism to ensure full reachable object connectivity risks corrupting the repository and should not be used in the general case\&.
+.RE
 .SH "PRE\-RECEIVE HOOK"
 .sp
 Before any ref is updated, if $GIT_DIR/hooks/pre\-receive file exists and is executable, it will be invoked once with no parameters\&. The standard input of the hook will be one line per ref to be updated:
@@ -95,7 +100,8 @@ The GPG key ID of the key that signed the push certificate\&.
 .PP
 \fBGIT_PUSH_CERT_STATUS\fR
 .RS 4
-The status of GPG verification of the push certificate, using the same mnemonic as used in %G? format of
+The status of GPG verification of the push certificate, using the same mnemonic as used in
+\fB%G\fR? format of
 \fBgit\fR
 \fBlog\fR
 family of commands (see
@@ -189,7 +195,7 @@ sha1\-old SP sha1\-new SP refname LF
 .sp
 The refname value is relative to $GIT_DIR; e\&.g\&. for the master head this is "refs/heads/master"\&. The two sha1 values before each refname are the object names for the refname before and after the update\&. Refs that were created will have sha1\-old equal to 0{40}, while refs that were deleted will have sha1\-new equal to 0{40}, otherwise sha1\-old and sha1\-new should be valid objects in the repository\&.
 .sp
-The \fBGIT_PUSH_CERT\fR* environment variables can be inspected, just as in \fBpre\-receive\fR hook, after accepting a signed push\&.
+The \fBGIT_PUSH_CERT*\fR environment variables can be inspected, just as in \fBpre\-receive\fR hook, after accepting a signed push\&.
 .sp
 Using this hook, it is easy to generate mails describing the updates to the repository\&. This example script sends one mail message per ref listing the commits pushed to the repository, and logs the push certificates of signed pushes with good signatures to a logger service:
 .sp

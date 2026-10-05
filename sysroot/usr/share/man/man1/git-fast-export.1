@@ -2,12 +2,12 @@
 .\"     Title: git-fast-export
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-FAST\-EXPORT" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-FAST\-EXPORT" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -32,7 +32,7 @@ git-fast-export \- Git data exporter
 .SH "SYNOPSIS"
 .sp
 .nf
-\fIgit fast\-export\fR [<options>] | \fIgit fast\-import\fR
+\fIgit fast\-export\fR [<options>] [<revision\-range>] [[\-\-] <path>\&...]
 .fi
 .sp
 .SH "DESCRIPTION"
@@ -51,9 +51,9 @@ statements every <n> objects, to be shown by
 during import\&.
 .RE
 .PP
-\-\-signed\-tags=(verbatim|warn|warn\-strip|strip|abort)
+\-\-signed\-tags=(verbatim|warn\-verbatim|warn\-strip|strip|abort)
 .RS 4
-Specify how to handle signed tags\&. Since any transformation after the export can change the tag names (which can also happen when excluding revisions) the signatures will not match\&.
+Specify how to handle signed tags\&. Since any transformation after the export (or during the export, such as excluding revisions) can change the hashes being signed, the signatures may become invalid\&.
 .sp
 When asking to
 \fIabort\fR
@@ -62,7 +62,53 @@ When asking to
 \fIwarn\-strip\fR
 they will be made unsigned but a warning will be displayed, with
 \fIverbatim\fR, they will be silently exported and with
-\fIwarn\fR, they will be exported, but you will see a warning\&.
+\fIwarn\-verbatim\fR
+(or
+\fIwarn\fR, a deprecated synonym), they will be exported, but you will see a warning\&.
+\fIverbatim\fR
+and
+\fIwarn\-verbatim\fR
+should only be used if you know that no transformation affecting tags or any commit in their history will be performed by you or by fast\-export or fast\-import, or if you do not care that the resulting tag will have an invalid signature\&.
+.RE
+.PP
+\-\-signed\-commits=(verbatim|warn\-verbatim|warn\-strip|strip|abort)
+.RS 4
+Specify how to handle signed commits\&. Behaves exactly as
+\fI\-\-signed\-tags\fR, but for commits\&. Default is
+\fIstrip\fR, which is the same as how earlier versions of this command without this option behaved\&.
+.sp
+When exported, a signature starts with:
+.sp
+gpgsig <git\-hash\-algo> <signature\-format>
+.sp
+where <git\-hash\-algo> is the Git object hash so either "sha1" or "sha256", and <signature\-format> is the signature type, so "openpgp", "x509", "ssh" or "unknown"\&.
+.sp
+For example, an OpenPGP signature on a SHA\-1 commit starts with
+\fBgpgsig\fR
+\fBsha1\fR
+\fBopenpgp\fR, while an SSH signature on a SHA\-256 commit starts with
+\fBgpgsig\fR
+\fBsha256\fR
+\fBssh\fR\&.
+.sp
+While all the signatures of a commit are exported, an importer may choose to accept only some of them\&. For example
+\fBgit-fast-import\fR(1)
+currently stores at most one signature per Git hash algorithm in each commit\&.
+.if n \{\
+.sp
+.\}
+.RS 4
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.ps +1
+\fBNote\fR
+.ps -1
+.br
+This is highly experimental and the format of the data stream may change in the future without compatibility guarantees\&.
+.sp .5v
+.RE
 .RE
 .PP
 \-\-tag\-of\-filtered\-object=(abort|drop|rewrite)

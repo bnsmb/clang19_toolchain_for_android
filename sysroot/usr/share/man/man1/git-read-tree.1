@@ -2,12 +2,12 @@
 .\"     Title: git-read-tree
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-READ\-TREE" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-READ\-TREE" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -136,7 +136,7 @@ Instead of writing the results out to
 \fB$GIT_INDEX_FILE\fR, write the resulting index in the named file\&. While the command is operating, the original index file is locked with the same mechanism as usual\&. The file must allow to be rename(2)ed into from a temporary file that is created next to the usual index file; typically this means it needs to be on the same filesystem as the index file itself, and you need write permission to the directories the index file and index output file are located in\&.
 .RE
 .PP
-\-\-[no\-]recurse\-submodules
+\-\-recurse\-submodules, \-\-no\-recurse\-submodules
 .RS 4
 Using \-\-recurse\-submodules will update the content of all active submodules according to the commit recorded in the superproject by calling read\-tree recursively, also setting the submodules\*(Aq HEAD to be detached at that commit\&.
 .RE

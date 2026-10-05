@@ -2,12 +2,12 @@
 .\"     Title: git-fsck
 .\"    Author: [FIXME: author] [see http://www.docbook.org/tdg5/en/html/author]
 .\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
-.\"      Date: 01/20/2025
+.\"      Date: 10/05/2026
 .\"    Manual: Git Manual
-.\"    Source: Git 2.48.0
+.\"    Source: Git 2.56.0
 .\"  Language: English
 .\"
-.TH "GIT\-FSCK" "1" "01/20/2025" "Git 2\&.48\&.0" "Git Manual"
+.TH "GIT\-FSCK" "1" "10/05/2026" "Git 2\&.56\&.0" "Git Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -35,7 +35,7 @@ git-fsck \- Verifies the connectivity and validity of the objects in the databas
 \fIgit fsck\fR [\-\-tags] [\-\-root] [\-\-unreachable] [\-\-cache] [\-\-no\-reflogs]
          [\-\-[no\-]full] [\-\-strict] [\-\-verbose] [\-\-lost\-found]
          [\-\-[no\-]dangling] [\-\-[no\-]progress] [\-\-connectivity\-only]
-         [\-\-[no\-]name\-objects] [<object>\&...]
+         [\-\-[no\-]name\-objects] [\-\-[no\-]references] [<object>\&...]
 .fi
 .sp
 .SH "DESCRIPTION"
@@ -59,7 +59,7 @@ namespace, and all reflogs (unless \-\-no\-reflogs is given) as heads\&.
 Print out objects that exist but that aren\(cqt reachable from any of the reference nodes\&.
 .RE
 .PP
-\-\-[no\-]dangling
+\-\-dangling, \-\-no\-dangling
 .RS 4
 Print objects that exist but that are never
 \fIdirectly\fR
@@ -126,9 +126,17 @@ they are reachable, compatible with
 \fBHEAD@\fR{1234567890}~25^2:src/\&.
 .RE
 .PP
-\-\-[no\-]progress
+\-\-progress, \-\-no\-progress
 .RS 4
 Progress status is reported on the standard error stream by default when it is attached to a terminal, unless \-\-no\-progress or \-\-verbose is specified\&. \-\-progress forces progress status even if the standard error stream is not directed to a terminal\&.
+.RE
+.PP
+\-\-references, \-\-no\-references
+.RS 4
+Control whether to check the references database consistency via
+\fIgit refs verify\fR\&. See
+\fBgit-refs\fR(1)
+for details\&. The default is to check the references database\&.
 .RE
 .SH "CONFIGURATION"
 .sp
@@ -149,9 +157,11 @@ instead, or to clone or fetch it set
 \fBfetch\&.fsck\&.\fR\fI<msg\-id>\fR\&.
 .sp
 The rest of the documentation discusses
-\fBfsck\&.\fR* for brevity, but the same applies for the corresponding
-\fBreceive\&.fsck\&.\fR* and
-\fBfetch\&.fsck\&.\fR*\&. variables\&.
+\fBfsck\&.*\fR
+for brevity, but the same applies for the corresponding
+\fBreceive\&.fsck\&.*\fR
+and
+\fBfetch\&.fsck\&.*\fR\&. variables\&.
 .sp
 Unlike variables like
 \fBcolor\&.ui\fR
@@ -282,6 +292,25 @@ The following lists the types of errors \fBgit\fR \fBfsck\fR detects and what ea
 (INFO) A tree contains a bad filemode entry\&.
 .RE
 .PP
+\fBbadGpgsig\fR
+.RS 4
+(ERROR) A tag contains a bad (truncated) signature (e\&.g\&.,
+\fBgpgsig\fR) header\&.
+.RE
+.PP
+\fBbadHeadTarget\fR
+.RS 4
+(ERROR) The
+\fBHEAD\fR
+ref is a symref that does not refer to a branch\&.
+.RE
+.PP
+\fBbadHeaderContinuation\fR
+.RS 4
+(ERROR) A continuation header (such as for
+\fBgpgsig\fR) is unexpectedly truncated\&.
+.RE
+.PP
 \fBbadName\fR
 .RS 4
 (ERROR) An author/committer name is empty\&.
@@ -290,6 +319,16 @@ The following lists the types of errors \fBgit\fR \fBfsck\fR detects and what ea
 \fBbadObjectSha1\fR
 .RS 4
 (ERROR) An object has a bad sha1\&.
+.RE
+.PP
+\fBbadPackedRefEntry\fR
+.RS 4
+(ERROR) The "packed\-refs" file contains an invalid entry\&.
+.RE
+.PP
+\fBbadPackedRefHeader\fR
+.RS 4
+(ERROR) The "packed\-refs" file contains an invalid header\&.
 .RE
 .PP
 \fBbadParentSha1\fR
@@ -312,9 +351,19 @@ The following lists the types of errors \fBgit\fR \fBfsck\fR detects and what ea
 (ERROR) A ref has an invalid format\&.
 .RE
 .PP
+\fBbadRefOid\fR
+.RS 4
+(ERROR) A ref points to an invalid object ID\&.
+.RE
+.PP
 \fBbadReferentName\fR
 .RS 4
 (ERROR) The referent name of a symref is invalid\&.
+.RE
+.PP
+\fBbadReftableTableName\fR
+.RS 4
+(WARN) A reftable table has an invalid name\&.
 .RE
 .PP
 \fBbadTagName\fR
@@ -350,6 +399,13 @@ The following lists the types of errors \fBgit\fR \fBfsck\fR detects and what ea
 \fBemptyName\fR
 .RS 4
 (WARN) A path contains an empty name\&.
+.RE
+.PP
+\fBemptyPackedRefsFile\fR
+.RS 4
+(INFO) "packed\-refs" file is empty\&. Report to the
+\m[blue]\fBgit@vger\&.kernel\&.org\fR\m[]\&\s-2\u[1]\d\s+2
+mailing list if you see this error\&. As only very early versions of Git would create such an empty "packed_refs" file, we might tighten this rule in the future\&.
 .RE
 .PP
 \fBextraHeaderEntry\fR
@@ -435,8 +491,6 @@ blob\&.
 \fB\&.gitmodules\fR
 blob\&.
 .RE
-.sp
-\fBgitmodulesLarge\fR; (ERROR) \fB\&.gitmodules\fR blob is too large to parse\&.
 .PP
 \fBgitmodulesPath\fR
 .RS 4
@@ -589,6 +643,16 @@ line in a tag object\&.
 \fBnullSha1\fR
 .RS 4
 (WARN) Tree contains entries pointing to a null sha1\&.
+.RE
+.PP
+\fBpackedRefEntryNotTerminated\fR
+.RS 4
+(ERROR) The "packed\-refs" file contains an entry that is not terminated by a newline\&.
+.RE
+.PP
+\fBpackedRefUnsorted\fR
+.RS 4
+(ERROR) The "packed\-refs" file is not sorted\&.
 .RE
 .PP
 \fBrefMissingNewline\fR
