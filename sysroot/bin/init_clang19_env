@@ -122,10 +122,13 @@
 #    /data/local/tmp/sysroot/bin is now in the PATH variable before /data/local/tmp/sysroot/usr/bin
 #
 #  19.09.2026 v1.5.20 /bs
-#   the example source files are now in the directory "./examples" and the binaries are created in the directory "./out"
+#    the example source files are now in the directory "./examples" and the binaries are created in the directory "./out"
 #
-#  02.10.2026 v	1.5.21 /bs
-#   added code to allow the user shell access to /proc in SELinux if root access is available
+#  02.10.2026 v1.5.21 /bs
+#    added code to allow the user shell access to /proc in SELinux if root access is available
+#
+#  05.10.2026 v1.5.22 /bs
+#    added the alias swapon
 #
 
 __TRUE=0
@@ -248,7 +251,7 @@ function define_aliase {
 
   NEW_ALIAS=""
 
-  for i in vi find tar bash sed awk dd nano curl ; do
+  for i in vi find tar bash sed awk dd nano curl swapon ; do
     if ${TEST} -x "${CLANG_SYSROOT}/usr/bin/$i"  ; then
        alias $i="${CLANG_SYSROOT}/usr/bin/$i"
       NEW_ALIAS="${NEW_ALIAS} $i"
