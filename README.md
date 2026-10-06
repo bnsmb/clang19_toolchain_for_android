@@ -134,7 +134,7 @@ http://bnsmb.de/files/public/Android/archive/ndk_for_clang19_toolchain/
 
 A [Magisk](https://github.com/topjohnwu/Magisk/) module to automatically start the **sshd** from the **clang19 toolchain** after a reboot of the phone is available here:
 
-[http://bnsmb.de/files/public/Android/MagiskModules/clang19_sshd_1.3.0.zip](http://bnsmb.de/files/public/Android/MagiskModules/clang19_sshd_1.3.0.zip)
+[https://bnsmb.de/files/public/Android/MagiskModules/clang19_sshd_1.3.0.zip](https://bnsmb.de/files/public/Android/MagiskModules/clang19_sshd_1.3.0.zip)
 
 
 
