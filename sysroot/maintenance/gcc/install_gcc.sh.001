@@ -1,0 +1,51 @@
+echo
+echo "Installing the GCC ..."
+echo
+
+GCC_INSTALL_SCRIPT="/data/local/tmp/gcc-install.sh"
+
+# download the original install script from the repository
+# 
+${CMD_PREFIX} wget https://cdn.jsdelivr.net/gh/AmanoTeam/android-gcc-cross@master/tools/termux-install.sh -O "${GCC_INSTALL_SCRIPT}"
+
+# the toybox commands from Android do not support long arguments
+# 
+${CMD_PREFIX} sed -i -e "s/--symbolic/-s/g" -e "s/--force/-f/g" -e "s/--recursive/-r/g" "${GCC_INSTALL_SCRIPT}"
+
+
+# Note: the install script must be run by bash
+#
+${CMD_PREFIX} sed -i -e "s#/data/data/com.termux/files/usr/bin/bash#/data/local/tmp/sysroot/usr/bin/bash#g" "${GCC_INSTALL_SCRIPT}"
+
+# set the target directory for the gcc toolchain
+#
+${CMD_PREFIX} sed -i -e "s#/data/data/com.termux/files/usr/lib/android-gcc-cross#/data/local/tmp/sysroot/usr/lib/android-gcc-cross#g" "${GCC_INSTALL_SCRIPT}"
+
+# do not delete the tar file with gcc compiler
+# 
+${CMD_PREFIX} sed -i -e 's|unlink "${pino_tarball}"|# unlink "${pino_tarball}"|g' "${GCC_INSTALL_SCRIPT}"
+
+# do not download the tar file if it already exists
+#
+${CMD_PREFIX} sed -i -e 's#^curl # /system/bin/test -r  "${pino_tarball}" \|\| curl #'  "${GCC_INSTALL_SCRIPT}"
+
+
+
+# define the directory with the gcc toolchain
+# 
+export PREFIX=/data/local/tmp/sysroot/usr/gcc
+
+# set the home directory
+#
+export HOME=/data/local/tmp/sysroot/home
+
+# create the necessary directories if missing and start the installation
+# 
+${CMD_PREFIX} mkdir -p ${PREFIX}/bin ${PREFIX}/usr/lib/ ${PREFIX}/home
+${CMD_PREFIX} chmod 755 "${GCC_INSTALL_SCRIPT}"
+( ${CMD_PREFIX} cd / && ${CMD_PREFIX} "${GCC_INSTALL_SCRIPT}" )
+
+echo
+echo "Use the script ./maintenance/fix_gcc_installation.sh to delete all files not neccessary for arm64 CPUs and create the correct symbolic links"
+echo
+
