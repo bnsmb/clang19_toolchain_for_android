@@ -462,12 +462,13 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 
 # SELinux helpler script for machines with root access and installed Magisk
 #
-  SELINUX_HELP_SCRIPT_FOR_MAGISK="$( which add_missing_selinux_rules_with_magisk.sh )"
- 
+  SELINUX_HELP_SCRIPT_FOR_MAGISK="${CLANG_SYSROOT}/bin/add_missing_selinux_rules_with_magisk.sh"
+  [ ! -x "${SELINUX_HELP_SCRIPT_FOR_MAGISK}" ] && SELINUX_HELP_SCRIPT_FOR_MAGISK=""
+  
 # SELinux helpler script for machines with root access but without Magisk
 #
-  SELINUX_HELP_SCRIPT="$( which add_missing_selinux_rules.sh )"
-
+  SELINUX_HELP_SCRIPT="${CLANG_SYSROOT}/bin/add_missing_selinux_rules.sh"
+  [ ! -x "${SELINUX_HELP_SCRIPT}" ] && SELINUX_HELP_SCRIPT=""
 
   MANPATH=${CLANG_SYSROOT}/usr/share/man
 
@@ -865,7 +866,7 @@ echo
   define_aliase
 
   echo ""
-
+  
   if [ ${ROOT_ACCESS_AVAILABLE} = ${__TRUE} ] ; then
 
     if [ "${ROOT_PREFIX}"x = ""x ] ; then
@@ -874,7 +875,7 @@ echo
       echo "Root access is enabled on this machine"
       echo ""
 
-      if [ "${SELINUX_HELP_SCRIPT_FOR_MAGISK}"x != ""x ] ; then
+      if [ "${MAGISKPOLICY}"x != ""x -a "${SELINUX_HELP_SCRIPT_FOR_MAGISK}"x != ""x ] ; then
 
         echo "Adding missing SELinux policies using the script \"${SELINUX_HELP_SCRIPT_FOR_MAGISK}\" ..."
 
@@ -889,6 +890,7 @@ echo
       else
         LogDebugMsg "Magisk is not installed on this machine and the SELinux helper script is missing - can not add missing SELinux rules"
       fi
+
     fi
 
     echo ""
