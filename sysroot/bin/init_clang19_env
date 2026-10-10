@@ -134,13 +134,13 @@
 __TRUE=0
 __FALSE=1
 
-STANDALONE_SCRIPT=${__FALSE}
+  STANDALONE_SCRIPT=${__FALSE}
 
-CONTINUE=${__TRUE}
+  CONTINUE=${__TRUE}
 
 # list of warning messages to print a script end
 #
-WARNING_MESSAGES=""
+  WARNING_MESSAGES=""
 
 if [ ${CONTINUE} = ${__TRUE} ] ; then
 
@@ -460,6 +460,10 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
 #
   MAGISKPOLICY="$( which magiskpolicy 2>/dev/null )"
 
+# SELinux helpler script for machines with root access and installed Magisk
+#
+  SELINUX_HELP_SCRIPT_FOR_MAGISK="$( which add_missing_selinux_rules_with_magisk.sh )"
+ 
 # SELinux helpler script for machines with root access but without Magisk
 #
   SELINUX_HELP_SCRIPT="$( which add_missing_selinux_rules.sh )"
@@ -870,32 +874,12 @@ echo
       echo "Root access is enabled on this machine"
       echo ""
 
-      if [ "${MAGISKPOLICY}"x != ""x ] ; then
+      if [ "${SELINUX_HELP_SCRIPT_FOR_MAGISK}"x != ""x ] ; then
 
-        echo "Adding missing SELinux policies using \"${MAGISKPOLICY}\" ..."
+        echo "Adding missing SELinux policies using the script \"${SELINUX_HELP_SCRIPT_FOR_MAGISK}\" ..."
 
-        echo "Enabling socket access for the user \"shell\" (this is necessary to use tmux or ssh-agent)..."
-
-        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file sock_file { create getattr setattr write unlink }"  '
-        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell devpts chr_file { read write open }"'
-
-        if which mtr 2>/dev/null 1>dev/null ; then
-          echo "Enabling icmp_socket access for the user \"shell\" (this is necessary to use mtr)..."
-          ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell port icmp_socket { name_bind }"'     
-        fi
-
-        echo "Enabling hard links for the user \"shell\" ..."
-        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file file link" '
+        ${ROOT_PREFIX} ${SELINUX_HELP_SCRIPT_FOR_MAGISK}
  
-
-	echo "Enabling access to proc for the user \"shell\" ..."
-        ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell proc_swaps file { read open gettattr }" '
-
-        if [ ${OS_VERSION} -gt 13 ] ; then
-          echo "Enabling creating and using fifos for the user \"shell\" ..."
-          ${ROOT_PREFIX} ${MAGISKPOLICY} '--live "allow shell shell_data_file fifo_file { create read open write getattr unlink ioctl }" '
-        fi
-
       elif [ "${SELINUX_HELP_SCRIPT}"x != ""x ] ; then
 
         echo "Adding missing SELinux policies using the script \"${SELINUX_HELP_SCRIPT}\" ..."

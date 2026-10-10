@@ -652,7 +652,6 @@ History
     updated the coreutils to version 9.12 (in /data/local/tmp/sysroot/usr/coreutils/) 
     updated the gcc toolchain to version 16.2.1_20260927 and removed the files for non-arm64 CPUs
     updated cmake 4.x to version 4.4.2
-    moved the api-level.h file for clang from /data/local/tmp/sysroot/usr/include/android/api-level.h to /data/local/tmp/sysroot/usr/clang19/include/android/api-level.h
     added the empty dummy libraries librt.so and librt.a
     added the include file usr/include/android_affinity_fix.h with definitions available in the bionic libarieries but missing in the include file sched.sh
     added the alias add_gcc_lib
@@ -674,4 +673,7 @@ History
     the script myldd now uses readelf if ldd failed
     updated gdb to version 18.1
     updated git to version 2.56.0 
+    added the script find_symbol_in_ndk_libcs to check in which API versions a symbol is defined
+    added the script ./bin/add_missing_selinux_rules_with_magisk.sh to define the missing SELinux policies with magiskpolicy
+    ./bin/init_clang19_env now uses add_missing_selinux_rules_with_magisk.sh  
 
