@@ -150,7 +150,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/b
 # cmake 3.30.4, 4.0.1, and 4.4.2
 # ninja 1.13.1
 # make 4.4.1
-# meson 1.9.1
+# meson 1.12.1
 # binutils 2.45 (addr2line  ar  as  c++filt  elfedit  gprof  ld  ld.bfd  nm  objcopy  objdump  ranlib  readelf  size  strings  strip)
 # 
 # autoconf 2.72
@@ -180,7 +180,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/b
 # 
 # perl 5.44
 # python 3.15
-# pip 25.0.1
+# pip 26.2.1
 # tcl 9.0
 # lua 5.4.8
 # sqlite3 3.53.4
@@ -675,6 +675,8 @@ History
     updated git to version 2.56.0 
     added the script find_symbol_in_ndk_libcs to check in which API versions a symbol is defined
     added the script ./bin/add_missing_selinux_rules_with_magisk.sh to define the missing SELinux policies with magiskpolicy
-    ./bin/init_clang19_env now uses add_missing_selinux_rules_with_magisk.sh  
     updated 7zz to version 26.04
     updated Python to version 3.15
+    updated meson to version 1.12.1
+    updated pip to veraion 26.2.1
+
