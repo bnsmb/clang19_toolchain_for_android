@@ -1,0 +1,63 @@
+
+[ $( uname -m )x != "x86_64"x ] && ( echo "ERROR: This is a configure script for cross compiling on the PC" ; exit 1 )
+
+TARGET_ROOT="/data/local/tmp/sysroot"
+#TARGET_ROOT="/system"
+
+
+# CFLAGS="$CFLAGS -Wno-implicit-function-declaration -Wno-int-conversion"
+
+CFLAGS="$CFLAGS -D__BIONIC_NO_PAGE_SIZE_MACRO "
+LDFLAGS="$LDFLAGS -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,-z,max-page-size=16384 -lm"
+CXXFLAGS="$CFLAGS"
+CXXFLAGS="$CXXFLAGS "
+
+# from Termux:
+# AC_OPTIONS="ac_cv_func_shm_unlink=no  ac_cv_func_shm_open=yesac_cv_posix_semaphores_enabled=yes ac_cv_func_linkat=no ac_cv_func_faccessat=no  ac_cv_file__dev_ptc=no"
+#
+
+CONFIGURE_OPTIONS="
+
+#--bindir=DIR            user executables [EPREFIX/bin]
+#--sbindir=DIR           system admin executables [EPREFIX/sbin]
+#--libexecdir=DIR        program executables [EPREFIX/libexec]
+#--sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
+#--sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
+#--localstatedir=DIR     modifiable single-machine data [PREFIX/var]
+#--runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
+#--libdir=DIR            object code libraries [EPREFIX/lib]
+#--includedir=DIR        C header files [PREFIX/include]
+#--oldincludedir=DIR     C header files for non-gcc [/usr/include]
+#--datarootdir=DIR       read-only arch.-independent data root [PREFIX/share]
+#--datadir=DIR           read-only architecture-independent data [DATAROOTDIR]
+#--infodir=DIR           info documentation [DATAROOTDIR/info]
+#--localedir=DIR         locale-dependent data [DATAROOTDIR/locale]
+#--mandir=DIR            man documentation [DATAROOTDIR/man]
+#--docdir=DIR            documentation root [DATAROOTDIR/doc/tmux]
+#--htmldir=DIR           html documentation [DOCDIR]
+#--dvidir=DIR            dvi documentation [DOCDIR]
+#--pdfdir=DIR            pdf documentation [DOCDIR]
+#--psdir=DIR             ps documentation [DOCDIR]
+
+--with-openssl=/data/develop/android/sysroot/usr 
+--enable-loadable-sqlite-extensions 
+--enable-shared
+--with-builtin-hashlib-hashes=md5,sha1,sha2,sha3,blake2,sha256,sha512 
+--without-ensurepip  
+--with-tzpath=/system/usr/share/zoneinfo 
+--enable-static-libpython-for-interpreter
+
+--with-build-python=/tools/python3.15/bin/python3.15 
+
+$*
+"
+
+CONFIGURE_OPTIONS="$( echo "${CONFIGURE_OPTIONS}" | grep -v "^#" )"
+
+
+CFLAGS="$( echo "$CFLAGS" | tr "\n" " " )"
+CXXFLAGS="$( echo "$CXXFLAGS" | tr "\n" " " )"
+LDFLAGS="$( echo "$LDFLAGS" | tr "\n" " " )"
+CPPFLAGS="$( echo "$CPPFLAGS" | tr "\n" " " )"
+
+${PREFIX}  ./configure  --build=aarch64  --host ${TARGET} --target=${TARGET} --prefix=${TARGET_ROOT}/usr/ $* CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" ${CONFIGURE_OPTIONS}  
