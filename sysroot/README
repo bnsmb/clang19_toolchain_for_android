@@ -162,7 +162,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/b
 # GNU help2man 1.49.3
 # pkg-config 0.29
 # pkgconf 2.30
-# autopoint 0.23
+# gettext 1.0 (autopoint, gettext, etc)
 # texinfo 7.2
 # 
 # bash 5.2.37
@@ -176,7 +176,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/b
 # rsync 3.4.4
 # 
 # wget 2.3.0
-# curl 8.22.0
+# curl 8.23.0
 # 
 # perl 5.44
 # python 3.15
@@ -647,7 +647,7 @@ History
     updated socat to version 1.8.1.3 using OpenSSL 3.5.8
     updated gzip to version 1.15
     added the symbolic link lib -> ./usr/lib
-    updated curl to version 8.22 using OpenSSL 3.5.8
+    updated curl to version 8.23 using OpenSSL 3.5.8
     removed the broken symbolic links chcon getlimits ginstall make-prime-list stdbuf libstdbuf.so kill du-tests  uptime dcgen  runcon in ./usr/bin
     updated the coreutils to version 9.12 (in /data/local/tmp/sysroot/usr/coreutils/) 
     updated the gcc toolchain to version 16.2.1_20260927 and removed the files for non-arm64 CPUs
@@ -679,4 +679,5 @@ History
     updated Python to version 3.15
     updated meson to version 1.12.1
     updated pip to veraion 26.2.1
+    added gettext 1.0
 

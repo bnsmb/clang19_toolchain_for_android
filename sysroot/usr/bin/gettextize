@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 1995-2024 Free Software Foundation, Inc.
+# Copyright (C) 1995-2026 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
+# Written by Ulrich Drepper, Bruno Haible, and Daiki Ueno.
 
 # This file is meant for authors or maintainers which want to
 # internationalize their package with the help of GNU gettext.  For
@@ -22,15 +23,8 @@
 
 progname=$0
 package=gettext-tools
-version=0.23
-archive_version=0.23
-
-# 04.02.2025 /bs : Use the executables from the clang19 tool chain if availalbe
-# #
-if test -d /data/local/tmp/sysroot/usr/bin ; then
-  export PATH=/data/local/tmp/sysroot/usr/bin:$PATH
-fi
-
+version=1.0
+archive_version=1.0
 
 # Set variables
 # - gettext_datadir     directory where the data files are stored.
@@ -135,9 +129,9 @@ func_find_prefixes ()
     curr_installprefix=`echo "$curr_installprefix" | sed -e 's,/[^/]*$,,'`
   done
 }
-if test "yes" = yes; then
-  exec_prefix="${prefix}"
-  bindir="${exec_prefix}/bin"
+if test "no" = yes; then
+  exec_prefix="/data/local/tmp/sysroot/usr"
+  bindir="/data/local/tmp/sysroot/usr/bin"
   orig_installdir="$bindir" # see Makefile.am's *_SCRIPTS variables
   func_find_curr_installdir # determine curr_installdir
   func_find_prefixes
@@ -213,11 +207,11 @@ or by email to <bug-gettext@gnu.org>."
 func_version ()
 {
   echo "$progname (GNU $package) $version"
-  echo "Copyright (C) 1995-2024 Free Software Foundation, Inc.
+  echo "Copyright (C) 1995-2026 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law."
-  echo "Written by" "Ulrich Drepper"
+  printf 'Written by %s and %s.\n' "Ulrich Drepper" "Bruno Haible"
 }
 
 # func_fatal_error message
@@ -290,7 +284,7 @@ unset CLICOLOR_FORCE GREP_OPTIONS
       --version | --versio | --versi | --vers | --ver | --ve | --v )
         func_version
         exit 0 ;;
-      -- ) # Stop option prcessing
+      -- ) # Stop option processing
         shift; break ;;
       -* )
         echo "gettextize: unknown option $1" 1>&2
@@ -767,6 +761,20 @@ You can then remove $podir/Makevars.template.
 "
         fi
         ;;
+      fetch-po)
+        if test -f "$srcdir/$podir/$file"; then
+          # This file may already be customized. Don't overwrite it.
+          :
+        else
+          if $do_changelog; then
+            func_poChangeLog_add_entry "	* $file: New file, from gettext-${version}."
+          fi
+          func_linkorcopy $file "$gettext_datadir/po/$file" "$podir/$file"
+          please="$please
+Please customize $podir/fetch-po, if appropriate.
+"
+        fi
+        ;;
       *)
         same=no
         if test -f "$srcdir/$podir/$file"; then
@@ -893,7 +901,7 @@ if test -f "$srcdir/Makefile.am"; then
   for file in $m4filelist; do
     same=no
     if test -f "$srcdir/$m4dir/$file"; then
-      if cmp -s "${datarootdir}/aclocal/$file" "$srcdir/$m4dir/$file"; then
+      if cmp -s "${datarootdir}/gettext/m4/$file" "$srcdir/$m4dir/$file"; then
         same=yes
       fi
     else
@@ -907,7 +915,7 @@ if test -f "$srcdir/Makefile.am"; then
       fi
     fi
     func_backup "$m4dir/$file"
-    func_linkorcopy "${datarootdir}/aclocal/$file" "${datarootdir}/aclocal/$file" "$m4dir/$file"
+    func_linkorcopy "${datarootdir}/gettext/m4/$file" "${datarootdir}/gettext/m4/$file" "$m4dir/$file"
   done
   missing_m4Makefileam=
   if test -n "$added_m4files"; then
@@ -1099,7 +1107,7 @@ else
   please="$please
 Please add the files
 $m4filelist
-from the ${datarootdir}/aclocal directory to your aclocal.m4 file.
+from the ${datarootdir}/gettext/m4 directory to your aclocal.m4 file.
 "
 fi
 

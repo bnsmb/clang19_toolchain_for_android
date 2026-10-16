@@ -1,6 +1,6 @@
 #! /bin/sh
 #
-# Copyright (C) 2002-2024 Free Software Foundation, Inc.
+# Copyright (C) 2002-2026 Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
+# Written by Bruno Haible and Daiki Ueno.
 
 # This file is meant for authors, maintainers, co-maintainers or installers
 # of packages which are internationalized with the help of GNU gettext.  For
@@ -22,15 +23,8 @@
 
 progname=$0
 package=gettext-tools
-version=0.23
-archive_version=0.23
-
-# 04.02.2025 /bs : Use the executables from the clang19 tool chain if availalbe
-# #
-if test -d /data/local/tmp/sysroot/usr/bin ; then
-  export PATH=/data/local/tmp/sysroot/usr/bin:$PATH
-fi
-
+version=1.0
+archive_version=1.0
 
 # Set variables
 # - gettext_datadir     directory where the data files are stored.
@@ -135,9 +129,9 @@ func_find_prefixes ()
     curr_installprefix=`echo "$curr_installprefix" | sed -e 's,/[^/]*$,,'`
   done
 }
-if test "yes" = yes; then
-  exec_prefix="${prefix}"
-  bindir="${exec_prefix}/bin"
+if test "no" = yes; then
+  exec_prefix="/data/local/tmp/sysroot/usr"
+  bindir="/data/local/tmp/sysroot/usr/bin"
   orig_installdir="$bindir" # see Makefile.am's *_SCRIPTS variables
   func_find_curr_installdir # determine curr_installdir
   func_find_prefixes
@@ -166,11 +160,13 @@ m4_pushdef([m4_esyscmd])
 
 # func_trace_sed macro configure.ac
 # traces an Autoconf macro call and outputs the arguments to stdout,
-# using sed.
+# using sed. For a macro call without arguments, print just a blank line.
 func_trace_sed ()
 {
   sed_extract_arguments='
-s,#.*$,,; s,^dnl .*$,,; s, dnl .*$,,;
+s,#.*$,,
+s,^dnl .*$,,
+s, dnl .*$,,
 /'"$1"'(/ {
   ta
   :a
@@ -182,6 +178,8 @@ s,#.*$,,; s,^dnl .*$,,; s, dnl .*$,,;
   :b
   s,^.*'"$1"'([[ ]*\([^]"$`\\)]*\).*$,\1,p
 }
+/'"$1"'[^A-Za-z0-9_(]/ s,^.*$,,p
+/'"$1"'$/ s,^.*$,,p
 d'
   sed -e "$sed_extract_arguments" "$2"
 }
@@ -219,11 +217,11 @@ func_version ()
     echo "This binary is configured to use a versions archive in dirxz format."
     echo
   fi
-  echo "Copyright (C) 2002-2024 Free Software Foundation, Inc.
+  echo "Copyright (C) 2002-2026 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law."
-  echo "Written by" "Bruno Haible"
+  printf 'Written by %s.\n' "Bruno Haible"
 }
 
 # func_fatal_error message
@@ -280,7 +278,7 @@ unset CLICOLOR_FORCE GREP_OPTIONS
       --version | --versio | --versi | --vers | --ver | --ve | --v )
         func_version true
         exit 0 ;;
-      -- ) # Stop option prcessing
+      -- ) # Stop option processing
         shift; break ;;
       -* )
         echo "autopoint: unknown option $1" 1>&2
@@ -344,10 +342,18 @@ func_version_prereq ()
 # If AM_GNU_GETTEXT_REQUIRE_VERSION is used and archive_version is newer than
 # that, use archive_version.
 xreq=`func_trace_sed AM_GNU_GETTEXT_REQUIRE_VERSION "$configure_in"`
+case "$xreq" in
+  *'
+'*) func_fatal_error "found more than one invocation of AM_GNU_GETTEXT_REQUIRE_VERSION" ;;
+esac
 
 # Need to use func_trace_sed instead of $func_trace, since
 # AM_GNU_GETTEXT_VERSION is not a standard Autoconf trace.
 xver=`func_trace_sed AM_GNU_GETTEXT_VERSION "$configure_in"`
+case "$xver" in
+  *'
+'*) func_fatal_error "found more than one invocation of AM_GNU_GETTEXT_VERSION" ;;
+esac
 
 # Prefer AM_GNU_GETTEXT_REQUIRE_VERSION over AM_GNU_GETTEXT_VERSION if both are
 # specified.
@@ -381,7 +387,12 @@ else
 fi
 
 if test -z "$ver"; then
-  func_fatal_error "Missing version: please specify in $configure_in through a line 'AM_GNU_GETTEXT_VERSION(x.yy.zz)' the gettext version the package is using"
+  # The $configure_in does not specify an AM_GNU_GETTEXT_VERSION.
+  # This is OK in two cases:
+  #   - The package uses an old gettext infrastructure (from 2024 or earlier).
+  #   - The package merely uses AM_ICONV, not AM_GNU_GETTEXT.
+  # Use the last version whose po.m4 is nearly identical to the older ones.
+  ver=0.23.1
 fi
 
 # Check whether the version number is supported.
@@ -399,7 +410,11 @@ case "$ver" in
   0.20 | 0.20.2 | \
   0.21 | 0.21.1 | \
   0.22 | 0.22.1 | 0.22.2 | 0.22.3 | 0.22.4 | 0.22.5 | \
-  0.23 )
+  0.23 | 0.23.1 | 0.23.2 | \
+  0.24 | 0.24.1 | 0.24.2 | \
+  0.25 | 0.25.1 | \
+  0.26 | \
+  1.0 )
     ;;
   *)
     func_fatal_error "The AM_GNU_GETTEXT_VERSION declaration in your $configure_in
@@ -451,15 +466,20 @@ fi
 omitintl=
 # Need to use func_trace_sed instead of $func_trace, since
 # AM_GNU_GETTEXT is not a standard Autoconf trace.
-xargs=`func_trace_sed AM_GNU_GETTEXT "$configure_in"`
-save_IFS="$IFS"; IFS=:
-for arg in $xargs; do
-  if test 'external' = "$arg"; then
-    omitintl=yes
-    break
-  fi
-done
-IFS="$save_IFS"
+if test `func_trace_sed AM_GNU_GETTEXT "$configure_in" | wc -l` = 0; then
+  # No AM_GNU_GETTEXT invocation.
+  omitintl=yes
+else
+  xargs=`func_trace_sed AM_GNU_GETTEXT "$configure_in"`
+  save_IFS="$IFS"; IFS=:
+  for arg in $xargs; do
+    if test 'external' = "$arg"; then
+      omitintl=yes
+      break
+    fi
+  done
+  IFS="$save_IFS"
+fi
 
 if test -z "$omitintl"; then
   case "$ver" in
