@@ -198,7 +198,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/b
 # mtr 0.96
 # ngrep 1.49.0
 # 
-# nano 9.2
+# nano 9.3
 # vim 9.2
 # ed 1.21
 # bvi /bmore 1.5.0 (a hex editor)
@@ -678,6 +678,7 @@ History
     updated 7zz to version 26.04
     updated Python to version 3.15
     updated meson to version 1.12.1
-    updated pip to veraion 26.2.1
+    updated pip to version 26.2.1
     added gettext 1.0
+    updated nano to version 9.3
 
