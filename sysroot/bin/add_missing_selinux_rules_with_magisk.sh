@@ -24,7 +24,7 @@
       echo "ERROR: \"${MAGISKPOLICY}\" is not executable"
       THISRC=3
     else
-      echo "Adding missing SELinux policies using \"${MAGISKPOLICY}\" ..."
+      echo "Using the magisk binary \"${MAGISKPOLICY}\" ..."
   
       echo "Enabling socket access for the user \"shell\" (this is necessary to use tmux or ssh-agent)..."
   
