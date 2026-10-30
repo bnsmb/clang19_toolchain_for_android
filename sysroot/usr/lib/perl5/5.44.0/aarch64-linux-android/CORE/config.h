@@ -9,7 +9,7 @@
 
 /* Package name      : perl5
  * Source directory  : .
- * Configuration time: Sat Jul 25 18:37:21 CEST 2026
+ * Configuration time: Mon Oct 26 19:26:21 CET 2026
  * Configured by     : shell
  * Target system     : linux localhost 5.4.302-qgki-perf-g47b98c8cd885 #7 smp preempt thu jun 4 08:41:20 cest 2026 aarch64 toybox 
  */
@@ -20,7 +20,7 @@
 /* LOC_SED:
  *	This symbol holds the complete pathname to the sed program.
  */
-#define LOC_SED 	"/system/bin/sed"	/**/
+#define LOC_SED 	"/data/local/tmp/develop/sysroot/usr/bin/sed"	/**/
 
 /* HAS_ALARM:
  *	This symbol, if defined, indicates that the alarm routine is

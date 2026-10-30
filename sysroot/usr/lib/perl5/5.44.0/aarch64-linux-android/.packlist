@@ -9,10 +9,9 @@
 /data/local/tmp/sysroot/usr/bin/libnetcfg relocate_as=../../../../bin/libnetcfg type=file
 /data/local/tmp/sysroot/usr/bin/perl from=/data/local/tmp/sysroot/usr/bin/perl5.44.0 relocate_as=../../../../bin/perl type=link
 /data/local/tmp/sysroot/usr/bin/perl5.44.0 relocate_as=../../../../bin/perl5.44.0 type=file
-/data/local/tmp/sysroot/usr/bin/perlbug relocate_as=../../../../bin/perlbug type=file
 /data/local/tmp/sysroot/usr/bin/perldoc relocate_as=../../../../bin/perldoc type=file
 /data/local/tmp/sysroot/usr/bin/perlivp relocate_as=../../../../bin/perlivp type=file
-/data/local/tmp/sysroot/usr/bin/perlthanks from=/data/local/tmp/sysroot/usr/bin//perlbug relocate_as=../../../../bin/perlthanks type=link
+/data/local/tmp/sysroot/usr/bin/perlthanks relocate_as=../../../../bin/perlthanks type=file
 /data/local/tmp/sysroot/usr/bin/piconv relocate_as=../../../../bin/piconv type=file
 /data/local/tmp/sysroot/usr/bin/pl2pm relocate_as=../../../../bin/pl2pm type=file
 /data/local/tmp/sysroot/usr/bin/pod2html relocate_as=../../../../bin/pod2html type=file
@@ -63,6 +62,7 @@
 /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/CPAN/FTP.pm relocate_as=../CPAN/FTP.pm type=file
 /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/CPAN/FTP/netrc.pm relocate_as=../CPAN/FTP/netrc.pm type=file
 /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/CPAN/FirstTime.pm relocate_as=../CPAN/FirstTime.pm type=file
+/data/local/tmp/sysroot/usr/lib/perl5/5.44.0/CPAN/FirstTime.pm.org relocate_as=../CPAN/FirstTime.pm.org type=file
 /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/CPAN/HTTP/Client.pm relocate_as=../CPAN/HTTP/Client.pm type=file
 /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/CPAN/HTTP/Credentials.pm relocate_as=../CPAN/HTTP/Credentials.pm type=file
 /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/CPAN/HandleConfig.pm relocate_as=../CPAN/HandleConfig.pm type=file
@@ -212,6 +212,7 @@
 /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/File/Find.pm relocate_as=../File/Find.pm type=file
 /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/File/GlobMapper.pm relocate_as=../File/GlobMapper.pm type=file
 /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/File/Path.pm relocate_as=../File/Path.pm type=file
+/data/local/tmp/sysroot/usr/lib/perl5/5.44.0/File/Spec/Unix.pm.org relocate_as=../File/Spec/Unix.pm.org type=file
 /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/File/Temp.pm relocate_as=../File/Temp.pm type=file
 /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/File/stat.pm relocate_as=../File/stat.pm type=file
 /data/local/tmp/sysroot/usr/lib/perl5/5.44.0/FileCache.pm relocate_as=../FileCache.pm type=file

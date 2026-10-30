@@ -1110,7 +1110,8 @@ sub init {
         # as long as Windows needs $self->_build_command, we cannot
         # support sudo on windows :-)
         my $default = $CPAN::Config->{make} || "";
-        if ( $default && $CPAN::Config->{install_help} eq 'sudo' ) {
+        # https://github.com/termux/termux-packages/issues/16467
+        if ( 0 && $default && $CPAN::Config->{install_help} eq 'sudo' ) {
             if ( find_exe('sudo') ) {
                 $default = "sudo $default";
                 delete $CPAN::Config->{make_install_make_command}

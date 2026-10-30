@@ -196,7 +196,7 @@ sub _tmpdir {
 sub tmpdir {
     my $cached = $_[0]->_cached_tmpdir('TMPDIR');
     return $cached if defined $cached;
-    $_[0]->_cache_tmpdir($_[0]->_tmpdir( $ENV{TMPDIR}, "/tmp" ), 'TMPDIR');
+    $_[0]->_cache_tmpdir($_[0]->_tmpdir( $ENV{TMPDIR}, "/data/local/tmp/sysroot/tmp" ), 'TMPDIR');
 }
 
 =item updir
