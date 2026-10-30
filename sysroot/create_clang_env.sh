@@ -31,6 +31,8 @@
 #   09.07.2026 1.3.7 Bs
 #     the script now copies ./etc/ssh/sshd_config.new to ./etc/ssh/sshd_config if that file does not existi (./etc/ssh/sshd_config is deleted by the cleanup script for "release" and "dev" tar files now)
 #     the script now copies ./etc/ssh/ssh_config.new to ./etc/ssh/ssh_config if that file does not exist (./etc/ssh/ssh_config is deleted by the cleanup script for "release" and "dev" tar files now)  
+#   23.10.2026 1.3.8 /bs
+#     the script now also creates the directory ./home/shell/.local/share/wget
 #
 #
 
@@ -69,7 +71,7 @@ HOME="${BASE_HOME_DIR}/${CUR_USER}"
 
 TMP="${SYSROOT_DIR}/var/tmp"
 
-DIRS_TO_CREATE="./var/run ./var/log ./var/empty ./var/lib ./var/mail ./var/lock ./var/cache ./var/cache/man " 
+DIRS_TO_CREATE="./var/run ./var/log ./var/empty ./var/lib ./var/mail ./var/lock ./var/cache ./var/cache/man ./home/shell/.local/share/wget " 
 
 PATH="$PATH:${SYSROOT_DIR}/usr/bin"
 
