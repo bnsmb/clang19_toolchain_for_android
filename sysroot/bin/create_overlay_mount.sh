@@ -3,25 +3,35 @@
 #h#
 #h# create_overlay_mount.sh <VERSION> - create one or more overlay mounts on a device running a rooted Android OS
 #h#
-#h# Usage:  create_overlay_mount.sh [-h|--help] [--version] [--verbose|-v] [--noselinux] [--selinux] [--no_relabel|--relabel] [--initdisk|--format] [--details] [--short] [--active] [--nomagisk] [var=value] 
-#h#                                 [help] [vars] [list] [test] [get] [undo] [diff] [get] [restore] [clean] [mount_only] [mount] [umount] [remount] [directory0] [... directory#] [default]
+#h# Usage:  create_overlay_mount.sh [-h|--help] [-V|--version] [--verbose|-v] [--noselinux] [--selinux] [--no_relabel|--relabel] [--initdisk|--format] [--no_su] 
+#h#                                 [--relax] [--details]  [--short] [--active] [--nomagisk] [var=value] [--run=script[,..,script#]] [help] [vars] [list] [test] [get] 
+#h#                                 [undo] [diff] [get] [restore] [clean] [cleanup] [mount_only] [mount] [mount_existing] [umount] [remount] [directory0] [... directory#] [default]
 #h#
 #H# The parameter that neither start with a "-" or "/" nor contain a "=" are the action parameter that determine what is to be done. 
 #H# Only one action parameter for a run is allowed. 
 #H#
-#H# Without an action parameter the script prints the short usage help. If one more directories are found in the parameter the default action is "mount".
+#H# Without an action parameter the script prints the short usage help. If one or more directories are found in the parameter the default action is "mount".
 #H#
-#H# All parameter starting with a "/" are considered to be a filename or directory name.
+#H# The script needs root access.
+#H#
+#H# If started as non-root user, the script restarts itself using "su -c $0 $@" if possible; use the parameter "--no-su" to disable this feature.
+#H#
+#H# All parameter starting with a "/" are considered to be a directory name (or filename for some of the actions)
 #H# The parameter with the directory names are optional.
 #H#
 #H# The default directory list for the actions "mount", "diff", "get" and "undo" is the list of directories in the environment variable DIRS_TO_OVERLAY.
 #H# The default directory list for the actions "test", "umount", and "remount" is the list of directories currently mounted to an overlay filesystem.
 #H#
-#H# There are no default values for the action "restore"; the actions "mount_only" and "list" ignore directory parameter.
+#H# There are no default values for the action "restore".
+#H#
+#H# "directory" parameter are not allowed for the actions "mount_only", "mount_existing", "list", and "cleanup". If the parameter "--relax" is used
+#H# these action ignore "directory" parameter.
 #H#
 #H# The actions "vars" and "help" only print help messages.
 #H#
-#H# If the variable DIRS_TO_OVERLAY is empty the script uses the hardcoded default value for this variable; that is: /system_ext  /product  /odm  /system
+#H# If the variable DIRS_TO_OVERLAY is empty the script uses the hardcoded default value for this variable:
+#H#
+#H#   /system_ext  /product  /odm  /system
 #H#
 #H# "directory#" must be either "default", "none", or the fully qualified directory name of a directory.
 #H# The value "none" deletes the current list of directories in the variable DIRS_TO_OVERLAY; the value "default" adds the default directories to the list
@@ -29,70 +39,140 @@
 #H# 
 #H# The known option parameter are:
 #H# 
-#H# --version    print the script version and exit
-#H# --verbose    print more messages
-#H# --noselinux  disable SELinux at start of the script (SELinux is NOT enabled again by the script)
-#H# --selinux    enable SELinux at start of the script (SELinux is NOT disabled again by the script)
-#H# --no_relabel do not modify the SELinux context for files with unlabeled SELinux context in the overlay filesystem
-#H# --relabel    modify the SELinux context for files with unlabeled SELinux context in the overlay filesystem (this is the default)
-#H# --initdisk   format the virtual disk before creating the overlay mounts; this will undo all previous changes in the filesystems
-#H#              Without this option the script never formats an existing virtual disk.
-#H# --details    print more details
-#H# --short      print only the important information
-#H# --active     the tasks diff, get, and undo should work only on the currently mounted overlay filesystems
-#H# --nomagisk   do not create temporary bind mounts for the Magisk binaries; without this parameter the script creates temporary
-#H#              bind mounts for the executables magisk, su, and resetprop if Magisk is installed and the bind mount 
-#H#              should be created for the directory "/system".
-#H#              The bind mounts are created in the directory "/data/local/tmp"; to use another directory for the bind mounts set the environment variable
-#H#              BIND_MOUNT_TARGET_DIR="<directory_name>"
-#H#              To create bind mounts for additional files before creating the overlay mount for "/system", add the filenames to the variable FILES_TO_KEEP 
-#H#              (see below for details); the files must exist and bind mounts for directories are not supported.
+#H# --version      print the script version and exit
+#H# --verbose      print more messages
+#H# --noselinux    disable SELinux at start of the script (SELinux is NOT enabled again by the script)
+#H# --selinux      enable SELinux at start of the script (SELinux is NOT disabled again by the script)
+#H# --no_relabel   do not modify the SELinux context for files with unlabeled or default SELinux context in the overlay filesystem
+#H# --relabel      modify the SELinux context for files with unlabeled or default SELinux context in the overlay filesystems
+#H#                The default is not to relabel. 
+#H# --initdisk     format the virtual disk before creating the overlay mounts; this will undo all previous changes in the filesystems
+#H#                Without this option the script never formats an existing virtual disk.
+#H# --no_su        do not restart the script as user root automatically
+#H# --relax        ignore parameter that are not a directory (e.g. symbolic links); ignore parameter that are not used for an action
+#H# --details      print more details
+#H# --short        print only the important information
+#H# --active       the tasks diff, get, and undo should work only on the currently mounted overlay filesystems
+#H# --nomagisk     do not create temporary bind mounts for the Magisk binaries; without this parameter the script creates temporary
+#H#                bind mounts for the executables magisk, su, resetprop, and magiskpolicy if Magisk is installed and an overlay filesystem
+#H#                should be created for the directory with these executables.
+#H# --run          run the executable "script" if it exists after the overlay mounts are inplace. "script" can be any executable.
+#H#                The parameter can be used multiple times; Note that "--script" is an alias for "--run".
+#H#                Ths option is only used for the action "mount" and ignored for all other actions.
 #H#
 #H# The known action parameter are:
 #H#
-#H# help         print verbose usage help
-#H# vars         print only the list of supported environment variables
-#H# list         list directories mounted on overlay filesystems
-#H# test         test write access to directories mounted on overlay filesystems; 
-#H#              default is: test write access to all directories currently mounted on an overlay filesystems
-#H# get          print the name of the backend used for a file or directory mounted on an overlay filesystem
-#H# undo         delete all changes done in a directory with an overlay mount
-#H#              default is: delete all changes done for all directories in the environment variable DIRS_TO_OVERLAY (regardless of the mount status)
-#H# diff         list the file changes for directories with overlay mounts
-#H#              default is: list the changes done for all directories in the environment variable DIRS_TO_OVERLAY (regardless of the mount status)
-#H# restore      restore a file or directory mounted on an overlay filesystem
+#H# help           print verbose usage help
+#H# vars           print only the list of supported environment variables; the script prints the default values and the current values of these variables
+#H# list           list directories mounted on overlay filesystems
+#H# test           test write access to directories mounted on overlay filesystems; 
+#H#                default is: test write access to all directories currently mounted on an overlay filesystems
+#H# get            print the name of the backend used for a file or directory mounted on an overlay filesystem
+#H# undo           delete all changes done in a directory with an overlay mount
+#H#                default is: delete all changes done for all directories in the environment variable DIRS_TO_OVERLAY (regardless of the mount status)
+#H# diff           list the file changes for directories with overlay mounts
+#H#                default is: list the changes done for all directories in the environment variable DIRS_TO_OVERLAY (regardless of the mount status)
+#H# restore        restore a file or directory mounted on an overlay filesystem
 #H#
-#H# mount_only   mount the virtual disk and exit
+#H# mount_only     mount the virtual disk and exit (do not create an overlay mount)
+#H#                The script does not relabel files if the parameter "mount_only" is used (even if there are relabel files in the overlay filesystems).
+#H#                To force relabeling the files when "mount_only" is used, add the option "--relabel"
 #H#
-#H# mount        mount the overlays for the directories
-#H# umount       umount the overlays for the directories; default is to umount all overlays
-#H# remount      remount the overlay mounts
+#H# mount          mount the overlays for the directories
+#H# mount_existing mount only the existing overlay filesystems on the virtual disk
+#H# umount         umount the overlays for the directories; default is to umount all overlay mounts
+#H# remount        remount the overlay mounts
 #H#
-#H# clean        umount all overlay mounts and umount the virtual disk
-#H#
-#H# The script does NOT relabel files if the parameter "mount_only" is used. 
-#H# To force relabeling the files when "mount_only" is used, add the option "--relabel"
+#H# clean          umount all overlay mounts and umount the virtual disk
+#H# cleanup        umount all overlay mounts found 
 #H#
 #H# Other supported parameter:
 #H#
 #H# var=value sets the variable "var" to the value "value"
 #H# 
+#H# 
+#H# The script can create temporary bind mounts for files that will no longer be available after an overlay mount is created for a directory. This
+#H# applies, for example, to files created by a Magisk module.
+#H# 
+#H# To create bind mounts for files before the overlay mounts are created, add the file names to the environment variable FILES_TO_KEEP.
 #H#
 #H# The number of filenames in the variable FILES_TO_KEEP is not limited; the filenames must be separated by whitespaces or commas.
 #H# 
 #H# The filenames in the variable FILES_TO_KEEP are interpreted by the script using these rules:
 #H#
-#H# - filenames without a slash are searched in the directory "/system/bin", e.g.  bash -> /system/bin/bash
+#H# - filenames without a slash are searched in the directory "/system/bin",     Example:  bash -> /system/bin/bash
 #H# 
-#H# - filenames starting with "bin/" are searched in the directory "/system", e.g.  bin/sh -> /system/bin/sh
+#H# - filenames starting with "bin/" are searched in the directory "/system",    Example:  bin/sh -> /system/bin/sh
 #H# 
-#H# - filenames starting with "./" are searched in the directory "/system", e.g.  ./etc/ssh/sshd_config  -> /system/./etc/ssh/sshd_config
+#H# - filenames starting with "./" are searched in the directory "/system",      Example:  ./etc/ssh/sshd_config  -> /system/./etc/ssh/sshd_config
 #H# 
-#H# - fully qualified names are searched in "/",  e.g /system_ext/bin/rsync -> /system_ext/bin/rsync
+#H# - fully qualified names are searched in "/",                                 Example:  /system_ext/bin/rsync -> /system_ext/bin/rsync
 #H# 
+#H# All files in other directories than /system must be specified with fully qualified filename.
+#H#
+#H# bind mounts for the Magisk binaries are created automatically (see the description for the parameter "--nomagisk" above)
+#H#
+#H# bind mounts for directories are not supported.
+#H#
+#H# The script creates bind mounts only for files in directories for which an overlay mount is requested. 
+#H# Other entries in the variable FILES_TO_KEEP are silently ignored
+#H#
+#H# The bind mounts are created in the directory "/data/local/tmp"; to use another directory for the bind mounts set the environment variable
+#H# BIND_MOUNT_TARGET_DIR="<directory_name>"
+#H# 
+#H# Please note that the bind mounts created by the script are not deleted when the overlay mount is removed. 
+#H# To delete the bind mounts, either manually unmount them or simply restart the phone.
+#H#
+#H# Note: 
+#H#
+#H# The following information is only valid for virtual disks created in an OS other than Android, such as Linux.
+#H# For virtual disks created in Android, the following information can be ignored.
+#H#
+#H# --------------------------------------------------------------------
+#H#
+#H# For virtual disks created on operating systems other than Android, the SELinux context for most files and directories on the virtual disk is
+#H# “system_u:object_r:unlabeled_t:s0” or “unconfined_u:object_r:default_t:s0” or something similar. Because of this SELinux context, these files 
+#H# cannot be accessed by users without root privileges. 
+#H# Therefore, it is essential to correct the SELinux context for these files before they can be used.
+#H# 
+#H# The “--relabel” parameter of the script create_overlay_mount.sh can be used for this purpose:
+#H# 
+#H# If the “--relabel” parameter is specified, the script corrects the SELinux context for all files in the overlay directories for all 
+#H# directories specified in the parameters for the script. The SELinux context used for this modification is the SELinux context of the
+#H# target directory for the overlay mount. The script modifies only the files with an SELinux context that matches the expression
+#H# "*:unlabeled*" or "*:default:*"-.
+#H#
+#H# If the SELinux context of the files is to be corrected only for certain overlay file systems, the file “relabel” can be created in 
+#H# those directories. In this case, the “--relabel” parameter must not be specified.
+#H# For the overlay filesystem for /system, this is, for example, the file ./upper/system/relabel. I
+#H#
+#H# To relabel the files in the overlay filesystem with other SELinux contexts, create a script to change the SELinux context and
+#H# run it as post install script using the parameter "--run=script". The script can also be located on the overlay filesystem.
+#H# Do not use the parameter "--relabel" in this case.
+#H# 
+#H# 
+#H# If the parameter “--norelabel” is specified, the “relabel” files are ignored.
+#H# 
+#H# To correct the SELinux contexts in all overlay filesystems on the virtual disk, the following script command can also be used:
+#H# 
+#H# create_overlay_mount.sh --relabel mount_only
+#H# 
+#H# Using these parameter, the script mounts the virtual disk and corrects the SELinux context for all overlay filesystems on the
+#H# virtual disk without mounting the overlay file systems.
+#H# 
+#H# The code for correcting the SELinux context is currently implemented only for overlay filesystems for directories in the root directory
+#H# (such as /system, /product, /vendor, etc.)
+#H# 
+#H# Please note that this correction only needs to be performed once for each overlay file system on the virtual hard drive; however, 
+#H# it does no harm if the code to change the SELinux context for the files is executed every time the virtual hard drive is mounted.
+#H#
+#H# For virtual disks created under Android, no correction is necessary.
+#H#
+#H# --------------------------------------------------------------------
+#H#
 #H#
 #H# Notes
-#H#  
+#H#
 #H# Set the variable TRACE to any value before starting the script to execute it with "set -x"
 #H#
 #H# The detailed documentation for the script can be found here:
@@ -142,12 +222,32 @@
 #     the script now prints a warning if an unknown environment variable is used in the parameter
 #     corrected the code to relabel unlabeled files and directories (the previous code failed for symbolic links)
 #
+#   03.09.2026 /bs v1.5.0
+#     added the parameter "--run" to execute post installation scripts or executables
+#     added the parameter "mount_existing" to only mount the overlay filesystems that already exist on the virtual disk
+#     the code to relabel the files and directories was rewritten from scratch
+#     the automatically relabeling of the overlay filesystem is now disabled
+#     now an overlay filesystem is automatically relabeled if the file ./upper/<dir_name>/relabel exists 
+#
+#   28.10.2026 /bs v1.6.0
+#     the script now restarts itself using "su -" if started as non-root user if possible
+#     added the parameter "--no_su" to disable the automatic restart as user root 
+#     the script now prints the default value and the current value for the supported environment variables when the parameter "vars" is used
+#     the script no longer attempts to create bind mounts for files to be retained if an overlay mount already exists.
+#     the script now processes the variable FILES_TO_KEEP if an overlay mount for any directory in / is requested
+#     the script now creates bind mounts for the Magisk executables in any directory if necessary      
+#     added the parameter "--relax"
+#     in the previous version of the script you could mount a virtual disk multiple times using different mount points -- that is fixed now
+#     the action "clean" now also umounts orphan overlay mounts 
+#     added the parameter "cleanup"
+#
 # ----------------------------------------------------------------------
 
 __TRUE=0
 __FALSE=1
 
 # ----------------------------------------------------------------------
+
 
 # ----------------------------------------------------------------------
 # enable tracing if requested
@@ -159,6 +259,41 @@ elif [[ $- == *x* ]] ; then
 # tracing is already enabled 
 #
   TRACE=${__TRUE}
+fi
+
+# ----------------------------------------------------------------------
+
+# ----------------------------------------------------------------------
+# restart the script as user "root" if running as non-root user
+#
+
+SU_ERROR_MESSAGE=""
+
+if [[ " $* " != *\ --no_su\ * &&  " $* " != *\ --no-su\ * ]] ; then
+  if [ "$( id -un )"x != "root"x ] ; then
+#
+# the script is running as non-root user -- check if root access via "su -" is possible
+#  
+    CUR_OUTPUT="$( su -c uname -a 2>&1 )"
+    if [ $? -eq 0 ] ;then
+#
+# restart the script as user root
+#
+      exec su -c "$0 $(printf "'%s' " "$@")"
+#
+# this code should never run
+#
+      THISRC=$?
+      echo "ERROR: The \"exec\" command failed with RC=${THISRC}"      
+      exit $?
+    else  
+# 
+# "su - -c" does not work -- save an error message and ignore the error for now (root access is only required for some of the actions)
+#    
+      SU_ERROR_MESSAGE="Executing a command as user \"root\" via \"su -c \" failed:
+${CUR_OUTPUT}" 
+    fi
+  fi
 fi
 
 # ----------------------------------------------------------------------
@@ -210,15 +345,15 @@ DEFAULT_MOUNT_OPTIONS=""
 #
 #DEFAULT_SELINUX_CONTEXT="u:object_r:shell_data_file:s0"
 DEFAULT_SELINUX_CONTEXT="u:object_r:system_file:s0"
-
-# SELinux context for unlabeled files/dirs: The function "set_selinux_context" replaces this SELinux context with the default SELinux Context
-# To disable this behaviour set UNLABELED_SELINUX_CONTEXT to an empty string or "none"
+ 
+# SELinux context for unlabeled files/dirs for virtual disks created on a non-Android OS
 #
-UNLABELED_SELINUX_CONTEXT="${UNLABELED_SELINUX_CONTEXT:=u:object_r:unlabeled:s0}"
+ UNLABELED_SELINUX_CONTEXT="${UNLABELED_SELINUX_CONTEXT:=*:unlabeled*:*}"
+UNLABELED_SELINUX_CONTEXT1="${UNLABELED_SELINUX_CONTEXT1:=*:default*:*}"
 
-# relabel all files in the overlay filesystem with the SELinux context "u:object_r:unlabeled:s0"
+# relabel all files in the overlay filesystem with the SELinux context "*:unlabeled:*" or "*:default:*"
 #
-RELABEL_UNLABELED_FILES=${__TRUE}
+RELABEL_UNLABELED_FILES=${__FALSE}
 
 # list of environment variables supported by the script
 #
@@ -248,14 +383,16 @@ DEFAULT_MKFS=$( which mkfs )
 DEFAULT_DD=$( which dd )
 
 # list of Magisk binaries for which a bind mount should be created automatically before creating the overlay mount for /system
-#
+# 
 MAGISK_BINARIES=" magisk su resetprop magiskpolicy"
 
 # list of additional files for which a bind mount should be created before creating the overlay mount for /system
+# The value of this variable is only used if the variable FILES_TO_KEEP is empty or if the variable FILES_TO_KEEP contains the string "default".
 #
 DEFAULT_FILES_TO_KEEP=""
 
-# directory for the bind mounts 
+# base directory for the temporary bind mounts 
+# (-> the bind mounts are then created in /data/local/tmp/system or in sub directories in this directory)
 #
 DEFAULT_BIND_MOUNT_TARGET_DIR="/data/local/tmp"
 
@@ -285,7 +422,6 @@ if [ "${BASH_VERSION}"x != ""x ] ; then
 fi
 
 alias LogInfoVar='f() { [[ ${__FUNCTION} = "" ]] && __FUNCTION=main ; [[ ${VERBOSE} != 0 ]] && return; varname="$1"; eval "echo \"INFO: in $__FUNCTION:  $varname is \${$varname}\" >&2"; unset -f f; } ;  f'
-
 
 # ---------------------------------------------------------------------
 # functions
@@ -410,7 +546,7 @@ function get_mount_device {
 }
 
 # ---------------------------------------------------------------------
-# get_mountpoint- get the mount point for a file or directory on an overly filesystem
+# get_mountpoint- get the mount point for a file or directory on an overlay filesystem
 #
 # usage: 
 #   get_mountpoint [directory|file] [subdir]
@@ -624,7 +760,9 @@ function retrieve_overlay_filesystem_backend {
   THISRC=1
 
   typeset CUR_DIR="$1"
-  
+
+# init the global variables
+#  
   CUR_BACKEND_DIR=""
   CUR_BACKEND_DISK=""
   
@@ -638,7 +776,7 @@ function retrieve_overlay_filesystem_backend {
         THISRC=2
       else
 
-        CUR_BACKEND_DISK="$( ${LOSETUP} -a | grep $( df -h  "${CUR_BACKEND_DIR}" | tail -1 | cut -f1 -d " " ) |  sed -e "s#.*(##g" -e "s#).*##g" )"
+        CUR_BACKEND_DISK="$( ${LOSETUP} -a | grep $( df -h  "${CUR_BACKEND_DIR}" 2>/dev/null| tail -1 | cut -f1 -d " " ) |  sed -e "s#.*(##g" -e "s#).*##g" )"
         if [ "${CUR_BACKEND_DISK}"x = ""x ] ; then
           THISRC=1
         else
@@ -837,17 +975,14 @@ function set_selinux_context {
     fi
 
 
-    if [ "${CUR_SELINUX_CONTEXT}"x = "u:object_r:unlabeled:s0"x ] ; then
+    if [[ "${CUR_SELINUX_CONTEXT}" == ${UNLABELED_SELINUX_CONTEXT} || "${CUR_SELINUX_CONTEXT}" == ${UNLABELED_SELINUX_CONTEXT1} ]] ; then
 
-      LogWarning "The SELinux context to use for \"${TARGET_DIR}\" is \"${UNLABELED_SELINUX_CONTEXT}\" "
+      LogWarning "The SELinux context to use for \"${TARGET_DIR}\" is \"${CUR_SELINUX_CONTEXT}\" "
 
-      if [ "${UNLABELED_SELINUX_CONTEXT}"x != ""x -a "${UNLABELED_SELINUX_CONTEXT}"x != "none"x ] ; then
- 
-        LogWarning "That does not work -- using the default SELinux context \"${SELINUX_CONTEXT}\" now "
+      LogWarning "That does not work -- using the default SELinux context \"${SELINUX_CONTEXT}\" now "
 
-        CUR_SELINUX_CONTEXT="${SELINUX_CONTEXT}"
-      fi
-    fi
+      CUR_SELINUX_CONTEXT="${SELINUX_CONTEXT}"
+   fi
 
     if [ ! -d "${TARGET_DIR}" ] ; then
       LogError "The directory \"${TARGET_DIR}\" does not exist"
@@ -874,10 +1009,10 @@ function set_selinux_context {
 
 # ---------------------------------------------------------------------
 # set_selinux_context_for_files - copy the SELinux context from a directory to all
-# files in the directory with the SELinux context "u:object_r:unlabeled:s0"
+# files in the directory with the SELinux context "*:unlabeled*" or "*:default:*"
 #
 # usage: 
-#   set_selinux_context_for_files [directory]
+#   set_selinux_context_for_files [overlay_directory] [target_directory]
 # 
 #
 # returns:
@@ -886,71 +1021,67 @@ function set_selinux_context {
 #
 function set_selinux_context_for_files {
   typeset __FUNCTION="set_selinux_context_for_files"
-  
-  typeset TARGET_DIR="$1"
 
+  typeset OVERLAY_DIR="$1"
+
+  typeset TARGET_DIR="$2"
+  
   typeset NEW_SELINUX_CONTEXT=""
   
   typeset THISRC=${__TRUE}
- 
-  typeset DIR_LIST="$( ls -d "${TARGET_DIR}/"* )"
   
-  typeset SUB_DIR_LIST="$( ls -d "${TARGET_DIR}/"*/* )"
   
-  typeset CUR_DIR=""
+  LogInfo "*** The function ${__FUNCTION} started"
+  
+  LogInfo "The overlay directory is \"${OVERLAY_DIR}\" "
+  LogInfo "The target directory is  \"${TARGET_DIR}\" "
 
-  if [ -d "${TARGET_DIR}" ] ; then
+  if [ "${OVERLAY_DIR}"x = ""x -o "${TARGET_DIR}"x = ""x  ] ; then
+    LogError "${__FUNCTION} called with missing parameter, the parameter for the function are: \"$*\" "
+    THISRC=${__FALSE}
+  elif [ ! -d "${OVERLAY_DIR}" ] ; then
+    LogWarning "The overlay directory \"${OVERLAY_DIR}\" does not exist" 
+  elif [ ! -d "${TARGET_DIR}" ] ; then
+    LogWarning "The target directory \"${TARGET_DIR}\" does not exist" 
+  else
+
     NEW_SELINUX_CONTEXT="$( stat -c %C "${TARGET_DIR}" )"
 
-    if [ "${UNLABELED_SELINUX_CONTEXT}"x = "${NEW_SELINUX_CONTEXT}"x ] ; then
-      LogWarning "Something might be wrong here: The new SELinux Context is \"${NEW_SELINUX_CONTEXT}\" "
+    LogInfo "The SELinux context of the target directory \"${TARGET_DIR}\" is \"${NEW_SELINUX_CONTEXT}\" "
+
+    if [[ "${NEW_SELINUX_CONTEXT}" == ${UNLABELED_SELINUX_CONTEXT} || "${NEW_SELINUX_CONTEXT}" == ${UNLABELED_SELINUX_CONTEXT1}  ]] ; then
+      LogWarning "Something might be wrong here: The SELinux Context for \"${TARGET_DIR}\" is \"${NEW_SELINUX_CONTEXT}\" "
     fi 
-    
-    LogMsg "Now correcting the SELinux context for all files and directories in the directory \"${TARGET_DIR}\" with the SELinux context \"${UNLABELED_SELINUX_CONTEXT}\" to \"${NEW_SELINUX_CONTEXT}\" ..."
+
+    LogMsg "Now correcting the SELinux context for all files and directories with the SELinux context \"${UNLABELED_SELINUX_CONTEXT}\" or \"${UNLABELED_SELINUX_CONTEXT1}\" in the directory \"${OVERLAY_DIR}\" to \"${NEW_SELINUX_CONTEXT}\" ..."
     LogMsg  "This may take some minutes - please be patient "
 
-    chcon -h "${NEW_SELINUX_CONTEXT}" ${DIR_LIST}
+    [[ ${VERBOSE} = ${__TRUE} ]] && set -x 
     
-    for CUR_DIR in ${SUB_DIR_LIST} ; do
-      LogInfo "Correcting the SELinux context for the files in the directory \"${CUR_DIR}\" ..."
+    find "${OVERLAY_DIR}"  -type l \( -context "${UNLABELED_SELINUX_CONTEXT}" -o -context "${UNLABELED_SELINUX_CONTEXT1}" \) -print0 2>/dev/null | xargs -0 -r chcon -h "${NEW_SELINUX_CONTEXT}" || \
+      THISRC=${__FALSE}
+ 
+    find "${OVERLAY_DIR}"          \( -context "${UNLABELED_SELINUX_CONTEXT}" -o -context "${UNLABELED_SELINUX_CONTEXT1}" \) -print0 | xargs -0 -r chcon -h "${NEW_SELINUX_CONTEXT}" || \
+      THISRC=${__FALSE}
 
-#
-# IMPORTANT : First process symbolic links because "find -context ..." only reads the SELinux context of the target for a symbolic link!!!
-#
-#      find "${CUR_DIR}" -context  "${UNLABELED_SELINUX_CONTEXT}"  -type l -exec chcon -h "${NEW_SELINUX_CONTEXT}" {} \; || THISRC=${__FALSE}
-
-# correct symbolic links
-#
-
-      find "${CUR_DIR}"  -type l -context "${UNLABELED_SELINUX_CONTEXT}" -print0 2>/dev/null | xargs -0 -r chcon -h "${NEW_SELINUX_CONTEXT}"
-
-      find "${CUR_DIR}"          -context "${UNLABELED_SELINUX_CONTEXT}" -print0 | xargs -0 -r chcon -h "${NEW_SELINUX_CONTEXT}"
-
-# works without xargs but takes about 5 minutes for the virtual disk with the clang19 toolchain
-#
-#      find "${CUR_DIR}"  -type l -exec chcon -h "${NEW_SELINUX_CONTEXT}" {} + 2>/dev/null  || \
-#        find "${CUR_DIR}"  -type l -exec chcon -h "${NEW_SELINUX_CONTEXT}" {}  \; || THISRC=${__FALSE}
-#
-#      find "${CUR_DIR}" -context  "${UNLABELED_SELINUX_CONTEXT}"  -exec chcon "${NEW_SELINUX_CONTEXT}" {} +  2>/dev/null || \
-#        find "${CUR_DIR}" -context  "${UNLABELED_SELINUX_CONTEXT}"  -exec chcon "${NEW_SELINUX_CONTEXT}" {} \; || THISRC=${__FALSE}
-#
-
-    done
+    [[ ${VERBOSE} = ${__TRUE} && "${TRACE}"x = ""x ]] && set +x
 
     if [ ${THISRC} -eq ${__TRUE} ] ; then
       LogMsg "... SELinux context for the files successfully modified"
       THISRC=${__TRUE}
     else
       if [ "$( getenforce )"x = "Enforcing"x ] ;then
-        die 95 "Error correcting the SELinux contexts"
+        die 95 "Error correcting the SELinux contexts in the directory \"${OVERLAY_DIR}\""
       else
-        LogError "Error correcting the SELinux contexts. SELinux is currently disabled. Please check the SELinux context for the files in the overlay filesystem"
+        LogError "Error correcting the SELinux contexts. SELinux is currently disabled. Please check the SELinux context for the files in the directory  \"${OVERLAY_DIR}\""
        fi
     fi    
   fi
 
+  LogInfoVar OVERLAY_DIR 
   LogInfoVar TARGET_DIR 
   LogInfoVar UNLABELED_SELINUX_CONTEXT 
+  LogInfoVar UNLABELED_SELINUX_CONTEXT1
   LogInfoVar NEW_SELINUX_CONTEXT 
 
   return ${THISRC}
@@ -1064,11 +1195,11 @@ function format_virtual_disk {
         if [ ${TEMPRC} -eq 0 ] ; then
           THISRC=0
         else
-          LogError "Error creating a filesystem on the imagefile \"${CUR_IMAGE_FILE}\" "
+          LogError "Error creating a filesystem on the image file \"${CUR_IMAGE_FILE}\" "
           THISRC=1
         fi
       else
-        LogError "The imagefile \"${CUR_IMAGE_FILE}\" does not exist"
+        LogError "The image file \"${CUR_IMAGE_FILE}\" does not exist"
         THISRC=3
       fi
     else
@@ -1079,7 +1210,6 @@ function format_virtual_disk {
 
   return ${THISRC}
 }
-
 
 
 # ---------------------------------------------------------------------
@@ -1160,6 +1290,12 @@ function mount_virtual_disk {
 
   typeset TEMPRC=0
        
+  typeset EXISTING_LOOP_DEVICE=""
+  typeset EXISTING_MOUNT_POINT=""
+
+  typeset MOUNT_LOOP_DEVICE=${__TRUE}
+  typeset CREATE_LOOP_DEVICE=${__TRUE}
+
 #
 # create the image file if it does not already exist
 #
@@ -1181,7 +1317,7 @@ function mount_virtual_disk {
   esac
 
 #
-# create an filesystem on the loop device if necessary
+# create an filesystem on the virtual disk if necessary
 #
   if  [ ${IMAGE_FILE_CREATED} = ${__TRUE} -o ${INIT_DISK} = ${__TRUE} ] ; then
     LogMsg "Creating a \"${FILESYSTEM_TO_USE}\" filesystem on the image file \"${IMAGE_FILE}\" now ..."
@@ -1191,12 +1327,12 @@ function mount_virtual_disk {
   else
     LogMsg "The image file \"${IMAGE_FILE}\" already exists - there should already be a filesystem on the disk"
   fi
-
-# create the mount point for mounting the loop device
+#
+# create the mount point for mounting the loop device; copy the SELinux context from the directory /system
 #
   create_directory "${BASEDIR}:755" && set_selinux_context "/system" "${BASEDIR}" || \
     die 30 "Error creating the directory \"${BASEDIR}\"" 
-
+#
 # mount the loop device
 #
   is_directory_mounted "${BASEDIR}" 
@@ -1211,18 +1347,55 @@ function mount_virtual_disk {
     LOOP_DEVICE="${CUR_DEVICE}"
     LogInfo "\"${BASEDIR}\" is already mounted on the loop device \"${LOOP_DEVICE}\" "
   else
-    LogMsg "Mounting the imagefile \"${IMAGE_FILE}\" to \"${BASEDIR}\" ..."
+    LogMsg "Mounting the image file \"${IMAGE_FILE}\" to \"${BASEDIR}\" ..."
 
     [[ ${VERBOSE} = ${__TRUE} ]] && set -x 
 
+# check if there is already a loop device for the file with the virtual disk
+#
+    EXISTING_LOOP_DEVICE="$( ${LOSETUP} -a | grep  "(${IMAGE_FILE})" | head -1  | cut -f1 -d ":" )"
+
+    if [ "${EXISTING_LOOP_DEVICE}"x != ""x ] ; then 
+      CREATE_LOOP_DEVICE=${__FALSE}
+      NEW_LOOP_DEVICE="${EXISTING_LOOP_DEVICE}"
+
+      LogInfo "The existing loop device for the file \"${IMAGE_FILE}\" is \"${EXISTING_LOOP_DEVICE}\""
+
+# check if the loop device is already mounted
+#      
+      EXISTING_MOUNT_POINT="$( mount | grep "${EXISTING_LOOP_DEVICE}" | cut -f3 -d " " )"
+      if [ "${EXISTING_MOUNT_POINT}"x != ""x ] ; then 
+        if [ "${EXISTING_MOUNT_POINT}"x != "${BASEDIR}"x ] ; then 
+          die 36 "The image file \"${IMAGE_FILE}\" is already mounted on \"${EXISTING_MOUNT_POINT}\" "
+        else
+#
+# this code should never run but you never know ....        
+#
+          LogInfo "The image file \"${IMAGE_FILE}\" is already mounted on \"${EXISTING_MOUNT_POINT}\" "
+          MOUNT_LOOP_DEVICE=${__FALSE}          
+        fi
+      else
+        LogInfo "The loop device for the file \"${IMAGE_FILE}\" (\"${EXISTING_LOOP_DEVICE}\") is not yet mounted"
+      fi
+    fi
+
+    if [ ${CREATE_LOOP_DEVICE} = ${__TRUE} ] ; then
+#
 # create a new loop device if necessary
 # (losetup sometimes writes useless error messages ....)
-    NEW_LOOP_DEVICE="$( ${LOSETUP} -f  2>/dev/null )"
-    LogInfoVar NEW_LOOP_DEVICE
-    
-    ${MOUNT} -o rw -t "${FILESYSTEM_TO_USE}" ${MOUNT_OPTIONS} "${IMAGE_FILE}" "${BASEDIR}"
-    TEMPRC=$?
+#
+      NEW_LOOP_DEVICE="$( ${LOSETUP} -f  2>/dev/null )"
+      LogInfoVar NEW_LOOP_DEVICE
+    fi
 
+    if [ ${MOUNT_LOOP_DEVICE} = ${__TRUE} ] ; then
+#
+# mount the loop device
+#
+      ${MOUNT} -o rw -t "${FILESYSTEM_TO_USE}" ${MOUNT_OPTIONS} "${IMAGE_FILE}" "${BASEDIR}"
+      TEMPRC=$?
+    fi
+    
     [[ ${VERBOSE} = ${__TRUE} && "${TRACE}"x = ""x ]] && set +x 
 
     [ ${TEMPRC} != 0 ]  && die 40 "Error mounting the image file \"${IMAGE_FILE}\" to \"${BASEDIR}\" " 
@@ -1864,6 +2037,9 @@ function clean_mount_config {
   THISRC=${__FALSE}
 
   typeset CUR_DIR=""
+
+  typeset ORPHAN_OVERLAY_MOUNTS=""
+  typeset CUR_MOUNT=""
   
   CUR_DIR="$1"
   CUR_DIR="${CUR_DIR:=${BASEDIR}}"
@@ -1877,15 +2053,21 @@ function clean_mount_config {
     elif [[ ${CUR_DEVICE} != /dev/block/loop* ]] ; then
       LogWarning "\"${CUR_DIR}\" is mounted on \"${CUR_DEVICE}\" - that is not a looop device"
     else
-      LogMsg "Umounting \"${CUR_DIR}\" ..."
-      ${UMOUNT} "${CUR_DIR}" 
-      if [ $? -ne 0 ] ; then
-        LogError "Error umounting \"${CUR_DIR}\" "
-      else
-
-        LogMsg "... \"${CUR_DIR}\" successully umounted"
-        THISRC=${__TRUE}
-      fi
+#
+# check for orphan overlay mounts
+#
+      ORPHAN_OVERLAY_MOUNTS="$( mount | grep ^overlay |  grep " ${CUR_DIR}/"  | tac | cut -f3 -d" " )"
+      
+      for CUR_MOUNT in ${ORPHAN_OVERLAY_MOUNTS} ${CUR_DIR} ; do
+        LogMsg "Umounting \"${CUR_MOUNT}\" ..."
+        ${UMOUNT} "${CUR_MOUNT}" 
+        if [ $? -ne 0 ] ; then
+          LogError "Error umounting \"${CUR_MOUNT}\" "
+        else
+          LogMsg "... \"${CUR_DIR}\" successully umounted"
+          THISRC=${__TRUE}
+        fi
+      done
     fi
   else
     LogError "clean_mount_config: No directory to clean found"
@@ -1895,7 +2077,7 @@ function clean_mount_config {
 }
   
 
-# ---------------------------------------------------------------------
+# --------------------------------------------------------------------
 # create_overlay_mounts - create the overlay mounts
 #
 # usage: 
@@ -1906,7 +2088,6 @@ function clean_mount_config {
 #
 function create_overlay_mounts {
   typeset __FUNCTION="create_overlay_mounts"
-
 
   typeset THISMSG=""
   
@@ -1932,6 +2113,11 @@ function create_overlay_mounts {
   typeset CUR_SUB_DIR=""
   typeset CUR_TARGET_SIZE=0
   
+  typeset MAGISK_BINARY=""
+  typeset MAGISK_DIR=""
+  
+  typeset BIND_MOUNTS_ALREADY_CREATED=""
+  
 # these are global variables:
 #
 #  OVERLAY_MOUNTS_CREATED=""
@@ -1946,6 +2132,8 @@ function create_overlay_mounts {
 #  OVERLAY_MOUNTS_NOT_CREATED=""
 #  NO_OVERLAY_MOUNTS_NOT_CREATED=0
 #
+  
+  BIND_MOUNTS_ALREADY_CREATED=""
   
   for CUR_DIR in ${DIRS_TO_OVERLAY} ; do
 
@@ -1969,67 +2157,6 @@ function create_overlay_mounts {
 
 # remove trailing /
     [[ ${CUR_DIR} == */ ]] && CUR_DIR="${CUR_DIR%*/}"
-
-# check for overlay mounts for /system 
-#    
-    if [[ ${CUR_DIR} == /system ]] ; then
-
-# check if magisk is installed
-#
-      if [ -x /system/bin/magisk ] ; then         
-        if [ ${IGNORE_MAGISK} = ${__TRUE} ] ; then
-          LogMsg "INFO: Magisk is installed but no temporary copies of the Magisk executables created on request"
-        else
-          LogMsg ""
-          LogMsg "Magisk is installed - creating temporary copies of the Magisk executables ..."
-          FILES_TO_KEEP="${FILES_TO_KEEP} ${MAGISK_BINARIES}"
-        fi
-      fi
-
-
-# list of files for which a bind mount should be created
-#   
-      FILES_TO_KEEP="$( echo "${FILES_TO_KEEP}" | tr "," " " )"
-      
-      for CUR_PROG in ${FILES_TO_KEEP} ; do
-
-        if [[ ${CUR_PROG} != */* ]] ; then
-          CUR_SOURCE="/system/bin/${CUR_PROG}"
-        elif [[ ${CUR_PROG} == bin/* ]]  ; then
-          CUR_SOURCE="/system/${CUR_PROG}"
-        elif [[ ${CUR_PROG} = /* ]]  ; then
-          CUR_SOURCE="${CUR_PROG}"                
-        elif [[ ${CUR_PROG} = ./* ]]  ; then
-          CUR_SOURCE="/system/${CUR_PROG}"
-        else   
-          CUR_SOURCE="${CUR_PROG}"                
-        fi
-           
-        if [  -d "${CUR_SOURCE}" ] ; then
-          LogError "\"${CUR_SOURCE}\" is a directory -- directories are not supported"
-        elif [ ! -r "${CUR_SOURCE}" ] ; then
-          LogWarning "The file \"${CUR_SOURCE}\" does not exist -- can not create a bind mount"
-        else
-          MOUNT_TARGET="${BIND_MOUNT_TARGET_DIR}${CUR_SOURCE}"
-
-          if [ ! -r "${MOUNT_TARGET}" ] ; then
-            CUR_SUB_DIR="${MOUNT_TARGET%/*}"
-            [ ! -d "${CUR_SUB_DIR}" ] && mkdir -p "${CUR_SUB_DIR}"          
-            touch "${MOUNT_TARGET}"
-          fi
-          CUR_TARGET_SIZE="$(  stat -c%s "${MOUNT_TARGET}" )"
-          if [ "${CUR_TARGET_SIZE}"x != "0"x ] ; then          
-            LogMsg "The temporary flie \"${MOUNT_TARGET}\" already exists"
-          else
-            LogMsg "Creating the temporary file \"${MOUNT_TARGET}\" ..."
-            mount -o bind "${CUR_SOURCE}" "${MOUNT_TARGET}"
-          fi
-        fi
-      done
-      LogMsg ""
-
-    fi
-
 
     DIRECTORY_OKAY=${__TRUE}
 
@@ -2082,7 +2209,6 @@ function create_overlay_mounts {
 #
 # print detailed infos
 #    
-
       THISMSG="There is already an overlay mount for the directory \"${CUR_DIR}\" in place"
 
       retrieve_overlay_filesystem_backend "${CUR_DIR}"
@@ -2091,11 +2217,11 @@ function create_overlay_mounts {
       fi
       
       if [ "${CUR_BACKEND_DIR}"x != ""x ] ; then    
-        THISMSG="There is already an overlay mount for the directory \"${CUR_DIR}\" in place for for \"${CUR_DEVICE}"
+        THISMSG="There is already an overlay mount for the directory \"${CUR_DIR}\" in place"
         if [ "${CUR_BACKEND_DIR}"x != ""x ] ; then    
-          THISMSG="${THISMSG} (backend directory is \"${CUR_BACKEND_DIR}\" "
+          THISMSG="${THISMSG}, the backend directory is \"${CUR_BACKEND_DIR}\""
           if [ "${CUR_BACKEND_DISK}"x != ""x ] ; then
-            THISMSG="${THISMSG}, backend disk is \"${CUR_BACKEND_DISK}\" )"
+            THISMSG="${THISMSG}, the backend disk is \"${CUR_BACKEND_DISK}\" "
           else
             THISMSG="${THISMSG})"
           fi
@@ -2116,7 +2242,6 @@ function create_overlay_mounts {
       fi                  
     fi
 
-
     if [ ${OVERLAY_ALREADY_IN_PLACE} = ${__TRUE} ] ; then          
       LogMsg "${THISMSG}"
 #
@@ -2132,6 +2257,103 @@ function create_overlay_mounts {
 #
 # there is no overlay mount in place for this directory --> create the overlay mount
 #
+
+#
+# check if the magisk binary is in a sub directory of this directory
+#
+    MAGISK_BINARY="$( which magisk )"    
+
+    if [ "${MAGISK_BINARY}"x = ""x ] ; then
+      LogInfo "No installed magisk binary found in the PATH"
+    else
+      MAGISK_DIR="${MAGISK_BINARY%/*}"
+    
+      if [[ ${MAGISK_DIR} == ${CUR_DIR}/* ]] ; then
+        if [ ${IGNORE_MAGISK} = ${__TRUE} ] ; then
+          LogMsg "INFO: Magisk is installed but no temporary copies of the Magisk executables created on request"
+        else
+#
+# add the directory to the magisk executables 
+#        
+          MAGISK_BINARIES="$( echo " ${MAGISK_BINARIES}" | tr -s " " | sed "s# # ${MAGISK_DIR}/#g" )"
+
+          LogMsg ""
+          LogMsg "Magisk is installed in ${MAGISK_DIR} - creating temporary copies of the Magisk executables ..."
+          FILES_TO_KEEP="${FILES_TO_KEEP} ${MAGISK_BINARIES}"
+        fi
+      fi
+    fi
+#    
+# check if this is an overlay mount for a directory in /
+#
+    if [ "$( dirname ${CUR_DIR} )"x = "/"x ] ; then
+#
+# list of files for which a bind mount should be created
+#   
+      FILES_TO_KEEP="$( echo "${FILES_TO_KEEP}" | tr "," " " )"
+      
+      for CUR_PROG in ${FILES_TO_KEEP} ; do
+
+        if [[ ${CUR_PROG} != */* ]] ; then
+          CUR_SOURCE="/system/bin/${CUR_PROG}"
+        elif [[ ${CUR_PROG} == bin/* ]]  ; then
+          CUR_SOURCE="/system/${CUR_PROG}"
+        elif [[ ${CUR_PROG} = /* ]]  ; then
+          CUR_SOURCE="${CUR_PROG}"                
+        elif [[ ${CUR_PROG} = ./* ]]  ; then
+          CUR_SOURCE="/system/${CUR_PROG#./*}"
+        else   
+          CUR_SOURCE="${CUR_PROG}"                
+        fi
+#
+# ignore files in other directories
+#
+        [[ ${CUR_SOURCE} != ${CUR_DIR}/* ]] && continue
+        
+#
+# ignore duplicate entries
+#
+        [[ " ${BIND_MOUNTS_ALREADY_CREATED} " == *\ ${CUR_PROG}\ * ]] && continue
+
+#
+# add the filename to the list of directories already processed
+#
+        BIND_MOUNTS_ALREADY_CREATED="${BIND_MOUNTS_ALREADY_CREATED} ${CUR_PROG} "
+
+        if [  -d "${CUR_SOURCE}" ] ; then
+          LogError "\"${CUR_SOURCE}\" is a directory -- directories are not supported"
+        elif [ ! -r "${CUR_SOURCE}" ] ; then
+          LogWarning "The file \"${CUR_SOURCE}\" does not exist -- can not create a bind mount"
+        else
+          MOUNT_TARGET="${BIND_MOUNT_TARGET_DIR}${CUR_SOURCE}"
+
+          if [ ! -r "${MOUNT_TARGET}" ] ; then
+            CUR_SUB_DIR="${MOUNT_TARGET%/*}"
+            [ ! -d "${CUR_SUB_DIR}" ] && mkdir -p "${CUR_SUB_DIR}"   
+            LogInfo "Creating the temporary file \"${MOUNT_TARGET}\" ..."
+                   
+            touch "${MOUNT_TARGET}" || LogError "Can not create the tmeporary file \"${MOUNT_TARGET}\" "
+          else
+            LogInfo "The temporary file \"${MOUNT_TARGET}\" already exists"
+          fi
+
+          if [ ! -f "${MOUNT_TARGET}" ] ; then
+            LogWarning "\"${MOUNT_TARGET}\" is not a file -- will not create a bind mount for it"
+          elif [ -r "${MOUNT_TARGET}" ] ; then
+            CUR_TARGET_SIZE="$(  stat -c%s "${MOUNT_TARGET}" )"
+            if [ "${CUR_TARGET_SIZE}"x != "0"x ] ; then          
+              LogWarning "The size of the temporary flie \"${MOUNT_TARGET}\" is not zero (size=${CUR_TARGET_SIZE}) -- this is probably already a bind mount; will not create a bind mount for that file"
+            else
+              LogMsg "Creating the temporary file \"${MOUNT_TARGET}\" ..."
+              mount -o bind "${CUR_SOURCE}" "${MOUNT_TARGET}" || \
+                LogError "Error creating the bind mount \"${MOUNT_TARGET}\" -> \"${CUR_SOURCE}\" "
+            fi
+          fi
+        fi
+      done
+      LogMsg ""
+
+    fi
 
     OVERLAY_SUBDIR="/$( create_dir_name_for_the_overlay_filesystem "${CUR_DIR}" )"
 
@@ -2327,6 +2549,76 @@ ${CUR_DIR}"
   return ${THISRC}
 }
 
+
+
+# ---------------------------------------------------------------------
+# remove_all_overlay_mounts
+#
+# usage: 
+#   remove_all_overlay_mounts
+#
+# returns:
+#   ${__TRUE} - all overlay mounts umounted
+#   ${__FALSE} - umounting one or more overlay failed
+#
+#
+function remove_all_overlay_mounts {
+  typeset __FUNCTION="remove_all_overlay_mounts"
+
+  typeset THISRC=${__TRUE}
+
+  typeset OVERLAY_MOUNTS=""
+  typeset MOUNT_POINTS=""
+  typeset CUR_MOUNT=""
+  typeset NO_OF_UMOUNTS=0
+
+  typeset MP_DONE=""
+  
+  OVERLAY_MOUNTS="$( mount | grep "^overlay"  )"
+  
+  if [ "${OVERLAY_MOUNTS}"x = ""x ] ; then
+    LogMsg "No overlay mounts found"
+  else
+    LogInfo "Found these overlay mounts:" && \
+      LogMsg "${OVERLAY_MOUNTS}"
+
+    MOUNT_POINTS="$( echo "${OVERLAY_MOUNTS}"| cut -f3 -d " " | sort | tac )"
+    NO_OF_UMOUNTS="$( echo "${MOUNT_POINTS}" | wc -l )"
+
+    ALL_MOUNT_POINTS=""
+    
+    LogMsg "Umounting ${NO_OF_UMOUNTS} overlay mount(s) ..."
+
+#
+# search for sub mounts
+#
+    for CUR_MOUNT in ${MOUNT_POINTS} ; do
+      ALL_MOUNT_POINTS="${ALL_MOUNT_POINTS} $( mount | grep " ${CUR_MOUNT}/" | grep "^/dev/block/" | tr "\t" " " | tr -s " " | cut -f3 -d  " " | sort | uniq ) ${CUR_MOUNT}" 
+    done
+
+    for CUR_MOUNT in ${ALL_MOUNT_POINTS} ; do
+      
+      [[ " ${MP_DONE} " ==  *\ ${CUR_MOUNT}\ * ]] && continue
+      MP_DONE=" ${MP_DONE} ${CUR_MOUNT} "
+      
+      [ ! -d "${CUR_MOUNT}"  ] && continue
+      is_directory_mounted "${CUR_MOUNT}" || continue
+      
+      LogMsg "Umounting \"${CUR_MOUNT}\" ..."
+      
+      umount "${CUR_MOUNT}"
+      if [ $? -ne 0 ] ; then
+        LogError "Error umounting \"${CUR_MOUNT}\" "
+        THISRC=${__FALSE}
+      fi
+    done
+  fi
+
+  return ${THISRC}
+}
+
+
+  
 # ---------------------------------------------------------------------
 # print_summary - print the summary
 #
@@ -2384,9 +2676,13 @@ function print_environment_variables {
   typeset __FUNCTION="print_environment_variables"
 
 
-  typeset  NAME_FIELD_LENGTH=10
+  typeset NAME_FIELD_LENGTH=10
+  
+  typeset DEFAULT_VALUE_FIELD_LENGTH=10
+  
   typeset CUR_VAR=""
-
+  typeset CUR_VALUE=""
+  
   typeset CUR_ENVIRONMENT_VARIABLES="$( echo "${ENVIRONMENT_VARIABLES}" | sort )"
   
   echo
@@ -2400,12 +2696,20 @@ function print_environment_variables {
     [ ${#CUR_VAR} -gt ${NAME_FIELD_LENGTH} ] && NAME_FIELD_LENGTH="${#CUR_VAR}"
   done
 
-  let NAME_FIELD_LENGTH=NAME_FIELD_LENGTH+5
-  printf "%-${NAME_FIELD_LENGTH}s %s\n" "Name" "Default Value"
-  printf "%-${NAME_FIELD_LENGTH}s %s\n" "----" "-------------"
   for CUR_VAR in ${CUR_ENVIRONMENT_VARIABLES} ; do
-    printf "%-${NAME_FIELD_LENGTH}s %s\n" "${CUR_VAR}" "$( eval echo "\$DEFAULT_${CUR_VAR}" )"
+    CUR_VALUE="$( eval echo "\$DEFAULT_${CUR_VAR}" )"
+    [ ${#CUR_VALUE} -gt ${DEFAULT_VALUE_FIELD_LENGTH} ] && DEFAULT_VALUE_FIELD_LENGTH="${#CUR_VALUE}" 
   done
+  (( DEFAULT_VALUE_FIELD_LENGTH = DEFAULT_VALUE_FIELD_LENGTH + 4 ))
+  
+  let NAME_FIELD_LENGTH=NAME_FIELD_LENGTH+5
+  printf "%-${NAME_FIELD_LENGTH}s %-${DEFAULT_VALUE_FIELD_LENGTH}s %s\n" "Name" "Default Value" "Current Value"
+  printf "%-${NAME_FIELD_LENGTH}s %-${DEFAULT_VALUE_FIELD_LENGTH}s %s\n" "----" "-------------" "-------------"
+
+  for CUR_VAR in ${CUR_ENVIRONMENT_VARIABLES} ; do
+    printf  "%-${NAME_FIELD_LENGTH}s %-${DEFAULT_VALUE_FIELD_LENGTH}s %s\n" "${CUR_VAR}"  "$( eval echo "\$DEFAULT_${CUR_VAR}" )"  "$( eval echo "\$${CUR_VAR}" )" 
+  done
+
 
   echo
 }
@@ -2459,7 +2763,11 @@ PROCESS_ONLY_MOUNTED_OVERLAY_FILESYSTEMS=${__FALSE}
 
 IGNORE_MAGISK=${__FALSE}
 
-LABEL_PARAMETER_FOUND=${__FALSE}
+NO_LABEL_PARAMETER_FOUND=${__FALSE}
+
+EXECUTABLES_TO_RUN=""
+
+IGNORE_WRONG_DIR_PARAMETER=${__FALSE}
 
 if [ $# -ne 0 ] ; then
 
@@ -2492,25 +2800,47 @@ if [ $# -ne 0 ] ; then
         PROCESS_ONLY_MOUNTED_OVERLAY_FILESYSTEMS=${__TRUE}
         ;;
 
+     ++active )
+        PROCESS_ONLY_MOUNTED_OVERLAY_FILESYSTEMS=${__FALSE}
+        ;;
+
      --nomagisk )
         IGNORE_MAGISK=${__TRUE}
+        ;;
+
+     ++nomagisk )
+        IGNORE_MAGISK=${__FALSE}
         ;;
 
      --details )
         PRINT_MORE_DETAILS=${__TRUE}
         ;;
 
+      ++details )
+        PRINT_MORE_DETAILS=${__FALSE}
+        ;;
+
       --short )
         SHORT_INFOS=${__TRUE}        
         ;;
 
+      ++short )
+        SHORT_INFOS=${__FALSE}    
+        ;;
+
       --no_relabel | --norelabel )
         RELABEL_UNLABELED_FILES=${__FALSE}
+        NO_LABEL_PARAMETER_FOUND=${__TRUE}
         ;;
 
       --relabel )
         RELABEL_UNLABELED_FILES=${__TRUE}
-        LABEL_PARAMETER_FOUND=${__TRUE}
+        NO_LABEL_PARAMETER_FOUND=${__FALSE}
+        ;;
+
+      --run=* | --script=* )
+        CUR_VAL="${CUR_PARAMETER#*=}"
+        EXECUTABLES_TO_RUN="${EXECUTABLES_TO_RUN} $( echo "${CUR_VAL}" | tr "," " " )"
         ;;
 
       *=* )
@@ -2539,6 +2869,11 @@ if [ $# -ne 0 ] ; then
       clean )
         [ "${ACTION}"x != ""x ] && die 101 "Duplicate action parameter found (\"${ACTION}\" and \"${CUR_PARAMETER}\") "
         ACTION="clean"
+        ;;
+
+      cleanup )
+        [ "${ACTION}"x != ""x ] && die 101 "Duplicate action parameter found (\"${ACTION}\" and \"${CUR_PARAMETER}\") "
+        ACTION="cleanup"
         ;;
 
       get )
@@ -2579,7 +2914,11 @@ if [ $# -ne 0 ] ; then
       mount_only )
         [ "${ACTION}"x != ""x ] && die 101 "Duplicate action parameter found (\"${ACTION}\" and \"${CUR_PARAMETER}\") "
         ACTION="mount_only"
+        ;;
 
+      mount_existing )
+        [ "${ACTION}"x != ""x ] && die 101 "Duplicate action parameter found (\"${ACTION}\" and \"${CUR_PARAMETER}\") "
+        ACTION="mount_existing"
         ;;
 
       test )
@@ -2607,6 +2946,22 @@ if [ $# -ne 0 ] ; then
         NEW_SELINUX_MODE="Enforcing"
         ;;
 
+      --no_su | --no-su )
+         :  # the parameter is already prcoessed (++no-su is not usefull)
+         ;;
+
+      --relax )
+         IGNORE_WRONG_DIR_PARAMETER=${__TRUE}
+         ;;
+
+      ++relax )
+         IGNORE_WRONG_DIR_PARAMETER=${__FALSE}
+         ;;
+
+      "" )
+        :   # ignore empty parameter
+        ;; 
+
       --* | -* )
         die 80 "Unknown parameter found: ${CUR_PARAMETER}"
         ;;
@@ -2627,12 +2982,26 @@ if [ $# -ne 0 ] ; then
            if [[ ${CUR_PARAMETER} == *'#'* ]] ; then
              die 81 "Directory names with a hash \"#\" are not supported (${CUR_PARAMETER})  -- use \"IMAGE_FILE=${CUR_PARAMETER}\" to define the image file to use "
            fi
+       
+           case ${ACTION} in 
            
-           if [ ! -d "${CUR_PARAMETER}" ] ; then
-             die 82 "The parameter \"${CUR_PARAMETER}\" is not a directory"
-           fi
-           DIRS_TO_OVERLAY="${DIRS_TO_OVERLAY} ${CUR_PARAMETER}"
-           ;;
+             get | restore )
+# file parameter are allowed for these actions
+               DIRS_TO_OVERLAY="${DIRS_TO_OVERLAY} ${CUR_PARAMETER}"
+               ;;
+
+             * )             
+               if [ ! -d "${CUR_PARAMETER}" ] ; then
+                 if [ ${IGNORE_WRONG_DIR_PARAMETER} = ${__TRUE} ] ; then
+                   LogWarning "The parameter \"${CUR_PARAMETER}\" is not a directory - the parameter will be ignored"
+                 else
+                   die 82 "The parameter \"${CUR_PARAMETER}\" is not a directory (use the parameter \"--relax\" to ignore this parameter"
+                 fi
+               else
+                 DIRS_TO_OVERLAY="${DIRS_TO_OVERLAY} ${CUR_PARAMETER}"
+               fi
+             esac
+             ;;
 
           * ) 
             die 90 "Unknown parameter found: \"${CUR_PARAMETER}\" " 
@@ -2643,6 +3012,22 @@ if [ $# -ne 0 ] ; then
 
     esac
   done
+fi
+
+if [ "${FILES_TO_KEEP}"x = "none"x ] ;then
+  FILES_TO_KEEP=""
+elif [ "${FILES_TO_KEEP}"x = ""x ] ;then
+#
+# FILES_TO_KEEP is empty - use the default files to keep
+#  
+  FILES_TO_KEEP="${DEFAULT_FILES_TO_KEEP}"
+
+elif [[ " ${FILES_TO_KEEP} " = *\ default\ * ]] ; then
+#
+# default used in the variable FILES_TO_KEEP -- add the default files to keep 
+#
+  FILES_TO_KEEP=" ${FILES_TO_KEEP} "
+  FILES_TO_KEEP="${FILES_TO_KEEP/ default /${DEFAULT_FILES_TO_KEEP} }"
 fi
 
 #
@@ -2782,6 +3167,19 @@ DIRS_TO_OVERLAY="${NEW_DIRS_TO_OVERLAY}"
 
 # ---------------------------------------------------------------------
 
+case ${ACTION} in
+
+  mount_only | mount_existing | cleanup | clean | list )
+    if [ ${DIRECTORY_FOUND_IN_THE_PARAMETER} = ${__TRUE}  ] ;then
+      if [ ${IGNORE_WRONG_DIR_PARAMETER} != ${__TRUE} ] ; then
+        die 75 "Directory parameter are not allowed for the action \"${ACTION}\" " 
+      else
+        LogWarning "Directory parameter are not used for the action \"${ACTION}\" " 
+      fi
+    fi
+    ;;
+    
+esac
 
 # ---------------------------------------------------------------------
 # first check for actions that can be executed by any user
@@ -2809,10 +3207,7 @@ case ${ACTION} in
     die 0
     ;;
 
-  list )
-    [ ${DIRECTORY_FOUND_IN_THE_PARAMETER} = ${__TRUE} ] && \
-      die 75 "Directory parameter are not allowed for the action \"${ACTION}\" " 
-  
+  list )  
     if [ ${PRINT_MORE_DETAILS} = ${__TRUE}  ] ; then
       ${LOSETUP} -a 2>/dev/null 1>/dev/null
       if [ $? -ne 0 ] ; then
@@ -2830,12 +3225,19 @@ esac
 # all other actions need root access
 #
 
+# ---------------------------------------------------------------------
 
 # check the prerequisites for the other actions 
 
 CUR_USER="$( id -un )"
 
 if [ "${CUR_USER}"x != "root"x ] ; then
+
+  if [ "${SU_ERROR_MESSAGE}"x != ""x ] ; then
+     LogMsg 
+     LogMsg "${SU_ERROR_MESSAGE}"
+     LogMsg 
+  fi
   die 250 "The script \"$0\" must be executed by the root user (the current user is \"${CUR_USER}\")"
 fi
 
@@ -2878,9 +3280,7 @@ if [ "${CUR_SELINUX_MODE}"x = "Permissive"x ] ; then
 else
   LogInfo "SELinux is currently enabled"
 fi
-
-# ---------------------------------------------------------------------
-
+  
 case ${ACTION} in
 
   get )
@@ -2929,51 +3329,145 @@ case ${ACTION} in
     MAIN_RC=$?
     ;;
 
+
+  cleanup )    
+    remove_all_overlay_mounts
+    MAIN_RC=$?
+    ;;
+
   clean )
-    [ ${DIRECTORY_FOUND_IN_THE_PARAMETER} = ${__TRUE} ] && \
-      die 75 "Directory parameter are not allowed for the action \"${ACTION}\" " 
-  
     umount_overlay_mounts || \
        die 100 "clean config requested but umounting the overlay filesystems failed"
     clean_mount_config
     MAIN_RC=$?
     ;;
 
-  mount | mount_only )
+  mount | mount_only | mount_existing )    
     if [ ${INIT_DISK} = ${__TRUE} ] ; then
       LogMsg "Initializing the virtual disk requested -- now umounting all overlay filesystems ..."
       umount_overlay_mounts || \
         die 100 "init disk requested but umounting the overlay filesystems failed"
     fi
 
+    LogInfo "### Now the action starts ..."
 #
 # create the image file
 #
     mount_virtual_disk
+ 
+#
+# get the list of overlay directories in the virtual disk
+#
+    DIR_LIST="$( cd "${BASEDIR}/upper" 2>/dev/null && ls | sed "s#^#/#g" | tr "\n" " "   )"
 
-#
-# default value for RELABEL_UNLABELED_FILES is ${__TRUE}
-#
-    if [ "${ACTION}"x = "mount_only"x ] ; then
-#
-# relabel the files for mount_only only if the parameter --label is used
-#    
-      [ ${LABEL_PARAMETER_FOUND} != ${__TRUE} ] && RELABEL_UNLABELED_FILES=${__FALSE}
+    if [ "${ACTION}"x = "mount_existing"x ] ; then
+      LogInfo "Only mount the existing overlay directories on the virtual disk .."
+      DIRS_TO_OVERLAY="$( echo "${DIR_LIST}" | tr "#" "/" )"
+      LogInfo "Now mounting the overlay directories for the directories \"${DIRS_TO_OVERLAY}\" ..."
+      
+      if [ "${DIRS_TO_OVERLAY}"x = ""x ] ; then
+        die 95 "There are no overlay directories on the virtual disk"
+      fi
     fi
+
 #       
 # correct the SELinux context for the files and directories in the ./upper dir with unlabeled SELinux context
 #
-    if [ ${RELABEL_UNLABELED_FILES} = ${__TRUE} ] ; then
-      create_overlay_directory_tree
+    create_overlay_directory_tree
 
-      set_selinux_context_for_files "${BASEDIR}/upper"
+    LogInfo "Checking for overlay directories that should be relabeled ..."
+
+    LogInfo "DIRS_TO_OVERLAY is \"${DIRS_TO_OVERLAY}\" "
+    
+    DIRS_TO_RELABEL=""
+
+    if [ "${ACTION}"x = "mount_only"x ] ; then
+#
+# option "--relabel" and action "mount_only" --> relabel all overlay filesystems on the virtual disk
+#    
+      if [ ${RELABEL_UNLABELED_FILES} = ${__TRUE} ] ; then
+        DIRS_TO_RELABEL="${DIR_LIST}"
+      fi
     else
-      LogInfo "Relabeling of unlabeled files in the overlay filesystem is disabled"
+#
+# relabel all the overlay mounts for all filesystem found in the parameter
+#    
+      DIRS_TO_RELABEL="${DIRS_TO_OVERLAY}"
     fi
 
+    LogInfo "The list of overlay directories to check for relableing is \"${DIRS_TO_RELABEL}\"  "  
+    
+    for CUR_DIR in ${DIR_LIST} ; do
+      LogInfo "Checking the directory \"${CUR_DIR}\" ...."
+
+      if [[ ${CUR_DIR} = *\#* ]] ; then
+        LogInfo "relabeling is not yet implemented for the directory \"${CUR_DIR}\" "
+        continue
+      fi
+
+      if [ "${DIRS_TO_RELABEL}"x != ""x ] ; then
+        if [[ " ${DIRS_TO_RELABEL} " != *\ ${CUR_DIR}\ * ]] ; then
+          LogInfo "The directory \"${CUR_DIR}\" is not in the list of overlays - skipping this directory"
+          continue
+        fi
+      fi
+
+      RELABEL_THIS_DIR=${__FALSE}
+      
+      RELABEL_FILE_NAME="${CUR_DIR}/relabel"
+      RELABEL_FILE="${BASEDIR}/upper${RELABEL_FILE_NAME}"
+      
+      if [  -r "${RELABEL_FILE}" ] ; then
+        if [ "${ACTION}"x = "mount_only"x ] ; then
+#
+# action "mount_only" without the option "--relabel" -> do not relabel any file
+#        
+          :  
+        elif [ ${NO_LABEL_PARAMETER_FOUND} = ${__TRUE} ] ; then
+          LogInfo "File \"${RELABEL_FILE_NAME}\" found but parameter \"--no_relabel\" was used -- skipping this directory "
+        else
+          LogMsg "File \"${RELABEL_FILE_NAME}\" found - will relabel this directory "
+          RELABEL_THIS_DIR=${__TRUE}
+        fi
+      fi
+      
+      if [ ${RELABEL_UNLABELED_FILES} = ${__TRUE}  ] ; then
+        LogInfo "Option \"--relabel\" was used -- will relabel this directory"
+        RELABEL_THIS_DIR=${__TRUE}
+      fi
+
+      if [ ${RELABEL_THIS_DIR} = ${__TRUE} ] ;then
+        set_selinux_context_for_files "${BASEDIR}/upper${CUR_DIR}" "${CUR_DIR}"
+      fi
+      
+    done
+
+    
     if [ "${ACTION}"x != "mount_only"x ] ; then
       create_overlay_mounts
 
+#
+# execute the post installation commands if there are any defined
+#
+      if [ "${EXECUTABLES_TO_RUN}"x != ""x ] ; then
+        for CUR_EXECUTABLE in ${EXECUTABLES_TO_RUN} ; do
+          LogMsg "-"
+          LogMsg "Now executing the post installation commands ..."
+          if [ ! -x "${CUR_EXECUTABLE}" ] ; then
+            LogWarning "The executable \"${CUR_EXECUTABLE}\" does not exist or is not executable"
+            continue
+          else
+            LogMsg "+++ Now executing \"${CUR_EXECUTABLE}\" ..."
+            LogMsg "-"
+            ${CUR_EXECUTABLE}
+            TEMPRC=$?
+            LogMsg "-"
+            LogMsg "+++ The command \"${CUR_EXECUTABLE}\" ended with RC=${TEMPRC}"
+            LogMsg "-"
+          fi
+        done
+      fi
+      
       print_summary
     else
       LogMsg ""
