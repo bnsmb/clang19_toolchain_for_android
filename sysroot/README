@@ -682,6 +682,6 @@ History
     added gettext 1.0
     updated nano to version 9.3
     updated wget2 to version 2.3.0
-    updated create_overlay_mounts.sh to version 1.6.0
+    updated create_overlay_mounts.sh to version 2.0.0 
     sudo is now using "su -c <command>" (no login shell anymore)
 
