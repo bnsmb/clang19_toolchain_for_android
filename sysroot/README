@@ -244,7 +244,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/b
 #
 # various compression tools:
 # 
-# 7zz 26.04
+# 7zz 26.06
 # bzip2 1.0.8
 # zip 3.0
 # unzip 5.52
@@ -675,7 +675,7 @@ History
     updated git to version 2.56.0 
     added the script find_symbol_in_ndk_libcs to check in which API versions a symbol is defined
     added the script ./bin/add_missing_selinux_rules_with_magisk.sh to define the missing SELinux policies with magiskpolicy
-    updated 7zz to version 26.04
+    updated 7zz to version 26.06
     updated Python to version 3.15
     updated meson to version 1.12.1
     updated pip to version 26.2.1
