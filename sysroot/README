@@ -164,6 +164,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/b
 # pkgconf 2.30
 # gettext 1.0 (autopoint, gettext, etc)
 # texinfo 7.2
+# re2c 4.6 (ihttps://re2c.org/)
 # 
 # bash 5.2.37
 # mksh @(#)MIRBSD KSH R59 2025/06/02
@@ -684,4 +685,4 @@ History
     updated wget2 to version 2.3.0
     updated create_overlay_mounts.sh to version 2.0.0 
     sudo is now using "su -c <command>" (no login shell anymore)
-
+    add re2c 4.6 
