@@ -130,6 +130,9 @@
 #  05.10.2026 v1.5.22 /bs
 #    added the alias swapon and swapoff
 #
+#  15.11.2026 v1.5.23 /bs
+#    the script now defines the variable ACLOCAL_PATH if it is not already defined
+#
 
 __TRUE=0
 __FALSE=1
@@ -479,6 +482,9 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   add_path "${CLANG_SYSROOT}/bin" "${CLANG_SYSROOT}/usr/bin"
 
   add_library_path "${CLANG_SYSROOT}/usr/lib"
+
+
+  [ i"${ACLOCAL_PATH}"x = ""x ] && ACLOCAL_PATH="${CLANG_SYSROOT}/usr/share/aclocal/"
 
 # ---------------------------------------------------------------------
 #
