@@ -19,6 +19,8 @@
 # History
 #   05.09.2024 1.0.0 /bs
 #     initial release
+#   18.11.2026 v1.1.0 /bs
+#     replace "su - -c " with "su - " ("su -" does not work anymmore with Magisk 31.1)
 #
 
 __TRUE=0
@@ -223,9 +225,9 @@ CUR_ID="$( id -un )"
 if [ "${CUR_ID}"x = "root"x ] ; then
   LogInfo "root access without any prefix works"
 else
-  CUR_ID="$( su - -c id -un )"
+  CUR_ID="$( su -c id -un )"
   if [ "${CUR_ID}"x = "root"x ] ; then
-    SU_PREFIX="su - -c "
+    SU_PREFIX="su  -c "
     LogInfo "Using the prefix \"${SU_PREFIX}\" for root access"
   else
     LogError " root access to the phone does not work"

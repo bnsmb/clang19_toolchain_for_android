@@ -54,7 +54,7 @@
 #   Magisk must be installed and active on the phone
 #   The Magisk Modules to install must exist on the machine on which this script is running
 #   A shell on the phone or a connection via adb command to the phone is required
-#   root access is required (either direct or via "su -")
+#   root access is required (either direct or via "su ")
 #
 #
 # History
@@ -70,7 +70,12 @@
 #   29.10.2024 v1.2.0 /bs
 #     the script now uses /data/local/tmp or /sdcard/Download for temporary files if /tmp does not exist
 #
-
+#   19.04.2025 v1.2.1 /bs
+#     the script now deletes the temporary test files /sdcard/Download/xxx.$$ 
+#
+#   18.11.2026 v1.3.0 /bs
+#     replace "su - -c " with "su - " ("su -" does not work anymmore with Magisk 31.1)
+#
 # read the script version from the script source code
 #
 SCRIPT_VERSION="$( grep -E "^#.*/bs" $0 | tail -1 | awk '{ print $3 }' )"
@@ -284,6 +289,8 @@ else
   CUR_ID="$( ${ADB_SHELL_COMMAND} touch ${TARGET_DIR}/xxx.$$  )"
   if [ $? != 0 ] ; then
      die 107  "Can not write to the directory \"${TARGET_DIR}\" "
+  else     
+    CUR_OUTPUT="$( ${ADB_SHELL_COMMAND} rm ${TARGET_DIR}/xxx.$$  )"
   fi
 
   CUR_PHONE_MODEL="$( ${ADB_SHELL_COMMAND} getprop ro.product.odm.model 2>/dev/null )"
@@ -300,9 +307,9 @@ CUR_ID="$( ${ADB_SHELL_COMMAND} id -un )"
 if [ "${CUR_ID}"x = "root"x ] ; then
   LogMsg "root access without any prefix works"
 else
-  CUR_ID="$( ${ADB_SHELL_COMMAND} su - -c id -un )"
+  CUR_ID="$( ${ADB_SHELL_COMMAND} su -c id -un )"
   if [ "${CUR_ID}"x = "root"x ] ; then
-    SU_PREFIX="su - -c "
+    SU_PREFIX="su -c "
     LogMsg "Using the prefix \"${SU_PREFIX}\" for root access"
   else
     die 105 " root access to the phone does not work"

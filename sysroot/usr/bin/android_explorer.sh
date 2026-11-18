@@ -83,18 +83,15 @@ fi
 # PREFIX                     # string   # prefix used in dry-run-mode
 #
 ADDITIONAL_ENV_VARIABLES="
-ADD_BIN_DIR                # string   # directory with executables 
 "
 
 # Script Usage (lines starting with "#h#" are printed if the parameter -h or -H is used; lines starting with "#H#" are only printed if the parameter -H is used
 #
 # ----------------------------------------------------------------------
-# android_explorer.sh
-#
-# Function: Collect logs, config files, and command output in Android for trouble shooting
+#H# android_explorer.sh
+#H#
+#H# Function: Collect logs, config files, and command output in Android for trouble shooting
 #H# 
-#h# android_explorer #VERSION# - collect logs and configuration infos from a running Android OS
-#h#
 #h# Usage:    android_explorer.sh [-h|--help] [-v|--verbose] [-v:fn|--verbose:fn] [-q|--quiet] [-f|--force] [-o|--overwrite] [-y|--yes] [-n|--no]
 #h#               [-l|--logfile [filename[:n]|:n] [-d{:dryrun_prefix}|--dryrun{:dryrun_prefix}] [-D|--debugshell] [-t fn|--tracefunc fn] [-L]
 #h#               [-T|--tee] [-V|--version] [--var name=value] [--appendlog] [--nologrotate] [--noSTDOUTlog] [--print_runtime_vars]
@@ -187,7 +184,7 @@ ADD_BIN_DIR                # string   # directory with executables
 #H#        use \"all\" to execute all modules (this is the default)
 #H#        If a module is in the list of modules to execute and in the list of modules to exclude it is not executed
 #H#   -O 
-#H#      - create the tar file \"outputfile\" with the collected files
+#H#      - create the ZIP file \"outputfile\" with the collected files
 #H#   -w   
 #H#      - use the working directory \"workdir\"
 #H#   --keep
@@ -260,14 +257,6 @@ ADD_BIN_DIR                # string   # directory with executables
 #V#     added mount_dynamic_partition commands to the storage module
 #V#     added a command to retrieve the size of the privapps to the module privapp
 #V#     added the module apps
-#V#
-#V#   08.08.2026 v0.0.3 /bs
-#V#     the script now searches the binaries and scripts also in /system/usr/bin
-#V#     added the module for collecting infos about overlay mounts
-#V#
-#V#   18.10.2026 v0.0.4 /bs
-#V#     corrected some typoes
-#V#     changed the handling for module parameter
 #V#
 #T# ----------------------------------------------------------------------
 #T#
@@ -373,8 +362,8 @@ fi
 #
 # dryrun mode only works if you prefix all commands that change something whith ${PREFIX}!
 #
-#DRYRUN_MODE_DISABLED=${__TRUE}
-DRYRUN_MODE_DISABLED=${__FALSE}
+DRYRUN_MODE_DISABLED=${__TRUE}
+#DRYRUN_MODE_DISABLED=${__FALSE}
 
 # dryrun prefix (parameter -d)   
 #
@@ -2404,7 +2393,7 @@ function show_script_usage {
     REGEX="^#H#|^#h#"
   fi
   
-  HELPMSG="$( ${EGREP} "${REGEX}" "${REAL_SCRIPTNAME}" | cut -c4- | sed -e "s/scriptt_mini.sh/${SCRIPTNAME}/g"  -e "s/#VERSION#/${SCRIPT_VERSION}/g")"
+  HELPMSG="$( ${EGREP} "${REGEX}" "${REAL_SCRIPTNAME}" | cut -c4- | sed "s/scriptt_mini.sh/${SCRIPTNAME}/g" )"
    
   eval echo \""${HELPMSG}"\"
 
@@ -2646,7 +2635,7 @@ function die {
     fi      
   fi
 
-  if [ "${PREFIX}"x != ""x -a ${DRYRUN_MODE_DISABLED} != ${__TRUE} ] ; then
+  if [ "${PREFIX}"x != ""x ] ; then
     LogMsg "-"
     LogMsg "*** Running in dry-run mode -- no changes were done. The dryrun prefix used was \"${PREFIX}\" "
     LogMsg "-"
@@ -3163,6 +3152,7 @@ function show_extended_usage_help {
   VERBOSE_LEVEL=0
   return ${THISRC}
 }
+  
   
 
 # ----------------------------------------------------------------------
@@ -4257,10 +4247,6 @@ function search_help_script {
 
   typeset SCRIPT_FULL_NAME=""
 
-# the directory for binaries used in most of my Magisk modules
-#
-  typeset USR_BIN="/system/usr/bin"
-
 # the directory with binaries from the clang19 toolchain
 #
   typeset CLANG19_SYSROOT_USR_BIN="/data/local/tmp/sysroot/usr/bin"
@@ -4285,31 +4271,12 @@ function search_help_script {
     fi
   fi
 
-
-
-  if [ "${SCRIPT_FULL_NAME}"x  = ""x ] ; then  
-    if [ -x "${USR_BIN}/${SCRIPT_NAME}" ] ; then
-      SCRIPT_FULL_NAME="${USR_BIN}/${SCRIPT_NAME}"
-      THISRC=${__TRUE}
-    fi
-  fi
-
-  if [ "${SCRIPT_FULL_NAME}"x  = ""x ] ; then  
-    if [ -x "${ADD_BIN_DIR}/${SCRIPT_NAME}" ] ; then
-      SCRIPT_FULL_NAME="${ADD_BIN_DIR}/${SCRIPT_NAME}"
-      THISRC=${__TRUE}
-    fi
-  fi
-
-
   if [ "${SCRIPT_FULL_NAME}"x  = ""x ] ; then  
     if [ -x "${CLANG19_SYSROOT_USR_BIN}/${SCRIPT_NAME}" ] ; then
       SCRIPT_FULL_NAME="${CLANG19_SYSROOT_USR_BIN}/${SCRIPT_NAME}"
       THISRC=${__TRUE}
     fi
   fi
-
-  LogInfo "Found \"${SCRIPT_NAME}\" here: \"${SCRIPT_FULL_NAME}\" "
 
   echo "${SCRIPT_FULL_NAME}"
   
@@ -5523,139 +5490,6 @@ function module_network {
 
 
 # ----------------------------------------------------------------------
-# module_overlay_mounts
-#
-# function: Collect the infos about overlay mounts
-#
-# usage: module_overlay_mounts
-#
-# returns: ${__TRUE} - module successfully executed
-#          ${__FALSE} - error executing the module
-#
-#
-function module_overlay_mounts {
-  typeset __FUNCTION="module_overlay_mounts"
-  ${__DEBUG_CODE}
-  ${__FUNCTION_INIT}
-
-  typeset THISRC=${__TRUE}
-
-  typeset CONT=${__TRUE}
-  
-  typeset CUR_OUTPUT=""
-  typeset TEMPRC=""
-  typeset CUR_LOG_FILE=""
-  typeset FILE_LIST=""
-  typeset CUR_FILE=""
-  typeset i=0
-  typeset CUR_LOOP_DEVICE=""
-  
-  typeset MODULE_WORKDIR="${CUR_WORKDIR}/${__FUNCTION#module_*}"
-
-  typeset CREATE_OVERLAY_MOUNT=$( search_help_script "ceate_overlay_mount.sh" )
-  
-# ----------------------------------------------------------------------
-  
-  if [ ${THISRC} = ${__TRUE} -a ${CONT} = ${__TRUE} ] ;then
-    create_directory "${MODULE_WORKDIR}" || THISRC=${__FALSE}
-  fi
-
-# ----------------------------------------------------------------------
-#  CUR_LOG_FILE="${MODULE_WORKDIR}/df_h_dev_ov.txt"
-#  CMD="df -h /dev/ov"
-#  execute_command "${CMD}" "${CUR_LOG_FILE}" 
-#
-# ----------------------------------------------------------------------
-
-  if [ ${THISRC} = ${__TRUE} -a ${CONT} = ${__TRUE} ] ;then
-    CUR_LOG_FILE="${MODULE_WORKDIR}/xxxx.txt"
-    :
-  fi
-
-# ----------------------------------------------------------------------
-
-  if [ ${THISRC} = ${__TRUE} -a ${CONT} = ${__TRUE} ] ;then
-    if [ ${ROOT_ACCESS_AVAILABLE} = ${__TRUE} ] ; then
-
-      if [ "${CREATE_OVERLAY_MOUNT}"x != ""x ] ; then
-        CUR_LOG_FILE="${MODULE_WORKDIR}/create_overlay_mount.txt"
-        CMD="${CREATE_OVERLAY_MOUNT} --verbose--details list "
-        execute_command "${CMD}" "${CUR_LOG_FILE}"  "${ROOT_PREFIX}"
-      fi
-
-# find loop back devices mount on a file
-#
-      CUR_LOG_FILE="${MODULE_WORKDIR}/losetup_a.txt"
-
-      LOOP_DEVICES="$( execute_command "losetup -a"  "${CUR_LOG_FILE}" "${ROOT_PREFIX}" )"
-      
-        while read CUR_LOOP_DEVICE_INFO ;do
-          LogInfo "Processing the loop device \"${CUR_LOOP_DEVICE_INFO}\" ..."
-          CUR_LOOP_DEVICE="$( echo "${CUR_LOOP_DEVICE_INFO}" | cut -f1 -d":" )"
-          CUR_IMAGE_FILE="$( echo "${CUR_LOOP_DEVICE_INFO}" | tr '()' '##' | cut -f2 -d '#' )"
-          CUR_MOUNT_POINT="$( df -h "${CUR_LOOP_DEVICE}" | tail -1 | sed "s#.* /#/#g" )"
-
-          [ "${CUR_IMAGE_FILE}"x = ""x ] && continue
-
-          LogMsg "Processing the loop device \"${CUR_LOOP_DEVICE_INFO}\" ..."
-
-          cat >"${TMPFILE1}" <<EOT
-echo          
-echo "The loop device is \"${CUR_LOOP_DEVICE}\""
-echo "The file used is \"${CUR_IMAGE_FILE}\" " 
-echo "The mount point is \"${CUR_MOUNT_POINT}\""
-
-echo
-echo "*** ls -lhZ \"${CUR_IMAGE_FILE}\" "
-ls -lhZ "${CUR_IMAGE_FILE}" 
-
-echo
-echo "*** ls -lZ \"${CUR_LOOP_DEVICE}\""
-ls -lZ "${CUR_LOOP_DEVICE}"
-echo
-
-echo
-echo "*** ls -ldZ \"${CUR_MOUNT_POINT}\""
-ls -ldZ "${CUR_MOUNT_POINT}"
-echo
-
-EOT
-          if [ "${CUR_MOUNT_POINT}"x != ""x ] ; then
-            cat >>"${TMPFILE1}" <<EOT
-echo "*** df -h \"${CUR_MOUNT_POINT}\" "
-df -h "${CUR_MOUNT_POINT}"
-echo
-
-echo "*** mount | grep \"${CUR_MOUNT_POINT}\"  "
-mount | grep "${CUR_MOUNT_POINT}"
-echo
-
-echo "*** ls -dZl \"${CUR_MOUNT_POINT}\"/* "
-ls -dZl "${CUR_MOUNT_POINT}"/*
-echo
-
-echo "*** ls -dZl \"${CUR_MOUNT_POINT}\"/*/* "
-ls -dZl "${CUR_MOUNT_POINT}"/*/*
-echo
-
-EOT
-          fi
-
-          CUR_LOG_FILE="${MODULE_WORKDIR}/file_loop_mounts_${CUR_LOOP_DEVICE##*/}.txt"
-          CMD="sh ${TMPFILE1}"
-          execute_command "${CMD}" "${CUR_LOG_FILE}"  "${ROOT_PREFIX}"
-
-        done <"${CUR_LOG_FILE}"
-      
-    fi
-  fi
-
-# ----------------------------------------------------------------------
-
-  return ${THISRC}
-}
-
-# ----------------------------------------------------------------------
 # module_pm
 #
 # function: Collect the infos from pm
@@ -6114,7 +5948,7 @@ function module_storage {
       CUR_LOG_FILE="${MODULE_WORKDIR}/dmctl_list_devices.txt"
       CMD="dmctl list devices "
       execute_command "${CMD}" "${CUR_LOG_FILE}"  "${ROOT_PREFIX}"
-
+set -x
       CUR_LIST_OF_LOGICAL_DEVICES="$( ${ROOT_PREFIX} dmctl list devices | tr "\t" " " | cut -f1 -d  " " )"
 
       for CUR_LOGICAL_DEVICE in ${CUR_LIST_OF_LOGICAL_DEVICES} ; do
@@ -6122,7 +5956,7 @@ function module_storage {
         CMD="dmctl table ${CUR_LOGICAL_DEVICE}"
         execute_command "${CMD}" "${CUR_LOG_FILE}"  "${ROOT_PREFIX}"
       done
-
+set +x
       MOUNT_DYNAMIC_PARTITIONS="${MOUNT_DYNAMIC_PARTITIONS:=$( which mount_dynamic_partitions )}"
       [ "${MOUNT_DYNAMIC_PARTITIONS}"x = ""x -a -x /data/local/tmp/mount_dynamic_partitions ] && MOUNT_DYNAMIC_PARTITIONS=" /data/local/tmp/mount_dynamic_partitions"
 
@@ -6433,12 +6267,6 @@ LIST_OF_ADDITIONAL_KNOWN_MODULES=""
 
 # ----------------------------------------------------------------------
 
-# a directory used for additional binaries
-#
-ADD_BIN_DIR="${ADD_BIN_DIR:=/data/local/tmp/bin}"
-
-
-# ----------------------------------------------------------------------
 
 gettime_in_seconds STARTTIME_IN_SECONDS
 STARTTIME_IN_HUMAN_READABLE_FORMAT="$( date "+%d.%m.%Y %H:%M:%S" )"
@@ -6485,7 +6313,7 @@ KEEP_WORKING_DIRECTORY=${__FALSE}
 
 LIST_DEFINED_MODULES=${__FALSE}
 
-MODULES_TO_EXECUTE="${MODULES_TO_EXECUTE:=${LIST_OF_KNOWN_MODULES}}"
+MODULES_TO_EXECUTE="${MODULES_TO_EXECUTE:=${LIST_OF_KNOWN_MODULES} ${LIST_OF_ADDITIONAL_KNOWN_MODULES}}"
 
 DEFAULT_INCLUDE_FILES="$( ls ${REAL_SCRIPTDIR}/*.include 2>/dev/null ) $( ls ${PWD}/*.include  2>/dev/null )"
 
@@ -6600,11 +6428,9 @@ while [ $# -ne 0 ] ; do
        ;;
 
 
-    -d | --dryrun | -d:* | --dryrun:* | --dry-run | --dry-run:*)
-       CUR_KEY="$1"
-       CUR_VALUE="${1#*:}"
-       [ ${CUR_KEY}x = ${CUR_VALUE}x ] && CUR_VALUE=""
-        
+    -d | --dryrun | -d:* | --dryrun:* )
+       __getparameter    
+       
        if [ "${CUR_VALUE}"x = ""x ] ; then
          PREFIX="${PREFIX:=${DEFAULT_DRYRUN_PREFIX}}"
        else
@@ -6975,40 +6801,12 @@ if [ ${VAR_VALUE_PARAMETER_ENABLED} = ${__TRUE} ] ; then
   set -- ${TMP_PARAMETER}
 fi
 
+
 NOT_USED_PARAMETER="$*"
 # [ $# -ne 0 ] && LogMsg "Not yet used parameter are: \"$*\" "
 
 
-MODULE_PARAMETER_FOUND=${__FALSE}
-
-if [ $# -ne 0 ] ; then
-  MODULE_PARAMETER_FOUND=${__TRUE}
-
-  NEW_MODULE_LIST=""
-  
-  while [ $# -ne 0 ] ; do
-    CUR_PARAMETER="$1"
-    shift
-    case ${CUR_PARAMETER} in
-
-      "none" )
-        NEW_MODULE_LIST=""
-        ;;
-
-      "default" )
-        NEW_MODULE_LIST="${NEW_MODULE_LIST} ${MODULES_TO_EXECUTE}"
-        ;;
-
-      * )
-        NEW_MODULE_LIST="${NEW_MODULE_LIST} ${CUR_PARAMETER}"
-        ;;
-      
-    esac
-  done
-
-  MODULES_TO_EXECUTE="${NEW_MODULE_LIST}"
-
-fi
+[ $# -ne 0 ] && MODULES_TO_EXECUTE="${MODULES_TO_EXECUTE} $*"
 
 
 if [ ${SHOW_SCRIPT_USAGE} = ${__TRUE} ] ; then
@@ -7023,7 +6821,6 @@ if [ ${PRINT_VERSION_AND_EXIT} = ${__TRUE}   ] ; then
   die 0
 fi
 
-
 # ---------------------------------------------------------------------
 # process the include files
 #
@@ -7031,8 +6828,6 @@ fi
 if [ "${INCLUDE_FILES}"x = "none"x ] ; then
   LogInfo "Include files are disabled"
 elif [ "${INCLUDE_FILES}"x != ""x ] ; then
-
-  LogMsg "Processing the include files ..."
 
   LogMsg "-"
   LogInfo "Checking the include files ..."
@@ -7045,14 +6840,14 @@ elif [ "${INCLUDE_FILES}"x != ""x ] ; then
   ERROR_FOUND=${__FALSE}
 
   LogInfo "The list of include files is now: " && \
-    LogMsg "${INCLUDE_FILES}" 
+    LogMsg "-" "${INCLUDE_FILES}" 
   
   for CUR_INCLUDE_FILE in ${INCLUDE_FILES} ; do
 
     LogInfo "Processing the include file \"${CUR_INCLUDE_FILE}\" ..."
 
     if [ -d "${CUR_INCLUDE_FILE}" ] ; then
-      NEW_INCLUDE_FILES="${NEW_INCLUDE_FILES} $( ls -1d ${CUR_INCLUDE_FILE}/*.include 2>/dev/null )"
+      NEW_INCLUDE_FILES="${NEW_INCLUDE_FILES} $( ls -ld ${CUR_INCLUDE_FILE}/*.include 2>/dev/null )"
     elif [ -r "${CUR_INCLUDE_FILE}" ] ; then
       NEW_INCLUDE_FILES="${NEW_INCLUDE_FILES} ${CUR_INCLUDE_FILE}"
     else
@@ -7063,13 +6858,13 @@ elif [ "${INCLUDE_FILES}"x != ""x ] ; then
   done
 
   LogInfo "The list of include files is now: " && \
-    LogMsg "-" "${NEW_INCLUDE_FILES}" 
+    LogMsg "${INCLUDE_FILES}" 
 
-  LogInfo "Removing the line feeds ..."
+  LogInfo "Removing the line breaks ..."
   INCLUDE_FILES="$( echo "${NEW_INCLUDE_FILES}" | tr "\n" " " )"
 
   LogInfo "The list of include files is now: " && \
-    LogMsg "-" "${INCLUDE_FILES}" 
+    LogMsg "${INCLUDE_FILES}" 
 
   LogInfo "Removing duplicates ..."
 
@@ -7086,14 +6881,14 @@ elif [ "${INCLUDE_FILES}"x != ""x ] ; then
   INCLUDE_FILES="${NEW_INCLUDE_FILES}"
 
   LogInfo "The list of include files is now: " && \
-    LogMsg "-"  "${INCLUDE_FILES}" 
+    LogMsg "${INCLUDE_FILES}" 
 
   if [ "${NEW_INCLUDE_FILES}"x != ""x  ] ; then
     LogInfo "Checking the include files ..."
           
     for CUR_INCLUDE_FILE in ${INCLUDE_FILES} ; do
   
-      LogMsg "Checking the include file \"${CUR_INCLUDE_FILE}\" ..."
+      LogInfo "Checking the include file \"${CUR_INCLUDE_FILE}\" ..."
   
       CUR_OUTPUT="$( source "${CUR_INCLUDE_FILE}" 2>&1 )"
       if [ $? -ne 0 ] ; then
@@ -7103,7 +6898,7 @@ elif [ "${INCLUDE_FILES}"x != ""x ] ; then
       fi  
     done
   
-    if [ ${ERROR_FOUND} = ${__FALSE} ] ;then
+    if [ ${ERROR_FOUND} = ${__FALSE} -a   ] ;then
       LogMsg "-"
       LogMsg "Reading the include files ..."
   
@@ -7116,7 +6911,7 @@ elif [ "${INCLUDE_FILES}"x != ""x ] ; then
           LogError "Error reading the file \"${CUR_INCLUDE_FILE}\" "
           ERROR_FOUND=${__TRUE}
         else
-          LIST_OF_NEW_ADDITIONAL_KNOWN_MODULES="$( grep "^[[:space:]]*function module_" "${CUR_INCLUDE_FILE}" | grep -v "module_template" |  awk '{ print $2 }'  | cut -f2- -d "_"  |  tr "\n" " " )"
+          LIST_OF_NEW_ADDITIONAL_KNOWN_MODULES="$( grep "  function module_" "${CUR_INCLUDE_FILE}" | grep -v "module_template" |  awk '{ print $2 }'  | cut -f2- -d "_"  |  tr "\n" " " )"
           
           LogInfo "Modules found in the include file \"${CUR_INCLUDE_FILE}\" : " && \
            LogMsg "-" "${LIST_OF_NEW_ADDITIONAL_KNOWN_MODULES}"
@@ -7127,46 +6922,18 @@ elif [ "${INCLUDE_FILES}"x != ""x ] ; then
       LogMsg "-"
     fi
   fi
-
-  if [ ${MODULE_PARAMETER_FOUND} != ${__TRUE} ] ; then
-    MODULES_TO_EXECUTE="${MODULES_TO_EXECUTE} ${LIST_OF_ADDITIONAL_KNOWN_MODULES}"
-  fi
   
   if [ ${ERROR_FOUND} = ${__TRUE} ] ;then
     die 17 "Error(s) found in one ore more include files"
   fi  
 fi
 
-# ---------------------------------------------------------------------
-
-ERROR_FOUND=${__FALSE}
-
-KNOWN_MODULES="${LIST_OF_KNOWN_MODULES} ${LIST_OF_ADDITIONAL_KNOWN_MODULES}"
-
-for CUR_MODULE in ${MODULES_TO_EXECUTE} ; do
-
-  if [[ " ${KNOWN_MODULES} " != *\ ${CUR_MODULE}\ * ]] ; then
-    LogError "The module \"${CUR_MODULE}\" is unknown"
-    ERROR_FOUND=${__TRUE}
-  fi
-done
-
-if [ ${ERROR_FOUND} = ${__TRUE} ] ;then
-  die 18 "One or more unknown modules found in the parameter"
-fi  
 
 # ---------------------------------------------------------------------
 
 for CUR_MODULE in ${MODULES_TO_EXECUTE} ; do
-  
   DISABLED_MODULES="$( echo " ${DISABLED_MODULES} " | sed "s/ ${CUR_MODULE} //g" )"
 done
-
-# DISABLED_MODULES="$( echo "${DISABLED_MODULES}" | tr -s " " )"
-
-# remove leading and trailig blanks
-#
-eval DISABLED_MODULES=${DISABLED_MODULES}
 
 if [ ${PARAMETER_OKAY} != ${__TRUE} ] ; then
   die 2
@@ -7336,6 +7103,7 @@ fi
 # ----------------------------------------------------------------------
 #
 
+
 CUR_MODULES_TO_EXECUTE=""
 
 # remove disabled  and duplicate modules
@@ -7363,21 +7131,13 @@ CUR_OUTPUT="$(
     LogMsg "The known modules defined in include files are: ${LIST_OF_ADDITIONAL_KNOWN_MODULES}"
     LogMsg "-"
   fi
-
-  LogMsg "The modules to execute are: ${MODULES_TO_EXECUTE}"
-
-  if [ "${DISABLED_MODULES}"x != ""x ] ; then
-    LogMsg "-"
-    LogMsg "Disabled modules are: \"${DISABLED_MODULES}\""
-  fi
   
-  if [ "${MODULES_TO_EXCLUDE}"x != ""x ] ; then
-    LogMsg "-"
-    LogMsg "The excluded modules are: \"${MODULES_TO_EXCLUDE}\""
-  fi
-
+  LogMsg "The modules to execute are: ${MODULES_TO_EXECUTE}"
   LogMsg "-"
-
+  LogMsg "Disabled modules are: ${DISABLED_MODULES}"
+  LogMsg "-"
+  LogMsg "The modules to exclude are: ${MODULES_TO_EXCLUDE}"
+  LogMsg "-"
 )" 
 
   echo "${CUR_OUTPUT}"
@@ -7451,7 +7211,6 @@ NO_OF_MODULES_EXECUTED_WITH_ERROR=0
 MODULES_NOT_DEFINED=""
 NO_OF_MODULES_NOT_DEFINED=0
 
-NO_OF_MODULES_PROCESSED=0
 
 for CUR_MODULE in ${CUR_MODULES_TO_EXECUTE} ; do
   [[ " ${MODULES_TO_EXCLUDE} " = *\ ${CUR_MODULE}\ * ]] && continue
@@ -7469,13 +7228,11 @@ ${CUR_MODULE}"
     continue
   fi
 
-  (( NO_OF_MODULES_PROCESSED = NO_OF_MODULES_PROCESSED + 1 ))
-  
   CUR_START_TIME="$( date +%s )"
   
   LogMsg "-"
   LogMsg "Executing the module \"${CUR_MODULE}\" ..."
-  ${PREFIX} module_${CUR_MODULE}
+  module_${CUR_MODULE}
   TEMPRC=$?
   CUR_END_TIME="$( date +%s )"
   
@@ -7506,31 +7263,26 @@ done
 
 LogMsg "-"
 
-if [ ${NO_OF_MODULES_PROCESSED} = 0 ] ; then
-  LogWarning "No modules executed"
-else
+if [ ${NO_OF_MODULES_SUCCESSFULLY_EXECUTED} = 0 ] ; then
+  LogMsg "No modules ended without an error"
+else  
+  LogMsg "${NO_OF_MODULES_SUCCESSFULLY_EXECUTED} module(s) successfully executed: "
+  LogMsg "-" "$( echo "${MODULES_SUCCESSFULLY_EXECUTED}"  )" 
+  LogMsg "-"
+fi
 
-  if [ ${NO_OF_MODULES_SUCCESSFULLY_EXECUTED} = 0 ] ; then
-    LogMsg "No modules ended without an error"
-  else  
-    LogMsg "${NO_OF_MODULES_SUCCESSFULLY_EXECUTED} module(s) successfully executed: "
-    LogMsg "-" "$( echo "${MODULES_SUCCESSFULLY_EXECUTED}"  )" 
-    LogMsg "-"
-  fi
-  
-  if [ ${NO_OF_MODULES_EXECUTED_WITH_ERROR} = 0 ] ; then
-    LogMsg "No modules ended with an error"
-  else
-    LogMsg "${NO_OF_MODULES_EXECUTED_WITH_ERROR} module(s) ended with an error: "
-    LogMsg "-" "$( echo "${MODULES_EXECUTED_WITH_ERROR}"  )" 
-    LogMsg "-"
-  fi
-  
-  if [ ${NO_OF_MODULES_NOT_DEFINED} != 0 ] ; then
-    LogMsg "${NO_OF_MODULES_NOT_DEFINED} module(s) not defined: "
-    LogMsg "-" "$( echo "${MODULES_NOT_DEFINED}"  )" 
-    LogMsg "-"
-  fi
+if [ ${NO_OF_MODULES_EXECUTED_WITH_ERROR} = 0 ] ; then
+  LogMsg "No modules ended with an error"
+else
+  LogMsg "${NO_OF_MODULES_EXECUTED_WITH_ERROR} module(s) ended with an error: "
+  LogMsg "-" "$( echo "${MODULES_EXECUTED_WITH_ERROR}"  )" 
+  LogMsg "-"
+fi
+
+if [ ${NO_OF_MODULES_NOT_DEFINED} != 0 ] ; then
+  LogMsg "${NO_OF_MODULES_NOT_DEFINED} module(s) not defined: "
+  LogMsg "-" "$( echo "${MODULES_NOT_DEFINED}"  )" 
+  LogMsg "-"
 fi
 
 # ----------------------------------------------------------------------

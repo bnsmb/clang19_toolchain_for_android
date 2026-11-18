@@ -162,6 +162,9 @@
 #      the script now fails if there is an unknown value for the parameter "--list"
 #      added the parameter "--list:help" to print all known values for the parameter "--list"
 #
+#    18.11.2026 v4.1.0 /bs
+#     replace "su - -c " with "su - " ("su -" does not work anymmore with Magisk 31.1)
+#
 
 __TRUE=0
 __FALSE=1
@@ -598,7 +601,7 @@ fi
 #
 if [ "$( id -un )"x != "root"x ] ; then
    LogInfo "Running as non-root user -- now restarting \"$0 $*\" as user root ..."
-   exec su - -c $0 $*
+   exec su -c $0 $*
    exit $?
 fi
 
