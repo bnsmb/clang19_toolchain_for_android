@@ -484,7 +484,7 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
   add_library_path "${CLANG_SYSROOT}/usr/lib"
 
 
-  [ i"${ACLOCAL_PATH}"x = ""x ] && ACLOCAL_PATH="${CLANG_SYSROOT}/usr/share/aclocal/"
+  [ "${ACLOCAL_PATH}"x = ""x ] && ACLOCAL_PATH="${CLANG_SYSROOT}/usr/share/aclocal/"
 
 # ---------------------------------------------------------------------
 #
