@@ -33,6 +33,8 @@
 #     the script now copies ./etc/ssh/ssh_config.new to ./etc/ssh/ssh_config if that file does not exist (./etc/ssh/ssh_config is deleted by the cleanup script for "release" and "dev" tar files now)  
 #   23.10.2026 1.3.8 /bs
 #     the script now also creates the directory ./home/shell/.local/share/wget
+#   18.11.2026 1.3.9 /bs
+#     replace "su - -c " with "su - " ("su -" does not work anymmore with Magisk 31.1)
 #
 #
 
@@ -236,10 +238,10 @@ LogMsg ""
   if [ "${CUR_USER}"x = "root"x ] ; then
     ROOT_ACCESS_AVAILABLE=${__TRUE}
   else 
-    su - -c id 2>/dev/null 1>/dev/null 
+    su  -c id 2>/dev/null 1>/dev/null 
     if [ $? -eq 0 ] ; then
       ROOT_ACCESS_AVAILABLE=${__TRUE}
-      ROOT_PREFIX="su - -c "
+      ROOT_PREFIX="su  -c "
     fi
   fi  
 
