@@ -131,7 +131,7 @@ elif [ "${CUR_ID}"x = "root"x ] ; then
   LogMsg "The user executing this script is \"root\" -- will now restart the script as user \"${SSH_USER}\" ... "
   id "${SSH_USER}" 2>/dev/null 1>/dev/null \
     die 90 "The user \"${SSH_USER}\" does not exist"
-  exec su - "${SSH_USER}" -c $0 $*
+  exec su  "${SSH_USER}" -c $0 $*
   exit?
 else
   die 101 "The script $0 must be executed either by the user \"${SSH_USER}\" or the user \"root\" "

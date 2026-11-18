@@ -33,8 +33,8 @@
 #H#  -g                              -> apply all runtime permissions
 #H#
 #H#  -r -d                           -> downgrade an apk (this only works if the pm command is executed as root user)
-#H#                                     examples: su - -c 'PM_INSTALL_OPTIONS="-r -d " /data/local/tmp/install_apk.sh  /sdcard/Download/com.machiav3lli.backup_8316.apk '  
-#H#                                            or su - -c "/data/local/tmp/install_apk.sh  -r -d /sdcard/Download/com.machiav3lli.backup_8316.apk "  
+#H#                                     examples: su -c 'PM_INSTALL_OPTIONS="-r -d " /data/local/tmp/install_apk.sh  /sdcard/Download/com.machiav3lli.backup_8316.apk '  
+#H#                                            or su -c "/data/local/tmp/install_apk.sh  -r -d /sdcard/Download/com.machiav3lli.backup_8316.apk "  
 #H# --enable-rollback                -> using this parameter the current app version can later be restored using using "pm rollback-app"
 #H#                                     Use the command " device_config get rollback_boot rollback_lifetime_in_millis  " to get the time in milliseconds the rollback version
 #H#                                     will be kept

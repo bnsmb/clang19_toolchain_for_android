@@ -133,6 +133,10 @@
 #  15.11.2026 v1.5.23 /bs
 #    the script now defines the variable ACLOCAL_PATH if it is not already defined
 #
+#   18.11.2026 v4.1.0 /bs
+#     replace "su - -c " with "su - " ("su -" does not work anymmore with Magisk 31.1)
+#
+#
 
 __TRUE=0
 __FALSE=1
@@ -524,10 +528,10 @@ if [ ${CONTINUE} = ${__TRUE} ] ; then
     if [ "${CUR_USER}"x = "root"x ] ; then
       ROOT_ACCESS_AVAILABLE=${__TRUE}
     else 
-      su - -c id 2>/dev/null 1>/dev/null 
+      su  -c id 2>/dev/null 1>/dev/null 
       if [ $? -eq 0 ] ; then
         ROOT_ACCESS_AVAILABLE=${__TRUE}
-        ROOT_PREFIX="su - -c "
+        ROOT_PREFIX="su  -c "
       fi
     fi
   else

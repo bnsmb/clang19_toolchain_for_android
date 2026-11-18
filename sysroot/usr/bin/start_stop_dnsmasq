@@ -5,7 +5,8 @@
 # History
 #   04.06.2026 /bs
 #     initial release
-#
+#   18.11.2026 /bs
+#     replace "su - -c " with "su - " ("su -" does not work anymmore with Magisk 31.1)#
 
 __TRUE=0
 __FALSE=1
@@ -21,7 +22,7 @@ if [ "$( id -un )"x != "root"x ] ; then
     echo "ERROR: The script \"$0\" needs root access"
     exit 254
   else
-    ROOT_PREFIX="su - -c "
+    ROOT_PREFIX="su -c "
   fi
 fi
 
