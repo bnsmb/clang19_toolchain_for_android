@@ -1,0 +1,161 @@
+# template file with ./configure command for using with the clang19 tool chain
+#
+
+[[ :${LD_LIBRARY_PATH}: != *:/data/local/tmp/develop/sysroot/usr/lib:* ]] && export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/local/tmp/develop/sysroot/usr/lib
+
+APP="$( echo $PWD | awk -F/ '{ print $NF}' | cut -f1 -d"-" )"
+
+# APP="openvpn"
+
+# default target directory used by "make install"
+#
+#TARGET_ROOT="${TARGET_ROOT:=/data/local/tmp/develop/sysroot}"
+
+TARGET_ROOT="/data/local/tmp/sysroot"
+#
+echo "Configuring \"${APP}\" for the target root \"${TARGET_ROOT}\" ..."
+
+DEBUG_CFLAGS=""
+
+# use these additional CFLAGs for binaries that should be executed using a debugger like gdb
+# 
+#DEBUG_CFLAGS="-g -O0"
+
+# these configure options are required to compile the source code of a lot of  "old" unix programs with clang
+# 
+CFLAGS="${CFLAGS} -Wno-implicit-function-declaration -Wno-int-conversion ${DEBUG_CFLAGS}"
+
+
+# add additional CFLAGS for the compiler here
+#
+CFLAGS="${CFLAGS} "
+
+# C++ compiler options
+# 
+CXXFLAGS="${CFLAGS}"
+
+# add additional LDFLAGS for the linker here
+#
+LDFLAGS="${LDFLAGS} -fuse-ld=bfd  "
+
+CXXFLAGS="${CFLAGS}"
+
+# add additional configure options here
+#
+CONFIGURE_OPTIONS="
+
+  --prefix=${TARGET_ROOT} 
+  --exec-prefix=${TARGET_ROOT}/usr/bin 
+
+  --bindir=${TARGET_ROOT}/usr/bin 
+
+  --sbindir=${TARGET_ROOT}/usr/bin
+  --libexecdir=${TARGET_ROOT}/usr/libexec
+  --sysconfdir=${TARGET_ROOT}/etc
+  --sharedstatedir=${TARGET_ROOT}/usr/share/com
+  --localstatedir=${TARGET_ROOT}/var
+  --runstatedir=${TARGET_ROOT}/usr/run
+  --libdir=${TARGET_ROOT}/usr/lib
+  --includedir=${TARGET_ROOT}/usr/include
+  --oldincludedir=${TARGET_ROOT}/usr/include
+  --datarootdir=${TARGET_ROOT}/usr/share
+  --datadir=${TARGET_ROOT}/usr/share
+  --infodir=${TARGET_ROOT}/usr/share/info
+  --localedir=${TARGET_ROOT}/usr/share/locale
+  --mandir=${TARGET_ROOT}/usr/share/man
+  --docdir=${TARGET_ROOT}/usr/share/doc/${APP}
+  --htmldir=${TARGET_ROOT}/usr/share/doc/${APP}
+  --dvidir=${TARGET_ROOT}/usr/share/doc/${APP}
+  --pdfdir=${TARGET_ROOT}/usr/share/doc/${APP}
+  --psdir=${TARGET_ROOT}/usr/share/doc/${APP}
+
+ac_cv_func_res_nsearch=no 
+ac_cv_func_res_search=no 
+ac_cv_func_dns_search=no 
+ac_cv_header_resolv_h=no 
+
+ac_cv_phpdbg_userfaultfd_writefault=no
+php_cv_lib_gd_gdImageCreateFromPng=yes
+php_cv_lib_gd_gdImageCreateFromAvif=yes
+php_cv_lib_gd_gdImageCreateFromWebp=yes
+php_cv_lib_gd_gdImageCreateFromJpeg=yes
+php_cv_lib_gd_gdImageCreateFromBmp=yes
+php_cv_lib_gd_gdImageCreateFromTga=yes
+
+--enable-bcmath
+--enable-calendar
+--enable-exif
+--enable-mbstring
+--with-capstone
+--enable-pcntl
+--enable-sockets
+--with-bz2=/data/local/tmp/develop/sysroot/usr/
+--with-config-file-path=/data/local/tmp/sysroot/etc/php
+--with-config-file-scan-dir=/data/local/tmp/sysroot/etc/php/conf.d
+--with-curl
+--with-openssl
+--with-readline
+--with-sodium=shared
+--with-zlib
+--with-mysqli=mysqlnd
+--with-pdo-mysql=mysqlnd
+--with-mysql-sock=/data/local/tmp/mysqld.sock
+--with-iconv=/data/local/tmp/develop/sysroot/usr
+--enable-fpm
+--enable-gd=shared
+--with-external-gd
+--with-external-pcre
+--with-zip
+--with-xsl
+--with-gmp
+--with-ffi
+--enable-intl
+--with-tidy=/data/local/tmp/develop/sysroot/usr/
+--sbindir=/data/local/tmp/develop/sysroot/bin
+
+ --disable-dns
+
+php_cv_iconv_errno=yes
+php_with_readline=yes
+
+   --disable-phpdbg
+
+  --without-pcre-jit  
+  --disable-opcache-jit 
+
+  --with-apxs2=/data/local/tmp/develop/php815/apxs.sh
+
+  --disable-zts 
+  --enable-zts=no
+
+#--with-pgsql=shared
+#--with-pdo-pgsql=shared
+#--with-tidy
+
+"
+
+CONFIGURE_OPTIONS="$( echo "${CONFIGURE_OPTIONS}" | grep -v "^#" )"
+
+#
+# set PREFIX to "echo" or something similar before calling this script to run it in dry-run mode
+#
+${PREFIX}  time ./configure  CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" ${CONFIGURE_OPTIONS} $* 
+THISRC=$?
+
+if [ ${THISRC} = 0 ] ; then
+  cp main/php_config.h main/php_config.h.org
+
+  sed -i 's/#define HAVE_COPY_FILE_RANGE 1/\/\* #undef HAVE_COPY_FILE_RANGE \*\//' main/php_config.h
+
+  sed -i 's/#define HAVE_RES_NSEARCH 1/\/\* #undef HAVE_RES_NSEARCH  \*\//' main/php_config.h
+
+fi
+
+
+cp ${NDK_DIR}/sysroot/usr/lib/${CPU_TYPE}-linux-android/${API}/crt*.o .
+
+echo
+echo "Configuring \"${APP}\" for the target root \"${TARGET_ROOT}\" ended with RC=${THISRC}"
+
+echo
+

@@ -1,0 +1,113 @@
+#! /bin/sh
+
+SED="/data/local/tmp/develop/sysroot/usr/bin/sed"
+prefix="/data/local/tmp/sysroot"
+datarootdir="/data/local/tmp/sysroot/php"
+exec_prefix="/data/local/tmp/sysroot/usr/bin"
+version="8.5.12"
+vernum="80512"
+include_dir="/data/local/tmp/sysroot/usr/include/php"
+lib_dir="/data/local/tmp/sysroot/usr/lib"
+includes="-I$include_dir -I$include_dir/main -I$include_dir/TSRM -I$include_dir/Zend -I$include_dir/ext -I$include_dir/ext/date/lib"
+ldflags=" -L/data/local/tmp/develop/sysroot/usr/lib -L/data/local/tmp/sysroot/lib -L/data/local/tmp/sysroot/usr/lib -L/data/local/tmp/sysroot/usr//lib -L/data/local/tmp/develop/sysroot/usr//lib"
+libs="  -ltidy -lreadline -lncurses -lstdc++ -liconv -lbz2 -lm  -lxml2 -lssl -lcrypto -lpcre2-8 -lsqlite3 -lz -lcurl -lxml2 -lffi -lgmp -licuuc -licuio -licui18n -lonig -lsqlite3 -lxml2 -lxml2 -lxml2 -lxml2 -lxslt -lxml2 -lexslt -lxslt -lxml2 -lzip -lz -lssl -lcrypto"
+extension_dir="/data/local/tmp/sysroot/usr/lib/extensions/no-debug-non-zts-20250925"
+man_dir=`eval echo /data/local/tmp/sysroot/usr/share/man`
+program_prefix=""
+program_suffix=""
+exe_extension=""
+php_cli_binary=NONE
+php_cgi_binary=NONE
+configure_options=" 'CFLAGS= -I/data/local/tmp/sysroot/usr/include -I/data/local/tmp/sysroot/usr/clang19/include -I/data/local/tmp/sysroot/usr/ndk/r27d/include -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include/aarch64-linux-android -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include -I/data/local/tmp/develop/sysroot/usr/include --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot -Wno-implicit-function-declaration -Wno-int-conversion ' 'LDFLAGS= -L/data/local/tmp/sysroot/usr/lib -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/31 -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android -L/data/local/tmp/develop/sysroot/usr/lib -B/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/31/ --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot -lc ' '--prefix=/data/local/tmp/sysroot' '--exec-prefix=/data/local/tmp/sysroot/usr/bin' '--bindir=/data/local/tmp/sysroot/usr/bin' '--sbindir=/data/local/tmp/sysroot/usr/bin' '--libexecdir=/data/local/tmp/sysroot/usr/libexec' '--sysconfdir=/data/local/tmp/sysroot/etc' '--sharedstatedir=/data/local/tmp/sysroot/usr/share/com' '--localstatedir=/data/local/tmp/sysroot/var' '--runstatedir=/data/local/tmp/sysroot/usr/run' '--libdir=/data/local/tmp/sysroot/usr/lib' '--includedir=/data/local/tmp/sysroot/usr/include' '--oldincludedir=/data/local/tmp/sysroot/usr/include' '--datarootdir=/data/local/tmp/sysroot/usr/share' '--datadir=/data/local/tmp/sysroot/usr/share' '--infodir=/data/local/tmp/sysroot/usr/share/info' '--localedir=/data/local/tmp/sysroot/usr/share/locale' '--mandir=/data/local/tmp/sysroot/usr/share/man' '--docdir=/data/local/tmp/sysroot/usr/share/doc/php815' '--htmldir=/data/local/tmp/sysroot/usr/share/doc/php815' '--dvidir=/data/local/tmp/sysroot/usr/share/doc/php815' '--pdfdir=/data/local/tmp/sysroot/usr/share/doc/php815' '--psdir=/data/local/tmp/sysroot/usr/share/doc/php815' 'ac_cv_func_res_nsearch=no' 'ac_cv_func_res_search=no' 'ac_cv_func_dns_search=no' 'ac_cv_header_resolv_h=no' 'ac_cv_phpdbg_userfaultfd_writefault=no' 'php_cv_lib_gd_gdImageCreateFromPng=yes' 'php_cv_lib_gd_gdImageCreateFromAvif=yes' 'php_cv_lib_gd_gdImageCreateFromWebp=yes' 'php_cv_lib_gd_gdImageCreateFromJpeg=yes' 'php_cv_lib_gd_gdImageCreateFromBmp=yes' 'php_cv_lib_gd_gdImageCreateFromTga=yes' '--enable-bcmath' '--enable-calendar' '--enable-exif' '--enable-mbstring' '--with-capstone' '--enable-pcntl' '--enable-sockets' '--with-bz2=/data/local/tmp/develop/sysroot/usr/' '--with-config-file-path=/data/local/tmp/sysroot/etc/php' '--with-config-file-scan-dir=/data/local/tmp/sysroot/etc/php/conf.d' '--with-curl' '--with-openssl' '--with-readline' '--with-sodium=shared' '--with-zlib' '--with-mysqli=mysqlnd' '--with-pdo-mysql=mysqlnd' '--with-mysql-sock=/data/local/tmp/mysqld.sock' '--with-iconv=/data/local/tmp/develop/sysroot/usr' '--enable-fpm' '--enable-gd=shared' '--with-external-gd' '--with-external-pcre' '--with-zip' '--with-xsl' '--with-gmp' '--with-ffi' '--enable-intl' '--with-tidy=/data/local/tmp/develop/sysroot/usr/' '--sbindir=/data/local/tmp/develop/sysroot/bin' '--disable-dns' 'php_cv_iconv_errno=yes' 'php_with_readline=yes' '--disable-phpdbg' '--without-pcre-jit' '--disable-opcache-jit' '--with-apxs2=/data/local/tmp/develop/php815/apxs.sh' '--disable-zts' '--enable-zts=no' 'PKG_CONFIG=/data/local/tmp/sysroot/usr/clang19/bin/pkg-config' 'PKG_CONFIG_PATH=:/data/local/tmp/sysroot/usr/lib/pkgconfig/:/data/local/tmp/develop/sysroot/usr/lib/pkgconfig/' 'CPPFLAGS= -I/data/local/tmp/sysroot/usr/include -I/data/local/tmp/sysroot/usr/clang19/include -I/data/local/tmp/sysroot/usr/ndk/r27d/include -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include/aarch64-linux-android -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include -I/data/local/tmp/develop/sysroot/usr/include --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot ' 'CPP=/data/local/tmp/sysroot/usr/clang19/bin/clang-cpp' 'CXXFLAGS= -I/data/local/tmp/sysroot/usr/include -I/data/local/tmp/sysroot/usr/clang19/include -I/data/local/tmp/sysroot/usr/ndk/r27d/include -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include/aarch64-linux-android -I/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/include -I/data/local/tmp/develop/sysroot/usr/include --sysroot=/data/local/tmp/sysroot/usr/ndk/r27d/sysroot -Wno-implicit-function-declaration -Wno-int-conversion ' 'CXXCPP=/data/local/tmp/sysroot/usr/clang19/bin/clang-cpp'"
+php_sapis=" apache2handler cli fpm cgi"
+ini_dir="/data/local/tmp/sysroot/etc/php/conf.d"
+ini_path="/data/local/tmp/sysroot/etc/php"
+php_embed_type=""
+
+# Set php_cli_binary and php_cgi_binary if available
+for sapi in $php_sapis; do
+  case $sapi in
+  cli)
+    php_cli_binary="/data/local/tmp/sysroot/usr/bin/${program_prefix}php${program_suffix}${exe_extension}"
+    ;;
+  cgi)
+    php_cgi_binary="/data/local/tmp/sysroot/usr/bin/${program_prefix}php-cgi${program_suffix}${exe_extension}"
+    ;;
+  esac
+done
+
+# Determine which (if any) php binary is available
+if test "$php_cli_binary" != "NONE"; then
+  php_binary="$php_cli_binary"
+else
+  php_binary="$php_cgi_binary"
+fi
+
+# Set embed SAPI library path
+if test "$php_embed_type" = "shared"; then
+  php_embed_lib=libphp.so
+elif test "$php_embed_type" = "static"; then
+  php_embed_lib=libphp.a
+fi
+
+# Remove quotes
+configure_options=`echo $configure_options | $SED -e "s#'##g"`
+
+case "$1" in
+--prefix)
+  echo $prefix;;
+--includes)
+  echo $includes;;
+--ldflags)
+  echo $ldflags;;
+--libs)
+  echo $libs;;
+--extension-dir)
+  echo $extension_dir;;
+--include-dir)
+  echo $include_dir;;
+--lib-dir)
+  echo $lib_dir;;
+--lib-embed)
+  echo $php_embed_lib;;
+--php-binary)
+  echo $php_binary;;
+--php-sapis)
+  echo $php_sapis;;
+--configure-options)
+  echo $configure_options;;
+--man-dir)
+  echo $man_dir;;
+--ini-path)
+  echo $ini_path;;
+--ini-dir)
+  echo $ini_dir;;
+--version)
+  echo $version;;
+--vernum)
+  echo $vernum;;
+*)
+  cat << EOF
+Usage: $0 [OPTION]
+Options:
+  --prefix            [$prefix]
+  --includes          [$includes]
+  --ldflags           [$ldflags]
+  --libs              [$libs]
+  --extension-dir     [$extension_dir]
+  --include-dir       [$include_dir]
+  --lib-dir           [$lib_dir]
+  --lib-embed         [$php_embed_lib]
+  --man-dir           [$man_dir]
+  --php-binary        [$php_binary]
+  --php-sapis         [$php_sapis]
+  --ini-path          [$ini_path]
+  --ini-dir           [$ini_dir]
+  --configure-options [$configure_options]
+  --version           [$version]
+  --vernum            [$vernum]
+EOF
+  exit 1;;
+esac
+
+exit 0

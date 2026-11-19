@@ -1,0 +1,34 @@
+#!/bin/sh
+
+LOGFILE="/data/local/tmp/develop/php815/apr-config.log"
+
+function log {
+  echo "$*" >>"${LOGFILE}"
+}
+
+log ""
+
+log "apr_config -- Parameter \"$*\ "
+
+RESULT_STRING=""
+
+while [ $# -ne 0 ] ; do
+  CUR_PARAM="$1"
+  shift
+
+  case ${CUR_PARAM} in
+     --cppflags )
+       RESULT_STRING="${RESULT_STRING}  -DLINUX -D_REENTRANT -D_GNU_SOURC"
+       ;;
+
+     --includes )
+       RESULT_STRING="${RESULT_STRING} -I/data/local/tmp/develop/php815/apache/include/apr-1 "
+       ;;
+
+  esac
+done
+
+log "apr_config -- Resultstring: \"${RESULT_STRING}\" "
+
+echo "${RESULT_STRING}"
+

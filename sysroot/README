@@ -183,6 +183,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=/data/local/tmp/sysroot/usr/lib/android-gcc-cross/b
 # perl 5.44
 # python 3.15
 # pip 26.2.1
+# php 8.5.12
 # tcl 9.0
 # lua 5.4.8
 # sqlite3 3.53.4
@@ -688,3 +689,5 @@ History
     sudo is now using "su -c <command>" (no login shell anymore)
     added re2c 4.6 
     added capstone 6.0.0-Alpha11
+    added php 8.5.12
+

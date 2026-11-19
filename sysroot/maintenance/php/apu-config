@@ -1,0 +1,31 @@
+#!/bin/sh
+
+LOGFILE="/data/local/tmp/develop/php815/apu-config.log"
+
+function log {
+  echo "$*" >>"${LOGFILE}"
+}
+
+log ""
+
+log "apu_config -- Parameter \"$*\ "
+
+RESULT_STRING=""
+
+while [ $# -ne 0 ] ; do
+  CUR_PARAM="$1"
+  shift
+
+  case ${CUR_PARAM} in
+
+     --includes )
+       RESULT_STRING="${RESULT_STRING} -I/data/local/tmp/develop/php815/apache/include/apu-1 "
+       ;;
+
+  esac
+done
+
+log "apu_config -- Resultstring: \"${RESULT_STRING}\" "
+
+echo "${RESULT_STRING}"
+
