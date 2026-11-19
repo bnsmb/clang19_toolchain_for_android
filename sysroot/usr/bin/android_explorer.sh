@@ -258,6 +258,10 @@ ADDITIONAL_ENV_VARIABLES="
 #V#     added a command to retrieve the size of the privapps to the module privapp
 #V#     added the module apps
 #V#
+#V#   18.11.2026 v0.0.3 /bs
+#V#     removed the empty "-a" in one of the if clauses
+#V#     STDERR for the getprop command is now directed to /dev/null
+#V#
 #T# ----------------------------------------------------------------------
 #T#
 
@@ -6292,7 +6296,7 @@ LOGFILE_PARAMETER_FOUND=${__FALSE}
 
 PRINT_RUNTIME_VARIABLES=${__FALSE}
 
-CUR_SERIAL_NO="$( "${GETPROP}" ro.serialno )"
+CUR_SERIAL_NO="$( "${GETPROP}" ro.serialno 2>/dev/null )"
 
 if [ "${TMPDIR}"x != ""x ] ; then
   DEFAULT_OUTPUT_FILE="${TMPDIR}/android_explorer_${CUR_SERIAL_NO}_$( date +%Y-%m-%d-$H_%S_%s ).tar.gz"
@@ -6898,7 +6902,7 @@ elif [ "${INCLUDE_FILES}"x != ""x ] ; then
       fi  
     done
   
-    if [ ${ERROR_FOUND} = ${__FALSE} -a   ] ;then
+    if [ ${ERROR_FOUND} = ${__FALSE}  ] ;then
       LogMsg "-"
       LogMsg "Reading the include files ..."
   
