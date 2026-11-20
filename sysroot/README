@@ -86,18 +86,20 @@ The include file sysroot/usr/include/add_missing_definitions.h contains definiti
 
 Some configure scripts and makefiles for standard Unix tools use libraries that are not available (and not needed) in Android, e.g. libpthread.so.
 
-A dummy (= empty) libraries for libpthread.so and librt.so are part of the clang19 toolchain:
+Dummy (= empty) libraries for some of these libraries are included in the clang19 toolchain:
 
-[clang19 toolchain] [shell@localhost /data/local/tmp/sysroot]$ date
-Tue Sep 29 09:51:29 CEST 2026
-[clang19 toolchain] [shell@localhost /data/local/tmp/sysroot]$ 
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot $ date
+Thu Nov 19 16:08:04 CET 2026
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot $ 
 
-[clang19 toolchain] [shell@localhost /data/local/tmp/sysroot]$ ls -l usr/lib/librt*  usr/lib/libpthread*
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot $ ls -l usr/lib/librt*  usr/lib/libpthread* usr/lib/libutil*                                                                                                                                                   
 -rw-rw-r-- 1 shell shell 1218 2026-03-25 16:58 usr/lib/libpthread.a
 -rw-rw-r-- 1 shell shell 5272 2026-03-25 16:58 usr/lib/libpthread.so
 -rw-r--r-- 1 shell shell 1216 2026-09-28 15:40 usr/lib/librt.a
 -rw-r--r-- 1 shell shell 5272 2026-09-28 15:40 usr/lib/librt.so
-[clang19 toolchain] [shell@localhost /data/local/tmp/sysroot]$ 
+-rw-r--r-- 1 shell shell 1218 2026-10-02 09:28 usr/lib/libutil.a
+-rw-r--r-- 1 shell shell 5272 2026-10-02 09:28 usr/lib/libutil.so
+[clang19 toolchain] ASUS_I006D:/data/local/tmp/sysroot $ 
 
 
 
@@ -690,4 +692,5 @@ History
     added re2c 4.6 
     added capstone 6.0.0-Alpha11
     added php 8.5.12
+    added file 5.48 w/ embedded magisk db
 
