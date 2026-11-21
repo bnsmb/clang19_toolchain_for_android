@@ -8,13 +8,17 @@
 # History
 #   15.06.2026 /bs
 #     release tar files are now compressed tar files; all other tar files are still uncompressed
+#   21.11.2026 /bs
+#    added the parameter "print" to only print the name of the tar file that would be created
 #
+__TRUE=0
+__FALSE=1
 
 SYSROOT_DIR="${0%/*}"
 BASE_DIR="$( cd "${SYSROOT_DIR}/.." ; pwd )"
 
 if [ "$1"x = "-h"x -o "$1"x = "--help"x ] ; then
-  echo "Usage: $0 [target_dir_for_the_tar_file] [tar_file_description]"
+  echo "Usage: $0 [target_dir_for_the_tar_file] [print] [tar_file_description]"
   echo "The default target directory is the directory with this script:  ${BASE_DIR}"
   exit 5
 fi
@@ -22,11 +26,16 @@ fi
 
 CLANG_VERSION=19
 
+PRINT_FILENAME_ONLY=${__FALSE}
+
+if [ "$1"x = "print"x ] ; then
+    PRINT_FILENAME_ONLY=${__TRUE}
+    shift
+fi
+
 if [ $# -ge 1 -a -d $1 ] ; then
 
   TARGET_DIR="$1"
-  shift
-
 elif [ "${TARGET_DIR}"x = ""x ] ; then
   TARGET_DIR="${BASE_DIR}"
 fi
@@ -60,6 +69,11 @@ fi
 TAR_FILE_NAME="clang${CLANG_VERSION}_toolchain-${TAR_FILE_VERSION}${POSTFIX}.tar.gz"
 
 TAR_FILE="${TARGET_DIR}/${TAR_FILE_NAME}" ;
+
+if [ ${PRINT_FILENAME_ONLY} = ${__TRUE} ] ; then
+	echo ${TAR_FILE}
+	exit 0
+fi
 
 echo "Creating the tar file \"${TAR_FILE}\" ..."
 
