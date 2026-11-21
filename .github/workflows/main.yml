@@ -29,15 +29,19 @@ jobs:
       - name: Retrieve the name of the tar file 
         id: getfilename
         run: |
+          pwd
+          ls -l
           echo "Creating the tar file in the directory \"$( pwd )\" "
-          TAR_FILENAME="$( ./create_tar_archive.sh release "${{ inputs.commment }}" )"
-          echo "${TAR_FILENAME}" >$GITHUB_OUTPUT
+          TAR_FILENAME="` ./create_tar_archive.sh release "${{ inputs.commment }}" `"
+          echo "$TAR_FILENAME" >$GITHUB_OUTPUT
 
-          echo "The name of the tar file will be: ${TAR_FILENAME}"
+          echo "The name of the tar file will be: $TAR_FILENAME"
 
       - name: Create tar file
         id: createtarfile
         run: |
+          pwd
+          ls -l
           ./create_tar_archive.sh release "${{ inputs.commment }}"
 
       - name: Create Release
