@@ -31,8 +31,8 @@ jobs:
         run: |
           pwd
           ls -l
-          echo "Creating the tar file in the directory \"$( pwd )\" "
-          TAR_FILENAME="` ./create_tar_archive.sh release "${{ inputs.commment }}" `"
+          echo "Retrieving the tar file in the directory \"$( pwd )\" "
+          TAR_FILENAME="` cd sysroot && ./create_tar_archive.sh release "${{ inputs.commment }}" `"
           echo "$TAR_FILENAME" >$GITHUB_OUTPUT
 
           echo "The name of the tar file will be: $TAR_FILENAME"
@@ -42,7 +42,8 @@ jobs:
         run: |
           pwd
           ls -l
-          ./create_tar_archive.sh release "${{ inputs.commment }}"
+          echo "Creating the tar file in the directory \"$( pwd )\" "
+          cd sysroot &&  ./create_tar_archive.sh release "${{ inputs.commment }}"
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
