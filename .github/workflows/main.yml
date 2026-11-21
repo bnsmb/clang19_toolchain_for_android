@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Release-Typ: prerelease oder release'
+        required: true
+        type: choice
+        options:
+          - prerelease
+          - release
+        default: prerelease
+      comment:
+        description: 'tar file comment'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Retrieve the name of the tar file 
+        id: getfilename
+        run: |
+          echo "Creating the tar file in the directory \"$( pwd )\" "
+          TAR_FILENAME="$( ./create_tar_archive.sh release "${{ inputs.commment }}" )"
+          echo "${TAR_FILENAME}" >$GITHUB_OUTPUT
+
+          echo "The name of the tar file will be: ${TAR_FILENAME}"
+
+      - name: Create tar file
+        id: createtarfile
+        run: |
+          ./create_tar_archive.sh release "${{ inputs.commment }}"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ steps.module_version.outputs.version }}
+          tag_name: v${{ steps.module_version.outputs.version }}
+          prerelease: ${{ inputs.release_type == 'prerelease' }}
+          files: ${{ steps.getfilename.outputs.TAR_FILENAME }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
