@@ -31,8 +31,8 @@ jobs:
         run: |
           pwd
           ls -l
-          echo "Retrieving the tar file in the directory \"$( pwd )\" "
-          TAR_FILENAME="` cd sysroot && ./create_tar_archive.sh release "${{ inputs.commment }}" `"
+          echo "Retrieving the name of the tar file in the directory \"$( pwd )\" "
+          TAR_FILENAME="` cd sysroot && ./create_tar_archive.sh print release "${{ inputs.commment }}" `"
           echo "$TAR_FILENAME" >$GITHUB_OUTPUT
 
           echo "The name of the tar file will be: $TAR_FILENAME"
