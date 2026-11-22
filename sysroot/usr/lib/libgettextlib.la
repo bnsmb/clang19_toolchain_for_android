@@ -17,7 +17,7 @@ old_library='libgettextlib.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -R/data/local/tmp/develop/sysroot/usr/lib -R/data/local/tmp/sysroot/usr/lib -R/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/31 -L/data/local/tmp/develop/sysroot/usr/lib /data/local/tmp/sysroot/usr/lib/libintl.la -L/data/local/tmp/sysroot/usr/lib -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android/31 -L/data/local/tmp/sysroot/usr/ndk/r27d/sysroot/usr/lib/aarch64-linux-android /data/local/tmp/develop/sysroot/usr/lib/libunistring.la -L/data/develop/android/android-ndk-r25.2/toolchains/llvm.dir/sysroot/lib -ldl -lm /data/local/tmp/develop/sysroot/usr/lib/libiconv.la -lc'
+dependency_libs=' -lintl -lunistring -ldl -lm -liconv -lc'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''

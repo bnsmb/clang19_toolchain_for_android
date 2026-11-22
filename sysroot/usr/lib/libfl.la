@@ -17,7 +17,7 @@ old_library='libfl.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/data/local/tmp/develop/sysroot/usr/lib -lm'
+dependency_libs=' -lm'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
