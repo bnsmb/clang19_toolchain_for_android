@@ -17,7 +17,7 @@ old_library='libcurl.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs='  -lnghttp3  -lnghttp2 -bpsl -lssl -lcrypto -lzstd -lbrotlicommon -lz -lunistring -liconv -ldl -lm'
+dependency_libs='  -lnghttp3  -lnghttp2 -lpsl -lssl -lcrypto -lzstd -lbrotlicommon -lz -lunistring -liconv -ldl -lm'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
