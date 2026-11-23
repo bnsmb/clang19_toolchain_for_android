@@ -1,0 +1,74 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Release-Typ auswählen'
+        required: true
+        default: 'pre-release'
+        type: choice
+        options:
+          - pre-release
+          - release
+      version:
+        description: 'Version (Freitext). Leer lassen = automatisch vom Script ermitteln'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Make scripts executable
+        run: chmod +x ./sysroot/create_tar_archive.sh
+
+      - name: Determine version
+        id: version
+        shell: bash
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            VERSION="${{ inputs.version }}"
+            echo "Version manuell gesetzt: $VERSION"
+          else
+            VERSION="$(./sysroot/create_tar_archive.sh version release)"
+            echo "Version automatisch ermittelt: $VERSION"
+          fi
+          VERSION="$(echo "$VERSION" | tr -d '[:space:]')"
+          if [ -z "$VERSION" ]; then
+            echo "::error::Version konnte nicht ermittelt werden."
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Build release archive
+        id: build
+        shell: bash
+        run: |
+          ./sysroot/create_tar_archive.sh release
+          TARFILE="$(./sysroot/create_tar_archive.sh print release | tr -d '[:space:]')"
+          if [ -z "$TARFILE" ] || [ ! -f "$TARFILE" ]; then
+            echo "::error::Tar-Archiv '$TARFILE' wurde nicht erstellt oder nicht gefunden."
+            exit 1
+          fi
+          echo "Archive: $TARFILE"
+          echo "tarball=$TARFILE" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }}
+          prerelease: ${{ inputs.release_type == 'pre-release' }}
+          files: ${{ steps.build.outputs.tarball }}
+          generate_release_notes: true
+          draft: false
