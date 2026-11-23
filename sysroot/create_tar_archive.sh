@@ -7,9 +7,11 @@
 #
 # History
 #   15.06.2026 /bs
-#     release tar files are now compressed tar files; all other tar files are still uncompressed
+#      release tar files are now compressed tar files; all other tar files are still uncompressed
 #   21.11.2026 /bs
-#    added the parameter "print" to only print the name of the tar file that would be created
+#     added the parameter "print" to only print the name of the tar file that would be created
+#   23.11.2026 /bs
+#     added the parameter "version" to only print the version number
 #
 __TRUE=0
 __FALSE=1
@@ -27,10 +29,18 @@ fi
 CLANG_VERSION=19
 
 PRINT_FILENAME_ONLY=${__FALSE}
+PRINT_VERSION_ONLY=${__FALSE}
+
+TAR_FILE_HIST_LINE="$( grep "/bs" ${SYSROOT_DIR}/README |  tail -1  )"
+
+TAR_FILE_VERSION="$( echo "${TAR_FILE_HIST_LINE}" | awk '{ print $2 }' )"
+TAR_FILE_TIMESTAMP="$( echo "${TAR_FILE_HIST_LINE}" | awk '{ print $1 }' )"
 
 if [ "$1"x = "print"x ] ; then
     PRINT_FILENAME_ONLY=${__TRUE}
     shift
+elif [ "$1"x = "version"x ] ; then
+    PRINT_VERSION_ONLY=${__TRUE}    
 fi
 
 if [ $# -ge 1 -a -d $1 ] ; then
@@ -40,25 +50,22 @@ elif [ "${TARGET_DIR}"x = ""x ] ; then
   TARGET_DIR="${BASE_DIR}"
 fi
 
-TAR_FILE_HIST_LINE="$( grep "/bs" ${SYSROOT_DIR}/README |  tail -1  )"
-
-TAR_FILE_VERSION="$( echo "${TAR_FILE_HIST_LINE}" | awk '{ print $2 }' )"
-TAR_FILE_TIMESTAMP="$( echo "${TAR_FILE_HIST_LINE}" | awk '{ print $1 }' )"
-
-
-TAR_COMPRESS_OPTION=""
-
 
 if [ "$1"x = "release"x ] ; then
   POSTFIX="_release_${TAR_FILE_TIMESTAMP}_"
-  
-  ${SYSROOT_DIR}/clean_env.sh -x
 
+  if [ ${PRINT_FILENAME_ONLY} != ${__TRUE}  -a   ${PRINT_VERSION_ONLY} != ${__TRUE} ] ; then
+    ${SYSROOT_DIR}/clean_env.sh -x
+  fi
   TAR_COMPRESS_OPTION="-z"
 
 elif [ "$1"x = "develop"x -o "$1"x = "dev"x -o "$1"x = "devel"x ] ; then
   POSTFIX="_dev_${TAR_FILE_TIMESTAMP}_"
-   ${SYSROOT_DIR}/clean_env.sh -x
+
+  if [ ${PRINT_FILENAME_ONLY} != ${__TRUE} ] ; then
+  
+    ${SYSROOT_DIR}/clean_env.sh -x
+  fi
 
 elif [ $# -ne 0 ] ; then
   POSTFIX="_$( date +%Y-%m-%d )_$( echo $* | tr " " "_" )_"
@@ -73,6 +80,9 @@ TAR_FILE="${TARGET_DIR}/${TAR_FILE_NAME}" ;
 if [ ${PRINT_FILENAME_ONLY} = ${__TRUE} ] ; then
 	echo ${TAR_FILE}
 	exit 0
+elif [ ${PRINT_VERSION_ONLY} = ${__TRUE} ] ; then
+	echo "${TAR_FILE_VERSION}"
+        exit 0	
 fi
 
 echo "Creating the tar file \"${TAR_FILE}\" ..."
